@@ -28,6 +28,7 @@ public class TwitterScraper: NSObject {
         until: String? = nil,
         count: Int = 0,
         refresh: String = "",
+        filterLangCode: String? = nil,
         success: TwitterScraperSuccessHandler? = nil,
         progress: TwitterScraperProgressHandler? = nil,
         failure: HTTPRequest.FailureHandler? = nil) {
@@ -56,6 +57,7 @@ public class TwitterScraper: NSObject {
                     let doc: Document = try SwiftSoup.parse(items.string ?? "")
                     let elesText = try doc.select("div.js-tweet-text-container")
                     let elesTime = try doc.select("span.js-short-timestamp")
+                    let elesLang = try? doc.select("p.js-tweet-text")
                     
                     if elesText.count == 0 {
                         
@@ -63,8 +65,11 @@ public class TwitterScraper: NSObject {
                     } else {
 
                         for (index, ele) in elesText.enumerated() {
+                            guard index < count else { break }
+                            
                             let text: String = (try? ele.text()) ?? ""
                             let time: String = elesTime.array().count > index ? (try? elesTime.array()[index].attr("data-time")) ?? "" : ""
+                            let lang: String = (elesLang?.array().count ?? -1) > index ? (try? elesLang?.array()[index].attr("lang")) ?? "" : ""
                             
 //                            if let doubleTime = Double(time) {
 //                                let date = Date(timeIntervalSince1970: doubleTime)
@@ -77,11 +82,14 @@ public class TwitterScraper: NSObject {
 //                                print("{TEST} time \(localDate)")
 //                            }
                             
-                            self.results.append(
-                                Tweet.init(
-                                    text: text,
-                                    time: time)
-                            )
+                            if filterLangCode == nil || filterLangCode == lang {
+                                self.results.append(
+                                    Tweet.init(
+                                        text: text,
+                                        time: time,
+                                        lang: lang)
+                                )
+                            }
                         }
                         
                         self.searchTweet(
@@ -90,6 +98,7 @@ public class TwitterScraper: NSObject {
                             until: until,
                             count: count,
                             refresh: refreshCursor,
+                            filterLangCode: filterLangCode,
                             success: success,
                             failure: failure)
                     }

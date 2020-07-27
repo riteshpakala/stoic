@@ -32,7 +32,10 @@ public class DetailView: GraniteView {
                 progressTimer?.invalidate()
                 self.progressTimer = nil
                 self.consoleView.setStatus(nil)
-                self.frame.size = DetailStyle.consoleSizeExpanded
+                
+                if !consoleView.minimized {
+                    self.frame.size = DetailStyle.consoleSizeExpanded
+                }
             }
         }
     }

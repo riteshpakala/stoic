@@ -52,27 +52,27 @@ struct GetPredictionReducer: Reducer {
                 model: model)
         }
         
-        var outputs : [Double?] = []
-        print("{TEST} \(validSentimentTradingDays)")
-        for i in 0..<2 {
-            let testData = DataSet(dataType: .Regression, inputDimension: 3, outputDimension: 1)
-            do {
-                try testData.addTestDataPoint(input: [Double(validTradingData.count), 0.5, 0.5])
-            }
-            catch {
-                print("Invalid data set created")
-            }
-
-            if i == 0 {
-                state.model?.open.predictValues(data: testData)
-                print("{TEST} open: \(testData.outputs)")
-            } else if i == 1 {
-                state.model?.close.predictValues(data: testData)
-                print("{TEST} close: \(testData.outputs)")
-            }
-
-            outputs.append(testData.outputs?.first?.first)
-        }
+//        var outputs : [Double?] = []
+//        print("{TEST} \(validSentimentTradingDays)")
+//        for i in 0..<2 {
+//            let testData = DataSet(dataType: .Regression, inputDimension: 3, outputDimension: 1)
+//            do {
+//                try testData.addTestDataPoint(input: [Double(validTradingData.count), 0.5, 0.5])
+//            }
+//            catch {
+//                print("Invalid data set created")
+//            }
+//
+//            if i == 0 {
+//                state.model?.open.predictValues(data: testData)
+//                print("{TEST} open: \(testData.outputs)")
+//            } else if i == 1 {
+//                state.model?.close.predictValues(data: testData)
+//                print("{TEST} close: \(testData.outputs)")
+//            }
+//
+//            outputs.append(testData.outputs?.first?.first)
+//        }
         
         state.progressLabelText = nil
         state.predictionState = DetailView.DetailPredictionState.done.rawValue

@@ -115,7 +115,7 @@ extension DetailViewController {
             self._view.frame.size = _view.consoleView.minimizedTaskBarSize()
         } else if sender.tag == 1 {
 
-            self._view.frame.size = DetailStyle.consoleSizeExpanded
+            self._view.frame.size = _view.currentState == .done ? DetailStyle.consoleSizeExpanded : DetailStyle.consoleSizePredicting
         }
         
         _view.consoleView.changeViewState()

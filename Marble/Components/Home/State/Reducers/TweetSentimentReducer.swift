@@ -47,26 +47,26 @@ struct TweetSentimentReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        let scraper = TwitterScraper()
-        scraper.searchTweet(
-            using: "Valorant",
-            username: nil,
-            near: nil,
-            since: "2020-06-01",
-            until: "2020-06-02",
-            count: 120,
-            
-        success:  { (results, reponse) in
-            for result in results {
-                print(result.text)
-                print("########################")
-            }
-        },
-        
-        failure: {  error in
-            
-        })
-        
+//        let scraper = TwitterScraper()
+//        scraper.searchTweet(
+//            using: "Valorant",
+//            username: nil,
+//            near: nil,
+//            since: "2020-06-01",
+//            until: "2020-06-02",
+//            count: 120,
+//
+//        success:  { (results, reponse) in
+//            for result in results {
+//                print(result.text)
+//                print("########################")
+//            }
+//        },
+//
+//        failure: {  error in
+//
+//        })
+//        VaderSentiment.test()
         state.test+=1
     }
     

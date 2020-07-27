@@ -115,6 +115,10 @@
 		7164E6A7248DD4700035CE9B /* StockKitBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E6A0248DD4700035CE9B /* StockKitBuilder.swift */; };
 		7164E6A8248DD4700035CE9B /* StockKitStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E6A1248DD4700035CE9B /* StockKitStyle.swift */; };
 		7164E6AA248DDB8C0035CE9B /* SearchCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E6A9248DDB8C0035CE9B /* SearchCollectionCell.swift */; };
+		716D147024CE2F9B0075F86E /* VaderSentiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716D146F24CE2F9B0075F86E /* VaderSentiment.swift */; };
+		716D147324CE2FB20075F86E /* vader_lexicon.txt in Resources */ = {isa = PBXBuildFile; fileRef = 716D147124CE2FB10075F86E /* vader_lexicon.txt */; };
+		716D147424CE2FB20075F86E /* emoji_utf8_lexicon.txt in Resources */ = {isa = PBXBuildFile; fileRef = 716D147224CE2FB20075F86E /* emoji_utf8_lexicon.txt */; };
+		716D147724CE96AE0075F86E /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716D147624CE96AE0075F86E /* Translate.swift */; };
 		716D6787248ECD1E00E1B3CC /* GetValidMarketDaysReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716D6786248ECD1E00E1B3CC /* GetValidMarketDaysReducer.swift */; };
 		71783873248F10B200A7CD40 /* StockKitIsPreparedReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71783872248F10B200A7CD40 /* StockKitIsPreparedReducer.swift */; };
 		717A75F524A14C7D005348F9 /* TwitterScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717A75F424A14C7D005348F9 /* TwitterScraper.swift */; };
@@ -430,6 +434,10 @@
 		7164E6A0248DD4700035CE9B /* StockKitBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockKitBuilder.swift; sourceTree = "<group>"; };
 		7164E6A1248DD4700035CE9B /* StockKitStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockKitStyle.swift; sourceTree = "<group>"; };
 		7164E6A9248DDB8C0035CE9B /* SearchCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionCell.swift; sourceTree = "<group>"; };
+		716D146F24CE2F9B0075F86E /* VaderSentiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaderSentiment.swift; sourceTree = "<group>"; };
+		716D147124CE2FB10075F86E /* vader_lexicon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vader_lexicon.txt; sourceTree = "<group>"; };
+		716D147224CE2FB20075F86E /* emoji_utf8_lexicon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = emoji_utf8_lexicon.txt; sourceTree = "<group>"; };
+		716D147624CE96AE0075F86E /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 		716D6786248ECD1E00E1B3CC /* GetValidMarketDaysReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetValidMarketDaysReducer.swift; sourceTree = "<group>"; };
 		71783872248F10B200A7CD40 /* StockKitIsPreparedReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKitIsPreparedReducer.swift; sourceTree = "<group>"; };
 		717A75F424A14C7D005348F9 /* TwitterScraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterScraper.swift; sourceTree = "<group>"; };
@@ -982,6 +990,7 @@
 		71478F3224790288007DF62D /* Sentiment */ = {
 			isa = PBXGroup;
 			children = (
+				716D146E24CE1AEB0075F86E /* Vader */,
 				71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */,
 				71478F302479027D007DF62D /* SentimentClassifier.mlmodel */,
 			);
@@ -1202,6 +1211,24 @@
 			path = Reducers;
 			sourceTree = "<group>";
 		};
+		716D146E24CE1AEB0075F86E /* Vader */ = {
+			isa = PBXGroup;
+			children = (
+				716D147224CE2FB20075F86E /* emoji_utf8_lexicon.txt */,
+				716D147124CE2FB10075F86E /* vader_lexicon.txt */,
+				716D146F24CE2F9B0075F86E /* VaderSentiment.swift */,
+			);
+			path = Vader;
+			sourceTree = "<group>";
+		};
+		716D147524CE96960075F86E /* Translate */ = {
+			isa = PBXGroup;
+			children = (
+				716D147624CE96AE0075F86E /* Translate.swift */,
+			);
+			path = Translate;
+			sourceTree = "<group>";
+		};
 		717A75F324A14C00005348F9 /* TwitterScraper */ = {
 			isa = PBXGroup;
 			children = (
@@ -1350,6 +1377,7 @@
 		71A1D162246E027D00D778A5 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				716D147524CE96960075F86E /* Translate */,
 				717A75F824A16118005348F9 /* SwiftSoup */,
 				717A75F324A14C00005348F9 /* TwitterScraper */,
 				71478F3324790296007DF62D /* Swifter */,
@@ -2034,9 +2062,11 @@
 				71A1D13C246E01E400D778A5 /* Assets.xcassets in Resources */,
 				71A1D2E4246E027D00D778A5 /* FiraSans-LightItalic.otf in Resources */,
 				7127AFAA24859FC8004C57F1 /* alexander.obj in Resources */,
+				716D147324CE2FB20075F86E /* vader_lexicon.txt in Resources */,
 				71F5BA4C248474B30085E8DD /* GOOG2.csv in Resources */,
 				71A1D2E6246E027D00D778A5 /* FiraSans-Italic.otf in Resources */,
 				71A1D2DF246E027D00D778A5 /* FiraSans-Medium.otf in Resources */,
+				716D147424CE2FB20075F86E /* emoji_utf8_lexicon.txt in Resources */,
 				71A1D2D9246E027D00D778A5 /* PlayfairDisplay-BlackItalic.otf in Resources */,
 				71A1D2E5246E027D00D778A5 /* FiraSans-Regular.otf in Resources */,
 				71A1D2DE246E027D00D778A5 /* FiraSans-MediumItalic.otf in Resources */,
@@ -2312,8 +2342,10 @@
 				719AA33E2478B69A000F7CBD /* DataSet.swift in Sources */,
 				717A763924A16131005348F9 /* NodeTraversor.swift in Sources */,
 				71A1D2EF246E027D00D778A5 /* AssetsPickerConfig.swift in Sources */,
+				716D147724CE96AE0075F86E /* Translate.swift in Sources */,
 				71A1D301246E027D00D778A5 /* AssetsNoPermissionView.swift in Sources */,
 				7164E6AA248DDB8C0035CE9B /* SearchCollectionCell.swift in Sources */,
+				716D147024CE2F9B0075F86E /* VaderSentiment.swift in Sources */,
 				71A1D304246E027D00D778A5 /* AssetsPhotoCell.swift in Sources */,
 				7127B02E2485DCF7004C57F1 /* DetailEvents.swift in Sources */,
 				71478F7E24790297007DF62D /* SwifterHelp.swift in Sources */,

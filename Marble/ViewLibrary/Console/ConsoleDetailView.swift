@@ -646,13 +646,14 @@ class ConsoleDetailPredictionView: UIView {
         positive: Double = 0.5,
         negative: Double = 0.5) {
         
+        print("{TEST} \(positive - negative)")
         DispatchQueue.init(label: "stoic.predicting").async { [weak self] in
             
             var outputs : [Double?] = []
             for i in 0..<2 {
-                let testData = DataSet(dataType: .Regression, inputDimension: 3, outputDimension: 1)
+                let testData = DataSet(dataType: .Regression, inputDimension: 2, outputDimension: 1)
                 do {
-                    try testData.addTestDataPoint(input: [Double((self?.days ?? PredictionRules().days)), positive, negative])
+                    try testData.addTestDataPoint(input: [Double((self?.days ?? PredictionRules().days)), positive-negative])
                 }
                 catch {
                     print("Invalid data set created")

@@ -9,8 +9,9 @@
 import Foundation
 
 struct PredictionRules {
-    var days: Int = 12
+    var days: Int = 4
     var maxDays: Int = 12
+    var baseLangCode: String = "en"
 }
 
 public class StockKitState: State {
@@ -71,7 +72,14 @@ public class StockKitState: State {
         }
         return (hour, minute, seconds)
     }
-    var date: Date? = nil
+    var date: Date? {
+        let sortedTradingDays = validTradingDays?.sorted(
+            by:  { ($0.asDate ?? Date())
+                .compare(($1.asDate ?? Date())) == .orderedDescending } )
+        
+        return sortedTradingDays?.last?.asDate
+    }
+    
     var dateTargetAsString: String? {
         guard let date = date else {
             return nil
@@ -97,30 +105,10 @@ public class StockKitState: State {
         
         super.init()
         
-        var lastDateThreshold: Date = currentDate
-        
-        for _ in 0..<rules.days {
-            lastDateThreshold = advanceDate1Day(date: lastDateThreshold, value: -1) ?? currentDate
-        }
-//        guard let lastWeekDate = Calendar.current.date(
-//            byAdding: .weekOfYear,
-//            value: -1, to: currentDate) else { return }
-//
-//
         
         yahooFinanceAPIHistoryKey = "\(Int(currentDate.timeIntervalSince1970))"
         
-        
-        guard currentTime.hour >= 16,
-            let padADayDate = self.advanceDate1Day(
-            date: lastDateThreshold) else {
-                
-                date = lastDateThreshold
-                return
-        }
-        
-        
-        date = padADayDate
+       
         
         print("{TEST} \(currentDateComponents)")
         print("{TEST} \(yahooFinanceAPIHistoryKey)")

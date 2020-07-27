@@ -11,4 +11,5 @@ import Foundation
 public struct Tweet {
     let text: String
     let time: String
+    let lang: String
 }

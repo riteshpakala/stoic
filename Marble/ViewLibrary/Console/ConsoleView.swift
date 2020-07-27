@@ -90,6 +90,10 @@ class ConsoleView: UIView {
         return view
     }()
     
+    var minimized: Bool {
+        minimizeButton.tag == 1
+    }
+    
     let baseFrame: CGRect
     
     var baseSize: CGSize {
@@ -186,6 +190,11 @@ extension ConsoleView {
     
     func changeViewState(){
         
+        statusView.isHidden = minimizeButton.tag == 0 || detailIsLoaded
+        progressView.isHidden = minimizeButton.tag == 0 || detailIsLoaded
+        detailView.isHidden = minimizeButton.tag == 0 || !detailIsLoaded
+        predictingIndicator.isHidden = minimizeButton.tag == 0 || detailIsLoaded
+        
         if minimizeButton.tag == 0 {
             
             taskbarView.snp.remakeConstraints { make in
@@ -198,17 +207,13 @@ extension ConsoleView {
             
             taskbarView.snp.remakeConstraints { make in
                 make.top.left.right.equalToSuperview()
-                make.height.equalToSuperview().multipliedBy(0.10)
+                make.height.equalTo(baseSize.height*0.1)
             }
             
             minimizeButton.tag = 0
         }
         
         
-        statusView.isHidden = minimizeButton.tag == 0 || detailIsLoaded
-        progressView.isHidden = minimizeButton.tag == 0 || detailIsLoaded
-        detailView.isHidden = minimizeButton.tag == 0
-        predictingIndicator.isHidden = minimizeButton.tag == 0 || detailIsLoaded
     }
 }
 
@@ -228,6 +233,7 @@ extension ConsoleView {
             predictingIndicator.stop()
             statusView.text = nil
             progressView.isHidden = true
+            
             statusView.snp.remakeConstraints { make in
                 make.top.equalTo(taskbarView.snp.bottom).offset(GlobalStyle.padding)
                 make.left.equalToSuperview().offset(GlobalStyle.spacing)
