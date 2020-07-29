@@ -27,7 +27,7 @@ public class HomeViewController: GraniteViewController<HomeState>{
         
         print("{TEST} Home viewDidLoad reached \(component?.state.test)")
 //        sendEvent(HomeEvents.SVMStockTestEvent())
-        sendEvent(HomeEvents.TweetSentimentTestEvent())
+//        sendEvent(HomeEvents.TweetSentimentTestEvent())
         print("{TEST} Home viewDidLoad reached \(component?.state.test)")
         
         self.view.backgroundColor = .clear

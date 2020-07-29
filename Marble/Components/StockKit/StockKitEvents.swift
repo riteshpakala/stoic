@@ -29,7 +29,7 @@ struct StockKitEvents {
         let result: [StockSentimentData]
     }
     struct SentimentProgress: Event {
-        let sentiment: StockSentimentData?
+        let text: String?
         let fraction: Double
     }
     struct PredictionProgress: Event {

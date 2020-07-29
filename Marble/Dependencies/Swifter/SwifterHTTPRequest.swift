@@ -102,8 +102,6 @@ public class HTTPRequest: NSObject, URLSessionDataDelegate {
     }
     
     public func start() {
-        
-        
         if request == nil {
             self.request = URLRequest(url: self.url)
             self.request!.httpMethod = self.HTTPMethod.rawValue

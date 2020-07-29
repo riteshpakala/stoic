@@ -12,13 +12,92 @@ public class TwitterScraper: NSObject {
     public typealias SuccessHandler = (JSONSwifter) -> Void
     public typealias CursorSuccessHandler = (JSONSwifter, _ previousCursor: String?, _ nextCursor: String?) -> Void
     public typealias TwitterScraperSuccessHandler = ([Tweet], _ response: HTTPURLResponse?) -> Void
-    public typealias TwitterScraperProgressHandler = ([Tweet], _ fraction: Double) -> Void
+    public typealias TwitterScraperProgressHandler = (String, _ fraction: Double) -> Void
     public typealias SearchResultHandler = (JSONSwifter, _ searchMetadata: JSONSwifter) -> Void
     public typealias FailureHandler = (_ error: Error) -> Void
     
     let dataEncoding: String.Encoding = .utf8
     
     var results: [Tweet] = []
+    var defaultHourlyTweets: Int = 4
+    var cursorHour: Int = 20
+    var cursorHourMove: Int = 4
+    var defaultHour: Int = 20
+    var cursorTweets: Int = 1
+    var cursorMinute: Int {
+        guard cursorTweets + 1 > 0 else { return 60 }
+        return 60 - (60/(cursorTweets + 1))
+    }
+    var activeRequest: HTTPRequest?
+    var isCancelled: Bool = false
+    private var emptyPageCount: Int = 0
+    private var maxEmptyPages: Int = 4
+    private var searchPayload: StockSearchPayload?
+    var searchQuery: String {
+        searchPayload?.cycle(emptyPageCount) ?? ""
+    }
+    
+    private var _max_id: String {
+        guard let dateString = _sinceDate,
+              let date = Calendar.nyDateFormatter.date(
+                from: dateString) else { return "" }
+        
+        var components = Calendar.nyCalendar.dateComponents(
+            [.year, .month, .day, .hour, .minute, .second],
+            from: date)
+        
+        components.hour = cursorHour
+        
+        guard let newDate = Calendar.nyCalendar.date(from: components) else {
+            return ""
+        }
+        let msEpoch = newDate.millisecondsSince1970
+        let id = (msEpoch - 1288834974657) << 22
+        
+        return " max_id:\(id)"
+    }
+    private var _sinceDate: String? = nil
+    
+    public func begin(using payload: StockSearchPayload,
+        username: String? = nil,
+        near: String? = nil,
+        since: String,
+        until: String? = nil,
+        count: Int = 0,
+        refresh: String = "",
+        filterLangCode: String? = nil,
+        isUniqueTicker: (enabled: Bool, mentions: Int) = (true, 2),
+        noLinks: Bool = false,
+        cleanLinks: Bool = true,
+        isSpread: Bool = true,
+        success: TwitterScraperSuccessHandler? = nil,
+        progress: TwitterScraperProgressHandler? = nil,
+        failure: HTTPRequest.FailureHandler? = nil) {
+        
+        print("{TEST} hour: TEST BEGIN")
+        cancel()
+        reset()
+        
+        self.searchPayload = payload
+        self._sinceDate = since
+        
+        searchTweet(
+            using: searchQuery,
+            username: username,
+            near: near,
+            since: since,
+            until: until,
+            count: count,
+            refresh: refresh,
+            filterLangCode: filterLangCode,
+            isUniqueTicker: isUniqueTicker,
+            noLinks: noLinks,
+            cleanLinks: cleanLinks,
+            isSpread: isSpread,
+            success: success,
+            progress: progress,
+            failure: failure)
+    }
     
     public func searchTweet(
         using query: String,
@@ -29,11 +108,15 @@ public class TwitterScraper: NSObject {
         count: Int = 0,
         refresh: String = "",
         filterLangCode: String? = nil,
+        isUniqueTicker: (enabled: Bool, mentions: Int) = (true, 2),
+        noLinks: Bool = false,
+        cleanLinks: Bool = false,
+        isSpread: Bool = false,
         success: TwitterScraperSuccessHandler? = nil,
         progress: TwitterScraperProgressHandler? = nil,
         failure: HTTPRequest.FailureHandler? = nil) {
         
-        guard (count > 0 && results.count < count) || count == 0 else {
+        guard (count > 0 && results.count < count) || count == 0 || cursorHour <= 0 else {
             
             success?(results, nil)
             
@@ -42,70 +125,122 @@ public class TwitterScraper: NSObject {
         
         let JSONSwifterDownloadProgressHandler: HTTPRequest.DownloadProgressHandler = { [weak self] data, received, expected, response in
             
-            progress?([], 0.0)
+            
 
         }
         
-        let JSONSwifterSuccessHandler: HTTPRequest.SuccessHandler = { data, response in
+        cursorTweets = cursorTweets <= 0 ? defaultHourlyTweets : cursorTweets
+        
+        let JSONSwifterSuccessHandler: HTTPRequest.SuccessHandler = { [weak self] data, response in
+            
             DispatchQueue.global(qos: .utility).async {
                 do {
+                    guard let this = self, !this.isCancelled else { return }
                     let jsonData = try JSON(data: data)
                     let refreshCursor: String = jsonData.dictionaryValue["min_position"]?.string ?? refresh
                     
                     guard let items = jsonData.dictionaryValue["items_html"] else { return }
                     
                     let doc: Document = try SwiftSoup.parse(items.string ?? "")
+                    
                     let elesText = try doc.select("div.js-tweet-text-container")
                     let elesTime = try doc.select("span.js-short-timestamp")
                     let elesLang = try? doc.select("p.js-tweet-text")
                     
-                    if elesText.count == 0 {
-                        
-                        success?(self.results, response)
+                    
+                    let minimumTimeComponentHour: Int
+                    if isSpread {
+                        let times: [Double] = elesTime.array().map { try? $0.attr("data-time") }.map { Double($0 ?? "") ?? Double.greatestFiniteMagnitude }
+                        minimumTimeComponentHour = (times.min() ?? 0.0).date().timeComponents().hour
                     } else {
-
-                        for (index, ele) in elesText.enumerated() {
-                            guard index < count else { break }
-                            
-                            let text: String = (try? ele.text()) ?? ""
-                            let time: String = elesTime.array().count > index ? (try? elesTime.array()[index].attr("data-time")) ?? "" : ""
-                            let lang: String = (elesLang?.array().count ?? -1) > index ? (try? elesLang?.array()[index].attr("lang")) ?? "" : ""
-                            
-//                            if let doubleTime = Double(time) {
-//                                let date = Date(timeIntervalSince1970: doubleTime)
-//                                let dateFormatter = DateFormatter()
-//                                dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
-//                                dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
-//                                dateFormatter.timeZone = Calendar.nyTimezone
-//                                let localDate = dateFormatter.string(from: date)
-//
-//                                print("{TEST} time \(localDate)")
-//                            }
-                            
-                            if filterLangCode == nil || filterLangCode == lang {
-                                self.results.append(
-                                    Tweet.init(
-                                        text: text,
-                                        time: time,
-                                        lang: lang)
-                                )
+                        minimumTimeComponentHour = -100000
+                    }
+                    print("{TEST} DEBUG \(minimumTimeComponentHour) : \(this.cursorHour) \(this._max_id)")
+                    if minimumTimeComponentHour <= this.cursorHour {
+                        if elesText.count > 0 {
+                            for (index, ele) in elesText.enumerated() {
+                                guard this.results.count < count,
+                                    (this.cursorTweets > 0) || !isSpread,
+                                    this.cursorHour > 0 || !isSpread,
+                                    !this.isCancelled else {
+                                        
+                                    break
+                                }
+                                
+                                let text: String = (try? ele.text()) ?? ""
+                                let time: String = elesTime.array().count > index ? (try? elesTime.array()[index].attr("data-time")) ?? "" : ""
+                                let lang: String = (elesLang?.array().count ?? -1) > index ? (try? elesLang?.array()[index].attr("lang")) ?? "" : ""
+                                
+    //                            if let doubleTime = Double(time) {
+    //                                let date = Date(timeIntervalSince1970: doubleTime)
+    //                                let dateFormatter = DateFormatter()
+    //                                dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
+    //                                dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
+    //                                dateFormatter.timeZone = Calendar.nyTimezone
+    //                                let localDate = dateFormatter.string(from: date)
+    //
+    //                                print("{TEST} time \(localDate)")
+    //                            }
+    //                            print("{TEST} \(text)")
+                                let timeComponents = Double(time)?.date().timeComponents()
+                                let hour: Int = timeComponents?.hour ?? 0
+                                let minute: Int = timeComponents?.minute ?? 0
+                                if (filterLangCode == nil || filterLangCode == lang),
+                                    (hour <= this.cursorHour) || !isSpread,
+                                    (minute < this.cursorMinute) || !isSpread,
+                                    (!this.linkExists(in: text) || !noLinks),
+                                    (text.filter( { $0 == "$" } ).count <= isUniqueTicker.mentions && text.count > query.count) || (!isUniqueTicker.enabled) {
+                                    
+                                    //
+                                    this.results.append(
+                                        Tweet.init(
+                                            text: cleanLinks ? this.removeLinks(in: text) : text,
+                                            time: time,
+                                            lang: lang)
+                                    )
+                                    //
+                                    
+                                    print("{TEST} tweetHour: \(hour) hour: \(this.cursorHour), minute: \(this.cursorMinute), tweet: \(this.cursorTweets)")
+                                    
+                                    //this.cursorHour = hour
+                                    this.cursorTweets -= 1
+                                    
+                                    if this.cursorTweets <= 0 && isSpread {
+                                        this.cursorHour -= this.cursorHourMove
+                                    }
+                                    
+                                    progress?(text, Double(this.results.count))
+                                }
                             }
+                        } else {
+                            this.emptyPageCount += 1
                         }
-                        
-                        self.searchTweet(
-                            using: query,
+                    }
+                    
+                    let didNotReachMaxEmpty: Bool = this.emptyPageCount - 1 < this.maxEmptyPages
+                    
+                    if  !this.isCancelled,
+                        didNotReachMaxEmpty {
+                        this.searchTweet(
+                            using: this.searchQuery,
                             since: since,
                             until: until,
                             count: count,
                             refresh: refreshCursor,
                             filterLangCode: filterLangCode,
+                            isUniqueTicker: isUniqueTicker,
+                            noLinks: noLinks,
+                            isSpread: isSpread,
                             success: success,
+                            progress: progress,
                             failure: failure)
+                    } else if !didNotReachMaxEmpty {
+                        success?(this.results, response)
                     }
                 } catch {
                     DispatchQueue.main.async {
                         if case 200...299 = response.statusCode, data.isEmpty {
-                            success?(self.results, response)
+                            success?(self?.results ?? [], response)
                         } else {
                             failure?(error)
                         }
@@ -116,7 +251,7 @@ public class TwitterScraper: NSObject {
         
         let path: String = "https://twitter.com/i/search/timeline?f=tweets&q=%@&src=typd&max_position=%@"
        
-        let pathData: String = " "+query+" since:"+since+" until:"+(until ?? since)
+        let pathData: String = " "+query+"\(isSpread ? self._max_id : "")"+" since:"+since+" until:"+(until ?? since)
         
         let finalPath = String(
             format: path,
@@ -125,11 +260,65 @@ public class TwitterScraper: NSObject {
             refresh.addingPercentEncoding(
                 withAllowedCharacters: .urlPathAllowed) ?? "")
         
-        _ = self.get(
+        activeRequest = self.get(
             finalPath,
             downloadProgress: JSONSwifterDownloadProgressHandler,
             success: JSONSwifterSuccessHandler,
             failure: failure)
+    }
+    
+    func linkExists(in input: String) -> Bool {
+        guard let detector = try? NSDataDetector(
+            types: NSTextCheckingResult.CheckingType.link.rawValue) else {
+            return false
+        }
+        let matches = detector.matches(
+            in: input,
+            options: [],
+            range: NSRange(location: 0, length: input.utf16.count))
+
+        return matches.count > 0
+    }
+    
+    func removeLinks(in input: String) -> String{
+        var text = input
+        guard let detector = try? NSDataDetector(
+            types: NSTextCheckingResult.CheckingType.link.rawValue) else {
+            return text
+        }
+        let matches = detector.matches(
+            in: input,
+            options: [],
+            range: NSRange(location: 0, length: input.utf16.count))
+        
+        for match in matches {
+            if let range = Range(match.range, in: text) {
+                text.removeSubrange(range)
+            }
+        }
+        
+        return text
+    }
+    
+    func cancel() {
+        activeRequest?.stop()
+        activeRequest = nil
+        isCancelled = true
+    }
+    
+    func reset() {
+        results.removeAll()
+        results = []
+        
+        cursorHour = defaultHour
+        cursorTweets = defaultHourlyTweets
+        
+        isCancelled = false
+        
+        emptyPageCount = 0
+        
+        searchPayload = nil
+        _sinceDate = nil
     }
     
     func get(_ path: String,

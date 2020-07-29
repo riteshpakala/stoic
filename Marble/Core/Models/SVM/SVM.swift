@@ -1190,7 +1190,7 @@ internal class Solver {
                 let i = indexes.i
                 let j = indexes.j
                 iter+=1
-                print("at iteration \(iter), select indices \(i) and \(j)")
+//                print("at iteration \(iter), select indices \(i) and \(j)")
                 // update α[i] and α[j], handle bounds carefully
                 let Q_i = kernel!.getQ(i: i)
                 let Q_j = kernel!.getQ(i: j)

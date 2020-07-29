@@ -9,120 +9,6 @@
 import Foundation
 import UIKit
 
-public enum StockPrediction {
-    case high
-    case low
-    case open
-    case close
-}
-class StockSentimentData: NSObject {
-    let date: Date
-    let dateAsString: String
-    let dateComponents: (year: Int, month: Int, day: Int)
-    let sentimentData: [VaderSentimentOutput]
-    var positives: [Double] {
-        return sentimentData.map { $0.pos }
-    }
-    var neutrals: [Double] {
-        return sentimentData.map { $0.neu }
-    }
-    var negatives: [Double] {
-        return sentimentData.map { $0.neg }
-    }
-    var compounds: [Double] {
-        return sentimentData.map { $0.compound }
-    }
-    let textData: [String]
-    
-    var posAverage: Double {
-        var sum: Double = 0.0
-        for value in positives {
-            sum += value
-        }
-        
-        return sum/Double(positives.count)
-    }
-    
-    var negAverage: Double {
-        var sum: Double = 0.0
-        for value in negatives {
-            sum += value
-        }
-        
-        return sum/Double(negatives.count)
-    }
-    
-    var compoundAverage: Double {
-        var sum: Double = 0.0
-        for value in compounds {
-            sum += value
-        }
-        
-        return sum/Double(compounds.count)
-    }
-    
-    init(
-        date: Date,
-        dateAsString: String,
-        dateComponents: (year: Int, month: Int, day: Int),
-        sentimentData: [VaderSentimentOutput],
-        textData: [String]) {
-        
-        self.date = date
-        self.dateAsString = dateAsString
-        self.dateComponents = dateComponents
-        self.sentimentData = sentimentData
-        self.textData = textData
-    }
-}
-class StockData: NSObject {
-    var dateData: StockDateData
-    var open: Double
-    var high: Double
-    var low: Double
-    var close: Double
-    var adjClose: Double
-    var volume: Double
-    
-    init(
-        dateData: StockDateData,
-        open: Double,
-        high: Double,
-        low: Double,
-        close: Double,
-        adjClose: Double,
-        volume: Double) {
-        
-        self.dateData = dateData
-        self.open = open
-        self.high = high
-        self.low = low
-        self.close = close
-        self.adjClose = adjClose
-        self.volume = volume
-    }
-}
-class StockDateData: NSObject {
-    var asString: String
-    var asDate: Date?
-    var isOpen: Bool
-    var dateComponents: (year: Int, month: Int, day: Int)
-    
-    init(
-        date: Date?,
-        isOpen: Bool,
-        dateAsString: String) {
-        self.asDate = date
-        self.asString = dateAsString
-        self.isOpen = isOpen
-
-        let day = Calendar.nyCalendar.component(.day, from: asDate ?? Date())
-        let month = Calendar.nyCalendar.component(.month, from: asDate ?? Date())
-        let year = Calendar.nyCalendar.component(.year, from: asDate ?? Date())
-        
-        self.dateComponents = (year, month, day)
-    }
-}
 public class StockKitComponent: Component<StockKitState> {
     override var reducers: [AnyReducer] {
         [
@@ -135,6 +21,15 @@ public class StockKitComponent: Component<StockKitState> {
         observeState(
             \.nextValidTradingDay,
             handler: prepared(_:))
+    }
+    
+    override func rip() {
+        super.rip()
+        
+        searchTask?.cancel()
+        csvTask?.cancel()
+        validMarketDaysTask?.cancel()
+        scraper.cancel()
     }
     
     func prepare() {
@@ -173,7 +68,8 @@ public class StockKitComponent: Component<StockKitState> {
     var searchTask: URLSessionTask? = nil
     var csvTask: URLSessionTask? = nil
     var validMarketDaysTask: URLSessionTask? = nil
-    
+    let scraper = TwitterScraper()
+    var disable: Bool = false
 }
 
 
@@ -181,32 +77,31 @@ public class StockKitComponent: Component<StockKitState> {
 extension StockKitComponent: SVMModelDelegate {
     func predict(
         withStockData stockData: [StockData],
-        stockSentimentData sentimentData: [StockSentimentData]) -> (open: SVMModel, close: SVMModel) {
+        stockSentimentData sentimentData: [StockSentimentData]) -> StockKitUtils.Models {
         
-        let dataOpen = DataSet(dataType: .Regression, inputDimension: 2, outputDimension: 1)
-        
-        let dataClose = DataSet(dataType: .Regression, inputDimension: 2, outputDimension: 1)
+        let dataVolatility = DataSet(
+            dataType: .Regression,
+            inputDimension: StockKitUtils.inDim,
+            outputDimension: StockKitUtils.outDim)
         
         let sortedStockData = stockData.sorted(
             by: {
                 ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedAscending })
         
-        for (index, stock) in sortedStockData.enumerated() {
+        for (_, stock) in sortedStockData.enumerated() {
             do {
                 if let firstSentiment = sentimentData.first(
                     where: { $0.dateAsString == stock.dateData.asString }) {
-                    print("{TEST} STOCK: \(stock.dateData.asString) \(firstSentiment.sentimentData.count)")
-                    for (i, compound) in firstSentiment.compounds.enumerated() {
-                        try dataOpen.addDataPoint(input: [Double("\(index).\(i < 10 ? "0\(i)" : "\(i)")") ?? Double(index), compound], output: [stock.open])
 
-                        try dataClose.addDataPoint(input: [Double("\(index).\(i < 10 ? "0\(i)" : "\(i)")") ?? Double(index), compound], output: [stock.close])
-
-                        print("{TEST} DP: \(Double("\(index).\(i < 10 ? "0\(i)" : "\(i)")"))")
-                    }
+                    let dataSet = StockKitUtils.Models.DataSet(
+                        stock,
+                        firstSentiment)
                     
-//                    try dataOpen.addDataPoint(input: [Double(index), firstSentiment.compoundAverage], output: [stock.open])
-//                    
-//                    try dataClose.addDataPoint(input: [Double(index), firstSentiment.compoundAverage], output: [stock.close])
+                    print(dataSet.description)
+                    
+                    try dataVolatility.addDataPoint(
+                        input: dataSet.asArray,
+                        output: dataSet.output)
                 }
             }
             catch {
@@ -214,48 +109,18 @@ extension StockKitComponent: SVMModelDelegate {
             }
         }
         
-        
-        let svmOpen = SVMModel(
+        let svmVolatility = SVMModel(
             problemType: .ϵSVMRegression,
             kernelSettings:
-            KernelParameters(type: .RadialBasisFunction,
-                             degree: 2,
-                             gamma: 0.1,
+            KernelParameters(type: .Polynomial,
+                             degree: 1,
+                             gamma: 0.5,
                              coef0: 0.0))
-        svmOpen.delegate = self
-        svmOpen.Cost = 1e3
-        svmOpen.train(data: dataOpen)
+        svmVolatility.delegate = self
+        svmVolatility.Cost = 1e3
+        svmVolatility.train(data: dataVolatility)
         
-        let svmClose = SVMModel(
-            problemType: .ϵSVMRegression,
-            kernelSettings:
-            KernelParameters(type: .RadialBasisFunction,
-                             degree: 2,
-                             gamma: 0.1,
-                             coef0: 0.0))
-        svmClose.delegate = self
-        svmClose.Cost = 1e3
-        svmClose.train(data: dataClose)
-        
-        
-//        let testData = DataSet(dataType: .Regression, inputDimension: 1, outputDimension: 1)
-//        do {
-//            try testData.addTestDataPoint(input: [29])
-//        }
-//        catch {
-//            print("Invalid data set created")
-//        }
-//        svm.predictValues(data: testData)
-//        var outputs : [[Double]]?
-//        do {
-//            try outputs = testData.outputs
-//        }
-//        catch {
-//            outputs = nil
-//            print("Error in prediction")
-//        }
-        
-        return (svmOpen, svmClose)
+        return StockKitUtils.Models(volatility: svmVolatility)
     }
     
     func SVMProgress(
@@ -367,20 +232,33 @@ extension StockKitComponent {
         
         if let url = URL(string: csvURLasString) {
             var observation: NSKeyValueObservation? = nil
-            csvTask = URLSession.shared.dataTask(with: url) { data, response, error in
+            csvTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                 observation?.invalidate()
                 
-                if let data = data, let dates = self.state.validTradingDays {
+                guard let this = self else { return }
+                
+                if let data = data, let dates = this.state.validHistoricalTradingDays {
                     if let content = String(data: data, encoding: .utf8) {
-                        guard let stockData = self.parseCSV(
+                        guard let stockData = this.parseCSV(
                            content: content,
                            forDates: dates), !stockData.isEmpty else {
                            return
                         }
                         
-                        self.processBubbleEvent(
-                            StockKitEvents.CSVDownloadCompleted(
-                                result: stockData))
+                        if let validTradingDays = this.state.validTradingDays {
+                            let datesAsStrings = validTradingDays.map { $0.asString }
+                            let observedStocks: [StockData] = stockData.filter { datesAsStrings.contains($0.dateData.asString) }
+                            
+                            let updatedStocks: [StockData] = observedStocks.map {
+                                $0.update(
+                                    historicalTradingData: stockData,
+                                    rsiMax: this.state.rules.rsiMaxHistorical)
+                            }
+                            
+                            this.processBubbleEvent(
+                                StockKitEvents.CSVDownloadCompleted(
+                                    result: updatedStocks ))
+                        }
                     }
                 }
             }
@@ -396,7 +274,7 @@ extension StockKitComponent {
         }
     }
     
-    func getSentiment(forTicker ticker: String) {
+    func getSentiment(forSearch payload: StockSearchPayload) {
         guard crawls < state.rules.days,
               let validTradingDays = state.validTradingDays,
               crawls < validTradingDays.count else {
@@ -411,7 +289,7 @@ extension StockKitComponent {
         
         guard let aheadDate = state.advanceDate1Day(
             date: date,
-            value: 1) else {
+            value: -1) else {
             return
         }
         
@@ -420,7 +298,7 @@ extension StockKitComponent {
         crawls += 1
         
         pullTweets(
-            ticker: ticker,
+            forSearch: payload,
             dateAsString: dateAsString,
             aheadDateAsString: aheadDateAsString,
             date: date)
@@ -459,7 +337,7 @@ extension StockKitComponent {
                                     
                                     let dateAsString: String = date
                                     let isOpen: Bool = status == "open" ? true : false
-                                    let dateAsDate: Date? = self.state.dateFormatter.date(from: dateAsString)
+                                    let dateAsDate: Date? = dateAsString.asDate()
                                     
                                     let stockDateData: StockDateData = .init(
                                         date: dateAsDate,
@@ -490,8 +368,8 @@ extension StockKitComponent {
                 }
                 
                 if error != nil {
-                    print(error?.localizedDescription)
-                    print(response)
+                    print(error?.localizedDescription ?? "error could not be transcribed")
+                    print(response ?? "response could not be transcribed")
                 }
             }
             
@@ -499,7 +377,7 @@ extension StockKitComponent {
         }
     }
     func pullTweets(
-        ticker: String,
+        forSearch payload: StockSearchPayload,
         dateAsString: String,
         aheadDateAsString: String,
         date: Date) {
@@ -507,23 +385,30 @@ extension StockKitComponent {
         var sentimentData: [VaderSentimentOutput] = []
         var textData: [String] = []
         
-        print("{TEST} Sentiment \(ticker) \(dateAsString) \(aheadDateAsString)")
-        let scraper = TwitterScraper()
-        scraper.searchTweet(
-            using: ticker,
+        print("{TEST} Sentiment \(payload.asString) \(dateAsString) \(aheadDateAsString)")
+        
+        scraper.begin(
+            using: payload,
             username: nil,
             near: nil,
-            since: dateAsString,
-            until: aheadDateAsString,
-            count: 40,
+            since: aheadDateAsString,
+            until: dateAsString,
+            count: state.rules.tweets,
             filterLangCode: state.rules.baseLangCode,
             
-        success:  { (results, reponse) in
+        success:  { [weak self] (results, reponse) in
             for result in results{
                 let vaderSentiment = VaderSentiment.predict(result.text)
-                                
-                sentimentData.append(vaderSentiment)
-                textData.append(result.text)
+                
+                if vaderSentiment.compound != .zero {
+                    sentimentData.append(vaderSentiment)
+                    textData.append(result.text)
+                    
+//                    print("{TEST} #############################################")
+//                    print("{TEST} tweet \(Double(result.time)?.date().dateComponents()), \(Double(result.time)?.date().timeComponents())")
+//                    print("{TEST} tweet-text \(result.text)")
+//                    print("{TEST} tweet-sentiment \(vaderSentiment.asString)")
+                }
 //                let input = SentimentPolarityInput(input: self.features(from: result.text))
 //
 //                let score = self.predictionSentimentScore(
@@ -544,18 +429,22 @@ extension StockKitComponent {
 //                print("{DEBUG} Vader: \(VaderSentiment.predict(result.text).asString)")
             }
             
-            self.pushSentiment(
-                should: sentimentData.count == results.count,
+            self?.pushSentiment(
                 date,
                 dateAsString,
                 sentimentData,
                 textData,
-                ticker)
-        }, progress: { _, _ in
-            self.processBubbleEvent(
+                payload)
+        }, progress: { [weak self] text, count in
+            guard let this = self else { return }
+            
+            let sentimentGatheredValueTotal: Double = Double(this.sentiments.map { $0.positives.count }.reduce(0, +))
+            let sentimentGatheredDiff: Double = abs(sentimentGatheredValueTotal - Double(this.sentiments.count*this.state.rules.tweets))
+            let sentimentMaxGathered: Double = Double(this.state.rules.days * this.state.rules.tweets) - Double(sentimentGatheredDiff)
+            this.processBubbleEvent(
                 StockKitEvents.SentimentProgress(
-                    sentiment: self.sentiments.randomElement(),
-                    fraction: Double(self.crawls-1)/Double(self.state.rules.days)))
+                    text: text,
+                    fraction: (count+sentimentGatheredValueTotal)/sentimentMaxGathered))
         },
         failure: {  error in
             
@@ -604,22 +493,22 @@ extension StockKitComponent {
     }
     
     func pushSentiment(
-        should: Bool,
+        should: Bool = true,
         _ date: Date,
         _ dateAsString: String,
         _ sentimentData: [VaderSentimentOutput],
         _ textData: [String],
-        _ ticker: String) {
+        _ payload: StockSearchPayload) {
         guard should else { return }
         let stockSentiment: StockSentimentData = .init(
             date: date,
             dateAsString: dateAsString,
-            dateComponents: self.state.dateComponents(fromDate: date),
+            dateComponents: date.dateComponents(),
             sentimentData: sentimentData,
             textData: textData)
             
         self.sentiments.append(stockSentiment)
-        self.getSentiment(forTicker: ticker)
+        self.getSentiment(forSearch: payload)
     }
 }
 

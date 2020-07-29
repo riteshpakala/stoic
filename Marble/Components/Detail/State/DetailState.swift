@@ -28,7 +28,7 @@ public class DetailState: State {
     
     @objc dynamic var predictionState: String = DetailView.DetailPredictionState.downloadingData.rawValue
     
-    var model: (open: SVMModel, close: SVMModel)? = nil
+    var model: StockKitUtils.Models? = nil
     
     var consoleDetailPayload: ConsoleDetailPayload? = nil
     

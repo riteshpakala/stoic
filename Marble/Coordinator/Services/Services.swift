@@ -3,6 +3,7 @@ import Firebase
 import UIKit
 
 public struct Services {
+    public let debug: Bool = false
     public let dataService: DataService
     
     public init() {

@@ -75,7 +75,8 @@ class VaderSentiment {
     // check for special case idioms and phrases containing lexicon words
     static var SPECIAL_CASES: [String: Double] = ["the shit": 3, "the bomb": 3, "bad ass": 1.5, "badass": 1.5, "bus stop": 0.0,
                      "yeah right": -2, "kiss of death": -1.5, "to die for": 3,
-                     "beating heart": 3.1, "broken heart": -2.9 ]
+                     "beating heart": 3.1, "broken heart": -2.9, "all time high": 3, "price hike": -1, "rate hike": -2,
+                     "high debt": -2, "high fiscal deficit": -3, "AH": 3]
     
     
     //MARK: Static methods

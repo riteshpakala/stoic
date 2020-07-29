@@ -47,9 +47,9 @@ open class SwiftyWaveView: UIView {
     fileprivate var currentAmplitude: CGFloat = 0.0
     
     @IBInspectable
-    public var speed: CGFloat = 0.084
+    public var speed: CGFloat = 0.07
     @IBInspectable
-    public var amplitude: CGFloat = 0.42
+    public var amplitude: CGFloat = 0.24
     @IBInspectable
     public var frequency: Int = 6
     @IBInspectable

@@ -80,7 +80,6 @@ class DaysPicker: Picker, UITableViewDataSource {
             withIdentifier: "\(PickerCell.self)",
             for: indexPath)
         
-        print("{TEST} \(cell.frame)")
         if let tradingCell = cell as? PickerCell {
             let day = days - indexPath.item
             tradingCell.label.text = "\(day) day\(day > 1 ? "s" : "")"

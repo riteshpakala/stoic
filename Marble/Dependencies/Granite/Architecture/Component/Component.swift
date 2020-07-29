@@ -21,6 +21,7 @@ protocol AnyComponent {
     func processEvent(_ event: Event)
     func processBubbleEvent(_ event: Event)
     var observers: [NSKeyValueObservation?] { get set }
+    func rip()
 }
 
 public class Component<S: State>: AnyComponent {
@@ -39,6 +40,8 @@ public class Component<S: State>: AnyComponent {
     public var viewController: UIViewController?
     public var graniteController: GraniteViewController<S>?
     public var id: String
+    
+    private var hasRipped: Bool = false
     
     init(
         _ services: Services,
@@ -59,6 +62,14 @@ public class Component<S: State>: AnyComponent {
     
     func didLoad() {
         
+    }
+    
+    func rip() {
+        subComponents.forEach { component in
+            component.rip()
+        }
+        
+        hasRipped = true
     }
 }
 
@@ -125,7 +136,9 @@ extension Component {
         fit: Bool = false) {
         
         guard let componentCheck = component else {
-            print("⚠️ Failed to push component, component not found.")
+            if services.debug {
+                print("⚠️ Failed to push component, component not found.")
+            }
             return
         }
         componentCheck.build()
@@ -147,7 +160,9 @@ extension Component {
         subComponents.append(component)
         
         guard component.viewController != nil else {
-            print("⚠️ Failed to attach component controller, viewController not found.")
+            if services.debug {
+                print("⚠️ Failed to attach component controller, viewController not found.")
+            }
             return
         }
         
@@ -161,6 +176,8 @@ extension Component {
         }
         
         subComponents.removeAll { $0.viewController == component.viewController }
+        
+        component.rip()
         
         guard component.viewController != nil else { return }
         
@@ -185,6 +202,7 @@ extension Component {
     //
     public func processEvent(
         _ event: Event) {
+        guard !hasRipped else { return }
         var mutableComponent: AnyComponent = self
         var mutableState: State = self.state
         
@@ -201,7 +219,7 @@ extension Component {
         
         if let stateCheck = mutableState as? S {
             self.state = stateCheck
-        } else {
+        } else if services.debug {
             print("⚠️ State was unable to persist.")
         }
         
@@ -217,12 +235,12 @@ extension Component {
     
     public func processBubbleEvent(
         _ event: Event) {
-        
+        guard !hasRipped else { return }
         if  !executeEvent(event),
             let parentComponent = self.parent{
             
             parentComponent.processBubbleEvent(event)
-        } else {
+        } else if services.debug {
             print("⚠️ End of bubble chain for \(type(of: event))")
         }
     }

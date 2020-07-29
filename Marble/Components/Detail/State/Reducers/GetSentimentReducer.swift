@@ -20,12 +20,15 @@ struct GetSentimentReducer: Reducer {
         
         state.sentimentDownloadTimer?.invalidate()
         state.sentimentDownloadTimer = nil
+        state.progressLabelText = "\("\"What is the world saying about \(state.searchedStock.companyName ?? state.searchedStock.symbol)?\"")"
         
         guard let stockKit = component.getSubComponent(
             StockKitComponent.self) as? StockKitComponent else {
             return
         }
         
+        let companyName = state.searchedStock.companyName
+        let symbolName = state.searchedStock.symbolName
         state.sentimentDownloadTimer = Timer.scheduledTimer(
             withTimeInterval: 0.5,
             repeats: false) { timer in
@@ -33,15 +36,27 @@ struct GetSentimentReducer: Reducer {
             timer.invalidate()
             self.executeDigest(
                 ticker: event.ticker,
+                companyName: companyName,
+                symbolName: symbolName,
                 withStockKit: stockKit)
         }
     }
     
     func executeDigest(
         ticker: String,
+        companyName: String?,
+        symbolName: String?,
         withStockKit kit: StockKitComponent) {
         
-        kit.getSentiment(forTicker: ticker)
+        let companyHashtag = companyName != nil ? "#"+companyName!.strip : ""
+        let symbolHashtag = symbolName != nil ? "#"+symbolName!.strip : ""
+        kit.getSentiment(
+            forSearch: .init(
+                ticker: ticker,
+                companyHashtag: companyHashtag,
+                companyName: (companyName ?? "").strip,
+                symbolHashtag: symbolHashtag,
+                symbolName: (symbolName ?? "").strip))
     }
 }
 
@@ -55,7 +70,17 @@ struct GetSentimentProgressResponseReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        let sentiment = "[+: \(Int(round((event.sentiment?.posAverage ?? 0)*100)))%] ~ [-: \(Int(round((event.sentiment?.negAverage ?? 0)*100)))%]\n"
+//        let sentiment = "[+: \(Int(round((event.sentiment?.posAverage ?? 0)*100)))%] ~ [-: \(Int(round((event.sentiment?.negAverage ?? 0)*100)))%]\n"
+        let condensedText: String? = event.text?
+            .enumerated().map {
+            if $0.offset < 48 {
+                return String($0.element)
+            } else {
+                return ""
+            }
+        }.joined().trailingSpacesTrimmed
+        
+        let sentiment = "\"\(condensedText ?? "What is the world saying about \(state.searchedStock.companyName ?? state.searchedStock.symbol)")\((condensedText != nil && (condensedText?.count ?? 0) < (event.text?.count ?? 0)) ? "..." : "")\"\n\n"
         let percent = "\(Int(round(event.fraction*100)))% complete"
         state.progressLabelText = sentiment+percent
     }

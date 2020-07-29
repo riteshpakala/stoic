@@ -34,7 +34,5 @@ struct ShowDetailReducer: Reducer {
                 component.services,
                 parent: component,
                 event.searchedStock))
-        
-        
     }
 }

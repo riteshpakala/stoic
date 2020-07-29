@@ -56,7 +56,7 @@ struct GetValidMarketDaysResponseReducer: Reducer {
                     ($0.dateComponents.year > state.currentDateComponents.year )
         }.sorted(by: { ($0.asDate ?? Date()).compare(($1.asDate ?? Date())) == .orderedAscending })
         
-        if state.currentTime.hour >= 16 && filteredForValidCurrent.first?.asString == state.currentDateAsString {
+        if state.currentTime.hour >= state.rules.marketCloseHour && filteredForValidCurrent.first?.asString == state.currentDateAsString {
             _ = filteredForValidCurrent.removeFirst()
         }
         
@@ -77,10 +77,11 @@ struct GetValidMarketDaysResponseReducer: Reducer {
         
         var sanitizedStockData: [StockDateData] = []
      
-        for _ in 0..<state.rules.days {
+        for _ in 0..<state.rules.historicalDays {
             sanitizedStockData.append(filteredForPrevious.removeFirst())
         }
         
-        state.validTradingDays = sanitizedStockData
+        state.validTradingDays = (sanitizedStockData.enumerated().filter { $0.offset < state.rules.days }).map { $0.element }
+        state.validHistoricalTradingDays = sanitizedStockData
     }
 }

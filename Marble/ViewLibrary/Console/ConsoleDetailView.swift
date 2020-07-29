@@ -16,7 +16,7 @@ struct ConsoleDetailPayload {
     let stockSentimentData: [StockSentimentData]
     let days: Int
     let maxDays: Int
-    let model: (open: SVMModel, close: SVMModel)
+    let model: StockKitUtils.Models
 }
 
 class PredictWorkItem {
@@ -125,7 +125,11 @@ class ConsoleDetailView: UIView {
             payload.historicalTradingData.reversed(),
             payload.stockSentimentData)
         
-        predictionView.updateModel(payload.days, maxDays: payload.maxDays, model: payload.model)
+        predictionView.updateModel(
+            payload.days,
+            maxDays: payload.maxDays,
+            model: payload.model,
+            stockData: payload.historicalTradingData)
     }
     
     override func hitTest(
@@ -175,14 +179,15 @@ class ConsoleDetailView: UIView {
 }
 
 extension ConsoleDetailView: ConsoleDetailSentimentViewDelegate {
-    func sentimentChanged(_ positive: Double, negative: Double) {
+    func sentimentChanged(_ positive: Double, negative: Double, neutral: Double) {
         currentPredictionWorkItem = .init(
             DispatchWorkItem.init(
                 block: {
                     
             self.predictionView.predict(
                 positive: positive,
-                negative: negative)
+                negative: negative,
+                neutral: neutral)
         }))
     }
 }
@@ -382,10 +387,18 @@ class ConsoleDetailHistoricalView: UIView {
 
 //MARK: Sentiment
 protocol ConsoleDetailSentimentViewDelegate: class {
-    func sentimentChanged(_ positive: Double, negative: Double)
+    func sentimentChanged(_ positive: Double, negative: Double, neutral: Double)
 }
 class ConsoleDetailSentimentView: UIView {
     weak var delegate: ConsoleDetailSentimentViewDelegate?
+    
+    lazy var refineSlider: UISlider = {
+        let view: UISlider = .init(frame: .zero)
+        view.tintColor = GlobalStyle.Colors.orange
+        view.setValue(0.0, animated: false)
+        view.addTarget(self, action: #selector(self.sliderValue(_:)), for: .valueChanged)
+        return view
+    }()
     
     lazy var slider: UISlider = {
         let view: UISlider = .init(frame: .zero)
@@ -393,6 +406,12 @@ class ConsoleDetailSentimentView: UIView {
         view.setValue(0.5, animated: false)
         view.addTarget(self, action: #selector(self.sliderValue(_:)), for: .valueChanged)
         return view
+    }()
+    
+    lazy var seperator: UIView = {
+        let label = UIView.init()
+        label.backgroundColor = GlobalStyle.Colors.orange
+        return label
     }()
     
     lazy var posLabel: UILabel = {
@@ -422,14 +441,33 @@ class ConsoleDetailSentimentView: UIView {
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.numberOfLines = 1
         label.text = "neutral"
+        label.isHidden = true
+        return label
+    }()
+    
+    lazy var refineLabel: UILabel = {
+        let label = UILabel.init()
+        label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.orange
+        label.font = GlobalStyle.Fonts.courier(.small, .bold)
+        label.numberOfLines = 1
+        label.text = "λ"
+        label.isHidden = true
         return label
     }()
     
     lazy var hStack: UIStackView = {
-        let stack = UIStackView.init(arrangedSubviews: [negLabel, slider, posLabel])
-        stack.alignment = .fill
+        let stack = UIStackView.init(
+            arrangedSubviews: [
+                refineSlider,
+                seperator,
+                negLabel,
+                slider,
+                posLabel])
+        stack.alignment = .center
         stack.distribution = .fill
         stack.axis = .horizontal
+        stack.setCustomSpacing(GlobalStyle.padding, after: refineSlider)
         return stack
     }()
     
@@ -439,45 +477,66 @@ class ConsoleDetailSentimentView: UIView {
         
         addSubview(hStack)
         addSubview(emotionLabel)
+        addSubview(refineLabel)
         
         hStack.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(GlobalStyle.spacing)
-            make.right.equalToSuperview().offset(GlobalStyle.spacing)
+            make.left.equalToSuperview().offset(GlobalStyle.padding)
+            make.right.equalToSuperview().offset(-GlobalStyle.padding)
             make.top.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.75)
         }
-        emotionLabel.sizeToFit()
+        
+        refineSlider.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.2)
+        }
+        
+        seperator.snp.makeConstraints { make in
+            make.width.equalTo(GlobalStyle.spacing/2)
+            make.height.equalToSuperview().multipliedBy(0.75)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        emotionLabel.center = .init(
-            x: self.center.x + GlobalStyle.spacing,
-            y: hStack.frame.maxY)
-    }
-    
     @objc func sliderValue(
         _ slider: UISlider) {
-        let posValue = slider.value
-        let negValue = abs(slider.value - 1.0)
+        let neuValue = self.refineSlider.value
+        var posValue = self.slider.value
+        var negValue = abs(self.slider.value - 1.0)
         
-        posLabel.text = "[\(Int(posValue*100))%]"
-        negLabel.text = "[\(Int(negValue*100))%]"
-        emotionLabel.text = "\(posValue > 0.6 ? "positive" : (negValue > 0.6 ? "negative" : "neutral"))"
+        let diff = abs(1.0 - (posValue + negValue + neuValue))
+        posValue -= diff/2
+        negValue -= diff/2
+        posValue = posValue < 0 ? 0 : posValue
+        negValue = negValue < 0 ? 0 : negValue
+        
+        let posPercent = Int(posValue*100)
+        let negPercent = Int(negValue*100)
+        posLabel.text = "[\(posPercent)%]"
+        negLabel.text = "[\(negPercent)%]"
+        emotionLabel.text = "\(posPercent > negPercent ? "positive" : (posPercent < negPercent ? "negative" : "neutral"))"
         updateEmotionTrack()
         
-        delegate?.sentimentChanged(Double(posValue), negative: Double(negValue))
+        delegate?.sentimentChanged(
+            Double(posValue),
+            negative: Double(negValue),
+            neutral: Double(neuValue))
     }
     
     func updateEmotionTrack() {
+        emotionLabel.isHidden = false
+        refineLabel.isHidden = false
+        
         emotionLabel.sizeToFit()
         emotionLabel.center = .init(
-            x: slider.thumbCenterX + GlobalStyle.spacing,
+            x: slider.thumbCenterX + GlobalStyle.padding,
+            y: hStack.frame.maxY)
+        
+        refineLabel.sizeToFit()
+        refineLabel.center = .init(
+            x: refineSlider.thumbCenterX + GlobalStyle.padding,
             y: hStack.frame.maxY)
     }
 }
@@ -572,7 +631,8 @@ class ConsoleDetailPredictionView: UIView {
         }
     }
     
-    private var model: (open: SVMModel, close: SVMModel)? = nil
+    private var model: StockKitUtils.Models? = nil
+    private var stockData: [StockData]? = nil
     
     init(cellHeight: CGFloat = 30,
         cellsToViewWhenExpanded: CGFloat = 3) {
@@ -634,50 +694,65 @@ class ConsoleDetailPredictionView: UIView {
         
     }
     
-    func updateModel(_ days: Int, maxDays: Int, model: (open: SVMModel, close: SVMModel)) {
+    func updateModel(
+        _ days: Int,
+        maxDays: Int,
+        model: StockKitUtils.Models,
+        stockData: [StockData]) {
+        
         cellHeight = self.frame.height*0.66
         self.days = days
         self.maxDays = maxDays
         self.model = model
+        self.stockData = stockData
         predict()
     }
     
     public func predict(
         positive: Double = 0.5,
-        negative: Double = 0.5) {
+        negative: Double = 0.5,
+        neutral: Double = 0.0) {
         
-        print("{TEST} \(positive - negative)")
+        guard let recentStock = self.stockData?.sorted(
+            by: {
+                ($0.dateData.asDate ?? Date())
+                    .compare(($1.dateData.asDate ?? Date())) == .orderedDescending
+                
+        }).first else { return}
+        
         DispatchQueue.init(label: "stoic.predicting").async { [weak self] in
             
-            var outputs : [Double?] = []
-            for i in 0..<2 {
-                let testData = DataSet(dataType: .Regression, inputDimension: 2, outputDimension: 1)
-                do {
-                    try testData.addTestDataPoint(input: [Double((self?.days ?? PredictionRules().days)), positive-negative])
-                }
-                catch {
-                    print("Invalid data set created")
-                }
-
-                if i == 0 {
-                    self?.model?.open.predictValues(data: testData)
-                } else if i == 1 {
-                    self?.model?.close.predictValues(data: testData)
-                }
-
-                outputs.append(testData.outputs?.first?.first)
+            let testData = DataSet(
+               dataType: .Regression,
+               inputDimension: StockKitUtils.inDim,
+               outputDimension: StockKitUtils.outDim)
+            do {
+                let dataSet = StockKitUtils.Models.DataSet(
+                    recentStock,
+                    StockSentimentData.emptyWithValues(
+                        positive: positive,
+                        negative: negative,
+                        neutral: neutral),
+                    updated: true)
+                
+                print("PREDICTING\n\(dataSet.description)")
+                
+                try testData.addTestDataPoint(
+                   input: dataSet.asArray)
+            }
+            catch {
+               print("Invalid data set created")
             }
             
+            self?.model?.volatility.predictValues(data: testData)
+            
             DispatchQueue.main.async {
-                guard let open = outputs.first, let close = outputs.last else {
+                guard let output = testData.singleOutput(index: 0) else {
                     self?.predictionLabel.text = "open: $⚠️\nclose: $⚠️"
                     return
                 }
                 
-                let actualOpen = open ?? 0.0
-                let actualClose = close ?? 0.0
-                
-                self?.predictionLabel.text = "open: $\(String(round(actualOpen*100)/100))\nclose: $\(String(round(actualClose*100)/100))"
+                self?.predictionLabel.text = StockKitUtils.Models.DataSet.outputLabel(output)
             }
         
         }

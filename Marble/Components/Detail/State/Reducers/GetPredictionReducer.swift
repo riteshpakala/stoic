@@ -18,6 +18,8 @@ struct GetPredictionReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        state.progressLabelText = nil
+        
         guard let stockKit = (component as? DetailComponent)?.stockKit else {
             return
         }

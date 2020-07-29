@@ -128,9 +128,9 @@ class ConsoleView: UIView {
             make.height.equalTo(GlobalStyle.Fonts.FontSize.medium.rawValue)
         }
         progressView.snp.makeConstraints { make in
-            make.top.equalTo(taskbarView.snp.bottom)
-            make.left.equalToSuperview().offset(GlobalStyle.spacing)
-            make.right.equalToSuperview().offset(-GlobalStyle.spacing)
+            make.top.equalTo(statusView.snp.bottom)
+            make.left.equalToSuperview().offset(GlobalStyle.padding)
+            make.right.equalToSuperview().offset(-GlobalStyle.padding)
             make.bottom.equalToSuperview()
         }
         detailView.snp.makeConstraints { make in
@@ -241,9 +241,9 @@ extension ConsoleView {
                 make.height.equalTo(0)
             }
             progressView.snp.remakeConstraints { make in
-                make.top.equalTo(taskbarView.snp.bottom).offset(GlobalStyle.padding)
-                make.left.equalToSuperview().offset(GlobalStyle.spacing)
-                make.right.equalToSuperview().offset(-GlobalStyle.spacing)
+                make.top.equalTo(statusView.snp.bottom).offset(GlobalStyle.padding)
+                make.left.equalToSuperview().offset(GlobalStyle.padding)
+                make.right.equalToSuperview().offset(-GlobalStyle.padding)
                 make.height.equalTo(0)
             }
         } else {
@@ -258,9 +258,9 @@ extension ConsoleView {
                 make.height.equalTo(GlobalStyle.Fonts.FontSize.medium.rawValue)
             }
             progressView.snp.makeConstraints { make in
-                make.top.equalTo(taskbarView.snp.bottom)
-                make.left.equalToSuperview().offset(GlobalStyle.spacing)
-                make.right.equalToSuperview().offset(-GlobalStyle.spacing)
+                make.top.equalTo(statusView.snp.bottom)
+                make.left.equalToSuperview().offset(GlobalStyle.padding)
+                make.right.equalToSuperview().offset(-GlobalStyle.padding)
                 make.bottom.equalToSuperview()
             }
         }
