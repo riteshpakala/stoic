@@ -90,25 +90,25 @@ class ConsoleDetailView: UIView {
         historicalView.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.22)
+            make.height.equalTo(baseSize.height*0.24)
         }
         
         sentimentView.snp.makeConstraints { make in
             make.top.equalTo(historicalView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.22)
+            make.height.equalTo(baseSize.height*0.24)
         }
         
         predictionView.snp.makeConstraints { make in
             make.top.equalTo(sentimentView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.22)
+            make.height.equalTo(baseSize.height*0.24)
         }
         
         disclaimerView.snp.makeConstraints { make in
             make.top.equalTo(predictionView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.22)
+            make.height.equalTo(baseSize.height*0.16)
         }
         
         sentimentView.delegate = self
@@ -179,7 +179,12 @@ class ConsoleDetailView: UIView {
 }
 
 extension ConsoleDetailView: ConsoleDetailSentimentViewDelegate {
-    func sentimentChanged(_ positive: Double, negative: Double, neutral: Double) {
+    func sentimentChanged(
+        _ positive: Double,
+        negative: Double,
+        neutral: Double,
+        compound: Double) {
+        
         currentPredictionWorkItem = .init(
             DispatchWorkItem.init(
                 block: {
@@ -187,7 +192,8 @@ extension ConsoleDetailView: ConsoleDetailSentimentViewDelegate {
             self.predictionView.predict(
                 positive: positive,
                 negative: negative,
-                neutral: neutral)
+                neutral: neutral,
+                compound: compound)
         }))
     }
 }
@@ -209,7 +215,8 @@ class ConsoleDetailHeaderView: UIView {
         
         addSubview(currentTradingDay)
         currentTradingDay.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(GlobalStyle.padding)
+            make.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(GlobalStyle.padding)
             make.right.equalToSuperview().offset(-GlobalStyle.padding)
         }
@@ -220,7 +227,7 @@ class ConsoleDetailHeaderView: UIView {
     }
     
     func updateTradingDay(_ date: String) {
-        currentTradingDay.text = "trading day: "+date
+        currentTradingDay.text = "\("trading day".localized): "+date
     }
 }
 
@@ -262,8 +269,8 @@ class ConsoleDetailHistoricalView: UIView {
         let label = UILabel.init()
         label.textAlignment = .center
         label.textColor = GlobalStyle.Colors.green
-        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        label.text = "+: 50%\n-: 50%"
+        label.font = GlobalStyle.Fonts.courier(.small, .bold)
+        label.text = "\("positive".localized.lowercased()): 50%\n\("negative".localized.lowercased()): 50%"
         label.numberOfLines = 0
         return label
     }()
@@ -274,13 +281,13 @@ class ConsoleDetailHistoricalView: UIView {
         label.textColor = GlobalStyle.Colors.green
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.numberOfLines = 0
-        label.text = "open: $0000.00\nclose: $0000.00"
+        label.text = "\("open".localized.lowercased()): $0000.00\n\("close".localized.lowercased()): $0000.00"
         return label
     }()
     
     lazy var hStack: UIStackView = {
         let stack = UIStackView.init(arrangedSubviews: [emotionLabel, openLabel])
-        stack.alignment = .fill
+        stack.alignment = .center
         stack.distribution = .fill
         stack.axis = .horizontal
         return stack
@@ -365,7 +372,7 @@ class ConsoleDetailHistoricalView: UIView {
         }
         
         let stock = data[index]
-        openLabel.text = "open: $\(round(stock.open*100)/100)\nclose: $\(round(stock.close*100)/100)"
+        openLabel.text = "\("open".localized.lowercased()): $\(round(stock.open*100)/100)\n\("close".localized.lowercased()): $\(round(stock.close*100)/100)"
         
         guard let sentiment = sentimentData.first(
             where: { $0.dateAsString == stock.dateData.asString }) else {
@@ -374,7 +381,7 @@ class ConsoleDetailHistoricalView: UIView {
                 return
         }
         
-        emotionLabel.text = "+: \(Int(sentiment.posAverage*100))%\n-: \(Int(sentiment.negAverage*100))%"
+        emotionLabel.text = "\("positive".localized.lowercased()): \(Int(sentiment.posAverage*100))%\n\("negative".localized.lowercased()): \(Int(sentiment.negAverage*100))%"
     }
     
     @objc
@@ -387,10 +394,31 @@ class ConsoleDetailHistoricalView: UIView {
 
 //MARK: Sentiment
 protocol ConsoleDetailSentimentViewDelegate: class {
-    func sentimentChanged(_ positive: Double, negative: Double, neutral: Double)
+    func sentimentChanged(
+        _ positive: Double,
+        negative: Double,
+        neutral: Double,
+        compound: Double)
 }
 class ConsoleDetailSentimentView: UIView {
+    enum SentimentDetail: String {
+        case positive = "positive"
+        case negative = "negative"
+        case neutral = "neutral"
+        case delta = "leaning"
+        case negCompound = "| -neg bias"
+        case posCompound = "| -pos bias"
+    }
+    
     weak var delegate: ConsoleDetailSentimentViewDelegate?
+    
+    lazy var compoundSlider: UISlider = {
+        let view: UISlider = .init(frame: .zero)
+        view.tintColor = GlobalStyle.Colors.orange
+        view.setValue(0.5, animated: false)
+        view.addTarget(self, action: #selector(self.sliderValue(_:)), for: .valueChanged)
+        return view
+    }()
     
     lazy var refineSlider: UISlider = {
         let view: UISlider = .init(frame: .zero)
@@ -408,29 +436,25 @@ class ConsoleDetailSentimentView: UIView {
         return view
     }()
     
-    lazy var seperator: UIView = {
+    lazy var seperator1: UIView = {
         let label = UIView.init()
         label.backgroundColor = GlobalStyle.Colors.orange
         return label
     }()
     
-    lazy var posLabel: UILabel = {
-        let label = UILabel.init()
-        label.textAlignment = .center
-        label.textColor = GlobalStyle.Colors.orange
-        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        label.text = "[50%]"
-        label.numberOfLines = 0
+    lazy var seperator2: UIView = {
+        let label = UIView.init()
+        label.backgroundColor = GlobalStyle.Colors.orange
         return label
     }()
     
-    lazy var negLabel: UILabel = {
+    lazy var emotionTitleLabel: UILabel = {
         let label = UILabel.init()
         label.textAlignment = .center
         label.textColor = GlobalStyle.Colors.orange
-        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        label.text = "[50%]"
-        label.numberOfLines = 0
+        label.font = GlobalStyle.Fonts.courier(.small, .bold)
+        label.numberOfLines = 1
+        label.text = "neutral".localized
         return label
     }()
     
@@ -440,8 +464,7 @@ class ConsoleDetailSentimentView: UIView {
         label.textColor = GlobalStyle.Colors.orange
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.numberOfLines = 1
-        label.text = "neutral"
-        label.isHidden = true
+        label.text = "[50%:50%]"
         return label
     }()
     
@@ -451,7 +474,18 @@ class ConsoleDetailSentimentView: UIView {
         label.textColor = GlobalStyle.Colors.orange
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.numberOfLines = 1
-        label.text = "λ"
+        label.text = "Δ:0%"
+        label.isHidden = true
+        return label
+    }()
+    
+    lazy var compoundLabel: UILabel = {
+        let label = UILabel.init()
+        label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.orange
+        label.font = GlobalStyle.Fonts.courier(.small, .bold)
+        label.numberOfLines = 1
+        label.text = "λ:0"
         label.isHidden = true
         return label
     }()
@@ -460,14 +494,17 @@ class ConsoleDetailSentimentView: UIView {
         let stack = UIStackView.init(
             arrangedSubviews: [
                 refineSlider,
-                seperator,
-                negLabel,
+                seperator1,
                 slider,
-                posLabel])
+                seperator2,
+                compoundSlider])
         stack.alignment = .center
         stack.distribution = .fill
         stack.axis = .horizontal
         stack.setCustomSpacing(GlobalStyle.padding, after: refineSlider)
+        stack.setCustomSpacing(GlobalStyle.padding, after: seperator1)
+        stack.setCustomSpacing(GlobalStyle.padding, after: slider)
+        stack.setCustomSpacing(GlobalStyle.padding, after: seperator2)
         return stack
     }()
     
@@ -478,21 +515,53 @@ class ConsoleDetailSentimentView: UIView {
         addSubview(hStack)
         addSubview(emotionLabel)
         addSubview(refineLabel)
+        addSubview(compoundLabel)
+        addSubview(emotionTitleLabel)
         
         hStack.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(GlobalStyle.padding)
             make.right.equalToSuperview().offset(-GlobalStyle.padding)
-            make.top.equalToSuperview()
+            make.centerY.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.75)
         }
         
         refineSlider.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.2)
+            make.width.equalToSuperview().multipliedBy(0.24)
         }
         
-        seperator.snp.makeConstraints { make in
+        compoundSlider.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.24)
+        }
+        
+        seperator1.snp.makeConstraints { make in
             make.width.equalTo(GlobalStyle.spacing/2)
-            make.height.equalToSuperview().multipliedBy(0.75)
+            make.height.equalToSuperview().multipliedBy(0.66)
+        }
+        seperator2.snp.makeConstraints { make in
+            make.width.equalTo(GlobalStyle.spacing/2)
+            make.height.equalToSuperview().multipliedBy(0.66)
+        }
+        
+        refineLabel.sizeToFit()
+        emotionLabel.sizeToFit()
+        compoundLabel.sizeToFit()
+        emotionTitleLabel.sizeToFit()
+        
+        refineLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.25)
+        }
+        emotionLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.25)
+        }
+        compoundLabel.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.25)
+        }
+        
+        emotionTitleLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(GlobalStyle.padding)
+            make.right.equalToSuperview().offset(-GlobalStyle.padding)
+            make.top.equalToSuperview()
+            make.height.equalTo(emotionTitleLabel.frame.height)
         }
     }
     
@@ -500,11 +569,24 @@ class ConsoleDetailSentimentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        
+        emotionLabel.center = .init(
+            x: self.center.x,
+            y: hStack.frame.maxY)
+    }
+    
     @objc func sliderValue(
         _ slider: UISlider) {
+        
         let neuValue = self.refineSlider.value
         var posValue = self.slider.value
         var negValue = abs(self.slider.value - 1.0)
+        
+        let compoundValue1 = self.compoundSlider.value
+        let compoundValue2 = abs(self.compoundSlider.value - 1.0)
         
         let diff = abs(1.0 - (posValue + negValue + neuValue))
         posValue -= diff/2
@@ -514,29 +596,85 @@ class ConsoleDetailSentimentView: UIView {
         
         let posPercent = Int(posValue*100)
         let negPercent = Int(negValue*100)
-        posLabel.text = "[\(posPercent)%]"
-        negLabel.text = "[\(negPercent)%]"
-        emotionLabel.text = "\(posPercent > negPercent ? "positive" : (posPercent < negPercent ? "negative" : "neutral"))"
+        let neuPercent = Int(neuValue*100)
+        var compound = round((compoundValue1 - compoundValue2)*100)/100
+        compound = compound > -0.01 && compound < 0.01 ? 0.0 : compound
+        
+        refineLabel.text = "Δ:\(neuPercent)%"
+        emotionLabel.text = "[\(negPercent)%:\(posPercent)%]"
+        compoundLabel.text = "λ:\(compound)"
+        
+        updateEmotionCharacteristics(
+            neuPercent: neuPercent,
+            negPercent: negPercent,
+            posPercent: posPercent,
+            compound: compound)
+        
+        
         updateEmotionTrack()
         
         delegate?.sentimentChanged(
             Double(posValue),
             negative: Double(negValue),
-            neutral: Double(neuValue))
+            neutral: Double(neuValue),
+            compound: Double(compound))
+        
+    }
+    
+    func updateEmotionCharacteristics(
+        neuPercent: Int,
+        negPercent: Int,
+        posPercent: Int,
+        compound: Float,
+        padding: Int = 5) {
+        
+        var characteristics: [SentimentDetail] = []
+        
+        print("{TEST} \(neuPercent), \(negPercent), \(posPercent) \(compound)")
+        if neuPercent > padding {
+            //Refine General Emotion
+            characteristics.append(.delta)
+        }
+        
+        if negPercent > posPercent + 5 {
+            //Negative Emotion
+            characteristics.append(.negative)
+        } else if posPercent > negPercent + 5 {
+            //Positive Emotion
+            characteristics.append(.positive)
+        } else {
+            //Neutral Emotion
+            characteristics.append(.neutral)
+        }
+        
+        if compound > 0.0 {
+            //Positive words
+            characteristics.append(.posCompound)
+        } else if compound < 0.0{
+            //Negative words
+            characteristics.append(.negCompound)
+        } else {
+            //Neutral words
+        }
+        
+        let finalStatement: String = characteristics.map { $0.rawValue.localized }.joined(separator: " ")
+        emotionTitleLabel.text = finalStatement
     }
     
     func updateEmotionTrack() {
-        emotionLabel.isHidden = false
         refineLabel.isHidden = false
+        compoundLabel.isHidden = false
         
-        emotionLabel.sizeToFit()
         emotionLabel.center = .init(
             x: slider.thumbCenterX + GlobalStyle.padding,
             y: hStack.frame.maxY)
         
-        refineLabel.sizeToFit()
         refineLabel.center = .init(
             x: refineSlider.thumbCenterX + GlobalStyle.padding,
+            y: hStack.frame.maxY)
+        
+        compoundLabel.center = .init(
+            x: compoundSlider.thumbCenterX + GlobalStyle.padding,
             y: hStack.frame.maxY)
     }
 }
@@ -566,8 +704,15 @@ class ConsoleDetailPredictionView: UIView {
     
     lazy var reFetchTrigger: UIImageView = {
         let view = UIImageView.init()
-        view.image = UIImage(named:"console.detail.refresh")
+        view.image = UIImage(named:"console.detail.refresh")?.withRenderingMode(.alwaysTemplate)
         view.contentMode = .scaleAspectFit
+        view.tintColor = GlobalStyle.Colors.purple
+        return view
+    }()
+    
+    lazy var thinkTrigger: UIView = {
+        let view: UIView = .init()
+        view.clipsToBounds = true
         return view
     }()
     
@@ -582,11 +727,16 @@ class ConsoleDetailPredictionView: UIView {
     }()
     
     lazy var hStack: UIStackView = {
-        let stack = UIStackView.init(arrangedSubviews: [refetchTriggerContainer, predictionLabel])
-        stack.alignment = .fill
+        let stack = UIStackView.init(
+            arrangedSubviews: [
+                refetchTriggerContainer,
+                thinkTrigger,
+                predictionLabel])
+        stack.alignment = .center
         stack.distribution = .fill
         stack.axis = .horizontal
         stack.spacing = GlobalStyle.spacing
+        stack.setCustomSpacing(GlobalStyle.padding, after: refetchTriggerContainer)
         return stack
     }()
     
@@ -670,6 +820,10 @@ class ConsoleDetailPredictionView: UIView {
         }
         
         self.refetchTriggerContainer.snp.makeConstraints { make in
+            make.height.width.equalTo(cellHeight - GlobalStyle.padding/2)
+        }
+        
+        self.thinkTrigger.snp.makeConstraints { make in
             make.height.width.equalTo(cellHeight)
         }
         
@@ -681,6 +835,12 @@ class ConsoleDetailPredictionView: UIView {
         }
         
         indicator.addGestureRecognizer(tapGestureTableView)
+        
+        thinkTrigger.thinkingEmitter(
+            forSize: .init(
+                width: cellHeight,
+                height: cellHeight))
+        thinkTrigger.layer.cornerRadius = (cellHeight)/2
     }
     
     required init?(coder: NSCoder) {
@@ -701,6 +861,7 @@ class ConsoleDetailPredictionView: UIView {
         stockData: [StockData]) {
         
         cellHeight = self.frame.height*0.66
+        self.predictionRangePicker.currentDay = abs(maxDays - days)
         self.days = days
         self.maxDays = maxDays
         self.model = model
@@ -711,7 +872,8 @@ class ConsoleDetailPredictionView: UIView {
     public func predict(
         positive: Double = 0.5,
         negative: Double = 0.5,
-        neutral: Double = 0.0) {
+        neutral: Double = 0.0,
+        compound: Double = 0.0) {
         
         guard let recentStock = self.stockData?.sorted(
             by: {
@@ -732,7 +894,8 @@ class ConsoleDetailPredictionView: UIView {
                     StockSentimentData.emptyWithValues(
                         positive: positive,
                         negative: negative,
-                        neutral: neutral),
+                        neutral: neutral,
+                        compound: compound),
                     updated: true)
                 
                 print("PREDICTING\n\(dataSet.description)")
@@ -766,7 +929,7 @@ class ConsoleDetailDisclaimerView: UIView {
         label.textAlignment = .left
         label.textColor = GlobalStyle.Colors.red
         label.font = GlobalStyle.Fonts.courier(.footnote, .bold)
-        label.text = "//// All predictions are never 100% accurate. Use this as a tool to estimate \"direction\"\n//// Predictions may change on each run due to newer updates in emotions\n//// found realtime on the web."
+        label.text = "//// \("All predictions are never 100% accurate. Use this as a tool to estimate direction on top of your manual technical analysis.".localized)\n//// \("Predictions may change on each run due to newer updates in emotions found realtime on the web.".localized)\n//// \("Have questions or feedback?".localized+" Email: team@linenandsole.com")"
         label.numberOfLines = 0
         return label
     }()

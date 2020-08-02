@@ -13,7 +13,7 @@ struct PredictionRules {
     var maxDays: Int = 12
     var historicalDays: Int = 30
     var baseLangCode: String = "en"
-    var tweets: Int = 4
+    var tweets: Int = 1
     let marketCloseHour: Int = 16
     let rsiMaxHistorical: Int = 16
 }

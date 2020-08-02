@@ -102,7 +102,8 @@ class StockSentimentData: NSObject {
     public static func emptyWithValues(
         positive: Double,
         negative: Double,
-        neutral: Double) -> StockSentimentData {
+        neutral: Double,
+        compound: Double) -> StockSentimentData {
         
         return .init(
             date: .init(),
@@ -112,7 +113,7 @@ class StockSentimentData: NSObject {
                 pos: positive,
                 neg: negative,
                 neu: neutral,
-                compound: positive - negative)],
+                compound: compound)],
             textData: [])
     }
 }

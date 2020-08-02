@@ -54,9 +54,12 @@ class DaysPicker: Picker, UITableViewDataSource {
         didSet {
             DispatchQueue.main.async {
                 self.reloadData()
+                self.scrollTo(self.currentDay)
             }
         }
     }
+    
+    var currentDay: Int = 0
     
     override init(color: UIColor) {
         super.init(color: color)
@@ -82,11 +85,17 @@ class DaysPicker: Picker, UITableViewDataSource {
         
         if let tradingCell = cell as? PickerCell {
             let day = days - indexPath.item
-            tradingCell.label.text = "\(day) day\(day > 1 ? "s" : "")"
+            let dayText = "day\(day > 1 ? "s" : "")".localized.lowercased()
+            tradingCell.label.text = "\(day) \(dayText)"
             tradingCell.label.textColor = color
         }
         
         return cell
+    }
+    
+    override func scrollTo(_ index: Int, animated: Bool = false) {
+        guard index < days else { return }
+        super.scrollTo(index, animated: animated)
     }
 }
 
@@ -108,6 +117,13 @@ class Picker: UITableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func scrollTo(_ index: Int, animated: Bool = false) {
+        self.scrollToRow(
+            at: .init(row: index, section: 0),
+            at: .top,
+            animated: animated)
     }
 }
 

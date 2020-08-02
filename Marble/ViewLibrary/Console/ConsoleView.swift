@@ -128,7 +128,7 @@ class ConsoleView: UIView {
             make.height.equalTo(GlobalStyle.Fonts.FontSize.medium.rawValue)
         }
         progressView.snp.makeConstraints { make in
-            make.top.equalTo(statusView.snp.bottom)
+            make.top.equalTo(taskbarView.snp.bottom)
             make.left.equalToSuperview().offset(GlobalStyle.padding)
             make.right.equalToSuperview().offset(-GlobalStyle.padding)
             make.bottom.equalToSuperview()
@@ -241,7 +241,7 @@ extension ConsoleView {
                 make.height.equalTo(0)
             }
             progressView.snp.remakeConstraints { make in
-                make.top.equalTo(statusView.snp.bottom).offset(GlobalStyle.padding)
+                make.top.equalTo(taskbarView.snp.bottom).offset(GlobalStyle.padding)
                 make.left.equalToSuperview().offset(GlobalStyle.padding)
                 make.right.equalToSuperview().offset(-GlobalStyle.padding)
                 make.height.equalTo(0)
@@ -249,7 +249,7 @@ extension ConsoleView {
         } else {
             detailIsLoaded = false
             predictingIndicator.start()
-            statusView.text = "/**** \(status ?? "") */"
+            statusView.text = "/**** \(status?.localized ?? "") */"
             progressView.isHidden = false
             statusView.snp.makeConstraints { make in
                 make.top.equalTo(taskbarView.snp.bottom).offset(GlobalStyle.padding)
@@ -258,7 +258,7 @@ extension ConsoleView {
                 make.height.equalTo(GlobalStyle.Fonts.FontSize.medium.rawValue)
             }
             progressView.snp.makeConstraints { make in
-                make.top.equalTo(statusView.snp.bottom)
+                make.top.equalTo(taskbarView.snp.bottom)
                 make.left.equalToSuperview().offset(GlobalStyle.padding)
                 make.right.equalToSuperview().offset(-GlobalStyle.padding)
                 make.bottom.equalToSuperview()

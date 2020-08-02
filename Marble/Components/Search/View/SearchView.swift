@@ -21,7 +21,7 @@ public class SearchView: GraniteView {
         textField.font = GlobalStyle.Fonts.courier(.large, .bold)
         textField.textColor = GlobalStyle.Colors.purple
         textField.backgroundColor = .clear
-        textField.placeholder = "Search".localized
+        textField.placeholder = "Search".localized.capitalized
         textField.textAlignment = .center
         return textField
     }()

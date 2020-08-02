@@ -56,6 +56,7 @@
 		713ABC1F246E392300DD03EA /* SVMStockPredictionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713ABC1E246E392300DD03EA /* SVMStockPredictionReducer.swift */; };
 		713ABC22246E39A000DD03EA /* HomeEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713ABC21246E39A000DD03EA /* HomeEvents.swift */; };
 		713ABC25246E50E500DD03EA /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713ABC24246E50E500DD03EA /* Presenter.swift */; };
+		7145BCE024D215B20098D5D6 /* UIView+Emitters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */; };
 		71478F312479027D007DF62D /* SentimentClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71478F302479027D007DF62D /* SentimentClassifier.mlmodel */; };
 		71478F6224790296007DF62D /* Data++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F3424790296007DF62D /* Data++.swift */; };
 		71478F6324790296007DF62D /* SwifterHTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F3524790296007DF62D /* SwifterHTTPRequest.swift */; };
@@ -375,6 +376,7 @@
 		713ABC1E246E392300DD03EA /* SVMStockPredictionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVMStockPredictionReducer.swift; sourceTree = "<group>"; };
 		713ABC21246E39A000DD03EA /* HomeEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEvents.swift; sourceTree = "<group>"; };
 		713ABC24246E50E500DD03EA /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Emitters.swift"; sourceTree = "<group>"; };
 		71478F302479027D007DF62D /* SentimentClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentClassifier.mlmodel; sourceTree = "<group>"; };
 		71478F3424790296007DF62D /* Data++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data++.swift"; sourceTree = "<group>"; };
 		71478F3524790296007DF62D /* SwifterHTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterHTTPRequest.swift; sourceTree = "<group>"; };
@@ -999,6 +1001,14 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		7145BCDE24D215A90098D5D6 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
 		71478F3224790288007DF62D /* Sentiment */ = {
 			isa = PBXGroup;
 			children = (
@@ -1436,6 +1446,7 @@
 		71A1D173246E027D00D778A5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				7145BCDE24D215A90098D5D6 /* UIView */,
 				71A1D174246E027D00D778A5 /* CaseIterable */,
 				71A1D176246E027D00D778A5 /* UIColor */,
 				71A1D178246E027D00D778A5 /* URL */,
@@ -2244,6 +2255,7 @@
 				71A1D2F7246E027D00D778A5 /* AssetsManager+Sync.swift in Sources */,
 				717A764124A16131005348F9 /* SwiftSoup.swift in Sources */,
 				71A1D321246E027D00D778A5 /* FiraSansLabel.swift in Sources */,
+				7145BCE024D215B20098D5D6 /* UIView+Emitters.swift in Sources */,
 				71A1D2F1246E027D00D778A5 /* UIColor+ARGB.swift in Sources */,
 				715DB1BA24CB60DC00E1D741 /* Picker.swift in Sources */,
 				71478F8024790297007DF62D /* SwifterCredential.swift in Sources */,

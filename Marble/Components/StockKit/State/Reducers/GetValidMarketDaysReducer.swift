@@ -73,10 +73,9 @@ struct GetValidMarketDaysResponseReducer: Reducer {
                && $0.dateComponents.day < currentDay) ||
                ($0.dateComponents.month < currentMonth) ||
                ($0.dateComponents.year < currentYear )
-        }.sorted(by:  { ($0.asDate ?? Date()).compare(($1.asDate ?? Date())) == .orderedDescending })
+        }.sorted(by: { ($0.asDate ?? Date()).compare(($1.asDate ?? Date())) == .orderedDescending } )
         
         var sanitizedStockData: [StockDateData] = []
-     
         for _ in 0..<state.rules.historicalDays {
             sanitizedStockData.append(filteredForPrevious.removeFirst())
         }

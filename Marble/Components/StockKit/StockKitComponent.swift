@@ -142,6 +142,7 @@ extension StockKitComponent {
         
         let sanitizedMonth: String
         let previousMonth: String
+        let previousMonth2: String
         let nextMonth: String
         let previousYear: String
         let nextYear: String
@@ -155,10 +156,19 @@ extension StockKitComponent {
             if intMonth == 1 {
                 previousMonth = "12"
             } else if intMonth <= 10 {
-
                 previousMonth = "0"+String(intMonth-1)
             } else {
                 previousMonth = String(intMonth-1)
+            }
+            
+            if intMonth == 1 {
+                previousMonth2 = "11"
+            } else if intMonth == 2 {
+                previousMonth2 = "12"
+            } else if intMonth <= 11 {
+                previousMonth2 = "0"+String(intMonth-2)
+            } else {
+                previousMonth2 = String(intMonth-2)
             }
             
             if intMonth == 12 {
@@ -171,6 +181,7 @@ extension StockKitComponent {
         } else {
             sanitizedMonth = month
             previousMonth = month
+            previousMonth2 = month
             nextMonth = month
         }
         
@@ -189,6 +200,7 @@ extension StockKitComponent {
         pullMarketDays(
             forMonth: sanitizedMonth,
             forPreviousMonth: previousMonth,
+            forPreviousMonth2: previousMonth2,
             forNextMonth: nextMonth,
             forYear: year,
             forPreviousYear: previousYear,
@@ -310,15 +322,29 @@ extension StockKitComponent {
     func pullMarketDays(
         forMonth month: String,
         forPreviousMonth prevMonth: String,
+        forPreviousMonth2 prevMonth2: String,
         forNextMonth nextMonth: String,
         forYear year: String,
         forPreviousYear prevYear: String,
         forNextYear nextYear: String,
         hittingPrevious: Bool = false,
+        hittingPrevious2: Bool = false,
         hittingAfter: Bool = false) {
         
         validMarketDaysTask?.cancel()
-        let validMarketEndpointasString = "https://api.tradier.com/v1/markets/calendar?month=\(hittingPrevious ? prevMonth : (hittingAfter ? nextMonth : month))&year=\(hittingPrevious ? prevYear : hittingAfter ? nextYear : year)"
+        
+        let monthToScrape: String
+        if hittingPrevious2 {
+            monthToScrape = prevMonth2
+        } else if hittingPrevious {
+            monthToScrape = prevMonth
+        } else if hittingAfter {
+            monthToScrape = nextMonth
+        } else {
+            monthToScrape = month
+        }
+        
+        let validMarketEndpointasString = "https://api.tradier.com/v1/markets/calendar?month=\(monthToScrape)&year=\(hittingPrevious ? prevYear : hittingAfter ? nextYear : year)"
         
         if let url = URL(string: validMarketEndpointasString) {
             validMarketDaysTask = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -357,11 +383,13 @@ extension StockKitComponent {
                             self.pullMarketDays(
                                 forMonth: month,
                                 forPreviousMonth: prevMonth,
+                                forPreviousMonth2: prevMonth2,
                                 forNextMonth: nextMonth,
                                 forYear: year,
                                 forPreviousYear: prevYear,
                                 forNextYear: nextYear,
-                                hittingPrevious: hittingPrevious == false,
+                                hittingPrevious: hittingPrevious2,
+                                hittingPrevious2: !hittingPrevious2 && !hittingPrevious,
                                 hittingAfter: hittingPrevious)
                         }
                     }

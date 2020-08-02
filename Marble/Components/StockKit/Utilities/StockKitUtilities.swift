@@ -9,7 +9,7 @@
 import Foundation
 
 public struct StockKitUtils {
-    static let inDim: Int = 5
+    static let inDim: Int = 6
     static let outDim: Int = 1
     
     static let Tolerance: Double = 10e-20
@@ -89,7 +89,7 @@ public struct StockKitUtils {
             }
             
             public var asArray: [Double] {
-                [averages.momentum, averages.volatility, sentiment.posAverage, sentiment.negAverage, sentiment.neuAverage]
+                [averages.momentum, averages.volatility, sentiment.posAverage, sentiment.negAverage, sentiment.neuAverage, sentiment.compoundAverage]
             }
             
             public var inDim: Int {
@@ -105,7 +105,7 @@ public struct StockKitUtils {
             }
             
             static func outputLabel(_ variable: Double) -> String {
-                return "Close: $\(String(round(variable*100)/100))"
+                return "\("close".localized.lowercased()):\n$\(String(round(variable*100)/100))"
             }
             
             public var description: String {
