@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 import PhotosUI
-import SnapKit
+import Granite
 
 // MARK: - AssetsPhotoViewController
 open class AssetsPhotoViewController: UIViewController {

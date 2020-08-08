@@ -5,11 +5,10 @@
 //  Created by Ritesh Pakala on 8/12/19.
 //  Copyright © 2019 Ritesh Pakala. All rights reserved.
 //
-
+import Granite
 import MediaPlayer
 import MobileCoreServices
 import UIKit
-import SnapKit
 import Photos
 
 public class HomeViewController: GraniteViewController<HomeState>{

@@ -5,10 +5,9 @@
 //  Created by Ritesh Pakala on 7/24/20.
 //  Copyright © 2020 Ritesh Pakala. All rights reserved.
 //
-
+import Granite
 import Foundation
 import UIKit
-import SnapKit
 
 struct ConsoleDetailPayload {
     let currentTradingDay: String

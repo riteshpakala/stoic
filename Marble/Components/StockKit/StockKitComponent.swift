@@ -5,25 +5,25 @@
 //  Created by Ritesh Pakala on 6/7/20.
 //  Copyright (c) 2020 Ritesh Pakala. All rights reserved.
 //
-
+import Granite
 import Foundation
 import UIKit
 
 public class StockKitComponent: Component<StockKitState> {
-    override var reducers: [AnyReducer] {
+    override public var reducers: [AnyReducer] {
         [
             GetValidMarketDaysReducer.Reducible(),
             GetValidMarketDaysResponseReducer.Reducible()
         ]
     }
     
-    override func didLoad() {
+    override public func didLoad() {
         observeState(
             \.nextValidTradingDay,
             handler: prepared(_:))
     }
     
-    override func rip() {
+    override public func rip() {
         super.rip()
         
         searchTask?.cancel()

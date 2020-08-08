@@ -5,19 +5,19 @@
 //  Created by Ritesh Pakala on 6/1/20.
 //  Copyright (c) 2020 Ritesh Pakala. All rights reserved.
 //
-
+import Granite
 import Foundation
 import UIKit
 
 public class DashboardComponent: Component<DashboardState> {
-    override var reducers: [AnyReducer] {
+    override public var reducers: [AnyReducer] {
         [
             ShowDetailReducer.Reducible(),
             CloseDetailReducer.Reducible()
         ]
     }
     
-    override func didLoad() {
+    override public func didLoad() {
 //        push(LiveSearchCollectionBuilder.build(self.services, parent: self))
         push(SearchBuilder.build(self.services, parent: self))
          

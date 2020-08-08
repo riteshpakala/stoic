@@ -6,7 +6,6 @@ target 'Stoic' do
   use_frameworks!
 
   # Pods for Marble
-  pod 'SnapKit'
   pod 'Firebase/Database'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Granite",
+        "repositoryURL": "git@github.com:riteshpakala/granite.git",
+        "state": {
+          "branch": "master",
+          "revision": "2e55dcc7a636df6c87a1a8875222fc29855c2c8c",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

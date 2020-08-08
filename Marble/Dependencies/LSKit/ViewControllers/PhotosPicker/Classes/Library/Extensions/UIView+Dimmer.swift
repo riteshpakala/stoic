@@ -6,7 +6,8 @@
 //
 //
 
-import SnapKit
+import Granite
+import UIKit
 
 fileprivate let kDimmerViewKey                          = "kDimmerViewKey"
 fileprivate let kDimmerView                             = "kDimmerView"

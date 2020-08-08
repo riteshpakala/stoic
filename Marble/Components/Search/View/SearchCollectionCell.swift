@@ -5,10 +5,9 @@
 //  Created by Ritesh Pakala on 6/7/20.
 //  Copyright © 2020 Ritesh Pakala. All rights reserved.
 //
-
+import Granite
 import Foundation
 import UIKit
-import SnapKit
 
 class SearchCollectionCell: UICollectionViewCell {
     lazy var tickerLabel: UILabel = {

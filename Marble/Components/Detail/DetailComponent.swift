@@ -5,13 +5,13 @@
 //  Created by Ritesh Pakala on 6/1/20.
 //  Copyright (c) 2020 Ritesh Pakala. All rights reserved.
 //
-
+import Granite
 import Foundation
 import UIKit
 
 public class DetailComponent: Component<DetailState> {
     
-    override var reducers: [AnyReducer] {
+    override public var reducers: [AnyReducer] {
         [
             DetailLongPressStartedReducer.Reducible(),
             DetailLongPressChangedReducer.Reducible(),
@@ -32,7 +32,7 @@ public class DetailComponent: Component<DetailState> {
         return getSubComponent(StockKitComponent.self) as? StockKitComponent
     }
     
-    override func didLoad() {
+    override public func didLoad() {
         push(
             StockKitBuilder.build(
                 self.services,

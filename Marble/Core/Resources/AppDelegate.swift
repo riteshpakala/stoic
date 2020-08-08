@@ -6,79 +6,30 @@
 //  Copyright © 2019 Ritesh Pakala. All rights reserved.
 //
 
+import Granite
 import AVFoundation
 import UIKit
 import Firebase
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var appCoordinator: AppCoordinator!
-    var window: UIWindow?
+class AppDelegate: GraniteAppDelegate {
+    
     var orientationLock = UIInterfaceOrientationMask.all
     var lockRotationToLast: Bool = false
     var lastRotation: UIInterfaceOrientationMask? = nil
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    
+    override func didLaunch() {
+        print("{TEST} 7")
         FileManager.default.clearTmpDirectory()
         FirebaseApp.configure()
-        self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        let services = Services()
-        services.dataService.deviceInfo.updateDeviceProcessor(to: Array(CPUinfo().keys)[0])
-        
-        self.appCoordinator = AppCoordinator(window: self.window!, services: services)
-        
-        self.appCoordinator.start()
-        
-        return true
-    }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-//        self.appCoordinator.checkShared(isActive: true)
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-//        FileManager.default.clearTmpDirectory()
+        super.didLaunch()
     }
     
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        if (self.lockRotationToLast), let lastRotation = lastRotation {
-            return lastRotation
-        } else {
-            ///It does not really make sense as to why the landscape
-            ///orientations are switched like so
-            ///
-            switch UIDevice.current.orientation {
-            case .portrait:
-                lastRotation = .portrait
-            case .landscapeRight:
-                lastRotation = .landscapeLeft
-            case .landscapeLeft:
-                lastRotation = .landscapeRight
-            default:
-                break
-            }
-            
-            return self.orientationLock
-        }
+    override func willStart() {
+        coordinator.showHomeController()
+        coordinator.showSceneController()
+        coordinator.showDashboardController()
     }
     
     struct AppUtility {
@@ -117,7 +68,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate{
+extension GraniteCoordinator {
+    func showHomeController() {
+        push(HomeBuilder.build(self.services))
+    }
+    
+    func showSceneController() {
+        push(SceneBuilder.build(self.services), fromComponent: HomeComponent.self)
+    }
+    
+    func showDashboardController() {
+        push(DashboardBuilder.build(self.services), fromComponent: HomeComponent.self)
+    }
+}
+
+extension AppDelegate {
     
     private func CPUinfo() -> Dictionary<String, String> {
         
