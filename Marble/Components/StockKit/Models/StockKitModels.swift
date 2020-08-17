@@ -17,6 +17,7 @@ public enum StockPrediction {
 class StockSentimentData: NSObject {
     let date: Date
     let dateAsString: String
+    let stockDateRefAsString: String
     let dateComponents: (year: Int, month: Int, day: Int)
     let sentimentData: [VaderSentimentOutput]
     var positives: [Double] {
@@ -31,7 +32,7 @@ class StockSentimentData: NSObject {
     var compounds: [Double] {
         return sentimentData.map { $0.compound }
     }
-    let textData: [String]
+    let tweetData: [Tweet]
     
     var posAverage: Double {
         guard !positives.isEmpty else { return 0 }
@@ -76,15 +77,17 @@ class StockSentimentData: NSObject {
     init(
         date: Date,
         dateAsString: String,
+        stockDateRefAsString: String,
         dateComponents: (year: Int, month: Int, day: Int),
         sentimentData: [VaderSentimentOutput],
-        textData: [String]) {
+        tweetData: [Tweet]) {
         
         self.date = date
         self.dateAsString = dateAsString
+        self.stockDateRefAsString = stockDateRefAsString
         self.dateComponents = dateComponents
         self.sentimentData = sentimentData
-        self.textData = textData
+        self.tweetData = tweetData
     }
     
     public var toString: String {
@@ -109,13 +112,14 @@ class StockSentimentData: NSObject {
         return .init(
             date: .init(),
             dateAsString: "",
+            stockDateRefAsString: "",
             dateComponents: Date.dateComponents(.init())(),
             sentimentData: [.init(
                 pos: positive,
                 neg: negative,
                 neu: neutral,
                 compound: compound)],
-            textData: [])
+            tweetData: [])
     }
 }
 class StockData: NSObject {
@@ -124,7 +128,7 @@ class StockData: NSObject {
     var high: Double
     var low: Double
     var close: Double
-    var adjClose: Double
+    var adjClose: Double //X-Dividend
     var volume: Double
     var count: Int = 0
     var historicalData: [StockData]? = nil {
@@ -134,11 +138,20 @@ class StockData: NSObject {
             let historicalFeatures = history.map { $0.features }
             let sumOfMomentums: Double = Double(historicalFeatures.map { $0?.momentum ?? 0 }.reduce(0, +))
             let sumOfVolatilities: Double = (historicalFeatures.map { $0?.volatility ?? 0.0 }.reduce(0, +))
-            
+            let volumeAVG = Double(history.map { $0.volume }.reduce(0, +)) / Double(history.count)
+            let sma20 = Double(historicalFeatures.suffix(20).map { $0?.dayAverage ?? 0 }.reduce(0, +)) / (20.0)
             averages = StockKitUtils.Features.Averages(
                 momentum: sumOfMomentums/Double(historicalFeatures.count),
-                volatility: sumOfVolatilities/Double(historicalFeatures.count))
+                volatility: sumOfVolatilities/Double(historicalFeatures.count),
+                volume: volumeAVG,
+                sma20: sma20)
         }
+    }
+    
+    var lastStockData: StockData {
+        historicalData?.sorted(
+            by: {
+                ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedDescending }).first ?? self
     }
     
     var rsi: StockKitUtils.RSI? = nil
@@ -154,15 +167,19 @@ class StockData: NSObject {
         let historicalFeatures = history.map { $0.features }
         let sumOfMomentums: Double = Double(historicalFeatures.map { $0?.momentum ?? 0 }.reduce(0, +) + thisFeature.momentum)
         let sumOfVolatilities: Double = (historicalFeatures.map { $0?.volatility ?? 0.0 }.reduce(0, +)) + thisFeature.volatility
+        let volumeAVG = (Double(history.map { $0.volume }.reduce(0, +)) + self.volume) / Double(history.count + 1)
+        let sma20 = Double(historicalFeatures.suffix(19).map { $0?.dayAverage ?? 0 }.reduce(0, +) + thisFeature.dayAverage) / (20.0)
         
         return StockKitUtils.Features.Averages(
             momentum: sumOfMomentums/Double(historicalFeatures.count + 1),
-            volatility: sumOfVolatilities/Double(historicalFeatures.count + 1))
+            volatility: sumOfVolatilities/Double(historicalFeatures.count + 1),
+            volume: volumeAVG,
+            sma20: sma20)
     }
     
     
     var updatedRSI: StockKitUtils.RSI {
-        if let history = historicalData {
+        if let history = historicalData?.suffix(PredictionRules().rsiMaxHistorical) {
             return StockKitUtils.RSI(
                 open: StockKitUtils.calculateRsi(
                     history.map { $0.open } + [open]),
@@ -211,7 +228,8 @@ class StockData: NSObject {
             
             stock.features = StockKitUtils.Features(
                 momentum: stock.close > nextStock.close ? 1 : -1,
-                volatility: (stock.close - nextStock.close)/nextStock.close)
+                volatility: (stock.close - nextStock.close)/nextStock.close,
+                dayAverage: (stock.close + stock.open)/2)
             
             sortedHistory[i] = stock
         }
@@ -229,7 +247,8 @@ class StockData: NSObject {
         if let nextStock = sortedHistory.first {
             self.features = StockKitUtils.Features(
                 momentum: self.close > nextStock.close ? 1 : -1,
-                volatility: (self.close - nextStock.close)/nextStock.close)
+                volatility: (self.close - nextStock.close)/nextStock.close,
+                dayAverage: (self.close + self.open)/2)
         }
         
         self.historicalData = sortedHistory

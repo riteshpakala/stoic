@@ -19,7 +19,6 @@ class AppDelegate: GraniteAppDelegate {
     var lastRotation: UIInterfaceOrientationMask? = nil
     
     override func didLaunch() {
-        print("{TEST} 7")
         FileManager.default.clearTmpDirectory()
         FirebaseApp.configure()
         
@@ -89,7 +88,6 @@ extension AppDelegate {
         #if (arch(i386) || arch(x86_64)) && os(iOS)
         let identifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"]!
         #else
-        
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)

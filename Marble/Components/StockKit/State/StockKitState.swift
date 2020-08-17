@@ -11,11 +11,11 @@ import Foundation
 struct PredictionRules {
     var days: Int = 7
     var maxDays: Int = 12
-    var historicalDays: Int = 30
+    var historicalDays: Int = 36
     var baseLangCode: String = "en"
     var tweets: Int = 1
     let marketCloseHour: Int = 16
-    let rsiMaxHistorical: Int = 16
+    let rsiMaxHistorical: Int = 20
 }
 
 public class StockKitState: State {

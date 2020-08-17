@@ -5,6 +5,7 @@
 //  Created by Ritesh Pakala on 7/24/20.
 //  Copyright © 2020 Ritesh Pakala. All rights reserved.
 //
+
 import Granite
 import Foundation
 import UIKit
@@ -38,7 +39,7 @@ class PredictWorkItem {
     }
 }
 
-class ConsoleDetailView: UIView {
+class ConsoleDetailView: GraniteView {
     lazy var headerView: ConsoleDetailHeaderView = {
         return .init()
     }()
@@ -111,6 +112,7 @@ class ConsoleDetailView: UIView {
         }
         
         sentimentView.delegate = self
+        clipsToBounds = true
     }
     
     required init?(coder: NSCoder) {
@@ -125,10 +127,20 @@ class ConsoleDetailView: UIView {
             payload.stockSentimentData)
         
         predictionView.updateModel(
-            payload.days,
-            maxDays: payload.maxDays,
             model: payload.model,
             stockData: payload.historicalTradingData)
+    }
+    
+    func updateThink(_ payload: ThinkPayload?) {
+        print("{THINK} \(payload?.stockSentimentData?.toString)")
+        if let sentiment = payload?.stockSentimentData {
+            sentimentView.updateSlider(sentiment)
+            sentimentChanged(
+                sentiment.posAverage,
+                negative: sentiment.negAverage,
+                neutral: sentiment.neuAverage,
+                compound: sentiment.compoundAverage)
+        }
     }
     
     override func hitTest(
@@ -148,29 +160,12 @@ class ConsoleDetailView: UIView {
             origin: historicalFrame.origin,
             size: .init(width: historicalIndicator.width + historicalIndicator.origin.x,
                         height: historicalIndicator.height + historicalIndicator.origin.y))
-        
-        let predictionFrame = predictionView.frame
-        let predictionTableViewFrame = predictionView.predictionRangePicker.frame
-        let predictionIndicator = predictionView.indicator.frame
-        
-        let adjPredictionTableViewFrame: CGRect = .init(
-            origin: predictionFrame.origin,
-            size: .init(width: predictionTableViewFrame.width + predictionTableViewFrame.origin.x,
-                        height: predictionTableViewFrame.height + predictionTableViewFrame.origin.y))
-        let adjPredictionIndicatorFrame: CGRect = .init(
-            origin: predictionFrame.origin,
-            size: .init(width: predictionIndicator.width + predictionIndicator.origin.x,
-                        height: predictionIndicator.height + predictionIndicator.origin.y))
-        
+
         if  adjHistoricalTableViewFrame.contains(point),
             historicalView.expand,
             !adjHistoricalIndicatorFrame.contains(point) {
             
             return historicalView.historicDatePicker
-        } else if adjPredictionTableViewFrame.contains(point),
-                  predictionView.expand,
-                  !adjPredictionIndicatorFrame.contains(point) {
-            return predictionView.predictionRangePicker
         } else {
             return super.hitTest(point, with: event)
         }
@@ -198,7 +193,7 @@ extension ConsoleDetailView: ConsoleDetailSentimentViewDelegate {
 }
 
 //MARK: Header
-class ConsoleDetailHeaderView: UIView {
+class ConsoleDetailHeaderView: GraniteView {
     let currentTradingDay: UILabel = {
         let label: UILabel = .init()
         label.text = ""
@@ -231,7 +226,7 @@ class ConsoleDetailHeaderView: UIView {
 }
 
 //MARK: Historical
-class ConsoleDetailHistoricalView: UIView {
+class ConsoleDetailHistoricalView: GraniteView {
     lazy var historicDatePicker: StockDatePicker = {
         return .init(color: GlobalStyle.Colors.green)
     }()
@@ -374,7 +369,7 @@ class ConsoleDetailHistoricalView: UIView {
         openLabel.text = "\("open".localized.lowercased()): $\(round(stock.open*100)/100)\n\("close".localized.lowercased()): $\(round(stock.close*100)/100)"
         
         guard let sentiment = sentimentData.first(
-            where: { $0.dateAsString == stock.dateData.asString }) else {
+            where: { $0.stockDateRefAsString == stock.dateData.asString }) else {
             
                 emotionLabel.text = "⚠️"
                 return
@@ -399,7 +394,7 @@ protocol ConsoleDetailSentimentViewDelegate: class {
         neutral: Double,
         compound: Double)
 }
-class ConsoleDetailSentimentView: UIView {
+class ConsoleDetailSentimentView: GraniteView {
     enum SentimentDetail: String {
         case positive = "positive"
         case negative = "negative"
@@ -577,6 +572,32 @@ class ConsoleDetailSentimentView: UIView {
             y: hStack.frame.maxY)
     }
     
+    func updateSlider(
+        _ sentiment: StockSentimentData) {
+        DispatchQueue.main.async {
+            self.refineSlider.setValue(
+                Float(sentiment.neuAverage),
+                animated: true)
+            
+            self.slider.setValue(
+                Float(0.5 + (0.5*(sentiment.posAverage-sentiment.negAverage))),
+                animated: true)
+            
+            
+            self.compoundSlider.setValue(
+                Float(0.5*(1.0 + sentiment.compoundAverage)),
+                animated: true)
+            
+            self.updateEmotionCharacteristics(
+                neuPercent: Int(sentiment.neuAverage*100),
+                negPercent: Int(sentiment.negAverage*100),
+                posPercent: Int(sentiment.posAverage*100),
+                compound: Float(sentiment.compoundAverage))
+            
+            self.updateEmotionTrack()
+        }
+    }
+    
     @objc func sliderValue(
         _ slider: UISlider) {
         
@@ -598,10 +619,6 @@ class ConsoleDetailSentimentView: UIView {
         let neuPercent = Int(neuValue*100)
         var compound = round((compoundValue1 - compoundValue2)*100)/100
         compound = compound > -0.01 && compound < 0.01 ? 0.0 : compound
-        
-        refineLabel.text = "Δ:\(neuPercent)%"
-        emotionLabel.text = "[\(negPercent)%:\(posPercent)%]"
-        compoundLabel.text = "λ:\(compound)"
         
         updateEmotionCharacteristics(
             neuPercent: neuPercent,
@@ -627,9 +644,12 @@ class ConsoleDetailSentimentView: UIView {
         compound: Float,
         padding: Int = 5) {
         
+        refineLabel.text = "Δ:\(neuPercent)%"
+        emotionLabel.text = "[\(negPercent)%:\(posPercent)%]"
+        compoundLabel.text = "λ:\(compound)"
+        
         var characteristics: [SentimentDetail] = []
         
-        print("{TEST} \(neuPercent), \(negPercent), \(posPercent) \(compound)")
         if neuPercent > padding {
             //Refine General Emotion
             characteristics.append(.delta)
@@ -686,32 +706,15 @@ extension UISlider {
 }
 
 //MARK: Prediction
-class ConsoleDetailPredictionView: UIView {
-    lazy var predictionRangePicker: DaysPicker = {
-        return .init(color: GlobalStyle.Colors.purple)
-    }()
-    
-    lazy var indicator: TriangleView = {
-        return .init(
-            frame: .zero,
-            color: GlobalStyle.Colors.purple)
-    }()
-    
-    lazy var refetchTriggerContainer: UIView = {
-        return .init()
-    }()
-    
-    lazy var reFetchTrigger: UIImageView = {
-        let view = UIImageView.init()
-        view.image = UIImage(named:"console.detail.refresh")?.withRenderingMode(.alwaysTemplate)
-        view.contentMode = .scaleAspectFit
-        view.tintColor = GlobalStyle.Colors.purple
+class ConsoleDetailPredictionView: GraniteView {
+    lazy var thinkTriggerContainer: UIView = {
+        let view: UIView = .init()
+        view.clipsToBounds = false
         return view
     }()
-    
     lazy var thinkTrigger: UIView = {
         let view: UIView = .init()
-        view.clipsToBounds = true
+        view.clipsToBounds = false
         return view
     }()
     
@@ -719,150 +722,90 @@ class ConsoleDetailPredictionView: UIView {
         let label = UILabel.init()
         label.textAlignment = .center
         label.textColor = GlobalStyle.Colors.purple
-        label.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
-        label.text = "open: $0000.00\nclose: $0000.00"
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.text = "close: $0000.00"
         label.numberOfLines = 0
         return label
     }()
     
-    lazy var hStack: UIStackView = {
+    lazy var vStack: UIStackView = {
         let stack = UIStackView.init(
             arrangedSubviews: [
-                refetchTriggerContainer,
-                thinkTrigger,
                 predictionLabel])
-        stack.alignment = .center
+        stack.alignment = .fill
         stack.distribution = .fill
-        stack.axis = .horizontal
+        stack.axis = .vertical
         stack.spacing = GlobalStyle.spacing
-        stack.setCustomSpacing(GlobalStyle.padding, after: refetchTriggerContainer)
         return stack
     }()
     
-    lazy var tapGestureTableView: UITapGestureRecognizer = {
+    lazy var tapGesture: UITapGestureRecognizer = {
         return .init(target: self, action: #selector(self.tapRegistered(_:)))
     }()
     
-    var cellsToViewWhenExpanded: CGFloat
-    
-    var expand: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                if self.expand {
-                    self.predictionRangePicker.snp.remakeConstraints { make in
-                        make.left.equalToSuperview().offset(GlobalStyle.padding)
-                        make.width.equalToSuperview().multipliedBy(0.39)
-                        make.height.equalTo(self.cellsToViewWhenExpanded * self.predictionRangePicker.cellHeight)
-                        make.top.equalToSuperview().offset(self.predictionRangePicker.frame.origin.y)
-                    }
-                } else {
-                    self.predictionRangePicker.snp.remakeConstraints { make in
-                        make.left.equalToSuperview().offset(GlobalStyle.padding)
-                        make.width.equalToSuperview().multipliedBy(0.39)
-                        make.height.equalToSuperview().multipliedBy(0.66)
-                        make.centerY.equalToSuperview()
-                    }
-                }
-            }
-        }
-    }
-    
-    var cellHeight: CGFloat {
-        didSet {
-            predictionRangePicker.cellHeight = cellHeight
-        }
-    }
-    
-    var days: Int = 0
-    var maxDays: Int = 0 {
-        didSet {
-            predictionRangePicker.days = maxDays
-        }
-    }
-    
     private var model: StockKitUtils.Models? = nil
     private var stockData: [StockData]? = nil
-    
-    init(cellHeight: CGFloat = 30,
-        cellsToViewWhenExpanded: CGFloat = 3) {
-        self.cellHeight = cellHeight
-        self.cellsToViewWhenExpanded = cellsToViewWhenExpanded
-        
+    private var emitterSize: CGFloat
+    init(emitterSize: CGFloat = 48) {
+        self.emitterSize = emitterSize
         super.init(frame: .zero)
         
         backgroundColor = .clear
         
-        predictionRangePicker.cellHeight = cellHeight
+        addSubview(vStack)
         
-        addSubview(predictionRangePicker)
-        addSubview(indicator)
-        addSubview(hStack)
-        
-        self.predictionRangePicker.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(GlobalStyle.padding)
-            make.width.equalToSuperview().multipliedBy(0.39)
-            make.height.equalToSuperview().multipliedBy(0.66)
-            make.centerY.equalToSuperview()
-        }
-        
-        self.indicator.snp.makeConstraints { make in
-            make.right.equalTo(predictionRangePicker.snp.right).offset(-GlobalStyle.padding)
-            make.centerY.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.19)
-            make.width.equalTo(indicator.snp.height).multipliedBy(1.3)
-        }
-        
-        self.hStack.snp.makeConstraints { make in
-            make.left.equalTo(predictionRangePicker.snp.right).offset(GlobalStyle.spacing)
+        self.vStack.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(GlobalStyle.spacing)
             make.right.equalToSuperview().offset(-GlobalStyle.spacing)
-            make.top.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(GlobalStyle.padding)
         }
         
-        self.refetchTriggerContainer.snp.makeConstraints { make in
-            make.height.width.equalTo(cellHeight - GlobalStyle.padding/2)
+        addSubview(thinkTriggerContainer)
+        thinkTriggerContainer.addSubview(thinkTrigger)
+        thinkTriggerContainer.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(GlobalStyle.spacing)
+            make.right.equalToSuperview().offset(-GlobalStyle.spacing)
+            make.top.equalTo(self.vStack.snp.bottom).offset(GlobalStyle.spacing)
+            make.bottom.equalToSuperview()
+        }
+        thinkTrigger.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.height.equalTo(emitterSize)
         }
         
-        self.thinkTrigger.snp.makeConstraints { make in
-            make.height.width.equalTo(cellHeight)
-        }
+        layoutIfNeeded()
         
-        refetchTriggerContainer.addSubview(reFetchTrigger)
+        thinkTrigger.addGestureRecognizer(tapGesture)
         
-        self.reFetchTrigger.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(GlobalStyle.spacing)
-            make.right.bottom.equalToSuperview().offset(-GlobalStyle.spacing)
-        }
-        
-        indicator.addGestureRecognizer(tapGestureTableView)
-        
-        thinkTrigger.thinkingEmitter(
-            forSize: .init(
-                width: cellHeight,
-                height: cellHeight))
-        thinkTrigger.layer.cornerRadius = (cellHeight)/2
+        thinkTrigger.layer.cornerRadius = (emitterSize)/2
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+        thinkTrigger.thinkingEmitter(
+            forSize: .init(
+                width: emitterSize,
+                height: emitterSize),
+            lifetime: 0.75)
+    }
+    
     @objc
     func tapRegistered(_ sender: UITapGestureRecognizer) {
-        expand.toggle()
-        indicator.rotate()
-        
+        feedbackGenerator.impactOccurred()
+        thinkTriggerContainer.thinkingEmitter(
+            forSize: thinkTriggerContainer.bounds.size,
+            renderMode: .backToFront,
+            color: GlobalStyle.Colors.purple)
+        bubbleEvent(DetailEvents.Think())
     }
     
     func updateModel(
-        _ days: Int,
-        maxDays: Int,
         model: StockKitUtils.Models,
         stockData: [StockData]) {
-        
-        cellHeight = self.frame.height*0.66
-        self.predictionRangePicker.currentDay = abs(maxDays - days)
-        self.days = days
-        self.maxDays = maxDays
         self.model = model
         self.stockData = stockData
         predict()
@@ -873,6 +816,14 @@ class ConsoleDetailPredictionView: UIView {
         negative: Double = 0.5,
         neutral: Double = 0.0,
         compound: Double = 0.0) {
+        
+        DispatchQueue.main.async {
+            self.thinkTriggerContainer
+                .layer.sublayers?.removeAll(
+                where: {
+                    ($0 as? CAEmitterLayer) != nil
+            })
+        }
         
         guard let recentStock = self.stockData?.sorted(
             by: {
@@ -897,7 +848,7 @@ class ConsoleDetailPredictionView: UIView {
                         compound: compound),
                     updated: true)
                 
-                print("PREDICTING\n\(dataSet.description)")
+                print("********************\nPREDICTING\n\(dataSet.description)")
                 
                 try testData.addTestDataPoint(
                    input: dataSet.asArray)
@@ -914,6 +865,8 @@ class ConsoleDetailPredictionView: UIView {
                     return
                 }
                 
+                print("[Prediction Output] :: \(output)")
+                
                 self?.predictionLabel.text = StockKitUtils.Models.DataSet.outputLabel(output)
             }
         
@@ -922,7 +875,7 @@ class ConsoleDetailPredictionView: UIView {
 }
 
 //MARK: Disclaimer
-class ConsoleDetailDisclaimerView: UIView {
+class ConsoleDetailDisclaimerView: GraniteView {
     lazy var disclaimer: UILabel = {
         let label = UILabel.init()
         label.textAlignment = .left

@@ -32,3 +32,11 @@ extension DetailEvents {
     struct GetPrediction: Event {
     }
 }
+
+extension DetailEvents {
+    struct Think: Event {
+    }
+    struct ThinkResponse: Event {
+        let payload: ThinkPayload
+    }
+}

@@ -21,7 +21,7 @@ struct GetSentimentReducer: Reducer {
         state.sentimentDownloadTimer?.invalidate()
         state.sentimentDownloadTimer = nil
         state.progressLabelText = "\("\"\("What is the world saying about".localized) \(state.searchedStock.companyName ?? state.searchedStock.symbol)?\"")"
-        
+
         guard let stockKit = component.getSubComponent(
             StockKitComponent.self) as? StockKitComponent else {
             return

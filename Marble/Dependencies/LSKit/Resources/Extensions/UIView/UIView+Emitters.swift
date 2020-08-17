@@ -13,16 +13,24 @@ extension UIView {
     func thinkingEmitter(
         forSize size: CGSize?,
         emitterSize: CGFloat = 1,
+        lifetime: Float = 12,
+        renderMode: CAEmitterLayerRenderMode = .oldestLast,
+        shape: CAEmitterLayerEmitterShape = .circle,
         color: UIColor = .white) {
+        
+        self.layer.sublayers?.removeAll(
+            where: {
+                ($0 as? CAEmitterLayer) != nil
+        })
         
         let explosionLayer = CAEmitterLayer()
         explosionLayer.emitterPosition = CGPoint(
             x: (size?.width ?? self.bounds.size.width) / 2,
             y: (size?.height ?? self.bounds.size.height) / 2)
-        explosionLayer.emitterShape = CAEmitterLayerEmitterShape.circle
+        explosionLayer.emitterShape = shape
         explosionLayer.emitterMode = CAEmitterLayerEmitterMode.outline
         explosionLayer.emitterSize = CGSize(width: emitterSize, height: 0)
-        explosionLayer.renderMode = CAEmitterLayerRenderMode.oldestLast
+        explosionLayer.renderMode = renderMode
         
         let bubble = CAEmitterCell()
         bubble.contents = UIImage(named: "emitter.particle")?.cgImage
@@ -30,7 +38,7 @@ extension UIView {
         bubble.alphaRange = 0.2
         bubble.alphaSpeed = -0.8
         bubble.birthRate = 120
-        bubble.lifetime = 0.5
+        bubble.lifetime = lifetime
         bubble.velocity = 24
         bubble.velocityRange = 5
         bubble.color = color.cgColor

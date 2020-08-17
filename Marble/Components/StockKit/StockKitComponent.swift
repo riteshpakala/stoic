@@ -88,21 +88,24 @@ extension StockKitComponent: SVMModelDelegate {
             by: {
                 ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedAscending })
         
-        for (_, stock) in sortedStockData.enumerated() {
+        
+        let sortedSentimentStockData = sentimentData.sorted(
+            by: {
+                ($0.date).compare($1.date) == .orderedAscending })
+        
+        for (i, stock) in sortedStockData.enumerated() {
             do {
-                if let firstSentiment = sentimentData.first(
-                    where: { $0.dateAsString == stock.dateData.asString }) {
-
-                    let dataSet = StockKitUtils.Models.DataSet(
-                        stock,
-                        firstSentiment)
-                    
-                    print(dataSet.description)
-                    
-                    try dataVolatility.addDataPoint(
-                        input: dataSet.asArray,
-                        output: dataSet.output)
-                }
+                guard sortedSentimentStockData.count > i else { continue }
+                let sentiment = sortedSentimentStockData[i]
+                let dataSet = StockKitUtils.Models.DataSet(
+                    stock,
+                    sentiment)
+                
+                print(dataSet.description)
+                
+                try dataVolatility.addDataPoint(
+                    input: dataSet.asArray,
+                    output: dataSet.output)
             }
             catch {
                 print("Invalid data set created")
@@ -113,8 +116,8 @@ extension StockKitComponent: SVMModelDelegate {
             problemType: .ϵSVMRegression,
             kernelSettings:
             KernelParameters(type: .Polynomial,
-                             degree: 1,
-                             gamma: 0.5,
+                             degree: 3,
+                             gamma: 0.3,
                              coef0: 0.0))
         svmVolatility.delegate = self
         svmVolatility.Cost = 1e3
@@ -258,6 +261,7 @@ extension StockKitComponent {
                         }
                         
                         if let validTradingDays = this.state.validTradingDays {
+
                             let datesAsStrings = validTradingDays.map { $0.asString }
                             let observedStocks: [StockData] = stockData.filter { datesAsStrings.contains($0.dateData.asString) }
                             
@@ -411,7 +415,7 @@ extension StockKitComponent {
         date: Date) {
         
         var sentimentData: [VaderSentimentOutput] = []
-        var textData: [String] = []
+        var tweetData: [Tweet] = []
         
         print("{TEST} Sentiment \(payload.asString) \(dateAsString) \(aheadDateAsString)")
         
@@ -430,38 +434,16 @@ extension StockKitComponent {
                 
                 if vaderSentiment.compound != .zero {
                     sentimentData.append(vaderSentiment)
-                    textData.append(result.text)
-                    
-//                    print("{TEST} #############################################")
-//                    print("{TEST} tweet \(Double(result.time)?.date().dateComponents()), \(Double(result.time)?.date().timeComponents())")
-//                    print("{TEST} tweet-text \(result.text)")
-//                    print("{TEST} tweet-sentiment \(vaderSentiment.asString)")
+                    tweetData.append(result)
                 }
-//                let input = SentimentPolarityInput(input: self.features(from: result.text))
-//
-//                let score = self.predictionSentimentScore(
-//                    with: [input],
-//                    self.classifier)
-                
-//                if let score = score {
-//                    positives.append(vaderSentiment.pos)
-//                    neutrals.append(vaderSentiment.neu)
-//                    negatives.append(vaderSentiment.neg)
-//                    compounds.append(vaderSentiment.compound)
-//                    textData.append(result.text)
-//                }
-                
-//                print("{DEBUG} ######################")
-//                print("{DEBUG} \(result.text)")
-//                print("{DEBUG} CoreML: \(score?.pos) \(score?.negative) \(score?.neutral)")
-//                print("{DEBUG} Vader: \(VaderSentiment.predict(result.text).asString)")
             }
             
             self?.pushSentiment(
                 date,
+                aheadDateAsString,
                 dateAsString,
                 sentimentData,
-                textData,
+                tweetData,
                 payload)
         }, progress: { [weak self] text, count in
             guard let this = self else { return }
@@ -477,64 +459,26 @@ extension StockKitComponent {
         failure: {  error in
             
         })
-        
-//        state.swifter.searchTweet(
-//            using: ticker,
-//            lang: "en",
-//            count: 12000,
-//            until: dateAsString,//pulls tweets from this day (-1), not until
-//            tweetMode: .extended,
-//            success: { (results, metadata) in
-//
-//            for i in 0..<(results.array?.count ?? 0){
-//                if let tweet = results[i]["full_text"].string{
-//                    let input = SentimentPolarityInput(input: self.features(from: tweet))
-//
-//                    let score = self.predictionSentimentScore(
-//                        with: [input],
-//                        self.classifier)
-//
-//                    if let score = score {
-//                        positives.append(score.pos ?? 0.0)
-//                        neutrals.append(score.neutral ?? 0.0)
-//                        negatives.append(score.negative ?? 0.0)
-//                        textData.append(tweet)
-//                    }
-//                }
-//            }
-//
-//
-//            let stockSentiment: StockSentimentData = .init(
-//                date: date,
-//                dateAsString: dateAsString,
-//                dateComponents: self.state.dateComponents(fromDate: date),
-//                positives: positives,
-//                neutrals: neutrals,
-//                negatives: negatives,
-//                textData: textData)
-//
-//            self.sentiments.append(stockSentiment)
-//            self.getSentiment(forTicker: ticker)
-//        }) { (error) in
-//            print("some error in searching tweets \(error)")
-//        }
     }
     
     func pushSentiment(
         should: Bool = true,
         _ date: Date,
+        _ aheadDateAsString: String,
         _ dateAsString: String,
         _ sentimentData: [VaderSentimentOutput],
-        _ textData: [String],
+        _ tweetData: [Tweet],
         _ payload: StockSearchPayload) {
         guard should else { return }
         let stockSentiment: StockSentimentData = .init(
             date: date,
-            dateAsString: dateAsString,
+            dateAsString: aheadDateAsString,
+            stockDateRefAsString: dateAsString,
             dateComponents: date.dateComponents(),
             sentimentData: sentimentData,
-            textData: textData)
-            
+            tweetData: tweetData)
+         
+        
         self.sentiments.append(stockSentiment)
         self.getSentiment(forSearch: payload)
     }

@@ -186,6 +186,7 @@ public class TwitterScraper: NSObject {
                                 let hour: Int = timeComponents?.hour ?? 0
                                 let minute: Int = timeComponents?.minute ?? 0
                                 if (filterLangCode == nil || filterLangCode == lang),
+                                    VaderSentiment.predict(text).compound != 0,
                                     (hour <= this.cursorHour) || !isSpread,
                                     (minute < this.cursorMinute) || !isSpread,
                                     (!this.linkExists(in: text) || !noLinks),

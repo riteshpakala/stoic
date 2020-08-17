@@ -24,7 +24,9 @@ public class DetailComponent: Component<DetailState> {
             GetSentimentResponseReducer.Reducible(),
             GetPredictionReducer.Reducible(),
             GetPredictionProgressReducer.Reducible(),
-            StockKitIsPreparedReducer.Reducible()
+            StockKitIsPreparedReducer.Reducible(),
+            ThinkReducer.Reducible(),
+            ThinkResponseReducer.Reducible()
         ]
     }
     

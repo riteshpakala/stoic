@@ -12,4 +12,13 @@ public struct Tweet {
     let text: String
     let time: String
     let lang: String
+    
+    var date: String {
+        if let timeInt = Int(time) {
+            return Calendar.nyDateFormatter.string(
+                from: Double(timeInt).date())
+        } else {
+            return ""
+        }
+    }
 }

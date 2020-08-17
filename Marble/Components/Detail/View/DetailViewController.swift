@@ -49,6 +49,11 @@ public class DetailViewController: GraniteViewController<DetailState> {
             async: .main)
         
         observeState(
+            \.thinkPayload,
+            handler: observeThink(_:),
+            async: .main)
+        
+        observeState(
             \.progressLabelText,
             handler: observeProgressText(_:),
             async: .main)
@@ -82,6 +87,14 @@ extension DetailViewController {
         self._view.center = .init(
                     x: self._view.center.x + (point.newValue?.x ?? 0),
                     y: self._view.center.y + (point.newValue?.y ?? 0))
+    }
+    
+    func observeThink(
+        _ payload: Change<ThinkPayload?>) {
+        
+        if  _view.currentState == .done {
+            _view.consoleView.setThinkData(payload.newValue ?? nil)
+        }
     }
     
     func observeProgressText(

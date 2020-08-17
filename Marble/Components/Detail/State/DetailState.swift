@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 public class DetailState: State {
+    let scraper = TwitterScraper()
+    
     var csvDownloadTimer: Timer? = nil
     let csvDelay: TimeInterval = 1.2
     
@@ -23,6 +25,7 @@ public class DetailState: State {
     
     var stockData: [StockData]? = nil
     var stockSentimentData: [StockSentimentData]? = nil
+    @objc dynamic var thinkPayload: ThinkPayload? = nil
     
     var searchedStock: SearchStock
     
@@ -34,5 +37,13 @@ public class DetailState: State {
     
     init(_ searchedStock: SearchStock) {
         self.searchedStock = searchedStock
+    }
+}
+
+class ThinkPayload: NSObject {
+    var stockSentimentData: StockSentimentData? = nil
+    public init(
+        sentiment: StockSentimentData) {
+        self.stockSentimentData = sentiment
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class ConsoleView: UIView {
+class ConsoleView: GraniteView {
     var detailIsLoaded: Bool = false
     
     lazy var taskbarView: UIView = {
@@ -221,6 +221,10 @@ extension ConsoleView {
     func setDetailData(_ payload: ConsoleDetailPayload) {
         detailView.isHidden = minimizeButton.tag == 1
         detailView.updateData(payload)
+    }
+    
+    func setThinkData(_ payload: ThinkPayload?) {
+        detailView.updateThink(payload)
     }
     
     func setTitle(_ title: String?) {

@@ -9,7 +9,7 @@
 import Foundation
 
 public struct StockKitUtils {
-    static let inDim: Int = 6
+    static let inDim: Int = 8
     static let outDim: Int = 1
     
     static let Tolerance: Double = 10e-20
@@ -49,18 +49,21 @@ public struct StockKitUtils {
     public struct Features {
         let momentum: Int
         let volatility: Double
+        let dayAverage: Double
         
         public struct Averages {
             let momentum: Double
             let volatility: Double
+            let volume: Double
+            let sma20: Double
             
             static var zero: StockKitUtils.Features.Averages {
-                return .init(momentum: 0.0, volatility: 0.0)
+                return .init(momentum: 0.0, volatility: 0.0, volume: 0.0, sma20: 0.0)
             }
         }
         
         static var zero: StockKitUtils.Features {
-            return .init(momentum: 0, volatility: 0.0)
+            return .init(momentum: 0, volatility: 0.0, dayAverage: 0.0)
         }
     }
     
@@ -71,25 +74,39 @@ public struct StockKitUtils {
             let stock: StockData
             let open: Double
             let close: Double
+            let volume: Double
             let rsi: StockKitUtils.RSI
             let features: StockKitUtils.Features
             let averages: StockKitUtils.Features.Averages
             let sentiment: StockSentimentData
+            
             init(
                 _ stock: StockData,
                 _ sentiment: StockSentimentData,
                 updated: Bool = false) {
+                
                 self.stock = stock
-                self.open = stock.open
-                self.close = stock.close
+                self.open = (updated ? stock.open : stock.lastStockData.open)
+                self.close = (updated ? stock.close : stock.lastStockData.close)
+                self.volume = updated ? stock.volume : stock.lastStockData.volume
                 self.rsi = (updated ? stock.updatedRSI : (stock.rsi ?? .zero))
                 self.features = stock.features ?? .zero
                 self.averages = (updated ? stock.updatedAverages : stock.averages) ?? .zero
                 self.sentiment = sentiment
+                
             }
             
             public var asArray: [Double] {
-                [averages.momentum, averages.volatility, sentiment.posAverage, sentiment.negAverage, sentiment.neuAverage, sentiment.compoundAverage]
+                [
+                 averages.momentum,
+                 averages.volatility,
+                 volume / averages.volume,
+                 close / averages.sma20,
+                 sentiment.posAverage,
+                 sentiment.negAverage,
+                 sentiment.neuAverage,
+                 sentiment.compoundAverage
+                ]
             }
             
             public var inDim: Int {
@@ -101,11 +118,11 @@ public struct StockKitUtils {
             }
             
             public var output: [Double] {
-                [Double(stock.close)]
+                [stock.close]
             }
             
             static func outputLabel(_ variable: Double) -> String {
-                return "\("close".localized.lowercased()):\n$\(String(round(variable*100)/100))"
+                return "\("close".localized.lowercased()): $\(String(round(variable*100)/100))"
             }
             
             public var description: String {
@@ -116,10 +133,15 @@ public struct StockKitUtils {
                     \(stock.toString)
                     RSI_open: \(rsi.open)
                     RSI_close: \(rsi.close)
+                    SMA_20: \(averages.sma20)
                     \(sentiment.toString)
                     Momentum: \(features.momentum)
                     - Prev_Stock_Close: \(stock.historicalData?.first?.dateData.asString ?? "⚠️") - \(stock.historicalData?.first?.close ?? 0.0)
                     Volatility: \(features.volatility)
+                    Momentum_AVG: \(averages.momentum)
+                    Volatility_AVG: \(averages.volatility)
+                    Volume_WAVG: \(averages.volume)
+                    Historical_Count: \(stock.count)
                     '''''''''''''''''''''''''''''
                     """
                 return desc
