@@ -23,12 +23,12 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         
         _view.parent = self.parent?.view
         
-        sendEvent(
-            DashboardEvents.ShowDetail(
-                searchedStock: .init(
-                    exchangeName: "NASDAQ",
-                    symbolName: "MSFT",
-                    companyName: "Microsoft")))
+//        sendEvent(
+//            DashboardEvents.ShowDetail(
+//                searchedStock: .init(
+//                    exchangeName: "NASDAQ",
+//                    symbolName: "MSFT",
+//                    companyName: "Microsoft")))
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -44,4 +44,14 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         super.viewDidLayoutSubviews()
     }
 	
+    override public func viewWillTransition(
+        to size: CGSize,
+        with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation == .landscapeLeft {
+            _view.settings.edge = .right
+        } else {
+            _view.settings.edge = .left
+        }
+    }
 }

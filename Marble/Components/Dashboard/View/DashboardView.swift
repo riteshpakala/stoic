@@ -10,10 +10,25 @@ import Foundation
 import UIKit
 
 public class DashboardView: GraniteView {
+    lazy var settings: TongueSettings = {
+        let view: TongueSettings = .init()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
     var parent: UIView?
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
+        
+        addSubview(settings)
+        settings.snp.makeConstraints { make in
+            make.size.equalTo(CGSize.init(width: 112, height: 200))
+            make.left.equalToSuperview().offset(-abs(112 - settings.tongueSize.width))
+            make.bottom.equalTo(
+                self.safeAreaLayoutGuide.snp.bottom)
+                .offset(-GlobalStyle.padding*3)
+        }
     }
     
     required init?(coder: NSCoder) {

@@ -14,33 +14,33 @@ import UIKit
 public class SceneView: GraniteView {
     
     struct SCNNodes {
-        var cameraNode: SCNNode {
+        lazy var cameraNode: SCNNode = {
             let cameraNode = SCNNode()
             cameraNode.camera = SCNCamera()
-            cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
+            cameraNode.position = SCNVector3(x: 0, y: 0, z: 12)
             cameraNode.rotation = SCNVector4(0, 0, 0, 0)
             return cameraNode
-        }
+        }()
         
-        var lightNode: SCNNode {
+        lazy var lightNode: SCNNode = {
             let lightNode = SCNNode()
             lightNode.light = SCNLight()
-            lightNode.light!.type = .omni
+            lightNode.light?.type = .omni
             lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
             
             return lightNode
-        }
+        }()
         
-        var ambientLightNode: SCNNode {
+        lazy var ambientLightNode: SCNNode = {
             let ambientLightNode = SCNNode()
             ambientLightNode.light = SCNLight()
             ambientLightNode.light!.type = .ambient
             ambientLightNode.light!.color = UIColor.darkGray
             
             return ambientLightNode
-        }
+        }()
         
-        var alexanderNode: SCNNode {
+        lazy var alexanderNode: SCNNode = {
             let path = Bundle.main.path(forResource: "alexander", ofType: "obj")
             let url = NSURL(fileURLWithPath: path!)
             let materialPath = Bundle.main.path(forResource: "alexander", ofType: "jpg")
@@ -64,10 +64,8 @@ public class SceneView: GraniteView {
                  else { fatalError("Failed to get mesh from asset.") }
             
             let alexanderNode = SCNNode(mdlObject: object)
-            alexanderNode.position = SCNVector3(x: 0, y: 0, z: 0)
-
             return alexanderNode
-        }
+        }()
     }
     
     lazy var sceneView: SCNView = {

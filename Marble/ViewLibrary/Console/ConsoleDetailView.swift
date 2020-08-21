@@ -709,11 +709,13 @@ extension UISlider {
 class ConsoleDetailPredictionView: GraniteView {
     lazy var thinkTriggerContainer: UIView = {
         let view: UIView = .init()
+        view.isUserInteractionEnabled = true
         view.clipsToBounds = false
         return view
     }()
     lazy var thinkTrigger: UIView = {
         let view: UIView = .init()
+        view.isUserInteractionEnabled = true
         view.clipsToBounds = false
         return view
     }()

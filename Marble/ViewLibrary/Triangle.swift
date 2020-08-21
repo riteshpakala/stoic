@@ -11,10 +11,13 @@ import UIKit
 
 class TriangleView : UIView {
     let color: UIColor
+    let direction: UIRectEdge
     init(
         frame: CGRect,
-        color: UIColor) {
+        color: UIColor,
+        direction: UIRectEdge = .bottom) {
         self.color = color
+        self.direction = direction
         super.init(frame: frame)
         
     }
@@ -28,18 +31,31 @@ class TriangleView : UIView {
         guard let context = UIGraphicsGetCurrentContext() else { return }
 
         context.beginPath()
-        context.move(to: CGPoint(x: rect.minX, y: rect.minY))
-        context.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        context.addLine(to: CGPoint(x: (rect.maxX / 2.0), y: rect.maxY))
+        
+        
+        if direction == .bottom {
+            context.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            context.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            context.addLine(to: CGPoint(x: (rect.maxX / 2.0), y: rect.maxY))
+        } else if direction == .right {
+            context.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            context.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY/2))
+            context.addLine(to: CGPoint(x: (rect.minX), y: rect.maxY))
+        } else if direction == .left {
+            context.move(to: CGPoint(x: rect.maxX, y: rect.minY))
+            context.addLine(to: CGPoint(x: rect.minX, y: rect.maxY/2))
+            context.addLine(to: CGPoint(x: (rect.maxX), y: rect.maxY))
+        }
+        
         context.closePath()
         context.setFillColor(color.cgColor)
         context.fillPath()
     }
     
-    func rotate() {
+    func rotate(by angle: CGFloat = CGFloat.pi/2) {
         UIView.animate(withDuration: 0.24, delay: 0.0, options: .curveEaseIn, animations: {
             if self.transform == .identity {
-                self.transform = self.transform.rotated(by: CGFloat.pi/2)
+                self.transform = self.transform.rotated(by: angle)
             } else {
                 self.transform = .identity
             }
