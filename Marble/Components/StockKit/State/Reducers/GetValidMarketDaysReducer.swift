@@ -18,6 +18,7 @@ struct GetValidMarketDaysReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        //TODO: Set days here for fresh launches
         
         if let component = component as? StockKitComponent {
             let currentDate = state.currentDateComponents

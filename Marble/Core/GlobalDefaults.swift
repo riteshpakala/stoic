@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 public struct GlobalDefaults {
     public static let subscription: String = "subscription"
     public static let predictionSentiment: String = "prediction.sentiment"
@@ -22,5 +20,24 @@ public struct GlobalDefaults {
             GlobalDefaults.predictionDays]
     }
     
-    
+    public struct Values {
+        public static var pairs: [String: Any] {
+            return [
+                GlobalDefaults.subscription : Values.subscription,
+                GlobalDefaults.predictionSentiment : Values.predictionSentiment,
+                GlobalDefaults.predictionDays : Values.predictionDays,
+            ]
+            
+        }
+        
+        public static var subscription: Bool {
+            false
+        }
+        public static var predictionSentiment: String {
+            "low"
+        }
+        public static var predictionDays: Int {
+            7
+        }
+    }
 }

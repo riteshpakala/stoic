@@ -56,7 +56,6 @@ class TriangleView : UIView {
     func rotate(by angle: CGFloat = CGFloat.pi/2, active: Bool = true) {
         self.isActive = active
         
-        print("{TEST} transform \(self.transform == .identity)")
         UIView.animate(withDuration: 0.24, delay: 0.0, options: .curveEaseIn, animations: {
             if self.transform == .identity {
                 self.transform = self.transform.rotated(by: angle)

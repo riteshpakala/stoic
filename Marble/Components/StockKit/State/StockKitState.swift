@@ -8,7 +8,7 @@
 import Granite
 import Foundation
 
-struct PredictionRules {
+public struct PredictionRules {
     var days: Int = 7
     var maxDays: Int = 12
     var historicalDays: Int = 36
@@ -16,6 +16,15 @@ struct PredictionRules {
     var tweets: Int = 1
     let marketCloseHour: Int = 16
     let rsiMaxHistorical: Int = 20
+    
+    public struct PredictionLevels {
+        public static var sentimentLow: Int = 1
+        public static var sentimentMed: Int = 4
+        public static var sentimentHi: Int = 7
+        
+        public static var maxDaysLearnedLearned: Int = 12
+        public static var minDaysLearnedLearned: Int = 1
+    }
 }
 
 public class StockKitState: State {
@@ -71,8 +80,21 @@ public class StockKitState: State {
     }
     
     init(
+        predictionSentiment: String = "low",
+        predictionDays: Int = 7,
         consumerKey: String? = nil,
         consumerSecret: String? = nil) {
+        
+        //TODO: Constants for strength levels
+        if predictionSentiment == "med" {
+            rules.tweets = PredictionRules.PredictionLevels.sentimentMed
+        } else if predictionSentiment == "hi" {
+            rules.tweets = PredictionRules.PredictionLevels.sentimentHi
+        } else {
+            rules.tweets = PredictionRules.PredictionLevels.sentimentLow
+        }
+        
+        rules.days = predictionDays
         
         if  let key = consumerKey,
             let secret = consumerSecret {
@@ -83,11 +105,12 @@ public class StockKitState: State {
         
         super.init()
         
-        
         yahooFinanceAPIHistoryKey = "\(Int(currentDate.timeIntervalSince1970))"
         
-        print("{TEST} \(currentDateComponents)")
-        print("{TEST} \(yahooFinanceAPIHistoryKey)")
+        print("{STOCKIT} \(rules.tweets)")
+        print("{STOCKIT} \(rules.days)")
+        print("{STOCKIT} \(currentDateComponents)")
+        print("{STOCKIT} \(yahooFinanceAPIHistoryKey)")
     }
     
     func dateAsString(date: Date) -> String {
