@@ -887,6 +887,7 @@ class ConsoleDetailDisclaimerView: GraniteView {
         label.numberOfLines = 0
         return label
     }()
+    
 //    lazy var disclaimer2: UILabel = {
 //        let label = UILabel.init()
 //        label.textAlignment = .left

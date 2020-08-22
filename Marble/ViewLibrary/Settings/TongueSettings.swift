@@ -30,7 +30,7 @@ class TongueSettings: GraniteView {
         let view: TriangleView = .init(
             frame: .zero,
             color: GlobalStyle.Colors.green,
-            direction: .right)
+            direction: .left)
         view.backgroundColor = .clear
         return view
     }()
@@ -51,7 +51,6 @@ class TongueSettings: GraniteView {
         view.backgroundColor = .clear
         view.alwaysBounceVertical = true
         
-        
         return (view, layout)
     }()
     
@@ -64,27 +63,44 @@ class TongueSettings: GraniteView {
     public var isOpen: Bool = false
     
     public var edge: UIRectEdge = .left {
-        willSet {
+        didSet {
             updateAppearance(true)
         }
     }
     
     public lazy var settingsItems: [TongueSettingsModel] = {
         let model1: TongueSettingsModel = TongueSettingsModel.init(
-            title: "Senti..",
-            subText: "..ment",
-            value: "1")
+            help: "sentiment strength",
+            label: "sentiment",
+            value: "low")
         let model2: TongueSettingsModel = TongueSettingsModel.init(
-            title: "Days",
-            subText: "seen",
+            help: "days to learn",
+            label: "days",
             value: "7")
         let model3: TongueSettingsModel = TongueSettingsModel.init(
-            title: "Subscr..",
-            subText: "..iption",
-            value: "on")
+            help: "subscription",
+            label: "subscription",
+            value: "off")
         
         return [model1, model2, model3]
     }()
+    
+    struct Helpers {
+        var isActive: Bool = false
+        var labels: [UILabel] = []
+        
+        static var basicLabel: UILabel {
+            let label: UILabel = .init()
+            label.font = GlobalStyle.Fonts.courier(.small, .bold)
+            label.textAlignment = .center
+            label.textColor = GlobalStyle.Colors.green
+            label.isHidden = true
+            label.backgroundColor = GlobalStyle.Colors.black
+            return label
+        }
+    }
+    
+    var helpers: Helpers = .init()
     
     public init(
         tongueSize: CGSize = .init(width: 42, height: 66)) {
@@ -100,7 +116,7 @@ class TongueSettings: GraniteView {
         
         tongueView.addSubview(indicator)
         self.indicator.snp.makeConstraints { make in
-            make.centerX.equalToSuperview().multipliedBy(1.5)
+            make.right.equalToSuperview().offset(-tongueSize.width/3)
             make.centerY.equalToSuperview()
             make.height.equalTo(tongueSize.width/3)
             make.width.equalTo(tongueSize.width/3)
@@ -123,11 +139,17 @@ class TongueSettings: GraniteView {
         collection.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        for i in 0..<settingsItems.count {
+            helpers.labels.append(Helpers.basicLabel)
+            helpers.labels[i].text = settingsItems[i].help
+            helpers.labels[i].sizeToFit()
+            self.addSubview(helpers.labels[i])
+        }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         updateAppearance(true)
     }
     
@@ -144,9 +166,14 @@ class TongueSettings: GraniteView {
     }
     
     func updateAppearance(_ isLayout: Bool = false) {
+        container.isHidden = !isOpen
+        
         if edge == .right && isLayout {
+            if self.indicator.isActive {
+                self.indicator.rotate(by: CGFloat.pi, active: false)
+            }
             self.indicator.snp.remakeConstraints { make in
-                make.centerX.equalToSuperview().multipliedBy(0.5)
+                make.left.equalToSuperview().offset(tongueSize.width/3)
                 make.centerY.equalToSuperview()
                 make.height.equalTo(tongueSize.width/3)
                 make.width.equalTo(tongueSize.width/3)
@@ -161,8 +188,11 @@ class TongueSettings: GraniteView {
                 corners: .topLeft,
                 radius: 8.0)
         } else if edge == .left && isLayout {
+            if !self.indicator.isActive {
+                self.indicator.rotate(by: CGFloat.pi)
+            }
             self.indicator.snp.remakeConstraints { make in
-                make.centerX.equalToSuperview().multipliedBy(1.5)
+                make.right.equalToSuperview().offset(-tongueSize.width/3)
                 make.centerY.equalToSuperview()
                 make.height.equalTo(tongueSize.width/3)
                 make.width.equalTo(tongueSize.width/3)
@@ -212,12 +242,39 @@ extension TongueSettings: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
-        return settingsItems.count
+        return settingsItems.count + 1
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
+        
+        guard indexPath.item < settingsItems.count else {
+            guard !helpers.isActive else {
+                helpers.labels.forEach { label in
+                    label.isHidden = true
+                }
+
+                helpers.isActive = false
+                return
+            }
+            
+            for i in 0..<settingsItems.count {
+                guard let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: "\(TongueSettingsCell.self)",
+                    for: IndexPath.init(item: i, section: 0)) as? TongueSettingsCell else {
+                        continue
+                }
+                
+                helpers.labels[i].isHidden = false
+                helpers.labels[i].frame.origin = .init(x: container.frame.maxX, y: (cell.frame.maxY - cell.frame.height/2) - helpers.labels[i].frame.size.height/2)
+            }
+            
+            helpers.isActive = true
+            
+            return
+        }
+        
         
     }
     
@@ -228,7 +285,7 @@ extension TongueSettings: UICollectionViewDelegate, UICollectionViewDataSource, 
         
         return .init(
             width: collectionView.frame.size.width,
-            height: collectionView.frame.size.height/CGFloat(settingsItems.count))
+            height: collectionView.frame.size.height/CGFloat(settingsItems.count + 1))
     }
     
     func collectionView(
@@ -241,14 +298,20 @@ extension TongueSettings: UICollectionViewDelegate, UICollectionViewDataSource, 
                 for: indexPath) as? TongueSettingsCell else {
             return .init()
         }
+        cell.layoutIfNeeded()
+        guard indexPath.item < self.settingsItems.count else {
+            cell.valueLabel.text = "i"
+            cell.valueContainer.layer.borderWidth  = 0
+            cell.valueLabel.font = GlobalStyle.Fonts.courier(.large, .bold)
+            return cell
+        }
         
-        cell.titleLabel.text = settingsItems[indexPath.item].title
-        cell.subtitleLabel.text = settingsItems[indexPath.item].subText
         cell.valueLabel.text = settingsItems[indexPath.item].value
-        cell.color = (indexPath.item + 1) % 2 == 0 ? GlobalStyle.Colors.purple : GlobalStyle.Colors.green
         
         return cell
     }
+    
+    
 }
 
 extension UIView {
@@ -261,65 +324,53 @@ extension UIView {
 }
 
 struct TongueSettingsModel {
-    var title: String
-    var subText: String
+    var help: String
+    var label: String
     var value: String
 }
 
 class TongueSettingsCell: UICollectionViewCell {
-    lazy var titleLabel: UILabel = {
-        let label: UILabel = .init()
-        label.font = GlobalStyle.Fonts.courier(.small, .bold)
-        label.textAlignment = .left
-        return label
-    }()
     
-    lazy var subtitleLabel: UILabel = {
-        let label: UILabel = .init()
-        label.font = GlobalStyle.Fonts.courier(.small, .bold)
-        label.textAlignment = .right
-        return label
+    lazy var valueContainer: UIView = {
+        let view: UIView = .init()
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 2.0
+        view.layer.borderColor = GlobalStyle.Colors.graniteGray.cgColor
+        return view
     }()
     
     lazy var valueLabel: UILabel = {
         let label: UILabel = .init()
-        label.font = GlobalStyle.Fonts.courier(.large, .bold)
+        label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.green
         return label
     }()
     
-    public var color: UIColor = GlobalStyle.Colors.purple {
-        didSet {
-            titleLabel.textColor = color
-            subtitleLabel.textColor = color
-            valueLabel.textColor = color
-        }
+    override func awakeFromNib() {
+        super.awakeFromNib()
     }
     
-    override func awakeFromNib() {
-        
-    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(GlobalStyle.spacing)
-            make.right.equalToSuperview()
-            make.height.equalTo(titleLabel.font.lineHeight)
+        contentView.addSubview(valueContainer)
+        valueContainer.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview().inset(GlobalStyle.padding+GlobalStyle.spacing)
+            make.height.equalTo(valueContainer.snp.width)
         }
-        contentView.addSubview(subtitleLabel)
-        subtitleLabel.snp.makeConstraints { make in
-            make.bottom.right.equalToSuperview().offset(-GlobalStyle.spacing)
-            make.left.equalToSuperview()
-            make.height.equalTo(subtitleLabel.font.lineHeight)
-        }
-        contentView.addSubview(valueLabel)
+        valueContainer.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom)
-            make.bottom.equalTo(subtitleLabel.snp.top)
+            make.center.equalToSuperview()
+            make.width.equalToSuperview().inset(4)
+            make.height.equalTo(valueContainer.snp.width)
         }
+    }
+    
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+        valueContainer.layer.cornerRadius = valueContainer.frame.size.width/2
     }
     
     required init?(coder: NSCoder) {

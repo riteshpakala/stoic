@@ -56,10 +56,10 @@ extension SceneViewController {
         SCNTransaction.animationDuration = 1.0
         
         if landscape {
-            _view.nodes.cameraNode.position.y = 11.5
+            _view.nodes.cameraNode.position.y = 11.0
             _view.nodes.cameraNode.position.z = 30
         } else {
-            _view.nodes.cameraNode.position.y = 20
+            _view.nodes.cameraNode.position.y = 21.5
             _view.nodes.cameraNode.position.z = 48
         }
         
