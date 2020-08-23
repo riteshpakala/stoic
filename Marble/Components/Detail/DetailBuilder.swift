@@ -10,14 +10,12 @@ import Foundation
 
 class DetailBuilder {
     static func build(
-        _ services: Services,
-        parent: AnyComponent? = nil,
+        _ service: Service,
         _ searchedStock: SearchStock) -> DetailComponent {
     
         return DetailComponent(
-            services,
+            service,
             .init(searchedStock),
-            DetailViewController(),
-            parent: parent)
+            DetailViewController())
     }
 }

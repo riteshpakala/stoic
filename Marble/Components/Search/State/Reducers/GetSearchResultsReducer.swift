@@ -75,13 +75,28 @@ struct GetSearchResultsResponseReducer: Reducer {
                 
             }
         }
-        
-        if sanitizedStocks.count > 0 {
-            state.stockResultsActive = true
-        } else {
-            state.stockResultsActive = false
-        }
+        state.searchTimer = nil
+        state.stockResultsActive = true
         state.stocks = sanitizedStocks
     }
 
+}
+
+struct SearchUpdateAppearanceReducer: Reducer {
+    typealias ReducerEvent = SearchEvents.SearchUpdateAppearance
+    typealias ReducerState = SearchState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        if event.intentToDismiss {
+            state.stockResultsActive = false
+        } else if !state.stocks.isEmpty {
+            state.stockResultsActive = true
+        }
+        
+    }
 }

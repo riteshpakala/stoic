@@ -13,7 +13,10 @@ public class SearchComponent: Component<SearchState> {
     override public var reducers: [AnyReducer] {
         [
             GetSearchResultsReducer.Reducible(),
-            GetSearchResultsResponseReducer.Reducible()
+            GetSearchResultsResponseReducer.Reducible(),
+            SearchUpdateAppearanceReducer.Reducible(),
+            GenerateStockRotationReducer.Reducible(),
+            GenerateStockRotationResponseReducer.Reducible()
         ]
     }
     
@@ -21,11 +24,13 @@ public class SearchComponent: Component<SearchState> {
         push(
             StockKitBuilder.build(
             state: .init(
-                sentimentStrength: services.storage.get(
+                sentimentStrength: service.storage.get(
                     GlobalDefaults.SentimentStrength.self),
-                predictionDays: services.storage.get(
+                predictionDays: service.storage.get(
                     GlobalDefaults.PredictionDays.self)),
-            self.services,
-            parent: self))
+            self.service))
+        
+        
+        sendEvent(SearchEvents.GenerateStockRotation())
     }
 }

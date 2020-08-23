@@ -8,7 +8,7 @@
 import Granite
 import Foundation
 
-public class SearchStock: NSObject {
+public class SearchStock: NSObject, Codable {
     var exchangeName: String?
     var symbolName: String?
     var companyName: String?
@@ -25,6 +25,8 @@ public class SearchStock: NSObject {
         self.exchangeName = exchangeName
         self.symbolName = symbolName
         self.companyName = companyName
+        
+        super.init()
     }
 }
 
@@ -37,12 +39,13 @@ public enum SearchStockKeys: String {
 }
 
 public class SearchState: State {
-    var searchTimer: Timer? = nil
+    @objc dynamic var searchTimer: Timer? = nil
     let searchDelay: TimeInterval = 1.2
     
     let validCountryCode: String = "US"
     let validIssueType: String = "STOCK"
     
     @objc dynamic var stocks: Array<SearchStock> = []
+    @objc dynamic var stockRotation: Array<SearchStock> = []
     @objc dynamic var stockResultsActive: Bool = false
 }

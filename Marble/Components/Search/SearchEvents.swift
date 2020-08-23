@@ -9,7 +9,21 @@ import Granite
 import Foundation
 
 struct SearchEvents {
+    struct GenerateStockRotation: Event {
+    }
+    
+    struct GenerateStockRotationResponse: Event {
+        let stocks: [SearchStock]
+    }
+    
     struct GetSearchResults: Event {
         let term: String
+    }
+    
+    struct SearchUpdateAppearance: Event {
+        let intentToDismiss: Bool
+        public init(intentToDismiss: Bool = false) {
+            self.intentToDismiss = intentToDismiss
+        }
     }
 }

@@ -65,7 +65,6 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
 extension DashboardViewController {
     func observeSettingsDidUpdate(
         _ updateRun: Change<Int>) {
-        print("{TEST} did update")
         self._view.settings.settingsItems = component?.state.settingsItems ?? self._view.settings.settingsItems
     }
 }

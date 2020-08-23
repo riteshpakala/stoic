@@ -18,7 +18,7 @@ struct CloseDetailReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        if let index = state.activeSearchedStocks.firstIndex(
+        if let index = state.activeSearchedStocks.values.firstIndex(
             where: { $0.symbolName == event.searchedStock.symbolName }) {
             
             state.activeSearchedStocks.remove(at: index)

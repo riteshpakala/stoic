@@ -11,12 +11,10 @@ import UIKit
 
 class SearchBuilder {
     static func build(
-        _ services: Services,
-        parent: AnyComponent? = nil) -> SearchComponent {
+        _ service: Service) -> SearchComponent {
         return SearchComponent(
-            services,
+            service,
             .init(),
-            SearchViewController(),
-            parent: parent)
+            SearchViewController())
     }
 }

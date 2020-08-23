@@ -19,12 +19,15 @@ struct SearchStyle {
         return .init(width: LSConst.Device.width, height: 50 + collectionHeight.height)
     }()
     
+    static let searchSpinnerSize: CGFloat = 24.0
+    
     static let amountOfCellsOnOnePage: CGFloat = 4.0
-    static let cellSize: CGSize = .init(width: LSConst.Device.width, height: 50)
+    static let cellSize: CGSize = .init(width: 120, height: 25)
+    static let headerCellSize: CGSize = .init(width: 75, height: 25)
     static var collectionHeight: CGSize = {
-        return .init(width: 0, height: cellSize.height)
+        return .init(width: 0, height: cellSize.height+GlobalStyle.spacing)
     }()
     
-    static let itemSpacing: CGFloat = GlobalStyle.spacing
-    static let lineSpacing: CGFloat = GlobalStyle.spacing
+    static let itemSpacing: CGFloat = GlobalStyle.padding
+    static let lineSpacing: CGFloat = GlobalStyle.padding
 }

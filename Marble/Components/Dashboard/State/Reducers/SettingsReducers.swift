@@ -63,7 +63,7 @@ struct UpdateSettingsReducer: Reducer {
         let targetIndex = settingsItemCases.index(after: baseIndex)
 
         let targetSettingsItem = settingsItemCases[targetIndex >= settingsItemCases.count ? 0 : targetIndex]
-        component.services.storage.update(targetSettingsItem)
+        component.service.storage.update(targetSettingsItem)
 
         //Update State
         guard let indexOfSettingsItem = state.settingsItems?.firstIndex(

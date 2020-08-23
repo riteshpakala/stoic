@@ -21,24 +21,30 @@ public class SearchView: GraniteView {
         textField.font = GlobalStyle.Fonts.courier(.large, .bold)
         textField.textColor = GlobalStyle.Colors.purple
         textField.backgroundColor = .clear
-        textField.placeholder = "Search".localized.capitalized
+        textField.placeholder = "Search".lowercased().localized
         textField.textAlignment = .center
+        textField.returnKeyType = .done
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.smartInsertDeleteType = .no
+        textField.backgroundColor = .clear
+        textField.inputAccessoryView = collectionAccessory.container
         return textField
     }()
     
     lazy var collection: UICollectionView = {
         let layout: UICollectionViewFlowLayout = .init()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = LiveSearchCollectionStyle.itemSpacing
-        layout.minimumLineSpacing = LiveSearchCollectionStyle.lineSpacing
-        layout.estimatedItemSize = LiveSearchCollectionStyle.cellSize
+        layout.minimumInteritemSpacing = SearchStyle.itemSpacing
+        layout.minimumLineSpacing = SearchStyle.lineSpacing
+        layout.estimatedItemSize = SearchStyle.cellSize
         
         let collection: UICollectionView = .init(
             frame: .zero,
             collectionViewLayout: layout)
         
         collection.contentInset = .init(
-            top: GlobalStyle.padding,
+            top: GlobalStyle.spacing,
             left: GlobalStyle.padding,
             bottom: 0.0,
             right: GlobalStyle.padding)
@@ -46,6 +52,55 @@ public class SearchView: GraniteView {
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false
         return collection
+    }()
+    
+    lazy var collectionAccessory: (
+        collection: UICollectionView,
+        container: UIView) = {
+            
+        let container: UIView = UIView.init(
+            frame: CGRect.init(
+                x: CGFloat.zero,
+                y: CGFloat.zero,
+                width: UIScreen.main.bounds.width,
+                height: SearchStyle.cellSize.height*2))
+        
+        container.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.75)
+        container.autoresizingMask = .flexibleWidth
+        container.translatesAutoresizingMaskIntoConstraints = true
+        
+        let layout: UICollectionViewFlowLayout = .init()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = SearchStyle.itemSpacing
+        layout.minimumLineSpacing = SearchStyle.lineSpacing
+        layout.estimatedItemSize = SearchStyle.cellSize
+        layout.headerReferenceSize = SearchStyle.headerCellSize
+        
+        let collection: UICollectionView = .init(
+            frame: .zero,
+            collectionViewLayout: layout)
+        
+        collection.contentInset = .init(
+            top: GlobalStyle.spacing,
+            left: GlobalStyle.padding,
+            bottom: 0.0,
+            right: GlobalStyle.padding)
+        collection.backgroundColor = .clear
+        collection.showsVerticalScrollIndicator = false
+        collection.showsHorizontalScrollIndicator = false
+        
+        container.addSubview(collection)
+            
+        collection.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        return (collection, container)
+    }()
+    
+    lazy var searchIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView.init(style: .white)
+        indicator.hidesWhenStopped = true
+        return indicator
     }()
     
     override public init(frame: CGRect) {
@@ -74,6 +129,13 @@ public class SearchView: GraniteView {
             make.height.equalTo(0.0)
         }
         
+        addSubview(searchIndicator)
+        
+        searchIndicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(collection.snp.top).offset(GlobalStyle.spacing)
+            make.size.equalTo(SearchStyle.searchSpinnerSize)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -83,13 +145,34 @@ public class SearchView: GraniteView {
     override public func hitTest(
         _ point: CGPoint,
         with event: UIEvent?) -> UIView? {
+        let newPoint = point.applying(
+            .init(
+                translationX: self.frame.origin.x,
+                y: self.frame.origin.y))
         
-        if let view = super.hitTest(point, with: event), view == self {
-            if searchBoxTextField.isFirstResponder {
-                searchBoxTextField.resignFirstResponder()
-            }
+        if searchBoxTextField.isFirstResponder,
+            !self.frame.contains(newPoint) {
+            bubbleEvent(SearchEvents.SearchUpdateAppearance(intentToDismiss: true))
+            resetSearch()
+        } else if self.frame.contains(newPoint){
+            bubbleEvent(SearchEvents.SearchUpdateAppearance())
         }
         
         return super.hitTest(point, with: event)
     }
+    
+    public func resetSearch() {
+        searchBoxTextField.resignFirstResponder()
+    }
 }
+
+//class TextFieldContainer: UIView {
+//    weak var heightConstraint: Constraint?
+//
+//    override var intrinsicContentSize: CGSize {
+//
+//        let contentHeight = self.heightConstraint?.
+//
+//        return CGSize(width: UIScreen.main.bounds.width, height: contentHeight)
+//    }
+//}

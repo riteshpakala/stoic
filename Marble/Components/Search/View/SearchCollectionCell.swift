@@ -41,3 +41,34 @@ class SearchCollectionCell: UICollectionViewCell {
         super.prepareForReuse()
     }
 }
+
+class SearchCollectionHeaderCell: UICollectionReusableView {
+    lazy var label: UILabel = {
+        let label: UILabel = .init()
+        label.text = "FREE"
+        label.textColor = GlobalStyle.Colors.orange
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.addSubview(label)
+        
+        self.backgroundColor = .clear
+        
+        label.snp.makeConstraints { make in
+            make.leading.trailing.top.bottom.equalToSuperview()
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+}

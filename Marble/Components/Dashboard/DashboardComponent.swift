@@ -21,10 +21,9 @@ public class DashboardComponent: Component<DashboardState> {
     
     override public func didLoad() {
 //        push(LiveSearchCollectionBuilder.build(self.services, parent: self))
-        push(SearchBuilder.build(self.services, parent: self))
+        push(SearchBuilder.build(self.service))
          
         guard let viewController = self.viewController else { return }
-        
         
         sendEvent(DashboardEvents.GenerateSettings())
         
@@ -46,5 +45,7 @@ public class DashboardComponent: Component<DashboardState> {
             make.left.equalTo(viewController.view.safeAreaLayoutGuide.snp.left)
             make.right.equalTo(viewController.view.safeAreaLayoutGuide.snp.right)
         }
+        
+        
     }
 }

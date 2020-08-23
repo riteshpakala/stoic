@@ -10,13 +10,11 @@ import Foundation
 
 class SceneBuilder {
     static func build(
-        _ services: Services,
-        parent: AnyComponent? = nil) -> SceneComponent {
+        _ service: Service) -> SceneComponent {
         
         return SceneComponent(
-            services,
+            service,
             .init(),
-            SceneViewController(),
-            parent: parent)
+            SceneViewController())
     }
 }

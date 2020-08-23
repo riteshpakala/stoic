@@ -186,7 +186,6 @@ class StockData: NSObject {
                 close: StockKitUtils.calculateRsi(
                     history.map { $0.close } + [close]))
         } else {
-            print("{TEST} UPDATING ruh roh")
             return rsi ?? .init(open: 0.5, close: 0.5)
         }
     }

@@ -41,7 +41,7 @@ public class StockKitComponent: Component<StockKitState> {
         { return }
         
         if nextValidTradingDay.newValue != nil {
-            processBubbleEvent(StockKitEvents.StockKitIsPrepared())
+            bubbleEvent(StockKitEvents.StockKitIsPrepared())
         }
     }
     
@@ -130,7 +130,7 @@ extension StockKitComponent: SVMModelDelegate {
         _ iterations: Int,
         _ maxIterations: Int) {
         
-        self.processBubbleEvent(
+        self.bubbleEvent(
             StockKitEvents.PredictionProgress.init(
                 maxIterations: maxIterations,
                 iterations: iterations))
@@ -222,7 +222,7 @@ extension StockKitComponent {
                     do {
                         guard let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: String]] else { return }
                         
-                        self.processBubbleEvent(
+                        self.bubbleEvent(
                             StockKitEvents.SearchCompleted(
                                 result: dict))
                     } catch {
@@ -271,7 +271,7 @@ extension StockKitComponent {
                                     rsiMax: this.state.rules.rsiMaxHistorical)
                             }
                             
-                            this.processBubbleEvent(
+                            this.bubbleEvent(
                                 StockKitEvents.CSVDownloadCompleted(
                                     result: updatedStocks ))
                         }
@@ -281,7 +281,7 @@ extension StockKitComponent {
             
             observation = csvTask?.progress.observe(\.fractionCompleted) { progress, _ in
            
-                self.processBubbleEvent(
+                self.bubbleEvent(
                       StockKitEvents.CSVProgress(
                             fraction: progress.fractionCompleted))
             }
@@ -296,7 +296,7 @@ extension StockKitComponent {
               crawls < validTradingDays.count else {
             crawls = 0
             
-            self.processBubbleEvent(
+            self.bubbleEvent(
                 StockKitEvents.SentimentDigetsCompleted(
                     result: sentiments))
             return
@@ -451,7 +451,7 @@ extension StockKitComponent {
             let sentimentGatheredValueTotal: Double = Double(this.sentiments.map { $0.positives.count }.reduce(0, +))
             let sentimentGatheredDiff: Double = abs(sentimentGatheredValueTotal - Double(this.sentiments.count*this.state.rules.tweets))
             let sentimentMaxGathered: Double = Double(this.state.rules.days * this.state.rules.tweets) - Double(sentimentGatheredDiff)
-            this.processBubbleEvent(
+            this.bubbleEvent(
                 StockKitEvents.SentimentProgress(
                     text: text,
                     fraction: (count+sentimentGatheredValueTotal)/sentimentMaxGathered))

@@ -22,7 +22,7 @@ class AppDelegate: GraniteAppDelegate {
         FileManager.default.clearTmpDirectory()
         FirebaseApp.configure()
         
-        coordinator.services
+        coordinator.service
         .storage.set(
             GlobalDefaults.defaults)
         
@@ -73,15 +73,59 @@ class AppDelegate: GraniteAppDelegate {
 
 extension GraniteCoordinator {
     func showHomeController() {
-        push(HomeBuilder.build(self.services))
+        push(HomeBuilder.build(self.service))
     }
     
     func showSceneController() {
-        push(SceneBuilder.build(self.services), fromComponent: HomeComponent.self)
+        push(SceneBuilder.build(self.service), fromComponent: HomeComponent.self)
     }
     
     func showDashboardController() {
-        push(DashboardBuilder.build(self.services), fromComponent: HomeComponent.self)
+        push(DashboardBuilder.build(self.service), fromComponent: HomeComponent.self)
+    }
+}
+
+extension ServiceCenter {
+    public var debug: Bool {
+        true
+    }
+    
+    
+    public var backend: BackendService {
+        .init()
+    }
+    
+    public struct BackendService {
+        public var core: Database {
+            Database.database()
+        }
+        
+        public var connect: DatabaseReference {
+            core.reference()
+        }
+        
+        public func put(_ data: BackendModel, route: Route) {
+            connect.child(route.rawValue).updateChildValues(data.backendModel)
+        }
+        
+        public func get(
+            route: Route,
+            key: String? = nil,
+            completion: @escaping (([[AnyHashable: Any]]) -> (Void))) {
+            
+            connect.child(
+                route.rawValue+(key != nil ? "/\(key!)" : ""))
+                .observeSingleEvent(
+                    of: .value,
+                    with: { snapshot in
+                        
+                if let data = snapshot.value as? [AnyHashable : Any] {
+                    completion(data.backendModel ?? [])
+                } else {
+                    completion([])
+                }
+            })
+        }
     }
 }
 

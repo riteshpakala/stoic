@@ -12,12 +12,10 @@ import UIKit
 class StockKitBuilder {
     static func build(
         state: StockKitState = .init(),
-        _ services: Services,
-        parent: AnyComponent? = nil) -> StockKitComponent {
+        _ service: Service) -> StockKitComponent {
         return StockKitComponent(
-            services,
+            service,
             state,
-            nil,
-            parent: parent)
+            nil)
     }
 }

@@ -38,12 +38,11 @@ public class DetailComponent: Component<DetailState> {
         push(
             StockKitBuilder.build(
             state: .init(
-                sentimentStrength: services.storage.get(
+                sentimentStrength: service.storage.get(
                     GlobalDefaults.SentimentStrength.self),
-                predictionDays: services.storage.get(
+                predictionDays: service.storage.get(
                     GlobalDefaults.PredictionDays.self)),
-            self.services,
-            parent: self))
+            self.service))
         
         
         stockKit?.prepare()

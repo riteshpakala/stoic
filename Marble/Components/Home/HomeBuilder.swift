@@ -10,13 +10,11 @@ import Foundation
 
 class HomeBuilder {
     static func build(
-        _ services: Services,
-        parent: AnyComponent? = nil) -> HomeComponent {
+        _ service: Service) -> HomeComponent {
         
         return HomeComponent(
-            services,
+            service,
             .init(),
-            HomeViewController(),
-            parent: parent)
+            HomeViewController())
     }
 }

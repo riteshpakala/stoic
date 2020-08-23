@@ -28,11 +28,32 @@ public class SearchViewController: GraniteViewController<SearchState> {
             SearchCollectionCell.self,
             forCellWithReuseIdentifier: "\(SearchCollectionCell.self)")
         
+        _view.collectionAccessory.collection.delegate = self
+        _view.collectionAccessory.collection.dataSource = self
+        
+        _view.collectionAccessory.collection.register(
+            SearchCollectionCell.self,
+            forCellWithReuseIdentifier: "\(SearchCollectionCell.self)")
+        _view.collectionAccessory.collection.register(
+            SearchCollectionHeaderCell.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(SearchCollectionHeaderCell.self)")
+        
         _view.searchBoxTextField.delegate = self
         
         observeState(
             \.stocks,
             handler: observeStockSearchResults(_:),
+            async: .main)
+        
+        observeState(
+            \.stockRotation,
+            handler: observeStockRotation(_:),
+            async: .main)
+        
+        observeState(
+            \.searchTimer,
+            handler: observeSearchStatus(_:),
             async: .main)
         
         observeState(
@@ -61,18 +82,23 @@ public class SearchViewController: GraniteViewController<SearchState> {
 extension SearchViewController {
     func observeStockSearchResults(
         _ stocks: Change<[SearchStock]>) {
-        
-        guard
-            let count = stocks.newValue?.count,
-            count > 0 else {
-            
-                
-            return
-        }
-        
         _view.collection.reloadData()
+    }
+    
+    func observeStockRotation(
+        _ stocks: Change<[SearchStock]>) {
+        _view.collectionAccessory.collection.reloadData()
+    }
+    
+    func observeSearchStatus(
+        _ searchTimer: Change<Timer?>) {
         
-        
+        if  let value = searchTimer.newValue,
+            value != nil {
+            _view.searchIndicator.startAnimating()
+        } else {
+            _view.searchIndicator.stopAnimating()
+        }
     }
     
     func observeStockSearchActive(
@@ -117,9 +143,11 @@ extension SearchViewController: UITextFieldDelegate {
         _ textField: UITextField) -> Bool {
         return true
     }
+    
     public func textFieldShouldReturn(
         _ textField: UITextField) -> Bool {
-        _view.searchBoxTextField.resignFirstResponder()
+        bubbleEvent(SearchEvents.SearchUpdateAppearance(intentToDismiss: true))
+        _view.resetSearch()
         return true
     }
     
@@ -128,10 +156,23 @@ extension SearchViewController: UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String) -> Bool {
         
-        sendEvent(SearchEvents.GetSearchResults(term: textField.text ?? string))
+        guard let textFieldText = textField.text else { return true }
+        
+        let text: String
+        if range.location >= textFieldText.count {
+            text = textFieldText + string
+        } else {
+            text = (textFieldText as NSString).replacingCharacters(
+                in: NSRange.init(location: range.location, length: range.length),
+                with: string) as String
+        }
+
+        sendEvent(SearchEvents.GetSearchResults(term: text))
         
         return true
     }
+    
+    
     public func textFieldDidEndEditing(
         _ textField: UITextField) {
         
@@ -144,7 +185,7 @@ extension SearchViewController: UICollectionViewDelegate {
         
         if  let stocks = component?.state.stocks,
             indexPath.item < (component?.state.stocks.count ?? 0) {
-
+            
             bubbleEvent(
                 DashboardEvents.ShowDetail(
                     searchedStock: stocks[indexPath.item]))
@@ -155,7 +196,13 @@ extension SearchViewController: UICollectionViewDataSource {
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
-        return component?.state.stocks.count ?? 0
+        if collectionView == _view.collection {
+            return component?.state.stocks.isEmpty == true ? 1 : (component?.state.stocks.count ?? 0)
+        } else if collectionView == _view.collectionAccessory.collection {
+            return component?.state.stockRotation.isEmpty == true ? 1 : (component?.state.stockRotation.count ?? 0)
+        } else {
+            return 1
+        }
     }
     
     public func collectionView(
@@ -166,10 +213,37 @@ extension SearchViewController: UICollectionViewDataSource {
             withReuseIdentifier: "\(SearchCollectionCell.self)",
             for: indexPath) as? SearchCollectionCell else { return .init() }
         
-        if let stock = component?.state.stocks[indexPath.item] {
+        if collectionView == _view.collection,
+            indexPath.item < (component?.state.stocks.count ?? 0),
+            let stock = component?.state.stocks[indexPath.item]
+        {
             cell.tickerLabel.text = stock.symbol
+        } else if collectionView == _view.collectionAccessory.collection,
+            indexPath.item < (component?.state.stockRotation.count ?? 0),
+            let stock = component?.state.stockRotation[indexPath.item]
+        {
+            cell.tickerLabel.text = stock.symbol
+        } else {
+            cell.tickerLabel.text = "none found".lowercased().localized
         }
         
         return cell
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        guard collectionView == _view.collectionAccessory.collection else {
+            return .init()
+        }
+        
+        let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(SearchCollectionHeaderCell.self)",
+            for: indexPath)
+        
+        return header
     }
 }

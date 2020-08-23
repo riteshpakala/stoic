@@ -35,12 +35,6 @@
 		7127B02F2485DCF7004C57F1 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0252485DCF7004C57F1 /* DetailView.swift */; };
 		7127B0302485DCF7004C57F1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0262485DCF7004C57F1 /* DetailViewController.swift */; };
 		7127B0322485DD2E004C57F1 /* GlobalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0312485DD2E004C57F1 /* GlobalStyle.swift */; };
-		7127B0552485E029004C57F1 /* LiveSearchCollectionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B04C2485E029004C57F1 /* LiveSearchCollectionComponent.swift */; };
-		7127B0562485E029004C57F1 /* LiveSearchCollectionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B04D2485E029004C57F1 /* LiveSearchCollectionStyle.swift */; };
-		7127B0572485E029004C57F1 /* LiveSearchCollectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B04F2485E029004C57F1 /* LiveSearchCollectionState.swift */; };
-		7127B0582485E029004C57F1 /* LiveSearchCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0522485E029004C57F1 /* LiveSearchCollectionView.swift */; };
-		7127B0592485E029004C57F1 /* LiveSearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0532485E029004C57F1 /* LiveSearchCollectionViewController.swift */; };
-		7127B05A2485E029004C57F1 /* LiveSearchCollectionEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0542485E029004C57F1 /* LiveSearchCollectionEvents.swift */; };
 		7127B05E2485E130004C57F1 /* ShowDetailReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B05D2485E130004C57F1 /* ShowDetailReducer.swift */; };
 		7127B0632485EEAB004C57F1 /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0622485EEAB004C57F1 /* ConsoleView.swift */; };
 		7127B0662485EFCD004C57F1 /* DetailStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0652485EFCD004C57F1 /* DetailStyle.swift */; };
@@ -168,7 +162,6 @@
 		717F1BD9248A1140001DD426 /* SceneBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BD8248A1140001DD426 /* SceneBuilder.swift */; };
 		717F1BDB248A1162001DD426 /* DetailBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BDA248A1162001DD426 /* DetailBuilder.swift */; };
 		717F1BDD248A117D001DD426 /* DashboardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BDC248A117D001DD426 /* DashboardBuilder.swift */; };
-		717F1BDF248A1194001DD426 /* LiveSearchCollectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BDE248A1194001DD426 /* LiveSearchCollectionBuilder.swift */; };
 		717FADBC24E8730600E2391D /* Granite in Frameworks */ = {isa = PBXBuildFile; productRef = 717FADBB24E8730600E2391D /* Granite */; };
 		719AA33C2478B69A000F7CBD /* SVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA3382478B69A000F7CBD /* SVM.swift */; };
 		719AA33E2478B69A000F7CBD /* DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA33A2478B69A000F7CBD /* DataSet.swift */; };
@@ -271,7 +264,6 @@
 		71B7AB10248E0ACE001E7891 /* GetSentimentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */; };
 		71B7AB12248E0C0A001E7891 /* GetPredictionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */; };
 		71B96C8724CF857000F01570 /* StockKitUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B96C8624CF857000F01570 /* StockKitUtilities.swift */; };
-		71BC1C2B2486189A00B35DC1 /* LiveSearchCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BC1C2A2486189A00B35DC1 /* LiveSearchCollectionCell.swift */; };
 		71BC1C2D248620EF00B35DC1 /* DetailLongPressReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BC1C2C248620EF00B35DC1 /* DetailLongPressReducer.swift */; };
 		71BC1C2F2486326800B35DC1 /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BC1C2E2486326800B35DC1 /* String+Size.swift */; };
 		71BC1C31248635F200B35DC1 /* CloseDetailReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BC1C30248635F200B35DC1 /* CloseDetailReducer.swift */; };
@@ -283,6 +275,8 @@
 		71D7CD8E248C913600C7180D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71D7CD8D248C913600C7180D /* GoogleService-Info.plist */; };
 		71D7CD91248C926A00C7180D /* StockKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7CD90248C926A00C7180D /* StockKit.swift */; };
 		71D98E3F24F1E3210089C85F /* SettingsReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E3E24F1E3210089C85F /* SettingsReducers.swift */; };
+		71D98E4124F239E80089C85F /* Router.Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E4024F239E80089C85F /* Router.Models.swift */; };
+		71D98E4324F255E20089C85F /* GenerateStockRotationReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E4224F255E20089C85F /* GenerateStockRotationReducer.swift */; };
 		71F5BA4C248474B30085E8DD /* GOOG2.csv in Resources */ = {isa = PBXBuildFile; fileRef = 71F5BA4B248474B30085E8DD /* GOOG2.csv */; };
 		71F5BA4E24847CE60085E8DD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F5BA4D24847CE60085E8DD /* HomeView.swift */; };
 		8178E23F17E028E4B0A045A0 /* Pods_StoicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD1232B647A9A4E8049ECA1 /* Pods_StoicTests.framework */; };
@@ -337,12 +331,6 @@
 		7127B0252485DCF7004C57F1 /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		7127B0262485DCF7004C57F1 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		7127B0312485DD2E004C57F1 /* GlobalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStyle.swift; sourceTree = "<group>"; };
-		7127B04C2485E029004C57F1 /* LiveSearchCollectionComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveSearchCollectionComponent.swift; sourceTree = "<group>"; };
-		7127B04D2485E029004C57F1 /* LiveSearchCollectionStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveSearchCollectionStyle.swift; sourceTree = "<group>"; };
-		7127B04F2485E029004C57F1 /* LiveSearchCollectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveSearchCollectionState.swift; sourceTree = "<group>"; };
-		7127B0522485E029004C57F1 /* LiveSearchCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveSearchCollectionView.swift; sourceTree = "<group>"; };
-		7127B0532485E029004C57F1 /* LiveSearchCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveSearchCollectionViewController.swift; sourceTree = "<group>"; };
-		7127B0542485E029004C57F1 /* LiveSearchCollectionEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveSearchCollectionEvents.swift; sourceTree = "<group>"; };
 		7127B05D2485E130004C57F1 /* ShowDetailReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailReducer.swift; sourceTree = "<group>"; };
 		7127B0622485EEAB004C57F1 /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		7127B0652485EFCD004C57F1 /* DetailStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStyle.swift; sourceTree = "<group>"; };
@@ -473,7 +461,6 @@
 		717F1BD8248A1140001DD426 /* SceneBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneBuilder.swift; sourceTree = "<group>"; };
 		717F1BDA248A1162001DD426 /* DetailBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBuilder.swift; sourceTree = "<group>"; };
 		717F1BDC248A117D001DD426 /* DashboardBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardBuilder.swift; sourceTree = "<group>"; };
-		717F1BDE248A1194001DD426 /* LiveSearchCollectionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSearchCollectionBuilder.swift; sourceTree = "<group>"; };
 		717FADB824E8710F00E2391D /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../granite; sourceTree = "<group>"; };
 		719AA3382478B69A000F7CBD /* SVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVM.swift; sourceTree = "<group>"; };
 		719AA3392478B69A000F7CBD /* SVMTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVMTests.swift; sourceTree = "<group>"; };
@@ -582,7 +569,6 @@
 		71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSentimentReducer.swift; sourceTree = "<group>"; };
 		71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPredictionReducer.swift; sourceTree = "<group>"; };
 		71B96C8624CF857000F01570 /* StockKitUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKitUtilities.swift; sourceTree = "<group>"; };
-		71BC1C2A2486189A00B35DC1 /* LiveSearchCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSearchCollectionCell.swift; sourceTree = "<group>"; };
 		71BC1C2C248620EF00B35DC1 /* DetailLongPressReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLongPressReducer.swift; sourceTree = "<group>"; };
 		71BC1C2E2486326800B35DC1 /* String+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
 		71BC1C30248635F200B35DC1 /* CloseDetailReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseDetailReducer.swift; sourceTree = "<group>"; };
@@ -594,6 +580,8 @@
 		71D7CD8D248C913600C7180D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		71D7CD90248C926A00C7180D /* StockKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKit.swift; sourceTree = "<group>"; };
 		71D98E3E24F1E3210089C85F /* SettingsReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsReducers.swift; sourceTree = "<group>"; };
+		71D98E4024F239E80089C85F /* Router.Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Models.swift; sourceTree = "<group>"; };
+		71D98E4224F255E20089C85F /* GenerateStockRotationReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateStockRotationReducer.swift; sourceTree = "<group>"; };
 		71F5BA4B248474B30085E8DD /* GOOG2.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GOOG2.csv; sourceTree = "<group>"; };
 		71F5BA4D24847CE60085E8DD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B216AA8A083E08322B07F45C /* Pods-Stoic-StoicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stoic-StoicUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stoic-StoicUITests/Pods-Stoic-StoicUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -690,6 +678,7 @@
 			isa = PBXGroup;
 			children = (
 				71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */,
+				71D98E4224F255E20089C85F /* GenerateStockRotationReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -825,45 +814,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		7127B04B2485E029004C57F1 /* LiveSearchCollection */ = {
-			isa = PBXGroup;
-			children = (
-				7127B04C2485E029004C57F1 /* LiveSearchCollectionComponent.swift */,
-				717F1BDE248A1194001DD426 /* LiveSearchCollectionBuilder.swift */,
-				7127B04D2485E029004C57F1 /* LiveSearchCollectionStyle.swift */,
-				7127B04E2485E029004C57F1 /* State */,
-				7127B0512485E029004C57F1 /* View */,
-				7127B0542485E029004C57F1 /* LiveSearchCollectionEvents.swift */,
-			);
-			path = LiveSearchCollection;
-			sourceTree = "<group>";
-		};
-		7127B04E2485E029004C57F1 /* State */ = {
-			isa = PBXGroup;
-			children = (
-				7127B04F2485E029004C57F1 /* LiveSearchCollectionState.swift */,
-				7127B0502485E029004C57F1 /* Reducers */,
-			);
-			path = State;
-			sourceTree = "<group>";
-		};
-		7127B0502485E029004C57F1 /* Reducers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Reducers;
-			sourceTree = "<group>";
-		};
-		7127B0512485E029004C57F1 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				7127B0522485E029004C57F1 /* LiveSearchCollectionView.swift */,
-				71BC1C2A2486189A00B35DC1 /* LiveSearchCollectionCell.swift */,
-				7127B0532485E029004C57F1 /* LiveSearchCollectionViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		7127B0612485EEA2004C57F1 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
@@ -882,6 +832,7 @@
 				7127B0312485DD2E004C57F1 /* GlobalStyle.swift */,
 				7165E48424F0FA2E00B59960 /* GlobalDefaults.swift */,
 				71305F73246E038A00E64718 /* Router.swift */,
+				71D98E4024F239E80089C85F /* Router.Models.swift */,
 				71D7CD8F248C925100C7180D /* StockKit */,
 				71F5BA4F24847DC30085E8DD /* 3DObj */,
 				71305F74246E038A00E64718 /* Models */,
@@ -1746,7 +1697,6 @@
 			children = (
 				7164E697248DD4700035CE9B /* StockKit */,
 				7110A55F248DCAD500F62940 /* Search */,
-				7127B04B2485E029004C57F1 /* LiveSearchCollection */,
 				7127B0152485DCF7004C57F1 /* Dashboard */,
 				7127B01E2485DCF7004C57F1 /* Detail */,
 				7127AFAB2485B064004C57F1 /* Scene */,
@@ -2055,7 +2005,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7127B0592485E029004C57F1 /* LiveSearchCollectionViewController.swift in Sources */,
 				717A766824A16131005348F9 /* TokenQueue.swift in Sources */,
 				7164E6A4248DD4700035CE9B /* StockKitComponent.swift in Sources */,
 				71478F7024790297007DF62D /* SwifterFavorites.swift in Sources */,
@@ -2134,6 +2083,7 @@
 				71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */,
 				717A766324A16131005348F9 /* TokeniserState.swift in Sources */,
 				7164E6A7248DD4700035CE9B /* StockKitBuilder.swift in Sources */,
+				71D98E4324F255E20089C85F /* GenerateStockRotationReducer.swift in Sources */,
 				717A764524A16131005348F9 /* StreamReader.swift in Sources */,
 				71A1D2F0246E027D00D778A5 /* AssetsCropViewController.swift in Sources */,
 				71A28AA3246E0F4100446141 /* HomeViewController.swift in Sources */,
@@ -2170,12 +2120,10 @@
 				71A1D2F4246E027D00D778A5 /* UIView+Fade.swift in Sources */,
 				717A765124A16131005348F9 /* Entities.swift in Sources */,
 				717A767024A16131005348F9 /* DataNode.swift in Sources */,
-				7127B05A2485E029004C57F1 /* LiveSearchCollectionEvents.swift in Sources */,
 				71478F8724790297007DF62D /* SwiftyJSON.swift in Sources */,
 				71478F7A24790297007DF62D /* SwifterFollowers.swift in Sources */,
 				717A764624A16131005348F9 /* Cleaner.swift in Sources */,
 				717A766524A16131005348F9 /* FormElement.swift in Sources */,
-				717F1BDF248A1194001DD426 /* LiveSearchCollectionBuilder.swift in Sources */,
 				71A1D322246E027D00D778A5 /* AKPickerView.swift in Sources */,
 				71478F7324790297007DF62D /* SwifterSavedSearches.swift in Sources */,
 				717A764424A16131005348F9 /* Elements.swift in Sources */,
@@ -2204,6 +2152,7 @@
 				717A766624A16131005348F9 /* Pattern.swift in Sources */,
 				717A764D24A16131005348F9 /* StringUtil.swift in Sources */,
 				71A1D30E246E027D00D778A5 /* QuickTableViewController.swift in Sources */,
+				71D98E4124F239E80089C85F /* Router.Models.swift in Sources */,
 				71478F6D24790297007DF62D /* SwifterAccountsClient.swift in Sources */,
 				71A1D31C246E027D00D778A5 /* Section.swift in Sources */,
 				71478F7824790297007DF62D /* URL++.swift in Sources */,
@@ -2215,12 +2164,10 @@
 				717A765724A16131005348F9 /* DocumentType.swift in Sources */,
 				717A766C24A16131005348F9 /* Attributes.swift in Sources */,
 				717A766E24A16131005348F9 /* StructuralEvaluator.swift in Sources */,
-				7127B0562485E029004C57F1 /* LiveSearchCollectionStyle.swift in Sources */,
 				71A1D30D246E027D00D778A5 /* UIColor+AssetsPickerViewController.swift in Sources */,
 				7164E6A3248DD4700035CE9B /* StockKitEvents.swift in Sources */,
 				71A1D2FD246E027D00D778A5 /* AssetsAlbumTitleView.swift in Sources */,
 				717A764C24A16131005348F9 /* TreeBuilder.swift in Sources */,
-				7127B0552485E029004C57F1 /* LiveSearchCollectionComponent.swift in Sources */,
 				71478F6224790296007DF62D /* Data++.swift in Sources */,
 				71478F8424790297007DF62D /* Utils.swift in Sources */,
 				717A767124A16131005348F9 /* NodeVisitor.swift in Sources */,
@@ -2255,9 +2202,7 @@
 				71A1D30B246E027D00D778A5 /* Bundle+AssetsPickerViewController.swift in Sources */,
 				71A1D307246E027D00D778A5 /* NumberFormatter+AssetsPickerViewController.swift in Sources */,
 				71478F8524790297007DF62D /* SwifterTag.swift in Sources */,
-				71BC1C2B2486189A00B35DC1 /* LiveSearchCollectionCell.swift in Sources */,
 				71BC1C2F2486326800B35DC1 /* String+Size.swift in Sources */,
-				7127B0582485E029004C57F1 /* LiveSearchCollectionView.swift in Sources */,
 				7127AFAF2485B09B004C57F1 /* SceneEvents.swift in Sources */,
 				71BC1C31248635F200B35DC1 /* CloseDetailReducer.swift in Sources */,
 				71A1D2D2246E027D00D778A5 /* Int.swift in Sources */,
@@ -2292,7 +2237,6 @@
 				713ABC1F246E392300DD03EA /* SVMStockPredictionReducer.swift in Sources */,
 				71A1D305246E027D00D778A5 /* AssetsFooterView.swift in Sources */,
 				71A1D2F9246E027D00D778A5 /* AssetsAlbumViewController.swift in Sources */,
-				7127B0572485E029004C57F1 /* LiveSearchCollectionState.swift in Sources */,
 				71A1D313246E027D00D778A5 /* RowCompatible.swift in Sources */,
 				71478F6C24790297007DF62D /* Int++.swift in Sources */,
 				7127B0292485DCF7004C57F1 /* DashboardState.swift in Sources */,

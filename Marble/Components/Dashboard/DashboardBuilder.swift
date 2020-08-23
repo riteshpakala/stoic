@@ -11,13 +11,11 @@ import Foundation
 class DashboardBuilder {
     static func build(
         state: DashboardState = .init(),
-        _ services: Services,
-        parent: AnyComponent? = nil) -> DashboardComponent {
+        _ service: Service) -> DashboardComponent {
     
         return DashboardComponent(
-            services,
+            service,
             state,
-            DashboardViewController(),
-            parent: parent)
+            DashboardViewController())
     }
 }

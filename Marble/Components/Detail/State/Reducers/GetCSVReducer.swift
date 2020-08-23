@@ -41,7 +41,6 @@ struct GetCSVReducer: Reducer {
         ticker: String,
         withStockKit kit: StockKitComponent) {
         
-        print("{TEST} execute download \(ticker)")
         kit.getCSV(forTicker: ticker)
     }
 }
