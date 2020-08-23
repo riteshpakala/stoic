@@ -311,13 +311,17 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
         cell.layoutIfNeeded()
         guard indexPath.item < self.settingsItems.count else {
             cell.valueLabel.text = "i"
-            cell.valueContainer.layer.borderWidth  = 0
             cell.valueLabel.font = GlobalStyle.Fonts.courier(.large, .bold)
             return cell
         }
-        cell.valueContainer.layer.borderWidth  = 3
         cell.valueLabel.font = GlobalStyle.Fonts.courier(.small, .bold)
-        cell.valueLabel.text = settingsItems[indexPath.item].value
+        if settingsItems[indexPath.item].isResource {
+            cell.imageView.isHidden = false
+            cell.imageView.image = UIImage.init(named: settingsItems[indexPath.item].value)
+        } else {
+            cell.imageView.isHidden = true
+            cell.valueLabel.text = settingsItems[indexPath.item].value
+        }
         
         return cell
     }
@@ -336,6 +340,7 @@ struct TongueSettingsModel<T> {
     var help: String
     var label: String
     var value: String
+    var isResource: Bool
     var reference: T
     var selector: Event
     
@@ -343,24 +348,34 @@ struct TongueSettingsModel<T> {
         help: String,
         label: String,
         value: String,
+        isResource: Bool,
         selector: Event,
         reference: T) {
         
         self.help = help
         self.label = label
         self.value = value
+        self.isResource = isResource
         self.reference = reference
         self.selector = selector
     }
 }
 
 class TongueSettingsCell: UICollectionViewCell {
+    lazy var imageView: UIImageView = {
+        let view: UIImageView = .init()
+        view.backgroundColor = .clear
+        view.contentMode = .scaleAspectFit
+        view.isHidden = true
+        view.tintColor = GlobalStyle.Colors.green
+        return view
+    }()
     
     lazy var valueContainer: UIView = {
         let view: UIView = .init()
         view.backgroundColor = .clear
-        view.layer.borderWidth = 2.0
-        view.layer.borderColor = GlobalStyle.Colors.graniteGray.cgColor
+//        view.layer.borderWidth = 2.0
+//        view.layer.borderColor = GlobalStyle.Colors.graniteGray.cgColor
         return view
     }()
     
@@ -391,6 +406,14 @@ class TongueSettingsCell: UICollectionViewCell {
             make.width.equalToSuperview().inset(4)
             make.height.equalTo(valueContainer.snp.width)
         }
+        
+        valueContainer.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalToSuperview().inset(floor(GlobalStyle.padding/1.2))
+            make.height.equalTo(valueContainer.snp.width)
+        }
     }
     
     override func layoutIfNeeded() {
@@ -400,5 +423,13 @@ class TongueSettingsCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        valueLabel.text = ""
+        imageView.image = nil
+        imageView.isHidden = true
     }
 }

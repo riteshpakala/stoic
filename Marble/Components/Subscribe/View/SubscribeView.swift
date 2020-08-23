@@ -1,0 +1,158 @@
+//
+//  SubscribeView.swift
+//  Stoic
+//
+//  Created by Ritesh Pakala on 8/23/20.
+//  Copyright (c) 2020 Ritesh Pakala. All rights reserved.
+//
+
+import Granite
+import Foundation
+import UIKit
+
+public class SubscribeView: GraniteView {
+    
+    lazy var subscribeLabel: UILabel = {
+        let view: UILabel = .init()
+        view.text = "Subscription".localized.capitalized
+        view.font = GlobalStyle.Fonts.courier(.Xlarge, .bold)
+        view.textColor = GlobalStyle.Colors.green
+        view.textAlignment = .left
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    
+    lazy var subscribeSubLabel: UILabel = {
+        let view: UILabel = .init()
+        view.text = "Benefits".localized.capitalized
+        view.font = GlobalStyle.Fonts.courier(.large, .bold)
+        view.textColor = GlobalStyle.Colors.green
+        view.textAlignment = .left
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    
+    lazy var subscriptionDescription: UILabel = {
+        let view: UILabel = .init()
+        view.text =
+            """
+            - Search any stock
+            - Realtime `Stoic` user stock searches
+            - Personal stock search tracking
+            - `High` Sentiment strength access
+            """
+        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        view.textColor = GlobalStyle.Colors.green
+        view.textAlignment = .left
+        view.isUserInteractionEnabled = false
+        view.numberOfLines = 0
+        return view
+    }()
+    
+    lazy var emailLabel: UILabel = {
+        let view: UILabel = .init()
+        view.text = "email: team@linenandsole.com\nfor feedback & suggestions".localized
+        view.font = GlobalStyle.Fonts.courier(.small, .bold)
+        view.textColor = GlobalStyle.Colors.purple
+        view.textAlignment = .center
+        view.isUserInteractionEnabled = true
+        view.numberOfLines = 0
+        return view
+    }()
+    
+    lazy var demo: SubscriptionOption = {
+        let view: SubscriptionOption = .init(frame: .zero)
+        return view
+    }()
+    
+    lazy var stackViewSubscriptionOptions: UIStackView = {
+        let view: UIStackView = UIStackView.init(
+            arrangedSubviews: [
+                .init(), demo, .init()
+            ]
+        )
+        
+        view.axis = .horizontal
+        view.alignment = .center
+        view.distribution = .fillProportionally
+        view.spacing = GlobalStyle.padding
+        
+        return view
+    }()
+    
+    lazy var stackViewDisclaimers: UIStackView = {
+        let view: UIStackView = UIStackView.init()
+        
+        view.axis = .vertical
+        view.alignment = .fill
+        view.distribution = .fill
+        view.spacing = GlobalStyle.padding
+        
+        return view
+    }()
+    
+    lazy var stackView: UIStackView = {
+        let view: UIStackView = UIStackView.init(
+            arrangedSubviews: [
+                subscribeLabel,
+                subscribeSubLabel,
+                subscriptionDescription,
+                .init(),
+                stackViewDisclaimers,
+                .init(),
+                stackViewSubscriptionOptions,
+                emailLabel,
+                spacer
+            ]
+        )
+        
+        view.axis = .vertical
+        view.alignment = .fill
+        view.distribution = .fill
+        view.spacing = GlobalStyle.largePadding
+        
+        return view
+    }()
+    
+    lazy var spacer: UIView = {
+        return .init()
+    }()
+    
+    lazy var emailTapGesture: UITapGestureRecognizer = {
+        return UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.emailTeamTapped(_:)))
+    }()
+    
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = GlobalStyle.Colors.black
+        
+        addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().offset(GlobalStyle.largePadding).priority(999)
+            make.right.bottom.equalToSuperview().offset(-GlobalStyle.largePadding).priority(999)
+        }
+        
+        emailLabel.addGestureRecognizer(emailTapGesture)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+	
+    @objc func emailTeamTapped(_ sender: UITapGestureRecognizer) {
+        emailTeam()
+    }
+    
+    func emailTeam() {
+        let email = "team@linenandsole.com"
+        if let url = URL(string: "mailto:\(email)") {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+}

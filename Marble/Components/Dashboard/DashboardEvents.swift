@@ -24,4 +24,10 @@ struct DashboardEvents {
     struct UpdateSettings: Event {
         let label: String
     }
+    
+    struct OpenProfile: Event {
+    }
+    
+    struct DismissProfile: Event {
+    }
 }

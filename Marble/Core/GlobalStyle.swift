@@ -24,6 +24,7 @@ public struct GlobalStyle {
     }
     public struct Fonts {
         public enum FontSize: CGFloat {
+            case Xlarge = 27
             case large = 24
             case medium = 18
             case subMedium = 16
@@ -52,6 +53,7 @@ public struct GlobalStyle {
         }
     }
     
+    static let largePadding: CGFloat = 24
     static let padding: CGFloat = 12
     static let spacing: CGFloat = 4
     

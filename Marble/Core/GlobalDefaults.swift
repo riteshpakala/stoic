@@ -14,12 +14,11 @@ public struct GlobalDefaults: LocalStorageDefaults {
     
     public static var defaults: [LocalStorage.Value<LocalStorageValue>] {
         return [
+            LocalStorage.Value.init(Subscription.inActive),
             LocalStorage.Value.init(SentimentStrength.low),
             LocalStorage.Value.init(PredictionDays.seven),
-            LocalStorage.Value.init(Subscription.inActive)
         ]
     }
-    
     
     public enum SentimentStrength: Int, LocalStorageValue {
         case low
@@ -99,11 +98,11 @@ public struct GlobalDefaults: LocalStorageDefaults {
         }
         
         public var description: String {
-            "subscription status".lowercased().localized
+            "account".lowercased().localized
         }
         
-        public var permissions: LocalStorageReadWrite {
-            return .readAndWrite
+        public var resource: LocalStorageResource? {
+            .image("profile.icon")
         }
     }
 }

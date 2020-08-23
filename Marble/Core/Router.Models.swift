@@ -14,6 +14,7 @@ extension ServiceCenter.BackendService {
     public enum Route: String {
         case global = "global"
         case globalStocksFreeRotation = "global/stocks/freeRotation"
+        case disclaimerUpcoming = "disclaimer/upcoming"
     }
 }
 

@@ -18,12 +18,23 @@ struct GenerateSettingsReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        let settingsItems: [TongueSettingsModel] = GlobalDefaults.instance.writeableDefaults.map {
+        let settingsItems: [TongueSettingsModel<LocalStorageValue>] = GlobalDefaults.instance.readableDefaults.map {
             
-            TongueSettingsModel.init(
+            let value: String
+            if let resource = $0.resource {
+                switch resource {
+                case .image(let name):
+                    value = name
+                }
+            } else {
+                value = $0.asString
+            }
+            
+            return TongueSettingsModel.init(
                 help: $0.description,
                 label: $0.key,
-                value: $0.asString,
+                value: value,
+                isResource: $0.resource != nil,
                 selector: DashboardEvents.UpdateSettings(label: $0.key),
                 reference: $0)
             
@@ -49,6 +60,10 @@ struct UpdateSettingsReducer: Reducer {
             .writeableDefaults
             .first(where: { $0.key == event.label }) else {
             
+                if event.label == GlobalDefaults.Subscription.key {
+                    component.sendEvent(DashboardEvents.OpenProfile())
+                }
+                
             return
         }
         
@@ -76,6 +91,40 @@ struct UpdateSettingsReducer: Reducer {
         state.settingsItems?[indexOfSettingsItem].value = targetSettingsItem.asString
         
         state.settingsDidUpdate = state.settingsDidUpdate % 12
+        
+    }
+}
+
+struct OpenProfileSettingsReducer: Reducer {
+    typealias ReducerEvent = DashboardEvents.OpenProfile
+    typealias ReducerState = DashboardState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        component.push(
+            ProfileBuilder.build(component.service),
+            display: .modal)
+        
+    }
+}
+
+struct DismissProfileSettingsReducer: Reducer {
+    typealias ReducerEvent = DashboardEvents.DismissProfile
+    typealias ReducerState = DashboardState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        if let profile = component.getSubComponent(ProfileComponent.self) {
+            component.deattach(profile)
+        }
         
     }
 }
