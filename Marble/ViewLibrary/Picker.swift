@@ -30,7 +30,7 @@ class StockDatePicker: Picker, UITableViewDataSource {
     func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int) -> Int {
-        data.count
+        data.count + expandedPadding
     }
     
     func tableView(
@@ -40,12 +40,19 @@ class StockDatePicker: Picker, UITableViewDataSource {
             withIdentifier: "\(PickerCell.self)",
             for: indexPath)
         
-        if let tradingCell = cell as? PickerCell {
+        if  let tradingCell = cell as? PickerCell,
+            indexPath.item < data.count {
+            
             tradingCell.label.text = data[indexPath.item].dateData.asString
             tradingCell.label.textColor = color
         }
         
         return cell
+    }
+    
+    override func scrollTo(_ index: Int, animated: Bool = false) {
+        guard index < data.count else { return }
+        super.scrollTo(index, animated: animated)
     }
 }
 
@@ -99,10 +106,24 @@ class DaysPicker: Picker, UITableViewDataSource {
     }
 }
 
+protocol PickerDelegate: class {
+    func didSelect(index: Int)
+}
+
 class Picker: UITableView {
+    weak var pickerDelegate: PickerDelegate?
+    
     let color: UIColor
     
     var cellHeight: CGFloat = 30
+    
+    var expandedPadding: Int = 0 {
+        didSet {
+            DispatchQueue.main.async {
+                self.reloadData()
+            }
+        }
+    }
     
     init(color: UIColor) {
         self.color = color
@@ -120,10 +141,11 @@ class Picker: UITableView {
     }
     
     func scrollTo(_ index: Int, animated: Bool = false) {
-        self.scrollToRow(
-            at: .init(row: index, section: 0),
-            at: .top,
-            animated: animated)
+        self.setContentOffset(
+            .init(
+                x: 0,
+                y: cellHeight*CGFloat(index)),
+            animated: true)
     }
 }
 
@@ -132,6 +154,7 @@ extension Picker: UITableViewDelegate {
         _ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath) {
         
+        pickerDelegate?.didSelect(index: indexPath.item)
     }
     
     func tableView(
@@ -172,5 +195,11 @@ class PickerCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        label.text = ""
     }
 }

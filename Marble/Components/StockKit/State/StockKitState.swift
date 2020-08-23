@@ -16,15 +16,6 @@ public struct PredictionRules {
     var tweets: Int = 1
     let marketCloseHour: Int = 16
     let rsiMaxHistorical: Int = 20
-    
-    public struct PredictionLevels {
-        public static var sentimentLow: Int = 1
-        public static var sentimentMed: Int = 4
-        public static var sentimentHi: Int = 7
-        
-        public static var maxDaysLearnedLearned: Int = 12
-        public static var minDaysLearnedLearned: Int = 1
-    }
 }
 
 public class StockKitState: State {
@@ -80,21 +71,13 @@ public class StockKitState: State {
     }
     
     init(
-        predictionSentiment: String = "low",
+        sentimentStrength: Int = 1,
         predictionDays: Int = 7,
         consumerKey: String? = nil,
         consumerSecret: String? = nil) {
         
-        //TODO: Constants for strength levels
-        if predictionSentiment == "med" {
-            rules.tweets = PredictionRules.PredictionLevels.sentimentMed
-        } else if predictionSentiment == "hi" {
-            rules.tweets = PredictionRules.PredictionLevels.sentimentHi
-        } else {
-            rules.tweets = PredictionRules.PredictionLevels.sentimentLow
-        }
-        
-        rules.days = predictionDays
+        rules.days = predictionDays <= rules.maxDays ? predictionDays : rules.days
+        rules.tweets = sentimentStrength
         
         if  let key = consumerKey,
             let secret = consumerSecret {

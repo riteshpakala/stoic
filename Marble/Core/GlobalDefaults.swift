@@ -6,38 +6,104 @@
 //  Copyright © 2020 Ritesh Pakala. All rights reserved.
 //
 
+import Granite
 import Foundation
 
-public struct GlobalDefaults {
-    public static let subscription: String = "subscription"
-    public static let predictionSentiment: String = "prediction.sentiment"
-    public static let predictionDays: String = "prediction.days"
+public struct GlobalDefaults: LocalStorageDefaults {
+    public init() {}
     
-    public static var defaultKeys: [String] {
+    public static var defaults: [LocalStorage.Value<LocalStorageValue>] {
         return [
-            GlobalDefaults.subscription,
-            GlobalDefaults.predictionSentiment,
-            GlobalDefaults.predictionDays]
+            LocalStorage.Value.init(SentimentStrength.low),
+            LocalStorage.Value.init(PredictionDays.seven),
+            LocalStorage.Value.init(Subscription.inActive)
+        ]
     }
     
-    public struct Values {
-        public static var pairs: [String: Any] {
-            return [
-                GlobalDefaults.subscription : Values.subscription,
-                GlobalDefaults.predictionSentiment : Values.predictionSentiment,
-                GlobalDefaults.predictionDays : Values.predictionDays,
-            ]
-            
+    
+    public enum SentimentStrength: Int, LocalStorageValue {
+        case low
+        case med
+        case hi
+        
+        public var value: Int {
+            switch self {
+            case .low: return 1
+            case .med: return 4
+            case .hi: return 7
+            }
         }
         
-        public static var subscription: Bool {
-            false
+        public var asString: String {
+            switch self {
+            case .low: return "low"
+            case .med: return "med"
+            case .hi: return "hi"
+            }
         }
-        public static var predictionSentiment: String {
-            "low"
+        
+        public var description: String {
+            "sentiment strength".lowercased().localized
         }
-        public static var predictionDays: Int {
-            7
+        
+        public var permissions: LocalStorageReadWrite {
+            return .readAndWrite
+        }
+    }
+    
+    public enum PredictionDays: Int, LocalStorageValue {
+        
+        case one
+        case two
+        case three
+        case four
+        case five
+        case six
+        case seven
+        case eight
+        case nine
+        case ten
+        case eleven
+        case twelve
+        
+        public var value: Int {
+            return self.rawValue + 1
+        }
+        
+        public var asString: String {
+            return String(self.value)
+        }
+        
+        public var description: String {
+            "days to learn".lowercased().localized
+        }
+        
+        public var permissions: LocalStorageReadWrite {
+            return .readAndWrite
+        }
+    }
+    
+    public enum Subscription: Int, LocalStorageValue {
+        case inActive
+        case active
+        
+        public var value: Int {
+            return self.rawValue
+        }
+        
+        public var asString: String {
+            switch self {
+            case .active: return "on"
+            case .inActive: return "off"
+            }
+        }
+        
+        public var description: String {
+            "subscription status".lowercased().localized
+        }
+        
+        public var permissions: LocalStorageReadWrite {
+            return .readAndWrite
         }
     }
 }

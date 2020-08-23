@@ -23,6 +23,10 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         
         _view.parent = self.parent?.view
         
+        observeState(
+            \.settingsDidUpdate,
+            handler: observeSettingsDidUpdate(_:),
+            async: .main)
 //        sendEvent(
 //            DashboardEvents.ShowDetail(
 //                searchedStock: .init(
@@ -54,5 +58,14 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
             _view.settings.edge = .left
         }
 
+    }
+}
+
+// MARK: Observers
+extension DashboardViewController {
+    func observeSettingsDidUpdate(
+        _ updateRun: Change<Int>) {
+        print("{TEST} did update")
+        self._view.settings.settingsItems = component?.state.settingsItems ?? self._view.settings.settingsItems
     }
 }

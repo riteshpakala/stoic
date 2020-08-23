@@ -132,7 +132,6 @@ class ConsoleDetailView: GraniteView {
     }
     
     func updateThink(_ payload: ThinkPayload?) {
-        print("{THINK} \(payload?.stockSentimentData?.toString)")
         if let sentiment = payload?.stockSentimentData {
             sentimentView.updateSlider(sentiment)
             sentimentChanged(
@@ -226,7 +225,7 @@ class ConsoleDetailHeaderView: GraniteView {
 }
 
 //MARK: Historical
-class ConsoleDetailHistoricalView: GraniteView {
+class ConsoleDetailHistoricalView: GraniteView, PickerDelegate {
     lazy var historicDatePicker: StockDatePicker = {
         return .init(color: GlobalStyle.Colors.green)
     }()
@@ -254,6 +253,8 @@ class ConsoleDetailHistoricalView: GraniteView {
                         make.height.equalToSuperview().multipliedBy(0.66)
                         make.centerY.equalToSuperview()
                     }
+                    
+                    self.historicDatePicker.scrollTo(self.currentIndex, animated: true)
                 }
             }
         }
@@ -300,7 +301,11 @@ class ConsoleDetailHistoricalView: GraniteView {
     
     private var stockData: [StockData]? = nil
     private var sentimentStockData: [StockSentimentData]? = nil
-    private var currentIndex: Int = 0
+    private var currentIndex: Int = 0 {
+        didSet {
+            updateStats()
+        }
+    }
     init(
         cellHeight: CGFloat = 30,
         cellsToViewWhenExpanded: CGFloat = 3) {
@@ -312,6 +317,7 @@ class ConsoleDetailHistoricalView: GraniteView {
         backgroundColor = .clear
         
         historicDatePicker.cellHeight = cellHeight
+        historicDatePicker.pickerDelegate = self
         
         addSubview(historicDatePicker)
         addSubview(indicator)
@@ -348,24 +354,25 @@ class ConsoleDetailHistoricalView: GraniteView {
         cellHeight = self.frame.height*0.66
             
         historicDatePicker.data = data
+        historicDatePicker.expandedPadding = Int(cellsToViewWhenExpanded - 1)
         
         stockData = data
         sentimentStockData = sentimentData
         
-        updateStats(currentIndex)
+        updateStats()
     }
     
-    public func updateStats(_ index: Int) {
+    public func updateStats() {
         guard
             let data = stockData,
             let sentimentData = sentimentStockData,
-            index < data.count else {
+            currentIndex < data.count else {
                 openLabel.text = "⚠️"
                 emotionLabel.text = "⚠️"
                 return
         }
         
-        let stock = data[index]
+        let stock = data[currentIndex]
         openLabel.text = "\("open".localized.lowercased()): $\(round(stock.open*100)/100)\n\("close".localized.lowercased()): $\(round(stock.close*100)/100)"
         
         guard let sentiment = sentimentData.first(
@@ -382,7 +389,16 @@ class ConsoleDetailHistoricalView: GraniteView {
     func tapRegistered(_ sender: UITapGestureRecognizer) {
         expand.toggle()
         indicator.rotate()
-        
+    }
+    
+    func didSelect(index: Int) {
+        guard index < (stockData?.count ?? 0) else {
+            return
+        }
+        DispatchQueue.main.async {
+            self.feedbackGenerator.impactOccurred()
+            self.currentIndex = index
+        }
     }
 }
 

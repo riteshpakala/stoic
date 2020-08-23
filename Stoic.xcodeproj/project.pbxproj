@@ -282,6 +282,7 @@
 		71D454DB246E05ED007E61FC /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D454DA246E05ED007E61FC /* RootNavigationController.swift */; };
 		71D7CD8E248C913600C7180D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71D7CD8D248C913600C7180D /* GoogleService-Info.plist */; };
 		71D7CD91248C926A00C7180D /* StockKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7CD90248C926A00C7180D /* StockKit.swift */; };
+		71D98E3F24F1E3210089C85F /* SettingsReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E3E24F1E3210089C85F /* SettingsReducers.swift */; };
 		71F5BA4C248474B30085E8DD /* GOOG2.csv in Resources */ = {isa = PBXBuildFile; fileRef = 71F5BA4B248474B30085E8DD /* GOOG2.csv */; };
 		71F5BA4E24847CE60085E8DD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F5BA4D24847CE60085E8DD /* HomeView.swift */; };
 		8178E23F17E028E4B0A045A0 /* Pods_StoicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD1232B647A9A4E8049ECA1 /* Pods_StoicTests.framework */; };
@@ -592,6 +593,7 @@
 		71D454DA246E05ED007E61FC /* RootNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
 		71D7CD8D248C913600C7180D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		71D7CD90248C926A00C7180D /* StockKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKit.swift; sourceTree = "<group>"; };
+		71D98E3E24F1E3210089C85F /* SettingsReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsReducers.swift; sourceTree = "<group>"; };
 		71F5BA4B248474B30085E8DD /* GOOG2.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GOOG2.csv; sourceTree = "<group>"; };
 		71F5BA4D24847CE60085E8DD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B216AA8A083E08322B07F45C /* Pods-Stoic-StoicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stoic-StoicUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stoic-StoicUITests/Pods-Stoic-StoicUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -764,6 +766,7 @@
 			isa = PBXGroup;
 			children = (
 				7127B05D2485E130004C57F1 /* ShowDetailReducer.swift */,
+				71D98E3E24F1E3210089C85F /* SettingsReducers.swift */,
 				71BC1C30248635F200B35DC1 /* CloseDetailReducer.swift */,
 			);
 			path = Reducers;
@@ -2138,6 +2141,7 @@
 				717A764A24A16131005348F9 /* Node.swift in Sources */,
 				71A1D31A246E027D00D778A5 /* RadioSection.swift in Sources */,
 				717F1BDB248A1162001DD426 /* DetailBuilder.swift in Sources */,
+				71D98E3F24F1E3210089C85F /* SettingsReducers.swift in Sources */,
 				71727CCD24E9060800AC25C7 /* ThinkReducer.swift in Sources */,
 				71A1D2D5246E027D00D778A5 /* String+Subscript.swift in Sources */,
 				71B96C8724CF857000F01570 /* StockKitUtilities.swift in Sources */,

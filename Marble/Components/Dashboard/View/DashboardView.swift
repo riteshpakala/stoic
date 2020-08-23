@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 
 public class DashboardView: GraniteView {
-    lazy var settings: TongueSettings = {
-        let view: TongueSettings = .init()
+    
+    lazy var settings: TongueSettings<LocalStorageValue> = {
+        let view: TongueSettings = TongueSettings<LocalStorageValue>.init()
         view.backgroundColor = .clear
         return view
     }()

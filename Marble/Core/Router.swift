@@ -22,16 +22,9 @@ class AppDelegate: GraniteAppDelegate {
         FileManager.default.clearTmpDirectory()
         FirebaseApp.configure()
         
-        if coordinator.services
-            .storage.shouldDefaultsBeSetFor(
-                GlobalDefaults.defaultKeys) {
-            
-            for key in GlobalDefaults.defaultKeys {
-                if let value = GlobalDefaults.Values.pairs[key] {
-                    coordinator.services.storage.store(key, value)
-                }
-            }
-        }
+        coordinator.services
+        .storage.set(
+            GlobalDefaults.defaults)
         
         super.didLaunch()
     }

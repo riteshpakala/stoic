@@ -13,7 +13,9 @@ public class DashboardComponent: Component<DashboardState> {
     override public var reducers: [AnyReducer] {
         [
             ShowDetailReducer.Reducible(),
-            CloseDetailReducer.Reducible()
+            CloseDetailReducer.Reducible(),
+            GenerateSettingsReducer.Reducible(),
+            UpdateSettingsReducer.Reducible()
         ]
     }
     
@@ -22,6 +24,9 @@ public class DashboardComponent: Component<DashboardState> {
         push(SearchBuilder.build(self.services, parent: self))
          
         guard let viewController = self.viewController else { return }
+        
+        
+        sendEvent(DashboardEvents.GenerateSettings())
         
 //        getSubComponent(
 //            LiveSearchCollectionComponent.self)?

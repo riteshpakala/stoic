@@ -17,4 +17,11 @@ struct DashboardEvents {
         let id: String?
         let searchedStock: SearchStock
     }
+    
+    struct GenerateSettings: Event {
+    }
+    
+    struct UpdateSettings: Event {
+        let label: String
+    }
 }

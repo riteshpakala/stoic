@@ -11,7 +11,7 @@ import Granite
 import Foundation
 import UIKit
 
-class TongueSettings: GraniteView {
+class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     lazy var tongueView: UIView = {
         let view: UIView = .init()
@@ -68,22 +68,14 @@ class TongueSettings: GraniteView {
         }
     }
     
-    public lazy var settingsItems: [TongueSettingsModel] = {
-        let model1: TongueSettingsModel = TongueSettingsModel.init(
-            help: "sentiment strength",
-            label: "sentiment",
-            value: "low")
-        let model2: TongueSettingsModel = TongueSettingsModel.init(
-            help: "days to learn",
-            label: "days",
-            value: "7")
-        let model3: TongueSettingsModel = TongueSettingsModel.init(
-            help: "subscription",
-            label: "subscription",
-            value: "off")
-        
-        return [model1, model2, model3]
-    }()
+    public var settingsItems: [TongueSettingsModel<T>] {
+        didSet {
+            DispatchQueue.main.async {
+                self.setup()
+                self.collection.view.reloadData()
+            }
+        }
+    }
     
     struct Helpers {
         var isActive: Bool = false
@@ -98,12 +90,26 @@ class TongueSettings: GraniteView {
             label.backgroundColor = GlobalStyle.Colors.black
             return label
         }
+        
+        mutating func reset() {
+            labels.forEach { label in
+                label.isHidden = true
+                label.removeFromSuperview()
+            }
+            
+            labels.removeAll()
+            
+            isActive = false
+        }
+    
     }
     
     var helpers: Helpers = .init()
     
     public init(
+        settingsItems: [TongueSettingsModel<T>] = [],
         tongueSize: CGSize = .init(width: 42, height: 66)) {
+        self.settingsItems = settingsItems
         self.tongueSize = tongueSize
         super.init(frame: .zero)
         
@@ -140,11 +146,16 @@ class TongueSettings: GraniteView {
             make.edges.equalToSuperview()
         }
         
-        for i in 0..<settingsItems.count {
-            helpers.labels.append(Helpers.basicLabel)
-            helpers.labels[i].text = settingsItems[i].help
-            helpers.labels[i].sizeToFit()
-            self.addSubview(helpers.labels[i])
+        setup()
+    }
+    
+    func setup() {
+        self.helpers.reset()
+        for i in 0..<self.settingsItems.count {
+            self.helpers.labels.append(Helpers.basicLabel)
+            self.helpers.labels[i].text = self.settingsItems[i].help
+            self.helpers.labels[i].sizeToFit()
+            self.addSubview(self.helpers.labels[i])
         }
     }
     
@@ -236,18 +247,17 @@ class TongueSettings: GraniteView {
             }
         }
     }
-}
-
-extension TongueSettings: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(
+    
+    @objc func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
         return settingsItems.count + 1
     }
     
-    func collectionView(
+    @objc func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
+        feedbackGenerator.impactOccurred()
         
         guard indexPath.item < settingsItems.count else {
             guard !helpers.isActive else {
@@ -275,10 +285,10 @@ extension TongueSettings: UICollectionViewDelegate, UICollectionViewDataSource, 
             return
         }
         
-        
+        bubbleEvent(settingsItems[indexPath.item].selector)
     }
     
-    func collectionView(
+    @objc func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -288,7 +298,7 @@ extension TongueSettings: UICollectionViewDelegate, UICollectionViewDataSource, 
             height: collectionView.frame.size.height/CGFloat(settingsItems.count + 1))
     }
     
-    func collectionView(
+    @objc func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -305,13 +315,12 @@ extension TongueSettings: UICollectionViewDelegate, UICollectionViewDataSource, 
             cell.valueLabel.font = GlobalStyle.Fonts.courier(.large, .bold)
             return cell
         }
-        
+        cell.valueContainer.layer.borderWidth  = 3
+        cell.valueLabel.font = GlobalStyle.Fonts.courier(.small, .bold)
         cell.valueLabel.text = settingsItems[indexPath.item].value
         
         return cell
     }
-    
-    
 }
 
 extension UIView {
@@ -323,10 +332,26 @@ extension UIView {
     }
 }
 
-struct TongueSettingsModel {
+struct TongueSettingsModel<T> {
     var help: String
     var label: String
     var value: String
+    var reference: T
+    var selector: Event
+    
+    public init(
+        help: String,
+        label: String,
+        value: String,
+        selector: Event,
+        reference: T) {
+        
+        self.help = help
+        self.label = label
+        self.value = value
+        self.reference = reference
+        self.selector = selector
+    }
 }
 
 class TongueSettingsCell: UICollectionViewCell {

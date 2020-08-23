@@ -37,8 +37,13 @@ public class DetailComponent: Component<DetailState> {
     override public func didLoad() {
         push(
             StockKitBuilder.build(
-                self.services,
-                parent: self))
+            state: .init(
+                sentimentStrength: services.storage.get(
+                    GlobalDefaults.SentimentStrength.self),
+                predictionDays: services.storage.get(
+                    GlobalDefaults.PredictionDays.self)),
+            self.services,
+            parent: self))
         
         
         stockKit?.prepare()
