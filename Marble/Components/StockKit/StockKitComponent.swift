@@ -474,7 +474,6 @@ extension StockKitComponent {
             date: date,
             dateAsString: aheadDateAsString,
             stockDateRefAsString: dateAsString,
-            dateComponents: date.dateComponents(),
             sentimentData: sentimentData,
             tweetData: tweetData)
          

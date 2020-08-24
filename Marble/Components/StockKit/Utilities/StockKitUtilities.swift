@@ -37,29 +37,56 @@ public struct StockKitUtils {
         return 100.0 - (100.0 / (1 + relativeStrength));
     }
     
-    public struct RSI {
+    public class RSI: NSObject, Codable {
         let open: Double
         let close: Double
+        
+        public init(open: Double, close: Double) {
+            self.open = open
+            self.close = close
+        }
         
         static var zero: StockKitUtils.RSI {
             return .init(open: 0, close: 0.0)
         }
     }
     
-    public struct Features {
+    public class Features: NSObject, Codable {
         let momentum: Int
         let volatility: Double
         let dayAverage: Double
         
-        public struct Averages {
+        public class Averages: NSObject, Codable {
             let momentum: Double
             let volatility: Double
             let volume: Double
             let sma20: Double
             
+            public init(
+                momentum: Double,
+                volatility: Double,
+                volume: Double,
+                sma20: Double) {
+                
+                self.momentum = momentum
+                self.volatility = volatility
+                self.volume = volume
+                self.sma20 = sma20
+            }
+            
             static var zero: StockKitUtils.Features.Averages {
                 return .init(momentum: 0.0, volatility: 0.0, volume: 0.0, sma20: 0.0)
             }
+        }
+        
+        public init(
+            momentum: Int,
+            volatility: Double,
+            dayAverage: Double) {
+            
+            self.momentum = momentum
+            self.volatility = volatility
+            self.dayAverage = dayAverage
         }
         
         static var zero: StockKitUtils.Features {

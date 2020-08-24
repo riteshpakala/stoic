@@ -31,6 +31,10 @@ extension DetailEvents {
     
     struct GetPrediction: Event {
     }
+    struct PredictionDidUpdate: Event {
+        let close: Double
+        let stockSentimentData: StockSentimentData
+    }
 }
 
 extension DetailEvents {

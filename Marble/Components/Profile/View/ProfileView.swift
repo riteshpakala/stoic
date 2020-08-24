@@ -13,7 +13,7 @@ import UIKit
 public class ProfileView: GraniteView {
     lazy var signInLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "Sign in with Apple".localized
+        view.text = "sign in with apple".localized
         view.font = GlobalStyle.Fonts.courier(.medium, .bold)
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .center
@@ -21,10 +21,24 @@ public class ProfileView: GraniteView {
         return view
     }()
     
+    lazy var profileOverView: ProfileOverView = {
+        let view: ProfileOverView = .init()
+        view.isHidden = true
+        return view
+    }()
+    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
         self.backgroundColor = GlobalStyle.Colors.black
+        
+        addSubview(profileOverView)
+        profileOverView.snp.makeConstraints { make in
+            make.top.left.equalToSuperview()
+                .offset(GlobalStyle.largePadding).priority(999)
+            make.right.bottom.equalToSuperview()
+                .offset(-GlobalStyle.largePadding).priority(999)
+        }
         
         addSubview(signInLabel)
         signInLabel.snp.makeConstraints { make in

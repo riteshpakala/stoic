@@ -22,7 +22,6 @@ public class SubscribeViewController: GraniteViewController<SubscribeState> {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        
         observeState(
             \.disclaimers,
             handler: observeDisclaimers(_:),

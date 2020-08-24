@@ -8,6 +8,7 @@
 import Granite
 import Foundation
 import UIKit
+import Firebase
 
 public class SearchViewController: GraniteViewController<SearchState> {
     override public func loadView() {
@@ -184,8 +185,22 @@ extension SearchViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath) {
         
         if  let stocks = component?.state.stocks,
-            indexPath.item < (component?.state.stocks.count ?? 0) {
+            indexPath.item < stocks.count {
             
+            let stock = stocks[indexPath.item]
+            
+            if let id = Auth.auth().currentUser?.uid {
+                component?.service.center.backend.put(
+                    stock,
+                    route: .users,
+                    key: id+"/"+ServiceCenter.BackendService.Route.stockSearches.rawValue)
+            }
+            
+            bubbleEvent(
+                DashboardEvents.ShowDetail(
+                    searchedStock: stock))
+        } else if let stocks = component?.state.stockRotation,
+            indexPath.item < stocks.count {
             bubbleEvent(
                 DashboardEvents.ShowDetail(
                     searchedStock: stocks[indexPath.item]))

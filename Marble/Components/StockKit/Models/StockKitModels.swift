@@ -14,11 +14,13 @@ public enum StockPrediction {
     case open
     case close
 }
-class StockSentimentData: NSObject {
+class StockSentimentData: NSObject, Codable {
     let date: Date
     let dateAsString: String
     let stockDateRefAsString: String
-    let dateComponents: (year: Int, month: Int, day: Int)
+    var dateComponents: (year: Int, month: Int, day: Int) {
+        date.dateComponents()
+    }
     let sentimentData: [VaderSentimentOutput]
     var positives: [Double] {
         return sentimentData.map { $0.pos }
@@ -78,14 +80,12 @@ class StockSentimentData: NSObject {
         date: Date,
         dateAsString: String,
         stockDateRefAsString: String,
-        dateComponents: (year: Int, month: Int, day: Int),
         sentimentData: [VaderSentimentOutput],
         tweetData: [Tweet]) {
         
         self.date = date
         self.dateAsString = dateAsString
         self.stockDateRefAsString = stockDateRefAsString
-        self.dateComponents = dateComponents
         self.sentimentData = sentimentData
         self.tweetData = tweetData
     }
@@ -113,7 +113,6 @@ class StockSentimentData: NSObject {
             date: .init(),
             dateAsString: "",
             stockDateRefAsString: "",
-            dateComponents: Date.dateComponents(.init())(),
             sentimentData: [.init(
                 pos: positive,
                 neg: negative,
@@ -122,7 +121,7 @@ class StockSentimentData: NSObject {
             tweetData: [])
     }
 }
-class StockData: NSObject {
+class StockData: NSObject, Codable {
     var dateData: StockDateData
     var open: Double
     var high: Double
@@ -277,11 +276,17 @@ class StockData: NSObject {
         return desc
     }
 }
-class StockDateData: NSObject {
+class StockDateData: NSObject, Codable {
     var asString: String
     var asDate: Date?
     var isOpen: Bool
-    var dateComponents: (year: Int, month: Int, day: Int)
+    
+    public var dateComponents: (year: Int, month: Int, day: Int) {
+        let day = Calendar.nyCalendar.component(.day, from: asDate ?? Date())
+        let month = Calendar.nyCalendar.component(.month, from: asDate ?? Date())
+        let year = Calendar.nyCalendar.component(.year, from: asDate ?? Date())
+        return (year, month, day)
+    }
     
     init(
         date: Date?,
@@ -290,12 +295,6 @@ class StockDateData: NSObject {
         self.asDate = date
         self.asString = dateAsString
         self.isOpen = isOpen
-
-        let day = Calendar.nyCalendar.component(.day, from: asDate ?? Date())
-        let month = Calendar.nyCalendar.component(.month, from: asDate ?? Date())
-        let year = Calendar.nyCalendar.component(.year, from: asDate ?? Date())
-        
-        self.dateComponents = (year, month, day)
     }
 }
 public struct StockSearchPayload {

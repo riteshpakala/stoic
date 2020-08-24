@@ -35,6 +35,8 @@ public class DetailState: State {
     
     var consoleDetailPayload: ConsoleDetailPayload? = nil
     
+    var predictionDidUpdate: Int = 7
+    
     init(_ searchedStock: SearchStock) {
         self.searchedStock = searchedStock
     }
@@ -45,5 +47,30 @@ class ThinkPayload: NSObject {
     public init(
         sentiment: StockSentimentData) {
         self.stockSentimentData = sentiment
+    }
+}
+
+class PredictionUpdate: NSObject, Codable {
+    let sentimentStrength: Int
+    let predictionDays: Int
+    let stock: SearchStock
+    let sentimentWeights: StockSentimentData
+    let nextTradingDay: String
+    let close: Double
+    
+    public init(
+        sentimentStrength: Int,
+        predictionDays: Int,
+        stock: SearchStock,
+        sentimentWeights: StockSentimentData,
+        nextTradingDay: String,
+        close: Double) {
+        
+        self.sentimentStrength = sentimentStrength
+        self.predictionDays = predictionDays
+        self.stock = stock
+        self.sentimentWeights = sentimentWeights
+        self.nextTradingDay = nextTradingDay
+        self.close = close
     }
 }

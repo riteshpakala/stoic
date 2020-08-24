@@ -11,5 +11,5 @@ import Foundation
 public class DashboardState: State {
     var activeSearchedStocks: [String: SearchStock] = [:]
     var settingsItems: [TongueSettingsModel<LocalStorageValue>]? = nil
-    @objc dynamic var settingsDidUpdate: Int = 0
+    @objc dynamic var settingsDidUpdate: Int = 12
 }

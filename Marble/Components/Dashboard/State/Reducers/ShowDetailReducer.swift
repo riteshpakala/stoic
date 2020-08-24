@@ -40,6 +40,7 @@ struct ShowDetailReducer: Reducer {
                 return
         }
         
+        
         let detailComponent = DetailBuilder.build(
             component.service,
             event.searchedStock)

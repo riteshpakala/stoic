@@ -7,6 +7,7 @@
 //
 import Granite
 import Foundation
+import Firebase
 
 struct GetPredictionReducer: Reducer {
     typealias ReducerEvent = DetailEvents.GetPrediction
@@ -72,3 +73,46 @@ struct GetPredictionProgressReducer: Reducer {
         state.progressLabelText = "iteration: \(event.iterations)\n--------\n\(event.maxIterations)"
     }
 }
+
+struct PredictionDidUpdateReducer: Reducer {
+    typealias ReducerEvent = DetailEvents.PredictionDidUpdate
+    typealias ReducerState = DetailState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        if state.predictionDidUpdate >= 7 {
+            guard let stockKit = (component as? DetailComponent)?.stockKit else {
+                return
+            }
+            
+            if  let id = Auth.auth().currentUser?.uid,
+                let nextTradingDay = stockKit.state.nextValidTradingDay?.asString {
+                
+                let predictionUpdate: PredictionUpdate = .init(
+                    sentimentStrength: component.service.storage.get(GlobalDefaults.SentimentStrength.self),
+                    predictionDays: component.service.storage.get(GlobalDefaults.PredictionDays.self),
+                    stock: state.searchedStock,
+                    sentimentWeights: event.stockSentimentData,
+                    nextTradingDay: nextTradingDay,
+                    close: event.close)
+                
+                let endPoint: String = ServiceCenter.BackendService.Route.stockPredictions.rawValue
+                
+                component.service.center.backend.put(
+                    predictionUpdate,
+                    route: .users,
+                    key: id+"/"+endPoint+"/"+(state.searchedStock.symbolName ?? "unknown")+"/"+nextTradingDay)
+            }
+        }
+        
+        state.predictionDidUpdate %= 7
+        state.predictionDidUpdate += 1
+    }
+}
+
+        
+

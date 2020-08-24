@@ -7,11 +7,33 @@
 //
 
 import Granite
+import AuthenticationServices
 import Foundation
 
 struct ProfileEvents {
     public struct ShowSubscribe: Event {
     }
     public struct CheckCredential: Event {
+        public enum Intent {
+            case login
+            case relogin
+            case register
+        }
+        let intent: Intent
+        public init(
+            intent: CheckCredential.Intent) {
+            self.intent = intent
+        }
+    }
+    public struct Authenticate: Event {
+        let credential: ASAuthorizationAppleIDCredential
+    }
+    
+    public struct ProfileSetup: Event {}
+    
+    public struct GetDisclaimer: Event {}
+    
+    public struct GetDisclaimerResponse: Event {
+        public let disclaimers: [Disclaimer]
     }
 }

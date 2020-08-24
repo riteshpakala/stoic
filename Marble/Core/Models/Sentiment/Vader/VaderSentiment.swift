@@ -8,11 +8,18 @@
 
 import Foundation
 
-struct VaderSentimentOutput {
+class VaderSentimentOutput: NSObject, Codable {
     let pos: Double
     let neg: Double
     let neu: Double
     let compound: Double
+    
+    public init(pos: Double, neg: Double, neu: Double, compound: Double) {
+        self.pos = pos
+        self.neg = neg
+        self.neu = neu
+        self.compound = compound
+    }
     
     var asString: String {
         return "{VADER} pos: \(pos) neg: \(neg) neu: \(neu) compound: \(compound)"

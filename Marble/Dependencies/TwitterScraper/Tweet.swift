@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Tweet {
+public class Tweet: NSObject, Codable {
     let text: String
     let time: String
     let lang: String
@@ -20,5 +20,11 @@ public struct Tweet {
         } else {
             return ""
         }
+    }
+    
+    public init(text: String, time: String, lang: String) {
+        self.text = text
+        self.time = time
+        self.lang = lang
     }
 }

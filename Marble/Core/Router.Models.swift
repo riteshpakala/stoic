@@ -8,11 +8,16 @@
 
 import Granite
 import Foundation
+import Firebase
 
 //MARK: Backend
 extension ServiceCenter.BackendService {
     public enum Route: String {
-        case global = "global"
+        case global = "global/"
+        case users = "users/"
+        case stocks = "stocks/"
+        case stockSearches = "stocks/searches"
+        case stockPredictions = "stocks/predictions"
         case globalStocksFreeRotation = "global/stocks/freeRotation"
         case disclaimerUpcoming = "disclaimer/upcoming"
     }
@@ -42,7 +47,27 @@ extension NSObject: BackendModel {
         let values = m.children.reduce([AnyHashable: Any]()) {
             (dict, child) -> [AnyHashable: Any] in
             var dict = dict
-            dict[child.label ?? "error-\(UUID().uuidString)"] = child.value
+            var value: Any = child.value
+            
+            switch child.value
+            {
+            case is NSNumber, is NSString, is NSDictionary: break
+            case is NSArray:
+                var convertedDictionary: [AnyHashable:Any] = [:]
+                if let childObj = child.value as? [NSObject] {
+                    let convertedValues = childObj.compactMap { $0.backendModel }
+                    convertedDictionary["dict"] = convertedValues
+                    value = convertedDictionary
+                    print("{TEST} \(convertedValues)")
+                }
+            default:
+                if let childObj = child.value as? NSObject {
+                    value = childObj.backendModel
+                }
+            }
+            
+            dict[child.label ?? "error-\(UUID().uuidString)"] = value
+            
             return dict
         }
         

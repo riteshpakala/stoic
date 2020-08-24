@@ -15,10 +15,15 @@ public class ProfileComponent: Component<ProfileState> {
         [
             ShowSubscribeReducer.Reducible(),
             CheckCredentialStateReducer.Reducible(),
+            AuthenticateReducer.Reducible(),
+            ProfileSetupReducer.Reducible(),
+            ProfileDisclaimerReducer.Reducible(),
+            ProfileDisclaimerResponseReducer.Reducible()
         ]
     }
     
     override public func didLoad() {
+        sendEvent(ProfileEvents.CheckCredential(intent: .relogin))
 //        sendEvent(ProfileEvents.ShowSubscribe())
     }
 }

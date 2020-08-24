@@ -856,14 +856,17 @@ class ConsoleDetailPredictionView: GraniteView {
                dataType: .Regression,
                inputDimension: StockKitUtils.inDim,
                outputDimension: StockKitUtils.outDim)
+            
+            let sentimentWeights = StockSentimentData.emptyWithValues(
+                positive: positive,
+                negative: negative,
+                neutral: neutral,
+                compound: compound)
+            
             do {
                 let dataSet = StockKitUtils.Models.DataSet(
                     recentStock,
-                    StockSentimentData.emptyWithValues(
-                        positive: positive,
-                        negative: negative,
-                        neutral: neutral,
-                        compound: compound),
+                    sentimentWeights,
                     updated: true)
                 
                 print("********************\nPREDICTING\n\(dataSet.description)")
@@ -884,10 +887,16 @@ class ConsoleDetailPredictionView: GraniteView {
                 }
                 
                 print("[Prediction Output] :: \(output)")
+
+                self?.bubbleEvent(
+                    DetailEvents.PredictionDidUpdate(
+                        close: output,
+                        stockSentimentData: sentimentWeights),
+                    async: DispatchQueue.init(label: "stoic.prediction.didUpdate"))
                 
                 self?.predictionLabel.text = StockKitUtils.Models.DataSet.outputLabel(output)
             }
-        
+            
         }
     }
 }

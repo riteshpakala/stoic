@@ -104,8 +104,13 @@ extension ServiceCenter {
             core.reference()
         }
         
-        public func put(_ data: BackendModel, route: Route) {
-            connect.child(route.rawValue).updateChildValues(data.backendModel)
+        public func put(
+            _ data: BackendModel,
+            route: Route,
+            key: String? = nil) {
+            connect.child(
+                route.rawValue+(key != nil ? "/\(key!)" : ""))
+                    .updateChildValues(data.backendModel)
         }
         
         public func get(

@@ -71,7 +71,6 @@ struct ThinkReducer: Reducer {
                 date: theDetailDate,
                 dateAsString: stockKit.state.dateAsString(date: aheadDate),
                 stockDateRefAsString: stockKit.state.dateAsString(date: theDetailDate),
-                dateComponents: theDetailDate.dateComponents(),
                 sentimentData: sentimentData,
                 tweetData: tweetData)
             
@@ -97,7 +96,8 @@ struct ThinkResponseReducer: Reducer {
         state: inout ReducerState,
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
-
+        
+        
         print("{THINK}")
         state.thinkPayload = event.payload
     }
