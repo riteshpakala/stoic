@@ -10,6 +10,10 @@
 		138F47D904DF8F9B7C96B350 /* Pods_Stoic_StoicUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C4C9ABE478FAF82259FB15 /* Pods_Stoic_StoicUITests.framework */; };
 		7107B82224D0CE1B00FADC28 /* StockKitModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7107B82124D0CE1B00FADC28 /* StockKitModels.swift */; };
 		710993F124F4430800EAA482 /* UserProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710993F024F4430800EAA482 /* UserProperties.swift */; };
+		710993F324F49FCF00EAA482 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 710993F224F49FCF00EAA482 /* StoreKit.framework */; };
+		710993F724F4A81100EAA482 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710993F624F4A81100EAA482 /* IAPManager.swift */; };
+		710993F924F4A93300EAA482 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710993F824F4A93300EAA482 /* Products.swift */; };
+		710993FB24F4AA0100EAA482 /* SusbcribeProductsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710993FA24F4AA0100EAA482 /* SusbcribeProductsReducer.swift */; };
 		7110A56A248DCAD500F62940 /* SearchStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A560248DCAD500F62940 /* SearchStyle.swift */; };
 		7110A56B248DCAD500F62940 /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A562248DCAD500F62940 /* SearchState.swift */; };
 		7110A56C248DCAD500F62940 /* SearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A564248DCAD500F62940 /* SearchBuilder.swift */; };
@@ -330,6 +334,10 @@
 		57C4C9ABE478FAF82259FB15 /* Pods_Stoic_StoicUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stoic_StoicUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7107B82124D0CE1B00FADC28 /* StockKitModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKitModels.swift; sourceTree = "<group>"; };
 		710993F024F4430800EAA482 /* UserProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProperties.swift; sourceTree = "<group>"; };
+		710993F224F49FCF00EAA482 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		710993F624F4A81100EAA482 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
+		710993F824F4A93300EAA482 /* Products.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
+		710993FA24F4AA0100EAA482 /* SusbcribeProductsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SusbcribeProductsReducer.swift; sourceTree = "<group>"; };
 		7110A560248DCAD500F62940 /* SearchStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStyle.swift; sourceTree = "<group>"; };
 		7110A562248DCAD500F62940 /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		7110A564248DCAD500F62940 /* SearchBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBuilder.swift; sourceTree = "<group>"; };
@@ -646,6 +654,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				710993F324F49FCF00EAA482 /* StoreKit.framework in Frameworks */,
 				8272E280DE0EF2B2440C734C /* Pods_Stoic.framework in Frameworks */,
 				717FADBC24E8730600E2391D /* Granite in Frameworks */,
 			);
@@ -686,6 +695,7 @@
 		570E7BE214BAA7ADDCA9745C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				710993F224F49FCF00EAA482 /* StoreKit.framework */,
 				C8C4AC17A6B30BE381B5D71B /* Pods_Stoic.framework */,
 				57C4C9ABE478FAF82259FB15 /* Pods_Stoic_StoicUITests.framework */,
 				CFD1232B647A9A4E8049ECA1 /* Pods_StoicTests.framework */,
@@ -707,6 +717,22 @@
 				710993F024F4430800EAA482 /* UserProperties.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		710993F424F4A80000EAA482 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				710993F824F4A93300EAA482 /* Products.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		710993F524F4A80400EAA482 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				710993F624F4A81100EAA482 /* IAPManager.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		7110A55F248DCAD500F62940 /* Search */ = {
@@ -1078,6 +1104,7 @@
 			isa = PBXGroup;
 			children = (
 				71725D9B24F27833003B0FF6 /* SubscribeDisclaimerReducer.swift */,
+				710993FA24F4AA0100EAA482 /* SusbcribeProductsReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -1827,6 +1854,8 @@
 		71D98E7E24F26B450089C85F /* Subscribe */ = {
 			isa = PBXGroup;
 			children = (
+				710993F524F4A80400EAA482 /* Utilities */,
+				710993F424F4A80000EAA482 /* Models */,
 				71D98E7F24F26B450089C85F /* SubscribeBuilder.swift */,
 				71D98E8024F26B450089C85F /* State */,
 				71D98E8224F26B450089C85F /* SubscribeStyle.swift */,
@@ -2302,6 +2331,7 @@
 				717A763624A16131005348F9 /* SimpleDictionary.swift in Sources */,
 				71A1D30F246E027D00D778A5 /* Configurable.swift in Sources */,
 				717A765024A16131005348F9 /* Attribute.swift in Sources */,
+				710993F924F4A93300EAA482 /* Products.swift in Sources */,
 				71A1D2FF246E027D00D778A5 /* AssetsPhotoViewController.swift in Sources */,
 				717A766024A16131005348F9 /* Parser.swift in Sources */,
 				7127B0272485DCF7004C57F1 /* DashboardEvents.swift in Sources */,
@@ -2310,6 +2340,7 @@
 				717A764D24A16131005348F9 /* StringUtil.swift in Sources */,
 				71A1D30E246E027D00D778A5 /* QuickTableViewController.swift in Sources */,
 				71D98E8824F26B450089C85F /* SubscribeBuilder.swift in Sources */,
+				710993FB24F4AA0100EAA482 /* SusbcribeProductsReducer.swift in Sources */,
 				71D98E8B24F26B450089C85F /* SubscribeViewController.swift in Sources */,
 				71D98E4124F239E80089C85F /* Router.Models.swift in Sources */,
 				71478F6D24790297007DF62D /* SwifterAccountsClient.swift in Sources */,
@@ -2385,6 +2416,7 @@
 				717A766B24A16131005348F9 /* StringBuilder.swift in Sources */,
 				71D454DB246E05ED007E61FC /* RootNavigationController.swift in Sources */,
 				71725D9E24F28389003B0FF6 /* CheckCredentialStateReducer.swift in Sources */,
+				710993F724F4A81100EAA482 /* IAPManager.swift in Sources */,
 				71A1D318246E027D00D778A5 /* Subtitle.swift in Sources */,
 				7164E6A2248DD4700035CE9B /* StockKitState.swift in Sources */,
 				71A1D315246E027D00D778A5 /* TapActionRow.swift in Sources */,

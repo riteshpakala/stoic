@@ -15,10 +15,21 @@ public class SubscribeComponent: Component<SubscribeState> {
         [
             SubscribeDisclaimerReducer.Reducible(),
             SubscribeDisclaimerResponseReducer.Reducible(),
+            SusbcribeProductsReducer.Reducible(),
+            SusbcribeSelectedProductReducer.Reducible()
         ]
     }
     
     override public func didLoad() {
         sendEvent(SubscribeEvents.GetDisclaimer())
+        
+        StoicProducts.store.requestProducts { [weak self] success, products in
+            guard success, let products = products else {
+                print("failed")
+                return
+            }
+            
+            self?.sendEvent(SubscribeEvents.GetProducts(products: products))
+        }
     }
 }

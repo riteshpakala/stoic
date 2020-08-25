@@ -9,6 +9,7 @@
 import Granite
 import Foundation
 import UIKit
+import StoreKit
 
 public class SubscribeViewController: GraniteViewController<SubscribeState> {
     override public func loadView() {
@@ -25,6 +26,11 @@ public class SubscribeViewController: GraniteViewController<SubscribeState> {
         observeState(
             \.disclaimers,
             handler: observeDisclaimers(_:),
+            async: .main)
+        
+        observeState(
+            \.products,
+            handler: observeProducts(_:),
             async: .main)
     }
     
@@ -65,5 +71,18 @@ extension SubscribeViewController {
         }
         
         _view.stackViewDisclaimers.layoutIfNeeded()
+    }
+    
+    func observeProducts(
+        _ products: Change<[SKProduct]>) {
+        
+        guard let products = products.newValue else {
+            return
+        }
+        
+        for product in products {
+            let option = SubscriptionOption.init(product: product)
+            _view.stackViewSubscriptionOptions.insertArrangedSubview(option, at: 1)
+        }
     }
 }

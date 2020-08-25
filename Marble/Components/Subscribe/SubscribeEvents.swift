@@ -8,11 +8,18 @@
 
 import Granite
 import Foundation
+import StoreKit
 
 struct SubscribeEvents {
     public struct GetDisclaimer: Event {
     }
     public struct GetDisclaimerResponse: Event {
         public let disclaimers: [Disclaimer]
+    }
+    public struct GetProducts: Event {
+        let products: [SKProduct]
+    }
+    public struct SelectedProduct: Event {
+        let product: SKProduct
     }
 }

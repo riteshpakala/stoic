@@ -8,7 +8,9 @@
 
 import Granite
 import Foundation
+import StoreKit
 
 public class SubscribeState: State {
     @objc dynamic var disclaimers: [Disclaimer]? = nil
+    @objc dynamic var products: [SKProduct] = []
 }

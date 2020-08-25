@@ -61,15 +61,10 @@ public class SubscribeView: GraniteView {
         return view
     }()
     
-    lazy var demo: SubscriptionOption = {
-        let view: SubscriptionOption = .init(frame: .zero)
-        return view
-    }()
-    
-    lazy var stackViewSubscriptionOptions: UIStackView = {
-        let view: UIStackView = UIStackView.init(
+    lazy var stackViewSubscriptionOptions: GraniteStackView = {
+        let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
-                .init(), demo, .init()
+                .init(), .init()
             ]
         )
         
@@ -81,8 +76,8 @@ public class SubscribeView: GraniteView {
         return view
     }()
     
-    lazy var stackViewDisclaimers: UIStackView = {
-        let view: UIStackView = UIStackView.init()
+    lazy var stackViewDisclaimers: GraniteStackView = {
+        let view: GraniteStackView = GraniteStackView.init()
         
         view.axis = .vertical
         view.alignment = .fill
@@ -92,8 +87,8 @@ public class SubscribeView: GraniteView {
         return view
     }()
     
-    lazy var stackView: UIStackView = {
-        let view: UIStackView = UIStackView.init(
+    lazy var stackView: GraniteStackView = {
+        let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
                 subscribeLabel,
                 subscribeSubLabel,
@@ -155,3 +150,24 @@ public class SubscribeView: GraniteView {
         }
     }
 }
+
+//class GraniteStackView: GraniteStackView, EventResponder {
+//    var responder: EventResponder?
+//
+//    override func addSubview(_ view: UIView) {
+//        super.addSubview(view)
+//
+//        if let graniteView = view as? EventResponder {
+//            graniteView.responder = self
+//        }
+//    }
+//
+//    override func insertSubview(_ view: UIView, at index: Int) {
+//        super.insertSubview(view, at: index)
+//
+//        if let graniteView = view as? EventResponder,
+//            graniteView.responder == nil {
+//            graniteView.responder = self
+//        }
+//    }
+//}
