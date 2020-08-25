@@ -14,35 +14,38 @@ import StoreKit
 class SubscriptionOption: GraniteView {
     lazy var priceLabel: UILabel = {
         let label: UILabel = .init()
-        label.text = "$11.99/mo"
+        label.text = "$11.99"
         label.textColor = GlobalStyle.Colors.orange
-        label.font = GlobalStyle.Fonts.courier(.large, .bold)
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
         label.textAlignment = .center
+        
+        label.numberOfLines = 0
         return label
     }()
     
     lazy var trialLabel: UILabel = {
         let label: UILabel = .init()
-        label.text = "3 day free trial".localized
+        label.text = "3 day trial".localized
         label.textColor = GlobalStyle.Colors.orange
-        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
     lazy var stackView: GraniteStackView = {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
-                .init(),
+                topSpacer,
                 priceLabel,
                 trialLabel,
-                .init()
+                bottomSpacer
             ]
         )
         
         view.axis = .vertical
         view.alignment = .center
-        view.distribution = .fillEqually
+        view.distribution = .fill
         view.spacing = GlobalStyle.padding
         
         return view
@@ -54,17 +57,27 @@ class SubscriptionOption: GraniteView {
             action: #selector(self.tapGestureTapped(_:)))
     }()
     
+    lazy var topSpacer: UIView = {
+        return .init()
+    }()
+    
+    lazy var bottomSpacer: UIView = {
+        return .init()
+    }()
+    
     let product: SKProduct
     init(product: SKProduct) {
         self.product = product
         super.init(frame: .zero)
         
-        priceLabel.text = "\(product.priceLocale.currencySymbol ?? "$")\(product.price)/\(product.subscriptionPeriod?.unit.description() ?? "month")"
+        priceLabel.text = "\(product.priceLocale.currencySymbol ?? "$")\(product.price)\n/\(product.subscriptionPeriod?.unit.description(numberOfUnits: product.subscriptionPeriod?.numberOfUnits) ?? "month")"
         
         if let discount = product.discounts.first {
-            trialLabel.text = "Free trial: \(discount.subscriptionPeriod.unit.description(numberOfUnits: discount.subscriptionPeriod.numberOfUnits))"
+            trialLabel.text = "\(discount.subscriptionPeriod.unit.description(numberOfUnits: discount.subscriptionPeriod.numberOfUnits, showNumber: true))\ntrial"
         } else {
             trialLabel.isHidden = true
+            topSpacer.isHidden = true
+            bottomSpacer.isHidden = true
         }
 //        if let intro = product.introductoryPrice {
 //            trialLabel.text = "\(intro.subscriptionPeriod.unit.description())"
@@ -101,22 +114,32 @@ class SubscriptionOption: GraniteView {
 }
 
 extension SKProduct.PeriodUnit {
-    func description(capitalizeFirstLetter: Bool = false, numberOfUnits: Int? = nil) -> String {
+    func description(
+        capitalizeFirstLetter: Bool = false,
+        numberOfUnits: Int? = nil,
+        showNumber: Bool = false) -> String {
+        
+        
         let period:String = {
             switch self {
-            case .day: return "day"
+            case .day:
+                if numberOfUnits == 7 {
+                    return "week"
+                } else {
+                    return "day"
+                }
             case .week: return "week"
             case .month: return "month"
             case .year: return "year"
+            @unknown default:
+                return "unknown"
             }
         }()
 
         var numUnits = ""
-        var plural = ""
-        if let numberOfUnits = numberOfUnits {
+        if let numberOfUnits = numberOfUnits, showNumber {
             numUnits = "\(numberOfUnits) " // Add space for formatting
-            plural = numberOfUnits > 1 ? "s" : ""
         }
-        return "\(numUnits)\(capitalizeFirstLetter ? period.capitalized : period)\(plural)"
+        return "\(numUnits)\(capitalizeFirstLetter ? period.capitalized : period)"
     }
 }

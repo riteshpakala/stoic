@@ -19,7 +19,7 @@ struct SusbcribeProductsReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        state.products = event.products
+        state.products = event.products.sorted(by: { ($0.subscriptionPeriod?.unit.rawValue ?? 0) < ($1.subscriptionPeriod?.unit.rawValue ?? 0) })
         
         print("{TEST} products \(event.products.count)")
     }

@@ -82,7 +82,7 @@ extension SubscribeViewController {
         
         for product in products {
             let option = SubscriptionOption.init(product: product)
-            _view.stackViewSubscriptionOptions.insertArrangedSubview(option, at: 1)
+            _view.stackViewSubscriptionOptions.addArrangedSubview(option)
         }
     }
 }

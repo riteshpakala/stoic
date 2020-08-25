@@ -62,15 +62,11 @@ public class SubscribeView: GraniteView {
     }()
     
     lazy var stackViewSubscriptionOptions: GraniteStackView = {
-        let view: GraniteStackView = GraniteStackView.init(
-            arrangedSubviews: [
-                .init(), .init()
-            ]
-        )
+        let view: GraniteStackView = GraniteStackView.init()
         
         view.axis = .horizontal
-        view.alignment = .center
-        view.distribution = .fillProportionally
+        view.alignment = .fill
+        view.distribution = .fillEqually
         view.spacing = GlobalStyle.padding
         
         return view
