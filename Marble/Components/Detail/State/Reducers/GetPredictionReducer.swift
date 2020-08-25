@@ -84,7 +84,7 @@ struct PredictionDidUpdateReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        if state.predictionDidUpdate >= 7 {
+        if state.predictionDidUpdate >= 4 {
             guard let stockKit = (component as? DetailComponent)?.stockKit else {
                 return
             }
@@ -100,16 +100,15 @@ struct PredictionDidUpdateReducer: Reducer {
                     nextTradingDay: nextTradingDay,
                     close: event.close)
                 
-                let endPoint: String = ServiceCenter.BackendService.Route.stockPredictions.rawValue
-                
                 component.service.center.backend.put(
                     predictionUpdate,
-                    route: .users,
-                    key: id+"/"+endPoint+"/"+(state.searchedStock.symbolName ?? "unknown")+"/"+nextTradingDay)
+                    route: .global,
+                    server: .prediction,
+                    key: id+"/"+predictionUpdate.key)
             }
         }
         
-        state.predictionDidUpdate %= 7
+        state.predictionDidUpdate %= 4
         state.predictionDidUpdate += 1
     }
 }

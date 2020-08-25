@@ -96,40 +96,106 @@ extension ServiceCenter {
     }
     
     public struct BackendService {
-        public var core: Database {
-            Database.database()
-        }
         
-        public var connect: DatabaseReference {
-            core.reference()
+        public struct Core {
+            public static var main: Database {
+                Database.database(url: "https://stoic-45d04.firebaseio.com/")
+            }
+            public static var search: Database {
+                Database.database(url: "https://stoic-45d04-searches-d90cb.firebaseio.com/")
+            }
+            public static var prediction: Database {
+                Database.database(url: "https://stoic-45d04-predictions-3acae.firebaseio.com/")
+            }
+            
+            public enum Server {
+                case main
+                case search
+                case prediction
+                
+                var connect: DatabaseReference {
+                    switch self {
+                    case .main:
+                        return BackendService.Core.main.reference()
+                    case .search:
+                        return BackendService.Core.search.reference()
+                    case .prediction:
+                        return BackendService.Core.prediction.reference()
+                    }
+                }
+            }
         }
         
         public func put(
             _ data: BackendModel,
             route: Route,
-            key: String? = nil) {
-            connect.child(
-                route.rawValue+(key != nil ? "/\(key!)" : ""))
-                    .updateChildValues(data.backendModel)
+            server: Core.Server = .main,
+            key: String? = nil,
+            permission: Route.Permission = .update) {
+            
+            switch permission {
+            case .update:
+                server.connect.child(
+                    route.rawValue+(key != nil ? "/\(key!)" : ""))
+                        .updateChildValues(data.backendModel)
+            case .set:
+                get(route: route, server: server, key: key) { existedData in
+                    if existedData.isEmpty {
+                        server.connect.child(
+                            route.rawValue+(key != nil ? "/\(key!)" : ""))
+                                .updateChildValues(data.backendModel)
+                    }
+                }
+            case .overwrite:
+                print("{BACKEND} overwrite is not setup yet")
+            }
         }
         
         public func get(
             route: Route,
+            server: Core.Server = .main,
+            query: Route.Query? = nil,
             key: String? = nil,
             completion: @escaping (([[AnyHashable: Any]]) -> (Void))) {
             
-            connect.child(
-                route.rawValue+(key != nil ? "/\(key!)" : ""))
-                .observeSingleEvent(
-                    of: .value,
-                    with: { snapshot in
-                        
-                if let data = snapshot.value as? [AnyHashable : Any] {
-                    completion(data.backendModel ?? [])
-                } else {
-                    completion([])
+            if let query = query {
+                switch query {
+                case .limitFirst(let limit):
+                    server.connect.child(
+                        route.rawValue+(key != nil ? "/\(key!)" : ""))
+                        .queryLimited(toFirst: limit)
+                        .observeSingleEvent(
+                            of: .value,
+                            with: { snapshot in
+                         completion(BackendService.getValueFrom(snapshot))
+                    })
+                case .limitLast(let limit):
+                    server.connect.child(
+                        route.rawValue+(key != nil ? "/\(key!)" : ""))
+                        .queryLimited(toLast: limit)
+                        .observeSingleEvent(
+                            of: .value,
+                            with: { snapshot in
+                         completion(BackendService.getValueFrom(snapshot))
+                    })
                 }
-            })
+            } else {
+                server.connect.child(
+                    route.rawValue+(key != nil ? "/\(key!)" : ""))
+                    .observeSingleEvent(
+                        of: .value,
+                        with: { snapshot in
+                        completion(BackendService.getValueFrom(snapshot))
+                })
+            }
+        }
+        
+        public static func getValueFrom(_ snapshot: DataSnapshot) -> [[AnyHashable : Any]] {
+            if let data = snapshot.value as? [AnyHashable : Any] {
+                return data.backendModel ?? [data]
+            }else {
+                return []
+            }
         }
     }
 }

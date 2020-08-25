@@ -35,7 +35,7 @@ public class DetailState: State {
     
     var consoleDetailPayload: ConsoleDetailPayload? = nil
     
-    var predictionDidUpdate: Int = 7
+    var predictionDidUpdate: Int = 4
     
     init(_ searchedStock: SearchStock) {
         self.searchedStock = searchedStock
@@ -72,5 +72,40 @@ class PredictionUpdate: NSObject, Codable {
         self.sentimentWeights = sentimentWeights
         self.nextTradingDay = nextTradingDay
         self.close = close
+    }
+    
+    var key: String {
+        return (stock.symbolName ?? "unknown")+"/"+nextTradingDay
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: DTOKeys.self)
+        let time = try container.decode(String.self, forKey: .time)
+        
+        let searchStockContainer = container.nested(forTime: time, of: .stock)
+        let sentimentStockContainer = container.nested(forTime: time, of: .sentimentWeights)
+        
+        self.sentimentStrength = try container.decode(Int.self, forKey: .sentimentStrength)
+        self.predictionDays = try container.decode(Int.self, forKey: .predictionDays)
+        
+        self.stock = (try? searchStockContainer?.decode(
+            SearchStock.self,
+            forKey: CustomCodingKey.model)) ?? SearchStock.zero
+        self.sentimentWeights = (try? sentimentStockContainer?.decode(
+            StockSentimentData.self,
+            forKey: CustomCodingKey.model)) ?? StockSentimentData.zero
+        
+        self.nextTradingDay = try container.decode(String.self, forKey: .nextTradingDay)
+        self.close = try container.decode(Double.self, forKey: .close)
+    }
+    
+    enum DTOKeys: String, CodingKey {
+        case sentimentStrength
+        case predictionDays
+        case stock
+        case sentimentWeights
+        case nextTradingDay
+        case close
+        case time
     }
 }

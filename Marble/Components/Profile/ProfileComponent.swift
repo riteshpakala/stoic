@@ -17,12 +17,23 @@ public class ProfileComponent: Component<ProfileState> {
             CheckCredentialStateReducer.Reducible(),
             AuthenticateReducer.Reducible(),
             ProfileSetupReducer.Reducible(),
+            ProfileSetupOverViewReducer.Reducible(),
             ProfileDisclaimerReducer.Reducible(),
-            ProfileDisclaimerResponseReducer.Reducible()
+            ProfileDisclaimerResponseReducer.Reducible(),
+            ProfileGetCSVResultsResponseReducer.Reducible()
         ]
     }
     
     override public func didLoad() {
+        push(
+            StockKitBuilder.build(
+            state: .init(
+                sentimentStrength: service.storage.get(
+                    GlobalDefaults.SentimentStrength.self),
+                predictionDays: service.storage.get(
+                    GlobalDefaults.PredictionDays.self)),
+            self.service))
+        
         sendEvent(ProfileEvents.CheckCredential(intent: .relogin))
 //        sendEvent(ProfileEvents.ShowSubscribe())
     }

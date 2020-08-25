@@ -57,6 +57,7 @@ public class SubscribeView: GraniteView {
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
         view.numberOfLines = 0
+        view.addGestureRecognizer(emailTapGesture)
         return view
     }()
     
@@ -133,8 +134,6 @@ public class SubscribeView: GraniteView {
             make.top.left.equalToSuperview().offset(GlobalStyle.largePadding).priority(999)
             make.right.bottom.equalToSuperview().offset(-GlobalStyle.largePadding).priority(999)
         }
-        
-        emailLabel.addGestureRecognizer(emailTapGesture)
     }
     
     required init?(coder: NSCoder) {

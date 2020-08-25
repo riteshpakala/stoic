@@ -13,7 +13,7 @@ import UIKit
 public class ProfileOverView: GraniteView {
     lazy var profileLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "Account // Free".localized.capitalized
+        view.text = "Account".localized.capitalized
         view.font = GlobalStyle.Fonts.courier(.Xlarge, .bold)
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .left
@@ -55,7 +55,7 @@ public class ProfileOverView: GraniteView {
         let view: UILabel = .init()
         view.text =
             """
-            - 12 days old.
+            /**** loading... */
             """
         view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
         view.textColor = GlobalStyle.Colors.orange
@@ -69,8 +69,7 @@ public class ProfileOverView: GraniteView {
         let view: UILabel = .init()
         view.text =
             """
-            - most searched stock: $TSLA
-            - device's average error: 1%
+            /**** loading... */
             """
         view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
         view.textColor = GlobalStyle.Colors.orange
@@ -97,6 +96,7 @@ public class ProfileOverView: GraniteView {
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(subscribeTapGesture)
         return view
     }()
     
@@ -108,6 +108,7 @@ public class ProfileOverView: GraniteView {
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
         view.numberOfLines = 0
+        view.addGestureRecognizer(emailTapGesture)
         return view
     }()
     
@@ -153,11 +154,17 @@ public class ProfileOverView: GraniteView {
         return .init()
     }()
     
-//    lazy var emailTapGesture: UITapGestureRecognizer = {
-//        return UITapGestureRecognizer(
-//            target: self,
-//            action: #selector(self.emailTeamTapped(_:)))
-//    }()
+    lazy var emailTapGesture: UITapGestureRecognizer = {
+        return UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.emailTeamTapped(_:)))
+    }()
+    
+    lazy var subscribeTapGesture: UITapGestureRecognizer = {
+        return UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.subscribeTapped(_:)))
+    }()
     
     public init() {
         super.init(frame: .zero)
@@ -172,5 +179,40 @@ public class ProfileOverView: GraniteView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setProperties(_ properties: UserProperties) {
+        
+        statsDescription1.text =
+        """
+        - \(properties.accountAge) days old.
+        """
+        
+        statsDescription2.text =
+        """
+        - most searched stock: $\(properties.mostSearchedStock)
+        - device's average error: \(round((properties.deviceAverageError)*100)/100)%
+        """
+    }
+    
+    @objc func emailTeamTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
+        emailTeam()
+    }
+    
+    @objc func subscribeTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
+        bubbleEvent(ProfileEvents.ShowSubscribe())
+    }
+    
+    func emailTeam() {
+        let email = "team@linenandsole.com"
+        if let url = URL(string: "mailto:\(email)") {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
 }

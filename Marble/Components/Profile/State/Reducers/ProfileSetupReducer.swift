@@ -19,7 +19,7 @@ struct ProfileSetupReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        guard Auth.auth().currentUser != nil else { return }
+        guard let user = Auth.auth().currentUser else { return }
         
         guard let userData = try? component.service.center.keychain.retrieve() else {
             return
@@ -30,5 +30,149 @@ struct ProfileSetupReducer: Reducer {
         sideEffects.append(
             EventBox.init(
                 event: ProfileEvents.GetDisclaimer()))
+        
+//
+//        let diffInDays = Calendar.nyCalendar.dateComponents(
+//            [.day],
+//            from: user.metadata.creationDate ?? Date(),
+//            to: Date()).day
+        
+        let componentToPass = component
+        component
+            .service.center
+            .backend
+            .get(
+            route: .global,
+            server: .search,
+            key: user.uid) { data in
+            
+                
+            let stockSearches = data.compactMap {
+                SearchStock.initialize(from: $0) }
+            componentToPass
+                .service.center
+                .backend
+                .get(
+                route: .global,
+                server: .prediction,
+                key: user.uid) { data in
+                
+                let stockPredictions = data.compactMap {
+                    PredictionUpdate.initialize(from: $0) }
+                
+                    componentToPass.sendEvent(
+                        ProfileEvents.ProfileSetupOverView.init(
+                            stockSearches: stockSearches,
+                            stockPredictions: stockPredictions))
+            }
+        }
+    }
+}
+
+struct ProfileSetupOverViewReducer: Reducer {
+    typealias ReducerEvent = ProfileEvents.ProfileSetupOverView
+    typealias ReducerState = ProfileState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+            
+        guard let user = Auth.auth().currentUser else { return }
+            
+        let diffInDays = Calendar.nyCalendar.dateComponents(
+            [.day],
+            from: user.metadata.creationDate ?? Date(),
+            to: Date()).day ?? 0
+            
+        state.userProperties = .init(
+            accountAge: diffInDays,
+            stockSearches: event.stockSearches,
+            stockPredictions: event.stockPredictions)
+        
+        guard let stockKit = component.getSubComponent(
+            StockKitComponent.self) as? StockKitComponent else {
+            return
+        }
+        
+        if  let prediction = event.stockPredictions.first,
+            let symbolName = prediction.stock.symbolName {
+            stockKit.getCSV(
+                forTicker: symbolName,
+                date: .init(prediction.nextTradingDay))
+        }
+    }
+}
+
+struct ProfileGetCSVResultsResponseReducer: Reducer {
+    typealias ReducerEvent = StockKitEvents.CSVDownloadCompleted
+    typealias ReducerState = ProfileState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        guard let stock = event.result.first,
+              let userProperties = state.userProperties else {
+            return
+        }
+        
+        if userProperties
+            .stockPredictionsTradingDayResults[stock.symbolName] != nil {
+            userProperties
+            .stockPredictionsTradingDayResults[stock.symbolName]?[stock.dateData.asString] = stock
+        } else {
+            userProperties.stockPredictionsTradingDayResults[stock.symbolName] = [stock.dateData.asString:stock]
+        }
+        
+        state.userProperties = userProperties
+        
+        guard userProperties.totalUniques != userProperties.totalUniquesOfResults else {
+            userProperties.isPrepared = true
+            state.userProperties = userProperties
+            return
+        }
+        
+        guard let stockKit = component.getSubComponent(
+            StockKitComponent.self) as? StockKitComponent else {
+            return
+        }
+        
+        var symbolName: String = ""
+        var dayToGet: String = ""
+        for ticker in userProperties.uniqueTradingDaysForSymbols.keys {
+            if let days = userProperties.uniqueTradingDaysForSymbols[ticker] {
+                for day in days {
+                    if let daysResults = userProperties.stockPredictionsTradingDayResults[ticker] {
+                        if daysResults.keys.contains(day) {
+                            return
+                        } else {
+                            symbolName = ticker
+                            dayToGet = day
+                            break
+                        }
+                    } else {
+                        symbolName = ticker
+                        dayToGet = day
+                        break
+                    }
+                }
+                
+                if !symbolName.isEmpty && !dayToGet.isEmpty {
+                    break
+                }
+            }
+        }
+        
+        if !symbolName.isEmpty && !dayToGet.isEmpty {
+            stockKit.getCSV(
+                forTicker: symbolName,
+                date: .init(dayToGet))
+        } else {
+            return
+        }
     }
 }

@@ -30,6 +30,10 @@ struct ProfileEvents {
     }
     
     public struct ProfileSetup: Event {}
+    public struct ProfileSetupOverView: Event {
+        let stockSearches: [SearchStock]
+        let stockPredictions: [PredictionUpdate]
+    }
     
     public struct GetDisclaimer: Event {}
     

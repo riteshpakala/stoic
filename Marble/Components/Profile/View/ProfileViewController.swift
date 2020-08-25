@@ -38,6 +38,11 @@ public class ProfileViewController: GraniteViewController<ProfileState> {
             async: .main)
         
         observeState(
+            \.userProperties,
+            handler: observeUserProperties(_:),
+            async: .main)
+        
+        observeState(
             \.disclaimers,
             handler: observeDisclaimers(_:),
             async: .main)
@@ -75,6 +80,19 @@ extension ProfileViewController {
         
         self._view.signInLabel.isHidden = true
         self._view.profileOverView.isHidden = false
+    }
+    
+    func observeUserProperties(
+        _ user: Change<UserProperties?>) {
+
+        guard let userChange = user.newValue,
+              let user = userChange,
+                user.isPrepared else {
+                    
+            return
+        }
+        
+        _view.profileOverView.setProperties(user)
     }
     
     func observeDisclaimers(

@@ -21,7 +21,7 @@ class StockSentimentData: NSObject, Codable {
     var dateComponents: (year: Int, month: Int, day: Int) {
         date.dateComponents()
     }
-    let sentimentData: [VaderSentimentOutput]
+    var sentimentData: [VaderSentimentOutput]
     var positives: [Double] {
         return sentimentData.map { $0.pos }
     }
@@ -90,6 +90,28 @@ class StockSentimentData: NSObject, Codable {
         self.tweetData = tweetData
     }
     
+    required public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: DTOKeys.self)
+        
+        let dataEncoded = try container.decode([String: Any].self, forKey: .sentimentData)
+        
+        self.sentimentData = dataEncoded.decode().compactMap({ item in VaderSentimentOutput.initialize(from: item) })
+        
+        self.date = .init()
+        self.dateAsString = ""
+        self.stockDateRefAsString = ""
+        self.tweetData = []
+    }
+    
+    enum DTOKeys: String, CodingKey {
+        case date
+        case dateAsString
+        case stockDateRefAsString
+        case sentimentData
+        case tweetData
+        case time
+    }
+    
     public var toString: String {
         let desc: String =
             """
@@ -120,8 +142,17 @@ class StockSentimentData: NSObject, Codable {
                 compound: compound)],
             tweetData: [])
     }
+    
+    public static var zero: StockSentimentData {
+        return StockSentimentData.emptyWithValues(
+            positive: 0.0,
+            negative: 0.0,
+            neutral: 0.0,
+            compound: 0.0)
+    }
 }
 class StockData: NSObject, Codable {
+    var symbolName: String
     var dateData: StockDateData
     var open: Double
     var high: Double
@@ -190,6 +221,7 @@ class StockData: NSObject, Codable {
     }
     
     init(
+        symbolName: String,
         dateData: StockDateData,
         open: Double,
         high: Double,
@@ -198,6 +230,7 @@ class StockData: NSObject, Codable {
         adjClose: Double,
         volume: Double) {
         
+        self.symbolName = symbolName
         self.dateData = dateData
         self.open = open
         self.high = high
@@ -220,26 +253,30 @@ class StockData: NSObject, Codable {
 
         let cleanedHistoryForRSI = sortedHistory.enumerated().filter { $0.offset < rsiMax }.map { $0.element }
         
-        for i in 0..<sortedHistory.count-1 {
-            let stock = sortedHistory[i]
-            let nextStock = sortedHistory[i+1]
-            
-            stock.features = StockKitUtils.Features(
-                momentum: stock.close > nextStock.close ? 1 : -1,
-                volatility: (stock.close - nextStock.close)/nextStock.close,
-                dayAverage: (stock.close + stock.open)/2)
-            
-            sortedHistory[i] = stock
+        if !sortedHistory.isEmpty {
+            for i in 0..<sortedHistory.count-1 {
+                let stock = sortedHistory[i]
+                let nextStock = sortedHistory[i+1]
+                
+                stock.features = StockKitUtils.Features(
+                    momentum: stock.close > nextStock.close ? 1 : -1,
+                    volatility: (stock.close - nextStock.close)/nextStock.close,
+                    dayAverage: (stock.close + stock.open)/2)
+                
+                sortedHistory[i] = stock
+            }
         }
         
-        _ = sortedHistory.removeLast()
-        
-        for i in 0..<sortedHistory.count {
-            let stock = sortedHistory[i]
+        if !sortedHistory.isEmpty {
+            _ = sortedHistory.removeLast()
             
-            stock.historicalData = sortedHistory.enumerated().filter { $0.offset > i }.map { $0.element }
-            
-            sortedHistory[i] = stock
+            for i in 0..<sortedHistory.count {
+                let stock = sortedHistory[i]
+                
+                stock.historicalData = sortedHistory.enumerated().filter { $0.offset > i }.map { $0.element }
+                
+                sortedHistory[i] = stock
+            }
         }
         
         if let nextStock = sortedHistory.first {
@@ -251,11 +288,13 @@ class StockData: NSObject, Codable {
         
         self.historicalData = sortedHistory
         
-        self.rsi = StockKitUtils.RSI(
-            open: StockKitUtils.calculateRsi(
-                cleanedHistoryForRSI.map { $0.open }),
-            close: StockKitUtils.calculateRsi(
-                cleanedHistoryForRSI.map { $0.close }))
+        if !cleanedHistoryForRSI.isEmpty {
+            self.rsi = StockKitUtils.RSI(
+                open: StockKitUtils.calculateRsi(
+                    cleanedHistoryForRSI.map { $0.open }),
+                close: StockKitUtils.calculateRsi(
+                    cleanedHistoryForRSI.map { $0.close }))
+        }
         
         count = self.historicalData?.count ?? 0
         return self
@@ -295,6 +334,12 @@ class StockDateData: NSObject, Codable {
         self.asDate = date
         self.asString = dateAsString
         self.isOpen = isOpen
+    }
+    
+    init(_ dateAsString: String) {
+        self.asDate = dateAsString.asDate()
+        self.asString = dateAsString
+        self.isOpen = true
     }
 }
 public struct StockSearchPayload {

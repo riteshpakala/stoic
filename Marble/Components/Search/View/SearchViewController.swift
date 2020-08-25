@@ -192,8 +192,9 @@ extension SearchViewController: UICollectionViewDelegate {
             if let id = Auth.auth().currentUser?.uid {
                 component?.service.center.backend.put(
                     stock,
-                    route: .users,
-                    key: id+"/"+ServiceCenter.BackendService.Route.stockSearches.rawValue)
+                    route: .global,
+                    server: .search,
+                    key: id)
             }
             
             bubbleEvent(

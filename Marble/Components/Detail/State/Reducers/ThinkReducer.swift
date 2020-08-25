@@ -97,8 +97,6 @@ struct ThinkResponseReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        
-        print("{THINK}")
         state.thinkPayload = event.payload
     }
 }

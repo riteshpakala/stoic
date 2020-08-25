@@ -15,6 +15,8 @@ public class ProfileState: State {
     @objc dynamic var user: UserData? = nil
     var currentNonce: String?
     
+    @objc dynamic var userProperties: UserProperties? = nil
+    
     public override init() {
         let nonce = ProfileState.randomNonceString()
         currentNonce = nonce

@@ -239,7 +239,7 @@ extension StockKitComponent {
             searchTask?.resume()
         }
     }
-    func getCSV(forTicker ticker: String) {
+    func getCSV(forTicker ticker: String, date: StockDateData? = nil) {
         csvTask?.cancel()
         
         let csvURLasString = "https://query1.finance.yahoo.com/v7/finance/download/\(ticker)?period1=1092873600&period2=\(state.yahooFinanceAPIHistoryKey)&interval=1d&events=history"
@@ -252,17 +252,28 @@ extension StockKitComponent {
                 
                 guard let this = self else { return }
                 
-                if let data = data, let dates = this.state.validHistoricalTradingDays {
+                if  let data = data {
+                    
                     if let content = String(data: data, encoding: .utf8) {
+                        let dates: [StockDateData]
+                        if let selectiveDate = date {
+                            dates = [selectiveDate]
+                        } else if let validTradingDates = this.state.validHistoricalTradingDays {
+                            dates = validTradingDates
+                        } else {
+                            dates = []
+                        }
+                        
                         guard let stockData = this.parseCSV(
-                           content: content,
-                           forDates: dates), !stockData.isEmpty else {
+                            ticker,
+                            content: content,
+                            forDates: dates), !stockData.isEmpty else {
                            return
                         }
                         
-                        if let validTradingDays = this.state.validTradingDays {
+                        if !dates.isEmpty {
 
-                            let datesAsStrings = validTradingDays.map { $0.asString }
+                            let datesAsStrings = dates.map { $0.asString }
                             let observedStocks: [StockData] = stockData.filter { datesAsStrings.contains($0.dateData.asString) }
                             
                             let updatedStocks: [StockData] = observedStocks.map {
@@ -276,6 +287,8 @@ extension StockKitComponent {
                                     result: updatedStocks ))
                         }
                     }
+                } else {
+                    print("[StockKit] CSV retrieval failed.")
                 }
             }
             
@@ -485,6 +498,7 @@ extension StockKitComponent {
 
 extension StockKitComponent {
     func parseCSV (
+        _ symbolName: String,
         content: String,
         forDates dates: [StockDateData])
         -> [StockData]? {
@@ -548,6 +562,7 @@ extension StockKitComponent {
                     let volume = Double(values[6]) {
                     
                     let item: StockData = StockData.init(
+                        symbolName: symbolName,
                         dateData: dateData,
                         open:open,
                         high:high,

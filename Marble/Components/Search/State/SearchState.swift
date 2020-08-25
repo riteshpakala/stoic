@@ -28,6 +28,10 @@ public class SearchStock: NSObject, Codable {
         
         super.init()
     }
+    
+    static var zero: SearchStock {
+        return SearchStock.init(exchangeName: nil, symbolName: nil, companyName: nil)
+    }
 }
 
 public enum SearchStockKeys: String {
