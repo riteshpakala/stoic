@@ -25,6 +25,7 @@ extension DashboardView: Onboardable {
         get {
             [
                 settingsStep,
+                settingsOverviewStep,
                 sentimentStep,
                 daysStep,
                 searchStep,
@@ -43,7 +44,7 @@ extension DashboardView: Onboardable {
             order: 0)
     }
     
-    public var sentimentStep: OnboardingStep {
+    public var settingsOverviewStep: OnboardingStep {
         OnboardingStep.init(
             reference: OnboardingReference.init(
                 referenceView: self.settings,
@@ -54,7 +55,7 @@ extension DashboardView: Onboardable {
             order: 1)
     }
     
-    public var daysStep: OnboardingStep {
+    public var sentimentStep: OnboardingStep {
         OnboardingStep.init(
             reference: OnboardingReference.init(
                 referenceView: self.settings,
@@ -62,6 +63,17 @@ extension DashboardView: Onboardable {
                 padding: .init(top: 0, left: 0, bottom: 0, right: 100)),
             isActionable: false,
             text: "sentiment strengths define how much emotional data should be gathered for prediction accuracy. Higher settings will increase prediction generation.",
+            order: 2)
+    }
+    
+    public var daysStep: OnboardingStep {
+        OnboardingStep.init(
+            reference: OnboardingReference.init(
+                referenceView: self.settings,
+                fitsToBounds: true,
+                padding: .init(top: 0, left: 0, bottom: 0, right: 100)),
+            isActionable: false,
+            text: "you can set the days, of how far back in the market week data should be pulled to forecast the next trading day's stock.",
             order: 3)
     }
     
@@ -70,7 +82,7 @@ extension DashboardView: Onboardable {
             reference: OnboardingReference.init(
                 referenceView: self.subviews.first(where: { ($0 as? SearchView) != nil }) ?? self,
                 padding: .init(
-                    top: -GlobalStyle.spacing,
+                    top: GlobalStyle.spacing,
                     left: -GlobalStyle.spacing,
                     bottom: (GlobalStyle.spacing*2),
                     right: -GlobalStyle.spacing*2)),
@@ -84,7 +96,7 @@ extension DashboardView: Onboardable {
             reference: OnboardingReference.init(
                 referenceView: self.subviews.first(where: { ($0 as? SearchView) != nil }) ?? self,
                 padding: .init(
-                    top: -GlobalStyle.spacing,
+                    top: GlobalStyle.spacing,
                     left: -GlobalStyle.spacing,
                     bottom: SearchStyle.collectionHeight.height + (GlobalStyle.spacing*2),
                     right: -GlobalStyle.spacing*2)),
