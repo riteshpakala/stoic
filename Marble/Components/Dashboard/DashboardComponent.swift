@@ -22,21 +22,10 @@ public class DashboardComponent: Component<DashboardState> {
     }
     
     override public func didLoad() {
-//        push(LiveSearchCollectionBuilder.build(self.services, parent: self))
         push(SearchBuilder.build(self.service))
-         
         guard let viewController = self.viewController else { return }
         
         sendEvent(DashboardEvents.GenerateSettings())
-        
-//        getSubComponent(
-//            LiveSearchCollectionComponent.self)?
-//            .viewController?.view.snp.makeConstraints { make in
-//            make.height.equalTo(LiveSearchCollectionStyle.collectionHeight)
-//            make.bottom.equalTo(viewController.view.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.padding)
-//            make.left.equalTo(viewController.view.safeAreaLayoutGuide.snp.left)
-//            make.right.equalTo(viewController.view.safeAreaLayoutGuide.snp.right)
-//        }
         
         getSubComponent(
             SearchComponent.self)?
@@ -48,6 +37,7 @@ public class DashboardComponent: Component<DashboardState> {
             make.right.equalTo(viewController.view.safeAreaLayoutGuide.snp.right)
         }
         
-        
+        //Onboarding
+        push(OnboardingBuilder.build(self.service), display: .fit)
     }
 }

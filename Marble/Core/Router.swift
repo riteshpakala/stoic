@@ -200,6 +200,12 @@ extension ServiceCenter {
     }
 }
 
+extension ServiceCenter {
+    public struct OnboardingService {
+        
+    }
+}
+    
 extension AppDelegate {
     
     private func CPUinfo() -> Dictionary<String, String> {

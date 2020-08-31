@@ -37,7 +37,7 @@ struct SusbcribeSelectedProductReducer: Reducer {
         
         
         StoicProducts.store.buyProduct(event.product) { success, productId in
-          
+            
         }
     }
 }

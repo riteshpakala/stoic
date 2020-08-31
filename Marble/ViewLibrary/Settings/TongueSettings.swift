@@ -23,6 +23,8 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
     lazy var container: UIView = {
         let view: UIView = .init()
         view.backgroundColor = GlobalStyle.Colors.black
+        view.layer.masksToBounds = true
+        view.clipsToBounds = true
         return view
     }()
     
@@ -113,6 +115,8 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
         self.tongueSize = tongueSize
         super.init(frame: .zero)
         
+        self.backgroundColor = .clear
+        
         addSubview(tongueView)
         tongueView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -171,7 +175,21 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
     @objc
     func tapRegistered(_ sender: UITapGestureRecognizer) {
         feedbackGenerator.impactOccurred()
-        isOpen.toggle()
+        if isOpen {
+            collapse()
+        } else {
+            open()
+        }
+    }
+    
+    func open() {
+        isOpen = true
+        indicator.rotate(by: CGFloat.pi)
+        updateAppearance()
+    }
+    
+    func collapse() {
+        isOpen = false
         indicator.rotate(by: CGFloat.pi)
         updateAppearance()
     }
@@ -248,6 +266,34 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
         }
     }
     
+    func showHelpers(forceActive: Bool = false, forceHide: Bool = false) {
+        if forceActive && helpers.isActive {
+            return
+        }
+        
+        guard !helpers.isActive, !forceHide else {
+            helpers.labels.forEach { label in
+                label.isHidden = true
+            }
+
+            helpers.isActive = false
+            return
+        }
+        
+        for i in 0..<settingsItems.count {
+            guard let cell = collection.view.dequeueReusableCell(
+                withReuseIdentifier: "\(TongueSettingsCell.self)",
+                for: IndexPath.init(item: i, section: 0)) as? TongueSettingsCell else {
+                    continue
+            }
+            
+            helpers.labels[i].isHidden = false
+            helpers.labels[i].frame.origin = .init(x: container.frame.maxX, y: (cell.frame.maxY - cell.frame.height/2) - helpers.labels[i].frame.size.height/2)
+        }
+        
+        helpers.isActive = true
+    }
+    
     @objc func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
@@ -260,27 +306,7 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
         feedbackGenerator.impactOccurred()
         
         guard indexPath.item < settingsItems.count else {
-            guard !helpers.isActive else {
-                helpers.labels.forEach { label in
-                    label.isHidden = true
-                }
-
-                helpers.isActive = false
-                return
-            }
-            
-            for i in 0..<settingsItems.count {
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "\(TongueSettingsCell.self)",
-                    for: IndexPath.init(item: i, section: 0)) as? TongueSettingsCell else {
-                        continue
-                }
-                
-                helpers.labels[i].isHidden = false
-                helpers.labels[i].frame.origin = .init(x: container.frame.maxX, y: (cell.frame.maxY - cell.frame.height/2) - helpers.labels[i].frame.size.height/2)
-            }
-            
-            helpers.isActive = true
+            showHelpers()
             
             return
         }

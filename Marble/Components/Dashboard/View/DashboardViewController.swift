@@ -43,10 +43,6 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         super.viewDidDisappear(animated)
         
     }
-    
-    override public func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
 	
     override public func viewWillTransition(
         to size: CGSize,

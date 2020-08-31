@@ -93,6 +93,16 @@
 		715DB1B824CB461B00E1D741 /* ConsoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */; };
 		715DB1BA24CB60DC00E1D741 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B924CB60DC00E1D741 /* Picker.swift */; };
 		715DB1BC24CBD9CD00E1D741 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1BB24CBD9CD00E1D741 /* Triangle.swift */; };
+		716437C724FC6E6D00BAB6BC /* OnboardingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437BD24FC6E6D00BAB6BC /* OnboardingStyle.swift */; };
+		716437C824FC6E6D00BAB6BC /* OnboardingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437BE24FC6E6D00BAB6BC /* OnboardingComponent.swift */; };
+		716437C924FC6E6D00BAB6BC /* OnboardingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437BF24FC6E6D00BAB6BC /* OnboardingEvents.swift */; };
+		716437CA24FC6E6D00BAB6BC /* OnboardingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437C024FC6E6D00BAB6BC /* OnboardingBuilder.swift */; };
+		716437CB24FC6E6D00BAB6BC /* OnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437C224FC6E6D00BAB6BC /* OnboardingState.swift */; };
+		716437CC24FC6E6D00BAB6BC /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437C524FC6E6D00BAB6BC /* OnboardingViewController.swift */; };
+		716437CD24FC6E6D00BAB6BC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437C624FC6E6D00BAB6BC /* OnboardingView.swift */; };
+		716437D024FC6EBB00BAB6BC /* OnboardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437CF24FC6EBB00BAB6BC /* OnboardingStep.swift */; };
+		716437D224FC78D800BAB6BC /* Router.Onboarding.Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437D124FC78D700BAB6BC /* Router.Onboarding.Models.swift */; };
+		716437D624FC823C00BAB6BC /* UpdateStepReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437D524FC823C00BAB6BC /* UpdateStepReducer.swift */; };
 		7164E692248DCE770035CE9B /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E691248DCE770035CE9B /* String+Localization.swift */; };
 		7164E6A2248DD4700035CE9B /* StockKitState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E699248DD4700035CE9B /* StockKitState.swift */; };
 		7164E6A3248DD4700035CE9B /* StockKitEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E69B248DD4700035CE9B /* StockKitEvents.swift */; };
@@ -287,7 +297,7 @@
 		71D7CD8E248C913600C7180D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71D7CD8D248C913600C7180D /* GoogleService-Info.plist */; };
 		71D7CD91248C926A00C7180D /* StockKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7CD90248C926A00C7180D /* StockKit.swift */; };
 		71D98E3F24F1E3210089C85F /* SettingsReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E3E24F1E3210089C85F /* SettingsReducers.swift */; };
-		71D98E4124F239E80089C85F /* Router.Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E4024F239E80089C85F /* Router.Models.swift */; };
+		71D98E4124F239E80089C85F /* Router.Backend.Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E4024F239E80089C85F /* Router.Backend.Models.swift */; };
 		71D98E4324F255E20089C85F /* GenerateStockRotationReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E4224F255E20089C85F /* GenerateStockRotationReducer.swift */; };
 		71D98E6224F260CA0089C85F /* ProfileComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E5924F260CA0089C85F /* ProfileComponent.swift */; };
 		71D98E6324F260CA0089C85F /* ProfileEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E5A24F260CA0089C85F /* ProfileEvents.swift */; };
@@ -419,6 +429,16 @@
 		715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDetailView.swift; sourceTree = "<group>"; };
 		715DB1B924CB60DC00E1D741 /* Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picker.swift; sourceTree = "<group>"; };
 		715DB1BB24CBD9CD00E1D741 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		716437BD24FC6E6D00BAB6BC /* OnboardingStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingStyle.swift; sourceTree = "<group>"; };
+		716437BE24FC6E6D00BAB6BC /* OnboardingComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingComponent.swift; sourceTree = "<group>"; };
+		716437BF24FC6E6D00BAB6BC /* OnboardingEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingEvents.swift; sourceTree = "<group>"; };
+		716437C024FC6E6D00BAB6BC /* OnboardingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingBuilder.swift; sourceTree = "<group>"; };
+		716437C224FC6E6D00BAB6BC /* OnboardingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingState.swift; sourceTree = "<group>"; };
+		716437C524FC6E6D00BAB6BC /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		716437C624FC6E6D00BAB6BC /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		716437CF24FC6EBB00BAB6BC /* OnboardingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStep.swift; sourceTree = "<group>"; };
+		716437D124FC78D700BAB6BC /* Router.Onboarding.Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Models.swift; sourceTree = "<group>"; };
+		716437D524FC823C00BAB6BC /* UpdateStepReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStepReducer.swift; sourceTree = "<group>"; };
 		7164E691248DCE770035CE9B /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		7164E699248DD4700035CE9B /* StockKitState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockKitState.swift; sourceTree = "<group>"; };
 		7164E69B248DD4700035CE9B /* StockKitEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockKitEvents.swift; sourceTree = "<group>"; };
@@ -620,7 +640,7 @@
 		71D7CD8D248C913600C7180D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		71D7CD90248C926A00C7180D /* StockKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKit.swift; sourceTree = "<group>"; };
 		71D98E3E24F1E3210089C85F /* SettingsReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsReducers.swift; sourceTree = "<group>"; };
-		71D98E4024F239E80089C85F /* Router.Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Models.swift; sourceTree = "<group>"; };
+		71D98E4024F239E80089C85F /* Router.Backend.Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Backend.Models.swift; sourceTree = "<group>"; };
 		71D98E4224F255E20089C85F /* GenerateStockRotationReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateStockRotationReducer.swift; sourceTree = "<group>"; };
 		71D98E5924F260CA0089C85F /* ProfileComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileComponent.swift; sourceTree = "<group>"; };
 		71D98E5A24F260CA0089C85F /* ProfileEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEvents.swift; sourceTree = "<group>"; };
@@ -916,7 +936,8 @@
 				7127B0312485DD2E004C57F1 /* GlobalStyle.swift */,
 				7165E48424F0FA2E00B59960 /* GlobalDefaults.swift */,
 				71305F73246E038A00E64718 /* Router.swift */,
-				71D98E4024F239E80089C85F /* Router.Models.swift */,
+				71D98E4024F239E80089C85F /* Router.Backend.Models.swift */,
+				716437D124FC78D700BAB6BC /* Router.Onboarding.Models.swift */,
 				71D7CD8F248C925100C7180D /* StockKit */,
 				71F5BA4F24847DC30085E8DD /* 3DObj */,
 				71305F74246E038A00E64718 /* Models */,
@@ -1049,6 +1070,54 @@
 				715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */,
 			);
 			path = Console;
+			sourceTree = "<group>";
+		};
+		716437BC24FC6E6D00BAB6BC /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				716437CE24FC6EA800BAB6BC /* Models */,
+				716437BD24FC6E6D00BAB6BC /* OnboardingStyle.swift */,
+				716437BE24FC6E6D00BAB6BC /* OnboardingComponent.swift */,
+				716437BF24FC6E6D00BAB6BC /* OnboardingEvents.swift */,
+				716437C024FC6E6D00BAB6BC /* OnboardingBuilder.swift */,
+				716437C124FC6E6D00BAB6BC /* State */,
+				716437C424FC6E6D00BAB6BC /* View */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		716437C124FC6E6D00BAB6BC /* State */ = {
+			isa = PBXGroup;
+			children = (
+				716437C224FC6E6D00BAB6BC /* OnboardingState.swift */,
+				716437C324FC6E6D00BAB6BC /* Reducers */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		716437C324FC6E6D00BAB6BC /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+				716437D524FC823C00BAB6BC /* UpdateStepReducer.swift */,
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
+		716437C424FC6E6D00BAB6BC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				716437C524FC6E6D00BAB6BC /* OnboardingViewController.swift */,
+				716437C624FC6E6D00BAB6BC /* OnboardingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		716437CE24FC6EA800BAB6BC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				716437CF24FC6EBB00BAB6BC /* OnboardingStep.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		7164E697248DD4700035CE9B /* StockKit */ = {
@@ -1789,6 +1858,7 @@
 		71D454D8246E05ED007E61FC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				716437BC24FC6E6D00BAB6BC /* Onboarding */,
 				71D98E7E24F26B450089C85F /* Subscribe */,
 				71D98E5824F260CA0089C85F /* Profile */,
 				7164E697248DD4700035CE9B /* StockKit */,
@@ -2187,8 +2257,10 @@
 				71478F7224790297007DF62D /* JSON.swift in Sources */,
 				71A1D2F2246E027D00D778A5 /* UIView+Dimmer.swift in Sources */,
 				717A765624A16131005348F9 /* XmlTreeBuilder.swift in Sources */,
+				716437D624FC823C00BAB6BC /* UpdateStepReducer.swift in Sources */,
 				717F1BD9248A1140001DD426 /* SceneBuilder.swift in Sources */,
 				71A1D30C246E027D00D778A5 /* Device+AssetsPickerViewController.swift in Sources */,
+				716437D024FC6EBB00BAB6BC /* OnboardingStep.swift in Sources */,
 				71A1D2D4246E027D00D778A5 /* Double.swift in Sources */,
 				71A1D2F7246E027D00D778A5 /* AssetsManager+Sync.swift in Sources */,
 				717A764124A16131005348F9 /* SwiftSoup.swift in Sources */,
@@ -2224,6 +2296,7 @@
 				713ABC22246E39A000DD03EA /* HomeEvents.swift in Sources */,
 				717A765B24A16131005348F9 /* Whitelist.swift in Sources */,
 				71A1D308246E027D00D778A5 /* UIScreen+AssetsPickerViewController.swift in Sources */,
+				716437C824FC6E6D00BAB6BC /* OnboardingComponent.swift in Sources */,
 				71A1D302246E027D00D778A5 /* AssetsPhotoLayout.swift in Sources */,
 				717A765824A16131005348F9 /* Collector.swift in Sources */,
 				7165E48524F0FA2E00B59960 /* GlobalDefaults.swift in Sources */,
@@ -2272,6 +2345,7 @@
 				71A1D31A246E027D00D778A5 /* RadioSection.swift in Sources */,
 				717F1BDB248A1162001DD426 /* DetailBuilder.swift in Sources */,
 				71D98E3F24F1E3210089C85F /* SettingsReducers.swift in Sources */,
+				716437CD24FC6E6D00BAB6BC /* OnboardingView.swift in Sources */,
 				71727CCD24E9060800AC25C7 /* ThinkReducer.swift in Sources */,
 				71A1D2D5246E027D00D778A5 /* String+Subscript.swift in Sources */,
 				71B96C8724CF857000F01570 /* StockKitUtilities.swift in Sources */,
@@ -2286,6 +2360,7 @@
 				71478F7D24790297007DF62D /* SwifterTweets.swift in Sources */,
 				719AA33C2478B69A000F7CBD /* SVM.swift in Sources */,
 				71A1D31B246E027D00D778A5 /* Deprecated.swift in Sources */,
+				716437D224FC78D800BAB6BC /* Router.Onboarding.Models.swift in Sources */,
 				71A1D2D3246E027D00D778A5 /* FileManager.swift in Sources */,
 				7110A56A248DCAD500F62940 /* SearchStyle.swift in Sources */,
 				71478F6624790296007DF62D /* Operator++.swift in Sources */,
@@ -2304,6 +2379,7 @@
 				717A765124A16131005348F9 /* Entities.swift in Sources */,
 				717A767024A16131005348F9 /* DataNode.swift in Sources */,
 				71478F8724790297007DF62D /* SwiftyJSON.swift in Sources */,
+				716437CC24FC6E6D00BAB6BC /* OnboardingViewController.swift in Sources */,
 				71478F7A24790297007DF62D /* SwifterFollowers.swift in Sources */,
 				71D98E6324F260CA0089C85F /* ProfileEvents.swift in Sources */,
 				717A764624A16131005348F9 /* Cleaner.swift in Sources */,
@@ -2318,8 +2394,10 @@
 				71A1D306246E027D00D778A5 /* AssetsEmptyView.swift in Sources */,
 				71478F7F24790297007DF62D /* Scanner++.swift in Sources */,
 				719AA33E2478B69A000F7CBD /* DataSet.swift in Sources */,
+				716437C924FC6E6D00BAB6BC /* OnboardingEvents.swift in Sources */,
 				717A763924A16131005348F9 /* NodeTraversor.swift in Sources */,
 				71A1D2EF246E027D00D778A5 /* AssetsPickerConfig.swift in Sources */,
+				716437CA24FC6E6D00BAB6BC /* OnboardingBuilder.swift in Sources */,
 				716D147724CE96AE0075F86E /* Translate.swift in Sources */,
 				71A1D301246E027D00D778A5 /* AssetsNoPermissionView.swift in Sources */,
 				7164E6AA248DDB8C0035CE9B /* SearchCollectionCell.swift in Sources */,
@@ -2342,7 +2420,7 @@
 				71D98E8824F26B450089C85F /* SubscribeBuilder.swift in Sources */,
 				710993FB24F4AA0100EAA482 /* SusbcribeProductsReducer.swift in Sources */,
 				71D98E8B24F26B450089C85F /* SubscribeViewController.swift in Sources */,
-				71D98E4124F239E80089C85F /* Router.Models.swift in Sources */,
+				71D98E4124F239E80089C85F /* Router.Backend.Models.swift in Sources */,
 				71478F6D24790297007DF62D /* SwifterAccountsClient.swift in Sources */,
 				71A1D31C246E027D00D778A5 /* Section.swift in Sources */,
 				71D98E6624F260CA0089C85F /* ProfileView.swift in Sources */,
@@ -2353,6 +2431,7 @@
 				71A2FF2E24F3425D00B8B650 /* ProfileSetupReducer.swift in Sources */,
 				71A1D300246E027D00D778A5 /* PanoramaIconView.swift in Sources */,
 				71478F7B24790297007DF62D /* SwifterAuth.swift in Sources */,
+				716437CB24FC6E6D00BAB6BC /* OnboardingState.swift in Sources */,
 				71D98E8C24F26B450089C85F /* SubscribeView.swift in Sources */,
 				717A765724A16131005348F9 /* DocumentType.swift in Sources */,
 				717A766C24A16131005348F9 /* Attributes.swift in Sources */,
@@ -2432,6 +2511,7 @@
 				71D98E6824F260CA0089C85F /* ProfileBuilder.swift in Sources */,
 				7110A56E248DCAD500F62940 /* SearchComponent.swift in Sources */,
 				71A1D30A246E027D00D778A5 /* String+AssetsPickerViewController.swift in Sources */,
+				716437C724FC6E6D00BAB6BC /* OnboardingStyle.swift in Sources */,
 				71A1D314246E027D00D778A5 /* OptionRow.swift in Sources */,
 				717A763B24A16131005348F9 /* DataUtil.swift in Sources */,
 				71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */,
