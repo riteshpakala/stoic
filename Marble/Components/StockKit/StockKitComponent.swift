@@ -275,7 +275,6 @@ extension StockKitComponent {
 
                             let datesAsStrings = dates.map { $0.asString }
                             let observedStocks: [StockData] = stockData.filter { datesAsStrings.contains($0.dateData.asString) }
-                            
                             let updatedStocks: [StockData] = observedStocks.map {
                                 $0.update(
                                     historicalTradingData: stockData,

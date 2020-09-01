@@ -47,5 +47,8 @@ public class DetailComponent: Component<DetailState> {
         
         
         stockKit?.prepare()
+        
+        //Onboarding
+        push(OnboardingBuilder.build(self.service), display: .fit)
     }
 }

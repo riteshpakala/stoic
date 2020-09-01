@@ -28,27 +28,25 @@ struct GetPredictionReducer: Reducer {
         guard let stockData = state.stockData else { return }
         
         guard let stockSentimentData = state.stockSentimentData else { return }
-        
-//        guard let validTradindDateData = stockKit.state.validTradingDays else { return }
-//
-//        let validTradingDays: [String] = validTradindDateData.map { $0.asString }
-//
+
+        guard let validTradingDateData = stockKit.state.validTradingDays else { return }
+
+        let validTradingDays: [String] = validTradingDateData.map { $0.asString }
+
 //        let validSentiments: [StockSentimentData] = stockSentimentData.filter { validTradingDays.contains($0.dateAsString) }
 //
 //        let validSentimentTradingDays: [String] = validSentiments.map { $0.dateAsString }
         
-//        let validTradingData: [StockData] = stockDate.filter( { validSentimentTradingDays.contains($0.dateData.asString) })
-        
-        //
+        let validTradingData: [StockData] = stockData.filter( { validTradingDays.contains($0.dateData.asString) })
         
         state.model = stockKit.predict(
-            withStockData: stockData,
+            withStockData: validTradingData,
             stockSentimentData: stockSentimentData)
         
         if let model = state.model {
             state.consoleDetailPayload = ConsoleDetailPayload.init(
                 currentTradingDay: stockKit.state.nextValidTradingDay?.asString ?? "",
-                historicalTradingData: stockData,
+                historicalTradingData: validTradingData,
                 stockSentimentData: stockSentimentData,
                 days: stockKit.state.rules.days,
                 maxDays: stockKit.state.rules.maxDays,

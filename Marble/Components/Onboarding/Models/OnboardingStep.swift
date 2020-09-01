@@ -72,7 +72,7 @@ public class OnboardingReference: NSObject {
     let fitsToBounds: Bool
     let padding: UIEdgeInsets
     public init(
-        referenceView: UIView,
+        referenceView: UIView = .init(),
         containerView: UIView? = nil,
         fitsToBounds: Bool = false,
         padding: UIEdgeInsets = .zero) {

@@ -37,7 +37,7 @@ public class DashboardComponent: Component<DashboardState> {
             make.right.equalTo(viewController.view.safeAreaLayoutGuide.snp.right)
         }
         
-        //Onboarding
-        push(OnboardingBuilder.build(self.service), display: .fit)
+//        //Onboarding
+//        push(OnboardingBuilder.build(self.service), display: .fit)
     }
 }

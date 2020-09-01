@@ -887,14 +887,16 @@ class ConsoleDetailPredictionView: GraniteView {
                 }
                 
                 print("[Prediction Output] :: \(output)")
-
+                
+                self?.predictionLabel.text = StockKitUtils.Models.DataSet.outputLabel(output)
+                
+                guard !output.isNaN else { return }
                 self?.bubbleEvent(
                     DetailEvents.PredictionDidUpdate(
                         close: output,
                         stockSentimentData: sentimentWeights),
                     async: DispatchQueue.init(label: "stoic.prediction.didUpdate"))
                 
-                self?.predictionLabel.text = StockKitUtils.Models.DataSet.outputLabel(output)
             }
             
         }

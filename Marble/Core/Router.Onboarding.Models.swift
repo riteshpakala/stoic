@@ -20,6 +20,7 @@ public protocol Onboardable {
     func committedStep(_ index: Int)
 }
 
+//MARK: Dashboard
 extension DashboardView: Onboardable {
     public var onboardingSteps: [OnboardingStep] {
         get {
@@ -112,5 +113,45 @@ extension DashboardView: Onboardable {
             self.settings.showHelpers(forceHide: true)
             self.settings.collapse()
         }
+    }
+}
+
+//MARK: Detail
+extension DetailView: Onboardable {
+    public var onboardingSteps: [OnboardingStep] {
+        get {
+            [
+                introStep,
+                nextTradingDayStep
+            ]
+        }
+    }
+    
+    public var introStep: OnboardingStep {
+        OnboardingStep.init(
+            isActionable: false,
+            text: "A prediction retrieves stock data & sentiment from all over the web",
+            order: 0)
+    }
+    
+    public var nextTradingDayStep: OnboardingStep {
+        OnboardingStep.init(
+            reference: .init(referenceView: consoleView.detailView.headerView),
+            isActionable: false,
+            text: "The trading date this window is predicting for",
+            order: 1)
+    }
+    
+    public var historicalDayStep: OnboardingStep {
+        OnboardingStep.init(
+            reference: .init(referenceView: consoleView.detailView.historicalView),
+            isActionable: true,
+            text: "You can view data of past dates here, tap the arrow and tap a date",
+            order: 2)
+    }
+    
+    
+    public func committedStep(_ index: Int) {
+        
     }
 }
