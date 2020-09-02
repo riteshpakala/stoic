@@ -15,9 +15,20 @@ extension ServiceCenter.OnboardingService {
     
 }
 
-public protocol Onboardable {
+public protocol Onboardable: GraniteView {
     var onboardingSteps: [OnboardingStep] { get }
+    var onboardingProperties: OnboardingProperties { get }
     func committedStep(_ index: Int)
+}
+
+extension Onboardable {
+    public var onboardingProperties: OnboardingProperties {
+        .init(
+            backgroundColor: GlobalStyle.Colors.yellow.withAlphaComponent(0.15),
+            textColor: GlobalStyle.Colors.yellow,
+            textFont: GlobalStyle.Fonts.courier(.medium, .bold),
+            textBackgroundColor: GlobalStyle.Colors.black.withAlphaComponent(0.75))
+    }
 }
 
 //MARK: Dashboard
@@ -118,17 +129,31 @@ extension DashboardView: Onboardable {
 
 //MARK: Detail
 extension DetailView: Onboardable {
+    public var onboardingProperties: OnboardingProperties {
+        .init(
+            backgroundColor: GlobalStyle.Colors.yellow.withAlphaComponent(0.36),
+            textColor: GlobalStyle.Colors.yellow,
+            textFont: GlobalStyle.Fonts.courier(.subMedium, .bold),
+            textBackgroundColor: GlobalStyle.Colors.black.withAlphaComponent(0.95))
+    }
+    
     public var onboardingSteps: [OnboardingStep] {
         get {
             [
                 introStep,
-                nextTradingDayStep
+                nextTradingDayStep,
+                historicalDayStep,
+                sentimentStepPart1,
+                sentimentStepPart2,
+                predictionStepPart1,
+                predictionStepPart2
             ]
         }
     }
     
     public var introStep: OnboardingStep {
         OnboardingStep.init(
+            reference: .init(textPadding: GlobalStyle.padding),
             isActionable: false,
             text: "A prediction retrieves stock data & sentiment from all over the web",
             order: 0)
@@ -136,7 +161,14 @@ extension DetailView: Onboardable {
     
     public var nextTradingDayStep: OnboardingStep {
         OnboardingStep.init(
-            reference: .init(referenceView: consoleView.detailView.headerView),
+            reference: .init(
+                referenceView: consoleView.detailView.headerView,
+                containerView: consoleView.detailView,
+                padding: .init(
+                    top: -GlobalStyle.spacing,
+                    left: -GlobalStyle.spacing,
+                    bottom: GlobalStyle.spacing,
+                    right: -GlobalStyle.spacing*2)),
             isActionable: false,
             text: "The trading date this window is predicting for",
             order: 1)
@@ -144,10 +176,77 @@ extension DetailView: Onboardable {
     
     public var historicalDayStep: OnboardingStep {
         OnboardingStep.init(
-            reference: .init(referenceView: consoleView.detailView.historicalView),
+            reference: .init(
+                referenceView: consoleView.detailView.historicalView,
+                containerView: consoleView.detailView,
+                padding: .init(
+                    top: 0,
+                    left: -GlobalStyle.spacing,
+                    bottom: 0,
+                    right: -GlobalStyle.spacing*2)),
             isActionable: true,
             text: "You can view data of past dates here, tap the arrow and tap a date",
             order: 2)
+    }
+    
+    public var sentimentStepPart1: OnboardingStep {
+        OnboardingStep.init(
+            reference: .init(
+                referenceView: consoleView.detailView.sentimentView,
+                containerView: consoleView.detailView,
+                padding: .init(
+                    top: GlobalStyle.spacing,
+                    left: -GlobalStyle.spacing,
+                    bottom: GlobalStyle.spacing,
+                    right: -GlobalStyle.spacing*2)),
+            isActionable: true,
+            text: "Adjust these sentiment knobs to get realtime predictions.",
+            order: 3)
+    }
+    
+    public var sentimentStepPart2: OnboardingStep {
+        OnboardingStep.init(
+            reference: .init(
+                referenceView: consoleView.detailView.sentimentView,
+                containerView: consoleView.detailView,
+                padding: .init(
+                    top: GlobalStyle.spacing,
+                    left: -GlobalStyle.spacing,
+                    bottom: GlobalStyle.spacing,
+                    right: -GlobalStyle.spacing*2)),
+            isActionable: false,
+            text: "The middle is negative & positive weights. The left is used to refine. The right is used to remove potential bias",
+            order: 4)
+    }
+    
+    public var predictionStepPart1: OnboardingStep {
+        OnboardingStep.init(
+            reference: .init(
+                referenceView: consoleView.detailView.predictionView,
+                containerView: consoleView.detailView,
+                padding: .init(
+                    top: -GlobalStyle.spacing,
+                    left: -GlobalStyle.spacing,
+                    bottom: 0,
+                    right: -GlobalStyle.spacing*2)),
+            isActionable: true,
+            text: "The prediction view shows the outcome of your judgement of the trading day's sentiment",
+            order: 5)
+    }
+    
+    public var predictionStepPart2: OnboardingStep {
+        OnboardingStep.init(
+            reference: .init(
+                referenceView: consoleView.detailView.predictionView,
+                containerView: consoleView.detailView,
+                padding: .init(
+                    top: -GlobalStyle.spacing,
+                    left: -GlobalStyle.spacing,
+                    bottom: 0,
+                    right: -GlobalStyle.spacing*2)),
+            isActionable: true,
+            text: "Tap the ball to auto suggest based on live sentiment from the web.",
+            order: 6)
     }
     
     

@@ -33,9 +33,8 @@ public class OnboardingView: GraniteView {
     lazy var onboardingMessage: UILabel = {
         let label: UILabel = .init()
         label.numberOfLines = 0
-        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        label.textColor = GlobalStyle.Colors.yellow
-        label.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.75)
+        label.textColor = .yellow
+        label.backgroundColor = .black
         label.textAlignment = .center
         label.layer.cornerRadius = 8.0
         label.layer.masksToBounds = true
@@ -43,16 +42,17 @@ public class OnboardingView: GraniteView {
     }()
     
     var messageCenterYConstraint: Constraint?
+    var messageHeightConstraint: Constraint?
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = GlobalStyle.Colors.yellow.withAlphaComponent(0.15)
+        self.backgroundColor = .yellow
         
         addSubview(onboardingMessage)
         onboardingMessage.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(GlobalStyle.padding)
-            make.right.equalToSuperview().offset(-GlobalStyle.padding)
-            make.height.equalTo(onboardingMessage.font.lineHeight*5 + GlobalStyle.padding)
+            make.left.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-12)
+            messageHeightConstraint = make.height.equalTo(onboardingMessage.font.lineHeight*5 + 12).constraint
             make.centerX.equalToSuperview()
             messageCenterYConstraint = make.centerY.equalToSuperview().constraint
         }

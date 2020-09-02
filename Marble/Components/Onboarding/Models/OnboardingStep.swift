@@ -9,6 +9,25 @@
 import Foundation
 import UIKit
 
+public class OnboardingProperties: NSObject {
+    let backgroundColor: UIColor
+    let textColor: UIColor
+    let textFont: UIFont
+    let textBackgroundColor: UIColor
+    
+    public init(
+        backgroundColor: UIColor,
+        textColor: UIColor,
+        textFont: UIFont,
+        textBackgroundColor: UIColor) {
+        
+        self.backgroundColor = backgroundColor
+        self.textColor = textColor
+        self.textFont = textFont
+        self.textBackgroundColor = textBackgroundColor
+    }
+}
+
 public class OnboardingStep: NSObject {
     let reference: OnboardingReference?
     let isActionable: Bool
@@ -71,14 +90,17 @@ public class OnboardingReference: NSObject {
     let containerView: UIView?
     let fitsToBounds: Bool
     let padding: UIEdgeInsets
+    let textPadding: CGFloat
     public init(
         referenceView: UIView = .init(),
         containerView: UIView? = nil,
         fitsToBounds: Bool = false,
-        padding: UIEdgeInsets = .zero) {
+        padding: UIEdgeInsets = .zero,
+        textPadding: CGFloat = 0) {
         self.referenceView = referenceView
         self.containerView = containerView
         self.fitsToBounds = fitsToBounds
         self.padding = padding
+        self.textPadding = textPadding
     }
 }
