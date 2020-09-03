@@ -5,7 +5,7 @@
 //  Created by Ritesh Pakala on 8/30/20.
 //  Copyright © 2020 Ritesh Pakala. All rights reserved.
 //
-
+import Granite
 import Foundation
 import UIKit
 
@@ -25,12 +25,62 @@ public class OnboardingProperties: NSObject {
         self.textColor = textColor
         self.textFont = textFont
         self.textBackgroundColor = textBackgroundColor
+        
+        super.init()
     }
 }
 
-public class OnboardingStep: NSObject {
+public protocol OnboardingActionableDelegate: class {
+    func commitAction()
+}
+public class OnboardingActionable: NSObject {
+    weak var delegate: OnboardingActionableDelegate? = nil
+    public var keyPath: String
+    public var view: GraniteBaseView
+    public var observer: NSKeyValueObservation? = nil
+    public var KVOContext: UniChar = UUID.init().uuidString.map({ UniChar.init(String($0)) ?? 0 }).reduce(0, +);
+    public init<ValueType>(
+        keyPath: KeyPath<GraniteBaseView, ValueType>,
+        view: GraniteBaseView) {
+        
+        self.keyPath = NSExpression.init(forKeyPath: keyPath).keyPath
+        self.view = view
+        
+        super.init()
+        
+        self.view.addObserver(
+            self,
+            forKeyPath: self.keyPath,
+            options: .new,
+            context: &KVOContext)
+    }
+    
+    override public func observeValue(
+        forKeyPath keyPath: String?,
+        of object: Any?,
+        change: [NSKeyValueChangeKey : Any]?,
+        context: UnsafeMutableRawPointer?) {
+        
+        self.delegate?.commitAction()
+    }
+    
+    public func removeObservers() {
+        view.removeObserver(self, forKeyPath: keyPath, context: &KVOContext)
+        self.observer?.invalidate()
+    }
+    
+    deinit {
+        removeObservers()
+    }
+}
+
+public class OnboardingStep: NSObject, OnboardingActionableDelegate {
+    weak var delegate: OnboardingActionableDelegate?
     let reference: OnboardingReference?
-    let isActionable: Bool
+    var isActionable: Bool {
+        actionable != nil
+    }
+    let actionable: OnboardingActionable?
     var hasCommittedAction: Bool = false
     let isEmpty: Bool
     let text: String
@@ -38,22 +88,34 @@ public class OnboardingStep: NSObject {
     
     public init(
         reference: OnboardingReference? = nil,
-        isActionable: Bool,
+        actionable: OnboardingActionable? = nil,
         text: String,
         order: Int,
         isEmpty: Bool = false) {
         
         self.reference = reference
-        self.isActionable = isActionable
         self.text = text
         self.order = order
         self.isEmpty = isEmpty
+        self.actionable = actionable
+        super.init()
+        
+        self.actionable?.delegate = self
+    }
+    
+    public func commitAction() {
+        hasCommittedAction = true
+        delegate?.commitAction()
+    }
+    
+    public func removeObservers() {
+        self.delegate = nil
+        self.actionable?.removeObservers()
     }
     
     static public var empty: OnboardingStep {
         OnboardingStep.init(
             reference: .init(referenceView: .init()),
-            isActionable: false,
             text: "error",
             order: 0,
             isEmpty: true)

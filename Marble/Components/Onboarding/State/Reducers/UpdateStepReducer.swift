@@ -19,5 +19,6 @@ struct UpdateStepReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         state.currentStep = event.step
+        state.index = event.index
     }
 }

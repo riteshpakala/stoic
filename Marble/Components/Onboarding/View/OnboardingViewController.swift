@@ -24,12 +24,12 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
         return self.view as! OnboardingView
     }
     
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
         _view.parent = self.parent?.view
         _view.delegate = self
-        
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -56,6 +56,10 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
     }
     
     func viewTapped(inRegion: Bool) {
+        guard !currentStepIsActionable else {
+            return
+        }
+        
         guard !isLastStep else {
             self.component?.removeFromParent()
             return
@@ -79,10 +83,34 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
     }
 }
 
+extension OnboardingViewController: OnboardingActionableDelegate {
+    public func commitAction() {
+        guard !isLastStep else {
+            self.component?.removeFromParent()
+            return
+        }
+        print("{TEST} observed")
+        guard
+            currentStepIsActionable,
+            currentStepCommittedAction else {
+            return
+        }
+        print("{TEST} observed and committed")
+        reference?.committedStep(self.currentStep.order)
+        setup(getNextStep())
+    }
+}
+
 extension OnboardingViewController {
     func setup(_ step: OnboardingStep) {
         mask(step)
         applyText(step)
+        
+        step.delegate = self
+        component?.sendEvent(
+            OnboardingEvents.UpdateStep.init(
+                step: step,
+                index: step.order))
     }
     
     func mask(_ step: OnboardingStep) {
@@ -120,14 +148,15 @@ extension OnboardingViewController {
                 height: sizeOfText.height + 24))
         
         if  rectOfText.intersects(referenceFrame) {
-
-            var positioning = reference.frame.height * (referenceFrame.midY > reference.frame.height/2 ? -0.25 : 0.25)
-            
+            print("{TEST} \(referenceFrame.midY) \(reference.frame.height/2)")
+            var positioning = reference.frame.height * (ceil(referenceFrame.midY) > ceil(reference.frame.height/2) ? -0.25 : 0.25)
+        
             if let textPadding = step.reference?.textPadding {
                 positioning += textPadding
             }
             
             _view.messageCenterYConstraint?.update(offset: positioning)
+            
         } else {
             let rectOfTextCentered = CGRect.init(
                 origin: .init(

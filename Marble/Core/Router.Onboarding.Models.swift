@@ -51,7 +51,6 @@ extension DashboardView: Onboardable {
             reference: OnboardingReference.init(
                 referenceView: self.settings.tongueView,
                 containerView: self.settings),
-            isActionable: true,
             text: "tap the arrow to open your profile or settings for your possible predictions.",
             order: 0)
     }
@@ -62,7 +61,6 @@ extension DashboardView: Onboardable {
                 referenceView: self.settings,
                 fitsToBounds: true,
                 padding: .init(top: 0, left: 0, bottom: 0, right: 100)),
-            isActionable: false,
             text: "sentiment and the amount of days can be set to strengthen or quicken prediction results.",
             order: 1)
     }
@@ -73,7 +71,6 @@ extension DashboardView: Onboardable {
                 referenceView: self.settings,
                 fitsToBounds: true,
                 padding: .init(top: 0, left: 0, bottom: 0, right: 100)),
-            isActionable: false,
             text: "sentiment strengths define how much emotional data should be gathered for prediction accuracy. Higher settings will increase prediction generation.",
             order: 2)
     }
@@ -84,7 +81,6 @@ extension DashboardView: Onboardable {
                 referenceView: self.settings,
                 fitsToBounds: true,
                 padding: .init(top: 0, left: 0, bottom: 0, right: 100)),
-            isActionable: false,
             text: "you can set the days, of how far back in the market week data should be pulled to forecast the next trading day's stock.",
             order: 3)
     }
@@ -98,7 +94,6 @@ extension DashboardView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: (GlobalStyle.spacing*2),
                     right: -GlobalStyle.spacing*2)),
-            isActionable: true,
             text: "you can search for most stocks using their $Ticker Symbol.",
             order: 4)
     }
@@ -112,7 +107,6 @@ extension DashboardView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: SearchStyle.collectionHeight.height + (GlobalStyle.spacing*2),
                     right: -GlobalStyle.spacing*2)),
-            isActionable: true,
             text: "Results would appear right below, tap one to begin a forecast.",
             order: 5)
     }
@@ -142,7 +136,8 @@ extension DetailView: Onboardable {
             [
                 introStep,
                 nextTradingDayStep,
-                historicalDayStep,
+                historicalDayStepPart1,
+                historicalDayStepPart2,
                 sentimentStepPart1,
                 sentimentStepPart2,
                 predictionStepPart1,
@@ -154,8 +149,8 @@ extension DetailView: Onboardable {
     public var introStep: OnboardingStep {
         OnboardingStep.init(
             reference: .init(textPadding: GlobalStyle.padding),
-            isActionable: false,
-            text: "A prediction retrieves stock data & sentiment from all over the web",
+            actionable: .init(keyPath: \.frame, view: self),
+            text: "A prediction retrieves stock data & sentiment from all over the web. Give it a moment to pull & process.",
             order: 0)
     }
     
@@ -169,12 +164,11 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
-            isActionable: false,
             text: "The trading date this window is predicting for",
             order: 1)
     }
     
-    public var historicalDayStep: OnboardingStep {
+    public var historicalDayStepPart1: OnboardingStep {
         OnboardingStep.init(
             reference: .init(
                 referenceView: consoleView.detailView.historicalView,
@@ -184,9 +178,24 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: 0,
                     right: -GlobalStyle.spacing*2)),
-            isActionable: true,
-            text: "You can view data of past dates here, tap the arrow and tap a date",
+            actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.historicalView.indicator),
+            text: "You can view data of past dates here, tap the triangle",
             order: 2)
+    }
+    
+    public var historicalDayStepPart2: OnboardingStep {
+        OnboardingStep.init(
+            reference: .init(
+                referenceView: consoleView.detailView.historicalView.historicDatePicker,
+                containerView: consoleView.detailView.historicalView,
+                padding: .init(
+                    top: -consoleView.detailView.frame.origin.y,
+                    left: 0,
+                    bottom: consoleView.detailView.historicalView.expandSize - consoleView.detailView.historicalView.cellHeight,
+                    right: 0)),
+            actionable: .init(keyPath: \.intrinsicContentSize, view: self.consoleView.detailView.historicalView.hStack),
+            text: "Tap on another date",
+            order: 3)
     }
     
     public var sentimentStepPart1: OnboardingStep {
@@ -199,9 +208,8 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
-            isActionable: true,
             text: "Adjust these sentiment knobs to get realtime predictions.",
-            order: 3)
+            order: 4)
     }
     
     public var sentimentStepPart2: OnboardingStep {
@@ -214,9 +222,8 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
-            isActionable: false,
             text: "The middle is negative & positive weights. The left is used to refine. The right is used to remove potential bias",
-            order: 4)
+            order: 5)
     }
     
     public var predictionStepPart1: OnboardingStep {
@@ -229,9 +236,8 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: 0,
                     right: -GlobalStyle.spacing*2)),
-            isActionable: true,
             text: "The prediction view shows the outcome of your judgement of the trading day's sentiment",
-            order: 5)
+            order: 6)
     }
     
     public var predictionStepPart2: OnboardingStep {
@@ -244,9 +250,8 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: 0,
                     right: -GlobalStyle.spacing*2)),
-            isActionable: true,
             text: "Tap the ball to auto suggest based on live sentiment from the web.",
-            order: 6)
+            order: 7)
     }
     
     

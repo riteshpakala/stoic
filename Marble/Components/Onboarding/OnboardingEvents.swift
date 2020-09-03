@@ -11,9 +11,11 @@ import Foundation
 
 struct OnboardingEvents {
     public struct UpdateStep: Event {
-        let step: Int
-        public init(step: Int) {
+        let step: OnboardingStep
+        let index: Int
+        public init(step: OnboardingStep, index: Int) {
             self.step = step
+            self.index = index
         }
     }
 }

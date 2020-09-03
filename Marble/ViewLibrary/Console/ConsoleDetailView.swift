@@ -243,7 +243,7 @@ class ConsoleDetailHistoricalView: GraniteView, PickerDelegate {
                     self.historicDatePicker.snp.remakeConstraints { make in
                         make.left.equalToSuperview().offset(GlobalStyle.padding)
                         make.width.equalToSuperview().multipliedBy(0.48)
-                        make.height.equalTo(self.cellsToViewWhenExpanded * self.historicDatePicker.cellHeight)
+                        make.height.equalTo(self.expandSize)
                         make.top.equalToSuperview().offset(self.historicDatePicker.frame.origin.y)
                     }
                 } else {
@@ -292,6 +292,9 @@ class ConsoleDetailHistoricalView: GraniteView, PickerDelegate {
         return .init(target: self, action: #selector(self.tapRegistered(_:)))
     }()
     
+    var expandSize: CGFloat {
+        self.cellsToViewWhenExpanded * self.historicDatePicker.cellHeight
+    }
     var cellHeight: CGFloat {
         didSet {
             historicDatePicker.cellHeight = cellHeight
