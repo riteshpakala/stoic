@@ -10,6 +10,7 @@ import Granite
 import AVFoundation
 import UIKit
 import Firebase
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: GraniteAppDelegate {
@@ -22,9 +23,7 @@ class AppDelegate: GraniteAppDelegate {
         FileManager.default.clearTmpDirectory()
         FirebaseApp.configure()
         
-        coordinator.service
-        .storage.set(
-            GlobalDefaults.defaults)
+        coordinator.service.storage.set(GlobalDefaults.defaults)
         
         super.didLaunch()
     }
@@ -90,6 +89,9 @@ extension ServiceCenter {
         true
     }
     
+    public var coreData: CoreDataManager {
+        return CoreDataManager(name: "version0000")
+    }
     
     public var backend: BackendService {
         .init()

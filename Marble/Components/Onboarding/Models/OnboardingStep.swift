@@ -39,6 +39,7 @@ public class OnboardingActionable: NSObject {
     public var view: GraniteBaseView
     public var observer: NSKeyValueObservation? = nil
     public var KVOContext: UniChar = UUID.init().uuidString.map({ UniChar.init(String($0)) ?? 0 }).reduce(0, +);
+    
     public init<ValueType>(
         keyPath: KeyPath<GraniteBaseView, ValueType>,
         view: GraniteBaseView) {

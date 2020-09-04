@@ -90,6 +90,8 @@
 		71478F8F24790BD8007DF62D /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */; };
 		714A82E1246E30BA006A7120 /* HomeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E0246E30BA006A7120 /* HomeComponent.swift */; };
 		714A82E3246E30C9006A7120 /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E2246E30C9006A7120 /* HomeState.swift */; };
+		71573DA725020E7A006EEDF0 /* StockPredictionObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71573DA525020E79006EEDF0 /* StockPredictionObject+CoreDataClass.swift */; };
+		71573DA825020E7A006EEDF0 /* StockPredictionObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71573DA625020E7A006EEDF0 /* StockPredictionObject+CoreDataProperties.swift */; };
 		715DB1B824CB461B00E1D741 /* ConsoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */; };
 		715DB1BA24CB60DC00E1D741 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B924CB60DC00E1D741 /* Picker.swift */; };
 		715DB1BC24CBD9CD00E1D741 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1BB24CBD9CD00E1D741 /* Triangle.swift */; };
@@ -181,6 +183,8 @@
 		717F1BDB248A1162001DD426 /* DetailBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BDA248A1162001DD426 /* DetailBuilder.swift */; };
 		717F1BDD248A117D001DD426 /* DashboardBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BDC248A117D001DD426 /* DashboardBuilder.swift */; };
 		717FADBC24E8730600E2391D /* Granite in Frameworks */ = {isa = PBXBuildFile; productRef = 717FADBB24E8730600E2391D /* Granite */; };
+		71829C902501ED49002D267E /* version0000.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71829C8E2501ED49002D267E /* version0000.xcdatamodeld */; };
+		71829C922501ED7A002D267E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71829C912501ED7A002D267E /* CoreDataManager.swift */; };
 		719AA33C2478B69A000F7CBD /* SVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA3382478B69A000F7CBD /* SVM.swift */; };
 		719AA33E2478B69A000F7CBD /* DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA33A2478B69A000F7CBD /* DataSet.swift */; };
 		719AA33F2478B69A000F7CBD /* Kernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA33B2478B69A000F7CBD /* Kernel.swift */; };
@@ -425,6 +429,8 @@
 		71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		714A82E0246E30BA006A7120 /* HomeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComponent.swift; sourceTree = "<group>"; };
 		714A82E2246E30C9006A7120 /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
+		71573DA525020E79006EEDF0 /* StockPredictionObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StockPredictionObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		71573DA625020E7A006EEDF0 /* StockPredictionObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StockPredictionObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDetailView.swift; sourceTree = "<group>"; };
 		715DB1B924CB60DC00E1D741 /* Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picker.swift; sourceTree = "<group>"; };
 		715DB1BB24CBD9CD00E1D741 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -517,6 +523,8 @@
 		717F1BDA248A1162001DD426 /* DetailBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBuilder.swift; sourceTree = "<group>"; };
 		717F1BDC248A117D001DD426 /* DashboardBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardBuilder.swift; sourceTree = "<group>"; };
 		717FADB824E8710F00E2391D /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../granite; sourceTree = "<group>"; };
+		71829C8F2501ED49002D267E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		71829C912501ED7A002D267E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		719AA3382478B69A000F7CBD /* SVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVM.swift; sourceTree = "<group>"; };
 		719AA3392478B69A000F7CBD /* SVMTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVMTests.swift; sourceTree = "<group>"; };
 		719AA33A2478B69A000F7CBD /* DataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSet.swift; sourceTree = "<group>"; };
@@ -931,6 +939,7 @@
 		71305F67246E038A00E64718 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				71829C8D2501EC97002D267E /* Data */,
 				7127B0312485DD2E004C57F1 /* GlobalStyle.swift */,
 				7165E48424F0FA2E00B59960 /* GlobalDefaults.swift */,
 				71305F73246E038A00E64718 /* Router.swift */,
@@ -1175,6 +1184,15 @@
 			path = Reducers;
 			sourceTree = "<group>";
 		};
+		717576AC2501FBA900164FC7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				71573DA525020E79006EEDF0 /* StockPredictionObject+CoreDataClass.swift */,
+				71573DA625020E7A006EEDF0 /* StockPredictionObject+CoreDataProperties.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		717A75F324A14C00005348F9 /* TwitterScraper */ = {
 			isa = PBXGroup;
 			children = (
@@ -1243,6 +1261,16 @@
 				717A761924A16130005348F9 /* XmlTreeBuilder.swift */,
 			);
 			path = SwiftSoup;
+			sourceTree = "<group>";
+		};
+		71829C8D2501EC97002D267E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				717576AC2501FBA900164FC7 /* Models */,
+				71829C8E2501ED49002D267E /* version0000.xcdatamodeld */,
+				71829C912501ED7A002D267E /* CoreDataManager.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		719AA3372478B691000F7CBD /* SVM */ = {
@@ -2239,6 +2267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71573DA825020E7A006EEDF0 /* StockPredictionObject+CoreDataProperties.swift in Sources */,
 				717A766824A16131005348F9 /* TokenQueue.swift in Sources */,
 				71725D9924F276E8003B0FF6 /* Disclaimer.swift in Sources */,
 				7164E6A4248DD4700035CE9B /* StockKitComponent.swift in Sources */,
@@ -2353,6 +2382,7 @@
 				7110A56A248DCAD500F62940 /* SearchStyle.swift in Sources */,
 				71478F6624790296007DF62D /* Operator++.swift in Sources */,
 				714A82E1246E30BA006A7120 /* HomeComponent.swift in Sources */,
+				71573DA725020E7A006EEDF0 /* StockPredictionObject+CoreDataClass.swift in Sources */,
 				71478F7724790297007DF62D /* SHA1.swift in Sources */,
 				715DB1B824CB461B00E1D741 /* ConsoleDetailView.swift in Sources */,
 				7127B0282485DCF7004C57F1 /* DashboardComponent.swift in Sources */,
@@ -2445,6 +2475,7 @@
 				7127B0662485EFCD004C57F1 /* DetailStyle.swift in Sources */,
 				71A1D312246E027D00D778A5 /* RowStyle.swift in Sources */,
 				717A766924A16131005348F9 /* OrderedSet.swift in Sources */,
+				71829C902501ED49002D267E /* version0000.xcdatamodeld in Sources */,
 				71A1D31F246E027D00D778A5 /* SwitchCell.swift in Sources */,
 				7127AFAD2485B078004C57F1 /* SceneComponent.swift in Sources */,
 				71D98E6424F260CA0089C85F /* ProfileStyle.swift in Sources */,
@@ -2460,6 +2491,7 @@
 				71A1D2EE246E027D00D778A5 /* AssetsGuideView.swift in Sources */,
 				71A1D2F6246E027D00D778A5 /* AssetsManager.swift in Sources */,
 				717A764324A16131005348F9 /* CharacterExt.swift in Sources */,
+				71829C922501ED7A002D267E /* CoreDataManager.swift in Sources */,
 				71A1D311246E027D00D778A5 /* Row.swift in Sources */,
 				717F1BD7248A0BCB001DD426 /* HomeBuilder.swift in Sources */,
 				7164E692248DCE770035CE9B /* String+Localization.swift in Sources */,
@@ -2856,6 +2888,19 @@
 			productName = Granite;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		71829C8E2501ED49002D267E /* version0000.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				71829C8F2501ED49002D267E /* Model.xcdatamodel */,
+			);
+			currentVersion = 71829C8F2501ED49002D267E /* Model.xcdatamodel */;
+			path = version0000.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 71A1D127246E01E300D778A5 /* Project object */;
 }

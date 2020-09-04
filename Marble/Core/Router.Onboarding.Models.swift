@@ -134,8 +134,8 @@ extension DashboardView: Onboardable {
                 padding: .init(
                     top: GlobalStyle.spacing,
                     left: -GlobalStyle.spacing,
-                    bottom: GlobalStyle.spacing,
-                    right: -GlobalStyle.spacing*2)),
+                    bottom: GlobalStyle.spacing*2,
+                    right: -GlobalStyle.padding)),
             actionable: .init(keyPath: \.layer.sublayers, view: self),
             text: "results would appear right below, tap one to begin a forecast.",
             order: 6)
@@ -221,7 +221,7 @@ extension DetailView: Onboardable {
                 padding: .init(
                     top: -consoleView.detailView.frame.origin.y,
                     left: 0,
-                    bottom: consoleView.detailView.historicalView.expandSize - consoleView.detailView.historicalView.cellHeight,
+                    bottom: 0,
                     right: 0)),
             actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.historicalView.indicator),
             text: "Tap on another date",
@@ -282,6 +282,7 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: GlobalStyle.spacing + consoleView.detailView.predictionView.frame.height,
                     right: -GlobalStyle.spacing*2)),
+            actionable: .init(keyPath: \.layer.sublayers, view: self.consoleView.detailView.predictionView.thinkTriggerContainer),
             text: "Give it a moment to find valuable info to work with.",
             order: 7)
     }
