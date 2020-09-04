@@ -295,7 +295,6 @@
 		71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D32A24CCB70100535F3F /* WaveFormView.swift */; };
 		71D454DB246E05ED007E61FC /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D454DA246E05ED007E61FC /* RootNavigationController.swift */; };
 		71D7CD8E248C913600C7180D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71D7CD8D248C913600C7180D /* GoogleService-Info.plist */; };
-		71D7CD91248C926A00C7180D /* StockKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7CD90248C926A00C7180D /* StockKit.swift */; };
 		71D98E3F24F1E3210089C85F /* SettingsReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E3E24F1E3210089C85F /* SettingsReducers.swift */; };
 		71D98E4124F239E80089C85F /* Router.Backend.Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E4024F239E80089C85F /* Router.Backend.Models.swift */; };
 		71D98E4324F255E20089C85F /* GenerateStockRotationReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E4224F255E20089C85F /* GenerateStockRotationReducer.swift */; };
@@ -638,7 +637,6 @@
 		71D2D32A24CCB70100535F3F /* WaveFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveFormView.swift; sourceTree = "<group>"; };
 		71D454DA246E05ED007E61FC /* RootNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
 		71D7CD8D248C913600C7180D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		71D7CD90248C926A00C7180D /* StockKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKit.swift; sourceTree = "<group>"; };
 		71D98E3E24F1E3210089C85F /* SettingsReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsReducers.swift; sourceTree = "<group>"; };
 		71D98E4024F239E80089C85F /* Router.Backend.Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Backend.Models.swift; sourceTree = "<group>"; };
 		71D98E4224F255E20089C85F /* GenerateStockRotationReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateStockRotationReducer.swift; sourceTree = "<group>"; };
@@ -938,20 +936,18 @@
 				71305F73246E038A00E64718 /* Router.swift */,
 				71D98E4024F239E80089C85F /* Router.Backend.Models.swift */,
 				716437D124FC78D700BAB6BC /* Router.Onboarding.Models.swift */,
-				71D7CD8F248C925100C7180D /* StockKit */,
 				71F5BA4F24847DC30085E8DD /* 3DObj */,
-				71305F74246E038A00E64718 /* Models */,
 			);
 			path = Core;
 			sourceTree = "<group>";
 		};
-		71305F74246E038A00E64718 /* Models */ = {
+		71305F74246E038A00E64718 /* MLModels */ = {
 			isa = PBXGroup;
 			children = (
 				71478F3224790288007DF62D /* Sentiment */,
 				719AA3372478B691000F7CBD /* SVM */,
 			);
-			path = Models;
+			path = MLModels;
 			sourceTree = "<group>";
 		};
 		713ABC1D246E38BF00DD03EA /* Reducers */ = {
@@ -1123,6 +1119,7 @@
 		7164E697248DD4700035CE9B /* StockKit */ = {
 			isa = PBXGroup;
 			children = (
+				71305F74246E038A00E64718 /* MLModels */,
 				7107B82024D0CE0800FADC28 /* Models */,
 				71B96C8524CF856400F01570 /* Utilities */,
 				7164E698248DD4700035CE9B /* State */,
@@ -1880,14 +1877,6 @@
 			path = Root;
 			sourceTree = "<group>";
 		};
-		71D7CD8F248C925100C7180D /* StockKit */ = {
-			isa = PBXGroup;
-			children = (
-				71D7CD90248C926A00C7180D /* StockKit.swift */,
-			);
-			path = StockKit;
-			sourceTree = "<group>";
-		};
 		71D98E5824F260CA0089C85F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -2354,7 +2343,6 @@
 				71A1D2ED246E027D00D778A5 /* SSCheckMark.swift in Sources */,
 				71478F312479027D007DF62D /* SentimentClassifier.mlmodel in Sources */,
 				71A1D310246E027D00D778A5 /* Reusable.swift in Sources */,
-				71D7CD91248C926A00C7180D /* StockKit.swift in Sources */,
 				717A766F24A16131005348F9 /* Element.swift in Sources */,
 				7107B82224D0CE1B00FADC28 /* StockKitModels.swift in Sources */,
 				71478F7D24790297007DF62D /* SwifterTweets.swift in Sources */,

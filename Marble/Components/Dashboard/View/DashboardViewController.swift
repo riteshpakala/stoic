@@ -29,12 +29,12 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
             async: .main)
         
         //DEV:
-        sendEvent(
-            DashboardEvents.ShowDetail(
-                searchedStock: .init(
-                    exchangeName: "NASDAQ",
-                    symbolName: "MSFT",
-                    companyName: "Microsoft")))
+//        sendEvent(
+//            DashboardEvents.ShowDetail(
+//                searchedStock: .init(
+//                    exchangeName: "NASDAQ",
+//                    symbolName: "MSFT",
+//                    companyName: "Microsoft")))
     }
     
     override public func viewDidAppear(_ animated: Bool) {

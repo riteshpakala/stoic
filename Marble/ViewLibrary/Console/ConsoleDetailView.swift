@@ -821,6 +821,7 @@ class ConsoleDetailPredictionView: GraniteView {
             forSize: thinkTriggerContainer.bounds.size,
             renderMode: .backToFront,
             color: GlobalStyle.Colors.purple)
+        sender.isEnabled = false
         bubbleEvent(DetailEvents.Think())
     }
     
@@ -839,6 +840,7 @@ class ConsoleDetailPredictionView: GraniteView {
         compound: Double = 0.0) {
         
         DispatchQueue.main.async {
+            self.tapGesture.isEnabled = true
             self.thinkTriggerContainer
                 .layer.sublayers?.removeAll(
                 where: {

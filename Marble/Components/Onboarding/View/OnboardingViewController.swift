@@ -49,10 +49,8 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
     
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        if _view.frame.size != _view.layer.mask?.frame.size {
-            setup(currentStep)
-        }
+
+        setup(currentStep)
     }
     
     func viewTapped(inRegion: Bool) {
@@ -66,14 +64,7 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
         }
         
         var step: OnboardingStep?
-        if  inRegion,
-            self.currentStep.isActionable {
-            
-            if !self.currentStep.hasCommittedAction {
-                self.currentStep.hasCommittedAction = true
-            }
-            step = getNextStep()
-        } else if !inRegion && !self.currentStep.isActionable {
+        if  !inRegion && !self.currentStep.isActionable {
             step = getNextStep()
         }
         
@@ -89,13 +80,13 @@ extension OnboardingViewController: OnboardingActionableDelegate {
             self.component?.removeFromParent()
             return
         }
-        print("{TEST} observed")
+        
         guard
             currentStepIsActionable,
             currentStepCommittedAction else {
             return
         }
-        print("{TEST} observed and committed")
+        
         reference?.committedStep(self.currentStep.order)
         setup(getNextStep())
     }
@@ -136,43 +127,46 @@ extension OnboardingViewController {
         guard let reference = reference,
               let referenceFrame = step.reference?.referenceFrame else { return }
         let sizeOfText = _view.onboardingMessage.sizeThatFits(reference.frame.size)
-        _view.messageHeightConstraint?.update(offset: sizeOfText.height + 24)
+        let heightOfText = sizeOfText.height + 24
+        _view.messageHeightConstraint?.update(offset: heightOfText)
         
+        //
+        //
+        let xPadding = step.reference?.containerView?.frame.origin.x ?? 0
         let yPadding = step.reference?.containerView?.frame.origin.y ?? 0
+        let rectOfReference: CGRect = CGRect.init(
+            origin: .init(
+                x: xPadding + referenceFrame.origin.x,
+                y: yPadding + referenceFrame.origin.y),
+            size: CGSize.init(
+                width: referenceFrame.width,
+                height: referenceFrame.height))
         let rectOfText = CGRect.init(
             origin: .init(
                 x: _view.onboardingMessage.frame.origin.x,
-                y: _view.onboardingMessage.frame.origin.y - (yPadding + (sizeOfText.height + 24)/2)),
+                y: reference.frame.height/2 - (heightOfText/2)),
             size: CGSize.init(
                 width: _view.onboardingMessage.frame.size.width,
-                height: sizeOfText.height + 24))
+                height: heightOfText))
+        //
+        //
         
-        if  rectOfText.intersects(referenceFrame) {
-            print("{TEST} \(referenceFrame.midY) \(reference.frame.height/2)")
-            var positioning = reference.frame.height * (ceil(referenceFrame.midY) > ceil(reference.frame.height/2) ? -0.25 : 0.25)
+        var positioning: CGFloat
         
-            if let textPadding = step.reference?.textPadding {
-                positioning += textPadding
-            }
+        if rectOfReference.intersects(rectOfText) {
+            let intersection = rectOfText.intersection(rectOfReference)
             
-            _view.messageCenterYConstraint?.update(offset: positioning)
-            
+            let isBelow: Bool = intersection.midY > rectOfText.midY
+            print("{Onboarding} \(isBelow) \(rectOfReference) \(rectOfText) == \(intersection)")
+            positioning = reference.frame.height * (isBelow ? -0.25 : 0.25)
         } else {
-            let rectOfTextCentered = CGRect.init(
-                origin: .init(
-                    x: _view.onboardingMessage.frame.origin.x,
-                    y: reference.frame.height/2 - (yPadding + (sizeOfText.height + 24)/2)),
-                size: CGSize.init(
-                    width: _view.onboardingMessage.frame.size.width,
-                    height: sizeOfText.height + 24))
-            
-            guard !rectOfTextCentered.intersects(referenceFrame) else { return }
-            var positioning: CGFloat = 0
-            if let textPadding = step.reference?.textPadding {
-                positioning += textPadding
-            }
-            
-            _view.messageCenterYConstraint?.update(offset: positioning)
+            positioning = 0
         }
+        //
+        
+        if let textPadding = step.reference?.textPadding {
+            positioning += textPadding
+        }
+        _view.messageCenterYConstraint?.update(offset: positioning)
     }
 }

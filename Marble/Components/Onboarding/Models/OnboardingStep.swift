@@ -60,7 +60,7 @@ public class OnboardingActionable: NSObject {
         of object: Any?,
         change: [NSKeyValueChangeKey : Any]?,
         context: UnsafeMutableRawPointer?) {
-        
+        print("{Onboarding} heard")
         self.delegate?.commitAction()
     }
     

@@ -18,6 +18,9 @@ public class OnboardingComponent: Component<OnboardingState> {
     }
     
     override public func didLoad() {
-        
+    }
+    
+    override public func rip() {
+        super.rip()
     }
 }

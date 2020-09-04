@@ -38,6 +38,7 @@ extension DashboardView: Onboardable {
             [
                 settingsStep,
                 settingsOverviewStep,
+                profileStep,
                 sentimentStep,
                 daysStep,
                 searchStep,
@@ -51,7 +52,8 @@ extension DashboardView: Onboardable {
             reference: OnboardingReference.init(
                 referenceView: self.settings.tongueView,
                 containerView: self.settings),
-            text: "tap the arrow to open your profile or settings for your possible predictions.",
+            actionable: .init(keyPath: \.layer.transform, view: self.settings.indicator),
+            text: "tap the arrow to view various options that control your experience in Stoic.",
             order: 0)
     }
     
@@ -60,9 +62,27 @@ extension DashboardView: Onboardable {
             reference: OnboardingReference.init(
                 referenceView: self.settings,
                 fitsToBounds: true,
-                padding: .init(top: 0, left: 0, bottom: 0, right: 100)),
-            text: "sentiment and the amount of days can be set to strengthen or quicken prediction results.",
+                padding: .init(
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: -abs(self.settings.container.frame.width - self.settings.tongueView.frame.width))),
+            text: "profile\nsentiment strength\ndays to predict from",
             order: 1)
+    }
+    
+    public var profileStep: OnboardingStep {
+        OnboardingStep.init(
+            reference: OnboardingReference.init(
+                referenceView: self.settings,
+                fitsToBounds: true,
+                padding: .init(
+                    top: 0,
+                    left: 0,
+                    bottom: -(self.settings.container.frame.height/4)*3,
+                right: -abs(self.settings.container.frame.width - self.settings.tongueView.frame.width))),
+            text: "profile is what it sounds like, view account stats that update on each forecast. longer you use this app the more interesting your device history will become.",
+            order: 2)
     }
     
     public var sentimentStep: OnboardingStep {
@@ -70,9 +90,13 @@ extension DashboardView: Onboardable {
             reference: OnboardingReference.init(
                 referenceView: self.settings,
                 fitsToBounds: true,
-                padding: .init(top: 0, left: 0, bottom: 0, right: 100)),
-            text: "sentiment strengths define how much emotional data should be gathered for prediction accuracy. Higher settings will increase prediction generation.",
-            order: 2)
+                padding: .init(
+                    top: -(self.settings.container.frame.height/4),
+                    left: 0,
+                    bottom: -(self.settings.container.frame.height/4)*3,
+                right: -abs(self.settings.container.frame.width - self.settings.tongueView.frame.width))),
+            text: "sentiment strength modifies the intensity of how and how much data to process from the web regarding emotion. higher settings increases prediction time, but tends to lead to more accurate results.",
+            order: 3)
     }
     
     public var daysStep: OnboardingStep {
@@ -80,9 +104,13 @@ extension DashboardView: Onboardable {
             reference: OnboardingReference.init(
                 referenceView: self.settings,
                 fitsToBounds: true,
-                padding: .init(top: 0, left: 0, bottom: 0, right: 100)),
-            text: "you can set the days, of how far back in the market week data should be pulled to forecast the next trading day's stock.",
-            order: 3)
+                padding: .init(
+                    top: -(self.settings.container.frame.height/2),
+                    left: 0,
+                    bottom: -(self.settings.container.frame.height/4)*3,
+                right: -abs(self.settings.container.frame.width - self.settings.tongueView.frame.width))),
+            text: "the number of days to learn from can be adjusted as well. from a day before the next valid trading window to 12 days to the past. prediction time greatly increases, especially if your sentiment strength is high. But, again... tends to lead to more interesting results.",
+            order: 4)
     }
     
     public var searchStep: OnboardingStep {
@@ -94,8 +122,9 @@ extension DashboardView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: (GlobalStyle.spacing*2),
                     right: -GlobalStyle.spacing*2)),
-            text: "you can search for most stocks using their $Ticker Symbol.",
-            order: 4)
+            actionable: .init(keyPath: \.layer.bounds, view: self.subviews.first(where: { ($0 as? SearchView) != nil }) ?? self),
+            text: "you can search for most stocks using their $Ticker Symbol. give it a shot.",
+            order: 5)
     }
     
     public var searchSelectionStep: OnboardingStep {
@@ -105,16 +134,17 @@ extension DashboardView: Onboardable {
                 padding: .init(
                     top: GlobalStyle.spacing,
                     left: -GlobalStyle.spacing,
-                    bottom: SearchStyle.collectionHeight.height + (GlobalStyle.spacing*2),
+                    bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
-            text: "Results would appear right below, tap one to begin a forecast.",
-            order: 5)
+            actionable: .init(keyPath: \.layer.sublayers, view: self),
+            text: "results would appear right below, tap one to begin a forecast.",
+            order: 6)
     }
     
     public func committedStep(_ index: Int) {
-        if index <= 3 {
-            self.settings.showHelpers(forceActive: true)
-        } else if index == 4 {
+//        if index <= 3 {
+//            self.settings.showHelpers(forceActive: true)
+        if index == 4 {
             self.settings.showHelpers(forceHide: true)
             self.settings.collapse()
         }
@@ -193,7 +223,7 @@ extension DetailView: Onboardable {
                     left: 0,
                     bottom: consoleView.detailView.historicalView.expandSize - consoleView.detailView.historicalView.cellHeight,
                     right: 0)),
-            actionable: .init(keyPath: \.intrinsicContentSize, view: self.consoleView.detailView.historicalView.hStack),
+            actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.historicalView.indicator),
             text: "Tap on another date",
             order: 3)
     }
@@ -208,6 +238,7 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
+            actionable: .init(keyPath: \.isHidden, view: self.consoleView.detailView.sentimentView.refineLabel),
             text: "Adjust these sentiment knobs to get realtime predictions.",
             order: 4)
     }
@@ -236,21 +267,22 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: 0,
                     right: -GlobalStyle.spacing*2)),
-            text: "The prediction view shows the outcome of your judgement of the trading day's sentiment",
+            actionable: .init(keyPath: \.layer.sublayers, view: self.consoleView.detailView.predictionView.thinkTriggerContainer),
+            text: "Tap the ball to provide a suggestion of sentiment. The web is filled with emotion, we're going to grab some based on the trading day.",
             order: 6)
     }
     
     public var predictionStepPart2: OnboardingStep {
         OnboardingStep.init(
             reference: .init(
-                referenceView: consoleView.detailView.predictionView,
+                referenceView: consoleView.detailView.sentimentView,
                 containerView: consoleView.detailView,
                 padding: .init(
-                    top: -GlobalStyle.spacing,
+                    top: GlobalStyle.spacing,
                     left: -GlobalStyle.spacing,
-                    bottom: 0,
+                    bottom: GlobalStyle.spacing + consoleView.detailView.predictionView.frame.height,
                     right: -GlobalStyle.spacing*2)),
-            text: "Tap the ball to auto suggest based on live sentiment from the web.",
+            text: "Give it a moment to find valuable info to work with.",
             order: 7)
     }
     
