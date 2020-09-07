@@ -112,7 +112,7 @@ extension DetailViewController {
         }
         
         _view.currentState = predictionState
-        
+        print("{CoreData} \(component?.state.consoleDetailPayload == nil)")
         if  predictionState == .done,
             let payload = component?.state.consoleDetailPayload {
             _view.consoleView.setDetailData(payload)

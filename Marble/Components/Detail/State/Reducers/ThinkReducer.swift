@@ -53,8 +53,8 @@ struct ThinkReducer: Reducer {
             using: payload,
             username: nil,
             near: nil,
-            since: stockKit.state.dateAsString(date: theDetailDate),
-            until: stockKit.state.dateAsString(date: aheadDate),
+            since: theDetailDate.asString,
+            until: aheadDate.asString,
             count: 1,
             filterLangCode: PredictionRules().baseLangCode,
 
@@ -69,8 +69,8 @@ struct ThinkReducer: Reducer {
             
             let stockSentiment: StockSentimentData = .init(
                 date: theDetailDate,
-                dateAsString: stockKit.state.dateAsString(date: aheadDate),
-                stockDateRefAsString: stockKit.state.dateAsString(date: theDetailDate),
+                dateAsString: aheadDate.asString,
+                stockDateRefAsString: theDetailDate.asString,
                 sentimentData: sentimentData,
                 tweetData: tweetData)
             

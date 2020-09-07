@@ -9,8 +9,9 @@ import Granite
 import Foundation
 
 struct DashboardEvents {
-    struct ShowDetail: Event {
-        let searchedStock: SearchStock
+    public enum ShowDetail: Event {
+        case search(SearchStock)
+        case stored(StockModel)
     }
     
     struct CloseDetail: Event {

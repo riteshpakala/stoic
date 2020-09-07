@@ -19,11 +19,23 @@ struct ShowDetailReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        let searchStock: SearchStock?
+        let stockModel: StockModel?
+
+        switch event {
+        case .search(let stock):
+            searchStock = stock
+            stockModel = nil
+        case .stored(let stored):
+            searchStock = stored.searchStock
+            stockModel = stored
+        }
+        
         guard state.activeSearchedStocks.values.first(
-            where: { $0.symbolName == event.searchedStock.symbolName }) == nil else {
+            where: { $0.symbolName == searchStock?.symbolName }) == nil else {
                 
                 state.activeSearchedStocks.forEach { (key, value) in
-                    if value.symbolName == event.searchedStock.symbolName {
+                    if value.symbolName == searchStock?.symbolName {
                         if let detailComponent = component
                             .getSubComponent(
                                 DetailComponent.self,
@@ -40,12 +52,13 @@ struct ShowDetailReducer: Reducer {
                 return
         }
         
+        guard let stock = searchStock else {
+            return
+        }
         
-        let detailComponent = DetailBuilder.build(
-            component.service,
-            event.searchedStock)
-        
-        state.activeSearchedStocks[detailComponent.id] = event.searchedStock
+        let detailComponent = DetailBuilder.build(component.service, stock, stockModel)
+
+        state.activeSearchedStocks[detailComponent.id] = stock
         
         component.push(detailComponent)
     }

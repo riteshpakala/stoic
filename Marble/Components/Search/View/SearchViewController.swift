@@ -198,13 +198,11 @@ extension SearchViewController: UICollectionViewDelegate {
             }
             
             bubbleEvent(
-                DashboardEvents.ShowDetail(
-                    searchedStock: stock))
+                DashboardEvents.ShowDetail.search(stock))
         } else if let stocks = component?.state.stockRotation,
             indexPath.item < stocks.count {
             bubbleEvent(
-                DashboardEvents.ShowDetail(
-                    searchedStock: stocks[indexPath.item]))
+                DashboardEvents.ShowDetail.search(stocks[indexPath.item]))
         }
     }
 }

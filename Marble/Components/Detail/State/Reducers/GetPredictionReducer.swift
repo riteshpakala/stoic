@@ -55,6 +55,23 @@ struct GetPredictionReducer: Reducer {
         
         state.progressLabelText = nil
         state.predictionState = DetailView.DetailPredictionState.done.rawValue
+        
+        // { CoreData } Insertion
+        guard let stockDataOfTradingDay = stockKit.state.nextValidTradingDay,
+              let model = state.model?.volatility.saveToFile() else {
+            return
+        }
+        print("{CoreData} check 1")
+        component.service.center.saveStockPredictions(
+            .init(
+                date: stockDataOfTradingDay,
+                data: model,
+                stock: state.searchedStock,
+                sentimentStrength: stockKit.state.rules.tweets,
+                predictionDays: stockKit.state.rules.days,
+                sentimentData: stockSentimentData,
+                historicalData: validTradingData),
+            with: .background)
     }
 }
 

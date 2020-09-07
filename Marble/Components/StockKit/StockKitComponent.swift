@@ -321,8 +321,8 @@ extension StockKitComponent {
             return
         }
         
-        let dateAsString = state.dateAsString(date: date)
-        let aheadDateAsString = state.dateAsString(date: aheadDate)
+        let dateAsString = date.asString
+        let aheadDateAsString = aheadDate.asString
         crawls += 1
         
         pullTweets(

@@ -21,6 +21,10 @@ struct DetailEvents {
 }
 
 extension DetailEvents {
+    struct LoadModel: Event {
+        let id: String
+    }
+    
     struct GetCSV: Event {
         let ticker: String
     }
@@ -31,6 +35,7 @@ extension DetailEvents {
     
     struct GetPrediction: Event {
     }
+    
     struct PredictionDidUpdate: Event {
         let close: Double
         let stockSentimentData: StockSentimentData

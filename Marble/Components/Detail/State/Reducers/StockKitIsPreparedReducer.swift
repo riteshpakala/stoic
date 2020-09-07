@@ -18,6 +18,14 @@ struct StockKitIsPreparedReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        guard state.shouldPredict else {
+            state.progressLabelText = nil
+            state.predictionState = DetailView.DetailPredictionState.done.rawValue
+            
+            
+            return
+        }
+        
         guard let symbolName = state.searchedStock.symbolName else { return }
         sideEffects.append(
             .init(

@@ -27,7 +27,8 @@ public class DetailComponent: Component<DetailState> {
             StockKitIsPreparedReducer.Reducible(),
             ThinkReducer.Reducible(),
             ThinkResponseReducer.Reducible(),
-            PredictionDidUpdateReducer.Reducible()
+            PredictionDidUpdateReducer.Reducible(),
+            LoadModelReducer.Reducible()
         ]
     }
     
@@ -49,6 +50,6 @@ public class DetailComponent: Component<DetailState> {
         stockKit?.prepare()
         
         //Onboarding
-        push(OnboardingBuilder.build(self.service), display: .fit)
+//        push(OnboardingBuilder.build(self.service), display: .fit)
     }
 }

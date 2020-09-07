@@ -8,7 +8,9 @@
 
 import Foundation
 
-public class Tweet: NSObject, Codable {
+public class Tweet: NSObject, Codable, NSCoding, NSSecureCoding {
+    public static var supportsSecureCoding: Bool = true
+    
     let text: String
     let time: String
     let lang: String
@@ -26,5 +28,22 @@ public class Tweet: NSObject, Codable {
         self.text = text
         self.time = time
         self.lang = lang
+    }
+    
+    public required convenience init?(coder: NSCoder) {
+        let text = (coder.decodeObject(forKey: "text") as? String) ?? ""
+        let time = (coder.decodeObject(forKey: "time") as? String) ?? ""
+        let lang = (coder.decodeObject(forKey: "lang") as? String) ?? ""
+
+        self.init(
+            text: text,
+            time: time,
+            lang: lang)
+    }
+
+    public func encode(with coder: NSCoder){
+        coder.encode(text, forKey: "text")
+        coder.encode(time, forKey: "time")
+        coder.encode(lang, forKey: "lang")
     }
 }

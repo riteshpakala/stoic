@@ -8,7 +8,9 @@
 
 import Foundation
 
-class VaderSentimentOutput: NSObject, Codable {
+public class VaderSentimentOutput: NSObject, Codable, NSCoding, NSSecureCoding {
+    public static var supportsSecureCoding: Bool = true
+    
     let pos: Double
     let neg: Double
     let neu: Double
@@ -23,6 +25,26 @@ class VaderSentimentOutput: NSObject, Codable {
     
     var asString: String {
         return "{VADER} pos: \(pos) neg: \(neg) neu: \(neu) compound: \(compound)"
+    }
+    
+    public required convenience init?(coder: NSCoder) {
+        let pos = coder.decodeDouble(forKey: "pos")
+        let neg = coder.decodeDouble(forKey: "neg")
+        let neu = coder.decodeDouble(forKey: "neu")
+        let compound = coder.decodeDouble(forKey: "compound")
+
+        self.init(
+            pos: pos,
+            neg: neg,
+            neu: neu,
+            compound: compound)
+    }
+
+    public func encode(with coder: NSCoder){
+        coder.encode(pos, forKey: "pos")
+        coder.encode(neg, forKey: "neg")
+        coder.encode(neu, forKey: "neu")
+        coder.encode(compound, forKey: "compound")
     }
 }
 

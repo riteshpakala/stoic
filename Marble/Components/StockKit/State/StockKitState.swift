@@ -45,7 +45,7 @@ public class StockKitState: State {
         return formatter.date(from: nyDateAsString) ?? Date()
     }
     var currentDateAsString: String {
-        return dateAsString(date: currentDate)
+        return currentDate.asString
     }
     var currentTime: (hour: Int, minute: Int, seconds: Int) {
         return currentDate.timeComponents()
@@ -63,7 +63,7 @@ public class StockKitState: State {
             return nil
         }
         
-        return dateAsString(date: date)
+        return date.asString
     }
     
     var currentDateComponents: (year: Int, month: Int, day: Int) {
@@ -96,10 +96,6 @@ public class StockKitState: State {
         print("{STOCKIT} \(yahooFinanceAPIHistoryKey)")
     }
     
-    func dateAsString(date: Date) -> String {
-        return Calendar.nyDateFormatter.string(from: date)
-    }
-    
     func advanceDate1Day(date: Date, value: Int = 1) -> Date? {
         return Calendar.nyCalendar.date(byAdding: .day, value: value, to: date)
     }
@@ -112,6 +108,10 @@ extension String {
 }
 
 extension Date {
+    var asString: String {
+        return Calendar.nyDateFormatter.string(from: self)
+    }
+    
     func dateComponents() -> (year: Int, month: Int, day: Int) {
         let calendar = Calendar.nyCalendar
 

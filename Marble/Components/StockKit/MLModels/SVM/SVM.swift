@@ -75,7 +75,7 @@ public class SVMModel
         probability = copyFrom.probability
     }
     
-    public init?(loadFromFile path: String)
+    public init?(load data: NSDictionary)//(loadFromFile path: String)
     {
         //  Initialize all the stored properties (Swift requires this, even when returning nil [supposedly fixed in Swift 2.2)
         numClasses = 0
@@ -90,9 +90,9 @@ public class SVMModel
         kernelParams = KernelParameters(type: .RadialBasisFunction, degree: 0, gamma: 0.5, coef0: 0.0)
         
         //  Read the property list
-        let pList = NSDictionary(contentsOfFile: path)
-        if pList == nil {type = .C_SVM_Classification; return nil }
-        let dictionary : Dictionary = pList! as! Dictionary<String, AnyObject>
+        let pList = data//NSDictionary(contentsOfFile: path)
+//        if pList == nil {type = .C_SVM_Classification; return nil }
+        let dictionary : Dictionary = pList as! Dictionary<String, AnyObject>
         
         //  Get the training results from the dictionary
         let typeValue = dictionary["type"] as? NSInteger
@@ -994,7 +994,7 @@ public class SVMModel
     
     ///  Routine to write the model result parameters to a property list path at the provided path
     public enum SVMWriteErrors: Error { case failedWriting }
-    public func saveToFile(path: String) throws
+    public func saveToFile() -> NSDictionary//(path: String) throws
     {
         //  Create a property list of the SVM model
         var modelDictionary = [String: AnyObject]()
@@ -1011,7 +1011,8 @@ public class SVMModel
         
         //  Convert to a property list (NSDictionary) and write
         let pList = NSDictionary(dictionary: modelDictionary)
-        if !pList.write(toFile: path, atomically: false) { throw SVMWriteErrors.failedWriting }
+        return pList
+//        if !pList.write(toFile: path, atomically: false) { throw SVMWriteErrors.failedWriting }
     }
 }
 

@@ -8,32 +8,6 @@
 import Granite
 import Foundation
 
-public class SearchStock: NSObject, Codable {
-    var exchangeName: String?
-    var symbolName: String?
-    var companyName: String?
-    
-    var symbol: String {
-        return "$"+(symbolName ?? "")
-    }
-    
-    init(
-        exchangeName: String?,
-        symbolName: String?,
-        companyName: String?){
-        
-        self.exchangeName = exchangeName
-        self.symbolName = symbolName
-        self.companyName = companyName
-        
-        super.init()
-    }
-    
-    static var zero: SearchStock {
-        return SearchStock.init(exchangeName: nil, symbolName: nil, companyName: nil)
-    }
-}
-
 public enum SearchStockKeys: String {
     case countryCode = "countryCode"
     case issueType = "issueType"

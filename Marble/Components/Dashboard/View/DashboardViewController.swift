@@ -28,13 +28,25 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
             handler: observeSettingsDidUpdate(_:),
             async: .main)
         
+        
+        
+        guard let predictions = component?.service.center.getStockPredictions(from: .main) else {
+            print("{CoreData} none found")
+            return
+        }
+        print("{CoreData} \(predictions.count)")
+        
+        if let prediction = predictions.first {
+            let model = StockModel.init(from: prediction)
+            
+            sendEvent(DashboardEvents.ShowDetail.stored(model))
+        }
+        
         //DEV:
-//        sendEvent(
-//            DashboardEvents.ShowDetail(
-//                searchedStock: .init(
-//                    exchangeName: "NASDAQ",
-//                    symbolName: "MSFT",
-//                    companyName: "Microsoft")))
+//        sendEvent(DashboardEvents.ShowDetail.search(.init(
+//            exchangeName: "NASDAQ",
+//            symbolName: "MSFT",
+//            companyName: "Microsoft")))
     }
     
     override public func viewDidAppear(_ animated: Bool) {
