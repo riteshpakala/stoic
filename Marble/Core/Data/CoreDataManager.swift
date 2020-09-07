@@ -3,7 +3,16 @@ import Granite
 import CoreData
 
 extension ServiceCenter {
-    func getStockPredictions(from: CoreDataThread) -> [StockModelObject]? {
+    func getMergedStockModels(from: CoreDataThread) -> [StockModelMergedObject]? {
+        switch from {
+        case .background:
+            return try? self.coreData.background.fetch(StockModelMergedObject.fetchRequest())
+        case .main:
+            return try? self.coreData.main.fetch(StockModelMergedObject.fetchRequest())
+        }
+    }
+    
+    func getStockModels(from: CoreDataThread) -> [StockModelObject]? {
         switch from {
         case .background:
             return try? self.coreData.background.fetch(StockModelObject.fetchRequest())
@@ -29,7 +38,17 @@ extension ServiceCenter {
             return
         }
         
+        
         moc.perform {
+            let mergedModels: [StockModelMergedObject]? = try? moc.fetch(StockModelMergedObject.fetchRequest())
+            let mergedModel = mergedModels?.first(where: { $0.stock.asSearchStock?.symbol == prediction.stock.symbol && $0.stock.asSearchStock?.exchangeName == prediction.stock.exchangeName })
+            let merged = mergedModel ?? StockModelMergedObject.init(context: moc)
+            
+            if mergedModel == nil {
+                merged.stock = preparedData.stock
+                merged.order = Int64(mergedModels?.count ?? 0)
+            }
+            
             let object = StockModelObject.init(context: moc)
             object.data = preparedData.modelData
             object.date = prediction.date.asDate?.timeIntervalSince1970 ?? 0.0
@@ -40,6 +59,8 @@ extension ServiceCenter {
             object.sentimentTradingData = preparedData.sentimentData
             object.historicalTradingData = preparedData.historicalData
             object.stock = preparedData.stock
+            
+            merged.addToModels(object)
             
             do {
                 try moc.save()
@@ -194,7 +215,7 @@ extension Data {
 
 extension StockModelObject {
     var asDetail: ConsoleDetailPayload? {
-        guard let model = self.data.model,
+        guard let model = self.data?.model,
             let sentiment = self.sentimentTradingData.asStockSentimentData,
             let historical = self.historicalTradingData.asStockData else {
             

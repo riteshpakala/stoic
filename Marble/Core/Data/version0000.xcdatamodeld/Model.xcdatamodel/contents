@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="StockModelMergedObject" representedClassName=".StockModelMergedObject" parentEntity="StockModelParentObject" syncable="YES">
-        <relationship name="models" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="StockModelObject" inverseName="merged" inverseEntity="StockModelParentObject"/>
+        <attribute name="order" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="models" optional="YES" toMany="YES" deletionRule="No Action" ordered="YES" destinationEntity="StockModelParentObject" inverseName="merged" inverseEntity="StockModelParentObject"/>
     </entity>
     <entity name="StockModelObject" representedClassName=".StockModelObject" parentEntity="StockModelParentObject" syncable="YES">
         <attribute name="date" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -10,17 +11,17 @@
         <attribute name="predictionDays" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sentimentStrength" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sentimentTradingData" attributeType="Binary" customClassName=".StockSentimentData"/>
-        <attribute name="stock" attributeType="Binary"/>
         <attribute name="ticker" attributeType="String"/>
     </entity>
     <entity name="StockModelParentObject" representedClassName=".StockModelParentObject" isAbstract="YES" syncable="YES">
-        <attribute name="data" attributeType="Binary"/>
+        <attribute name="data" optional="YES" attributeType="Binary"/>
         <attribute name="id" attributeType="String"/>
-        <relationship name="merged" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="StockModelMergedObject" inverseName="models" inverseEntity="StockModelMergedObject"/>
+        <attribute name="stock" optional="YES" attributeType="Binary"/>
+        <relationship name="merged" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="StockModelMergedObject" inverseName="models" inverseEntity="StockModelMergedObject"/>
     </entity>
     <elements>
-        <element name="StockModelObject" positionX="-63" positionY="-18" width="128" height="163"/>
-        <element name="StockModelParentObject" positionX="-63" positionY="36" width="128" height="88"/>
-        <element name="StockModelMergedObject" positionX="-54" positionY="45" width="128" height="58"/>
+        <element name="StockModelObject" positionX="131.546875" positionY="-397.37890625" width="128" height="148"/>
+        <element name="StockModelParentObject" positionX="-63" positionY="36" width="128" height="103"/>
+        <element name="StockModelMergedObject" positionX="-76.8671875" positionY="-421.73828125" width="128" height="73"/>
     </elements>
 </model>

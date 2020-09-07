@@ -29,6 +29,9 @@ struct DashboardEvents {
     struct OpenProfile: Event {
     }
     
+    struct OpenBrowser: Event {
+    }
+    
     struct DismissProfile: Event {
     }
 }

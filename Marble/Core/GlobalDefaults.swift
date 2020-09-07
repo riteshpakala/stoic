@@ -15,6 +15,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
     public static var defaults: [LocalStorage.Value<LocalStorageValue>] {
         return [
             LocalStorage.Value.init(Subscription.inActive),
+            LocalStorage.Value.init(Browser.none),
             LocalStorage.Value.init(SentimentStrength.low),
             LocalStorage.Value.init(PredictionDays.seven),
         ]
@@ -103,6 +104,34 @@ public struct GlobalDefaults: LocalStorageDefaults {
         
         public var resource: LocalStorageResource? {
             .image("profile.icon")
+        }
+    }
+    
+    public enum Browser: Int, LocalStorageValue {
+        case hasStaleModels
+        case modelsNeedSync
+        case hasNoModels
+        case none
+        
+        public var value: Int {
+            return self.rawValue
+        }
+        
+        public var asString: String {
+            switch self {
+            case .modelsNeedSync: return "some models need to sync"
+            case .hasStaleModels: return "you have stale models"
+            case .hasNoModels: return "you don't have any models"
+            case .none: return ""
+            }
+        }
+        
+        public var description: String {
+            "model browser".lowercased().localized
+        }
+        
+        public var resource: LocalStorageResource? {
+            .image("browser.icon")
         }
     }
 }

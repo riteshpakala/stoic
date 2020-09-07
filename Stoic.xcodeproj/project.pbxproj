@@ -300,6 +300,14 @@
 		71A7C6AC2505B9900094C352 /* StockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6AB2505B9900094C352 /* StockModel.swift */; };
 		71A7C6AE2505BAA90094C352 /* PredictionUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6AD2505BAA90094C352 /* PredictionUpdate.swift */; };
 		71A7C6B02505BABB0094C352 /* ThinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6AF2505BABB0094C352 /* ThinkPayload.swift */; };
+		71A7C6C02505C95D0094C352 /* BrowserBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6B62505C95D0094C352 /* BrowserBuilder.swift */; };
+		71A7C6C12505C95D0094C352 /* BrowserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6B82505C95D0094C352 /* BrowserState.swift */; };
+		71A7C6C22505C95D0094C352 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6BB2505C95D0094C352 /* BrowserView.swift */; };
+		71A7C6C32505C95D0094C352 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6BC2505C95D0094C352 /* BrowserViewController.swift */; };
+		71A7C6C42505C95D0094C352 /* BrowserStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6BD2505C95D0094C352 /* BrowserStyle.swift */; };
+		71A7C6C52505C95D0094C352 /* BrowserEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6BE2505C95D0094C352 /* BrowserEvents.swift */; };
+		71A7C6C62505C95D0094C352 /* BrowserComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6BF2505C95D0094C352 /* BrowserComponent.swift */; };
+		71A7C6C82505D3BF0094C352 /* BrowserModelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */; };
 		71B7AB10248E0ACE001E7891 /* GetSentimentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */; };
 		71B7AB12248E0C0A001E7891 /* GetPredictionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */; };
 		71B96C8724CF857000F01570 /* StockKitUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B96C8624CF857000F01570 /* StockKitUtilities.swift */; };
@@ -659,6 +667,14 @@
 		71A7C6AB2505B9900094C352 /* StockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModel.swift; sourceTree = "<group>"; };
 		71A7C6AD2505BAA90094C352 /* PredictionUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionUpdate.swift; sourceTree = "<group>"; };
 		71A7C6AF2505BABB0094C352 /* ThinkPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkPayload.swift; sourceTree = "<group>"; };
+		71A7C6B62505C95D0094C352 /* BrowserBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserBuilder.swift; sourceTree = "<group>"; };
+		71A7C6B82505C95D0094C352 /* BrowserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserState.swift; sourceTree = "<group>"; };
+		71A7C6BB2505C95D0094C352 /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
+		71A7C6BC2505C95D0094C352 /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
+		71A7C6BD2505C95D0094C352 /* BrowserStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserStyle.swift; sourceTree = "<group>"; };
+		71A7C6BE2505C95D0094C352 /* BrowserEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserEvents.swift; sourceTree = "<group>"; };
+		71A7C6BF2505C95D0094C352 /* BrowserComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserComponent.swift; sourceTree = "<group>"; };
+		71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelCell.swift; sourceTree = "<group>"; };
 		71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSentimentReducer.swift; sourceTree = "<group>"; };
 		71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPredictionReducer.swift; sourceTree = "<group>"; };
 		71B96C8624CF857000F01570 /* StockKitUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKitUtilities.swift; sourceTree = "<group>"; };
@@ -1919,6 +1935,45 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		71A7C6B52505C95D0094C352 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				71A7C6B62505C95D0094C352 /* BrowserBuilder.swift */,
+				71A7C6B72505C95D0094C352 /* State */,
+				71A7C6BA2505C95D0094C352 /* View */,
+				71A7C6BD2505C95D0094C352 /* BrowserStyle.swift */,
+				71A7C6BE2505C95D0094C352 /* BrowserEvents.swift */,
+				71A7C6BF2505C95D0094C352 /* BrowserComponent.swift */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		71A7C6B72505C95D0094C352 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				71A7C6B82505C95D0094C352 /* BrowserState.swift */,
+				71A7C6B92505C95D0094C352 /* Reducers */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		71A7C6B92505C95D0094C352 /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
+		71A7C6BA2505C95D0094C352 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				71A7C6BB2505C95D0094C352 /* BrowserView.swift */,
+				71A7C6BC2505C95D0094C352 /* BrowserViewController.swift */,
+				71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		71B96C8524CF856400F01570 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -1938,6 +1993,7 @@
 		71D454D8246E05ED007E61FC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				71A7C6B52505C95D0094C352 /* Browser */,
 				716437BC24FC6E6D00BAB6BC /* Onboarding */,
 				71D98E7E24F26B450089C85F /* Subscribe */,
 				71D98E5824F260CA0089C85F /* Profile */,
@@ -2329,6 +2385,7 @@
 				71A7C6A02505B24C0094C352 /* StockSentimentData.swift in Sources */,
 				71478F7224790297007DF62D /* JSON.swift in Sources */,
 				71A1D2F2246E027D00D778A5 /* UIView+Dimmer.swift in Sources */,
+				71A7C6C22505C95D0094C352 /* BrowserView.swift in Sources */,
 				717A765624A16131005348F9 /* XmlTreeBuilder.swift in Sources */,
 				716437D624FC823C00BAB6BC /* UpdateStepReducer.swift in Sources */,
 				717F1BD9248A1140001DD426 /* SceneBuilder.swift in Sources */,
@@ -2387,12 +2444,14 @@
 				7127B02C2485DCF7004C57F1 /* DetailState.swift in Sources */,
 				71A1D2FE246E027D00D778A5 /* AssetsPreviewController.swift in Sources */,
 				71478F7524790297007DF62D /* SwifterError.swift in Sources */,
+				71A7C6C52505C95D0094C352 /* BrowserEvents.swift in Sources */,
 				717A766724A16131005348F9 /* HtmlTreeBuilderState.swift in Sources */,
 				71A1D2EB246E027D00D778A5 /* AssetsPickerCustomStringConfig.swift in Sources */,
 				7127B0322485DD2E004C57F1 /* GlobalStyle.swift in Sources */,
 				71A7C6B02505BABB0094C352 /* ThinkPayload.swift in Sources */,
 				7127AFB42485B10B004C57F1 /* SceneView.swift in Sources */,
 				71D98E8924F26B450089C85F /* SubscribeState.swift in Sources */,
+				71A7C6C42505C95D0094C352 /* BrowserStyle.swift in Sources */,
 				717A766D24A16131005348F9 /* QueryParser.swift in Sources */,
 				71A1D2F5246E027D00D778A5 /* TinyLog.swift in Sources */,
 				71A1D2FA246E027D00D778A5 /* AssetsAlbumLayout.swift in Sources */,
@@ -2468,6 +2527,7 @@
 				717A764424A16131005348F9 /* Elements.swift in Sources */,
 				710993F124F4430800EAA482 /* UserProperties.swift in Sources */,
 				717A764224A16131005348F9 /* ParseErrorList.swift in Sources */,
+				71A7C6C82505D3BF0094C352 /* BrowserModelCell.swift in Sources */,
 				71A1D2F3246E027D00D778A5 /* UIView+KVO.swift in Sources */,
 				71478F7124790297007DF62D /* SwifterPlaces.swift in Sources */,
 				71A1D306246E027D00D778A5 /* AssetsEmptyView.swift in Sources */,
@@ -2506,10 +2566,12 @@
 				71A1D31C246E027D00D778A5 /* Section.swift in Sources */,
 				71D98E6624F260CA0089C85F /* ProfileView.swift in Sources */,
 				71478F7824790297007DF62D /* URL++.swift in Sources */,
+				71A7C6C12505C95D0094C352 /* BrowserState.swift in Sources */,
 				717A763724A16131005348F9 /* CssSelector.swift in Sources */,
 				717A765224A16131005348F9 /* BinarySearch.swift in Sources */,
 				719AA33F2478B69A000F7CBD /* Kernel.swift in Sources */,
 				71A2FF2E24F3425D00B8B650 /* ProfileSetupReducer.swift in Sources */,
+				71A7C6C62505C95D0094C352 /* BrowserComponent.swift in Sources */,
 				71A7C6A62505B2B90094C352 /* StockSearchData.swift in Sources */,
 				713D07BD2502F80D004A01A3 /* LoadModelReducer.swift in Sources */,
 				71A1D300246E027D00D778A5 /* PanoramaIconView.swift in Sources */,
@@ -2526,6 +2588,7 @@
 				71D98E8A24F26B450089C85F /* SubscribeStyle.swift in Sources */,
 				71D98E8E24F26B450089C85F /* SubscribeEvents.swift in Sources */,
 				717A764C24A16131005348F9 /* TreeBuilder.swift in Sources */,
+				71A7C6C02505C95D0094C352 /* BrowserBuilder.swift in Sources */,
 				71478F6224790296007DF62D /* Data++.swift in Sources */,
 				71A7C6A92505B7FF0094C352 /* SearchStock.swift in Sources */,
 				71478F8424790297007DF62D /* Utils.swift in Sources */,
@@ -2607,6 +2670,7 @@
 				713ABC1F246E392300DD03EA /* SVMStockPredictionReducer.swift in Sources */,
 				71A1D305246E027D00D778A5 /* AssetsFooterView.swift in Sources */,
 				71A1D2F9246E027D00D778A5 /* AssetsAlbumViewController.swift in Sources */,
+				71A7C6C32505C95D0094C352 /* BrowserViewController.swift in Sources */,
 				71A1D313246E027D00D778A5 /* RowCompatible.swift in Sources */,
 				71478F6C24790297007DF62D /* Int++.swift in Sources */,
 				7127B0292485DCF7004C57F1 /* DashboardState.swift in Sources */,

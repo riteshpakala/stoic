@@ -17,6 +17,7 @@ public class DashboardComponent: Component<DashboardState> {
             GenerateSettingsReducer.Reducible(),
             UpdateSettingsReducer.Reducible(),
             OpenProfileSettingsReducer.Reducible(),
+            OpenBrowserSettingsReducer.Reducible(),
             DismissProfileSettingsReducer.Reducible(),
         ]
     }

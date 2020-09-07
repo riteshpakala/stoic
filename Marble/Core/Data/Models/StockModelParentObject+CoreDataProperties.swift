@@ -17,24 +17,8 @@ extension StockModelParentObject {
     }
 
     @NSManaged public var id: String
-    @NSManaged public var data: Data
-    @NSManaged public var merged: NSSet?
-
-}
-
-// MARK: Generated accessors for merged
-extension StockModelParentObject {
-
-    @objc(addMergedObject:)
-    @NSManaged public func addToMerged(_ value: StockModelMergedObject)
-
-    @objc(removeMergedObject:)
-    @NSManaged public func removeFromMerged(_ value: StockModelMergedObject)
-
-    @objc(addMerged:)
-    @NSManaged public func addToMerged(_ values: NSSet)
-
-    @objc(removeMerged:)
-    @NSManaged public func removeFromMerged(_ values: NSSet)
+    @NSManaged public var data: Data?
+    @NSManaged public var merged: StockModelMergedObject?
+    @NSManaged public var stock: Data
 
 }

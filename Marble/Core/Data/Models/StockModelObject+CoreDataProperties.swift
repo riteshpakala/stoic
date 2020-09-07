@@ -23,6 +23,5 @@ extension StockModelObject {
     @NSManaged public var ticker: String
     @NSManaged public var sentimentTradingData: Data
     @NSManaged public var historicalTradingData: Data
-    @NSManaged public var stock: Data
 
 }

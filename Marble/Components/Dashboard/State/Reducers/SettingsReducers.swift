@@ -61,7 +61,9 @@ struct UpdateSettingsReducer: Reducer {
             .first(where: { $0.key == event.label }) else {
             
                 if event.label == GlobalDefaults.Subscription.key {
-                    component.sendEvent(DashboardEvents.OpenProfile())
+                    sideEffects.append(.init(event: DashboardEvents.OpenProfile()))
+                } else if event.label == GlobalDefaults.Browser.key {
+                    sideEffects.append(.init(event: DashboardEvents.OpenBrowser()))
                 }
                 
             return
@@ -107,6 +109,23 @@ struct OpenProfileSettingsReducer: Reducer {
         
         component.push(
             ProfileBuilder.build(component.service),
+            display: .modal)
+        
+    }
+}
+
+struct OpenBrowserSettingsReducer: Reducer {
+    typealias ReducerEvent = DashboardEvents.OpenBrowser
+    typealias ReducerState = DashboardState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        component.push(
+            BrowserBuilder.build(component.service),
             display: .modal)
         
     }

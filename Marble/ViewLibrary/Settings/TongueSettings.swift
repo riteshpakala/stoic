@@ -337,7 +337,7 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
         cell.layoutIfNeeded()
         guard indexPath.item < self.settingsItems.count else {
             cell.valueLabel.text = "i"
-            cell.valueLabel.font = GlobalStyle.Fonts.courier(.large, .bold)
+            cell.valueLabel.font = GlobalStyle.Fonts.courier(.medium, .bold)
             return cell
         }
         cell.valueLabel.font = GlobalStyle.Fonts.courier(.small, .bold)
