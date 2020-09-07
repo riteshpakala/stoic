@@ -8,6 +8,10 @@
 
 import Granite
 import Foundation
+import CoreGraphics
 
 struct BrowserStyle {
+    public static let browserCellHeight: CGFloat = 100
+    public static let browserDataCellWidthPerDayPadding: CGFloat = 60
+    public static let browserDataCellWidth: CGFloat = 160
 }

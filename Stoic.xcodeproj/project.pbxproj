@@ -43,6 +43,8 @@
 		7127B05E2485E130004C57F1 /* ShowDetailReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B05D2485E130004C57F1 /* ShowDetailReducer.swift */; };
 		7127B0632485EEAB004C57F1 /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0622485EEAB004C57F1 /* ConsoleView.swift */; };
 		7127B0662485EFCD004C57F1 /* DetailStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0652485EFCD004C57F1 /* DetailStyle.swift */; };
+		712F54662506C970000384A7 /* BrowserModelDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F54652506C970000384A7 /* BrowserModelDataCell.swift */; };
+		712F54682506DBED000384A7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F54672506DBED000384A7 /* PaddingLabel.swift */; };
 		71305F7F246E038A00E64718 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71305F73246E038A00E64718 /* Router.swift */; };
 		713ABC22246E39A000DD03EA /* HomeEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713ABC21246E39A000DD03EA /* HomeEvents.swift */; };
 		713D07BD2502F80D004A01A3 /* LoadModelReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D07BC2502F80D004A01A3 /* LoadModelReducer.swift */; };
@@ -399,6 +401,8 @@
 		7127B05D2485E130004C57F1 /* ShowDetailReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailReducer.swift; sourceTree = "<group>"; };
 		7127B0622485EEAB004C57F1 /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		7127B0652485EFCD004C57F1 /* DetailStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStyle.swift; sourceTree = "<group>"; };
+		712F54652506C970000384A7 /* BrowserModelDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelDataCell.swift; sourceTree = "<group>"; };
+		712F54672506DBED000384A7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		71305F73246E038A00E64718 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		713ABC21246E39A000DD03EA /* HomeEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEvents.swift; sourceTree = "<group>"; };
 		713D07BC2502F80D004A01A3 /* LoadModelReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadModelReducer.swift; sourceTree = "<group>"; };
@@ -977,6 +981,7 @@
 				715DB1B924CB60DC00E1D741 /* Picker.swift */,
 				715DB1BB24CBD9CD00E1D741 /* Triangle.swift */,
 				71D2D32A24CCB70100535F3F /* WaveFormView.swift */,
+				712F54672506DBED000384A7 /* PaddingLabel.swift */,
 				71725D9824F276E8003B0FF6 /* Disclaimer.swift */,
 			);
 			path = ViewLibrary;
@@ -1964,6 +1969,7 @@
 				71A7C6BB2505C95D0094C352 /* BrowserView.swift */,
 				71A7C6BC2505C95D0094C352 /* BrowserViewController.swift */,
 				71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */,
+				712F54652506C970000384A7 /* BrowserModelDataCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2432,6 +2438,7 @@
 				71478F6724790297007DF62D /* Swifter.swift in Sources */,
 				7127B0632485EEAB004C57F1 /* ConsoleView.swift in Sources */,
 				71478F7424790297007DF62D /* Dictionary++.swift in Sources */,
+				712F54682506DBED000384A7 /* PaddingLabel.swift in Sources */,
 				717A764E24A16131005348F9 /* BooleanAttribute.swift in Sources */,
 				7127B02C2485DCF7004C57F1 /* DetailState.swift in Sources */,
 				71A1D2FE246E027D00D778A5 /* AssetsPreviewController.swift in Sources */,
@@ -2544,6 +2551,7 @@
 				71A1D30F246E027D00D778A5 /* Configurable.swift in Sources */,
 				717A765024A16131005348F9 /* Attribute.swift in Sources */,
 				710993F924F4A93300EAA482 /* Products.swift in Sources */,
+				712F54662506C970000384A7 /* BrowserModelDataCell.swift in Sources */,
 				71A1D2FF246E027D00D778A5 /* AssetsPhotoViewController.swift in Sources */,
 				717A766024A16131005348F9 /* Parser.swift in Sources */,
 				7127B0272485DCF7004C57F1 /* DashboardEvents.swift in Sources */,

@@ -30,6 +30,8 @@ public class DashboardView: GraniteView {
                 self.safeAreaLayoutGuide.snp.bottom)
                 .offset(-GlobalStyle.padding*3)
         }
+        
+        self.dim(animated: false, alpha: 1.0)
     }
     
     required init?(coder: NSCoder) {

@@ -33,7 +33,6 @@ public class SceneViewController: GraniteViewController<SceneState>{
         super.viewDidAppear(animated)
         
         updateHomeState(self.view.frame.width > self.view.frame.height)
-        _view.undim(animated: true)
     }
     
     override public func viewDidDisappear(_ animated: Bool) {

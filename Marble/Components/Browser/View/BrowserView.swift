@@ -13,18 +13,67 @@ import UIKit
 public class BrowserView: GraniteView {
     lazy var browserLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "Model Browser".localized.capitalized
+        view.text = "Your Models".localized.capitalized
         view.font = GlobalStyle.Fonts.courier(.Xlarge, .bold)
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .left
         view.isUserInteractionEnabled = false
+        view.sizeToFit()
+        return view
+    }()
+    
+    lazy var predictionEngineLabel: UILabel = {
+        let view: UILabel = .init()
+        view.text = "engine".localized
+        view.font = GlobalStyle.Fonts.courier(.small, .bold)
+        view.textColor = GlobalStyle.Colors.orange
+        view.numberOfLines = 0
+        view.textAlignment = .right
+        view.isUserInteractionEnabled = false
+        view.sizeToFit()
+        return view
+    }()
+    
+    lazy var predictionEngineVersion: PaddingLabel = {
+        let view: PaddingLabel = .init(
+            UIEdgeInsets.init(
+                top: 0,
+                left: GlobalStyle.spacing,
+                bottom: 0.0,
+                right: GlobalStyle.spacing))
+        view.text = "David".localized.capitalized
+        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        view.textColor = GlobalStyle.Colors.orange
+        view.layer.borderColor = GlobalStyle.Colors.orange.cgColor
+        view.layer.borderWidth = 2.0
+        view.layer.cornerRadius = 4.0
+        view.textAlignment = .center
+        view.isUserInteractionEnabled = false
+        view.sizeToFit()
+        return view
+    }()
+    
+    lazy var stackViewHeader: GraniteStackView = {
+        let view: GraniteStackView = GraniteStackView.init(
+            arrangedSubviews: [
+                browserLabel,
+                predictionEngineLabel,
+                predictionEngineVersion
+            ]
+        )
+        
+        view.axis = .horizontal
+        view.alignment = .fill
+        view.distribution = .fill
+        view.spacing = GlobalStyle.padding/2
+        
         return view
     }()
     
     lazy var stackView: GraniteStackView = {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
-                browserLabel,
+                stackViewHeader,
                 collection.view
             ]
         )
@@ -42,15 +91,9 @@ public class BrowserView: GraniteView {
 
         let layout: UICollectionViewLayout
         let flowLayout = UICollectionViewFlowLayout()
-//        flowLayout.itemSize = CGSize(width: 200.0, height: 144.0)
-//        flowLayout.sectionInset = UIEdgeInsets(
-//            top: SharedStyle.padding,
-//            left: SharedStyle.padding,
-//            bottom: SharedStyle.padding,
-//            right: SharedStyle.padding)
-
+            
         flowLayout.minimumInteritemSpacing = 0.0
-        flowLayout.minimumLineSpacing = 0.0
+        flowLayout.minimumLineSpacing = GlobalStyle.padding
         flowLayout.scrollDirection = .vertical
         layout = flowLayout
 
@@ -76,6 +119,14 @@ public class BrowserView: GraniteView {
                 .offset(GlobalStyle.largePadding).priority(999)
             make.right.bottom.equalToSuperview()
                 .offset(-GlobalStyle.largePadding).priority(999)
+        }
+        
+        browserLabel.snp.makeConstraints { make in
+            make.width.equalTo(browserLabel.frame.size.width)
+        }
+        
+        predictionEngineVersion.snp.makeConstraints { make in
+            make.width.equalTo(predictionEngineVersion.frame.size.width + GlobalStyle.spacing*2)
         }
     }
     

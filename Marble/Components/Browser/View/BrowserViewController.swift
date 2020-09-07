@@ -56,8 +56,6 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
                     indexPath: indexPath,
                     object: object)
         })
-        
-        self.dataSource?.performFetch()
     }
     
     private func processCell(
@@ -74,26 +72,25 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
             return cell
         }
         
-        print("{CoreData} \(object.stock.asSearchStock?.symbol)")
-        browserModelCell.valueLabel.text = object.stock.asSearchStock?.symbol
+        browserModelCell.model = object
         
         return browserModelCell
     }
     
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
     
     override public func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
     }
+
     
-    override public func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override public func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        dataSource?.performFetch()
     }
-	
 }
 
 extension BrowserViewController: UICollectionViewDelegateFlowLayout {
@@ -102,7 +99,10 @@ extension BrowserViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return  .init(width: 50, height: 50)
+        
+        return  .init(
+            width: collectionView.frame.size.width,
+            height: BrowserStyle.browserCellHeight)
     }
 }
 

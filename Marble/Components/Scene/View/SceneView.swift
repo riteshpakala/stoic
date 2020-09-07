@@ -92,8 +92,6 @@ public class SceneView: GraniteView {
         sceneView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        self.dim(animated: false, alpha: 1.0)
     }
     
     required init?(coder: NSCoder) {
