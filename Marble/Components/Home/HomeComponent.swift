@@ -12,8 +12,8 @@ import UIKit
 public class HomeComponent: Component<HomeState> {
     override public var reducers: [AnyReducer] {
         [
-            SVMStockPredictionReducer.Reducible(),
-            TweetSentimentReducer.Reducible()
+            DetailWillShowReducer.Reducible(),
+            AllDetailsDidCloseReducer.Reducible()
         ]
     }
 }

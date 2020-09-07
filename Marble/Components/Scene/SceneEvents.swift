@@ -9,5 +9,11 @@ import Granite
 import Foundation
 
 struct SceneEvents {
+    public struct ChangeScene: Event {
+        let scene: SceneType
+        public init(scene: SceneType) {
+            self.scene = scene
+        }
+    }
 }
 

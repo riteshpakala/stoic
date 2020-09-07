@@ -25,7 +25,7 @@ public class BrowserView: GraniteView {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
                 browserLabel,
-                .init()
+                collection.view
             ]
         )
         
@@ -51,7 +51,7 @@ public class BrowserView: GraniteView {
 
         flowLayout.minimumInteritemSpacing = 0.0
         flowLayout.minimumLineSpacing = 0.0
-
+        flowLayout.scrollDirection = .vertical
         layout = flowLayout
 
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)

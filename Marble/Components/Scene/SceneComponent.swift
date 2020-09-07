@@ -10,5 +10,9 @@ import Foundation
 import UIKit
 
 public class SceneComponent: Component<SceneState> {
-    
+    override public var reducers: [AnyReducer] {
+        [
+            ChangeSceneReducer.Reducible()
+        ]
+    }
 }

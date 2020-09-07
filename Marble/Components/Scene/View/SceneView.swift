@@ -93,6 +93,7 @@ public class SceneView: GraniteView {
             make.edges.equalToSuperview()
         }
         
+        self.dim(animated: false, alpha: 1.0)
     }
     
     required init?(coder: NSCoder) {

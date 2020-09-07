@@ -37,15 +37,12 @@ public class BrowserModelCell: UICollectionViewCell {
         
         contentView.addSubview(valueContainer)
         valueContainer.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview().inset(GlobalStyle.padding+GlobalStyle.spacing)
-            make.height.equalTo(valueContainer.snp.width)
+            make.edges.equalToSuperview()
+            
         }
         valueContainer.addSubview(valueLabel)
         valueLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalToSuperview().inset(4)
-            make.height.equalTo(valueContainer.snp.width)
+            make.edges.equalToSuperview()
         }
     }
     

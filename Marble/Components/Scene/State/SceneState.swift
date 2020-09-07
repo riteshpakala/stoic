@@ -8,5 +8,12 @@
 import Granite
 import Foundation
 
+public enum SceneType: Int {
+    case minimized
+    case home
+    case custom
+}
+
 public class SceneState: State {
+    @objc dynamic var scene: Int = SceneType.home.rawValue
 }

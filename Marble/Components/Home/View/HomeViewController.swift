@@ -24,12 +24,6 @@ public class HomeViewController: GraniteViewController<HomeState>{
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        print("{TEST} Home viewDidLoad reached \(component?.state.test)")
-//        sendEvent(HomeEvents.SVMStockTestEvent())
-//        sendEvent(HomeEvents.TweetSentimentTestEvent())
-        print("{TEST} Home viewDidLoad reached \(component?.state.test)")
-        
-        self.view.backgroundColor = .clear
     }
     
     override public func viewDidAppear(_ animated: Bool) {

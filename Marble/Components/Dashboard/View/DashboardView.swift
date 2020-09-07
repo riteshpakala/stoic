@@ -24,7 +24,7 @@ public class DashboardView: GraniteView {
         
         addSubview(settings)
         settings.snp.makeConstraints { make in
-            make.size.equalTo(CGSize.init(width: 112, height: 200))
+            make.size.equalTo(CGSize.init(width: 112, height: 240))
             make.left.equalToSuperview().offset(-abs(112 - settings.tongueSize.width))
             make.bottom.equalTo(
                 self.safeAreaLayoutGuide.snp.bottom)

@@ -29,5 +29,12 @@ struct CloseDetailReducer: Reducer {
         }
 
         component.deattach(detail)
+        
+        if component.getSubComponent(DetailComponent.self) == nil {
+            sideEffects.append(
+                .init(
+                    event: DashboardEvents.AllDetailsClosed(),
+                    bubbles: true))
+        }
     }
 }

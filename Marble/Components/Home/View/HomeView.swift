@@ -15,7 +15,7 @@ public class HomeView: GraniteView {
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = .blue
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {

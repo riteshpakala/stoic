@@ -19,6 +19,9 @@ struct DashboardEvents {
         let searchedStock: SearchStock
     }
     
+    struct AllDetailsClosed: Event {
+    }
+    
     struct GenerateSettings: Event {
     }
     

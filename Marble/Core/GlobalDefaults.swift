@@ -18,6 +18,8 @@ public struct GlobalDefaults: LocalStorageDefaults {
             LocalStorage.Value.init(Browser.none),
             LocalStorage.Value.init(SentimentStrength.low),
             LocalStorage.Value.init(PredictionDays.seven),
+            //OboardingDefaults
+            LocalStorage.Value.init(OnboardingDashboard.notCompleted),
         ]
     }
     
@@ -132,6 +134,20 @@ public struct GlobalDefaults: LocalStorageDefaults {
         
         public var resource: LocalStorageResource? {
             .image("browser.icon")
+        }
+    }
+    
+    //MARK: -- Onboarding Defaults
+    public enum OnboardingDashboard: Int, LocalStorageValue {
+        case notCompleted
+        case completed
+        
+        public var value: Int {
+            return self.rawValue
+        }
+        
+        public var permissions: LocalStorageReadWrite {
+            return .internalReadAndWrite
         }
     }
 }

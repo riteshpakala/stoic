@@ -44,7 +44,6 @@
 		7127B0632485EEAB004C57F1 /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0622485EEAB004C57F1 /* ConsoleView.swift */; };
 		7127B0662485EFCD004C57F1 /* DetailStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0652485EFCD004C57F1 /* DetailStyle.swift */; };
 		71305F7F246E038A00E64718 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71305F73246E038A00E64718 /* Router.swift */; };
-		713ABC1F246E392300DD03EA /* SVMStockPredictionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713ABC1E246E392300DD03EA /* SVMStockPredictionReducer.swift */; };
 		713ABC22246E39A000DD03EA /* HomeEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713ABC21246E39A000DD03EA /* HomeEvents.swift */; };
 		713D07BD2502F80D004A01A3 /* LoadModelReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D07BC2502F80D004A01A3 /* LoadModelReducer.swift */; };
 		7145BCE024D215B20098D5D6 /* UIView+Emitters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */; };
@@ -87,7 +86,6 @@
 		71478F8524790297007DF62D /* SwifterTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F5824790296007DF62D /* SwifterTag.swift */; };
 		71478F8624790297007DF62D /* SwifterSpam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F5924790296007DF62D /* SwifterSpam.swift */; };
 		71478F8724790297007DF62D /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F5C24790296007DF62D /* SwiftyJSON.swift */; };
-		71478F8D24790329007DF62D /* TweetSentimentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F8C24790329007DF62D /* TweetSentimentReducer.swift */; };
 		71478F8F24790BD8007DF62D /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */; };
 		714A82E1246E30BA006A7120 /* HomeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E0246E30BA006A7120 /* HomeComponent.swift */; };
 		714A82E3246E30C9006A7120 /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E2246E30C9006A7120 /* HomeState.swift */; };
@@ -188,7 +186,6 @@
 		719AA33E2478B69A000F7CBD /* DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA33A2478B69A000F7CBD /* DataSet.swift */; };
 		719AA33F2478B69A000F7CBD /* Kernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA33B2478B69A000F7CBD /* Kernel.swift */; };
 		719AA3402478B74C000F7CBD /* SVMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA3392478B69A000F7CBD /* SVMTests.swift */; };
-		719AA3462478C159000F7CBD /* goog.csv in Resources */ = {isa = PBXBuildFile; fileRef = 719AA3452478C159000F7CBD /* goog.csv */; };
 		71A1D13C246E01E400D778A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71A1D13B246E01E400D778A5 /* Assets.xcassets */; };
 		71A1D13F246E01E400D778A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71A1D13D246E01E400D778A5 /* LaunchScreen.storyboard */; };
 		71A1D14A246E01E400D778A5 /* MarbleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A1D149246E01E400D778A5 /* MarbleTests.swift */; };
@@ -308,6 +305,8 @@
 		71A7C6C52505C95D0094C352 /* BrowserEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6BE2505C95D0094C352 /* BrowserEvents.swift */; };
 		71A7C6C62505C95D0094C352 /* BrowserComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6BF2505C95D0094C352 /* BrowserComponent.swift */; };
 		71A7C6C82505D3BF0094C352 /* BrowserModelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */; };
+		71A7C6CA2505DB7B0094C352 /* ChangeSceneReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6C92505DB7B0094C352 /* ChangeSceneReducer.swift */; };
+		71A7C6CC2505DC5D0094C352 /* DetailViewUpdateReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6CB2505DC5D0094C352 /* DetailViewUpdateReducers.swift */; };
 		71B7AB10248E0ACE001E7891 /* GetSentimentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */; };
 		71B7AB12248E0C0A001E7891 /* GetPredictionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */; };
 		71B96C8724CF857000F01570 /* StockKitUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B96C8624CF857000F01570 /* StockKitUtilities.swift */; };
@@ -339,7 +338,6 @@
 		71D98E8E24F26B450089C85F /* SubscribeEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E8724F26B450089C85F /* SubscribeEvents.swift */; };
 		71D98E9124F26B7A0089C85F /* ShowSubscribeReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E9024F26B7A0089C85F /* ShowSubscribeReducer.swift */; };
 		71D98E9324F26D920089C85F /* SubscriptionOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E9224F26D920089C85F /* SubscriptionOption.swift */; };
-		71F5BA4C248474B30085E8DD /* GOOG2.csv in Resources */ = {isa = PBXBuildFile; fileRef = 71F5BA4B248474B30085E8DD /* GOOG2.csv */; };
 		71F5BA4E24847CE60085E8DD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F5BA4D24847CE60085E8DD /* HomeView.swift */; };
 		8178E23F17E028E4B0A045A0 /* Pods_StoicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD1232B647A9A4E8049ECA1 /* Pods_StoicTests.framework */; };
 		8272E280DE0EF2B2440C734C /* Pods_Stoic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8C4AC17A6B30BE381B5D71B /* Pods_Stoic.framework */; };
@@ -402,7 +400,6 @@
 		7127B0622485EEAB004C57F1 /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		7127B0652485EFCD004C57F1 /* DetailStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStyle.swift; sourceTree = "<group>"; };
 		71305F73246E038A00E64718 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
-		713ABC1E246E392300DD03EA /* SVMStockPredictionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVMStockPredictionReducer.swift; sourceTree = "<group>"; };
 		713ABC21246E39A000DD03EA /* HomeEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEvents.swift; sourceTree = "<group>"; };
 		713D07BC2502F80D004A01A3 /* LoadModelReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadModelReducer.swift; sourceTree = "<group>"; };
 		7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Emitters.swift"; sourceTree = "<group>"; };
@@ -447,7 +444,6 @@
 		71478F5924790296007DF62D /* SwifterSpam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterSpam.swift; sourceTree = "<group>"; };
 		71478F5C24790296007DF62D /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		71478F5D24790296007DF62D /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyJSON.h; sourceTree = "<group>"; };
-		71478F8C24790329007DF62D /* TweetSentimentReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetSentimentReducer.swift; sourceTree = "<group>"; };
 		71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		714A82E0246E30BA006A7120 /* HomeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComponent.swift; sourceTree = "<group>"; };
 		714A82E2246E30C9006A7120 /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
@@ -549,7 +545,6 @@
 		719AA3392478B69A000F7CBD /* SVMTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVMTests.swift; sourceTree = "<group>"; };
 		719AA33A2478B69A000F7CBD /* DataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSet.swift; sourceTree = "<group>"; };
 		719AA33B2478B69A000F7CBD /* Kernel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kernel.swift; sourceTree = "<group>"; };
-		719AA3452478C159000F7CBD /* goog.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = goog.csv; sourceTree = "<group>"; };
 		71A1D12F246E01E300D778A5 /* Stoic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stoic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71A1D13B246E01E400D778A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71A1D13E246E01E400D778A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -675,6 +670,8 @@
 		71A7C6BE2505C95D0094C352 /* BrowserEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserEvents.swift; sourceTree = "<group>"; };
 		71A7C6BF2505C95D0094C352 /* BrowserComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserComponent.swift; sourceTree = "<group>"; };
 		71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelCell.swift; sourceTree = "<group>"; };
+		71A7C6C92505DB7B0094C352 /* ChangeSceneReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSceneReducer.swift; sourceTree = "<group>"; };
+		71A7C6CB2505DC5D0094C352 /* DetailViewUpdateReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewUpdateReducers.swift; sourceTree = "<group>"; };
 		71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSentimentReducer.swift; sourceTree = "<group>"; };
 		71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPredictionReducer.swift; sourceTree = "<group>"; };
 		71B96C8624CF857000F01570 /* StockKitUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKitUtilities.swift; sourceTree = "<group>"; };
@@ -707,7 +704,6 @@
 		71D98E8724F26B450089C85F /* SubscribeEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeEvents.swift; sourceTree = "<group>"; };
 		71D98E9024F26B7A0089C85F /* ShowSubscribeReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSubscribeReducer.swift; sourceTree = "<group>"; };
 		71D98E9224F26D920089C85F /* SubscriptionOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionOption.swift; sourceTree = "<group>"; };
-		71F5BA4B248474B30085E8DD /* GOOG2.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GOOG2.csv; sourceTree = "<group>"; };
 		71F5BA4D24847CE60085E8DD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B216AA8A083E08322B07F45C /* Pods-Stoic-StoicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stoic-StoicUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stoic-StoicUITests/Pods-Stoic-StoicUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B50CA4F992D9BE8565D5B3BB /* Pods-Stoic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stoic.release.xcconfig"; path = "Target Support Files/Pods-Stoic/Pods-Stoic.release.xcconfig"; sourceTree = "<group>"; };
@@ -882,6 +878,7 @@
 		7127AFB62485B147004C57F1 /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
+				71A7C6C92505DB7B0094C352 /* ChangeSceneReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -1011,10 +1008,7 @@
 		713ABC1D246E38BF00DD03EA /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
-				71F5BA4B248474B30085E8DD /* GOOG2.csv */,
-				719AA3452478C159000F7CBD /* goog.csv */,
-				713ABC1E246E392300DD03EA /* SVMStockPredictionReducer.swift */,
-				71478F8C24790329007DF62D /* TweetSentimentReducer.swift */,
+				71A7C6CB2505DC5D0094C352 /* DetailViewUpdateReducers.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -2228,12 +2222,10 @@
 				7127AFA824859D37004C57F1 /* alexander.jpg in Resources */,
 				71A1D2DD246E027D00D778A5 /* FiraSans-Light.otf in Resources */,
 				71A1D2DB246E027D00D778A5 /* PlayfairDisplay-Regular.otf in Resources */,
-				719AA3462478C159000F7CBD /* goog.csv in Resources */,
 				71A1D13C246E01E400D778A5 /* Assets.xcassets in Resources */,
 				71A1D2E4246E027D00D778A5 /* FiraSans-LightItalic.otf in Resources */,
 				7127AFAA24859FC8004C57F1 /* alexander.obj in Resources */,
 				716D147324CE2FB20075F86E /* vader_lexicon.txt in Resources */,
-				71F5BA4C248474B30085E8DD /* GOOG2.csv in Resources */,
 				71A1D2E6246E027D00D778A5 /* FiraSans-Italic.otf in Resources */,
 				71A1D2DF246E027D00D778A5 /* FiraSans-Medium.otf in Resources */,
 				716D147424CE2FB20075F86E /* emoji_utf8_lexicon.txt in Resources */,
@@ -2469,6 +2461,7 @@
 				7127B02D2485DCF7004C57F1 /* DetailComponent.swift in Sources */,
 				715DB1BC24CBD9CD00E1D741 /* Triangle.swift in Sources */,
 				7127AFB82485B153004C57F1 /* SceneState.swift in Sources */,
+				71A7C6CC2505DC5D0094C352 /* DetailViewUpdateReducers.swift in Sources */,
 				71478F6824790297007DF62D /* SwifterAppOnlyClient.swift in Sources */,
 				71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */,
 				717A766324A16131005348F9 /* TokeniserState.swift in Sources */,
@@ -2504,6 +2497,7 @@
 				71478F6624790296007DF62D /* Operator++.swift in Sources */,
 				714A82E1246E30BA006A7120 /* HomeComponent.swift in Sources */,
 				71478F7724790297007DF62D /* SHA1.swift in Sources */,
+				71A7C6CA2505DB7B0094C352 /* ChangeSceneReducer.swift in Sources */,
 				715DB1B824CB461B00E1D741 /* ConsoleDetailView.swift in Sources */,
 				7127B0282485DCF7004C57F1 /* DashboardComponent.swift in Sources */,
 				7110A56D248DCAD500F62940 /* SearchEvents.swift in Sources */,
@@ -2613,7 +2607,6 @@
 				717A763D24A16131005348F9 /* Exception.swift in Sources */,
 				71783873248F10B200A7CD40 /* StockKitIsPreparedReducer.swift in Sources */,
 				71A1D2CF246E027D00D778A5 /* CaseIterable.swift in Sources */,
-				71478F8D24790329007DF62D /* TweetSentimentReducer.swift in Sources */,
 				7127AFB22485B0EA004C57F1 /* SceneViewController.swift in Sources */,
 				71D98E8D24F26B450089C85F /* SubscribeComponent.swift in Sources */,
 				717A764824A16131005348F9 /* ParseSettings.swift in Sources */,
@@ -2667,7 +2660,6 @@
 				717A763B24A16131005348F9 /* DataUtil.swift in Sources */,
 				71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */,
 				7127B0302485DCF7004C57F1 /* DetailViewController.swift in Sources */,
-				713ABC1F246E392300DD03EA /* SVMStockPredictionReducer.swift in Sources */,
 				71A1D305246E027D00D778A5 /* AssetsFooterView.swift in Sources */,
 				71A1D2F9246E027D00D778A5 /* AssetsAlbumViewController.swift in Sources */,
 				71A7C6C32505C95D0094C352 /* BrowserViewController.swift in Sources */,
