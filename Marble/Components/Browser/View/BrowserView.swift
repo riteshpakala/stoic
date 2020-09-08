@@ -24,7 +24,7 @@ public class BrowserView: GraniteView {
     
     lazy var predictionEngineLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "engine".localized
+        view.text = "engine:".localized
         view.font = GlobalStyle.Fonts.courier(.small, .bold)
         view.textColor = GlobalStyle.Colors.orange
         view.numberOfLines = 0

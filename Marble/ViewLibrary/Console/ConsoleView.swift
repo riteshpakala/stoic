@@ -15,7 +15,7 @@ class ConsoleView: GraniteView {
     
     lazy var taskbarView: UIView = {
         let view: UIView = .init()
-        view.backgroundColor = GlobalStyle.Colors.graniteGray
+        view.backgroundColor = GlobalStyle.Colors.marbleBrown
         view.isUserInteractionEnabled = true
         return view
     }()
@@ -24,7 +24,7 @@ class ConsoleView: GraniteView {
         let button: UIButton = .init()
         button.setTitle("X", for: .normal)
         button.setTitleColor(GlobalStyle.Colors.black, for: .normal)
-        button.backgroundColor = GlobalStyle.Colors.graniteGray
+        button.backgroundColor = GlobalStyle.Colors.marbleBrown
         
         button.tag = 0
         
@@ -35,7 +35,7 @@ class ConsoleView: GraniteView {
         let button: UIButton = .init()
         button.setTitle("_", for: .normal)
         button.setTitleColor(GlobalStyle.Colors.black, for: .normal)
-        button.backgroundColor = GlobalStyle.Colors.graniteGray
+        button.backgroundColor = GlobalStyle.Colors.marbleBrown
         
         button.tag = 0
         

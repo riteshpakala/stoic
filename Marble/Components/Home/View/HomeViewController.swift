@@ -23,7 +23,7 @@ public class HomeViewController: GraniteViewController<HomeState>{
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.navigationBar.barStyle = .black
     }
     
     override public func viewDidAppear(_ animated: Bool) {

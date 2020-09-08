@@ -15,14 +15,14 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
     
     lazy var tongueView: UIView = {
         let view: UIView = .init()
-        view.backgroundColor = GlobalStyle.Colors.black
+        view.backgroundColor = GlobalStyle.Colors.marbleBrown
         view.layer.cornerRadius = 8.0
         return view
     }()
     
     lazy var container: UIView = {
         let view: UIView = .init()
-        view.backgroundColor = GlobalStyle.Colors.black
+        view.backgroundColor = GlobalStyle.Colors.marbleBrown
         view.layer.masksToBounds = true
         view.clipsToBounds = true
         return view
@@ -31,7 +31,7 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
     lazy var indicator: TriangleView = {
         let view: TriangleView = .init(
             frame: .zero,
-            color: GlobalStyle.Colors.green,
+            color: GlobalStyle.Colors.black,
             direction: .left)
         view.backgroundColor = .clear
         return view
@@ -51,7 +51,7 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
         view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
         view.backgroundColor = .clear
-        view.alwaysBounceVertical = true
+        view.alwaysBounceVertical = false
         
         return (view, layout)
     }()
@@ -87,9 +87,9 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
             let label: UILabel = .init()
             label.font = GlobalStyle.Fonts.courier(.small, .bold)
             label.textAlignment = .center
-            label.textColor = GlobalStyle.Colors.green
+            label.textColor = GlobalStyle.Colors.black
             label.isHidden = true
-            label.backgroundColor = GlobalStyle.Colors.black
+            label.backgroundColor = GlobalStyle.Colors.marbleBrown
             return label
         }
         
@@ -393,7 +393,7 @@ class TongueSettingsCell: UICollectionViewCell {
         view.backgroundColor = .clear
         view.contentMode = .scaleAspectFit
         view.isHidden = true
-        view.tintColor = GlobalStyle.Colors.green
+        view.tintColor = GlobalStyle.Colors.black
         return view
     }()
     
@@ -409,7 +409,7 @@ class TongueSettingsCell: UICollectionViewCell {
         let label: UILabel = .init()
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.textAlignment = .center
-        label.textColor = GlobalStyle.Colors.green
+        label.textColor = GlobalStyle.Colors.black
         return label
     }()
     
