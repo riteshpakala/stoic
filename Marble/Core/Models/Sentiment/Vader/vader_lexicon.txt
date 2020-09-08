@@ -7707,7 +7707,6 @@ shorted  -4.0
 whipsaw  -4.0
 whipsaws  -4.0
 2008  -4.0
-#POSITIVE
 hold  0.5
 long-term  0.5
 advance  1.0
