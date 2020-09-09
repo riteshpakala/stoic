@@ -102,7 +102,7 @@ extension BrowserViewController: UICollectionViewDelegateFlowLayout {
         
         return  .init(
             width: collectionView.frame.size.width,
-            height: BrowserStyle.browserCellHeight)
+            height: collectionView.frame.size.height)
     }
 }
 

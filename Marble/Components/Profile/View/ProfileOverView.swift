@@ -13,9 +13,9 @@ import UIKit
 public class ProfileOverView: GraniteView {
     lazy var profileLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "Account".localized.capitalized
+        view.text = "* account".localized.lowercased()
         view.font = GlobalStyle.Fonts.courier(.Xlarge, .bold)
-        view.textColor = GlobalStyle.Colors.green
+        view.textColor = GlobalStyle.Colors.purple
         view.textAlignment = .left
         view.isUserInteractionEnabled = false
         return view
@@ -23,7 +23,7 @@ public class ProfileOverView: GraniteView {
     
     lazy var profileStatsSubLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "// Stats".localized.capitalized
+        view.text = "// stats".localized.lowercased()
         view.font = GlobalStyle.Fonts.courier(.large, .bold)
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .left
@@ -33,7 +33,7 @@ public class ProfileOverView: GraniteView {
     
     lazy var profileAgeSubLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "// Age".localized.capitalized
+        view.text = "// age".localized.lowercased()
         view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .left
@@ -43,7 +43,7 @@ public class ProfileOverView: GraniteView {
     
     lazy var profileStocksSubLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "// Stocks".localized.capitalized
+        view.text = "// stocks".localized.lowercased()
         view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .left
@@ -185,7 +185,7 @@ public class ProfileOverView: GraniteView {
         
         statsDescription1.text =
         """
-        - \(properties.accountAge) days old.
+        - \(properties.accountAge) days old
         """
         
         statsDescription2.text =

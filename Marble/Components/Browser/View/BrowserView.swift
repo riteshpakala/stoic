@@ -13,9 +13,9 @@ import UIKit
 public class BrowserView: GraniteView {
     lazy var browserLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "Your Models".localized.capitalized
+        view.text = "* models".localized.lowercased()
         view.font = GlobalStyle.Fonts.courier(.Xlarge, .bold)
-        view.textColor = GlobalStyle.Colors.green
+        view.textColor = GlobalStyle.Colors.purple
         view.textAlignment = .left
         view.isUserInteractionEnabled = false
         view.sizeToFit()
@@ -38,10 +38,10 @@ public class BrowserView: GraniteView {
         let view: PaddingLabel = .init(
             UIEdgeInsets.init(
                 top: 0,
-                left: GlobalStyle.spacing,
+                left: GlobalStyle.spacing*2,
                 bottom: 0.0,
-                right: GlobalStyle.spacing))
-        view.text = "David".localized.capitalized
+                right: GlobalStyle.spacing*2))
+        view.text = "david".localized.lowercased()
         view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
         view.textColor = GlobalStyle.Colors.orange
         view.layer.borderColor = GlobalStyle.Colors.orange.cgColor
@@ -57,7 +57,7 @@ public class BrowserView: GraniteView {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
                 browserLabel,
-                predictionEngineLabel,
+//                predictionEngineLabel,
                 predictionEngineVersion
             ]
         )
@@ -66,7 +66,6 @@ public class BrowserView: GraniteView {
         view.alignment = .fill
         view.distribution = .fill
         view.spacing = GlobalStyle.padding/2
-        
         return view
     }()
     
@@ -86,7 +85,8 @@ public class BrowserView: GraniteView {
         return view
     }()
     
-    private(set) lazy var collection: (view: UICollectionView,
+    private(set) lazy var collection: (
+        view: UICollectionView,
         layout: UICollectionViewLayout) = {
 
         let layout: UICollectionViewLayout
@@ -94,15 +94,16 @@ public class BrowserView: GraniteView {
             
         flowLayout.minimumInteritemSpacing = 0.0
         flowLayout.minimumLineSpacing = GlobalStyle.padding
-        flowLayout.scrollDirection = .vertical
+        flowLayout.scrollDirection = .horizontal
         layout = flowLayout
 
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.showsVerticalScrollIndicator = true
         view.showsHorizontalScrollIndicator = false
             view.backgroundColor = .clear
-        view.alwaysBounceVertical = true
+        view.alwaysBounceVertical = false
         view.isPrefetchingEnabled = false
+        view.isPagingEnabled = true
 
         view.contentInsetAdjustmentBehavior = .never
         return (view, layout)
@@ -121,12 +122,8 @@ public class BrowserView: GraniteView {
                 .offset(-GlobalStyle.largePadding).priority(999)
         }
         
-        browserLabel.snp.makeConstraints { make in
-            make.width.equalTo(browserLabel.frame.size.width)
-        }
-        
         predictionEngineVersion.snp.makeConstraints { make in
-            make.width.equalTo(predictionEngineVersion.frame.size.width + GlobalStyle.spacing*2)
+            make.width.equalTo(predictionEngineVersion.frame.size.width + GlobalStyle.spacing*4)
         }
     }
     

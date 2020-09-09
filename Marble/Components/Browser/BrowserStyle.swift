@@ -13,5 +13,7 @@ import CoreGraphics
 struct BrowserStyle {
     public static let browserCellHeight: CGFloat = 100
     public static let browserDataCellWidthPerDayPadding: CGFloat = 60
-    public static let browserDataCellWidth: CGFloat = 160
+    public static let browserDataCellHeight: CGFloat = 84
+    public static let browserDataModelMultipleCellWidthRatio: CGFloat = 0.84
+    public static let dataModelSelectionSize: CGSize = .init(width: 24, height: 24)
 }

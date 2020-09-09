@@ -14,9 +14,9 @@ public class SubscribeView: GraniteView {
     
     lazy var subscribeLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "Subscription".localized.capitalized
+        view.text = "* subscription".localized.lowercased()
         view.font = GlobalStyle.Fonts.courier(.Xlarge, .bold)
-        view.textColor = GlobalStyle.Colors.green
+        view.textColor = GlobalStyle.Colors.purple
         view.textAlignment = .left
         view.isUserInteractionEnabled = false
         return view
@@ -24,7 +24,7 @@ public class SubscribeView: GraniteView {
     
     lazy var subscribeSubLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "Benefits".localized.capitalized
+        view.text = "// benefits".localized.lowercased()
         view.font = GlobalStyle.Fonts.courier(.large, .bold)
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .left
@@ -36,10 +36,10 @@ public class SubscribeView: GraniteView {
         let view: UILabel = .init()
         view.text =
             """
-            - Search any stock
-            - Realtime `Stoic` user stock searches
-            - Personal stock search tracking
-            - `High` Sentiment strength access
+            - search any stock
+            - realtime `Stoic` user stock searches
+            - personal stock search tracking
+            - `high` Sentiment strength access
             """
         view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
         view.textColor = GlobalStyle.Colors.green

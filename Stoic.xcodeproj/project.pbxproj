@@ -309,6 +309,7 @@
 		71A7C6C82505D3BF0094C352 /* BrowserModelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */; };
 		71A7C6CA2505DB7B0094C352 /* ChangeSceneReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6C92505DB7B0094C352 /* ChangeSceneReducer.swift */; };
 		71A7C6CC2505DC5D0094C352 /* DetailViewUpdateReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7C6CB2505DC5D0094C352 /* DetailViewUpdateReducers.swift */; };
+		71A7F8CD2508AD1500562B0A /* BrowserModelDataContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7F8CC2508AD1500562B0A /* BrowserModelDataContainerCell.swift */; };
 		71B7AB10248E0ACE001E7891 /* GetSentimentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */; };
 		71B7AB12248E0C0A001E7891 /* GetPredictionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */; };
 		71B96C8724CF857000F01570 /* StockKitUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B96C8624CF857000F01570 /* StockKitUtilities.swift */; };
@@ -318,6 +319,8 @@
 		71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */; };
 		71C21A35248D88B500F6D5BF /* GetSearchResultsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */; };
 		71C40EF724EF951B0050C072 /* TongueSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C40EF624EF951B0050C072 /* TongueSettings.swift */; };
+		71C58F562508354E00C342CE /* SwipeableHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C58F552508354E00C342CE /* SwipeableHelpers.swift */; };
+		71C58F582508369D00C342CE /* BrowserModelDataCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */; };
 		71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D32A24CCB70100535F3F /* WaveFormView.swift */; };
 		71D454DB246E05ED007E61FC /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D454DA246E05ED007E61FC /* RootNavigationController.swift */; };
 		71D7CD8E248C913600C7180D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71D7CD8D248C913600C7180D /* GoogleService-Info.plist */; };
@@ -676,6 +679,7 @@
 		71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelCell.swift; sourceTree = "<group>"; };
 		71A7C6C92505DB7B0094C352 /* ChangeSceneReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSceneReducer.swift; sourceTree = "<group>"; };
 		71A7C6CB2505DC5D0094C352 /* DetailViewUpdateReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewUpdateReducers.swift; sourceTree = "<group>"; };
+		71A7F8CC2508AD1500562B0A /* BrowserModelDataContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelDataContainerCell.swift; sourceTree = "<group>"; };
 		71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSentimentReducer.swift; sourceTree = "<group>"; };
 		71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPredictionReducer.swift; sourceTree = "<group>"; };
 		71B96C8624CF857000F01570 /* StockKitUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKitUtilities.swift; sourceTree = "<group>"; };
@@ -685,6 +689,8 @@
 		71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCSVReducer.swift; sourceTree = "<group>"; };
 		71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchResultsReducer.swift; sourceTree = "<group>"; };
 		71C40EF624EF951B0050C072 /* TongueSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TongueSettings.swift; sourceTree = "<group>"; };
+		71C58F552508354E00C342CE /* SwipeableHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableHelpers.swift; sourceTree = "<group>"; };
+		71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelDataCardView.swift; sourceTree = "<group>"; };
 		71D2D32A24CCB70100535F3F /* WaveFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveFormView.swift; sourceTree = "<group>"; };
 		71D454DA246E05ED007E61FC /* RootNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
 		71D7CD8D248C913600C7180D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -983,6 +989,7 @@
 				71D2D32A24CCB70100535F3F /* WaveFormView.swift */,
 				712F54672506DBED000384A7 /* PaddingLabel.swift */,
 				71725D9824F276E8003B0FF6 /* Disclaimer.swift */,
+				71C58F552508354E00C342CE /* SwipeableHelpers.swift */,
 			);
 			path = ViewLibrary;
 			sourceTree = "<group>";
@@ -1970,6 +1977,8 @@
 				71A7C6BC2505C95D0094C352 /* BrowserViewController.swift */,
 				71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */,
 				712F54652506C970000384A7 /* BrowserModelDataCell.swift */,
+				71A7F8CC2508AD1500562B0A /* BrowserModelDataContainerCell.swift */,
+				71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2377,6 +2386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				717A766824A16131005348F9 /* TokenQueue.swift in Sources */,
+				71C58F582508369D00C342CE /* BrowserModelDataCardView.swift in Sources */,
 				71725D9924F276E8003B0FF6 /* Disclaimer.swift in Sources */,
 				7164E6A4248DD4700035CE9B /* StockKitComponent.swift in Sources */,
 				71478F7024790297007DF62D /* SwifterFavorites.swift in Sources */,
@@ -2456,6 +2466,7 @@
 				71A1D2FA246E027D00D778A5 /* AssetsAlbumLayout.swift in Sources */,
 				71478F6324790296007DF62D /* SwifterHTTPRequest.swift in Sources */,
 				7164E6A8248DD4700035CE9B /* StockKitStyle.swift in Sources */,
+				71C58F562508354E00C342CE /* SwipeableHelpers.swift in Sources */,
 				717A763F24A16131005348F9 /* CharacterReader.swift in Sources */,
 				71C40EF724EF951B0050C072 /* TongueSettings.swift in Sources */,
 				717A763A24A16131005348F9 /* Evaluator.swift in Sources */,
@@ -2616,6 +2627,7 @@
 				71783873248F10B200A7CD40 /* StockKitIsPreparedReducer.swift in Sources */,
 				71A1D2CF246E027D00D778A5 /* CaseIterable.swift in Sources */,
 				7127AFB22485B0EA004C57F1 /* SceneViewController.swift in Sources */,
+				71A7F8CD2508AD1500562B0A /* BrowserModelDataContainerCell.swift in Sources */,
 				71D98E8D24F26B450089C85F /* SubscribeComponent.swift in Sources */,
 				717A764824A16131005348F9 /* ParseSettings.swift in Sources */,
 				7110A56B248DCAD500F62940 /* SearchState.swift in Sources */,
