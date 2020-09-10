@@ -33,7 +33,7 @@ protocol SVMModelDelegate: class {
 public class SVMModel
 {
     weak var delegate: SVMModelDelegate?
-    
+    var dataSet: DataSet? = nil
     ///  Parameters to be set by the caller
     let type : SVMType          //  Type of SVM problem we are trying to solve
     var Cost : Double = 1.0     //  Cost parameter for for C_SVM_Classification, ϵSVMRegression and νSVMRegression
@@ -170,6 +170,7 @@ public class SVMModel
     ///  Method to 'train' the SVM
     public func train(data: DataSet)
     {
+        self.dataSet = data
         //  Training depends on the problem type
         switch (type) {
             //  Training for one-class classification or regression

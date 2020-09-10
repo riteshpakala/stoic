@@ -95,7 +95,7 @@ public struct StockKitUtils {
     }
     
     public struct Models {
-        let volatility: SVMModel
+        let david: SVMModel
         
         public struct DataSet {
             let stock: StockData

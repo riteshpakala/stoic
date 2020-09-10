@@ -155,7 +155,7 @@ public class TwitterScraper: NSObject {
                     } else {
                         minimumTimeComponentHour = -100000
                     }
-                    print("{TEST} DEBUG \(minimumTimeComponentHour) : \(this.cursorHour) \(this._max_id)")
+                    
                     if minimumTimeComponentHour <= this.cursorHour {
                         if elesText.count > 0 {
                             for (index, ele) in elesText.enumerated() {
@@ -166,11 +166,24 @@ public class TwitterScraper: NSObject {
                                         
                                     break
                                 }
+                                let time: String = elesTime.array().count > index ? (try? elesTime.array()[index].attr("data-time")) ?? "" : ""
+                                
+                                
+                                let targetDate = (since.asDate() ?? Date()).dateComponents()
+                                let tweetDate = (Double(time)?.date() ?? Date()).dateComponents()
+                                guard tweetDate.day <= targetDate.day &&
+                                    tweetDate.month <= targetDate.month &&
+                                    tweetDate.year <= targetDate.year else {
+                                    
+                                    break
+                                }
+                                
                                 
                                 let text: String = (try? ele.text()) ?? ""
-                                let time: String = elesTime.array().count > index ? (try? elesTime.array()[index].attr("data-time")) ?? "" : ""
                                 let lang: String = (elesLang?.array().count ?? -1) > index ? (try? elesLang?.array()[index].attr("lang")) ?? "" : ""
                                 
+                                
+//                                print("{SVM} \((Double(time)?.date() ?? Date()).asString) \(text)")
     //                            if let doubleTime = Double(time) {
     //                                let date = Date(timeIntervalSince1970: doubleTime)
     //                                let dateFormatter = DateFormatter()
@@ -181,16 +194,17 @@ public class TwitterScraper: NSObject {
     //
     //                                print("{TEST} time \(localDate)")
     //                            }
-    //                            print("{TEST} \(text)")
+                                
                                 let timeComponents = Double(time)?.date().timeComponents()
                                 let hour: Int = timeComponents?.hour ?? 0
                                 let minute: Int = timeComponents?.minute ?? 0
+                                let tickerQueryCount: Int = (text.filter( { $0 == "$" } ).count)
                                 if (filterLangCode == nil || filterLangCode == lang),
                                     VaderSentiment.predict(text).compound != 0,
                                     (hour <= this.cursorHour) || !isSpread,
                                     (minute < this.cursorMinute) || !isSpread,
                                     (!this.linkExists(in: text) || !noLinks),
-                                    (text.filter( { $0 == "$" } ).count <= isUniqueTicker.mentions && text.count > query.count) || (!isUniqueTicker.enabled) {
+                                    ((tickerQueryCount <= isUniqueTicker.mentions && text.count > query.count && tickerQueryCount >= 1) || (!isUniqueTicker.enabled)) {
                                     
                                     //
                                     this.results.append(
@@ -201,7 +215,7 @@ public class TwitterScraper: NSObject {
                                     )
                                     //
                                     
-                                    print("{TEST} tweetHour: \(hour) hour: \(this.cursorHour), minute: \(this.cursorMinute), tweet: \(this.cursorTweets)")
+//                                    print("{TEST} tweetHour: \(hour) hour: \(this.cursorHour), minute: \(this.cursorMinute), tweet: \(this.cursorTweets)")
                                     
                                     //this.cursorHour = hour
                                     this.cursorTweets -= 1

@@ -68,6 +68,16 @@ public class BrowserView: GraniteView {
         return label
     }()
     
+    lazy var emptyLabel: UILabel = {
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.orange
+        label.text = "You don't have any models, search for a stock to train a model and it will appear here. Train more than 1 to merge them into a more refined version over time.".localized.lowercased()
+        label.numberOfLines = 0
+        return label
+    }()
+    
     lazy var stackViewHeader: GraniteStackView = {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
@@ -156,4 +166,15 @@ public class BrowserView: GraniteView {
         fatalError("init(coder:) has not been implemented")
     }
 	
+    func setupEmptyView() {
+        self.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+                
+            make.left.equalToSuperview()
+                .offset(GlobalStyle.largePadding)
+            make.right.equalToSuperview()
+                .offset(-GlobalStyle.largePadding)
+        }
+    }
 }

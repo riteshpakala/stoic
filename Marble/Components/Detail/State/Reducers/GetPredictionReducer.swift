@@ -58,10 +58,11 @@ struct GetPredictionReducer: Reducer {
         
         // { CoreData } Insertion
         guard let stockDataOfTradingDay = stockKit.state.nextValidTradingDay,
-              let model = state.model?.volatility.saveToFile() else {
+              let model = state.model?.david.saveToFile(),
+              let dataSet = state.model?.david.dataSet else {
             return
         }
-        
+
         component.service.center.saveStockPredictions(
             .init(
                 date: stockDataOfTradingDay,
@@ -70,7 +71,8 @@ struct GetPredictionReducer: Reducer {
                 sentimentStrength: stockKit.state.rules.tweets,
                 predictionDays: stockKit.state.rules.days,
                 sentimentData: stockSentimentData,
-                historicalData: validTradingData),
+                historicalData: validTradingData,
+                dataSet: dataSet),
             with: .background)
     }
 }

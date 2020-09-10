@@ -12,12 +12,14 @@ public class StockModel: NSObject {
     let id: String
     let searchStock: SearchStock?
     let consoleDetailPayload: ConsoleDetailPayload?
+    let object: StockModelObject
     public init(from object: StockModelObject) {
         self.id = object.id
         self.searchStock = object.stock.asSearchStock
         self.consoleDetailPayload = object.asDetail
-        self.sentiment = GlobalDefaults.SentimentStrength.init(rawValue: Int(object.sentimentStrength) ?? 0) ?? .low
+        self.sentiment = GlobalDefaults.SentimentStrength.init(rawValue: Int(object.sentimentStrength)) ?? .low
         self.tradingDayTime = object.date
+        self.object = object
     }
     
     public var stock: SearchStock {
@@ -39,12 +41,19 @@ public class StockModel: NSObject {
     public var tradingDayDate: Date {
         tradingDayTime.date()
     }
+    
+    public var model: SVMModel? {
+        self.object.data?.model
+    }
+    
+    
 }
 
 public class StockModelMerged: NSObject {
     let id: String
     let stock: SearchStock
     let stocks: [StockModel]
+    let object: StockModelMergedObject
     
     public init(from object: StockModelMergedObject) {
         self.id = object.id
@@ -61,6 +70,7 @@ public class StockModelMerged: NSObject {
             }
         }
         
+        self.object = object
         self.stocks = stockModels
     }
     

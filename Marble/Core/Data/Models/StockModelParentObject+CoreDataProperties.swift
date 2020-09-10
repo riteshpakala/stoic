@@ -17,7 +17,9 @@ extension StockModelParentObject {
     }
 
     @NSManaged public var id: String
+    @NSManaged public var version: String
     @NSManaged public var data: Data?
+    @NSManaged public var dataSet: Data?
     @NSManaged public var merged: StockModelMergedObject?
     @NSManaged public var stock: Data
 

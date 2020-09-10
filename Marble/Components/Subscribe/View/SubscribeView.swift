@@ -122,8 +122,10 @@ public class SubscribeView: GraniteView {
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(GlobalStyle.largePadding).priority(999)
-            make.right.bottom.equalToSuperview().offset(-GlobalStyle.largePadding).priority(999)
+            make.top.left.equalToSuperview()
+                .offset(GlobalStyle.largePadding).priority(999)
+            make.right.bottom.equalToSuperview()
+                .offset(-GlobalStyle.largePadding).priority(999)
         }
     }
     

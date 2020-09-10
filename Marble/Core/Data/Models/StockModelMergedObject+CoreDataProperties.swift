@@ -16,6 +16,7 @@ extension StockModelMergedObject {
 //    }
 
     @NSManaged public var models: NSOrderedSet?
+    @NSManaged public var currentModels: Data?
     @NSManaged public var order: Int64
 }
 

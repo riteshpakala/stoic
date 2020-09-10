@@ -59,6 +59,7 @@ extension ServiceCenter {
             object.sentimentTradingData = preparedData.sentimentData
             object.historicalTradingData = preparedData.historicalData
             object.stock = preparedData.stock
+            object.dataSet = preparedData.dataSet
             
             merged.addToModels(object)
             
@@ -72,7 +73,7 @@ extension ServiceCenter {
     
     public static func prepareData(
         from prediction: StockModelObjectPayload) ->
-        (modelData: Data, sentimentData: Data, historicalData: Data, stock: Data)? {
+        (modelData: Data, sentimentData: Data, historicalData: Data, stock: Data, dataSet: Data)? {
             
         let modelData: Data?
         do {
@@ -119,16 +120,29 @@ extension ServiceCenter {
             searchStockData = nil
             print("{CoreData} historical \(error)")
         }
+            
+        let dataSetData: Data?
+        do {
+            
+            dataSetData = try NSKeyedArchiver
+                                .archivedData(
+                                    withRootObject: prediction.dataSet,
+                                    requiringSecureCoding: true)
+        } catch let error {
+            dataSetData = nil
+            print("{CoreData} historical \(error)")
+        }
         
         guard let model = modelData,
             let sentiment = sentimentData,
             let historical = historicalData,
-            let stock = searchStockData else {
+            let stock = searchStockData,
+            let dataSet = dataSetData else {
             
             return nil
         }
         
-        return (model, sentiment, historical, stock)
+        return (model, sentiment, historical, stock, dataSet)
     }
 }
 
@@ -140,6 +154,7 @@ public class StockModelObjectPayload: NSObject {
     let predictionDays: Int
     let sentimentData: [StockSentimentData]
     let historicalData: [StockData]
+    let dataSet: DataSet
     
     public init(
         date: StockDateData,
@@ -148,7 +163,8 @@ public class StockModelObjectPayload: NSObject {
         sentimentStrength: Int,
         predictionDays: Int,
         sentimentData: [StockSentimentData],
-        historicalData: [StockData]) {
+        historicalData: [StockData],
+        dataSet: DataSet) {
         self.date = date
         self.data = data
         self.stock = stock
@@ -156,6 +172,7 @@ public class StockModelObjectPayload: NSObject {
         self.predictionDays = predictionDays
         self.sentimentData = sentimentData
         self.historicalData = historicalData
+        self.dataSet = dataSet
     }
 }
 
@@ -211,6 +228,19 @@ extension Data {
         
         return nil
     }
+    
+    public var asDataSet: DataSet? {
+        do {
+           if let object = try NSKeyedUnarchiver
+               .unarchiveTopLevelObjectWithData(self) as? DataSet {
+               return object
+           }
+        } catch let error {
+           print("{CoreData} \(error)")
+        }
+        
+        return nil
+    }
 }
 
 extension StockModelObject {
@@ -228,6 +258,6 @@ extension StockModelObject {
             stockSentimentData: sentiment,
             days: Int(self.predictionDays),
             maxDays: Int(self.predictionDays),
-            model: .init(volatility: model))
+            model: .init(david: model))
     }
 }

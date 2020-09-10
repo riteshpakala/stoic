@@ -111,6 +111,14 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
         super.viewWillLayoutSubviews()
         dataSource?.performFetch()
     }
+    
+    override public func bind(_ component: Component<BrowserState>) {
+        super.bind(component)
+        
+        if component.state.mergedModels.isEmpty {
+            _view.setupEmptyView()
+        }
+    }
 }
 
 extension BrowserViewController {

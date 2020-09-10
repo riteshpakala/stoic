@@ -29,7 +29,9 @@ enum DataIndexError: Error {
 }
 
 
-public class DataSet {
+public class DataSet: NSObject, NSCoding, NSSecureCoding {
+    public static var supportsSecureCoding: Bool = true
+    
     let dataType : DataSetType
     let inputDimension: Int
     let outputDimension: Int
@@ -37,7 +39,7 @@ public class DataSet {
     var outputs: [[Double]]?
     var classes: [Int]?
     var optionalData: AnyObject?        //  Optional data that can be temporarily added by methods using the data
-    
+    var labels: [String] = []
     public init(dataType : DataSetType, inputDimension : Int, outputDimension : Int)
     {
         //  Remember the data parameters
@@ -53,6 +55,7 @@ public class DataSet {
         else {
             classes = []
         }
+        super.init()
     }
     
     public init?(fromDataSet: DataSet, withEntries: [Int])
@@ -70,7 +73,7 @@ public class DataSet {
         else {
             classes = []
         }
-        
+        super.init()
         //  Copy the entries
         do {
             try includeEntries(fromDataSet: fromDataSet, withEntries: withEntries)
@@ -78,6 +81,31 @@ public class DataSet {
         catch {
             return nil
         }
+    }
+    
+    public required convenience init?(coder: NSCoder) {
+        let inDim: Int = coder.decodeInteger(forKey: "inputDimension")
+        let outDim: Int = coder.decodeInteger(forKey: "outputDimension")
+        let inputs: [[Double]] = coder.decodeObject(forKey: "inputs") as? [[Double]] ?? [[]]
+        let outputs: [[Double]] = coder.decodeObject(forKey: "outputs") as? [[Double]] ?? [[]]
+        let labels: [String] = (coder.decodeObject(forKey: "labels") as? [String]) ?? []
+
+        self.init(
+            dataType: .Regression,
+            inputDimension: inDim,
+            outputDimension: outDim)
+
+        self.inputs = inputs
+        self.outputs = outputs
+        self.labels = labels
+    }
+    
+    public func encode(with coder: NSCoder){
+        coder.encode(inputDimension, forKey: "inputDimension")
+        coder.encode(outputDimension, forKey: "outputDimension")
+        coder.encode(inputs, forKey: "inputs")
+        coder.encode(outputs, forKey: "outputs")
+        coder.encode(labels, forKey: "labels")
     }
     
     public func includeEntries(fromDataSet: DataSet, withEntries: [Int]) throws
@@ -124,7 +152,7 @@ public class DataSet {
         }
     }
     
-    public func addDataPoint(input : [Double], output: [Double]) throws
+    public func addDataPoint(input : [Double], output: [Double], label: String = "unknown") throws
     {
         //  Validate the data
         if (dataType != .Regression) { throw DataTypeError.DataWrongForType }
@@ -134,6 +162,7 @@ public class DataSet {
         //  Add the new data item
         inputs.append(input)
         outputs!.append(output)
+        self.labels.append(label)
     }
     
     public func addDataPoint(input : [Double], output: Int) throws

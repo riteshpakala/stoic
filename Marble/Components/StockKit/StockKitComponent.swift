@@ -79,7 +79,7 @@ extension StockKitComponent: SVMModelDelegate {
         withStockData stockData: [StockData],
         stockSentimentData sentimentData: [StockSentimentData]) -> StockKitUtils.Models {
         
-        let dataVolatility = DataSet(
+        let dataForDavid = DataSet(
             dataType: .Regression,
             inputDimension: StockKitUtils.inDim,
             outputDimension: StockKitUtils.outDim)
@@ -103,27 +103,28 @@ extension StockKitComponent: SVMModelDelegate {
                 
                 print(dataSet.description)
                 
-                try dataVolatility.addDataPoint(
+                try dataForDavid.addDataPoint(
                     input: dataSet.asArray,
-                    output: dataSet.output)
+                    output: dataSet.output,
+                    label: stock.dateData.asString)
             }
             catch {
                 print("Invalid data set created")
             }
         }
         
-        let svmVolatility = SVMModel(
+        let david = SVMModel(
             problemType: .ϵSVMRegression,
             kernelSettings:
             KernelParameters(type: .Polynomial,
                              degree: 3,
                              gamma: 0.3,
                              coef0: 0.0))
-        svmVolatility.delegate = self
-        svmVolatility.Cost = 1e3
-        svmVolatility.train(data: dataVolatility)
+        david.delegate = self
+        david.Cost = 1e3
+        david.train(data: dataForDavid)
         
-        return StockKitUtils.Models(volatility: svmVolatility)
+        return StockKitUtils.Models(david: david)
     }
     
     func SVMProgress(
@@ -429,7 +430,7 @@ extension StockKitComponent {
         var sentimentData: [VaderSentimentOutput] = []
         var tweetData: [Tweet] = []
         
-        print("{TEST} Sentiment \(payload.asString) \(dateAsString) \(aheadDateAsString)")
+        print("{TEST} Sentiment \(payload.asString) \(aheadDateAsString) \(dateAsString)")
         
         scraper.begin(
             using: payload,

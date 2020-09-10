@@ -883,7 +883,7 @@ class ConsoleDetailPredictionView: GraniteView {
                print("Invalid data set created")
             }
             
-            self?.model?.volatility.predictValues(data: testData)
+            self?.model?.david.predictValues(data: testData)
             
             DispatchQueue.main.async {
                 guard let output = testData.singleOutput(index: 0) else {

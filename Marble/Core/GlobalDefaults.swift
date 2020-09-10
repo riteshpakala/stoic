@@ -17,7 +17,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
             LocalStorage.Value.init(Subscription.inActive),
             LocalStorage.Value.init(Browser.none),
             LocalStorage.Value.init(SentimentStrength.low),
-            LocalStorage.Value.init(PredictionDays.seven),
+            LocalStorage.Value.init(PredictionDays.two),
             //OboardingDefaults
             LocalStorage.Value.init(OnboardingDashboard.notCompleted),
         ]

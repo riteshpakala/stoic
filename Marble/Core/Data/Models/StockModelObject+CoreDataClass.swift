@@ -15,10 +15,13 @@ public class StockModelObject: StockModelParentObject {
         entity: NSEntityDescription,
         insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
+        self.id = UUID().uuidString
+        self.version = "david.v0.00.00"
     }
     
     public init(context moc: NSManagedObjectContext) {
         super.init(entity: StockModelObject.entity(), insertInto: moc)
         self.id = UUID().uuidString
+        self.version = "david.v0.00.00"
     }
 }
