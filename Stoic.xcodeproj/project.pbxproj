@@ -96,6 +96,7 @@
 		715A7E96250973B6009E7244 /* ModelSelectionReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */; };
 		715A7E9825097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9725097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift */; };
 		715A7E9B2509790D009E7244 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9A2509790D009E7244 /* Array.swift */; };
+		715A7E9D2509CA09009E7244 /* MergeModelReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9C2509CA09009E7244 /* MergeModelReducer.swift */; };
 		715DB1B824CB461B00E1D741 /* ConsoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */; };
 		715DB1BA24CB60DC00E1D741 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B924CB60DC00E1D741 /* Picker.swift */; };
 		715DB1BC24CBD9CD00E1D741 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1BB24CBD9CD00E1D741 /* Triangle.swift */; };
@@ -464,6 +465,7 @@
 		715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSelectionReducers.swift; sourceTree = "<group>"; };
 		715A7E9725097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompiledModelCreationStatusUpdatedReducer.swift; sourceTree = "<group>"; };
 		715A7E9A2509790D009E7244 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		715A7E9C2509CA09009E7244 /* MergeModelReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeModelReducer.swift; sourceTree = "<group>"; };
 		715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDetailView.swift; sourceTree = "<group>"; };
 		715DB1B924CB60DC00E1D741 /* Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picker.swift; sourceTree = "<group>"; };
 		715DB1BB24CBD9CD00E1D741 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -1988,6 +1990,7 @@
 				715A7E9125095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift */,
 				715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */,
 				715A7E9725097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift */,
+				715A7E9C2509CA09009E7244 /* MergeModelReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -2549,6 +2552,7 @@
 				71D98E6524F260CA0089C85F /* ProfileState.swift in Sources */,
 				71A1D2D1246E027D00D778A5 /* URL+Share.swift in Sources */,
 				71A1D2F4246E027D00D778A5 /* UIView+Fade.swift in Sources */,
+				715A7E9D2509CA09009E7244 /* MergeModelReducer.swift in Sources */,
 				71D98E6224F260CA0089C85F /* ProfileComponent.swift in Sources */,
 				717A765124A16131005348F9 /* Entities.swift in Sources */,
 				717A767024A16131005348F9 /* DataNode.swift in Sources */,

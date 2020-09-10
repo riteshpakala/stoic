@@ -12,6 +12,13 @@ import Foundation
 import UIKit
 
 public class BrowserModelDataCell: UICollectionViewCell {
+    public enum BrowserModelStatus {
+        case baseModel
+        case appendedModel
+        case inCompatible
+        case compatible
+        case none
+    }
     
     lazy var sentimentLabel: UILabel = {
         let label: UILabel = .init()
@@ -94,54 +101,63 @@ public class BrowserModelDataCell: UICollectionViewCell {
         return view
     }()
     
-    var currentCreationStatusStep: BrowserCompiledModelCreationStatus = .none {
+    var status: BrowserModelStatus? = nil {
         didSet {
-            if currentCreationStatusStep == .none {
+            guard status != oldValue else { return }
+            switch status {
+            case .baseModel:
+                baseModelSelected = true
+                modelIsAvailableForSelection = false
+                modelSelected = true
+                selectionButton.isHidden = false
                 notCompatibleLabel.isHidden = true
-                selectionButton.isHidden = true
-            } else {
-                selectionButton.isHidden = !modelIsAvailableForSelection
-            }
-        }
-    }
-    
-    var baseModelSelected: Bool = false {
-        didSet {
-            if baseModelSelected {
                 self.selectionButton.layer.backgroundColor = GlobalStyle.Colors.black.cgColor
+                contentView.layer.opacity = 1.0
                 contentView.backgroundColor = GlobalStyle.Colors.orange
-            } else {
-                self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
-                contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
-            }
-        }
-    }
-    
-    var modelSelected: Bool = false {
-        didSet {
-            if modelSelected {
+            case .appendedModel:
+                baseModelSelected = false
+                modelIsAvailableForSelection = true
+                modelSelected = true
+                selectionButton.isHidden = false
+                notCompatibleLabel.isHidden = true
                 self.selectionButton.layer.backgroundColor = GlobalStyle.Colors.black.cgColor
+                contentView.layer.opacity = 1.0
                 contentView.backgroundColor = GlobalStyle.Colors.purple
-            } else {
-                self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
-                contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
-            }
-        }
-    }
-    
-    var modelIsAvailableForSelection: Bool = true {
-        didSet {
-            if modelIsAvailableForSelection {
+            case .compatible:
+                baseModelSelected = false
+                modelIsAvailableForSelection = true
+                modelSelected = false
                 self.selectionButton.isHidden = false
                 self.notCompatibleLabel.isHidden = true
+                self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
                 contentView.layer.opacity = 1.0
-            } else {
+                contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
+            case .inCompatible:
+                baseModelSelected = false
+                modelIsAvailableForSelection = false
+                modelSelected = false
                 self.selectionButton.isHidden = true
                 self.notCompatibleLabel.isHidden = false
+                self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
                 contentView.layer.opacity = 0.5
+                contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
+            default:
+                selectionButton.isHidden = true
+                notCompatibleLabel.isHidden = true
+                self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
+                contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
+                contentView.layer.opacity = 1.0
             }
         }
     }
+    
+    var currentCreationStatusStep: BrowserCompiledModelCreationStatus = .none
+    
+    var baseModelSelected: Bool = false
+    
+    var modelSelected: Bool = false
+    
+    var modelIsAvailableForSelection: Bool = true
     
     override public func awakeFromNib() {
         super.awakeFromNib()

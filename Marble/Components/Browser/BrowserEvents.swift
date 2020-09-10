@@ -34,4 +34,8 @@ struct BrowserEvents {
             self.status = status
         }
     }
+    
+    public struct MergeModel: Event {
+        
+    }
 }

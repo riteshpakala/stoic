@@ -39,13 +39,6 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
     
     var models: [StockModel]? = nil {
         didSet {
-//            if models.creationData == nil {
-//                DispatchQueue.main.async {
-//                    self.collection.view.reloadData()
-//                }
-//            } else {
-//                self.compiledModelCreationData = models.creationData
-//            }
             DispatchQueue.main.async {
                 self.collection.view.reloadData()
             }
@@ -59,14 +52,16 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
     var currentCreationStatusStep: BrowserCompiledModelCreationStatus = .none {
         didSet {
             guard oldValue != currentCreationStatusStep else { return }
-            for cell in self.collection.view.visibleCells {
-                if let dataCell = cell as? BrowserModelDataCell {
-                    dataCell.currentCreationStatusStep = currentCreationStatusStep
-                }
-            }
+            
             
             if currentCreationStatusStep == .none {
 
+                for cell in self.collection.view.visibleCells {
+                    if let dataCell = cell as? BrowserModelDataCell {
+                        dataCell.status = BrowserModelDataCell.BrowserModelStatus.none
+                    }
+                }
+                
                 var indexPathsToReload: [IndexPath] = []
                 if let oldBaseModelIndexPath = baseSelectedModel {
                     baseSelectedModel = nil
@@ -78,8 +73,23 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                     indexPathsToReload.append(oldSelectedModelIndexPath)
                 }
                 
+                
+                for modelToRemove in self.inCompatibleModels {
+                    if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
+                        
+                        indexPathsToReload.append(.init(item: index, section: 0))
+                    }
+                }
+                self.inCompatibleModels = []
+                
                 self.collection.view.reloadItems(at: indexPathsToReload)
                     
+            } else if currentCreationStatusStep == .step1 {
+                for cell in self.collection.view.visibleCells {
+                    if let dataCell = cell as? BrowserModelDataCell {
+                        dataCell.status = .compatible
+                    }
+                }
             }
         }
     }
@@ -142,30 +152,29 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 let compatibleIds = compatible.map { $0.id }
                 
                 let inCompatible = self.models?.filter { !compatibleIds.contains($0.id) } ?? []
-                
 
                 //Indices for new models that are incompatible
                 for modelToRemove in inCompatible {
                     
-                    if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
+                    if let index = self.models?.firstIndex(where: {
+                        $0.id == modelToRemove.id &&
+                            !self.inCompatibleModels.contains($0) }) {
                         
                         indexPathsToUpdate.append(.init(item: index, section: 0))
                         
-                    
                     }
                 }
                 
                 //Indices for old models that are now compatible
                 for modelToRemove in self.inCompatibleModels {
                     if let index = self.models?.firstIndex(where: { compatibleIds.contains(modelToRemove.id) && $0.id == modelToRemove.id }) {
-                        print("{Browser} \(self.models?.first?.tradingDay) \(index)")
                         
                         indexPathsToUpdate.append(.init(item: index, section: 0))
                     }
                 }
                 
                 self.inCompatibleModels = inCompatible
-            } else {
+            } else if currentCreationStatusStep != .none {
                 for modelToRemove in self.inCompatibleModels {
                     if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
                         
@@ -175,9 +184,10 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 self.inCompatibleModels = []
             }
             
+            
             guard !indexPathsToUpdate.isEmpty else { return }
             
-            self.collection.view.reloadItems(at: indexPathsToUpdate)
+            self.collection.view.reloadItems(at: indexPathsToUpdate.removingDuplicates())
         }
     }
     
@@ -237,17 +247,18 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
             dataCell.model = models[indexPath.item]
             if let baseModelIndexPath = baseSelectedModel,
                 indexPath == baseModelIndexPath {
-                dataCell.baseModelSelected = true
+                dataCell.status = .baseModel
+            } else if selectedModel == indexPath {
+                dataCell.status = .appendedModel
+            } else if inCompatibleModels.contains(models[indexPath.item]) {
+                dataCell.status = .inCompatible
+            } else if self.currentCreationStatusStep != .none {
+                dataCell.status = .compatible
             } else {
-                dataCell.baseModelSelected = false
-                dataCell.modelSelected = selectedModel == indexPath
+                dataCell.status = BrowserModelDataCell.BrowserModelStatus.none
             }
             
-            dataCell.modelIsAvailableForSelection = !inCompatibleModels.contains(models[indexPath.item])
-            
-            if dataCell.currentCreationStatusStep != self.currentCreationStatusStep {
-                dataCell.currentCreationStatusStep = self.currentCreationStatusStep
-            }
+            dataCell.currentCreationStatusStep = self.currentCreationStatusStep
         }
         
         return dataCell
@@ -299,7 +310,5 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
         default:
             break
         }
-        
-        
     }
 }

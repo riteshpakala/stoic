@@ -20,15 +20,9 @@ struct CompiledModelCreationStatusUpdatedReducer: Reducer {
         
         switch event.status {
         case .step2:
-//            let stockSymbol = state.compiledModelCreationData?.baseModel.stock.symbol
-//            let stockExchange = state.compiledModelCreationData?.baseModel.stock.exchangeName
-//            if  let stockModel = state.compiledModelCreationData?.baseModel,
-//                let mergedModel = state.mergedModels.first(where: { $0.stock.symbol == stockSymbol && $0.stock.exchangeName == stockExchange } ) {
-//                
-//                mergedModel.calculateCompatibleModels(from: [stockModel])
-//            }
-            
             break
+        case .step3:
+            sideEffects.append(.init(event: BrowserEvents.MergeModel()))
         case .none:
             state.compiledModelCreationData = nil
         default: break

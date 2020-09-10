@@ -244,9 +244,20 @@ public class BrowserModelCell: UICollectionViewCell {
             switch currentCreationStatusStep {
             case .step1:
                 hideViewsForCreation()
+                compiledCreationDoneLabel.text = "done".localized.lowercased()
+                compiledCreationDoneLabel.sizeToFit()
+                widthOfDoneLabel?.update(offset: compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4)
             case .step2:
+                compiledCreationDoneLabel.text = "confirm".localized.lowercased()
+                compiledCreationDoneLabel.sizeToFit()
+                widthOfDoneLabel?.update(offset: compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4)
+            case .step3:
                 break
-            default: showViewForCreation()
+            default:
+                showViewForCreation()
+                compiledCreationDoneLabel.text = "done".localized.lowercased()
+                compiledCreationDoneLabel.sizeToFit()
+                widthOfDoneLabel?.update(offset: compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4)
             }
         }
     }
@@ -409,29 +420,31 @@ public class BrowserModelCell: UICollectionViewCell {
     }()
     
     //MARK: Gestures
-    private lazy var createTappedGesture: UITapGestureRecognizer = {
+    private var createTappedGesture: UITapGestureRecognizer {
         let gesture: UITapGestureRecognizer = UITapGestureRecognizer
             .init(target: self,
                   action: #selector(self.createTapped(_:)))
         
         return gesture
-    }()
+    }
     
-    private lazy var cancelTappedGesture: UITapGestureRecognizer = {
+    private var cancelTappedGesture: UITapGestureRecognizer {
         let gesture: UITapGestureRecognizer = UITapGestureRecognizer
             .init(target: self,
                   action: #selector(self.cancelTapped(_:)))
         
         return gesture
-    }()
+    }
     
-    private lazy var doneTappedGesture: UITapGestureRecognizer = {
+    private var doneTappedGesture: UITapGestureRecognizer {
         let gesture: UITapGestureRecognizer = UITapGestureRecognizer
             .init(target: self,
                   action: #selector(self.doneTapped(_:)))
         
         return gesture
-    }()
+    }
+    
+    private var widthOfDoneLabel: Constraint?
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -497,9 +510,7 @@ public class BrowserModelCell: UICollectionViewCell {
             make.height.equalTo(compiledCreationDoneLabel.font.lineHeight + GlobalStyle.spacing*2)
         }
         compiledCreationCancelLabel.snp.makeConstraints { make in
-            make.centerX
-                .equalToSuperview()
-                .offset(-1*(compiledCreationCancelLabel.frame.size.width/2 + GlobalStyle.spacing*4))
+            make.left.equalToSuperview()
             make.centerY
                 .equalToSuperview()
                 .offset(compiledCreationStatusLabel.font.lineHeight/2 + GlobalStyle.spacing*2)
@@ -507,13 +518,11 @@ public class BrowserModelCell: UICollectionViewCell {
             make.height.equalTo(compiledCreationCancelLabel.font.lineHeight + GlobalStyle.spacing*2)
         }
         compiledCreationDoneLabel.snp.makeConstraints { make in
-            make.centerX
-                .equalToSuperview()
-                .offset(compiledCreationDoneLabel.frame.size.width/2 + GlobalStyle.spacing*4)
+            make.right.equalToSuperview()
             make.centerY
                 .equalToSuperview()
                 .offset(compiledCreationStatusLabel.font.lineHeight/2 + GlobalStyle.spacing*2)
-            make.width.equalTo(compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4)
+            widthOfDoneLabel = make.width.equalTo(compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4).constraint
             make.height.equalTo(compiledCreationDoneLabel.font.lineHeight + GlobalStyle.spacing*2)
         }
         compiledCreationCancelLabel.addGestureRecognizer(cancelTappedGesture)

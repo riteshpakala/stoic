@@ -16,7 +16,8 @@ public class BrowserComponent: Component<BrowserState> {
             StockKitPreparedTradingDayReducer.Reducible(),
             BaseModelSelectedReducer.Reducible(),
             CompiledModelCreationStatusUpdatedReducer.Reducible(),
-            ModelToMergeReducer.Reducible()
+            ModelToMergeReducer.Reducible(),
+            MergeModelReducer.Reducible()
         ]
     }
     

@@ -121,6 +121,9 @@ extension BrowserViewController {
     
     func observeCompiledCreationStatus(_ status: Change<String>) {
         guard let currentStep = component?.state.currentCompiledStatus else { return }
+        
+        _view.collection.view.isScrollEnabled = currentStep == .none
+        
         for cell in _view.collection.view.visibleCells {
             if let dataCell = cell as? BrowserModelCell {
                 dataCell.currentCreationStatusStep = currentStep
@@ -129,7 +132,7 @@ extension BrowserViewController {
     }
     
     func observeCompiledCreationData(_ data: Change<BrowserCompiledModelCreationData?>) {
-        print("{Browser} observed data change")
+        print("{Browser} observed data change \(CFAbsoluteTimeGetCurrent())")
         for cell in _view.collection.view.visibleCells {
             if let dataCell = cell as? BrowserModelCell {
                 dataCell.compiledModelCreationData = component?.state.compiledModelCreationData

@@ -52,6 +52,15 @@ struct ModelToMergeReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         let modelDay: String = event.model.tradingDay
+
+        let stockSymbol = state.compiledModelCreationData?.baseModel.stock.symbol
+        let stockExchange = state.compiledModelCreationData?.baseModel.stock.exchangeName
+        
+        guard  let baseStock = state.compiledModelCreationData?.baseModel,
+               let mergedModel = state.mergedModels.first(where: { $0.stock.symbol == stockSymbol && $0.stock.exchangeName == stockExchange } ) else {
+                
+            return
+        }
         
         if let data = state.compiledModelCreationData {
             if data.modelsToMerge.keys.contains(modelDay),
@@ -59,23 +68,20 @@ struct ModelToMergeReducer: Reducer {
                modelData.model.id == event.model.id {
                 state.compiledModelCreationData?.modelsToMerge.removeValue(forKey: modelDay)
             
-                if let modelIndex = state.compiledModelCreationData?
-                    .compatibleModels.firstIndex(
-                        where: { $0.id == event.model.id }) {
-                    
-                    state.compiledModelCreationData?.compatibleModels.remove(at: modelIndex)
+                guard let mergedStocks = state.compiledModelCreationData?.modelsToMerge.values.map({ $0.model }) else {
+                    return
                 }
+                
+                state.compiledModelCreationData?.compatibleModels = mergedModel.calculateCompatibleModels(from: [baseStock]+mergedStocks)
             } else {
                 state.compiledModelCreationData?.modelsToMerge[modelDay] = .init(event.model, event.indexPath)
                 
-                let stockSymbol = state.compiledModelCreationData?.baseModel.stock.symbol
-                let stockExchange = state.compiledModelCreationData?.baseModel.stock.exchangeName
-                if  let compatibleModels = state.compiledModelCreationData?.compatibleModels,
-                    let mergedModel = state.mergedModels.first(where: { $0.stock.symbol == stockSymbol && $0.stock.exchangeName == stockExchange } ) {
-                    
-                    state.compiledModelCreationData?.compatibleModels =
-                        mergedModel.calculateCompatibleModels(from: [event.model]+compatibleModels)
+                
+                guard let mergedStocks = state.compiledModelCreationData?.modelsToMerge.values.map({ $0.model }) else {
+                    return
                 }
+                
+                state.compiledModelCreationData?.compatibleModels = mergedModel.calculateCompatibleModels(from: [baseStock, event.model]+mergedStocks)
             }
         }
     }
