@@ -33,7 +33,7 @@ struct BaseModelSelectedReducer: Reducer {
                 let mergedModel = state.mergedModels.first(where: { $0.stock.symbol == stockSymbol && $0.stock.exchangeName == stockExchange } ) {
                 
                 state.compiledModelCreationData?.compatibleModels =
-                    mergedModel.calculateCompatibleModels(from: [stockModel])
+                    mergedModel.calculateCompatibleModels(from: [], base: stockModel)
             }
         }
         
@@ -63,16 +63,33 @@ struct ModelToMergeReducer: Reducer {
         }
         
         if let data = state.compiledModelCreationData {
-            if data.modelsToMerge.keys.contains(modelDay),
+            if let mergedStocks = state.compiledModelCreationData?.modelsToMerge,
+               data.modelsToMerge.keys.contains(modelDay),
                let modelData = data.modelsToMerge[modelDay],
                modelData.model.id == event.model.id {
-                state.compiledModelCreationData?.modelsToMerge.removeValue(forKey: modelDay)
-            
-                guard let mergedStocks = state.compiledModelCreationData?.modelsToMerge.values.map({ $0.model }) else {
-                    return
+                
+                
+                let isBaseStockGreater = (baseStock.tradingDayDate).compare(event.model.tradingDayDate) == .orderedDescending
+                
+                let datesToRemove = Array(mergedStocks.keys).filter {
+                    
+                    if isBaseStockGreater {
+                        return ($0.asDate() ?? Date()).compare(event.model.tradingDayDate) == .orderedAscending
+                    } else {
+                        return ($0.asDate() ?? Date()).compare(event.model.tradingDayDate) == .orderedDescending
+                    }
                 }
                 
-                state.compiledModelCreationData?.compatibleModels = mergedModel.calculateCompatibleModels(from: [baseStock]+mergedStocks)
+                for date in datesToRemove+[modelDay] {
+                    if state.compiledModelCreationData?.modelsToMerge.keys.contains(date) == true{
+                        state.compiledModelCreationData?.modelsToMerge.removeValue(forKey: date)
+                    }
+                }
+                
+            
+                let mergedStocks: [StockModel] = state.compiledModelCreationData?.modelsToMerge.values.compactMap({ $0.model }) ?? []
+                
+                state.compiledModelCreationData?.compatibleModels = mergedModel.calculateCompatibleModels(from: mergedStocks, base: baseStock)
             } else {
                 state.compiledModelCreationData?.modelsToMerge[modelDay] = .init(event.model, event.indexPath)
                 
@@ -81,7 +98,7 @@ struct ModelToMergeReducer: Reducer {
                     return
                 }
                 
-                state.compiledModelCreationData?.compatibleModels = mergedModel.calculateCompatibleModels(from: [baseStock, event.model]+mergedStocks)
+                state.compiledModelCreationData?.compatibleModels = mergedModel.calculateCompatibleModels(from: [event.model]+mergedStocks, base: baseStock)
             }
         }
     }

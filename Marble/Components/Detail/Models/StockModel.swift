@@ -64,9 +64,9 @@ public class StockModelMerged: NSObject {
         self.stocks = stockModels
     }
     
-    func calculateCompatibleModels(from models: [StockModel]) -> [StockModel] {
+    func calculateCompatibleModels(from models: [StockModel], base: StockModel, isRemoving: Bool = false) -> [StockModel] {
         //First add stocks added into list
-        var compatibleStocks: [StockModel] = models.sorted(
+        var compatibleStocks: [StockModel] = (models + [base]).sorted(
             by: { ($0.tradingDay.asDate() ?? Date())
             .compare(($1.tradingDay.asDate() ?? Date())) == .orderedDescending })
         
@@ -139,6 +139,7 @@ public class StockModelMerged: NSObject {
         
         compatibleStocks.append(contentsOf: filteredMaxDayDisparity)
         compatibleStocks.append(contentsOf: filteredMinDayDisparity)
+        
         
         return compatibleStocks
     }
