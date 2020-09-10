@@ -71,7 +71,7 @@ struct MergeModelReducer: Reducer {
         david.Cost = 1e3
         david.train(data: dataForDavid)
         
-        print("{SVM} \(mergeModel.object.version)")
+        print("{SVM} \(mergeModel.object.engine)")
         //Merged model
         
         

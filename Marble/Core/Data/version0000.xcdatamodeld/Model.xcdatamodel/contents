@@ -17,9 +17,9 @@
     <entity name="StockModelParentObject" representedClassName=".StockModelParentObject" isAbstract="YES" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary"/>
         <attribute name="dataSet" optional="YES" attributeType="Binary"/>
+        <attribute name="engine" attributeType="String" defaultValueString="david.v0.00.00"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="stock" optional="YES" attributeType="Binary"/>
-        <attribute name="version" attributeType="String"/>
         <relationship name="merged" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="StockModelMergedObject" inverseName="models" inverseEntity="StockModelMergedObject"/>
     </entity>
     <elements>
