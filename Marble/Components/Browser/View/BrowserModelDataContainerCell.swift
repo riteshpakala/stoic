@@ -143,13 +143,28 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 
                 let inCompatible = self.models?.filter { !compatibleIds.contains($0.id) } ?? []
                 
-                self.inCompatibleModels = inCompatible
+
+                //Indices for new models that are incompatible
                 for modelToRemove in inCompatible {
+                    
                     if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
+                        
+                        indexPathsToUpdate.append(.init(item: index, section: 0))
+                        
+                    
+                    }
+                }
+                
+                //Indices for old models that are now compatible
+                for modelToRemove in self.inCompatibleModels {
+                    if let index = self.models?.firstIndex(where: { compatibleIds.contains(modelToRemove.id) && $0.id == modelToRemove.id }) {
+                        print("{Browser} \(self.models?.first?.tradingDay) \(index)")
                         
                         indexPathsToUpdate.append(.init(item: index, section: 0))
                     }
                 }
+                
+                self.inCompatibleModels = inCompatible
             } else {
                 for modelToRemove in self.inCompatibleModels {
                     if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
@@ -228,9 +243,7 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
                 dataCell.modelSelected = selectedModel == indexPath
             }
             
-            if self.currentCreationStatusStep != .none {
-                dataCell.modelIsAvailableForSelection = !inCompatibleModels.contains(models[indexPath.item])
-            }
+            dataCell.modelIsAvailableForSelection = !inCompatibleModels.contains(models[indexPath.item])
             
             if dataCell.currentCreationStatusStep != self.currentCreationStatusStep {
                 dataCell.currentCreationStatusStep = self.currentCreationStatusStep
