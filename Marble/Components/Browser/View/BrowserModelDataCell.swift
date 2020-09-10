@@ -29,13 +29,25 @@ public class BrowserModelDataCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var selectionButton: UIButton = {
-        let button: UIButton = .init()
+    lazy var selectionButton: UIView = {
+        let button: UIView = .init()
         button.backgroundColor = .clear
         button.layer.cornerRadius = BrowserStyle.dataModelSelectionSize.width/2
         button.layer.borderColor = GlobalStyle.Colors.black.cgColor
         button.layer.borderWidth = 2.0
+        button.isHidden = true
         return button
+    }()
+    
+    lazy var notCompatibleLabel: UILabel = {
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.small, .bold)
+        label.textAlignment = .left
+        label.text = "not compatible".localized.lowercased()
+        label.textColor = GlobalStyle.Colors.black
+        label.isHidden = true
+        label.numberOfLines = 0
+        return label
     }()
     
     lazy var actionsContainerView: UIView = {
@@ -82,6 +94,55 @@ public class BrowserModelDataCell: UICollectionViewCell {
         return view
     }()
     
+    var currentCreationStatusStep: BrowserCompiledModelCreationStatus = .none {
+        didSet {
+            if currentCreationStatusStep == .none {
+                notCompatibleLabel.isHidden = true
+                selectionButton.isHidden = true
+            } else {
+                selectionButton.isHidden = !modelIsAvailableForSelection
+            }
+        }
+    }
+    
+    var baseModelSelected: Bool = false {
+        didSet {
+            if baseModelSelected {
+                self.selectionButton.layer.backgroundColor = GlobalStyle.Colors.black.cgColor
+                contentView.backgroundColor = GlobalStyle.Colors.orange
+            } else {
+                self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
+                contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
+            }
+        }
+    }
+    
+    var modelSelected: Bool = false {
+        didSet {
+            if modelSelected {
+                self.selectionButton.layer.backgroundColor = GlobalStyle.Colors.black.cgColor
+                contentView.backgroundColor = GlobalStyle.Colors.purple
+            } else {
+                self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
+                contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
+            }
+        }
+    }
+    
+    var modelIsAvailableForSelection: Bool = true {
+        didSet {
+            if modelIsAvailableForSelection {
+                self.selectionButton.isHidden = false
+                self.notCompatibleLabel.isHidden = true
+                contentView.layer.opacity = 1.0
+            } else {
+                self.selectionButton.isHidden = true
+                self.notCompatibleLabel.isHidden = false
+                contentView.layer.opacity = 0.5
+            }
+        }
+    }
+    
     override public func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -89,7 +150,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.layer.borderColor = GlobalStyle.Colors.marbleBrown.cgColor
+        contentView.layer.borderColor = UIColor.clear.cgColor
         contentView.layer.borderWidth = 2.0
         contentView.layer.cornerRadius = 4.0
         contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
@@ -113,6 +174,11 @@ public class BrowserModelDataCell: UICollectionViewCell {
             make.size.equalTo(BrowserStyle.dataModelSelectionSize)
             make.centerY.equalToSuperview()
             make.left.equalToSuperview()
+        }
+        
+        actionsContainerView.addSubview(notCompatibleLabel)
+        notCompatibleLabel.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     

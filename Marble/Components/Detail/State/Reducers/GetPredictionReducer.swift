@@ -61,7 +61,7 @@ struct GetPredictionReducer: Reducer {
               let model = state.model?.volatility.saveToFile() else {
             return
         }
-        print("{CoreData} check 1")
+        
         component.service.center.saveStockPredictions(
             .init(
                 date: stockDataOfTradingDay,

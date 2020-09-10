@@ -91,6 +91,11 @@
 		71478F8F24790BD8007DF62D /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */; };
 		714A82E1246E30BA006A7120 /* HomeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E0246E30BA006A7120 /* HomeComponent.swift */; };
 		714A82E3246E30C9006A7120 /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E2246E30C9006A7120 /* HomeState.swift */; };
+		715A7E9225095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9125095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift */; };
+		715A7E9425096188009E7244 /* BrowserModelCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9325096188009E7244 /* BrowserModelCellHeader.swift */; };
+		715A7E96250973B6009E7244 /* ModelSelectionReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */; };
+		715A7E9825097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9725097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift */; };
+		715A7E9B2509790D009E7244 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9A2509790D009E7244 /* Array.swift */; };
 		715DB1B824CB461B00E1D741 /* ConsoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */; };
 		715DB1BA24CB60DC00E1D741 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B924CB60DC00E1D741 /* Picker.swift */; };
 		715DB1BC24CBD9CD00E1D741 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1BB24CBD9CD00E1D741 /* Triangle.swift */; };
@@ -454,6 +459,11 @@
 		71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		714A82E0246E30BA006A7120 /* HomeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComponent.swift; sourceTree = "<group>"; };
 		714A82E2246E30C9006A7120 /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
+		715A7E9125095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKitPreparedTradingDayReducer.swift; sourceTree = "<group>"; };
+		715A7E9325096188009E7244 /* BrowserModelCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelCellHeader.swift; sourceTree = "<group>"; };
+		715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSelectionReducers.swift; sourceTree = "<group>"; };
+		715A7E9725097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompiledModelCreationStatusUpdatedReducer.swift; sourceTree = "<group>"; };
+		715A7E9A2509790D009E7244 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDetailView.swift; sourceTree = "<group>"; };
 		715DB1B924CB60DC00E1D741 /* Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picker.swift; sourceTree = "<group>"; };
 		715DB1BB24CBD9CD00E1D741 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -1123,6 +1133,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		715A7E9925097906009E7244 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				715A7E9A2509790D009E7244 /* Array.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		715DB1B624CB460800E1D741 /* Console */ = {
 			isa = PBXGroup;
 			children = (
@@ -1369,6 +1387,7 @@
 		71A1D131246E01E300D778A5 /* Marble */ = {
 			isa = PBXGroup;
 			children = (
+				715A7E9925097906009E7244 /* Extensions */,
 				7127B0612485EEA2004C57F1 /* ViewLibrary */,
 				71D454D8246E05ED007E61FC /* Components */,
 				71305F67246E038A00E64718 /* Core */,
@@ -1966,6 +1985,9 @@
 		71A7C6B92505C95D0094C352 /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
+				715A7E9125095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift */,
+				715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */,
+				715A7E9725097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -1976,6 +1998,7 @@
 				71A7C6BB2505C95D0094C352 /* BrowserView.swift */,
 				71A7C6BC2505C95D0094C352 /* BrowserViewController.swift */,
 				71A7C6C72505D3BF0094C352 /* BrowserModelCell.swift */,
+				715A7E9325096188009E7244 /* BrowserModelCellHeader.swift */,
 				712F54652506C970000384A7 /* BrowserModelDataCell.swift */,
 				71A7F8CC2508AD1500562B0A /* BrowserModelDataContainerCell.swift */,
 				71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */,
@@ -2421,6 +2444,7 @@
 				717A764F24A16131005348F9 /* Tag.swift in Sources */,
 				71A2FF3224F3454500B8B650 /* ProfileDisclaimerReducer.swift in Sources */,
 				71478F6424790296007DF62D /* SwifterClientProtocol.swift in Sources */,
+				715A7E9825097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift in Sources */,
 				71A7C69E250571000094C352 /* StockModelMergedObject+CoreDataClass.swift in Sources */,
 				717A766224A16131005348F9 /* ArrayExt.swift in Sources */,
 				71478F6B24790297007DF62D /* SwifterTrends.swift in Sources */,
@@ -2592,6 +2616,8 @@
 				716437CB24FC6E6D00BAB6BC /* OnboardingState.swift in Sources */,
 				71D98E8C24F26B450089C85F /* SubscribeView.swift in Sources */,
 				717A765724A16131005348F9 /* DocumentType.swift in Sources */,
+				715A7E9225095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift in Sources */,
+				715A7E96250973B6009E7244 /* ModelSelectionReducers.swift in Sources */,
 				717A766C24A16131005348F9 /* Attributes.swift in Sources */,
 				717A766E24A16131005348F9 /* StructuralEvaluator.swift in Sources */,
 				71A1D30D246E027D00D778A5 /* UIColor+AssetsPickerViewController.swift in Sources */,
@@ -2607,6 +2633,7 @@
 				71478F8424790297007DF62D /* Utils.swift in Sources */,
 				717A767124A16131005348F9 /* NodeVisitor.swift in Sources */,
 				71A1D2EC246E027D00D778A5 /* AssetsPickerViewController.swift in Sources */,
+				715A7E9B2509790D009E7244 /* Array.swift in Sources */,
 				7110A56F248DCAD500F62940 /* SearchViewController.swift in Sources */,
 				71A1D2D0246E027D00D778A5 /* UIColor.swift in Sources */,
 				71A1D31D246E027D00D778A5 /* DetailText.swift in Sources */,
@@ -2677,6 +2704,7 @@
 				71A1D30A246E027D00D778A5 /* String+AssetsPickerViewController.swift in Sources */,
 				716437C724FC6E6D00BAB6BC /* OnboardingStyle.swift in Sources */,
 				71A1D314246E027D00D778A5 /* OptionRow.swift in Sources */,
+				715A7E9425096188009E7244 /* BrowserModelCellHeader.swift in Sources */,
 				717A763B24A16131005348F9 /* DataUtil.swift in Sources */,
 				71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */,
 				7127B0302485DCF7004C57F1 /* DetailViewController.swift in Sources */,

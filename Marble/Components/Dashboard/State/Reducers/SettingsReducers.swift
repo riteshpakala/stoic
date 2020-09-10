@@ -124,10 +124,15 @@ struct OpenBrowserSettingsReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        component.push(
-            BrowserBuilder.build(component.service),
-            display: .modal)
+        let mergedObjects: [StockModelMergedObject] = component.service.center.getMergedStockModels(from: .main) ?? []
         
+        let modelsMerged = mergedObjects.map({ StockModelMerged.init(from: $0) })
+        
+        component.push(
+            BrowserBuilder.build(
+                component.service,
+                state: .init(modelsMerged)),
+            display: .modal)
     }
 }
 

@@ -11,7 +11,7 @@ import Granite
 import Foundation
 import UIKit
 
-public class BrowserModelContainerDataCell: UICollectionViewCell {
+public class BrowserModelDataContainerCell: UICollectionViewCell {
     private(set) lazy var collection: (
         view: UICollectionView,
         layout: UICollectionViewLayout) = {
@@ -39,9 +39,130 @@ public class BrowserModelContainerDataCell: UICollectionViewCell {
     
     var models: [StockModel]? = nil {
         didSet {
+//            if models.creationData == nil {
+//                DispatchQueue.main.async {
+//                    self.collection.view.reloadData()
+//                }
+//            } else {
+//                self.compiledModelCreationData = models.creationData
+//            }
             DispatchQueue.main.async {
                 self.collection.view.reloadData()
             }
+        }
+    }
+    
+    var baseSelectedModel: IndexPath? = nil
+    var selectedModel: IndexPath? = nil
+    var inCompatibleModels: [StockModel] = []
+    
+    var currentCreationStatusStep: BrowserCompiledModelCreationStatus = .none {
+        didSet {
+            guard oldValue != currentCreationStatusStep else { return }
+            for cell in self.collection.view.visibleCells {
+                if let dataCell = cell as? BrowserModelDataCell {
+                    dataCell.currentCreationStatusStep = currentCreationStatusStep
+                }
+            }
+            
+            if currentCreationStatusStep == .none {
+
+                var indexPathsToReload: [IndexPath] = []
+                if let oldBaseModelIndexPath = baseSelectedModel {
+                    baseSelectedModel = nil
+                    indexPathsToReload.append(oldBaseModelIndexPath)
+                }
+                
+                if let oldSelectedModelIndexPath = selectedModel {
+                    selectedModel = nil
+                    indexPathsToReload.append(oldSelectedModelIndexPath)
+                }
+                
+                self.collection.view.reloadItems(at: indexPathsToReload)
+                    
+            }
+        }
+    }
+    var compiledModelCreationData: BrowserCompiledModelCreationData? = nil {
+        didSet {
+            var updateCompatibility: Bool = false
+            var indexPathsToUpdate: [IndexPath] = []
+            switch currentCreationStatusStep {
+            case .step1:
+                let oldBaseModelIndexPath: IndexPath? = baseSelectedModel
+                
+                if models?.firstIndex(where: { $0.id == compiledModelCreationData?.baseModel.id }) != nil {
+                    baseSelectedModel = compiledModelCreationData?.baseModelIndexPath
+                } else {
+                    baseSelectedModel = nil
+                }
+                
+                if let selectedIndexPath = baseSelectedModel {
+                    if let baseIndexPath = oldBaseModelIndexPath {
+                        
+                        indexPathsToUpdate.append(contentsOf: [baseIndexPath, selectedIndexPath])
+                    } else {
+                        indexPathsToUpdate.append(selectedIndexPath)
+                    }
+                } else if let baseIndexPath = oldBaseModelIndexPath {
+                    indexPathsToUpdate.append(baseIndexPath)
+                }
+                updateCompatibility = true
+            case .step2:
+                guard let modelDay = self.models?.first?.tradingDay,
+                    baseSelectedModel == nil else { return }
+                
+                let idsOfModels: [String] = self.models?.compactMap({ $0.id }) ?? []
+                
+                if  let baseModelID = compiledModelCreationData?.baseModel.id,
+                    !idsOfModels.contains(baseModelID) {
+                    
+                    if let selectedModelIndex = compiledModelCreationData?.modelsToMerge[modelDay]?.indexPath {
+                        
+                        let oldSelectedModelIndexPath = selectedModel
+                        selectedModel = selectedModelIndex
+                        if let oldSelectedModel = oldSelectedModelIndexPath {
+
+                            indexPathsToUpdate.append(contentsOf: [oldSelectedModel, selectedModelIndex])
+                        } else if selectedModel != oldSelectedModelIndexPath {
+                            indexPathsToUpdate.append(selectedModelIndex)
+                        }
+                    } else if let oldSelectedModelIndexPath = selectedModel {
+                        selectedModel = nil
+                        indexPathsToUpdate.append(oldSelectedModelIndexPath)
+                    }
+                }
+                updateCompatibility = true
+            default: break
+            }
+            
+            if  updateCompatibility,
+                let compatible = compiledModelCreationData?.compatibleModels {
+                
+                let compatibleIds = compatible.map { $0.id }
+                
+                let inCompatible = self.models?.filter { !compatibleIds.contains($0.id) } ?? []
+                
+                self.inCompatibleModels = inCompatible
+                for modelToRemove in inCompatible {
+                    if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
+                        
+                        indexPathsToUpdate.append(.init(item: index, section: 0))
+                    }
+                }
+            } else {
+                for modelToRemove in self.inCompatibleModels {
+                    if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
+                        
+                        indexPathsToUpdate.append(.init(item: index, section: 0))
+                    }
+                }
+                self.inCompatibleModels = []
+            }
+            
+            guard !indexPathsToUpdate.isEmpty else { return }
+            
+            self.collection.view.reloadItems(at: indexPathsToUpdate)
         }
     }
     
@@ -78,7 +199,7 @@ public class BrowserModelContainerDataCell: UICollectionViewCell {
     }
 }
 
-extension BrowserModelContainerDataCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
+extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
@@ -99,6 +220,21 @@ extension BrowserModelContainerDataCell: UICollectionViewDataSource, UICollectio
         
         if let models = models {
             dataCell.model = models[indexPath.item]
+            if let baseModelIndexPath = baseSelectedModel,
+                indexPath == baseModelIndexPath {
+                dataCell.baseModelSelected = true
+            } else {
+                dataCell.baseModelSelected = false
+                dataCell.modelSelected = selectedModel == indexPath
+            }
+            
+            if self.currentCreationStatusStep != .none {
+                dataCell.modelIsAvailableForSelection = !inCompatibleModels.contains(models[indexPath.item])
+            }
+            
+            if dataCell.currentCreationStatusStep != self.currentCreationStatusStep {
+                dataCell.currentCreationStatusStep = self.currentCreationStatusStep
+            }
         }
         
         return dataCell
@@ -131,6 +267,26 @@ extension BrowserModelContainerDataCell: UICollectionViewDataSource, UICollectio
     public func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
+        
+        guard currentCreationStatusStep != .none else { return }
+        
+        guard let dataCell = collectionView
+            .cellForItem(at: indexPath) as? BrowserModelDataCell,
+              let model = dataCell.model else {
+
+            return
+        }
+        
+        switch currentCreationStatusStep {
+        case .step1:
+            bubble(BrowserEvents.BaseModelSelected.init(model, indexPath: indexPath))
+        case .step2:
+            guard dataCell.modelIsAvailableForSelection else { return }
+            bubble(BrowserEvents.ModelToMerge.init(model, indexPath: indexPath))
+        default:
+            break
+        }
+        
         
     }
 }

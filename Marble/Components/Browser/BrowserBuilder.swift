@@ -12,10 +12,11 @@ import UIKit
 
 class BrowserBuilder {
     static func build(
-        _ service: Service) -> BrowserComponent {
+        _ service: Service,
+        state: BrowserState) -> BrowserComponent {
         return BrowserComponent(
             service,
-            .init(),
+            state,
             BrowserViewController())
     }
 }

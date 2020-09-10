@@ -53,6 +53,21 @@ public class BrowserView: GraniteView {
         return view
     }()
     
+    lazy var subHeaderContainer: UIView = {
+            let view: UIView = .init()
+            view.backgroundColor = .clear
+            return view
+    }()
+    
+    lazy var nextTradingDayLabel: UILabel = {
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.textAlignment = .left
+        label.textColor = GlobalStyle.Colors.green
+        label.text = "/**** loading... */"
+        return label
+    }()
+    
     lazy var stackViewHeader: GraniteStackView = {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
@@ -73,6 +88,7 @@ public class BrowserView: GraniteView {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
                 stackViewHeader,
+                subHeaderContainer,
                 collection.view
             ]
         )
@@ -120,6 +136,15 @@ public class BrowserView: GraniteView {
                 .offset(GlobalStyle.largePadding).priority(999)
             make.right.bottom.equalToSuperview()
                 .offset(-GlobalStyle.largePadding).priority(999)
+        }
+        
+        subHeaderContainer.snp.makeConstraints { make in
+            make.height.equalTo(nextTradingDayLabel.font.lineHeight)
+            
+        }
+        subHeaderContainer.addSubview(nextTradingDayLabel)
+        nextTradingDayLabel.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
         predictionEngineVersion.snp.makeConstraints { make in

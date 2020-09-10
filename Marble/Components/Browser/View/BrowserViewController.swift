@@ -56,6 +56,26 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
                     indexPath: indexPath,
                     object: object)
         })
+        
+        observeState(
+            \.nextValidTradingDay,
+            handler: observeTradingDay(_:),
+            async: .main)
+        
+        observeState(
+            \.currentCompiledCreationStatus,
+            handler: observeCompiledCreationStatus(_:),
+            async: .main)
+        
+        observeState(
+            \.compiledModelCreationData,
+            handler: observeCompiledCreationData(_:),
+            async: .main)
+        
+        observeState(
+            \.compiledModelCreationData?.modelsToMerge,
+            handler: observeCompiledMergeData(_:),
+            async: .main)
     }
     
     private func processCell(
@@ -73,7 +93,8 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
         }
         
         browserModelCell.model = object
-        
+        browserModelCell.currentCreationStatusStep = component?.state.currentCompiledStatus ?? .none
+        browserModelCell.compiledModelCreationData = component?.state.compiledModelCreationData
         return browserModelCell
     }
     
@@ -85,11 +106,45 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
         super.viewDidDisappear(animated)
         
     }
-
     
     override public func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         dataSource?.performFetch()
+    }
+}
+
+extension BrowserViewController {
+    func observeTradingDay(_ day: Change<String>) {
+        
+        _view.nextTradingDayLabel.text = "trading day".localized+": "+(day.newValue ?? "unknown")
+    }
+    
+    func observeCompiledCreationStatus(_ status: Change<String>) {
+        guard let currentStep = component?.state.currentCompiledStatus else { return }
+        for cell in _view.collection.view.visibleCells {
+            if let dataCell = cell as? BrowserModelCell {
+                dataCell.currentCreationStatusStep = currentStep
+            }
+        }
+    }
+    
+    func observeCompiledCreationData(_ data: Change<BrowserCompiledModelCreationData?>) {
+        print("{Browser} observed data change")
+        for cell in _view.collection.view.visibleCells {
+            if let dataCell = cell as? BrowserModelCell {
+                dataCell.compiledModelCreationData = component?.state.compiledModelCreationData
+            }
+        }
+    }
+    
+    func observeCompiledMergeData(_ data: Change<[String: BrowserCompiledModelCreationData.CompiledMergeModelData]?>) {
+        guard component?.state.currentCompiledStatus == .step2 else { return }
+        print("{Browser} observed data model change")
+        for cell in _view.collection.view.visibleCells {
+            if let dataCell = cell as? BrowserModelCell {
+                dataCell.compiledModelCreationData = component?.state.compiledModelCreationData
+            }
+        }
     }
 }
 
