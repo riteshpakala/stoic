@@ -53,7 +53,7 @@ public class StockModelMerged: NSObject {
     let id: String
     let stock: SearchStock
     let stocks: [StockModel]
-    let object: StockModelMergedObject
+    let engine: String
     
     public init(from object: StockModelMergedObject) {
         self.id = object.id
@@ -70,7 +70,7 @@ public class StockModelMerged: NSObject {
             }
         }
         
-        self.object = object
+        self.engine = object.engine
         self.stocks = stockModels
     }
     
