@@ -195,7 +195,7 @@ extension DetailView: Onboardable {
         OnboardingStep.init(
             reference: .init(textPadding: GlobalStyle.padding),
             actionable: .init(keyPath: \.frame, view: self),
-            text: "A prediction retrieves stock data & sentiment from all over the web. Give it a moment to pull & process.",
+            text: "a prediction retrieves stock data & sentiment from all over the web. Give it a moment to pull & process.",
             order: 0)
     }
     
@@ -209,7 +209,7 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
-            text: "The trading date this window is predicting for",
+            text: "the trading date this window is predicting for",
             order: 1)
     }
     
@@ -224,7 +224,7 @@ extension DetailView: Onboardable {
                     bottom: 0,
                     right: -GlobalStyle.spacing*2)),
             actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.historicalView.indicator),
-            text: "You can view data of past dates here, tap the triangle",
+            text: "you can view data of past dates here, tap the triangle",
             order: 2)
     }
     
@@ -239,7 +239,7 @@ extension DetailView: Onboardable {
                     bottom: 0,
                     right: 0)),
             actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.historicalView.indicator),
-            text: "Tap on another date",
+            text: "tap on another date",
             order: 3)
     }
     
@@ -254,7 +254,7 @@ extension DetailView: Onboardable {
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
             actionable: .init(keyPath: \.isHidden, view: self.consoleView.detailView.sentimentView.refineLabel),
-            text: "Adjust these sentiment knobs to get realtime predictions.",
+            text: "adjust these sentiment knobs to get realtime predictions.",
             order: 4)
     }
     
@@ -268,7 +268,7 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
-            text: "The middle is negative & positive weights. The left is used to refine. The right is used to remove potential bias",
+            text: "the middle is negative & positive weights. The left is used to refine. The right is used to remove potential bias",
             order: 5)
     }
     
@@ -283,7 +283,7 @@ extension DetailView: Onboardable {
                     bottom: 0,
                     right: -GlobalStyle.spacing*2)),
             actionable: .init(keyPath: \.layer.sublayers, view: self.consoleView.detailView.predictionView.thinkTriggerContainer),
-            text: "Tap the ball to provide a suggestion of sentiment. The web is filled with emotion, we're going to grab some based on the trading day.",
+            text: "tap the ball to provide a suggestion of sentiment. The web is filled with emotion, we're going to grab some based on the trading day.",
             order: 6)
     }
     
@@ -298,7 +298,7 @@ extension DetailView: Onboardable {
                     bottom: GlobalStyle.spacing + consoleView.detailView.predictionView.frame.height,
                     right: -GlobalStyle.spacing*2)),
             actionable: .init(keyPath: \.layer.sublayers, view: self.consoleView.detailView.predictionView.thinkTriggerContainer),
-            text: "Give it a moment to find valuable info to work with.",
+            text: "give it a moment to find valuable info to work with.",
             order: 7)
     }
     

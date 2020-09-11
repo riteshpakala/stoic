@@ -30,6 +30,8 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
         
         _view.parent = self.parent?.view
         _view.delegate = self
+        
+        GraniteAppDelegate.AppUtility.lockToPortrait()
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -45,6 +47,8 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
     
     override public func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
+        GraniteAppDelegate.AppUtility.toggleLockToLast()
     }
     
     override public func viewDidLayoutSubviews() {
