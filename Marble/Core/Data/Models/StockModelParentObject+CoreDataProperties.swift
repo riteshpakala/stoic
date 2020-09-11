@@ -12,13 +12,9 @@ import CoreData
 
 extension StockModelParentObject {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<StockModelParentObject> {
-        return NSFetchRequest<StockModelParentObject>(entityName: "StockModelParentObject")
-    }
-
     @NSManaged public var id: String
     @NSManaged public var engine: String
-    @NSManaged public var data: Data?
+    @NSManaged public var model: Data?
     @NSManaged public var dataSet: Data?
     @NSManaged public var merged: StockModelMergedObject?
     @NSManaged public var stock: Data

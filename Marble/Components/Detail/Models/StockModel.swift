@@ -10,16 +10,65 @@ import Foundation
 
 public class StockModel: NSObject {
     let id: String
-    let searchStock: SearchStock?
-    let consoleDetailPayload: ConsoleDetailPayload?
-    let object: StockModelObject
+    private(set) var searchStock: SearchStock? = nil
+    private(set) var consoleDetailPayload: ConsoleDetailPayload? = nil
+    private(set) var model: SVMModel? = nil
+    private(set) var dataSet: DataSet? = nil
+    
     public init(from object: StockModelObject) {
         self.id = object.id
         self.searchStock = object.stock.asSearchStock
         self.consoleDetailPayload = object.asDetail
         self.sentiment = GlobalDefaults.SentimentStrength.init(rawValue: Int(object.sentimentStrength)) ?? .low
         self.tradingDayTime = object.date
-        self.object = object
+        self.model = object.model?.model
+        self.dataSet = object.dataSet?.asDataSet
+    }
+    
+    public init(fromMerged object: StockModelMergedObject) {
+        self.id = object.id
+        self.searchStock = object.stock.asSearchStock
+        self.sentiment = nil
+        guard let models = object.models,
+              let ids = object.currentModels?.mergedModelIDs else { return }
+        
+        let stockModelObjs: [StockModelObject] = models.compactMap({ ids.contains(($0 as? StockModelObject)?.id ?? "") ? ($0 as? StockModelObject) : nil })
+        
+        let sortedStockModelObjs = stockModelObjs.sorted(by: {
+            ($0.date.date())
+                .compare(($1.date.date())) == .orderedAscending })
+        
+        guard let latestModel = sortedStockModelObjs.last,
+              let model = object.model?.model else { return }
+        
+        self.tradingDayTime = latestModel.date
+        self.model = model
+        self.dataSet = object.dataSet?.asDataSet
+        
+        
+        var historical: [StockData] = []
+        var sentiment: [StockSentimentData] = []
+        
+        
+        for obj in sortedStockModelObjs {
+            if let historicalData = obj.historicalTradingData.asStockData {
+                historical.append(contentsOf: historicalData)
+            }
+            
+            if let sentimentData = obj.sentimentTradingData.asStockSentimentData {
+                sentiment.append(contentsOf: sentimentData)
+            }
+        }
+        
+        let predictionDays: Int = Int(sortedStockModelObjs.map({ $0.predictionDays }).reduce(0, +))
+        
+        self.consoleDetailPayload = .init(
+            currentTradingDay: latestModel.date.date().asString,
+            historicalTradingData: historical,
+            stockSentimentData: sentiment,
+            days: predictionDays,
+            maxDays: predictionDays,
+            model: .init(david: model))
     }
     
     public var stock: SearchStock {
@@ -30,7 +79,7 @@ public class StockModel: NSObject {
         consoleDetailPayload?.days ?? 0
     }
     
-    public var sentiment: GlobalDefaults.SentimentStrength
+    public var sentiment: GlobalDefaults.SentimentStrength?
     
     public var tradingDay: String {
         consoleDetailPayload?.currentTradingDay ?? "unknown"
@@ -41,12 +90,6 @@ public class StockModel: NSObject {
     public var tradingDayDate: Date {
         tradingDayTime.date()
     }
-    
-    public var model: SVMModel? {
-        self.object.data?.model
-    }
-    
-    
 }
 
 public class StockModelMerged: NSObject {

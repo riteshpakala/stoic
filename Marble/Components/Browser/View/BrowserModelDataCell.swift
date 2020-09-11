@@ -65,7 +65,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
     
     var model: StockModel? = nil {
         didSet {
-            sentimentLabel.text = model?.sentiment.asString
+            sentimentLabel.text = model?.sentiment?.asString
             daysLabel.text = "\("days trained".localized.lowercased()): "+String(model?.days ?? 0)
         }
     }
@@ -175,7 +175,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
         stackActionView.snp.makeConstraints { make in
             make.top.left.equalToSuperview().offset(GlobalStyle.padding)
             make.bottom.equalToSuperview().offset(-GlobalStyle.padding)
-            make.width.equalToSuperview().multipliedBy(0.36)
+            make.width.equalToSuperview().multipliedBy(0.24)
         }
         
         contentView.addSubview(stackInfoView)

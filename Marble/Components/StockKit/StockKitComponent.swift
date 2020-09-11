@@ -72,7 +72,6 @@ public class StockKitComponent: Component<StockKitState> {
     var disable: Bool = false
 }
 
-
 //MARK: Prediction Logic
 extension StockKitComponent: SVMModelDelegate {
     func predict(

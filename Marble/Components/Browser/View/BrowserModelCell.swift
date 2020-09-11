@@ -382,10 +382,25 @@ public class BrowserModelCell: UICollectionViewCell {
             self.stockModels = stockModelsDict
             
             //Update Compiled Model Data
-            if model?.data != nil {
-                compiledTradingDayLabel.text = "test"
-                compiledDaysLabel.text = "144"
-                compiledModelsWithinLabel.text = "12"
+            if model?.model != nil {
+                guard let models = model?.models,
+                      let ids = model?.currentModels?.mergedModelIDs else { return }
+                
+                let stockModelObjs: [StockModelObject] = models.compactMap({ ids.contains(($0 as? StockModelObject)?.id ?? "") ? ($0 as? StockModelObject) : nil })
+                
+                let stockModels: [StockModel] = stockModelObjs.map { StockModel.init(from: $0) }
+                
+                let sortedStockModels = stockModels.sorted(by: {
+                    ($0.tradingDayDate)
+                        .compare(($1.tradingDayDate)) == .orderedDescending })
+                
+                guard let firstModel = sortedStockModels.first else { return }
+                
+                print("{SVM} found new model")
+                
+                compiledTradingDayLabel.text = "\(firstModel.tradingDay)"
+                compiledDaysLabel.text = "\(stockModels.map { $0.days }.reduce(0, +))"
+                compiledModelsWithinLabel.text = "\(stockModels.count)"
                 compiledActionLabel.text = "Action"
                 compiledContainerStackView.isHidden = false
                 compiledCreateLabel.isHidden = true
@@ -420,6 +435,14 @@ public class BrowserModelCell: UICollectionViewCell {
     }()
     
     //MARK: Gestures
+    private var mergeModelTappedGesture: UITapGestureRecognizer {
+        let gesture: UITapGestureRecognizer = UITapGestureRecognizer
+            .init(target: self,
+                  action: #selector(self.mergedModelTapped(_:)))
+        
+        return gesture
+    }
+    
     private var createTappedGesture: UITapGestureRecognizer {
         let gesture: UITapGestureRecognizer = UITapGestureRecognizer
             .init(target: self,
@@ -527,6 +550,7 @@ public class BrowserModelCell: UICollectionViewCell {
         }
         compiledCreationCancelLabel.addGestureRecognizer(cancelTappedGesture)
         compiledCreationDoneLabel.addGestureRecognizer(doneTappedGesture)
+        compiledContainerView.addGestureRecognizer(mergeModelTappedGesture)
     }
     
     override public func layoutIfNeeded() {
@@ -652,6 +676,11 @@ extension BrowserModelCell: UICollectionViewDataSource, UICollectionViewDelegate
 
 //MARK: Compiled Model Creation Flow
 extension BrowserModelCell {
+    @objc func mergedModelTapped(_ sender: UITapGestureRecognizer) {
+        guard let model = model else { return }
+        bubble(BrowserEvents.MergeModelSelected.init(model))
+    }
+    
     @objc func createTapped(_ sender: UITapGestureRecognizer) {
         bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
     }

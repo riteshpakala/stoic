@@ -28,7 +28,7 @@ struct CloseDetailReducer: Reducer {
             return
         }
 
-        component.deattach(detail)
+        component.pop(detail, animated: false)
         
         if component.getSubComponent(DetailComponent.self) == nil {
             sideEffects.append(

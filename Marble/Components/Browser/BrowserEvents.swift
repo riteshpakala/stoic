@@ -35,7 +35,21 @@ struct BrowserEvents {
         }
     }
     
-    public struct MergeModel: Event {
-        
+    public struct MergeModel: Event {}
+    
+    public struct StandaloneModelSelected: Event {
+        let model: StockModel
+        let indexPath: IndexPath
+        public init(_ model: StockModel, indexPath: IndexPath) {
+            self.model = model
+            self.indexPath = indexPath
+        }
+    }
+    
+    public struct MergeModelSelected: Event {
+        let model: StockModelMergedObject
+        public init(_ model: StockModelMergedObject) {
+            self.model = model
+        }
     }
 }

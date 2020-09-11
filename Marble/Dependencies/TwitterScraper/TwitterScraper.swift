@@ -183,7 +183,7 @@ public class TwitterScraper: NSObject {
                                 let lang: String = (elesLang?.array().count ?? -1) > index ? (try? elesLang?.array()[index].attr("lang")) ?? "" : ""
                                 
                                 
-//                                print("{SVM} \((Double(time)?.date() ?? Date()).asString) \(text)")
+                                
     //                            if let doubleTime = Double(time) {
     //                                let date = Date(timeIntervalSince1970: doubleTime)
     //                                let dateFormatter = DateFormatter()
@@ -205,6 +205,8 @@ public class TwitterScraper: NSObject {
                                     (minute < this.cursorMinute) || !isSpread,
                                     (!this.linkExists(in: text) || !noLinks),
                                     ((tickerQueryCount <= isUniqueTicker.mentions && text.count > query.count && tickerQueryCount >= 1) || (!isUniqueTicker.enabled)) {
+                                    
+                                    print("{SVM} \((Double(time)?.date() ?? Date()).asString) \(text)")
                                     
                                     //
                                     this.results.append(

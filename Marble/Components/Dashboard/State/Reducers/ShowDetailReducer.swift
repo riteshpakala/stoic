@@ -31,6 +31,10 @@ struct ShowDetailReducer: Reducer {
             stockModel = stored
         }
         
+        if let browser = component.getSubComponent(BrowserComponent.self) {
+            component.pop(browser, animated: true)
+        }
+        
         guard state.activeSearchedStocks.values.first(
             where: { $0.symbolName == searchStock?.symbolName }) == nil else {
                 

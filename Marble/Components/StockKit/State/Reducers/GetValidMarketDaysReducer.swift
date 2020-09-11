@@ -76,6 +76,11 @@ struct GetValidMarketDaysResponseReducer: Reducer {
                ($0.dateComponents.year < currentYear )
         }.sorted(by: { ($0.asDate ?? Date()).compare(($1.asDate ?? Date())) == .orderedDescending } )
         
+        guard filteredForPrevious.count > 0 else {
+            print("{STOCKKIT} valid market days return - \(event.result.count)")
+            return
+        }
+        
         var sanitizedStockData: [StockDateData] = []
         for _ in 0..<state.rules.historicalDays {
             sanitizedStockData.append(filteredForPrevious.removeFirst())

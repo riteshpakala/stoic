@@ -37,63 +37,6 @@ public struct StockKitUtils {
         return 100.0 - (100.0 / (1 + relativeStrength));
     }
     
-    public class RSI: NSObject, Codable {
-        let open: Double
-        let close: Double
-        
-        public init(open: Double, close: Double) {
-            self.open = open
-            self.close = close
-        }
-        
-        static var zero: StockKitUtils.RSI {
-            return .init(open: 0, close: 0.0)
-        }
-    }
-    
-    public class Features: NSObject, Codable {
-        let momentum: Int
-        let volatility: Double
-        let dayAverage: Double
-        
-        public class Averages: NSObject, Codable {
-            let momentum: Double
-            let volatility: Double
-            let volume: Double
-            let sma20: Double
-            
-            public init(
-                momentum: Double,
-                volatility: Double,
-                volume: Double,
-                sma20: Double) {
-                
-                self.momentum = momentum
-                self.volatility = volatility
-                self.volume = volume
-                self.sma20 = sma20
-            }
-            
-            static var zero: StockKitUtils.Features.Averages {
-                return .init(momentum: 0.0, volatility: 0.0, volume: 0.0, sma20: 0.0)
-            }
-        }
-        
-        public init(
-            momentum: Int,
-            volatility: Double,
-            dayAverage: Double) {
-            
-            self.momentum = momentum
-            self.volatility = volatility
-            self.dayAverage = dayAverage
-        }
-        
-        static var zero: StockKitUtils.Features {
-            return .init(momentum: 0, volatility: 0.0, dayAverage: 0.0)
-        }
-    }
-    
     public struct Models {
         let david: SVMModel
         
@@ -102,9 +45,9 @@ public struct StockKitUtils {
             let open: Double
             let close: Double
             let volume: Double
-            let rsi: StockKitUtils.RSI
-            let features: StockKitUtils.Features
-            let averages: StockKitUtils.Features.Averages
+            let rsi: RSI
+            let features: Momentum
+            let averages: Averages
             let sentiment: StockSentimentData
             
             init(
@@ -177,4 +120,115 @@ public struct StockKitUtils {
     }
 }
 
+public class RSI: NSObject, Codable, NSCoding, NSSecureCoding {
+    public static var supportsSecureCoding: Bool = true
+    let open: Double
+    let close: Double
+    
+    public init(open: Double, close: Double) {
+        self.open = open
+        self.close = close
+    }
+    
+    public required convenience init?(coder: NSCoder) {
+        let open: Double = coder.decodeDouble(forKey: "volatility")
+        let close: Double = coder.decodeDouble(forKey: "dayAverage")
 
+        self.init(
+            open: open,
+            close: close)
+    }
+    
+    public func encode(with coder: NSCoder){
+        coder.encode(open, forKey: "open")
+        coder.encode(close, forKey: "close")
+    }
+    
+    static var zero: RSI {
+        return .init(open: 0, close: 0.0)
+    }
+}
+
+public class Momentum: NSObject, Codable, NSCoding, NSSecureCoding {
+    public static var supportsSecureCoding: Bool = true
+    
+    let momentum: Int
+    let volatility: Double
+    let dayAverage: Double
+    
+    public init(
+        momentum: Int,
+        volatility: Double,
+        dayAverage: Double) {
+        
+        self.momentum = momentum
+        self.volatility = volatility
+        self.dayAverage = dayAverage
+    }
+    
+    public required convenience init?(coder: NSCoder) {
+        let momentum: Int = coder.decodeInteger(forKey: "momentum")
+        let volatility: Double = coder.decodeDouble(forKey: "volatility")
+        let dayAverage: Double = coder.decodeDouble(forKey: "dayAverage")
+
+        self.init(
+            momentum: momentum,
+            volatility: volatility,
+            dayAverage: dayAverage)
+    }
+    
+    public func encode(with coder: NSCoder){
+        coder.encode(momentum, forKey: "momentum")
+        coder.encode(volatility, forKey: "volatility")
+        coder.encode(dayAverage, forKey: "dayAverage")
+    }
+    
+    static var zero: Momentum {
+        return .init(momentum: 0, volatility: 0.0, dayAverage: 0.0)
+    }
+}
+
+public class Averages: NSObject, Codable, NSCoding, NSSecureCoding {
+    public static var supportsSecureCoding: Bool = true
+    
+    let momentum: Double
+    let volatility: Double
+    let volume: Double
+    let sma20: Double
+    
+    public init(
+        momentum: Double,
+        volatility: Double,
+        volume: Double,
+        sma20: Double) {
+        
+        self.momentum = momentum
+        self.volatility = volatility
+        self.volume = volume
+        self.sma20 = sma20
+    }
+    
+    public required convenience init?(coder: NSCoder) {
+        let momentum: Double = coder.decodeDouble(forKey: "momentum")
+        let volatility: Double = coder.decodeDouble(forKey: "volatility")
+        let volume: Double = coder.decodeDouble(forKey: "volume")
+        let sma20: Double = coder.decodeDouble(forKey: "sma20")
+
+        self.init(
+            momentum: momentum,
+            volatility: volatility,
+            volume: volume,
+            sma20: sma20)
+    }
+    
+    public func encode(with coder: NSCoder){
+        coder.encode(momentum, forKey: "momentum")
+        coder.encode(volatility, forKey: "volatility")
+        coder.encode(volume, forKey: "volume")
+        coder.encode(sma20, forKey: "sma20")
+    }
+    
+    static var zero: Averages {
+        return .init(momentum: 0.0, volatility: 0.0, volume: 0.0, sma20: 0.0)
+    }
+}

@@ -20,18 +20,19 @@ public class StockModelMergedObject: StockModelParentObject, CoreDataManaged {
         entity: NSEntityDescription,
         insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
+    }
+    
+    convenience init(context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entity(
+            forEntityName: StockModelMergedObject.entityName,
+            in: context) ?? StockModelMergedObject.entity()
+        self.init(entity: entity, insertInto: context)
         self.id = UUID().uuidString
         self.engine = "david.v0.00.00"
     }
     
-    public init(context moc: NSManagedObjectContext) {
-        super.init(entity: StockModelMergedObject.entity(), insertInto: moc)
-        self.id = UUID().uuidString
-        self.engine = "david.v0.00.00"
-    }
-    
-    public static func fetchRequest() -> NSFetchRequest<Model> {
-        return NSFetchRequest<Model>(entityName: "StockModelMergedObject")
+    public static func request() -> NSFetchRequest<Model> {
+        return NSFetchRequest<Model>(entityName: StockModelMergedObject.entityName)
     }
 }
 

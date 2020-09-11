@@ -40,9 +40,19 @@ public class StockKitState: State {
         formatter.timeZone = Calendar.nyTimezone
         formatter.dateStyle = .long
         formatter.timeStyle = .long
-        let nyDateAsString = formatter.string(from: Date())
+        
+        let date: Date
+        if testable {
+            let prevDate = Date()
+            date = advanceDate1Day(date: prevDate, value: -1) ?? prevDate
+        } else {
+            date = Date()
+        }
+        
+        let nyDateAsString = formatter.string(from: date)
 
-        return formatter.date(from: nyDateAsString) ?? Date()
+        return formatter.date(from: nyDateAsString) ?? date
+        
     }
     var currentDateAsString: String {
         return currentDate.asString
@@ -70,13 +80,24 @@ public class StockKitState: State {
         return currentDate.dateComponents()
     }
     
+    var testable: Bool = false
+    
     init(
         sentimentStrength: Int = 1,
         predictionDays: Int = 7,
         consumerKey: String? = nil,
-        consumerSecret: String? = nil) {
+        consumerSecret: String? = nil,
+        testable: Bool = false) {
         
-        rules.days = predictionDays <= rules.maxDays ? predictionDays : rules.days
+        self.testable = testable
+        
+        if testable {
+            rules.maxDays = 30
+            rules.days = 30
+        } else {
+            rules.days = predictionDays <= rules.maxDays ? predictionDays : rules.days
+        }
+        
         rules.tweets = sentimentStrength
         
         if  let key = consumerKey,

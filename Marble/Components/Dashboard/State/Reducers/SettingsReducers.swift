@@ -147,7 +147,7 @@ struct DismissProfileSettingsReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         if let profile = component.getSubComponent(ProfileComponent.self) {
-            component.deattach(profile)
+            component.pop(profile, animated: true)
         }
         
     }

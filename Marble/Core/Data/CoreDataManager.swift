@@ -6,18 +6,18 @@ extension ServiceCenter {
     func getMergedStockModels(from: CoreDataThread) -> [StockModelMergedObject]? {
         switch from {
         case .background:
-            return try? self.coreData.background.fetch(StockModelMergedObject.fetchRequest())
+            return try? self.coreData.background.fetch(StockModelMergedObject.request())
         case .main:
-            return try? self.coreData.main.fetch(StockModelMergedObject.fetchRequest())
+            return try? self.coreData.main.fetch(StockModelMergedObject.request())
         }
     }
     
     func getStockModels(from: CoreDataThread) -> [StockModelObject]? {
         switch from {
         case .background:
-            return try? self.coreData.background.fetch(StockModelObject.fetchRequest())
+            return try? self.coreData.background.fetch(StockModelObject.request())
         case .main:
-            return try? self.coreData.main.fetch(StockModelObject.fetchRequest())
+            return try? self.coreData.main.fetch(StockModelObject.request())
         }
     }
     
@@ -40,7 +40,7 @@ extension ServiceCenter {
         
         
         moc.perform {
-            let mergedModels: [StockModelMergedObject]? = try? moc.fetch(StockModelMergedObject.fetchRequest())
+            let mergedModels: [StockModelMergedObject]? = try? moc.fetch(StockModelMergedObject.request())
             let mergedModel = mergedModels?.first(where: { $0.stock.asSearchStock?.symbol == prediction.stock.symbol && $0.stock.asSearchStock?.exchangeName == prediction.stock.exchangeName })
             let merged = mergedModel ?? StockModelMergedObject.init(context: moc)
             
@@ -50,7 +50,7 @@ extension ServiceCenter {
             }
             
             let object = StockModelObject.init(context: moc)
-            object.data = preparedData.modelData
+            object.model = preparedData.modelData
             object.date = prediction.date.asDate?.timeIntervalSince1970 ?? 0.0
             object.predictionDays = Int64(prediction.predictionDays)
             object.sentimentStrength = Int64(prediction.sentimentStrength)
@@ -75,16 +75,7 @@ extension ServiceCenter {
         from prediction: StockModelObjectPayload) ->
         (modelData: Data, sentimentData: Data, historicalData: Data, stock: Data, dataSet: Data)? {
             
-        let modelData: Data?
-        do {
-            modelData = try NSKeyedArchiver
-                .archivedData(
-                    withRootObject: prediction.data,
-                    requiringSecureCoding: true)
-        } catch let error {
-            modelData = nil
-            print("{CoreData} \(error.localizedDescription)")
-        }
+        let modelData: Data? = prediction.model.archived
         
         let sentimentData: Data?
         do {
@@ -121,17 +112,7 @@ extension ServiceCenter {
             print("{CoreData} historical \(error)")
         }
             
-        let dataSetData: Data?
-        do {
-            
-            dataSetData = try NSKeyedArchiver
-                                .archivedData(
-                                    withRootObject: prediction.dataSet,
-                                    requiringSecureCoding: true)
-        } catch let error {
-            dataSetData = nil
-            print("{CoreData} historical \(error)")
-        }
+        let dataSetData: Data? = prediction.dataSet.archived
         
         guard let model = modelData,
             let sentiment = sentimentData,
@@ -148,7 +129,7 @@ extension ServiceCenter {
 
 public class StockModelObjectPayload: NSObject {
     let date: StockDateData
-    let data: NSDictionary
+    let model: SVMModel
     let stock: SearchStock
     let sentimentStrength: Int
     let predictionDays: Int
@@ -158,7 +139,7 @@ public class StockModelObjectPayload: NSObject {
     
     public init(
         date: StockDateData,
-        data: NSDictionary,
+        model: SVMModel,
         stock: SearchStock,
         sentimentStrength: Int,
         predictionDays: Int,
@@ -166,7 +147,7 @@ public class StockModelObjectPayload: NSObject {
         historicalData: [StockData],
         dataSet: DataSet) {
         self.date = date
-        self.data = data
+        self.model = model
         self.stock = stock
         self.sentimentStrength = sentimentStrength
         self.predictionDays = predictionDays
@@ -176,12 +157,32 @@ public class StockModelObjectPayload: NSObject {
     }
 }
 
+extension NSObject {
+    public var archived: Data? {
+        do {
+            return try NSKeyedArchiver
+                .archivedData(
+                    withRootObject: self,
+                    requiringSecureCoding: true)
+        } catch let error {
+            return nil
+            print("{CoreData} \(error.localizedDescription)")
+        }
+    }
+}
+
+extension Array where Element == String {
+    public var archived: Data? {
+        return try? JSONEncoder().encode(self)
+    }
+}
+
 extension Data {
     public var model: SVMModel? {
         do {
             if let object = try NSKeyedUnarchiver
-                .unarchiveTopLevelObjectWithData(self) as? NSDictionary {
-                return SVMModel.init(load: object)
+                .unarchiveTopLevelObjectWithData(self) as? SVMModel {
+                return object
             }
         } catch let error {
             print("{CoreData} \(error)")
@@ -241,11 +242,15 @@ extension Data {
         
         return nil
     }
+    
+    public var mergedModelIDs: [String]? {
+        return (try? JSONDecoder().decode([String].self, from: self))
+    }
 }
 
 extension StockModelObject {
     var asDetail: ConsoleDetailPayload? {
-        guard let model = self.data?.model,
+        guard let model = self.model?.model,
             let sentiment = self.sentimentTradingData.asStockSentimentData,
             let historical = self.historicalTradingData.asStockData else {
             
@@ -259,5 +264,11 @@ extension StockModelObject {
             days: Int(self.predictionDays),
             maxDays: Int(self.predictionDays),
             model: .init(david: model))
+    }
+}
+
+extension StockModelMergedObject {
+    var asModel: StockModel {
+        return StockModel.init(fromMerged: self)
     }
 }

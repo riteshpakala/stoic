@@ -103,3 +103,102 @@ struct ModelToMergeReducer: Reducer {
         }
     }
 }
+
+struct StandaloneModelSelectedReducer: Reducer {
+    typealias ReducerEvent = BrowserEvents.StandaloneModelSelected
+    typealias ReducerState = BrowserState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        print("{SVM} standalone selected")
+        sideEffects.append(
+            .init(event: DashboardEvents.ShowDetail.stored(
+                event.model),
+                  bubbles: true))
+        
+//        let dataForDavid = DataSet(
+//            dataType: .Regression,
+//            inputDimension: StockKitUtils.inDim,
+//            outputDimension: StockKitUtils.outDim)
+//
+//        do {
+//            if let dataSet = model.dataSet {
+//                print("{SVM} labels \(dataSet.labels.count)")
+//                for i in 2..<dataSet.labels.count {
+//                    print("{SVM} \(dataSet.labels[i]) input \(dataSet.inputs[i]) ~ output \(dataSet.outputs?[i])")
+//                    try dataForDavid.addDataPoint(
+//                        input: dataSet.inputs[i],
+//                        output: dataSet.outputs?[i] ?? [],
+//                        label: dataSet.labels[i])
+//                }
+//            }
+//        } catch let error {
+//            print("{SVM} \(error)")
+//        }
+//
+//        let time = CFAbsoluteTimeGetCurrent()
+//        let david = SVMModel(
+//                problemType: .ϵSVMRegression,
+//                kernelSettings:
+//                KernelParameters(type: .Polynomial,
+//                                 degree: 3,
+//                                 gamma: 0.3,
+//                                 coef0: 0.0))
+////        david.delegate = self
+//        david.Cost = 1e3
+//        david.train(data: dataForDavid)
+
+//        let main = component.service.center.coreData.main
+//        var objects: [StockModelObject] = []
+//        do {
+//
+//            objects = try main.fetch(StockModelObject.request())
+//        } catch let error {
+//            print("{SVM} \(error)")
+//        }
+//        var object = objects.first(where: {
+//
+//            print("{SVM} \($0.id) == \(event.model.id)")
+//
+//            return $0.id == event.model.id
+//
+//        })
+//
+//        do {
+//            guard object?.historicalTradingData.asStockData?.first?.averages?.sma20 == nil else {
+//                return
+//            }
+//            print("{SVM} deleted")
+//            main.delete(object!)
+//            try main.save()
+//        } catch let error {
+//            print ("{SVM} \(error.localizedDescription)")
+//        }
+//
+//        print("{SVM} \(object?.predictionDays) training complete \(CFAbsoluteTimeGetCurrent() - time)")
+        
+        
+    }
+}
+
+struct MergedModelSelectedReducer: Reducer {
+    typealias ReducerEvent = BrowserEvents.MergeModelSelected
+    typealias ReducerState = BrowserState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        
+        sideEffects.append(
+            .init(event: DashboardEvents.ShowDetail.stored(
+                event.model.asModel),
+                  bubbles: true))
+        
+    }
+}

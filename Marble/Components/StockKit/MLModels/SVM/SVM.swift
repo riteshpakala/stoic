@@ -30,8 +30,9 @@ protocol SVMModelDelegate: class {
     func SVMProgress(_ iterations: Int, _ maxIterations: Int)
 }
 
-public class SVMModel
-{
+public class SVMModel: NSObject, NSCoding, NSSecureCoding {
+    public static var supportsSecureCoding: Bool = true
+    
     weak var delegate: SVMModelDelegate?
     var dataSet: DataSet? = nil
     ///  Parameters to be set by the caller
@@ -75,6 +76,52 @@ public class SVMModel
         probability = copyFrom.probability
     }
     
+    public required convenience init?(coder: NSCoder) {
+        let typeValue: Int = coder.decodeInteger(forKey: "type")
+        let numClasses: Int = coder.decodeInteger(forKey: "numClasses")
+        let labels: [Int] = (coder.decodeObject(forKey: "labels") as? [Int]) ?? []
+        let ρ: [Double] = (coder.decodeObject(forKey: "p") as? [Double]) ?? []
+        let totalSupportVectors: Int = coder.decodeInteger(forKey: "totalSupportVectors")
+        let supportVectorCount: [Int] = (coder.decodeObject(forKey: "supportVectorCount") as? [Int]) ?? []
+        let supportVector: [[Double]] = (coder.decodeObject(forKey: "supportVector") as? [[Double]]) ?? []
+        let coefficients: [[Double]] = (coder.decodeObject(forKey: "coefficients") as? [[Double]]) ?? []
+        let probabilityA: [Double] = (coder.decodeObject(forKey: "probabilityA") as? [Double]) ?? []
+        let probabilityB: [Double] = (coder.decodeObject(forKey: "probabilityB") as? [Double]) ?? []
+
+        self.init(
+            problemType: SVMType(rawValue: typeValue) ?? .ϵSVMRegression,
+            kernelSettings: KernelParameters(
+                type: .Polynomial,
+                degree: 3,
+                gamma: 0.3,
+                coef0: 0.0))
+        
+        self.Cost = 1e3
+        self.numClasses = numClasses
+        self.labels = labels
+        self.ρ = ρ
+        self.totalSupportVectors = totalSupportVectors
+        self.supportVectorCount = supportVectorCount
+        self.supportVector = supportVector
+        self.coefficients = coefficients
+        self.probabilityA = probabilityA
+        self.probabilityB = probabilityB
+        
+    }
+    
+    public func encode(with coder: NSCoder){
+        coder.encode(type.rawValue, forKey: "type")
+        coder.encode(numClasses, forKey: "numClasses")
+        coder.encode(labels, forKey: "labels")
+        coder.encode(ρ, forKey: "p")
+        coder.encode(totalSupportVectors, forKey: "totalSupportVectors")
+        coder.encode(supportVectorCount, forKey: "supportVectorCount")
+        coder.encode(supportVector, forKey: "supportVector")
+        coder.encode(coefficients, forKey: "coefficients")
+        coder.encode(probabilityA, forKey: "probabilityA")
+        coder.encode(probabilityB, forKey: "probabilityB")
+    }
+    
     public init?(load data: NSDictionary)//(loadFromFile path: String)
     {
         //  Initialize all the stored properties (Swift requires this, even when returning nil [supposedly fixed in Swift 2.2)
@@ -87,7 +134,7 @@ public class SVMModel
         coefficients = []
         probabilityA = []
         probabilityB = []
-        kernelParams = KernelParameters(type: .RadialBasisFunction, degree: 0, gamma: 0.5, coef0: 0.0)
+        kernelParams = KernelParameters(type: .Polynomial, degree: 3, gamma: 0.3, coef0: 0.0)
         
         //  Read the property list
         let pList = data//NSDictionary(contentsOfFile: path)
@@ -789,9 +836,11 @@ public class SVMModel
                 var sum = 0.0
                 for i in 0..<totalSupportVectors {
                     let kernelValue = Kernel.calcKernelValue(parameters: kernelParams, x: data.inputs[index], y: supportVector[i])
+                    
                     sum += coefficients[0][i] * kernelValue
                 }
                 sum -= ρ[0]
+                
                 data.outputs!.append([sum])
                 if (type == .OneClassSVM) {
                     data.classes!.append((sum>0) ? 1: -1)

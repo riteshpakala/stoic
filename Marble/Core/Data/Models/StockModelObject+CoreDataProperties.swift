@@ -12,10 +12,6 @@ import CoreData
 
 extension StockModelObject {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<StockModelObject> {
-        return NSFetchRequest<StockModelObject>(entityName: "StockModelObject")
-    }
-
     @NSManaged public var date: Double
     @NSManaged public var exchange: String
     @NSManaged public var predictionDays: Int64

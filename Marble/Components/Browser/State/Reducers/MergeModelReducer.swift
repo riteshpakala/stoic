@@ -47,7 +47,7 @@ struct MergeModelReducer: Reducer {
         
         do {
             for model in allModelsToMerge {
-                if let dataSet = model.object.dataSet?.asDataSet {
+                if let dataSet = model.dataSet {
                     for i in 0..<dataSet.labels.count {
                         try dataForDavid.addDataPoint(
                             input: dataSet.inputs[i],
@@ -74,7 +74,45 @@ struct MergeModelReducer: Reducer {
         print("{SVM} \(mergeModel.engine)")
         //Merged model
         
+        let modelIDs: [String] = allModelsToMerge.map { $0.id }
+        guard let vc = component.viewController as? BrowserViewController else {
+            return
+        }
+        let moc = vc.dataSource?.controller.managedObjectContext
+        guard let mergedObject: StockModelMergedObject = vc.dataSource?.controller.fetchedObjects?.first(where: {
+                    $0.stock.asSearchStock?.symbol == baseStock.stock.symbol &&
+                    $0.stock.asSearchStock?.exchangeName == baseStock.stock.exchangeName
+                
+            }) else {
+                
+                print("{SVM} failed to find merge object")
+            return
+        }
         
+        guard let model = david.archived,
+              let modelIDsData = modelIDs.archived,
+              let dataSet = dataForDavid.archived else {
+                
+              return
+        }
+        
+        moc?.perform {
+            mergedObject.setValue(model, forKey: "model")
+            mergedObject.setValue(modelIDsData, forKey: "currentModels")
+            mergedObject.setValue(dataSet, forKey: "dataSet")
+            
+            do {
+                try moc?.save()
+            } catch let error {
+                print("{SVM} \(error)")
+            }
+        }
+        
+        sideEffects.append(
+            .init(
+                event: BrowserEvents.CompiledModelCreationStatusUpdated.init(.none)))
+        print("{SVM} saved")
+    
         /********
          
             numClasses = 1

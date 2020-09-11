@@ -292,12 +292,15 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
         
-        guard currentCreationStatusStep != .none else { return }
-        
         guard let dataCell = collectionView
             .cellForItem(at: indexPath) as? BrowserModelDataCell,
               let model = dataCell.model else {
 
+            return
+        }
+        
+        guard currentCreationStatusStep != .none else {
+            bubble(BrowserEvents.StandaloneModelSelected.init(model, indexPath: indexPath))
             return
         }
         
