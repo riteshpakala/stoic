@@ -20,6 +20,14 @@ public class BrowserModelDataCell: UICollectionViewCell {
         case none
     }
     
+    lazy var idLabel: UILabel = {
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.small, .bold)
+        label.textAlignment = .right
+        label.textColor = GlobalStyle.Colors.black
+        return label
+    }()
+    
     lazy var sentimentLabel: UILabel = {
         let label: UILabel = .init()
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
@@ -46,6 +54,25 @@ public class BrowserModelDataCell: UICollectionViewCell {
         return button
     }()
     
+    lazy var loadButton: PaddingLabel = {
+        let view: PaddingLabel = .init(
+            UIEdgeInsets.init(
+                top: 0,
+                left: GlobalStyle.spacing*2,
+                bottom: 0.0,
+                right: GlobalStyle.spacing*2))
+        view.text = "load".localized.lowercased()
+        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        view.textColor = GlobalStyle.Colors.orange
+        view.layer.borderColor = GlobalStyle.Colors.orange.cgColor
+        view.layer.borderWidth = 2.0
+        view.layer.cornerRadius = 4.0
+        view.textAlignment = .center
+        view.isUserInteractionEnabled = false
+        view.sizeToFit()
+        return view
+    }()
+    
     lazy var notCompatibleLabel: UILabel = {
         let label: UILabel = .init()
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
@@ -65,8 +92,9 @@ public class BrowserModelDataCell: UICollectionViewCell {
     
     var model: StockModel? = nil {
         didSet {
-            sentimentLabel.text = model?.sentiment?.asString
+            sentimentLabel.text = "\("sentiment".localized.lowercased()): "+(model?.sentiment?.asString ?? "")
             daysLabel.text = "\("days trained".localized.lowercased()): "+String(model?.days ?? 0)
+            idLabel.text = "\((model?.id.components(separatedBy: "-").last ?? "").lowercased())"
         }
     }
     
@@ -74,7 +102,8 @@ public class BrowserModelDataCell: UICollectionViewCell {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
                 daysLabel,
-                sentimentLabel
+                sentimentLabel,
+                idLabel
             ]
         )
         
@@ -111,6 +140,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
                 modelSelected = true
                 selectionButton.isHidden = false
                 notCompatibleLabel.isHidden = true
+                loadButton.isHidden = true
                 self.selectionButton.layer.backgroundColor = GlobalStyle.Colors.black.cgColor
                 contentView.layer.opacity = 1.0
                 contentView.backgroundColor = GlobalStyle.Colors.orange
@@ -120,6 +150,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
                 modelSelected = true
                 selectionButton.isHidden = false
                 notCompatibleLabel.isHidden = true
+                loadButton.isHidden = true
                 self.selectionButton.layer.backgroundColor = GlobalStyle.Colors.black.cgColor
                 contentView.layer.opacity = 1.0
                 contentView.backgroundColor = GlobalStyle.Colors.purple
@@ -129,6 +160,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
                 modelSelected = false
                 self.selectionButton.isHidden = false
                 self.notCompatibleLabel.isHidden = true
+                self.loadButton.isHidden = true
                 self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
                 contentView.layer.opacity = 1.0
                 contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
@@ -138,16 +170,20 @@ public class BrowserModelDataCell: UICollectionViewCell {
                 modelSelected = false
                 self.selectionButton.isHidden = true
                 self.notCompatibleLabel.isHidden = false
+                self.loadButton.isHidden = true
                 self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
                 contentView.layer.opacity = 0.5
                 contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
             default:
                 selectionButton.isHidden = true
                 notCompatibleLabel.isHidden = true
+                self.loadButton.isHidden = false
                 self.selectionButton.layer.backgroundColor = UIColor.clear.cgColor
                 contentView.backgroundColor = GlobalStyle.Colors.marbleBrown
                 contentView.layer.opacity = 1.0
             }
+            
+            longPressGesture.isEnabled = status == BrowserModelStatus.none
         }
     }
     
@@ -158,6 +194,12 @@ public class BrowserModelDataCell: UICollectionViewCell {
     var modelSelected: Bool = false
     
     var modelIsAvailableForSelection: Bool = true
+    
+    private var longPressGesture: UILongPressGestureRecognizer {
+        let gesture:UILongPressGestureRecognizer = .init(target: self, action: #selector(self.cellWasLongPressed(_:)))
+        gesture.cancelsTouchesInView = true
+        return gesture
+    }
     
     override public func awakeFromNib() {
         super.awakeFromNib()
@@ -192,10 +234,20 @@ public class BrowserModelDataCell: UICollectionViewCell {
             make.left.equalToSuperview()
         }
         
+        actionsContainerView.addSubview(loadButton)
+        loadButton.snp.makeConstraints { make in
+            make.height.equalTo(loadButton.font.lineHeight+(GlobalStyle.spacing*2))
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalTo(loadButton.frame.size.width+(GlobalStyle.spacing*4))
+        }
+        
         actionsContainerView.addSubview(notCompatibleLabel)
         notCompatibleLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        contentView.addGestureRecognizer(longPressGesture)
     }
     
     override public func layoutIfNeeded() {
@@ -211,5 +263,32 @@ public class BrowserModelDataCell: UICollectionViewCell {
         
         sentimentLabel.text = ""
         daysLabel.text = ""
+    }
+    
+    @objc
+    func cellWasLongPressed(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began, status == BrowserModelStatus.none else { return }
+        let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let remove: UIAlertAction = .init(title: "remove", style: .destructive, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.undim()
+            }
+            self?.bubble(BrowserEvents.RemoveModel.init(self?.model?.id ?? ""))
+        })
+        
+        let cancel: UIAlertAction = .init(title: "cancel", style: .cancel, handler: { [weak self] alert in
+            DispatchQueue.main.async {
+                self?.undim()
+            }
+        })
+        
+        controller.addAction(remove)
+        controller.addAction(cancel)
+        
+        self.dim()
+        
+        bubble(HomeEvents.PresentAlertController.init(controller))
     }
 }

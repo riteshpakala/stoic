@@ -35,9 +35,33 @@ struct SusbcribeSelectedProductReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        
+        let componentToPass = component
         StoicProducts.store.buyProduct(event.product) { success, productId in
-            
+            if success {
+                componentToPass.sendEvent(
+                    SubscribeEvents.PurchaseResult.init(
+                        product: productId,
+                        success: success))
+                
+            }
         }
+    }
+}
+
+struct SusbcribePurchaseResultReducer: Reducer {
+    
+    typealias ReducerEvent = SubscribeEvents.PurchaseResult
+    typealias ReducerState = SubscribeState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+
+        state.purchaseResult = .init(event.success, productID: event.product)
+        
+        print("{SUBSCRIBE} purchase result heard")
+        
     }
 }

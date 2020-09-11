@@ -95,6 +95,20 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
         browserModelCell.model = object
         browserModelCell.currentCreationStatusStep = component?.state.currentCompiledStatus ?? .none
         browserModelCell.compiledModelCreationData = component?.state.compiledModelCreationData
+        
+        if let stockKit = component?
+            .getSubComponent(
+                StockKitComponent.self) as? StockKitComponent,
+            let nextValidTradingDay = component?.state.nextValidTradingDay {
+            let maxDays = stockKit.state.rules.maxDays
+            let components = Calendar.nyCalendar.dateComponents([.day], from: nextValidTradingDay.asDate() ?? Date(), to: object.date ?? Date())
+            
+            let dayDiff = abs(components.day ?? maxDays)
+            browserModelCell.lifecycle = (dayDiff >= maxDays) ? .isStale : (dayDiff > 0 ? .needsSyncing : .isReady)
+            
+            
+        }
+        
         return browserModelCell
     }
     
@@ -123,8 +137,12 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
 
 extension BrowserViewController {
     func observeTradingDay(_ day: Change<String>) {
-        
         _view.nextTradingDayLabel.text = "trading day".localized+": "+(day.newValue ?? "unknown")
+        
+        if day.newValue != nil {
+            _view.collection.view.reloadData()
+            _view.undim()
+        }
     }
     
     func observeCompiledCreationStatus(_ status: Change<String>) {

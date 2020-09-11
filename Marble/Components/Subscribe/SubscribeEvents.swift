@@ -22,4 +22,8 @@ struct SubscribeEvents {
     public struct SelectedProduct: Event {
         let product: SKProduct
     }
+    public struct PurchaseResult: Event {
+        let product: ProductID?
+        let success: Bool
+    }
 }

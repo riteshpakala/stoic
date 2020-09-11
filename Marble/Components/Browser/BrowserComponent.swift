@@ -19,7 +19,8 @@ public class BrowserComponent: Component<BrowserState> {
             ModelToMergeReducer.Reducible(),
             MergeModelReducer.Reducible(),
             StandaloneModelSelectedReducer.Reducible(),
-            MergedModelSelectedReducer.Reducible()
+            MergedModelSelectedReducer.Reducible(),
+            RemoveModelReducer.Reducible()
         ]
     }
     

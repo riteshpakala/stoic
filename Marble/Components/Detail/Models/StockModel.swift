@@ -93,6 +93,13 @@ public class StockModel: NSObject {
 }
 
 public class StockModelMerged: NSObject {
+    public enum Lifecycle {
+        case needsSyncing
+        case isStale
+        case isReady
+        case none
+    }
+    
     let id: String
     let stock: SearchStock
     let stocks: [StockModel]

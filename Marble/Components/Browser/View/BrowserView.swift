@@ -161,6 +161,8 @@ public class BrowserView: GraniteView {
         predictionEngineVersion.snp.makeConstraints { make in
             make.width.equalTo(predictionEngineVersion.frame.size.width + GlobalStyle.spacing*4)
         }
+        
+        self.dim()
     }
     
     required init?(coder: NSCoder) {

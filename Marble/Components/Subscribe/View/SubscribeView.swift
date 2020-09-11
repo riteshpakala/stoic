@@ -68,7 +68,7 @@ public class SubscribeView: GraniteView {
         view.alignment = .fill
         view.distribution = .fillEqually
         view.spacing = GlobalStyle.padding
-        
+        view.isHidden = true
         return view
     }()
     
@@ -83,6 +83,15 @@ public class SubscribeView: GraniteView {
         return view
     }()
     
+    lazy var optionsLoadingLabel: UILabel = {
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.orange
+        label.text = "/**** loading... */"
+        return label
+    }()
+    
     lazy var stackView: GraniteStackView = {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
@@ -93,6 +102,7 @@ public class SubscribeView: GraniteView {
                 stackViewDisclaimers,
                 .init(),
                 stackViewSubscriptionOptions,
+                optionsLoadingLabel,
                 emailLabel,
                 spacer
             ]
@@ -126,6 +136,10 @@ public class SubscribeView: GraniteView {
                 .offset(GlobalStyle.largePadding).priority(999)
             make.right.bottom.equalToSuperview()
                 .offset(-GlobalStyle.largePadding).priority(999)
+        }
+        
+        optionsLoadingLabel.snp.makeConstraints { make in
+            make.height.equalTo(SubscribeStyle.optionSize.height)
         }
     }
     

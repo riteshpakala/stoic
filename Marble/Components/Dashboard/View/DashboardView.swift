@@ -42,7 +42,9 @@ public class DashboardView: GraniteView {
         guard let view = super.hitTest(point, with: event), view == self else {
             return super.hitTest(point, with: event)
         }
-
+        if settings.isOpen {
+            settings.collapse()
+        }
         return parent
     }
 }

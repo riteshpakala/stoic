@@ -271,4 +271,18 @@ extension StockModelMergedObject {
     var asModel: StockModel {
         return StockModel.init(fromMerged: self)
     }
+    
+    var date: Date? {
+        if let models = self.models {
+            guard let mutableLogs: NSMutableOrderedSet = models.mutableCopy() as? NSMutableOrderedSet else {
+                return nil
+            }
+            let sd = NSSortDescriptor(key: "date", ascending: false)
+            mutableLogs.sort(using: [sd])
+            
+            return (mutableLogs.firstObject as? StockModelObject)?.date.date()
+        } else {
+            return nil
+        }
+    }
 }

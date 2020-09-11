@@ -16,7 +16,8 @@ public class SubscribeComponent: Component<SubscribeState> {
             SubscribeDisclaimerReducer.Reducible(),
             SubscribeDisclaimerResponseReducer.Reducible(),
             SusbcribeProductsReducer.Reducible(),
-            SusbcribeSelectedProductReducer.Reducible()
+            SusbcribeSelectedProductReducer.Reducible(),
+            SusbcribePurchaseResultReducer.Reducible()
         ]
     }
     

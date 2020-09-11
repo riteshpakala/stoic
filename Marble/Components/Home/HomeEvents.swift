@@ -7,12 +7,13 @@
 //
 import Granite
 import Foundation
+import UIKit
 
 struct HomeEvents {
-    struct SVMStockTestEvent: Event {
-        
-    }
-    struct TweetSentimentTestEvent: Event {
-        
+    public struct PresentAlertController: Event {
+        let alert: UIAlertController
+        public init(_ alert: UIAlertController) {
+            self.alert = alert
+        }
     }
 }

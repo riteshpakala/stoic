@@ -110,6 +110,23 @@ extension ServiceCenter {
                 Database.database(url: "https://stoic-45d04-predictions-3acae.firebaseio.com/")
             }
             
+            public enum Files {
+                case subscription
+                
+                public struct Receipts {
+                    public static var subscription: StorageReference {
+                        Storage.storage(url: "gs://stoic-45d04-receipts-us").reference().child("subscription")
+                    }
+                }
+                
+                var connect: StorageReference {
+                    switch self {
+                    case .subscription:
+                        return BackendService.Core.Files.Receipts.subscription
+                    }
+                }
+            }
+                
             public enum Server {
                 case main
                 case search
@@ -125,6 +142,67 @@ extension ServiceCenter {
                         return BackendService.Core.prediction.reference()
                     }
                 }
+            }
+        }
+        
+        public func putFile(
+            _ data: URL,
+            filename: String,
+            key: String? = nil,
+            storage: Core.Files,
+            completion: @escaping ((Bool) -> Void)) {
+            
+            storage.connect.child((key != nil ? "/\(key!)/" : "")+filename).putFile(
+                from: data,
+                metadata: nil,
+                completion: { (metaData, error) in
+                    completion(error == nil)
+            })
+        }
+        
+        public func putData(
+            _ data: Data,
+            filename: String,
+            key: String? = nil,
+            storage: Core.Files,
+            completion: @escaping ((Bool) -> Void)) {
+            
+            
+            storage.connect.child((key != nil ? "/\(key!)/" : "")+filename).putData(
+                data,
+                metadata: nil,
+                completion: { (metaData, error) in
+                    completion(error == nil)
+            })
+        }
+        
+        public func getData(
+            _ key: String,
+            filename: String,
+            storage: Core.Files,
+            completion: @escaping ((Data?, Bool) -> Void)) {
+            
+            storage.connect.child("/\(key)/\(filename)").getData(maxSize: Int64.max) { data, error in
+                completion(data, error == nil)
+            }
+        }
+        
+        public func getData(
+            fromRef ref: StorageReference,
+            completion: @escaping ((Data?, Bool) -> Void)) {
+            
+            ref.getData(maxSize: Int64.max) { data, error in
+                completion(data, error == nil)
+            }
+        }
+        
+        public func getDataList(
+            _ key: String,
+            storage: Core.Files,
+            completion: @escaping (([StorageReference], Bool) -> Void)) {
+            
+            storage.connect.child("/\(key)").listAll { (resultSpecific, error) in
+                completion(resultSpecific.items, error == nil)
             }
         }
         

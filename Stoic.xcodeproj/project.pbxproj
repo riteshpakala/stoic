@@ -349,6 +349,8 @@
 		71D98E8E24F26B450089C85F /* SubscribeEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E8724F26B450089C85F /* SubscribeEvents.swift */; };
 		71D98E9124F26B7A0089C85F /* ShowSubscribeReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E9024F26B7A0089C85F /* ShowSubscribeReducer.swift */; };
 		71D98E9324F26D920089C85F /* SubscriptionOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E9224F26D920089C85F /* SubscriptionOption.swift */; };
+		71DCBEE5250BEF2300C12F4B /* PresentAlertReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCBEE4250BEF2300C12F4B /* PresentAlertReducer.swift */; };
+		71DCBEE7250BF17000C12F4B /* RemoveModelReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCBEE6250BF17000C12F4B /* RemoveModelReducer.swift */; };
 		71F5BA4E24847CE60085E8DD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F5BA4D24847CE60085E8DD /* HomeView.swift */; };
 		8178E23F17E028E4B0A045A0 /* Pods_StoicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD1232B647A9A4E8049ECA1 /* Pods_StoicTests.framework */; };
 		8272E280DE0EF2B2440C734C /* Pods_Stoic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8C4AC17A6B30BE381B5D71B /* Pods_Stoic.framework */; };
@@ -726,6 +728,8 @@
 		71D98E8724F26B450089C85F /* SubscribeEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeEvents.swift; sourceTree = "<group>"; };
 		71D98E9024F26B7A0089C85F /* ShowSubscribeReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSubscribeReducer.swift; sourceTree = "<group>"; };
 		71D98E9224F26D920089C85F /* SubscriptionOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionOption.swift; sourceTree = "<group>"; };
+		71DCBEE4250BEF2300C12F4B /* PresentAlertReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentAlertReducer.swift; sourceTree = "<group>"; };
+		71DCBEE6250BF17000C12F4B /* RemoveModelReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveModelReducer.swift; sourceTree = "<group>"; };
 		71F5BA4D24847CE60085E8DD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B216AA8A083E08322B07F45C /* Pods-Stoic-StoicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stoic-StoicUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stoic-StoicUITests/Pods-Stoic-StoicUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B50CA4F992D9BE8565D5B3BB /* Pods-Stoic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stoic.release.xcconfig"; path = "Target Support Files/Pods-Stoic/Pods-Stoic.release.xcconfig"; sourceTree = "<group>"; };
@@ -1033,6 +1037,7 @@
 			isa = PBXGroup;
 			children = (
 				71A7C6CB2505DC5D0094C352 /* DetailViewUpdateReducers.swift */,
+				71DCBEE4250BEF2300C12F4B /* PresentAlertReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -1991,6 +1996,7 @@
 				715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */,
 				715A7E9725097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift */,
 				715A7E9C2509CA09009E7244 /* MergeModelReducer.swift */,
+				71DCBEE6250BF17000C12F4B /* RemoveModelReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -2535,6 +2541,7 @@
 				7107B82224D0CE1B00FADC28 /* StockKitModels.swift in Sources */,
 				71478F7D24790297007DF62D /* SwifterTweets.swift in Sources */,
 				719AA33C2478B69A000F7CBD /* SVM.swift in Sources */,
+				71DCBEE7250BF17000C12F4B /* RemoveModelReducer.swift in Sources */,
 				71A1D31B246E027D00D778A5 /* Deprecated.swift in Sources */,
 				716437D224FC78D800BAB6BC /* Router.Onboarding.Models.swift in Sources */,
 				71A1D2D3246E027D00D778A5 /* FileManager.swift in Sources */,
@@ -2698,6 +2705,7 @@
 				71478F6924790297007DF62D /* HMAC.swift in Sources */,
 				71478F6F24790297007DF62D /* SwifterSuggested.swift in Sources */,
 				7127B05E2485E130004C57F1 /* ShowDetailReducer.swift in Sources */,
+				71DCBEE5250BEF2300C12F4B /* PresentAlertReducer.swift in Sources */,
 				717A765924A16131005348F9 /* TextNode.swift in Sources */,
 				71A1D2FB246E027D00D778A5 /* AssetsAlbumHeaderView.swift in Sources */,
 				717A766424A16131005348F9 /* UnicodeScalar.swift in Sources */,

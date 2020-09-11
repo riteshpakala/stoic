@@ -61,21 +61,93 @@ public class BrowserModelCell: UICollectionViewCell {
         return view
     }()
     
-    //Compiled Section's action label (CompiledActionStackView)
-    lazy var compiledActionLabel: UILabel = {
+    private var longPressGesture: UILongPressGestureRecognizer {
+        let gesture:UILongPressGestureRecognizer = .init(target: self, action: #selector(self.mergedModelLongPressed(_:)))
+        gesture.cancelsTouchesInView = true
+        return gesture
+    }
+    
+    lazy var idLabel: UILabel = {
         let label: UILabel = .init()
-        label.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.textAlignment = .left
-        label.textColor = GlobalStyle.Colors.green
+        label.textColor = GlobalStyle.Colors.black
         return label
     }()
     
+    //Compiled Section's action (syncing) (CompiledActionStackView)
+    lazy var syncButton: PaddingLabel = {
+        let view: PaddingLabel = .init(
+            UIEdgeInsets.init(
+                top: 0,
+                left: GlobalStyle.spacing*2,
+                bottom: 0.0,
+                right: GlobalStyle.spacing*2))
+        view.text = "sync".localized.lowercased()
+        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        view.textColor = GlobalStyle.Colors.black
+        view.layer.borderColor = GlobalStyle.Colors.black.cgColor
+        view.layer.borderWidth = 2.0
+        view.layer.cornerRadius = 4.0
+        view.textAlignment = .center
+        view.isUserInteractionEnabled = false
+        view.sizeToFit()
+        view.isHidden = true
+        return view
+    }()
+    
+    lazy var loadButton: PaddingLabel = {
+        let view: PaddingLabel = .init(
+            UIEdgeInsets.init(
+                top: 0,
+                left: GlobalStyle.spacing*2,
+                bottom: 0.0,
+                right: GlobalStyle.spacing*2))
+        view.text = "load".localized.lowercased()
+        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        view.textColor = GlobalStyle.Colors.orange
+        view.layer.borderColor = GlobalStyle.Colors.orange.cgColor
+        view.layer.borderWidth = 2.0
+        view.layer.cornerRadius = 4.0
+        view.textAlignment = .center
+        view.isUserInteractionEnabled = false
+        view.sizeToFit()
+        view.isHidden = true
+        return view
+    }()
+    
+    lazy var staleButton: PaddingLabel = {
+        let view: PaddingLabel = .init(
+            UIEdgeInsets.init(
+                top: 0,
+                left: GlobalStyle.spacing*2,
+                bottom: 0.0,
+                right: GlobalStyle.spacing*2))
+        view.text = "stale".localized.lowercased()
+        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        view.textColor = GlobalStyle.Colors.black
+        view.layer.borderColor = GlobalStyle.Colors.black.cgColor
+        view.layer.borderWidth = 2.0
+        view.layer.cornerRadius = 4.0
+        view.textAlignment = .center
+        view.isUserInteractionEnabled = false
+        view.sizeToFit()
+        view.isHidden = true
+        return view
+    }()
+    
+    lazy var actionsContainerView: UIView = {
+        let view: UIView = .init()
+        
+        return view
+    }()
     
     //Compiled Section's action stack (left side)
     lazy var compiledActionStackView: GraniteStackView = {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
-                compiledActionLabel
+                idLabel,
+                actionsContainerView
             ]
         )
         
@@ -111,7 +183,7 @@ public class BrowserModelCell: UICollectionViewCell {
     lazy var compiledModelsWithinLabel: UILabel = {
         let label: UILabel = .init()
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
-        label.textAlignment = .left
+        label.textAlignment = .right
         label.textColor = GlobalStyle.Colors.black
         return label
     }()
@@ -128,7 +200,7 @@ public class BrowserModelCell: UICollectionViewCell {
         
         view.axis = .vertical
         view.alignment = .fill
-        view.distribution = .fill
+        view.distribution = .fillEqually
         view.spacing = GlobalStyle.spacing
         
         return view
@@ -399,16 +471,42 @@ public class BrowserModelCell: UICollectionViewCell {
                 print("{SVM} found new model")
                 
                 compiledTradingDayLabel.text = "\(firstModel.tradingDay)"
-                compiledDaysLabel.text = "\(stockModels.map { $0.days }.reduce(0, +))"
-                compiledModelsWithinLabel.text = "\(stockModels.count)"
-                compiledActionLabel.text = "Action"
+                compiledDaysLabel.text = "\("days trained".localized.lowercased()): "+"\(stockModels.map { $0.days }.reduce(0, +))"
+                compiledModelsWithinLabel.text = "\("models within".localized.lowercased()): "+"\(stockModels.count)"
+                idLabel.text = "\((model?.id.components(separatedBy: "-").last ?? "").lowercased())"
+                
                 compiledContainerStackView.isHidden = false
                 compiledCreateLabel.isHidden = true
                 compiledContainerView.backgroundColor = GlobalStyle.Colors.marbleBrown
+                longPressGesture.isEnabled = true
             } else {
                 compiledContainerStackView.isHidden = true
                 compiledCreateLabel.isHidden = false
                 compiledContainerView.backgroundColor = .clear
+                longPressGesture.isEnabled = false
+            }
+        }
+    }
+    
+    var lifecycle: StockModelMerged.Lifecycle = .none {
+        didSet {
+            switch lifecycle {
+            case .isReady:
+                compiledContainerView.backgroundColor = GlobalStyle.Colors.marbleBrown
+                staleButton.isHidden = true
+                syncButton.isHidden = true
+                loadButton.isHidden = false
+            case .isStale:
+                compiledContainerView.backgroundColor = GlobalStyle.Colors.graniteGray
+                staleButton.isHidden = false
+                syncButton.isHidden = true
+                loadButton.isHidden = true
+            case .needsSyncing:
+                compiledContainerView.backgroundColor = GlobalStyle.Colors.purple
+                staleButton.isHidden = true
+                syncButton.isHidden = false
+                loadButton.isHidden = true
+            default: break
             }
         }
     }
@@ -548,9 +646,31 @@ public class BrowserModelCell: UICollectionViewCell {
             widthOfDoneLabel = make.width.equalTo(compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4).constraint
             make.height.equalTo(compiledCreationDoneLabel.font.lineHeight + GlobalStyle.spacing*2)
         }
+        actionsContainerView.addSubview(syncButton)
+        syncButton.snp.makeConstraints { make in
+            make.height.equalTo(syncButton.font.lineHeight+(GlobalStyle.spacing*2))
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalTo(syncButton.frame.size.width+(GlobalStyle.spacing*4))
+        }
+        actionsContainerView.addSubview(loadButton)
+        loadButton.snp.makeConstraints { make in
+            make.height.equalTo(loadButton.font.lineHeight+(GlobalStyle.spacing*2))
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalTo(loadButton.frame.size.width+(GlobalStyle.spacing*4))
+        }
+        actionsContainerView.addSubview(staleButton)
+        staleButton.snp.makeConstraints { make in
+            make.height.equalTo(staleButton.font.lineHeight+(GlobalStyle.spacing*2))
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview()
+            make.width.equalTo(staleButton.frame.size.width+(GlobalStyle.spacing*4))
+        }
         compiledCreationCancelLabel.addGestureRecognizer(cancelTappedGesture)
         compiledCreationDoneLabel.addGestureRecognizer(doneTappedGesture)
         compiledContainerView.addGestureRecognizer(mergeModelTappedGesture)
+        compiledContainerView.addGestureRecognizer(longPressGesture)
     }
     
     override public func layoutIfNeeded() {
@@ -570,9 +690,11 @@ public class BrowserModelCell: UICollectionViewCell {
         compiledTradingDayLabel.text = ""
         compiledDaysLabel.text = ""
         compiledModelsWithinLabel.text = ""
-        compiledActionLabel.text = ""
+        syncButton.isHidden = true
+        loadButton.isHidden = true
         compiledContainerStackView.isHidden = true
         compiledCreateLabel.isHidden = true
+        longPressGesture.isEnabled = false
     }
 }
 
@@ -676,6 +798,33 @@ extension BrowserModelCell: UICollectionViewDataSource, UICollectionViewDelegate
 
 //MARK: Compiled Model Creation Flow
 extension BrowserModelCell {
+    @objc func mergedModelLongPressed(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began, currentCreationStatusStep == BrowserCompiledModelCreationStatus.none else { return }
+        
+        let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let update: UIAlertAction = .init(title: "update", style: .default, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.compiledContainerView.undim()
+            }
+            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
+        })
+        
+        let cancel: UIAlertAction = .init(title: "cancel", style: .cancel, handler: { [weak self] alert in
+            DispatchQueue.main.async {
+                self?.compiledContainerView.undim()
+            }
+        })
+        
+        controller.addAction(update)
+        controller.addAction(cancel)
+        
+        self.compiledContainerView.dim()
+        
+        bubble(HomeEvents.PresentAlertController.init(controller))
+    }
+    
     @objc func mergedModelTapped(_ sender: UITapGestureRecognizer) {
         guard let model = model else { return }
         bubble(BrowserEvents.MergeModelSelected.init(model))

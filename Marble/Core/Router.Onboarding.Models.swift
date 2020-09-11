@@ -149,8 +149,8 @@ extension DashboardView: Onboardable {
                 padding: .init(
                     top: GlobalStyle.spacing,
                     left: -GlobalStyle.spacing,
-                    bottom: GlobalStyle.spacing*2,
-                    right: -GlobalStyle.padding)),
+                    bottom: GlobalStyle.padding,
+                    right: -(GlobalStyle.padding+GlobalStyle.spacing))),
             actionable: .init(keyPath: \.layer.sublayers, view: self),
             text: "results would appear right below, tap one to begin a forecast.",
             order: 7)

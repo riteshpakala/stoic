@@ -52,4 +52,11 @@ struct BrowserEvents {
             self.model = model
         }
     }
+    
+    public struct RemoveModel: Event {
+        let id: String
+        public init(_ id: String) {
+            self.id = id
+        }
+    }
 }

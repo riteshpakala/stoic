@@ -13,7 +13,8 @@ public class HomeComponent: Component<HomeState> {
     override public var reducers: [AnyReducer] {
         [
             DetailWillShowReducer.Reducible(),
-            AllDetailsDidCloseReducer.Reducible()
+            AllDetailsDidCloseReducer.Reducible(),
+            PresentAlertReducer.Reducible()
         ]
     }
 }

@@ -13,4 +13,15 @@ import StoreKit
 public class SubscribeState: State {
     @objc dynamic var disclaimers: [Disclaimer]? = nil
     @objc dynamic var products: [SKProduct] = []
+    @objc dynamic var purchaseResult: PurchaseResult? = nil
+}
+
+public class PurchaseResult: NSObject {
+    let success: Bool
+    let productID: ProductID?
+    
+    public init(_ success: Bool, productID: ProductID?) {
+        self.success = success
+        self.productID = productID
+    }
 }
