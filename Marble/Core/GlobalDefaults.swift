@@ -14,7 +14,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
     
     public static var defaults: [LocalStorage.Value<LocalStorageValue>] {
         return [
-            LocalStorage.Value.init(Subscription.inActive),
+            LocalStorage.Value.init(Subscription.none),
             LocalStorage.Value.init(Browser.none),
             LocalStorage.Value.init(SentimentStrength.low),
             LocalStorage.Value.init(PredictionDays.two),
@@ -86,26 +86,34 @@ public struct GlobalDefaults: LocalStorageDefaults {
     }
     
     public enum Subscription: Int, LocalStorageValue {
-        case inActive
-        case active
+        case yearly
+        case monthly
+        case weekly
+        case none
         
         public var value: Int {
             return self.rawValue
         }
         
         public var asString: String {
-            switch self {
-            case .active: return "on"
-            case .inActive: return "off"
-            }
+            self.isActive ? "on" : "off"
         }
         
         public var description: String {
-            "account".lowercased().localized
+            switch self {
+            case .yearly, .monthly, .weekly:
+                return "account // PRO".lowercased().localized
+            case .none:
+                return "account".lowercased().localized
+            }
         }
         
         public var resource: LocalStorageResource? {
             .image("profile.icon")
+        }
+        
+        public var isActive: Bool {
+            return self != Subscription.none
         }
     }
     

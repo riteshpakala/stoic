@@ -1,0 +1,175 @@
+//
+//  Router.Subscription.swift
+//  Stoic
+//
+//  Created by Ritesh Pakala on 9/11/20.
+//  Copyright © 2020 Ritesh Pakala. All rights reserved.
+//
+
+import Granite
+import Foundation
+import Firebase
+
+extension ServiceCenter {
+    public enum SubscriptionStatus {
+        case purchased
+        case expired
+        case notPurchased
+    }
+    
+    func updateSubscription() {
+        let subscription = self.storage.get(GlobalDefaults.Subscription.self)
+        print("{SUBSCRIBE} check \(subscription) \(GlobalDefaults.Subscription.init(rawValue: subscription))")
+        
+        self.checkSubscription { [weak self] subscription in
+            if let value = subscription.values.first(where:  { $0 != .none } ) {
+                self?.storage.update(value)
+            }
+        }
+    }
+    
+    
+    func checkSubscription(completion: @escaping (([String: GlobalDefaults.Subscription]) -> Void)) {
+        checkSubscriptionStatus { status in
+            var subscription: [String: GlobalDefaults.Subscription] = [:]
+            StoicProducts.productIDs.forEach { id in
+                if let subStatus = status[id] {
+
+                    switch id {
+                    case StoicProducts.yearlySub:
+                        subscription[StoicProducts.yearlySub] = subStatus == .purchased ? GlobalDefaults.Subscription.yearly : GlobalDefaults.Subscription.none
+                    case StoicProducts.monthlySub:
+                        subscription[StoicProducts.monthlySub] = subStatus == .purchased ? GlobalDefaults.Subscription.monthly : GlobalDefaults.Subscription.none
+                    case StoicProducts.weeklySub:
+                        subscription[StoicProducts.weeklySub] = subStatus == .purchased ? GlobalDefaults.Subscription.weekly : GlobalDefaults.Subscription.none
+                    default: break
+                        
+                    }
+                }
+                
+                completion(subscription)
+                
+            }
+        }
+    }
+    
+    func checkSubscriptionStatus(
+        completion: @escaping (([String:ServiceCenter.SubscriptionStatus]) -> Void)) {
+        
+        var subStatus: [String: ServiceCenter.SubscriptionStatus] = [:]
+        retrieveReceipt(productID: StoicProducts.yearlySub) { [weak self] infoYearly in
+            self?.retrieveReceipt(productID: StoicProducts.monthlySub) { infoMonthly in
+                self?.retrieveReceipt(productID: StoicProducts.weeklySub) { infoWeekly in
+                    let info = infoYearly + infoMonthly + infoWeekly
+
+                    self?.verifySubscription(receipts: info) { items in
+                        if let items = items {
+                            for key in items.keys {
+                                
+                                guard let receipt = items[key] else { continue }
+                                print("{SUBSCRIBE} verifying ownership \(key)")
+                                let purchaseResult = SwiftyStoreKit.verifySubscription(
+                                    ofType: .autoRenewable,
+                                    productId: key,
+                                    inReceipt: receipt)
+                                
+                                
+                                
+                                switch purchaseResult {
+                                case .purchased(let date, let items):
+                                    subStatus[key] = .purchased
+                                    print("{SUBSCRIBE} verify \(key) \(date.asString)")
+                                case .notPurchased:
+                                    subStatus[key] = .notPurchased
+                                    print("{SUBSCRIBE} not purchased \(key)")
+                                case .expired(let expiryDate, let items):
+                                    subStatus[key] = .expired
+                                    print("{SUBSCRIBE} expired \(key)")
+                                }
+                            }
+                            completion(subStatus)
+                        } else {
+                            completion(subStatus)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func retrieveReceipt(
+        productID: String,
+        locally: Bool = false,
+        completion: (([String:Data]) -> Void)? = nil) {
+        
+        var receipts: [String:Data] = [:]
+        
+        guard let currentUser = Auth.auth().currentUser?.uid else {
+            completion?(receipts)
+            return
+        }
+        
+        if locally {
+            guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL else {
+                completion?(receipts)
+                return
+            }
+            
+            do {
+                let receiptData = try Data(contentsOf: appStoreReceiptURL)
+                completion?([appStoreReceiptURL.lastPathComponent : receiptData])
+            } catch let error {
+                completion?(receipts)
+                print("{SUBSCRIBE} retrieval failed \(error)")
+            }
+        } else {
+                self.backend
+                .getDataList(
+                currentUser+"/"+productID,
+                storage: .subscription) { [weak self] (items, success) in
+                    
+                    guard items.count > 0, success else { completion?(receipts); return }
+                    
+                    self?.backend
+                        .getData(
+                        currentUser+"/"+productID,
+                        filename: "\(items.count - 1)",
+                        storage: .subscription) { data, success in
+                            if success, let data = data {
+                                receipts[productID] = data
+                                
+
+                                print("{SUBSCRIBE} downloaded successfully \(productID) \(items.count - 1)")
+                            }
+                            
+                            completion?(receipts)
+                    }
+            }
+        }
+    }
+    
+    func verifySubscription(
+        receipts: [String: Data],
+        completion: (([String: ReceiptInfo]?) -> Void)? = nil) {
+        
+        let appleValidator = AppleReceiptValidator(
+            service: .sandbox,
+            sharedSecret: StoicProducts.sharedSecret)
+        
+        var receiptInfo: [String: ReceiptInfo] = [:]
+        for key in receipts.keys {
+            guard let data = receipts[key] else { continue }
+            appleValidator.validate(receiptData: data) { result in
+                switch result {
+                case .success(let receipt):
+                    receiptInfo[key] = receipt
+                    print("{SUBSCRIBE} verified \(key)")
+                    if receiptInfo.count == receipts.values.count {
+                        completion?(receiptInfo)
+                    }
+                default: completion?(nil); print("{SUBSCRIBE} could not verify")
+                }
+            }
+        }
+    }
+}

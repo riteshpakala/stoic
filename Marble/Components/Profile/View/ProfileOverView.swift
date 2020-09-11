@@ -166,6 +166,12 @@ public class ProfileOverView: GraniteView {
             action: #selector(self.subscribeTapped(_:)))
     }()
     
+    public var subscription: GlobalDefaults.Subscription = .none {
+        didSet {
+            updateSubscriptionAppearance()
+        }
+    }
+    
     public init() {
         super.init(frame: .zero)
         
@@ -193,6 +199,16 @@ public class ProfileOverView: GraniteView {
         - most searched stock: $\(properties.mostSearchedStock)
         - device's average error: \(round((properties.deviceAverageError)*100)/100)%
         """
+    }
+    
+    func updateSubscriptionAppearance() {
+        if subscription.isActive {
+            profileLabel.text = "* account".localized.lowercased()+" // PRO"
+            subscribeLabel.isHidden = true
+        } else {
+            profileLabel.text = "* account".localized.lowercased()
+            subscribeLabel.isHidden = false
+        }
     }
     
     @objc func emailTeamTapped(_ sender: UITapGestureRecognizer) {

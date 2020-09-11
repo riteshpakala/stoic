@@ -26,4 +26,6 @@ struct SubscribeEvents {
         let product: ProductID?
         let success: Bool
     }
+    
+    public struct UpdateSubscriptionStatus: Event {}
 }

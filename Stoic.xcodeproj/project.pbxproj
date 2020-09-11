@@ -347,10 +347,13 @@
 		71D98E8C24F26B450089C85F /* SubscribeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E8524F26B450089C85F /* SubscribeView.swift */; };
 		71D98E8D24F26B450089C85F /* SubscribeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E8624F26B450089C85F /* SubscribeComponent.swift */; };
 		71D98E8E24F26B450089C85F /* SubscribeEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E8724F26B450089C85F /* SubscribeEvents.swift */; };
-		71D98E9124F26B7A0089C85F /* ShowSubscribeReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E9024F26B7A0089C85F /* ShowSubscribeReducer.swift */; };
+		71D98E9124F26B7A0089C85F /* SubscriptionReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E9024F26B7A0089C85F /* SubscriptionReducers.swift */; };
 		71D98E9324F26D920089C85F /* SubscriptionOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E9224F26D920089C85F /* SubscriptionOption.swift */; };
 		71DCBEE5250BEF2300C12F4B /* PresentAlertReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCBEE4250BEF2300C12F4B /* PresentAlertReducer.swift */; };
 		71DCBEE7250BF17000C12F4B /* RemoveModelReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCBEE6250BF17000C12F4B /* RemoveModelReducer.swift */; };
+		71DCBEE9250C2A7600C12F4B /* Router.Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCBEE8250C2A7600C12F4B /* Router.Subscription.swift */; };
+		71DCBEEB250C2BAF00C12F4B /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCBEEA250C2BAF00C12F4B /* Dictionary.swift */; };
+		71DCBEED250C307D00C12F4B /* UpdateSubscriptionStatusReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DCBEEC250C307D00C12F4B /* UpdateSubscriptionStatusReducer.swift */; };
 		71F5BA4E24847CE60085E8DD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F5BA4D24847CE60085E8DD /* HomeView.swift */; };
 		8178E23F17E028E4B0A045A0 /* Pods_StoicTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD1232B647A9A4E8049ECA1 /* Pods_StoicTests.framework */; };
 		8272E280DE0EF2B2440C734C /* Pods_Stoic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8C4AC17A6B30BE381B5D71B /* Pods_Stoic.framework */; };
@@ -726,10 +729,13 @@
 		71D98E8524F26B450089C85F /* SubscribeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeView.swift; sourceTree = "<group>"; };
 		71D98E8624F26B450089C85F /* SubscribeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeComponent.swift; sourceTree = "<group>"; };
 		71D98E8724F26B450089C85F /* SubscribeEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeEvents.swift; sourceTree = "<group>"; };
-		71D98E9024F26B7A0089C85F /* ShowSubscribeReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSubscribeReducer.swift; sourceTree = "<group>"; };
+		71D98E9024F26B7A0089C85F /* SubscriptionReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionReducers.swift; sourceTree = "<group>"; };
 		71D98E9224F26D920089C85F /* SubscriptionOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionOption.swift; sourceTree = "<group>"; };
 		71DCBEE4250BEF2300C12F4B /* PresentAlertReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentAlertReducer.swift; sourceTree = "<group>"; };
 		71DCBEE6250BF17000C12F4B /* RemoveModelReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveModelReducer.swift; sourceTree = "<group>"; };
+		71DCBEE8250C2A7600C12F4B /* Router.Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Subscription.swift; sourceTree = "<group>"; };
+		71DCBEEA250C2BAF00C12F4B /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		71DCBEEC250C307D00C12F4B /* UpdateSubscriptionStatusReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSubscriptionStatusReducer.swift; sourceTree = "<group>"; };
 		71F5BA4D24847CE60085E8DD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B216AA8A083E08322B07F45C /* Pods-Stoic-StoicUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stoic-StoicUITests.debug.xcconfig"; path = "Target Support Files/Pods-Stoic-StoicUITests/Pods-Stoic-StoicUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B50CA4F992D9BE8565D5B3BB /* Pods-Stoic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stoic.release.xcconfig"; path = "Target Support Files/Pods-Stoic/Pods-Stoic.release.xcconfig"; sourceTree = "<group>"; };
@@ -1019,6 +1025,7 @@
 				71305F73246E038A00E64718 /* Router.swift */,
 				71D98E4024F239E80089C85F /* Router.Backend.Models.swift */,
 				716437D124FC78D700BAB6BC /* Router.Onboarding.Models.swift */,
+				71DCBEE8250C2A7600C12F4B /* Router.Subscription.swift */,
 				71F5BA4F24847DC30085E8DD /* 3DObj */,
 			);
 			path = Core;
@@ -1144,6 +1151,7 @@
 			isa = PBXGroup;
 			children = (
 				715A7E9A2509790D009E7244 /* Array.swift */,
+				71DCBEEA250C2BAF00C12F4B /* Dictionary.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1260,6 +1268,7 @@
 			children = (
 				71725D9B24F27833003B0FF6 /* SubscribeDisclaimerReducer.swift */,
 				710993FA24F4AA0100EAA482 /* SusbcribeProductsReducer.swift */,
+				71DCBEEC250C307D00C12F4B /* UpdateSubscriptionStatusReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -2127,7 +2136,7 @@
 		71D98E8F24F26B6B0089C85F /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
-				71D98E9024F26B7A0089C85F /* ShowSubscribeReducer.swift */,
+				71D98E9024F26B7A0089C85F /* SubscriptionReducers.swift */,
 				71725D9D24F28389003B0FF6 /* CheckCredentialStateReducer.swift */,
 				71A2FF2D24F3425D00B8B650 /* ProfileSetupReducer.swift */,
 				71A2FF2B24F3001A00B8B650 /* AuthenticateReducer.swift */,
@@ -2554,7 +2563,7 @@
 				7127B0282485DCF7004C57F1 /* DashboardComponent.swift in Sources */,
 				7110A56D248DCAD500F62940 /* SearchEvents.swift in Sources */,
 				717A75F724A14CBF005348F9 /* Tweet.swift in Sources */,
-				71D98E9124F26B7A0089C85F /* ShowSubscribeReducer.swift in Sources */,
+				71D98E9124F26B7A0089C85F /* SubscriptionReducers.swift in Sources */,
 				71A1D320246E027D00D778A5 /* PlayfairLabel.swift in Sources */,
 				71D98E6524F260CA0089C85F /* ProfileState.swift in Sources */,
 				71A1D2D1246E027D00D778A5 /* URL+Share.swift in Sources */,
@@ -2602,7 +2611,9 @@
 				717A766024A16131005348F9 /* Parser.swift in Sources */,
 				7127B0272485DCF7004C57F1 /* DashboardEvents.swift in Sources */,
 				717A766624A16131005348F9 /* Pattern.swift in Sources */,
+				71DCBEEB250C2BAF00C12F4B /* Dictionary.swift in Sources */,
 				71A7C699250571000094C352 /* StockModelObject+CoreDataClass.swift in Sources */,
+				71DCBEE9250C2A7600C12F4B /* Router.Subscription.swift in Sources */,
 				71A2FF2C24F3001A00B8B650 /* AuthenticateReducer.swift in Sources */,
 				717A764D24A16131005348F9 /* StringUtil.swift in Sources */,
 				71A1D30E246E027D00D778A5 /* QuickTableViewController.swift in Sources */,
@@ -2707,6 +2718,7 @@
 				7127B05E2485E130004C57F1 /* ShowDetailReducer.swift in Sources */,
 				71DCBEE5250BEF2300C12F4B /* PresentAlertReducer.swift in Sources */,
 				717A765924A16131005348F9 /* TextNode.swift in Sources */,
+				71DCBEED250C307D00C12F4B /* UpdateSubscriptionStatusReducer.swift in Sources */,
 				71A1D2FB246E027D00D778A5 /* AssetsAlbumHeaderView.swift in Sources */,
 				717A766424A16131005348F9 /* UnicodeScalar.swift in Sources */,
 				717A764924A16131005348F9 /* Document.swift in Sources */,

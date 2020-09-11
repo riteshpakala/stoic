@@ -92,6 +92,28 @@ public class SubscribeView: GraniteView {
         return label
     }()
     
+    lazy var loaderView: (container: UIView, label: UILabel) = {
+        let view: UIView = .init()
+        view.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.24)
+        
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.orange
+        label.text = "/**** loading... */"
+    
+        
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.height.equalTo(label.font.lineHeight)
+            make.left.right.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+        view.isHidden = true
+        
+        return (view, label)
+    }()
+    
     lazy var stackView: GraniteStackView = {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
@@ -140,6 +162,11 @@ public class SubscribeView: GraniteView {
         
         optionsLoadingLabel.snp.makeConstraints { make in
             make.height.equalTo(SubscribeStyle.optionSize.height)
+        }
+        
+        addSubview(loaderView.container)
+        loaderView.container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     

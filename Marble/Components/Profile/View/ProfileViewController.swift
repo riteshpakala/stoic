@@ -46,6 +46,11 @@ public class ProfileViewController: GraniteViewController<ProfileState> {
             \.disclaimers,
             handler: observeDisclaimers(_:),
             async: .main)
+        
+        observeState(
+            \.subscription,
+            handler: observeSubscription(_:),
+            async: .main)
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -93,6 +98,17 @@ extension ProfileViewController {
         }
         
         _view.profileOverView.setProperties(user)
+    }
+    
+    func observeSubscription(
+        _ user: Change<Int>) {
+
+        guard let value = user.newValue,
+            let subscription = GlobalDefaults.Subscription.init(rawValue: value) else {
+                return
+        }
+        
+        _view.profileOverView.subscription = subscription
     }
     
     func observeDisclaimers(

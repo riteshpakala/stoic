@@ -14,6 +14,7 @@ public class SubscribeState: State {
     @objc dynamic var disclaimers: [Disclaimer]? = nil
     @objc dynamic var products: [SKProduct] = []
     @objc dynamic var purchaseResult: PurchaseResult? = nil
+    @objc dynamic var isLoading: Bool = false
 }
 
 public class PurchaseResult: NSObject {
