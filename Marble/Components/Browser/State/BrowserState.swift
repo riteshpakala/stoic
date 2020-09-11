@@ -12,7 +12,7 @@ import Foundation
 public enum BrowserCompiledModelCreationStatus: String {
     case step1 = "select a base model"
     case step2 = "select models to merge"
-    case step3 = "finish"
+    case step3 = "/**** compiling... */"
     case none = ""
 }
 

@@ -14,6 +14,12 @@ struct DashboardEvents {
         case stored(StockModel)
     }
     
+    public struct DetailIsInteracting: Event {
+        let id: String
+    }
+    
+    public struct SettingsIsInteracting: Event {}
+    
     struct CloseDetail: Event {
         let id: String?
         let searchedStock: SearchStock

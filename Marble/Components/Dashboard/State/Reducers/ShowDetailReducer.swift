@@ -68,6 +68,23 @@ struct ShowDetailReducer: Reducer {
     }
 }
 
+struct DetailIsInteractingReducer: Reducer {
+    typealias ReducerEvent = DashboardEvents.DetailIsInteracting
+    typealias ReducerState = DashboardState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        if let detail = component.getSubComponent(id: event.id),
+            let view = detail.viewController?.view {
+            component.viewController?.view.bringSubviewToFront(view)
+        }
+    }
+}
+
 fileprivate enum Axis: StringLiteralType {
     case x = "x"
     case y = "y"

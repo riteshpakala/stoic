@@ -31,8 +31,8 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
         view.backgroundColor = .clear
         view.alwaysBounceVertical = false
         view.isPrefetchingEnabled = false
-        view.isPagingEnabled = true
-        
+        view.isPagingEnabled = false
+        view.decelerationRate = UIScrollView.DecelerationRate.fast
         view.contentInsetAdjustmentBehavior = .never
         return (view, layout)
     }()
@@ -313,5 +313,15 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
         default:
             break
         }
+    }
+}
+
+extension BrowserModelDataContainerCell: UIScrollViewDelegate {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.collection.view.scrollToNearestVisibleCollectionViewCell()
+    }
+
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        self.collection.view.scrollToNearestVisibleCollectionViewCell()
     }
 }

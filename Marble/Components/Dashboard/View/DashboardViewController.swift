@@ -81,7 +81,7 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         } else {
             _view.settings.edge = .left
         }
-
+        
     }
 }
 

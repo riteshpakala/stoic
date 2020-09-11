@@ -129,9 +129,10 @@ public class BrowserView: GraniteView {
             view.backgroundColor = .clear
         view.alwaysBounceVertical = false
         view.isPrefetchingEnabled = false
-        view.isPagingEnabled = true
-
+        view.isPagingEnabled = false
+        view.decelerationRate = UIScrollView.DecelerationRate.fast
         view.contentInsetAdjustmentBehavior = .never
+            
         return (view, layout)
     }()
     

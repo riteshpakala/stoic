@@ -178,6 +178,7 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
         if isOpen {
             collapse()
         } else {
+            bubble(DashboardEvents.SettingsIsInteracting())
             open()
         }
     }

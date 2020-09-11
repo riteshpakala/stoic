@@ -20,6 +20,12 @@ struct DetailLongPressStartedReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         state.lastTranslation = event.translation
+        
+        sideEffects.append(
+            .init(
+                event: DashboardEvents
+                    .DetailIsInteracting
+                    .init(id: component.id), bubbles: true))
     }
 }
 

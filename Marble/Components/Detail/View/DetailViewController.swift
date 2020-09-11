@@ -78,15 +78,34 @@ public class DetailViewController: GraniteViewController<DetailState> {
         super.viewDidLayoutSubviews()
     }
 	
+    override public func viewWillTransition(
+        to size: CGSize,
+        with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        let origin = _view.frame.origin
+        
+        _view.frame.origin = .init(x: origin.y, y: origin.x)
+        
+    }
 }
 
 // MARK: Observers
 extension DetailViewController {
     func observeTranslation(
         _ point: Change<CGPoint>) {
-        self._view.center = .init(
-                    x: self._view.center.x + (point.newValue?.x ?? 0),
-                    y: self._view.center.y + (point.newValue?.y ?? 0))
+        
+        let newCenter: CGPoint = .init(
+                            x: self._view.center.x + (point.newValue?.x ?? 0),
+                            y: self._view.center.y + (point.newValue?.y ?? 0))
+                            
+        guard newCenter.x - _view.frame.size.width/2 > -_view.frame.size.width/2 &&
+              newCenter.y - _view.frame.size.height/2 > -_view.frame.size.height/2 &&
+              newCenter.x < UIScreen.main.bounds.width &&
+              newCenter.y < UIScreen.main.bounds.height  else {
+            return
+        }
+        self._view.center = newCenter
     }
     
     func observeThink(

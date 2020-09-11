@@ -45,6 +45,22 @@ struct GenerateSettingsReducer: Reducer {
     }
 }
 
+struct ShowSettingsReducer: Reducer {
+    typealias ReducerEvent = DashboardEvents.SettingsIsInteracting
+    typealias ReducerState = DashboardState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        if let view = component.viewController?.view as? DashboardView {
+            component.viewController?.view.bringSubviewToFront(view.settings)
+        }
+    }
+}
+
 struct UpdateSettingsReducer: Reducer {
     typealias ReducerEvent = DashboardEvents.UpdateSettings
     typealias ReducerState = DashboardState

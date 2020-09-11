@@ -97,6 +97,8 @@ extension OnboardingViewController {
         mask(step)
         applyText(step)
         
+        self._view.superview?.bringSubviewToFront(_view)
+        
         step.delegate = self
         component?.sendEvent(
             OnboardingEvents.UpdateStep.init(

@@ -682,6 +682,7 @@ extension BrowserModelCell {
     }
     
     @objc func createTapped(_ sender: UITapGestureRecognizer) {
+        guard !self.collection.view.isDecelerating else { return }
         bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
     }
     
