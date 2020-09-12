@@ -18,6 +18,9 @@ struct GenerateSettingsReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        let subscriptionStatus = component.service.storage.get(GlobalDefaults.Subscription.self)
+        state.subscription = subscriptionStatus
+        
         let settingsItems: [TongueSettingsModel<LocalStorageValue>] = GlobalDefaults.instance.readableDefaults.map {
             
             let value: String

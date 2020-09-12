@@ -188,6 +188,18 @@ public class SubscribeView: GraniteView {
             }
         }
     }
+    
+    func updateLoaderAppearance(confirming: Bool) {
+        if confirming {
+            loaderView.label.textColor = GlobalStyle.Colors.purple
+            loaderView.label.text = "/**** confirming... */"
+            loaderView.container.backgroundColor = GlobalStyle.Colors.purple.withAlphaComponent(0.24)
+        } else {
+            loaderView.label.textColor = GlobalStyle.Colors.orange
+            loaderView.label.text = "/**** loading... */"
+            loaderView.container.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.24)
+        }
+    }
 }
 
 //class GraniteStackView: GraniteStackView, EventResponder {

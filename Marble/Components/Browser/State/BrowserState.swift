@@ -40,6 +40,7 @@ public class BrowserCompiledModelCreationData: NSObject {
 }
 
 public class BrowserState: State {
+    @objc dynamic var subscription: Int = GlobalDefaults.Subscription.none.rawValue
     @objc dynamic var nextValidTradingDay: String = "unknown"
     @objc dynamic var currentCompiledCreationStatus: String = BrowserCompiledModelCreationStatus.none.rawValue
     @objc dynamic var compiledModelCreationData: BrowserCompiledModelCreationData? = nil

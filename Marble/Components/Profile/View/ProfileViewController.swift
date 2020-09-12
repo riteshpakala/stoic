@@ -98,6 +98,9 @@ extension ProfileViewController {
         }
         
         _view.profileOverView.setProperties(user)
+        
+        _view.profileOverView.subscription = GlobalDefaults.Subscription.from(component?.state.subscription)
+        print("{LSV} prof setup \(component?.state.subscription)")
     }
     
     func observeSubscription(

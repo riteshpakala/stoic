@@ -25,6 +25,8 @@ struct ProfileSetupReducer: Reducer {
             return
         }
         
+        state.subscription = component.service.storage.get(GlobalDefaults.Subscription.self)
+        
         state.user = userData
         
         sideEffects.append(

@@ -123,6 +123,7 @@ extension SubscribeViewController {
         }
         
         _view.loaderView.container.isHidden = !status
+        
     }
 }
 
@@ -181,9 +182,11 @@ extension SubscribeViewController: SKRequestDelegate {
                    storage: .subscription) { success in
                        
                    if success {
-                           print("{SUBSCRIBE} uploaded successfully")
-                        
-                    self?.component?.bubbleEvent(SubscribeEvents.UpdateSubscriptionStatus.init())
+                        print("{SUBSCRIBE} uploaded successfully")
+                        DispatchQueue.main.async {
+                            self?._view.updateLoaderAppearance(confirming: true)
+                        }
+                        self?.component?.service.center.updateSubscription()
                    }
                }
             }

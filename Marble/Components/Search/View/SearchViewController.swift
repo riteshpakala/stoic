@@ -61,6 +61,11 @@ public class SearchViewController: GraniteViewController<SearchState> {
             \.stockResultsActive,
             handler: observeStockSearchActive(_:),
             async: .main)
+        
+        observeState(
+            \.subscription,
+            handler: observeSubscription(_:),
+            async: .main)
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -100,6 +105,13 @@ extension SearchViewController {
         } else {
             _view.searchIndicator.stopAnimating()
         }
+    }
+    
+    func observeSubscription(
+        _ user: Change<Int>) {
+
+        _view.collection.reloadData()
+        _view.collectionAccessory.collection.reloadData()
     }
     
     func observeStockSearchActive(
@@ -184,10 +196,23 @@ extension SearchViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
         
-        if  let stocks = component?.state.stocks,
-            indexPath.item < stocks.count {
-            
-            let stock = stocks[indexPath.item]
+        let stocks: Array<SearchStock>
+        
+        if collectionView == _view.collection {
+            stocks = component?.state.stocks ?? []
+        } else {
+            stocks = component?.state.stockRotation ?? []
+        }
+        
+        guard indexPath.item < stocks.count else { return }
+        
+        let stock: SearchStock = stocks[indexPath.item]
+        
+        if collectionView == _view.collection {
+            guard isStockAvailable(stock) else {
+                bubbleEvent(SubscribeEvents.Show())
+                return
+            }
             
             if let id = Auth.auth().currentUser?.uid {
                 component?.service.center.backend.put(
@@ -199,10 +224,9 @@ extension SearchViewController: UICollectionViewDelegate {
             
             bubbleEvent(
                 DashboardEvents.ShowDetail.search(stock))
-        } else if let stocks = component?.state.stockRotation,
-            indexPath.item < stocks.count {
+        } else {
             bubbleEvent(
-                DashboardEvents.ShowDetail.search(stocks[indexPath.item]))
+                DashboardEvents.ShowDetail.search(stock))
         }
     }
 }
@@ -227,16 +251,20 @@ extension SearchViewController: UICollectionViewDataSource {
             withReuseIdentifier: "\(SearchCollectionCell.self)",
             for: indexPath) as? SearchCollectionCell else { return .init() }
         
+        
+        
         if collectionView == _view.collection,
             indexPath.item < (component?.state.stocks.count ?? 0),
             let stock = component?.state.stocks[indexPath.item]
         {
             cell.tickerLabel.text = stock.symbol
+            cell.isAvailable = isStockAvailable(stock)
         } else if collectionView == _view.collectionAccessory.collection,
             indexPath.item < (component?.state.stockRotation.count ?? 0),
             let stock = component?.state.stockRotation[indexPath.item]
         {
             cell.tickerLabel.text = stock.symbol
+            cell.isAvailable = isStockAvailable(stock)
         } else {
             cell.tickerLabel.text = "none found".lowercased().localized
         }
@@ -258,6 +286,20 @@ extension SearchViewController: UICollectionViewDataSource {
             withReuseIdentifier: "\(SearchCollectionHeaderCell.self)",
             for: indexPath)
         
+        if let searchHeaderCell = header as? SearchCollectionHeaderCell {
+            let subscription: GlobalDefaults.Subscription = GlobalDefaults.Subscription.from(component?.state.subscription)
+            searchHeaderCell.isPRO = subscription.isActive
+        }
+        
         return header
+    }
+    
+    private func isStockAvailable(_ stock: SearchStock) -> Bool {
+        let symbol = stock.symbol
+        let subscription: GlobalDefaults.Subscription = GlobalDefaults.Subscription.from(component?.state.subscription)
+        
+        let stockRotation: [String] = component?.state.stockRotation.compactMap({ $0.symbol }) ?? []
+        
+        return stockRotation.contains(symbol) || subscription.isActive
     }
 }

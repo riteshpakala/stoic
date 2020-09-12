@@ -16,7 +16,8 @@ public class SearchComponent: Component<SearchState> {
             GetSearchResultsResponseReducer.Reducible(),
             SearchUpdateAppearanceReducer.Reducible(),
             GenerateStockRotationReducer.Reducible(),
-            GenerateStockRotationResponseReducer.Reducible()
+            GenerateStockRotationResponseReducer.Reducible(),
+            SubscriptionUpdatedSearchReducer.Reducible()
         ]
     }
     

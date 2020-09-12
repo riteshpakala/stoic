@@ -26,4 +26,5 @@ public class SearchState: State {
     @objc dynamic var stocks: Array<SearchStock> = []
     @objc dynamic var stockRotation: Array<SearchStock> = []
     @objc dynamic var stockResultsActive: Bool = false
+    @objc dynamic var subscription: Int = GlobalDefaults.Subscription.none.rawValue
 }

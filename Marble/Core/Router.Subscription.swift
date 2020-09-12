@@ -17,13 +17,30 @@ extension ServiceCenter {
         case notPurchased
     }
     
-    func updateSubscription() {
-        let subscription = self.storage.get(GlobalDefaults.Subscription.self)
-        print("{SUBSCRIBE} check \(subscription) \(GlobalDefaults.Subscription.init(rawValue: subscription))")
+    func requestSubscriptionUpdate(_ time: Double = 300) {
+        let value = storage.get(GlobalDefaults.SubscriptionCheck, defaultValue: 0.0)
         
+        if (CFAbsoluteTimeGetCurrent() - value) > time {
+            updateSubscription()
+
+            storage.update(GlobalDefaults.SubscriptionCheck, CFAbsoluteTimeGetCurrent())
+        }
+        print("{LSV} \(CFAbsoluteTimeGetCurrent() - value)")
+        
+    }//5 Minutes
+    
+    func updateSubscription() {
         self.checkSubscription { [weak self] subscription in
             if let value = subscription.values.first(where:  { $0 != .none } ) {
                 self?.storage.update(value)
+            } else {
+                self?.storage.update(GlobalDefaults.Subscription.none)
+            }
+            
+            DispatchQueue.main.async {
+                if let delegate = UIApplication.shared.delegate as? GraniteAppDelegate {
+                    delegate.coordinator.rootComponent.forwardEvent(ServiceCenter.Events.SubscriptionUpdated())
+                }
             }
         }
     }

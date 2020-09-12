@@ -96,6 +96,9 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
         browserModelCell.currentCreationStatusStep = component?.state.currentCompiledStatus ?? .none
         browserModelCell.compiledModelCreationData = component?.state.compiledModelCreationData
         
+        
+        guard object.model != nil else { return browserModelCell }
+        
         if let stockKit = component?
             .getSubComponent(
                 StockKitComponent.self) as? StockKitComponent,
@@ -105,8 +108,6 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
             
             let dayDiff = abs(components.day ?? maxDays)
             browserModelCell.lifecycle = (dayDiff >= maxDays) ? .isStale : (dayDiff > 0 ? .needsSyncing : .isReady)
-            
-            
         }
         
         return browserModelCell

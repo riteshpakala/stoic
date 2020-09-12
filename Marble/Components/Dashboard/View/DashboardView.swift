@@ -43,6 +43,7 @@ public class DashboardView: GraniteView {
             return super.hitTest(point, with: event)
         }
         if settings.isOpen {
+            settings.showHelpers(forceHide: true)
             settings.collapse()
         }
         return parent

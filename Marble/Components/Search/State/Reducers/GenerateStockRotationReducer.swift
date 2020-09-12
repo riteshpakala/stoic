@@ -18,6 +18,8 @@ struct GenerateStockRotationReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        state.subscription = component.service.storage.get(GlobalDefaults.Subscription.self)
+        print("{LSV} \(state.subscription)")
         let componentToPass = component
         component.service.center.backend.get(
             route: .globalStocksFreeRotation) { data in

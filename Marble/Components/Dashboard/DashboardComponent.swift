@@ -20,7 +20,9 @@ public class DashboardComponent: Component<DashboardState> {
             OpenBrowserSettingsReducer.Reducible(),
             DismissProfileSettingsReducer.Reducible(),
             DetailIsInteractingReducer.Reducible(),
-            ShowSettingsReducer.Reducible()
+            ShowSettingsReducer.Reducible(),
+            SubscriptionUpdatedDashboardReducer.Reducible(),
+            ShowSubscribeReducer.Reducible()
         ]
     }
     
@@ -41,6 +43,6 @@ public class DashboardComponent: Component<DashboardState> {
         }
         
 //        //Onboarding
-//        push(OnboardingBuilder.build(self.service), display: .fit)
+        push(OnboardingBuilder.build(self.service), display: .fit)
     }
 }

@@ -19,6 +19,16 @@ class SearchCollectionCell: UICollectionViewCell {
         return label
     }()
     
+    var isAvailable: Bool = false {
+        didSet {
+            if isAvailable {
+                tickerLabel.textColor = GlobalStyle.Colors.green
+            } else {
+                tickerLabel.textColor = GlobalStyle.Colors.red
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -39,18 +49,32 @@ class SearchCollectionCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        isAvailable = false
     }
 }
 
 class SearchCollectionHeaderCell: UICollectionReusableView {
     lazy var label: UILabel = {
         let label: UILabel = .init()
-        label.text = "FREE"
+        label.text = "FREE".localized.uppercased()
         label.textColor = GlobalStyle.Colors.orange
         label.font = GlobalStyle.Fonts.courier(.medium, .bold)
         label.textAlignment = .center
         return label
     }()
+    
+    var isPRO: Bool = false {
+        didSet {
+            if isPRO {
+                label.text = "LIVE".localized.uppercased()
+                label.textColor = GlobalStyle.Colors.purple
+            } else {
+                label.text = "FREE".localized.uppercased()
+                label.textColor = GlobalStyle.Colors.orange
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,5 +94,7 @@ class SearchCollectionHeaderCell: UICollectionReusableView {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        isPRO = false
     }
 }

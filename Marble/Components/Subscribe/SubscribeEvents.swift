@@ -11,6 +11,7 @@ import Foundation
 import StoreKit
 
 struct SubscribeEvents {
+    public struct Show: Event {}
     public struct GetDisclaimer: Event {
     }
     public struct GetDisclaimerResponse: Event {

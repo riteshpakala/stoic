@@ -57,10 +57,8 @@ struct SusbcribePurchaseResultReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        state.isLoading = false
         state.purchaseResult = .init(event.success, productID: event.product)
         
-        print("{SUBSCRIBE} purchase result heard")
-        
+        print("{LSV} purchase result heard \(event.success)")
     }
 }

@@ -1,16 +1,17 @@
 //
-//  ShowSubscribeReducer.swift
+//  SubscriptionUpdatedDashboardReducer.swift
 //  Stoic
 //
-//  Created by Ritesh Pakala on 8/23/20.
+//  Created by Ritesh Pakala on 9/12/20.
 //  Copyright (c) 2020 Ritesh Pakala. All rights reserved.
 //
 import Granite
 import Foundation
+import UIKit
 
 struct ShowSubscribeReducer: Reducer {
-    typealias ReducerEvent = ProfileEvents.ShowSubscribe
-    typealias ReducerState = ProfileState
+    typealias ReducerEvent = SubscribeEvents.Show
+    typealias ReducerState = DashboardState
     
     func reduce(
         event: ReducerEvent,
@@ -21,14 +22,14 @@ struct ShowSubscribeReducer: Reducer {
         component.push(
             SubscribeBuilder.build(
                 component.service),
-            display: .modal
+            display: .modalTop
         )
     }
 }
 
-struct SusbcriptionUpdatedProfileReducer: Reducer {
-    typealias ReducerEvent = SubscribeEvents.UpdateSubscriptionStatus
-    typealias ReducerState = ProfileState
+struct SubscriptionUpdatedDashboardReducer: Reducer {
+    typealias ReducerEvent = ServiceCenter.Events.SubscriptionUpdated
+    typealias ReducerState = DashboardState
     
     func reduce(
         event: ReducerEvent,

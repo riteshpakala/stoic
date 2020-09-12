@@ -11,8 +11,6 @@ import AuthenticationServices
 import Foundation
 
 struct ProfileEvents {
-    public struct ShowSubscribe: Event {
-    }
     public struct CheckCredential: Event {
         public enum Intent {
             case login

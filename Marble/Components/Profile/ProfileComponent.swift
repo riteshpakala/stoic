@@ -13,7 +13,6 @@ import UIKit
 public class ProfileComponent: Component<ProfileState> {
     override public var reducers: [AnyReducer] {
         [
-            ShowSubscribeReducer.Reducible(),
             CheckCredentialStateReducer.Reducible(),
             AuthenticateReducer.Reducible(),
             ProfileSetupReducer.Reducible(),
@@ -21,7 +20,7 @@ public class ProfileComponent: Component<ProfileState> {
             ProfileDisclaimerReducer.Reducible(),
             ProfileDisclaimerResponseReducer.Reducible(),
             ProfileGetCSVResultsResponseReducer.Reducible(),
-            SusbcriptionUpdatedProfileReducer.Reducible()
+            SubcriptionUpdatedProfileReducer.Reducible()
         ]
     }
     

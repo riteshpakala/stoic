@@ -181,6 +181,8 @@ public class ProfileOverView: GraniteView {
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        print("{LSV} prof setup 12")
     }
     
     required init?(coder: NSCoder) {
@@ -218,7 +220,7 @@ public class ProfileOverView: GraniteView {
     
     @objc func subscribeTapped(_ sender: UITapGestureRecognizer) {
         feedbackGenerator.impactOccurred()
-        bubbleEvent(ProfileEvents.ShowSubscribe())
+        bubbleEvent(SubscribeEvents.Show())
     }
     
     func emailTeam() {

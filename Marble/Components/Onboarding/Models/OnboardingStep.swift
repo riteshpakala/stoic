@@ -142,8 +142,14 @@ public class OnboardingReference: NSObject {
             origin.y += containerView.frame.origin.y
         }
         
-        origin.x -= padding.left
-        origin.y -= padding.top
+        if paddingPreferred {
+            origin.x = padding.left
+            origin.y = padding.top
+        } else {
+            origin.x -= padding.left
+            origin.y -= padding.top
+        }
+        
         return .init(
             origin: origin,
             size: .init(
@@ -154,16 +160,19 @@ public class OnboardingReference: NSObject {
     let fitsToBounds: Bool
     let padding: UIEdgeInsets
     let textPadding: CGFloat
+    let paddingPreferred: Bool
     public init(
         referenceView: UIView = .init(),
         containerView: UIView? = nil,
         fitsToBounds: Bool = false,
         padding: UIEdgeInsets = .zero,
+        paddingPreferred: Bool = false,
         textPadding: CGFloat = 0) {
         self.referenceView = referenceView
         self.containerView = containerView
         self.fitsToBounds = fitsToBounds
         self.padding = padding
         self.textPadding = textPadding
+        self.paddingPreferred = paddingPreferred
     }
 }

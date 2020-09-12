@@ -803,7 +803,15 @@ extension BrowserModelCell {
         
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let update: UIAlertAction = .init(title: "update", style: .default, handler: { [weak self] alert in
+        let create: UIAlertAction = .init(title: "create".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.compiledContainerView.undim()
+            }
+            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
+        })
+        
+        let update: UIAlertAction = .init(title: "update".localized.lowercased(), style: .default, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
@@ -818,6 +826,7 @@ extension BrowserModelCell {
         })
         
         controller.addAction(update)
+        controller.addAction(create)
         controller.addAction(cancel)
         
         self.compiledContainerView.dim()
@@ -827,6 +836,12 @@ extension BrowserModelCell {
     
     @objc func mergedModelTapped(_ sender: UITapGestureRecognizer) {
         guard let model = model else { return }
+        
+        guard lifecycle == .isReady else {
+            didSelectUnPreparedModel()
+            return
+        }
+        
         bubble(BrowserEvents.MergeModelSelected.init(model))
     }
     
@@ -849,6 +864,48 @@ extension BrowserModelCell {
         default:
             break
         }
+    }
+    
+    func didSelectUnPreparedModel() {
+        let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let train: UIAlertAction = .init(title: "train new model".localized.lowercased(), style: .default, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.compiledContainerView.undim()
+            }
+            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
+        })
+        
+        let create: UIAlertAction = .init(title: "create".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.compiledContainerView.undim()
+            }
+            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
+        })
+        
+        let cancel: UIAlertAction = .init(title: "cancel", style: .cancel, handler: { [weak self] alert in
+            DispatchQueue.main.async {
+                self?.compiledContainerView.undim()
+            }
+        })
+        
+        switch lifecycle {
+        case .isStale:
+            controller.addAction(create)
+            controller.addAction(cancel)
+            self.compiledContainerView.dim()
+            bubble(HomeEvents.PresentAlertController.init(controller))
+        case .needsSyncing:
+            controller.addAction(train)
+            controller.addAction(cancel)
+            self.compiledContainerView.dim()
+            bubble(HomeEvents.PresentAlertController.init(controller))
+        default: return
+        }
+        
+        
     }
 }
 

@@ -12,17 +12,36 @@ import Foundation
 public struct GlobalDefaults: LocalStorageDefaults {
     public init() {}
     
+    public static var allLSVDefaults: [LocalStorage.Value<LocalStorageValue>] {
+        return GlobalDefaults.defaults + GlobalDefaults.onboardingDefaults
+    }
+    
+    public static var allVariableDefaults: [LocalStorage.Value<Any>] {
+        return GlobalDefaults.variableDefaults
+    }
+    
     public static var defaults: [LocalStorage.Value<LocalStorageValue>] {
         return [
             LocalStorage.Value.init(Subscription.none),
             LocalStorage.Value.init(Browser.none),
             LocalStorage.Value.init(SentimentStrength.low),
             LocalStorage.Value.init(PredictionDays.two),
-            //OboardingDefaults
+        ]
+    }
+    
+    public static var onboardingDefaults: [LocalStorage.Value<LocalStorageValue>] {
+        return [
             LocalStorage.Value.init(OnboardingDashboard.notCompleted),
         ]
     }
     
+    public static var variableDefaults: [LocalStorage.Value<Any>] {
+        return [
+            LocalStorage.Value.init(GlobalDefaults.SubscriptionCheck, CFAbsoluteTimeGetCurrent()),
+        ]
+    }
+    
+
     public enum SentimentStrength: Int, LocalStorageValue {
         case low
         case med
@@ -115,7 +134,17 @@ public struct GlobalDefaults: LocalStorageDefaults {
         public var isActive: Bool {
             return self != Subscription.none
         }
+        
+        public static func from(_ value: Int?) -> GlobalDefaults.Subscription {
+            if let value = value {
+                return GlobalDefaults.Subscription.init(rawValue: value) ?? GlobalDefaults.Subscription.none
+            } else {
+                return GlobalDefaults.Subscription.none
+            }
+        }
     }
+    
+    public static var SubscriptionCheck: String = "SubscriptionCheck"
     
     public enum Browser: Int, LocalStorageValue {
         case hasStaleModels
