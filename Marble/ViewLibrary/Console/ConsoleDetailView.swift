@@ -66,6 +66,28 @@ class ConsoleDetailView: GraniteView {
         }
     }
     
+    lazy var loaderView: (container: UIView, label: UILabel) = {
+        let view: UIView = .init()
+        view.backgroundColor = GlobalStyle.Colors.purple.withAlphaComponent(0.36)
+        
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.purple
+        label.text = "/**** thinking... */"
+    
+        
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.height.equalTo(label.font.lineHeight)
+            make.left.right.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+        view.isHidden = true
+        
+        return (view, label)
+    }()
+    
     let baseFrame: CGRect
     
     var baseSize: CGSize {
@@ -81,6 +103,7 @@ class ConsoleDetailView: GraniteView {
         addSubview(disclaimerView)
         addSubview(predictionView)
         addSubview(historicalView)
+        addSubview(loaderView.container)
         
         headerView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -111,6 +134,11 @@ class ConsoleDetailView: GraniteView {
             make.height.equalTo(baseSize.height*0.16)
         }
         
+        loaderView.container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        predictionView.delegate = self
         sentimentView.delegate = self
         clipsToBounds = true
     }
@@ -132,6 +160,7 @@ class ConsoleDetailView: GraniteView {
     }
     
     func updateThink(_ payload: ThinkPayload?) {
+        self.loaderView.container.isHidden = true
         if let sentiment = payload?.stockSentimentData {
             sentimentView.updateSlider(sentiment)
             sentimentChanged(
@@ -188,6 +217,12 @@ extension ConsoleDetailView: ConsoleDetailSentimentViewDelegate {
                 neutral: neutral,
                 compound: compound)
         }))
+    }
+}
+
+extension ConsoleDetailView: ConsoleDetailPredictionViewDelegate {
+    func thinking() {
+        self.loaderView.container.isHidden = false
     }
 }
 
@@ -725,7 +760,12 @@ extension UISlider {
 }
 
 //MARK: Prediction
+protocol ConsoleDetailPredictionViewDelegate: class {
+    func thinking()
+}
 class ConsoleDetailPredictionView: GraniteView {
+    weak var delegate: ConsoleDetailPredictionViewDelegate?
+    
     lazy var thinkTriggerContainer: UIView = {
         let view: UIView = .init()
         view.isUserInteractionEnabled = true
@@ -817,6 +857,7 @@ class ConsoleDetailPredictionView: GraniteView {
     @objc
     func tapRegistered(_ sender: UITapGestureRecognizer) {
         feedbackGenerator.impactOccurred()
+        delegate?.thinking()
         thinkTriggerContainer.thinkingEmitter(
             forSize: thinkTriggerContainer.bounds.size,
             renderMode: .backToFront,

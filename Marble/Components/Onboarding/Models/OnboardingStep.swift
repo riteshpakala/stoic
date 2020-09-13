@@ -39,7 +39,8 @@ public class OnboardingActionable: NSObject {
     public var view: GraniteBaseView
     public var observer: NSKeyValueObservation? = nil
     public var KVOContext: UniChar = UUID.init().uuidString.map({ UniChar.init(String($0)) ?? 0 }).reduce(0, +);
-    
+    private var isObserving: Bool = false
+    public var order: Int = 0
     public init<ValueType>(
         keyPath: KeyPath<GraniteBaseView, ValueType>,
         view: GraniteBaseView) {
@@ -49,11 +50,16 @@ public class OnboardingActionable: NSObject {
         
         super.init()
         
+    }
+    
+    public func activate() {
         self.view.addObserver(
             self,
             forKeyPath: self.keyPath,
             options: .new,
             context: &KVOContext)
+        
+        isObserving = true
     }
     
     override public func observeValue(
@@ -61,11 +67,12 @@ public class OnboardingActionable: NSObject {
         of object: Any?,
         change: [NSKeyValueChangeKey : Any]?,
         context: UnsafeMutableRawPointer?) {
-        print("{Onboarding} heard")
+        
         self.delegate?.commitAction()
     }
     
     public func removeObservers() {
+        guard isObserving else { return }
         view.removeObserver(self, forKeyPath: keyPath, context: &KVOContext)
         self.observer?.invalidate()
     }
@@ -86,21 +93,25 @@ public class OnboardingStep: NSObject, OnboardingActionableDelegate {
     let isEmpty: Bool
     let text: String
     let order: Int
+    let isContinueHidden: Bool
     
     public init(
         reference: OnboardingReference? = nil,
         actionable: OnboardingActionable? = nil,
         text: String,
         order: Int,
-        isEmpty: Bool = false) {
+        isEmpty: Bool = false,
+        isContinueHidden: Bool = true) {
         
         self.reference = reference
         self.text = text
         self.order = order
         self.isEmpty = isEmpty
         self.actionable = actionable
+        self.isContinueHidden = isContinueHidden
         super.init()
         
+        self.actionable?.order = order
         self.actionable?.delegate = self
     }
     

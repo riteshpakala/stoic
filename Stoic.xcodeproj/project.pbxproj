@@ -328,6 +328,7 @@
 		71C135C0250D67B1007F1F96 /* SubscriptionUpdatedBrowserReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135BF250D67B1007F1F96 /* SubscriptionUpdatedBrowserReducer.swift */; };
 		71C135C3250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C2250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift */; };
 		71C135C5250D7D2C007F1F96 /* Router.Onboarding.Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C4250D7D2C007F1F96 /* Router.Onboarding.Detail.swift */; };
+		71C135C7250D9EC2007F1F96 /* Router.Onboarding.Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */; };
 		71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */; };
 		71C21A35248D88B500F6D5BF /* GetSearchResultsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */; };
 		71C40EF724EF951B0050C072 /* TongueSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C40EF624EF951B0050C072 /* TongueSettings.swift */; };
@@ -714,6 +715,7 @@
 		71C135BF250D67B1007F1F96 /* SubscriptionUpdatedBrowserReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionUpdatedBrowserReducer.swift; sourceTree = "<group>"; };
 		71C135C2250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Dashboard.swift; sourceTree = "<group>"; };
 		71C135C4250D7D2C007F1F96 /* Router.Onboarding.Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Detail.swift; sourceTree = "<group>"; };
+		71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Browser.swift; sourceTree = "<group>"; };
 		71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCSVReducer.swift; sourceTree = "<group>"; };
 		71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchResultsReducer.swift; sourceTree = "<group>"; };
 		71C40EF624EF951B0050C072 /* TongueSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TongueSettings.swift; sourceTree = "<group>"; };
@@ -2051,6 +2053,7 @@
 				716437D124FC78D700BAB6BC /* Router.Onboarding.Models.swift */,
 				71C135C2250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift */,
 				71C135C4250D7D2C007F1F96 /* Router.Onboarding.Detail.swift */,
+				71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */,
 			);
 			path = Router.Onboarding;
 			sourceTree = "<group>";
@@ -2708,6 +2711,7 @@
 				7110A56B248DCAD500F62940 /* SearchState.swift in Sources */,
 				71A1D2EE246E027D00D778A5 /* AssetsGuideView.swift in Sources */,
 				71A1D2F6246E027D00D778A5 /* AssetsManager.swift in Sources */,
+				71C135C7250D9EC2007F1F96 /* Router.Onboarding.Browser.swift in Sources */,
 				717A764324A16131005348F9 /* CharacterExt.swift in Sources */,
 				71829C922501ED7A002D267E /* CoreDataManager.swift in Sources */,
 				71C135C3250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift in Sources */,

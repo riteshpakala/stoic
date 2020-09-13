@@ -94,7 +94,7 @@ public class SubscribeView: GraniteView {
     
     lazy var loaderView: (container: UIView, label: UILabel) = {
         let view: UIView = .init()
-        view.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.24)
+        view.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.36)
         
         let label: UILabel = .init()
         label.font = GlobalStyle.Fonts.courier(.medium, .bold)
@@ -193,11 +193,11 @@ public class SubscribeView: GraniteView {
         if confirming {
             loaderView.label.textColor = GlobalStyle.Colors.purple
             loaderView.label.text = "/**** confirming... */"
-            loaderView.container.backgroundColor = GlobalStyle.Colors.purple.withAlphaComponent(0.24)
+            loaderView.container.backgroundColor = GlobalStyle.Colors.purple.withAlphaComponent(0.36)
         } else {
             loaderView.label.textColor = GlobalStyle.Colors.orange
             loaderView.label.text = "/**** loading... */"
-            loaderView.container.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.24)
+            loaderView.container.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.36)
         }
     }
 }

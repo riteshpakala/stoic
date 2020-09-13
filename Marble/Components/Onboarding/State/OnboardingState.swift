@@ -23,6 +23,10 @@ extension OnboardingViewController {
         component?.state.currentStep.isActionable == true
     }
     
+    var currentStepCanContinue: Bool {
+        component?.state.currentStep.isContinueHidden == false
+    }
+    
     var currentStepCommittedAction: Bool {
         component?.state.currentStep.hasCommittedAction == true
     }

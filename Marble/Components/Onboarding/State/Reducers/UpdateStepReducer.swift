@@ -20,5 +20,6 @@ struct UpdateStepReducer: Reducer {
         
         state.currentStep = event.step
         state.index = event.index
+        state.currentStep.actionable?.activate()
     }
 }

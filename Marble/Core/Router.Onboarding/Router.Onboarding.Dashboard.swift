@@ -48,7 +48,8 @@ extension DashboardView: Onboardable {
                     bottom: 0,
                     right: -abs(self.settings.container.frame.width - self.settings.tongueView.frame.width))),
             text: "profile\nsentiment strength\ndays to predict from",
-            order: 1)
+            order: 1,
+            isContinueHidden: false)
     }
     
     public var profileStep: OnboardingStep {
@@ -120,10 +121,11 @@ extension DashboardView: Onboardable {
             reference: OnboardingReference.init(
                 referenceView: self.subviews.first(where: { ($0 as? SearchView) != nil }) ?? self,
                 padding: .init(
-                    top: GlobalStyle.spacing,
-                    left: -GlobalStyle.spacing,
-                    bottom: (GlobalStyle.spacing*2),
-                    right: -GlobalStyle.spacing*2)),
+                    top: self.safeAreaInsets.top + GlobalStyle.padding,
+                    left: GlobalStyle.spacing,
+                    bottom: 0.0,
+                    right: -GlobalStyle.spacing*2),
+                paddingPreferred: true),
             actionable: .init(keyPath: \.layer.bounds, view: self.subviews.first(where: { ($0 as? SearchView) != nil }) ?? self),
             text: "you can search for most stocks using their $Ticker Symbol. give it a shot",
             order: 6)

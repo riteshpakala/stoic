@@ -24,12 +24,15 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
         return self.view as! OnboardingView
     }
     
-    
+    private lazy var nextButtonGesture: UITapGestureRecognizer = {
+        return UITapGestureRecognizer.init(target: self, action: #selector(self.nextButtonTapped(_:)))
+    }()
     override public func viewDidLoad() {
         super.viewDidLoad()
         
         _view.parent = self.parent?.view
         _view.delegate = self
+        _view.nextButton.addGestureRecognizer(nextButtonGesture)
         
         GraniteAppDelegate.AppUtility.lockToPortrait()
     }
@@ -39,9 +42,17 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
 
         if let reference = reference {
             _view.backgroundColor = reference.onboardingProperties.backgroundColor
-            _view.onboardingMessage.textColor = reference.onboardingProperties.textColor
-            _view.onboardingMessage.font = reference.onboardingProperties.textFont
+            _view.onboardingMessageLabel.textColor = reference.onboardingProperties.textColor
+            _view.onboardingMessageLabel.font = reference.onboardingProperties.textFont
             _view.onboardingMessage.backgroundColor = reference.onboardingProperties.textBackgroundColor
+            
+            _view.nextButton.textColor = reference.onboardingProperties.textColor
+            _view.nextButton.font = reference.onboardingProperties.textFont
+            _view.nextButton.backgroundColor = reference.onboardingProperties.textBackgroundColor
+            
+            let sizeOfNext = _view.nextButton.sizeThatFits(self._view.frame.size)
+            _view.nextButtonWidthConstraint?.update(offset: sizeOfNext.width + 16)
+            _view.nextButtonHeightConstraint?.update(offset: _view.nextButton.font.lineHeight + 6)
         }
     }
     
@@ -53,14 +64,20 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
     
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        
+        guard self._view.frame.size != self._view.layer.mask?.frame.size || currentStep.reference?.referenceFrame != component?.state.currentStep.reference?.referenceFrame else {
+            return
+        }
         setup(currentStep)
     }
     
     func viewTapped(inRegion: Bool) {
-        guard !currentStepIsActionable else {
+        
+        guard !currentStepIsActionable, !currentStepCanContinue else {
             return
         }
+        
+        reference?.committedStep(self.currentStep.order)
         
         guard !isLastStep else {
             self.component?.removeFromParent()
@@ -73,13 +90,33 @@ public class OnboardingViewController: GraniteViewController<OnboardingState>, O
         }
         
         guard let nextStep = step else { return }
-        reference?.committedStep(self.currentStep.order)
+
+        _view.feedbackGenerator.impactOccurred()
         setup(nextStep)
+    }
+    
+    @objc func nextButtonTapped(_ sender: UITapGestureRecognizer) {
+        reference?.committedStep(self.currentStep.order)
+        
+        guard !isLastStep else {
+            self.component?.removeFromParent()
+            return
+        }
+        
+        _view.feedbackGenerator.impactOccurred()
+        setup(getNextStep())
     }
 }
 
 extension OnboardingViewController: OnboardingActionableDelegate {
     public func commitAction() {
+        guard !currentStepCanContinue else {
+            _view.nextButton.isHidden = false
+            return
+        }
+        
+        reference?.committedStep(self.currentStep.order)
+        
         guard !isLastStep else {
             self.component?.removeFromParent()
             return
@@ -91,16 +128,21 @@ extension OnboardingViewController: OnboardingActionableDelegate {
             return
         }
         
-        reference?.committedStep(self.currentStep.order)
         setup(getNextStep())
     }
 }
 
 extension OnboardingViewController {
     func setup(_ step: OnboardingStep) {
+        
+        if step.isActionable {
+            _view.nextButton.isHidden = true
+        } else {
+            _view.nextButton.isHidden = step.isContinueHidden
+        }
+        
         mask(step)
         applyText(step)
-        
         self._view.superview?.bringSubviewToFront(_view)
         
         step.delegate = self
@@ -128,11 +170,11 @@ extension OnboardingViewController {
     }
     
     func applyText(_ step: OnboardingStep) {
-        _view.onboardingMessage.text = step.text
+        _view.onboardingMessageLabel.text = step.text
         
         guard let reference = reference,
               let referenceFrame = step.reference?.referenceFrame else { return }
-        let sizeOfText = _view.onboardingMessage.sizeThatFits(reference.frame.size)
+        let sizeOfText = _view.onboardingMessageLabel.sizeThatFits(reference.frame.size)
         let heightOfText = sizeOfText.height + 24
         _view.messageHeightConstraint?.update(offset: heightOfText)
         
@@ -163,10 +205,18 @@ extension OnboardingViewController {
             let intersection = rectOfText.intersection(rectOfReference)
             
             let isBelow: Bool = intersection.midY > rectOfText.midY
-            print("{Onboarding} \(isBelow) \(rectOfReference) \(rectOfText) == \(intersection)")
+//            print("{Onboarding} \(isBelow) \(rectOfReference) \(rectOfText) == \(intersection)")
             positioning = reference.frame.height * (isBelow ? -0.25 : 0.25)
+            
+            if isBelow && !step.isContinueHidden {
+                positioning -= _view.nextButton.frame.size.height + 2
+            }
         } else {
-            positioning = 0
+            if !step.isContinueHidden {
+                positioning = -_view.nextButton.frame.size.height + 2
+            } else {
+                positioning = 0
+            }
         }
         //
         

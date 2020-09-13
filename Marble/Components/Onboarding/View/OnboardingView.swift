@@ -30,7 +30,14 @@ public class OnboardingView: GraniteView {
     var debounceInterval: Double = 0.5
     var lastInteractionTime: Double = CACurrentMediaTime()
     
-    lazy var onboardingMessage: UILabel = {
+    lazy var onboardingMessage: UIView = {
+        let view: UIView = .init()
+        view.layer.cornerRadius = 8.0
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    lazy var onboardingMessageLabel: UILabel = {
         let label: UILabel = .init()
         label.numberOfLines = 0
         label.textColor = .yellow
@@ -41,8 +48,25 @@ public class OnboardingView: GraniteView {
         return label
     }()
     
+    lazy var nextButton: UILabel = {
+        let label: UILabel = .init()
+        label.numberOfLines = 0
+        label.textColor = .yellow
+        label.backgroundColor = .black
+        label.textAlignment = .center
+        label.layer.cornerRadius = 4.0
+        label.layer.masksToBounds = true
+        label.text = "continue".localized.lowercased()
+        label.sizeToFit()
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+    
     var messageCenterYConstraint: Constraint?
     var messageHeightConstraint: Constraint?
+    var nextButtonWidthConstraint: Constraint?
+    var nextButtonHeightConstraint: Constraint?
+    var nextButtonTopConstraint: Constraint?
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -52,9 +76,23 @@ public class OnboardingView: GraniteView {
         onboardingMessage.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(12)
             make.right.equalToSuperview().offset(-12)
-            messageHeightConstraint = make.height.equalTo(onboardingMessage.font.lineHeight*5 + 12).constraint
+            messageHeightConstraint = make.height.equalTo(onboardingMessageLabel.font.lineHeight*5 + 12).constraint
             make.centerX.equalToSuperview()
             messageCenterYConstraint = make.centerY.equalToSuperview().constraint
+        }
+        
+        onboardingMessage.addSubview(onboardingMessageLabel)
+        onboardingMessageLabel.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().offset(2)
+            make.bottom.right.equalToSuperview().offset(-2)
+        }
+        
+        addSubview(nextButton)
+        nextButton.snp.makeConstraints { make in
+            nextButtonWidthConstraint = make.width.equalTo(nextButton.frame.size.width + 12).constraint
+            nextButtonHeightConstraint = make.height.equalTo(nextButton.font.lineHeight + 2).constraint
+            make.centerX.equalTo(onboardingMessage.snp.centerX)
+            nextButtonTopConstraint = make.top.equalTo(onboardingMessage.snp.bottom).offset(6).constraint
         }
     }
     
@@ -69,6 +107,7 @@ public class OnboardingView: GraniteView {
         let regionOfTheCurrent: CGRect = currentStepRegion
         if CACurrentMediaTime() - lastInteractionTime >= debounceInterval {
             lastInteractionTime = CACurrentMediaTime()
+            
             delegate?.viewTapped(inRegion: regionOfTheCurrent.contains(point))
         }
         

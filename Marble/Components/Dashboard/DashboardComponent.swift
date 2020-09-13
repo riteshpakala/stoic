@@ -43,6 +43,6 @@ public class DashboardComponent: Component<DashboardState> {
         }
         
 //        //Onboarding
-        push(OnboardingBuilder.build(self.service), display: .fit)
+//        push(OnboardingBuilder.build(self.service), display: .fit)
     }
 }
