@@ -29,6 +29,7 @@ public class OnboardingView: GraniteView {
     weak var delegate: OnboardingViewDelegate?
     var debounceInterval: Double = 0.5
     var lastInteractionTime: Double = CACurrentMediaTime()
+    var doNotBubbleHits: Bool = false
     
     lazy var onboardingMessage: UIView = {
         let view: UIView = .init()
@@ -111,7 +112,7 @@ public class OnboardingView: GraniteView {
             delegate?.viewTapped(inRegion: regionOfTheCurrent.contains(point))
         }
         
-        if regionOfTheCurrent.contains(point) {
+        if regionOfTheCurrent.contains(point), !doNotBubbleHits {
             return parent
         } else {
             return super.hitTest(point, with: event)

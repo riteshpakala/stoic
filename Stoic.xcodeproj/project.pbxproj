@@ -329,6 +329,7 @@
 		71C135C3250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C2250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift */; };
 		71C135C5250D7D2C007F1F96 /* Router.Onboarding.Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C4250D7D2C007F1F96 /* Router.Onboarding.Detail.swift */; };
 		71C135C7250D9EC2007F1F96 /* Router.Onboarding.Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */; };
+		71C135C9250DA6FE007F1F96 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C8250DA6FE007F1F96 /* UIDevice.swift */; };
 		71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */; };
 		71C21A35248D88B500F6D5BF /* GetSearchResultsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */; };
 		71C40EF724EF951B0050C072 /* TongueSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C40EF624EF951B0050C072 /* TongueSettings.swift */; };
@@ -716,6 +717,7 @@
 		71C135C2250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Dashboard.swift; sourceTree = "<group>"; };
 		71C135C4250D7D2C007F1F96 /* Router.Onboarding.Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Detail.swift; sourceTree = "<group>"; };
 		71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Browser.swift; sourceTree = "<group>"; };
+		71C135C8250DA6FE007F1F96 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCSVReducer.swift; sourceTree = "<group>"; };
 		71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchResultsReducer.swift; sourceTree = "<group>"; };
 		71C40EF624EF951B0050C072 /* TongueSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TongueSettings.swift; sourceTree = "<group>"; };
@@ -1167,6 +1169,7 @@
 			children = (
 				715A7E9A2509790D009E7244 /* Array.swift */,
 				71DCBEEA250C2BAF00C12F4B /* Dictionary.swift */,
+				71C135C8250DA6FE007F1F96 /* UIDevice.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2667,6 +2670,7 @@
 				716437CB24FC6E6D00BAB6BC /* OnboardingState.swift in Sources */,
 				71D98E8C24F26B450089C85F /* SubscribeView.swift in Sources */,
 				717A765724A16131005348F9 /* DocumentType.swift in Sources */,
+				71C135C9250DA6FE007F1F96 /* UIDevice.swift in Sources */,
 				715A7E9225095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift in Sources */,
 				715A7E96250973B6009E7244 /* ModelSelectionReducers.swift in Sources */,
 				717A766C24A16131005348F9 /* Attributes.swift in Sources */,

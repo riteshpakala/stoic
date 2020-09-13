@@ -136,8 +136,10 @@ extension OnboardingViewController {
     func setup(_ step: OnboardingStep) {
         
         if step.isActionable {
+            _view.doNotBubbleHits = false
             _view.nextButton.isHidden = true
         } else {
+            _view.doNotBubbleHits = step.continuePreferred
             _view.nextButton.isHidden = step.isContinueHidden
         }
         
@@ -180,15 +182,7 @@ extension OnboardingViewController {
         
         //
         //
-        let xPadding = step.reference?.containerView?.frame.origin.x ?? 0
-        let yPadding = step.reference?.containerView?.frame.origin.y ?? 0
-        let rectOfReference: CGRect = CGRect.init(
-            origin: .init(
-                x: xPadding + referenceFrame.origin.x,
-                y: yPadding + referenceFrame.origin.y),
-            size: CGSize.init(
-                width: referenceFrame.width,
-                height: referenceFrame.height))
+        let rectOfReference: CGRect = referenceFrame
         let rectOfText = CGRect.init(
             origin: .init(
                 x: _view.onboardingMessage.frame.origin.x,
@@ -202,13 +196,27 @@ extension OnboardingViewController {
         var positioning: CGFloat
         
         if rectOfReference.intersects(rectOfText) {
-            let intersection = rectOfText.intersection(rectOfReference)
             
-            let isBelow: Bool = intersection.midY > rectOfText.midY
-//            print("{Onboarding} \(isBelow) \(rectOfReference) \(rectOfText) == \(intersection)")
-            positioning = reference.frame.height * (isBelow ? -0.25 : 0.25)
+            let aboveArea = rectOfReference.origin.y
+            let belowArea = (reference.frame.height - rectOfReference.maxY)
             
-            if isBelow && !step.isContinueHidden {
+            let isBelow = belowArea > aboveArea
+            
+            let diff: CGFloat
+            
+            if isBelow {
+                diff = belowArea - rectOfText.height
+            } else {
+                diff = aboveArea - rectOfText.height
+            }
+            
+            let rect: CGRect = .init(origin: .init(x: rectOfText.origin.x, y: (isBelow ? rectOfReference.maxY : 0) + diff/2), size: rectOfText.size)
+            
+            let centerOfRect = rect.origin.y + (rect.height/2)
+            
+            positioning = (-reference.frame.height/2) + centerOfRect
+            
+            if !isBelow && !step.isContinueHidden {
                 positioning -= _view.nextButton.frame.size.height + 2
             }
         } else {

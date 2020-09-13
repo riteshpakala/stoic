@@ -409,7 +409,8 @@ public class BrowserModelCell: UICollectionViewCell {
                 compiledStackView,
                 standaloneLabel,
                 collection.view,
-                compiledCreateDetailsContainerView
+                compiledCreateDetailsContainerView,
+                spacer
             ]
         )
         
@@ -419,6 +420,12 @@ public class BrowserModelCell: UICollectionViewCell {
         view.spacing = GlobalStyle.largePadding
         view.setCustomSpacing(GlobalStyle.padding, after: standaloneLabel)
         
+        return view
+    }()
+    
+    lazy var spacer: UIView = {
+        let view = UIView.init()
+        view.isHidden = true
         return view
     }()
     
@@ -509,6 +516,10 @@ public class BrowserModelCell: UICollectionViewCell {
             default: break
             }
         }
+    }
+    
+    var isCreating: Bool {
+        currentCreationStatusStep != .none
     }
     
     var stock: SearchStock? = nil {
@@ -646,6 +657,9 @@ public class BrowserModelCell: UICollectionViewCell {
             widthOfDoneLabel = make.width.equalTo(compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4).constraint
             make.height.equalTo(compiledCreationDoneLabel.font.lineHeight + GlobalStyle.spacing*2)
         }
+        spacer.snp.makeConstraints { make in
+            make.height.equalTo(self.contentView.safeAreaInsets.bottom)
+        }
         actionsContainerView.addSubview(syncButton)
         syncButton.snp.makeConstraints { make in
             make.height.equalTo(syncButton.font.lineHeight+(GlobalStyle.spacing*2))
@@ -675,7 +689,17 @@ public class BrowserModelCell: UICollectionViewCell {
     
     override public func layoutIfNeeded() {
         super.layoutIfNeeded()
+        
+        stackView.layoutIfNeeded()
+        collection.layout.invalidateLayout()
+        
+        if self.orientationIsIPhoneLandscape {
+            hideViewsForLandscape()
+        } else if self.orientationIsIPhonePortrait {
+            showViewForLandscape()
+        }
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -695,6 +719,8 @@ public class BrowserModelCell: UICollectionViewCell {
         compiledContainerStackView.isHidden = true
         compiledCreateLabel.isHidden = true
         longPressGesture.isEnabled = false
+        
+        
     }
 }
 
@@ -911,14 +937,36 @@ extension BrowserModelCell {
 
 extension BrowserModelCell {
     func showViewForCreation() {
-        updateAppearance(forHiddenViews: [compiledCreateDetailsContainerView], forAppearingViews: [compiledStackView])
+        updateAppearance(forHiddenViews: [compiledCreateDetailsContainerView, spacer], forAppearingViews: [compiledStackView])
     }
     
     func hideViewsForCreation() {
-        updateAppearance(forHiddenViews: [compiledStackView], forAppearingViews: [compiledCreateDetailsContainerView])
+        guard !self.orientationIsIPhoneLandscape else { return }
+        updateAppearance(forHiddenViews: [compiledStackView], forAppearingViews: [compiledCreateDetailsContainerView, spacer])
+    }
+    
+    func showViewForLandscape() {
+        if isCreating {
+            updateAppearance(forHiddenViews: [compiledStackView], forAppearingViews: [compiledCreateDetailsContainerView, spacer])
+        } else {
+            updateAppearance(forHiddenViews: [compiledCreateDetailsContainerView, spacer], forAppearingViews: [compiledStackView])
+        }
+    }
+    
+    func hideViewsForLandscape() {
+        updateAppearance(forHiddenViews: [compiledCreateDetailsContainerView, compiledStackView, spacer], forAppearingViews: [])
     }
     
     func updateAppearance(forHiddenViews hViews: [UIView], forAppearingViews aViews: [UIView]) {
+        
+        for view in hViews {
+            view.layer.removeAllAnimations()
+        }
+        
+        for view in aViews {
+            view.layer.removeAllAnimations()
+        }
+        
         UIView.animate(withDuration: 0.25, animations: {
             for view in hViews {
                 view.alpha = 0.0
@@ -930,7 +978,15 @@ extension BrowserModelCell {
                 view.isHidden = false
             }
         }, completion: { finished in
+            for view in hViews {
+                view.alpha = 0.0
+                view.isHidden = true
+            }
             
+            for view in aViews {
+                view.alpha = 1.0
+                view.isHidden = false
+            }
         })
     }
 }

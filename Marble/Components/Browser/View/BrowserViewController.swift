@@ -97,11 +97,13 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
         browserModelCell.compiledModelCreationData = component?.state.compiledModelCreationData
         
         
+        if self.isIPhone {
+            browserModelCell.layoutIfNeeded()
+        }
+        
         guard object.model != nil else { return browserModelCell }
         
-        if let stockKit = component?
-            .getSubComponent(
-                StockKitComponent.self) as? StockKitComponent,
+        if let stockKit = component?.getSubComponent(StockKitComponent.self) as? StockKitComponent,
             let nextValidTradingDay = component?.state.nextValidTradingDay {
             let maxDays = stockKit.state.rules.maxDays
             let components = Calendar.nyCalendar.dateComponents([.day], from: nextValidTradingDay.asDate() ?? Date(), to: object.date ?? Date())
@@ -124,7 +126,12 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
     
     override public func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        dataSource?.performFetch()
+        
+        if dataSource?.controller.fetchedObjects == nil {
+            dataSource?.performFetch()
+        } else {
+            _view.collection.layout.invalidateLayout()
+        }
     }
     
     override public func bind(_ component: Component<BrowserState>) {
@@ -185,9 +192,19 @@ extension BrowserViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         
-        return  .init(
-            width: collectionView.frame.size.width,
-            height: collectionView.frame.size.height)
+        let size: CGSize
+        
+        if self.orientation.isLandscape {
+            size = .init(
+                width: min(collectionView.frame.size.width, collectionView.frame.size.height)*2,
+                height: collectionView.frame.size.height)
+        } else {
+            size = .init(
+                width: min(collectionView.frame.size.width, collectionView.frame.size.height),
+                height: collectionView.frame.size.height)
+        }
+        
+        return size
     }
 }
 

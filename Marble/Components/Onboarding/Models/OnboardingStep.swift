@@ -94,6 +94,7 @@ public class OnboardingStep: NSObject, OnboardingActionableDelegate {
     let text: String
     let order: Int
     let isContinueHidden: Bool
+    let continuePreferred: Bool
     
     public init(
         reference: OnboardingReference? = nil,
@@ -101,7 +102,8 @@ public class OnboardingStep: NSObject, OnboardingActionableDelegate {
         text: String,
         order: Int,
         isEmpty: Bool = false,
-        isContinueHidden: Bool = true) {
+        isContinueHidden: Bool = true,
+        continuePreferred: Bool = false) {
         
         self.reference = reference
         self.text = text
@@ -109,6 +111,7 @@ public class OnboardingStep: NSObject, OnboardingActionableDelegate {
         self.isEmpty = isEmpty
         self.actionable = actionable
         self.isContinueHidden = isContinueHidden
+        self.continuePreferred = continuePreferred
         super.init()
         
         self.actionable?.order = order

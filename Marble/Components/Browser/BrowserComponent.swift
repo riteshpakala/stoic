@@ -40,5 +40,8 @@ public class BrowserComponent: Component<BrowserState> {
             self.service))
         
         stockKit?.prepare()
+        
+        //Onboarding
+        push(OnboardingBuilder.build(self.service), display: .fit)
     }
 }
