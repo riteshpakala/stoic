@@ -101,13 +101,16 @@ public class SubscribeView: GraniteView {
         label.textAlignment = .center
         label.textColor = GlobalStyle.Colors.orange
         label.text = "/**** loading... */"
-    
+        label.sizeToFit()
+        label.backgroundColor = GlobalStyle.Colors.black
+        label.layer.cornerRadius = 8.0
+        label.layer.masksToBounds = true
         
         view.addSubview(label)
         label.snp.makeConstraints { make in
-            make.height.equalTo(label.font.lineHeight)
-            make.left.right.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.height.equalTo(label.font.lineHeight + 8)
+            loaderLabelWidthConstraint = make.width.equalTo(label.frame.size.width + GlobalStyle.padding).constraint
+            make.center.equalToSuperview()
         }
         view.isHidden = true
         
@@ -148,6 +151,7 @@ public class SubscribeView: GraniteView {
             action: #selector(self.emailTeamTapped(_:)))
     }()
     
+    private var loaderLabelWidthConstraint: Constraint?
     private var loader: ConsoleLoader?
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -170,6 +174,8 @@ public class SubscribeView: GraniteView {
         loaderView.container.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        beginLoader(forOptions: true)
     }
     
     required init?(coder: NSCoder) {
@@ -215,6 +221,9 @@ public class SubscribeView: GraniteView {
             guard isLoading else { return }
             self.loader?.begin()
         }
+        
+        loaderView.label.sizeToFit()
+        loaderLabelWidthConstraint?.update(offset: loaderView.label.frame.size.width + GlobalStyle.padding)
     }
 }
 
@@ -222,10 +231,13 @@ extension SubscribeView: ConsoleLoaderDelegate {
     public func consoleLoaderUpdated(_ indicator: String) {
         loaderView.label.text = indicator
         optionsLoadingLabel.text = indicator
+        
+        loaderView.label.sizeToFit()
+        loaderLabelWidthConstraint?.update(offset: loaderView.label.frame.size.width + GlobalStyle.padding)
     }
     
-    public func beginLoader() {
-        loaderView.container.isHidden = false
+    public func beginLoader(forOptions: Bool = false) {
+        loaderView.container.isHidden = forOptions
         loader?.begin()
     }
     

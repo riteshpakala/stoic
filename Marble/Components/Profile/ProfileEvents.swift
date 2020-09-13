@@ -23,6 +23,7 @@ struct ProfileEvents {
             self.intent = intent
         }
     }
+    
     public struct Authenticate: Event {
         let credential: ASAuthorizationAppleIDCredential
     }
@@ -38,4 +39,6 @@ struct ProfileEvents {
     public struct GetDisclaimerResponse: Event {
         public let disclaimers: [Disclaimer]
     }
+    
+    public struct SignOut: Event {}
 }

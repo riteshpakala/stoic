@@ -80,6 +80,9 @@ extension ProfileViewController {
         
         guard let userChange = user.newValue,
               let user = userChange else {
+                
+            self._view.signInLabel.isHidden = false
+            self._view.profileOverView.isHidden = true
             return
         }
         

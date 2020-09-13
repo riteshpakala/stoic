@@ -112,7 +112,6 @@ extension SubscribeViewController {
         guard result.success else { return }
         
         handlePurchase(shouldUpload: true)
-        
     }
     
     func observeIsLoading(

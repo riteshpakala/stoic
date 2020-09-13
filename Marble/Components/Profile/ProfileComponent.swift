@@ -20,7 +20,8 @@ public class ProfileComponent: Component<ProfileState> {
             ProfileDisclaimerReducer.Reducible(),
             ProfileDisclaimerResponseReducer.Reducible(),
             ProfileGetCSVResultsResponseReducer.Reducible(),
-            SubcriptionUpdatedProfileReducer.Reducible()
+            SubcriptionUpdatedProfileReducer.Reducible(),
+            SignOutReducer.Reducible(),
         ]
     }
     

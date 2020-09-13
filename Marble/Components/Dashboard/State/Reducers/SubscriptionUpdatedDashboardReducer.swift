@@ -7,6 +7,7 @@
 //
 import Granite
 import Foundation
+import Firebase
 import UIKit
 
 struct ShowSubscribeReducer: Reducer {
@@ -18,6 +19,14 @@ struct ShowSubscribeReducer: Reducer {
         state: inout ReducerState,
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
+        
+        guard Auth.auth().currentUser != nil else {
+            component.push(
+                ProfileBuilder.build(component.service),
+                display: .modal)
+            
+            return
+        }
         
         component.push(
             SubscribeBuilder.build(

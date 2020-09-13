@@ -86,6 +86,7 @@ public class ProfileOverView: GraniteView {
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(signOutTapGesture)
         return view
     }()
     
@@ -166,6 +167,12 @@ public class ProfileOverView: GraniteView {
             action: #selector(self.subscribeTapped(_:)))
     }()
     
+    lazy var signOutTapGesture: UITapGestureRecognizer = {
+        return UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.signOutTapped(_:)))
+    }()
+    
     public var subscription: GlobalDefaults.Subscription = .none {
         didSet {
             updateSubscriptionAppearance()
@@ -221,6 +228,11 @@ public class ProfileOverView: GraniteView {
     @objc func subscribeTapped(_ sender: UITapGestureRecognizer) {
         feedbackGenerator.impactOccurred()
         bubbleEvent(SubscribeEvents.Show())
+    }
+    
+    @objc func signOutTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
+        bubble(ProfileEvents.SignOut())
     }
     
     func emailTeam() {

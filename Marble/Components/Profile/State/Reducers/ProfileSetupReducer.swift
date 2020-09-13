@@ -19,7 +19,16 @@ struct ProfileSetupReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        guard let user = Auth.auth().currentUser else { return }
+        guard let user = Auth.auth().currentUser else {
+            state.user = nil
+            state.userProperties = .init(
+                accountAge: 0,
+                stockSearches: [],
+                stockPredictions: [])
+            
+            component.service.center.updateSubscription()
+            return
+        }
         
         guard let userData = try? component.service.center.keychain.retrieve() else {
             return

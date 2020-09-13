@@ -21,6 +21,7 @@ struct SusbcribeProductsReducer: Reducer {
         
         state.products = event.products.sorted(by: { ($0.subscriptionPeriod?.unit.rawValue ?? 0) < ($1.subscriptionPeriod?.unit.rawValue ?? 0) })
         
+        state.isLoading = false
     }
 }
 
@@ -55,6 +56,10 @@ struct SusbcribePurchaseResultReducer: Reducer {
         state: inout ReducerState,
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
+        
+        if !event.success {
+            state.isLoading = false
+        }
         
         state.purchaseResult = .init(event.success, productID: event.product)
     }

@@ -51,6 +51,7 @@ struct AuthenticateReducer: Reducer {
             print("{KEYCHAIN} Keychain storage failed \(error)")
         }
         
+        let componentToPass = component
         // Sign in with Firebase.
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if (error != nil) {
@@ -58,7 +59,33 @@ struct AuthenticateReducer: Reducer {
                 return
             }
             
+            componentToPass.sendEvent(ProfileEvents.ProfileSetup())
+            
             print("{FIREBASE} signed in")
         }
+    }
+}
+
+struct SignOutReducer: Reducer {
+    typealias ReducerEvent = ProfileEvents.SignOut
+    typealias ReducerState = ProfileState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        
+        
+        do {
+            try Auth.auth().signOut()
+            
+            sideEffects.append(.init(event: ProfileEvents.ProfileSetup()))
+            
+        } catch let error {
+            print(error)
+        }
+        
     }
 }
