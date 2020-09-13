@@ -19,7 +19,7 @@ public class StockKitComponent: Component<StockKitState> {
     
     override public func didLoad() {
         observeState(
-            \.nextValidTradingDay,
+            \.isPrepared,
             handler: prepared(_:))
     }
     
@@ -36,11 +36,11 @@ public class StockKitComponent: Component<StockKitState> {
         processEvent(StockKitEvents.GetValidMarketDays())
     }
     
-    func prepared(_ nextValidTradingDay: Change<StockDateData?>) {
-        guard nextValidTradingDay.newValue != nextValidTradingDay.oldValue else
-        { return }
+    func prepared(_ isPrepared: Change<Bool>) {
+//        guard nextValidTradingDay.newValue != nextValidTradingDay.oldValue else
+//        { return }
         
-        if nextValidTradingDay.newValue != nil {
+        if state.nextValidTradingDay != nil {
             bubbleEvent(StockKitEvents.StockKitIsPrepared())
         }
     }

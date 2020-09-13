@@ -44,6 +44,7 @@ public class BrowserState: State {
     @objc dynamic var nextValidTradingDay: String = "unknown"
     @objc dynamic var currentCompiledCreationStatus: String = BrowserCompiledModelCreationStatus.none.rawValue
     @objc dynamic var compiledModelCreationData: BrowserCompiledModelCreationData? = nil
+    var daysFromTrading: Int = 1
     
     var currentCompiledStatus: BrowserCompiledModelCreationStatus {
         return BrowserCompiledModelCreationStatus.init(rawValue: currentCompiledCreationStatus) ?? .none

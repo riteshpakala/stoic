@@ -34,6 +34,7 @@ public class StockKitState: State {
     var validTradingDays: [StockDateData]? = nil
     var validHistoricalTradingDays: [StockDateData]? = nil
     @objc dynamic var nextValidTradingDay: StockDateData? = nil
+    @objc dynamic var isPrepared: Bool = false
     
     var currentDate: Date {
         let formatter = DateFormatter()
@@ -93,7 +94,7 @@ public class StockKitState: State {
         
         if testable {
             rules.maxDays = 30
-            rules.days = 30
+            rules.days = 1
         } else {
             rules.days = predictionDays <= rules.maxDays ? predictionDays : rules.days
         }

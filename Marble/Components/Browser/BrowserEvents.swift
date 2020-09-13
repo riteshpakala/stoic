@@ -59,4 +59,6 @@ struct BrowserEvents {
             self.id = id
         }
     }
+    
+    
 }

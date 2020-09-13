@@ -14,6 +14,7 @@ public class StockModel: NSObject {
     private(set) var consoleDetailPayload: ConsoleDetailPayload? = nil
     private(set) var model: SVMModel? = nil
     private(set) var dataSet: DataSet? = nil
+    private(set) var lastStock: StockData? = nil
     
     public init(from object: StockModelObject) {
         self.id = object.id
@@ -23,6 +24,11 @@ public class StockModel: NSObject {
         self.tradingDayTime = object.date
         self.model = object.model?.model
         self.dataSet = object.dataSet?.asDataSet
+        self.lastStock = object.historicalTradingData.asStockData?.sorted(
+            by: {
+                ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedDescending
+                
+        } ).first
     }
     
     public init(fromMerged object: StockModelMergedObject) {
@@ -77,6 +83,17 @@ public class StockModel: NSObject {
     
     public var days: Int {
         consoleDetailPayload?.days ?? 0
+    }
+    
+    public var trueDays: Int {
+        if let lastDate = lastStock?.dateData.asDate {
+            let days = Calendar.nyCalendar.dateComponents([.day], from: lastDate, to: self.tradingDayDate)
+            
+            return days.day ?? 0
+        } else {
+            return consoleDetailPayload?.days ?? 0
+        }
+        
     }
     
     public var sentiment: GlobalDefaults.SentimentStrength?
@@ -168,31 +185,36 @@ public class StockModelMerged: NSObject {
         
         //day count disparity
         
+        //Above the max day in selection
         let filteredMaxDayDisparity: [StockModel] = filteredMaxStocks.filter {
             let components = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: maxDate)
             
+            let componentsLast = Calendar.nyCalendar.dateComponents([.day], from: $0.lastStock?.dateData.asDate ?? $0.tradingDayDate, to: maxDate)
+            
             if  let dayDiff = components.day,
-                dayDiff + $0.days == 0 {
+                dayDiff + $0.trueDays == 0 {
 
+                return true
+            } else if componentsLast.day == 0 {
                 return true
             } else {
                 return false
             }
         }
         
+        //Below the min date in selection
         let filteredMinDayDisparity: [StockModel] = filteredMinStocks.filter {
             let minDate = minStock.tradingDayDate
             
-            if let minDateReach = Calendar.nyCalendar.date(byAdding: .day, value: -1*minStock.days, to: minDate) {
-                
-                let components = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: minDateReach)
-                
-                if  components.day == 0 {
-                    return true
-                } else {
-                    return false
-                }
-            } else{
+            let components = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: minDate)
+            
+            let componentsLast = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: minStock.lastStock?.dateData.asDate ?? minDate)
+            
+            if  components.day == 0 {
+                return true
+            } else if componentsLast.day == 0 {
+                return true
+            } else {
                 return false
             }
         }

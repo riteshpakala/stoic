@@ -22,7 +22,6 @@ struct StockKitIsPreparedReducer: Reducer {
             state.progressLabelText = nil
             state.predictionState = DetailView.DetailPredictionState.done.rawValue
             
-            
             return
         }
         

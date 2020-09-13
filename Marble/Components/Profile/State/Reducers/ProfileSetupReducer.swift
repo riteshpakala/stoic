@@ -30,6 +30,7 @@ struct ProfileSetupReducer: Reducer {
             return
         }
         
+        print("{PROFILE} setup")
         guard let userData = try? component.service.center.keychain.retrieve() else {
             return
         }
@@ -57,7 +58,7 @@ struct ProfileSetupReducer: Reducer {
             server: .search,
             key: user.uid) { data in
             
-                
+            print("{PROFILE} got the data")
             let stockSearches = data.compactMap {
                 SearchStock.initialize(from: $0) }
             componentToPass
@@ -67,10 +68,11 @@ struct ProfileSetupReducer: Reducer {
                 route: .global,
                 server: .prediction,
                 key: user.uid) { data in
-                
+                print("{PROFILE} got the second set of data")
                 let stockPredictions = data.compactMap {
                     PredictionUpdate.initialize(from: $0) }
-                
+
+                    print("{PROFILE} lets send the overview")
                     componentToPass.sendEvent(
                         ProfileEvents.ProfileSetupOverView.init(
                             stockSearches: stockSearches,
@@ -89,7 +91,9 @@ struct ProfileSetupOverViewReducer: Reducer {
         state: inout ReducerState,
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
-            
+        
+
+        print("{PROFILE} lets setup the overview \(Auth.auth().currentUser == nil)")
         guard let user = Auth.auth().currentUser else { return }
             
         let diffInDays = Calendar.nyCalendar.dateComponents(
@@ -131,6 +135,7 @@ struct ProfileGetCSVResultsResponseReducer: Reducer {
             return
         }
         
+        print("{PROFILE} lets setup the csv dl ")
         if userProperties
             .stockPredictionsTradingDayResults[stock.symbolName] != nil {
             userProperties
@@ -142,15 +147,20 @@ struct ProfileGetCSVResultsResponseReducer: Reducer {
         state.userProperties = userProperties
         
         guard userProperties.totalUniques != userProperties.totalUniquesOfResults else {
+            print("{PROFILE} lets setup the csv dl 2")
             userProperties.isPrepared = true
             state.userProperties = userProperties
             return
         }
         
+        print("{PROFILE} lets setup the csv dl 3")
+        
         guard let stockKit = component.getSubComponent(
             StockKitComponent.self) as? StockKitComponent else {
             return
         }
+        
+        print("{PROFILE} lets setup the csv dl 4")
         
         var symbolName: String = ""
         var dayToGet: String = ""
@@ -183,6 +193,9 @@ struct ProfileGetCSVResultsResponseReducer: Reducer {
                 forTicker: symbolName,
                 date: .init(dayToGet))
         } else {
+            print("{PROFILE} lets setup the csv dl 5")
+//            userProperties.isPrepared = true
+//            state.userProperties = userProperties
             return
         }
     }

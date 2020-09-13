@@ -21,6 +21,5 @@ struct SubcriptionUpdatedProfileReducer: Reducer {
         let subscriptionStatus = component.service.storage.get(GlobalDefaults.Subscription.self)
         state.subscription = subscriptionStatus
         
-        print("{PROFILE} \(state.subscription)")
     }
 }

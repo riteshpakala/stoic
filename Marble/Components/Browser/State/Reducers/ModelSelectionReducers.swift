@@ -32,12 +32,12 @@ struct BaseModelSelectedReducer: Reducer {
             if  let stockModel = event.model,
                 let mergedModel = state.mergedModels.first(where: { $0.stock.symbol == stockSymbol && $0.stock.exchangeName == stockExchange } ) {
                 
+                
+                print("{BROWSER} \(stockModel.tradingDay) \(stockModel.lastStock?.dateData.asString)")
                 state.compiledModelCreationData?.compatibleModels =
                     mergedModel.calculateCompatibleModels(from: [], base: stockModel)
             }
         }
-        
-
     }
 }
 

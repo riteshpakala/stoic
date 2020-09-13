@@ -60,8 +60,7 @@ struct AuthenticateReducer: Reducer {
             }
             
             componentToPass.sendEvent(ProfileEvents.ProfileSetup())
-            
-            print("{FIREBASE} signed in")
+            componentToPass.service.center.updateSubscription()
         }
     }
 }
@@ -75,8 +74,6 @@ struct SignOutReducer: Reducer {
         state: inout ReducerState,
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
-        
-        
         
         do {
             try Auth.auth().signOut()

@@ -54,15 +54,15 @@ struct CheckCredentialStateReducer: Reducer {
                             // Credentials are valid.
                             break
                         case .revoked:
-                            try? Auth.auth().signOut()
+                            componentToPass.sendEvent(ProfileEvents.SignOut())
                             // Credential revoked, log them out
-                            break
                         case .notFound:
+                            componentToPass.sendEvent(ProfileEvents.SignOut())
                             // Credentials not found, show login UI
-                            break
                         case .transferred:
-                            break
+                            componentToPass.sendEvent(ProfileEvents.SignOut())
                         @unknown default:
+                            componentToPass.sendEvent(ProfileEvents.SignOut())
                             break
                         }
                 }

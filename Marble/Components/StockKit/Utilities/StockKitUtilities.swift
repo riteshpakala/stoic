@@ -92,7 +92,7 @@ public struct StockKitUtils {
             }
             
             static func outputLabel(_ variable: Double) -> String {
-                return "\("close".localized.lowercased()): $\(String(round(variable*100)/100))"
+                return "\("close".localized.lowercased()): ~$\(String(round(variable*100)/100))"
             }
             
             public var description: String {

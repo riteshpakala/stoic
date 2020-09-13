@@ -22,6 +22,27 @@ struct StockKitPreparedTradingDayReducer: Reducer {
         let subscriptionStatus = component.service.storage.get(GlobalDefaults.Subscription.self)
         state.subscription = subscriptionStatus
         
-        state.nextValidTradingDay = ((component as? BrowserComponent)?.stockKit?.state.nextValidTradingDay?.asString ?? "unknown".localized)
+        guard let browser = (component as? BrowserComponent) else { return }
+        
+        guard let nextValidTradingDate = (browser.stockKit?.state.nextValidTradingDay) else {
+            state.nextValidTradingDay = "unknown".localized
+            return
+        }
+        
+        state.nextValidTradingDay = nextValidTradingDate.asString
+        
+        guard let validTradingDays = browser.stockKit?.state.validTradingDays else {
+            return
+        }
+        
+        let tradingDays: [StockDateData] = validTradingDays.sorted(by: { ($0.asDate ?? Date()).compare(($1.asDate ?? Date())) == .orderedDescending } )
+        
+        guard let firstDay = tradingDays.first?.asDate, let nextDate = nextValidTradingDate.asDate else {
+            return
+        }
+        
+        let components = Calendar.nyCalendar.dateComponents([.day], from: firstDay, to: nextDate)
+        
+        state.daysFromTrading = components.day ?? 1
     }
 }

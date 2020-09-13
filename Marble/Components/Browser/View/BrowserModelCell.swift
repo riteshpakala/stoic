@@ -467,7 +467,7 @@ public class BrowserModelCell: UICollectionViewCell {
                 
                 let stockModelObjs: [StockModelObject] = models.compactMap({ ids.contains(($0 as? StockModelObject)?.id ?? "") ? ($0 as? StockModelObject) : nil })
                 
-                let stockModels: [StockModel] = stockModelObjs.map { StockModel.init(from: $0) }
+                let stockModels: [StockModel] = stockModelObjs.map({ StockModel.init(from: $0) })
                 
                 let sortedStockModels = stockModels.sorted(by: {
                     ($0.tradingDayDate)

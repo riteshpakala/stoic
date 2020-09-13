@@ -58,7 +58,8 @@ extension ServiceCenter {
                         subscription[StoicProducts.monthlySub] = subStatus == .purchased ? GlobalDefaults.Subscription.monthly : GlobalDefaults.Subscription.none
                     case StoicProducts.weeklySub:
                         subscription[StoicProducts.weeklySub] = subStatus == .purchased ? GlobalDefaults.Subscription.weekly : GlobalDefaults.Subscription.none
-                    default: break
+                    default:
+                        subscription[identify(GlobalDefaults.Subscription.none)] = GlobalDefaults.Subscription.none
                         
                     }
                 }
@@ -173,6 +174,13 @@ extension ServiceCenter {
             sharedSecret: StoicProducts.sharedSecret)
         
         var receiptInfo: [String: ReceiptInfo] = [:]
+        
+        guard !receipts.isEmpty else {
+            
+            completion?(nil)
+            return
+        }
+        
         for key in receipts.keys {
             guard let data = receipts[key] else { continue }
             appleValidator.validate(receiptData: data) { result in

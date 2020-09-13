@@ -103,7 +103,7 @@ public class SubscribeView: GraniteView {
         label.text = "/**** loading... */"
         label.sizeToFit()
         label.backgroundColor = GlobalStyle.Colors.black
-        label.layer.cornerRadius = 8.0
+        label.layer.cornerRadius = 4.0
         label.layer.masksToBounds = true
         
         view.addSubview(label)

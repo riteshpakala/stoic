@@ -88,5 +88,6 @@ struct GetValidMarketDaysResponseReducer: Reducer {
         
         state.validTradingDays = (sanitizedStockData.enumerated().filter { $0.offset < state.rules.days }).map { $0.element }
         state.validHistoricalTradingDays = sanitizedStockData
+        state.isPrepared = true
     }
 }

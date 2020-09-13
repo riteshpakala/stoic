@@ -29,7 +29,7 @@ struct MergeModelReducer: Reducer {
             return
         }
         
-        guard let mergeModel = state.mergedModels.first(where: { $0.stock.symbol == baseStock.stock.symbol && $0.stock.exchangeName == baseStock.stock.exchangeName }) else {
+        guard state.mergedModels.first(where: { $0.stock.symbol == baseStock.stock.symbol && $0.stock.exchangeName == baseStock.stock.exchangeName }) != nil else {
             return
         }
         
