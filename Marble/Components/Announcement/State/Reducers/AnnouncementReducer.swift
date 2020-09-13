@@ -24,32 +24,34 @@ struct AnnouncementReducer: Reducer {
             let componentToPass = component
             component.service.center.backend.get(
                 route: .announcementWelcome) { data in
-                    componentToPass.sendEvent(AnnouncementEvents.AnnouncementResponse.init(
-                        disclaimers: data.compactMap {
-                            if let message = $0["value"] as? String {
-                                return message
-                            } else {
-                                return ""
-                            }
-                        }
-                    ))
+                    
+                    
+                    guard let data = data.first else { return }
+                    
+                    let value = (data["value"] as? String) ?? "error"
+                    let title = (data["title"] as? String) ?? "~"
+                    let image = (data["image"] as? String) ?? ""
+                    
+                    let announcement: Announcement = .init(message: value, image: image, title: title)
+                    
+                    componentToPass.sendEvent(AnnouncementEvents.AnnouncementResponse.init(announcement))
             }
         case .upcoming:
             let componentToPass = component
             component.service.center.backend.get(
                 route: .announcementUpcoming) { data in
-                    componentToPass.sendEvent(AnnouncementEvents.AnnouncementResponse.init(
-                        disclaimers: data.compactMap {
-                            print("{ANNOUNCEMENT} sent \($0)")
-                            if let message = $0["value"] as? String {
-                                return message
-                            } else {
-                                return ""
-                            }
-                        }
-                    ))
+                    
+                    guard let data = data.first else { return }
+                    
+                    let value = (data["value"] as? String) ?? "error"
+                    let title = (data["title"] as? String) ?? "~"
+                    let image = (data["image"] as? String) ?? ""
+                    let id = (data["id"] as? Int) ?? -1
+                    
+                    let announcement: Announcement = .init(message: value, id: id, image: image, title: title)
+                    
+                    componentToPass.sendEvent(AnnouncementEvents.AnnouncementResponse.init(announcement))
             }
-            
         }
     }
 }
@@ -64,6 +66,6 @@ struct AnnouncementResponseReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        state.disclaimers = event.disclaimers
+        state.announcement = event.announcement
     }
 }

@@ -16,6 +16,10 @@ struct AnnouncementEvents {
     }
     
     public struct AnnouncementResponse: Event {
-        public let disclaimers: [String]
+        public let announcement: Announcement
+        
+        public init(_ announcement: Announcement) {
+            self.announcement = announcement
+        }
     }
 }

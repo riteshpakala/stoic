@@ -39,7 +39,8 @@ public struct GlobalDefaults: LocalStorageDefaults {
     
     public static var announcementDefaults: [LocalStorage.Value<Any>] {
         return [
-            LocalStorage.Value.init(GlobalDefaults.Announcement, -1)
+            LocalStorage.Value.init(GlobalDefaults.Announcement, -1),
+            LocalStorage.Value.init(GlobalDefaults.Welcome, false),
         ]
     }
     

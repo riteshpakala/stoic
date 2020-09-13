@@ -16,6 +16,18 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
         component?.service.center.welcomeCompleted == false
     }
     
+    var announcementKey: String {
+        component?.state.announcementKey ?? (shouldWelcome ? GlobalDefaults.Welcome : GlobalDefaults.Announcement)
+    }
+    
+    private lazy var agreeGesture: UITapGestureRecognizer = {
+        .init(target: self, action: #selector(agreeTapped))
+    }()
+    
+    private lazy var continueGesture: UITapGestureRecognizer = {
+        .init(target: self, action: #selector(continueTapped))
+    }()
+    
     override public func loadView() {
         self.view = AnnouncementView.init()
     }
@@ -27,9 +39,16 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        if shouldWelcome {
+            self.isModalInPresentation = true
+        }
+        
+        _view.thePrivacyAgree.label.addGestureRecognizer(agreeGesture)
+        _view.theContinue.label.addGestureRecognizer(continueGesture)
+        
         observeState(
-            \.disclaimers,
-            handler: observeDisclaimers(_:),
+            \.announcement,
+            handler: observeAnnouncement(_:),
             async: .main)
     }
     
@@ -38,29 +57,99 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
        
     }
     
-    override public func viewDidDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+        if shouldWelcome {
+            component?.service.storage.update(announcementKey, true)
+        } else if let id = component?.state.announcement?.id {
+            component?.service.storage.update(announcementKey, id)
+        }
     }
     
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
 	
+    override public func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        if self.orientationIsIPhoneLandscape {
+            if shouldWelcome {
+                _view.updatePrivacyAppearance(landscape: true)
+            } else {
+                _view.updateAppearance(landscape: true)
+            }
+        } else if self.orientationIsIPhonePortrait {
+            if shouldWelcome {
+                _view.updatePrivacyAppearance(landscape: false)
+            } else {
+                _view.updateAppearance(landscape: false)
+            }
+        }
+    }
+    
+    @objc
+    func agreeTapped(_ sender: UITapGestureRecognizer) {
+        component?.service.storage.update(announcementKey, true)
+        self.component?.removeFromParent(animated: true)
+    }
+    
+    @objc
+    func continueTapped(_ sender: UITapGestureRecognizer) {
+        if let id = component?.state.announcement?.id {
+            component?.service.storage.update(announcementKey, id)
+        }
+        self.component?.removeFromParent(animated: true)
+    }
 }
 //MARK: Observers
 extension AnnouncementViewController {
-    func observeDisclaimers(
-        _ disclaimerChange: Change<[String]?>) {
-        _view.stopLoader()
+    func observeAnnouncement(
+        _ announcementChange: Change<Announcement?>) {
         
-        _view.theMessage.text = disclaimerChange.newValue??.first
-
-        _view.theMessage.isHidden = false
+        guard let announcementValue = announcementChange.newValue, let announcement = announcementValue else { return }
         
-        if shouldWelcome {
-            _view.thePrivacy.isHidden = false
-            component?.service.storage.update(GlobalDefaults.Welcome, true)
+        
+        
+        if let url = URL.init(string: announcement.image) {
+            DispatchQueue.global().async { [weak self] in
+                if let data = try? Data(contentsOf: url) {
+                    if let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            
+                            self?.showAnnouncement(announcement, image: image)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self?.showAnnouncement(announcement)
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self?.showAnnouncement(announcement)
+                    }
+                }
+            }
+        } else {
+            self.showAnnouncement(announcement)
         }
+    }
+    
+    func showAnnouncement(_ announcement: Announcement, image: UIImage? = nil) {
+
+        self._view.stopLoader()
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self._view.setData(
+                announcement: announcement,
+                image: image,
+                self.shouldWelcome)
+        }, completion: { [weak self] finished in
+            self?._view.setData(
+                announcement: announcement,
+                image: image,
+                self?.shouldWelcome == true)
+        })
     }
 }

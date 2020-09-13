@@ -51,14 +51,14 @@ public class DashboardComponent: Component<DashboardState> {
                  display: .fit)
         }
         
-        //DEV:
+        //Announcement
         if service.center.welcomeCompleted {
+            sendEvent(DashboardEvents.CheckAnnouncement())
+        } else {
             push(AnnouncementBuilder.build(
                 self.service,
                 state: .init(GlobalDefaults.Welcome)),
                 display: .modalTop)
-        } else {
-            sendEvent(DashboardEvents.CheckAnnouncement())
         }
     }
 }

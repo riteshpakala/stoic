@@ -8,6 +8,14 @@
 
 import Granite
 import Foundation
+import CoreGraphics
 
 struct AnnouncementStyle {
+    public static var privacyHeight: CGFloat {
+        160
+    }
+    
+    public static var imageHeight: CGFloat {
+        120
+    }
 }

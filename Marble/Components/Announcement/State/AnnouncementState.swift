@@ -10,9 +10,9 @@ import Granite
 import Foundation
 
 public class AnnouncementState: State {
-    @objc dynamic var disclaimers: [String]? = nil
-    var welcomeKey: String?
-    public init(_ welcomeKey: String? = nil) {
-        self.welcomeKey = welcomeKey
+    @objc dynamic var announcement: Announcement? = nil
+    var announcementKey: String?
+    public init(_ announcementKey: String? = nil) {
+        self.announcementKey = announcementKey
     }
 }

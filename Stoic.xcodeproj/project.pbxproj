@@ -43,6 +43,7 @@
 		7127B05E2485E130004C57F1 /* ShowDetailReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B05D2485E130004C57F1 /* ShowDetailReducer.swift */; };
 		7127B0632485EEAB004C57F1 /* ConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0622485EEAB004C57F1 /* ConsoleView.swift */; };
 		7127B0662485EFCD004C57F1 /* DetailStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127B0652485EFCD004C57F1 /* DetailStyle.swift */; };
+		71290D00250ED40200E48F55 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71290CFF250ED40200E48F55 /* Announcement.swift */; };
 		712F54662506C970000384A7 /* BrowserModelDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F54652506C970000384A7 /* BrowserModelDataCell.swift */; };
 		712F54682506DBED000384A7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F54672506DBED000384A7 /* PaddingLabel.swift */; };
 		71305F7F246E038A00E64718 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71305F73246E038A00E64718 /* Router.swift */; };
@@ -343,6 +344,7 @@
 		7127B05D2485E130004C57F1 /* ShowDetailReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailReducer.swift; sourceTree = "<group>"; };
 		7127B0622485EEAB004C57F1 /* ConsoleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleView.swift; sourceTree = "<group>"; };
 		7127B0652485EFCD004C57F1 /* DetailStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStyle.swift; sourceTree = "<group>"; };
+		71290CFF250ED40200E48F55 /* Announcement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		712F54652506C970000384A7 /* BrowserModelDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelDataCell.swift; sourceTree = "<group>"; };
 		712F54672506DBED000384A7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		71305F73246E038A00E64718 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
@@ -872,6 +874,14 @@
 				71C58F552508354E00C342CE /* SwipeableHelpers.swift */,
 			);
 			path = ViewLibrary;
+			sourceTree = "<group>";
+		};
+		71290CFE250ED3EA00E48F55 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				71290CFF250ED40200E48F55 /* Announcement.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		71305F67246E038A00E64718 /* Core */ = {
@@ -1477,6 +1487,7 @@
 		71C135CE250E2926007F1F96 /* Announcement */ = {
 			isa = PBXGroup;
 			children = (
+				71290CFE250ED3EA00E48F55 /* Models */,
 				71C135CF250E2926007F1F96 /* AnnouncementComponent.swift */,
 				71C135D0250E2926007F1F96 /* AnnouncementBuilder.swift */,
 				71C135D1250E2926007F1F96 /* State */,
@@ -1981,6 +1992,7 @@
 				717A766F24A16131005348F9 /* Element.swift in Sources */,
 				7107B82224D0CE1B00FADC28 /* StockKitModels.swift in Sources */,
 				71478F7D24790297007DF62D /* SwifterTweets.swift in Sources */,
+				71290D00250ED40200E48F55 /* Announcement.swift in Sources */,
 				719AA33C2478B69A000F7CBD /* SVM.swift in Sources */,
 				71C135DE250E2926007F1F96 /* AnnouncementViewController.swift in Sources */,
 				71DCBEE7250BF17000C12F4B /* RemoveModelReducer.swift in Sources */,

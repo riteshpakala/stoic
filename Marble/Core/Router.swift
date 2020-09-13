@@ -39,9 +39,6 @@ class AppDelegate: GraniteAppDelegate {
     }
     
     override func didBecomeActive() {
-        //DEV:
-        //
-//        coordinator.service.storage.update(GlobalDefaults.OnboardingBrowser, false)
         coordinator.service.center.requestSubscriptionUpdate()
     }
 }
