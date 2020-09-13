@@ -17,7 +17,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
     }
     
     public static var allVariableDefaults: [LocalStorage.Value<Any>] {
-        return GlobalDefaults.variableDefaults + GlobalDefaults.onboardingDefaults
+        return GlobalDefaults.variableDefaults + GlobalDefaults.onboardingDefaults + GlobalDefaults.announcementDefaults
     }
     
     public static var defaults: [LocalStorage.Value<LocalStorageValue>] {
@@ -34,6 +34,12 @@ public struct GlobalDefaults: LocalStorageDefaults {
             LocalStorage.Value.init(GlobalDefaults.OnboardingDashboard, false),
             LocalStorage.Value.init(GlobalDefaults.OnboardingDetail, false),
             LocalStorage.Value.init(GlobalDefaults.OnboardingBrowser, false),
+        ]
+    }
+    
+    public static var announcementDefaults: [LocalStorage.Value<Any>] {
+        return [
+            LocalStorage.Value.init(GlobalDefaults.Announcement, -1)
         ]
     }
     
@@ -182,4 +188,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
     
     //MARK: -- Welcome
     public static var Welcome: String = "Welcome"
+    
+    //MARK: -- Announcement
+    public static var Announcement: String = "Welcome"
 }

@@ -90,6 +90,7 @@
 		71478F8F24790BD8007DF62D /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */; };
 		714A82E1246E30BA006A7120 /* HomeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E0246E30BA006A7120 /* HomeComponent.swift */; };
 		714A82E3246E30C9006A7120 /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E2246E30C9006A7120 /* HomeState.swift */; };
+		7153FEB8250E451A005449D5 /* AnnouncementDashboardReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7153FEB7250E451A005449D5 /* AnnouncementDashboardReducer.swift */; };
 		715A7E9225095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9125095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift */; };
 		715A7E9425096188009E7244 /* BrowserModelCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E9325096188009E7244 /* BrowserModelCellHeader.swift */; };
 		715A7E96250973B6009E7244 /* ModelSelectionReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */; };
@@ -391,6 +392,7 @@
 		71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		714A82E0246E30BA006A7120 /* HomeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComponent.swift; sourceTree = "<group>"; };
 		714A82E2246E30C9006A7120 /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
+		7153FEB7250E451A005449D5 /* AnnouncementDashboardReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDashboardReducer.swift; sourceTree = "<group>"; };
 		715A7E9125095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockKitPreparedTradingDayReducer.swift; sourceTree = "<group>"; };
 		715A7E9325096188009E7244 /* BrowserModelCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelCellHeader.swift; sourceTree = "<group>"; };
 		715A7E95250973B6009E7244 /* ModelSelectionReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSelectionReducers.swift; sourceTree = "<group>"; };
@@ -795,6 +797,7 @@
 			isa = PBXGroup;
 			children = (
 				7127B05D2485E130004C57F1 /* ShowDetailReducer.swift */,
+				7153FEB7250E451A005449D5 /* AnnouncementDashboardReducer.swift */,
 				71C135BD250D675C007F1F96 /* SubscriptionUpdatedDashboardReducer.swift */,
 				71D98E3E24F1E3210089C85F /* SettingsReducers.swift */,
 				71BC1C30248635F200B35DC1 /* CloseDetailReducer.swift */,
@@ -1913,6 +1916,7 @@
 				7110A56C248DCAD500F62940 /* SearchBuilder.swift in Sources */,
 				71A1D2D6246E027D00D778A5 /* CALayer.swift in Sources */,
 				7127B02F2485DCF7004C57F1 /* DetailView.swift in Sources */,
+				7153FEB8250E451A005449D5 /* AnnouncementDashboardReducer.swift in Sources */,
 				71A7C6AC2505B9900094C352 /* StockModel.swift in Sources */,
 				71A7C69A250571000094C352 /* StockModelObject+CoreDataProperties.swift in Sources */,
 				71725D9C24F27833003B0FF6 /* SubscribeDisclaimerReducer.swift in Sources */,

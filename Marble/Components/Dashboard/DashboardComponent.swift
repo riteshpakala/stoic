@@ -22,7 +22,8 @@ public class DashboardComponent: Component<DashboardState> {
             DetailIsInteractingReducer.Reducible(),
             ShowSettingsReducer.Reducible(),
             SubscriptionUpdatedDashboardReducer.Reducible(),
-            ShowSubscribeReducer.Reducible()
+            ShowSubscribeReducer.Reducible(),
+            AnnouncementDashboardReducer.Reducible()
         ]
     }
     
@@ -51,11 +52,13 @@ public class DashboardComponent: Component<DashboardState> {
         }
         
         //DEV:
-        if !service.center.welcomeCompleted {
+        if service.center.welcomeCompleted {
             push(AnnouncementBuilder.build(
                 self.service,
                 state: .init(GlobalDefaults.Welcome)),
                 display: .modalTop)
+        } else {
+            sendEvent(DashboardEvents.CheckAnnouncement())
         }
     }
 }

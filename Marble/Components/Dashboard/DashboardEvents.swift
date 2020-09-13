@@ -25,22 +25,19 @@ struct DashboardEvents {
         let searchedStock: SearchStock
     }
     
-    struct AllDetailsClosed: Event {
-    }
+    struct AllDetailsClosed: Event {}
     
-    struct GenerateSettings: Event {
-    }
+    struct GenerateSettings: Event {}
     
     struct UpdateSettings: Event {
         let label: String
     }
     
-    struct OpenProfile: Event {
-    }
+    struct OpenProfile: Event {}
     
-    struct OpenBrowser: Event {
-    }
+    struct OpenBrowser: Event {}
     
-    struct DismissProfile: Event {
-    }
+    struct DismissProfile: Event {}
+    
+    struct CheckAnnouncement: Event {}
 }
