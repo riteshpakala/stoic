@@ -193,15 +193,20 @@ extension BrowserViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         
         let size: CGSize
+        let hasMore: Bool = (dataSource?.controller.fetchedObjects?.count ?? 0 ) > 1
         
-        if self.orientation.isLandscape {
-            size = .init(
-                width: min(collectionView.frame.size.width, collectionView.frame.size.height)*2,
-                height: collectionView.frame.size.height)
+        if hasMore {
+            if self.orientation.isLandscape {
+                size = .init(
+                    width: min(collectionView.frame.size.width, collectionView.frame.size.height)*(self.isIPad ? 1 : 2),
+                    height: collectionView.frame.size.height)
+            } else {
+                size = .init(
+                    width: min(collectionView.frame.size.width, collectionView.frame.size.height),
+                    height: collectionView.frame.size.height)
+            }
         } else {
-            size = .init(
-                width: min(collectionView.frame.size.width, collectionView.frame.size.height),
-                height: collectionView.frame.size.height)
+            size = collectionView.frame.size
         }
         
         return size
@@ -219,6 +224,23 @@ extension BrowserViewController: UICollectionViewDelegate {
     public func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath) {
+        
+        guard let browserModelCell = cell as? BrowserModelCell else { return }
+        
+        if self.orientationIsIPhoneLandscape {
+            browserModelCell.hideViewsForLandscape()
+            browserModelCell.layoutIfNeeded()
+        } else if self.orientationIsIPhonePortrait {
+            browserModelCell.showViewForLandscape()
+            browserModelCell.layoutIfNeeded()
+        }
         
     }
 }

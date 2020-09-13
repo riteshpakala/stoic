@@ -975,15 +975,22 @@ extension BrowserModelCell {
                 view.alpha = 1.0
                 view.isHidden = false
             }
-        }, completion: { finished in
-            for view in hViews {
-                view.alpha = 0.0
-                view.isHidden = true
-            }
+        }, completion: { [weak self] finished in
             
-            for view in aViews {
-                view.alpha = 1.0
-                view.isHidden = false
+            if self?.orientationIsIPhoneLandscape == true {
+                self?.compiledCreateDetailsContainerView.isHidden = true
+                self?.compiledLabel.isHidden = true
+                self?.spacer.isHidden = true
+            } else {
+                for view in hViews {
+                    view.alpha = 0.0
+                    view.isHidden = true
+                }
+                
+                for view in aViews {
+                    view.alpha = 1.0
+                    view.isHidden = false
+                }
             }
         })
     }
