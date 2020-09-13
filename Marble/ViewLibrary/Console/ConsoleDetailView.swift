@@ -66,26 +66,13 @@ class ConsoleDetailView: GraniteView {
         }
     }
     
-    lazy var loaderView: (container: UIView, label: UILabel) = {
+    lazy var loaderView: UIView = {
         let view: UIView = .init()
         view.backgroundColor = GlobalStyle.Colors.purple.withAlphaComponent(0.36)
         
-        let label: UILabel = .init()
-        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        label.textAlignment = .center
-        label.textColor = GlobalStyle.Colors.purple
-        label.text = "/**** thinking... */"
-    
-        
-        view.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.height.equalTo(label.font.lineHeight)
-            make.left.right.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
         view.isHidden = true
         
-        return (view, label)
+        return (view)
     }()
     
     let baseFrame: CGRect
@@ -94,16 +81,20 @@ class ConsoleDetailView: GraniteView {
         return baseFrame.size
     }
     
+    private var stockSymbol: String? = nil
+    private var loader: ConsoleLoader?
+    private var isThinking: Bool = false
     override init(frame: CGRect) {
         self.baseFrame = frame
         super.init(frame: frame)
         
+        loader = .init(self, baseText: " /* thinking\(ConsoleLoader.seperator) */")
         addSubview(headerView)
         addSubview(sentimentView)
         addSubview(disclaimerView)
         addSubview(predictionView)
         addSubview(historicalView)
-        addSubview(loaderView.container)
+        addSubview(loaderView)
         
         headerView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -134,7 +125,7 @@ class ConsoleDetailView: GraniteView {
             make.height.equalTo(baseSize.height*0.16)
         }
         
-        loaderView.container.snp.makeConstraints { make in
+        loaderView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
@@ -148,7 +139,7 @@ class ConsoleDetailView: GraniteView {
     }
     
     func updateData(_ payload: ConsoleDetailPayload) {
-        
+        stockSymbol = "$"+(payload.historicalTradingData.first?.symbolName ?? "")
         headerView.updateTradingDay(payload.currentTradingDay)
         historicalView.updateData(
             payload.historicalTradingData.reversed(),
@@ -160,7 +151,7 @@ class ConsoleDetailView: GraniteView {
     }
     
     func updateThink(_ payload: ThinkPayload?) {
-        self.loaderView.container.isHidden = true
+        thinkingStopped()
         if let sentiment = payload?.stockSentimentData {
             sentimentView.updateSlider(sentiment)
             sentimentChanged(
@@ -200,6 +191,14 @@ class ConsoleDetailView: GraniteView {
     }
 }
 
+extension ConsoleDetailView: ConsoleLoaderDelegate {
+    public func consoleLoaderUpdated(_ indicator: String) {
+        if let consoleView = superview as? ConsoleView, let symbol = stockSymbol {
+            consoleView.tickerLabel.text = symbol+indicator
+        }
+    }
+}
+
 extension ConsoleDetailView: ConsoleDetailSentimentViewDelegate {
     func sentimentChanged(
         _ positive: Double,
@@ -221,8 +220,50 @@ extension ConsoleDetailView: ConsoleDetailSentimentViewDelegate {
 }
 
 extension ConsoleDetailView: ConsoleDetailPredictionViewDelegate {
+    func minimized() {
+        self.loader?.stop()
+        self.loader = .init(self)
+        
+        guard isThinking else { return }
+        if let consoleView = superview as? ConsoleView {
+            consoleView.tickerLabel.text = (stockSymbol ?? "")+(self.loader?.defaultStatus ?? "")
+        }
+        self.loader?.begin()
+    }
+    
+    func expand() {
+        self.loader?.stop()
+        self.loader = .init(self, baseText: " /* thinking\(ConsoleLoader.seperator) */")
+        
+        guard isThinking else { return }
+        if let consoleView = superview as? ConsoleView {
+            consoleView.tickerLabel.text = (stockSymbol ?? "")+(self.loader?.defaultStatus ?? "")
+        }
+        self.loader?.begin()
+    }
+    
     func thinking() {
-        self.loaderView.container.isHidden = false
+        self.loader?.begin()
+        self.loaderView.isHidden = false
+        
+        if let consoleView = superview as? ConsoleView {
+            consoleView.tickerLabel.textColor = GlobalStyle.Colors.purple
+            consoleView.tickerLabel.text = (stockSymbol ?? "")+(self.loader?.defaultStatus ?? "")
+        }
+        
+        isThinking = true
+    }
+    
+    func thinkingStopped() {
+        self.loader?.stop()
+        self.loaderView.isHidden = true
+        
+        if let consoleView = superview as? ConsoleView, let symbol = stockSymbol {
+            consoleView.tickerLabel.text = symbol
+            consoleView.tickerLabel.textColor = GlobalStyle.Colors.black
+        }
+        
+        isThinking = false
     }
 }
 

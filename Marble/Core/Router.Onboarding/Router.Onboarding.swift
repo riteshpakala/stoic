@@ -8,7 +8,6 @@
 
 import Foundation
 import Granite
-import Firebase
 
 //MARK: Onboarding
 extension Onboardable {
@@ -18,5 +17,17 @@ extension Onboardable {
             textColor: GlobalStyle.Colors.yellow,
             textFont: GlobalStyle.Fonts.courier(.medium, .bold),
             textBackgroundColor: GlobalStyle.Colors.black.withAlphaComponent(0.75))
+    }
+}
+
+extension ServiceCenter {
+    var onboardingDashboardCompleted: Bool {
+        storage.get(GlobalDefaults.OnboardingDashboard, defaultValue: false)
+    }
+    var onboardingDetailCompleted: Bool {
+        storage.get(GlobalDefaults.OnboardingDetail, defaultValue: false)
+    }
+    var onboardingBrowserCompleted: Bool {
+        storage.get(GlobalDefaults.OnboardingBrowser, defaultValue: false)
     }
 }

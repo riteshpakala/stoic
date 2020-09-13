@@ -21,7 +21,10 @@ public class DetailView: GraniteView {
         let consoleView: ConsoleView = .init(
             frame: .init(
                 origin: .zero,
-                size: DetailStyle.consoleSizeExpanded))
+                size: DetailStyle.consoleSizeExpanded),
+            minimizedFrame: .init(
+                origin: .zero,
+                size: DetailStyle.consoleSizePredicting))
         consoleView.setStatus(currentState.rawValue)
         return consoleView
     }()
@@ -29,8 +32,7 @@ public class DetailView: GraniteView {
     var currentState: DetailPredictionState = .downloadingData {
         didSet {
             if currentState == .done {
-                progressTimer?.invalidate()
-                self.progressTimer = nil
+                loader?.stop()
                 self.consoleView.setStatus(nil)
                 
                 if !consoleView.minimized {
@@ -49,45 +51,33 @@ public class DetailView: GraniteView {
         case three = "..."
     }
     
+    private var loader: ConsoleLoader?
+    
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        
+        loader = .init(self)
         self.frame.size = DetailStyle.consoleSizePredicting
         self.center = .init(
             x: LSConst.Device.width/2,
             y: LSConst.Device.height/2)
             
+        
         addSubview(consoleView)
         consoleView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        progressTimer = Timer.scheduledTimer(
-            withTimeInterval: 0.42,
-            repeats: true) { timer in
-            
-                DispatchQueue.main.async {
-                    if self.currentState != .done {
-                        
-                        if self.currentIndicator == .zero {
-                            self.currentIndicator = .one
-                        } else if self.currentIndicator == .one {
-                            self.currentIndicator = .two
-                        } else if self.currentIndicator == .two {
-                            self.currentIndicator = .three
-                        } else {
-                            self.currentIndicator = .zero
-                        }
-                        
-                        self.consoleView.setStatus(
-                            self.currentState.rawValue+"\(self.currentIndicator.rawValue)")
-                    }
-                }
-        }
+        loader?.begin()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+extension DetailView: ConsoleLoaderDelegate {
+    public func consoleLoaderUpdated(_ indicator: String) {
+        
+        self.consoleView.setStatus(self.currentState.rawValue+indicator)
+    }
 }

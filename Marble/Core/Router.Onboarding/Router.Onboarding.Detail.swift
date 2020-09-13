@@ -144,7 +144,7 @@ extension DetailView: Onboardable {
                     left: -GlobalStyle.spacing,
                     bottom: GlobalStyle.spacing + consoleView.detailView.predictionView.frame.height,
                     right: -GlobalStyle.spacing*2)),
-            actionable: .init(keyPath: \.isHidden, view: self.consoleView.detailView.loaderView.container),
+            actionable: .init(keyPath: \.isHidden, view: self.consoleView.detailView.loaderView),
             text: "give it a moment to find valuable info to work with",
             order: 7)
     }
@@ -165,10 +165,8 @@ extension DetailView: Onboardable {
     }
     
     public func committedStep(_ index: Int) {
-        if index == 8 {
-            print("{Onboarding} committed")
+        if index == 7 {
             guard let superview = self.superview as? DashboardView else {
-                print("{Onboarding} could not cast")
                 return
             }
             superview.settings.open()

@@ -176,6 +176,7 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
     func tapRegistered(_ sender: UITapGestureRecognizer) {
         feedbackGenerator.impactOccurred()
         if isOpen {
+            showHelpers(forceHide: true)
             collapse()
         } else {
             bubble(DashboardEvents.SettingsIsInteracting())

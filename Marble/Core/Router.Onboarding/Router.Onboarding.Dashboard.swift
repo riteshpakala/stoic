@@ -31,9 +31,14 @@ extension DashboardView: Onboardable {
         OnboardingStep.init(
             reference: OnboardingReference.init(
                 referenceView: self.settings.tongueView,
-                containerView: self.settings),
+                containerView: self.settings,
+                padding: .init(
+                    top: self.safeAreaInsets.bottom == .zero ? 0 : self.settings.tongueView.frame.size.height/2,
+                    left: 0,
+                    bottom: 0,
+                    right: 0)),
             actionable: .init(keyPath: \.layer.transform, view: self.settings.indicator),
-            text: "tap the arrow to view various options that control your experience in Stoic.",
+            text: "tap the arrow to view various ways you can control your experience within Stoic",
             order: 0)
     }
     
@@ -63,7 +68,8 @@ extension DashboardView: Onboardable {
                     bottom: -(self.settings.container.frame.height*4/5),
                 right: -abs(self.settings.container.frame.width - self.settings.tongueView.frame.width))),
             text: "profile is what it sounds like, view account stats that update on each forecast. longer you use this app the more interesting your device history will become",
-            order: 2)
+            order: 2,
+            isContinueHidden: false)
     }
     
     public var modelBrowserStep: OnboardingStep {
@@ -77,7 +83,8 @@ extension DashboardView: Onboardable {
                     bottom: -(self.settings.container.frame.height*4/5),
                 right: -abs(self.settings.container.frame.width - self.settings.tongueView.frame.width))),
             text: "your trained models are stored here & can be combined into larger, refined versions",
-            order: 3)
+            order: 3,
+            isContinueHidden: false)
     }
     
     public var sentimentStep: OnboardingStep {
@@ -95,7 +102,8 @@ extension DashboardView: Onboardable {
         return OnboardingStep.init(
             reference: reference,
             text: "sentiment strength modifies the intensity of how & how much data to process from the web regarding emotion. higher settings increases prediction time, but tends to lead to more accurate results",
-            order: 4)
+            order: 4,
+            isContinueHidden: false)
     }
     
     public var daysStep: OnboardingStep {
@@ -113,7 +121,8 @@ extension DashboardView: Onboardable {
         return OnboardingStep.init(
             reference: reference,
             text: "the number of days to learn from can be adjusted as well. from a day before the next valid trading window to 12 days to the past. prediction time greatly increases, especially if your sentiment strength is high. But, again... tends to lead to more interesting results",
-            order: 5)
+            order: 5,
+            isContinueHidden: false)
     }
     
     public var searchStep: OnboardingStep {
@@ -151,9 +160,10 @@ extension DashboardView: Onboardable {
     }
     
     public func committedStep(_ index: Int) {
-//        if index <= 3 {
-//            self.settings.showHelpers(forceActive: true)
-        if index == 5 {
+        if index == 0 {
+            self.settings.showHelpers(forceActive: true)
+        }else if index == 5 {
+            self.bringSubviewToFront(self.settings)
             self.settings.showHelpers(forceHide: true)
             self.settings.collapse()
         }

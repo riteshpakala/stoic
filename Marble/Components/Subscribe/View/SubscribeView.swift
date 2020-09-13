@@ -148,8 +148,10 @@ public class SubscribeView: GraniteView {
             action: #selector(self.emailTeamTapped(_:)))
     }()
     
+    private var loader: ConsoleLoader?
     override public init(frame: CGRect) {
         super.init(frame: frame)
+        loader = .init(self, baseText: "/**** loading\(ConsoleLoader.seperator) */")
         backgroundColor = GlobalStyle.Colors.black
         
         addSubview(stackView)
@@ -194,11 +196,42 @@ public class SubscribeView: GraniteView {
             loaderView.label.textColor = GlobalStyle.Colors.purple
             loaderView.label.text = "/**** confirming... */"
             loaderView.container.backgroundColor = GlobalStyle.Colors.purple.withAlphaComponent(0.36)
+            
+            let isLoading = self.loader?.isLoading == true
+            self.loader?.stop()
+            self.loader = .init(self, baseText: "/**** confirming\(ConsoleLoader.seperator) */")
+            loaderView.label.text = self.loader?.defaultStatus
+            guard isLoading else { return }
+            self.loader?.begin()
         } else {
             loaderView.label.textColor = GlobalStyle.Colors.orange
             loaderView.label.text = "/**** loading... */"
             loaderView.container.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.36)
+            
+            let isLoading = self.loader?.isLoading == true
+            self.loader?.stop()
+            self.loader = .init(self, baseText: "/**** confirming\(ConsoleLoader.seperator) */")
+            loaderView.label.text = self.loader?.defaultStatus
+            guard isLoading else { return }
+            self.loader?.begin()
         }
+    }
+}
+
+extension SubscribeView: ConsoleLoaderDelegate {
+    public func consoleLoaderUpdated(_ indicator: String) {
+        loaderView.label.text = indicator
+        optionsLoadingLabel.text = indicator
+    }
+    
+    public func beginLoader() {
+        loaderView.container.isHidden = false
+        loader?.begin()
+    }
+    
+    public func stopLoader() {
+        loaderView.container.isHidden = true
+        loader?.stop()
     }
 }
 

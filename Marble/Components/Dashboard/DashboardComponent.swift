@@ -42,7 +42,12 @@ public class DashboardComponent: Component<DashboardState> {
             make.right.equalTo(viewController.view.safeAreaLayoutGuide.snp.right)
         }
         
-//        //Onboarding
-//        push(OnboardingBuilder.build(self.service), display: .fit)
+        //Onboarding
+        if !service.center.onboardingDashboardCompleted {
+            push(OnboardingBuilder.build(
+                self.service,
+                state: .init(GlobalDefaults.OnboardingDashboard)),
+                 display: .fit)
+        }
     }
 }

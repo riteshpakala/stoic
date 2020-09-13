@@ -122,8 +122,11 @@ extension SubscribeViewController {
             return
         }
         
-        _view.loaderView.container.isHidden = !status
-        
+        if status {
+            _view.beginLoader()
+        } else {
+            _view.stopLoader()
+        }
     }
 }
 

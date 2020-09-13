@@ -11,14 +11,26 @@ import UIKit
 
 public struct DetailStyle {
     static let consoleSizeExpanded: CGSize = {
-        return .init(
-            width: LSConst.Device.width*0.9,
-            height: LSConst.Device.width*0.9)
+        if LSConst.Device.isIPad {
+            return .init(
+                width: ceil(LSConst.Device.width*0.45),
+                height: ceil(LSConst.Device.width*0.45))
+        } else {
+            return .init(
+                width: ceil(LSConst.Device.width*0.9),
+                height: ceil(LSConst.Device.width*0.9))
+        }
     }()
     
     static let consoleSizePredicting: CGSize = {
-        return .init(
-            width: LSConst.Device.width*0.9,
-            height: LSConst.Device.width*0.45)
+        if LSConst.Device.isIPad {
+            return .init(
+                width: ceil(LSConst.Device.width*0.45),
+                height: ceil(LSConst.Device.width*0.28))
+        } else {
+            return .init(
+                width: ceil(LSConst.Device.width*0.9),
+                height: ceil(LSConst.Device.width*0.45))
+        }
     }()
 }

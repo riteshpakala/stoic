@@ -154,13 +154,19 @@ extension SearchViewController {
 extension SearchViewController: UITextFieldDelegate {
     public func textFieldShouldBeginEditing(
         _ textField: UITextField) -> Bool {
+        _view.collectionAccessory.container.isHidden = component?.service.center.onboardingDashboardCompleted == false
         return true
     }
     
     public func textFieldShouldReturn(
         _ textField: UITextField) -> Bool {
-        bubbleEvent(SearchEvents.SearchUpdateAppearance(intentToDismiss: true))
+        
         _view.resetSearch()
+        
+        if component?.service.center.onboardingDashboardCompleted == true {
+            bubbleEvent(SearchEvents.SearchUpdateAppearance(intentToDismiss: true))
+        }
+        
         return true
     }
     

@@ -172,15 +172,17 @@ public class ProfileOverView: GraniteView {
         }
     }
     
+    private var loader: ConsoleLoader?
     public init() {
         super.init(frame: .zero)
-        
+        loader = .init(self, baseText: "/**** loading\(ConsoleLoader.seperator) */")
         backgroundColor = .clear
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        loader?.begin()
     }
     
     required init?(coder: NSCoder) {
@@ -188,7 +190,7 @@ public class ProfileOverView: GraniteView {
     }
     
     func setProperties(_ properties: UserProperties) {
-        
+        loader?.stop()
         statsDescription1.text =
         """
         - \(properties.accountAge) days old
@@ -230,5 +232,12 @@ public class ProfileOverView: GraniteView {
                 UIApplication.shared.openURL(url)
             }
         }
+    }
+}
+
+extension ProfileOverView: ConsoleLoaderDelegate {
+    public func consoleLoaderUpdated(_ indicator: String) {
+        self.statsDescription1.text = indicator
+        self.statsDescription2.text = indicator
     }
 }

@@ -13,11 +13,11 @@ public struct GlobalDefaults: LocalStorageDefaults {
     public init() {}
     
     public static var allLSVDefaults: [LocalStorage.Value<LocalStorageValue>] {
-        return GlobalDefaults.defaults + GlobalDefaults.onboardingDefaults
+        return GlobalDefaults.defaults
     }
     
     public static var allVariableDefaults: [LocalStorage.Value<Any>] {
-        return GlobalDefaults.variableDefaults
+        return GlobalDefaults.variableDefaults + GlobalDefaults.onboardingDefaults
     }
     
     public static var defaults: [LocalStorage.Value<LocalStorageValue>] {
@@ -29,9 +29,11 @@ public struct GlobalDefaults: LocalStorageDefaults {
         ]
     }
     
-    public static var onboardingDefaults: [LocalStorage.Value<LocalStorageValue>] {
+    public static var onboardingDefaults: [LocalStorage.Value<Any>] {
         return [
-            LocalStorage.Value.init(OnboardingDashboard.notCompleted),
+            LocalStorage.Value.init(GlobalDefaults.OnboardingDashboard, false),
+            LocalStorage.Value.init(GlobalDefaults.OnboardingDetail, false),
+            LocalStorage.Value.init(GlobalDefaults.OnboardingBrowser, false),
         ]
     }
     
@@ -40,7 +42,6 @@ public struct GlobalDefaults: LocalStorageDefaults {
             LocalStorage.Value.init(GlobalDefaults.SubscriptionCheck, CFAbsoluteTimeGetCurrent()),
         ]
     }
-    
 
     public enum SentimentStrength: Int, LocalStorageValue {
         case low
@@ -175,16 +176,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
     }
     
     //MARK: -- Onboarding Defaults
-    public enum OnboardingDashboard: Int, LocalStorageValue {
-        case notCompleted
-        case completed
-        
-        public var value: Int {
-            return self.rawValue
-        }
-        
-        public var permissions: LocalStorageReadWrite {
-            return .internalReadAndWrite
-        }
-    }
+    public static var OnboardingDashboard: String = "OnboardingDashboard"
+    public static var OnboardingDetail: String = "OnboardingDetail"
+    public static var OnboardingBrowser: String = "OnboardingBrowser"
 }

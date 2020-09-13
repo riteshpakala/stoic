@@ -100,7 +100,7 @@ class ConsoleView: GraniteView {
         return baseFrame.size
     }
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, minimizedFrame: CGRect) {
         self.baseFrame = frame
         super.init(frame: frame)
         
@@ -115,7 +115,7 @@ class ConsoleView: GraniteView {
         
         predictingIndicator.center = .init(
             x: self.center.x,
-            y: self.center.y)
+            y: minimizedFrame.height)
         
         taskbarView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
@@ -196,6 +196,12 @@ extension ConsoleView {
         predictingIndicator.isHidden = minimizeButton.tag == 0 || detailIsLoaded
         
         if minimizeButton.tag == 0 {
+            detailView.minimized()
+        } else {
+            detailView.expand()
+        }
+        
+        if minimizeButton.tag == 0 {
             
             taskbarView.snp.remakeConstraints { make in
                 make.edges.equalToSuperview()
@@ -212,8 +218,6 @@ extension ConsoleView {
             
             minimizeButton.tag = 0
         }
-        
-        
     }
 }
 

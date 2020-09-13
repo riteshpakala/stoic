@@ -145,7 +145,7 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
 
 extension BrowserViewController {
     func observeTradingDay(_ day: Change<String>) {
-        _view.nextTradingDayLabel.text = "trading day".localized+": "+(day.newValue ?? "unknown")
+        _view.updateTradingLabel("trading day".localized+": "+(day.newValue ?? "unknown"))
         
         if day.newValue != nil {
             _view.collection.view.reloadData()

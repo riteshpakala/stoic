@@ -42,6 +42,11 @@ public class BrowserComponent: Component<BrowserState> {
         stockKit?.prepare()
         
         //Onboarding
-        push(OnboardingBuilder.build(self.service), display: .fit)
+        if !service.center.onboardingBrowserCompleted, !state.mergedModels.isEmpty {
+            push(OnboardingBuilder.build(
+                self.service,
+                state: .init(GlobalDefaults.OnboardingBrowser)),
+                 display: .fit)
+        }
     }
 }

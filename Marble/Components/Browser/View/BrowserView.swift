@@ -73,7 +73,7 @@ public class BrowserView: GraniteView {
         label.font = GlobalStyle.Fonts.courier(.medium, .bold)
         label.textAlignment = .center
         label.textColor = GlobalStyle.Colors.orange
-        label.text = "You don't have any models, search for a stock to train a model and it will appear here. Train more than 1 to merge them into a more refined version over time.".localized.lowercased()
+        label.text = "You don't have any models, search for a stock to train a model & it will appear here. Train more than 1 to combine them into a more refined version over time".localized.lowercased()
         label.numberOfLines = 0
         return label
     }()
@@ -136,9 +136,11 @@ public class BrowserView: GraniteView {
         return (view, layout)
     }()
     
+    private var loader: ConsoleLoader?
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
+        loader = .init(self, baseText: "/**** loading\(ConsoleLoader.seperator) */")
         self.backgroundColor = GlobalStyle.Colors.black
         
         addSubview(stackView)
@@ -165,6 +167,7 @@ public class BrowserView: GraniteView {
             make.width.equalTo(predictionEngineVersion.frame.size.width + GlobalStyle.spacing*4)
         }
         
+        loader?.begin()
         self.dim()
     }
     
@@ -182,5 +185,16 @@ public class BrowserView: GraniteView {
             make.right.equalToSuperview()
                 .offset(-GlobalStyle.largePadding)
         }
+    }
+}
+
+extension BrowserView: ConsoleLoaderDelegate {
+    public func consoleLoaderUpdated(_ indicator: String) {
+        self.nextTradingDayLabel.text = indicator
+    }
+    
+    public func updateTradingLabel(_ text: String) {
+        loader?.stop()
+        self.nextTradingDayLabel.text = text
     }
 }

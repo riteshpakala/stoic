@@ -49,6 +49,11 @@ public class DetailComponent: Component<DetailState> {
         stockKit?.prepare()
         
         //Onboarding
-        push(OnboardingBuilder.build(self.service), display: .fit)
+        if !service.center.onboardingDetailCompleted {
+            push(OnboardingBuilder.build(
+                self.service,
+                state: .init(GlobalDefaults.OnboardingDetail)),
+                 display: .fit)
+        }
     }
 }
