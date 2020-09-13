@@ -475,8 +475,6 @@ public class BrowserModelCell: UICollectionViewCell {
                 
                 guard let firstModel = sortedStockModels.first else { return }
                 
-                print("{SVM} found new model")
-                
                 compiledTradingDayLabel.text = "\(firstModel.tradingDay)"
                 compiledDaysLabel.text = "\("days trained".localized.lowercased()): "+"\(stockModels.map { $0.days }.reduce(0, +))"
                 compiledModelsWithinLabel.text = "\("models within".localized.lowercased()): "+"\(stockModels.count)"

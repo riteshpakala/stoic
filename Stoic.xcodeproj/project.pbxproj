@@ -47,7 +47,6 @@
 		712F54682506DBED000384A7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F54672506DBED000384A7 /* PaddingLabel.swift */; };
 		71305F7F246E038A00E64718 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71305F73246E038A00E64718 /* Router.swift */; };
 		713ABC22246E39A000DD03EA /* HomeEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713ABC21246E39A000DD03EA /* HomeEvents.swift */; };
-		713D07BD2502F80D004A01A3 /* LoadModelReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D07BC2502F80D004A01A3 /* LoadModelReducer.swift */; };
 		7145BCE024D215B20098D5D6 /* UIView+Emitters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */; };
 		71478F312479027D007DF62D /* SentimentClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71478F302479027D007DF62D /* SentimentClassifier.mlmodel */; };
 		71478F6224790296007DF62D /* Data++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F3424790296007DF62D /* Data++.swift */; };
@@ -100,16 +99,7 @@
 		715DB1B824CB461B00E1D741 /* ConsoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */; };
 		715DB1BA24CB60DC00E1D741 /* Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1B924CB60DC00E1D741 /* Picker.swift */; };
 		715DB1BC24CBD9CD00E1D741 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715DB1BB24CBD9CD00E1D741 /* Triangle.swift */; };
-		716437C724FC6E6D00BAB6BC /* OnboardingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437BD24FC6E6D00BAB6BC /* OnboardingStyle.swift */; };
-		716437C824FC6E6D00BAB6BC /* OnboardingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437BE24FC6E6D00BAB6BC /* OnboardingComponent.swift */; };
-		716437C924FC6E6D00BAB6BC /* OnboardingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437BF24FC6E6D00BAB6BC /* OnboardingEvents.swift */; };
-		716437CA24FC6E6D00BAB6BC /* OnboardingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437C024FC6E6D00BAB6BC /* OnboardingBuilder.swift */; };
-		716437CB24FC6E6D00BAB6BC /* OnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437C224FC6E6D00BAB6BC /* OnboardingState.swift */; };
-		716437CC24FC6E6D00BAB6BC /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437C524FC6E6D00BAB6BC /* OnboardingViewController.swift */; };
-		716437CD24FC6E6D00BAB6BC /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437C624FC6E6D00BAB6BC /* OnboardingView.swift */; };
-		716437D024FC6EBB00BAB6BC /* OnboardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437CF24FC6EBB00BAB6BC /* OnboardingStep.swift */; };
 		716437D224FC78D800BAB6BC /* Router.Onboarding.Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437D124FC78D700BAB6BC /* Router.Onboarding.Models.swift */; };
-		716437D624FC823C00BAB6BC /* UpdateStepReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716437D524FC823C00BAB6BC /* UpdateStepReducer.swift */; };
 		7164E692248DCE770035CE9B /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E691248DCE770035CE9B /* String+Localization.swift */; };
 		7164E6A2248DD4700035CE9B /* StockKitState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E699248DD4700035CE9B /* StockKitState.swift */; };
 		7164E6A3248DD4700035CE9B /* StockKitEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7164E69B248DD4700035CE9B /* StockKitEvents.swift */; };
@@ -426,7 +416,6 @@
 		712F54672506DBED000384A7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		71305F73246E038A00E64718 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		713ABC21246E39A000DD03EA /* HomeEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEvents.swift; sourceTree = "<group>"; };
-		713D07BC2502F80D004A01A3 /* LoadModelReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadModelReducer.swift; sourceTree = "<group>"; };
 		7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Emitters.swift"; sourceTree = "<group>"; };
 		71478F302479027D007DF62D /* SentimentClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentClassifier.mlmodel; sourceTree = "<group>"; };
 		71478F3424790296007DF62D /* Data++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data++.swift"; sourceTree = "<group>"; };
@@ -481,16 +470,7 @@
 		715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDetailView.swift; sourceTree = "<group>"; };
 		715DB1B924CB60DC00E1D741 /* Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picker.swift; sourceTree = "<group>"; };
 		715DB1BB24CBD9CD00E1D741 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
-		716437BD24FC6E6D00BAB6BC /* OnboardingStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingStyle.swift; sourceTree = "<group>"; };
-		716437BE24FC6E6D00BAB6BC /* OnboardingComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingComponent.swift; sourceTree = "<group>"; };
-		716437BF24FC6E6D00BAB6BC /* OnboardingEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingEvents.swift; sourceTree = "<group>"; };
-		716437C024FC6E6D00BAB6BC /* OnboardingBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingBuilder.swift; sourceTree = "<group>"; };
-		716437C224FC6E6D00BAB6BC /* OnboardingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingState.swift; sourceTree = "<group>"; };
-		716437C524FC6E6D00BAB6BC /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		716437C624FC6E6D00BAB6BC /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		716437CF24FC6EBB00BAB6BC /* OnboardingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStep.swift; sourceTree = "<group>"; };
 		716437D124FC78D700BAB6BC /* Router.Onboarding.Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Models.swift; sourceTree = "<group>"; };
-		716437D524FC823C00BAB6BC /* UpdateStepReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStepReducer.swift; sourceTree = "<group>"; };
 		7164E691248DCE770035CE9B /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		7164E699248DD4700035CE9B /* StockKitState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockKitState.swift; sourceTree = "<group>"; };
 		7164E69B248DD4700035CE9B /* StockKitEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockKitEvents.swift; sourceTree = "<group>"; };
@@ -1001,7 +981,6 @@
 				71783872248F10B200A7CD40 /* StockKitIsPreparedReducer.swift */,
 				71B7AB0F248E0ACE001E7891 /* GetSentimentReducer.swift */,
 				71B7AB11248E0C0A001E7891 /* GetPredictionReducer.swift */,
-				713D07BC2502F80D004A01A3 /* LoadModelReducer.swift */,
 				71BC1C2C248620EF00B35DC1 /* DetailLongPressReducer.swift */,
 				71727CCC24E9060800AC25C7 /* ThinkReducer.swift */,
 			);
@@ -1181,54 +1160,6 @@
 				715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */,
 			);
 			path = Console;
-			sourceTree = "<group>";
-		};
-		716437BC24FC6E6D00BAB6BC /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				716437CE24FC6EA800BAB6BC /* Models */,
-				716437BD24FC6E6D00BAB6BC /* OnboardingStyle.swift */,
-				716437BE24FC6E6D00BAB6BC /* OnboardingComponent.swift */,
-				716437BF24FC6E6D00BAB6BC /* OnboardingEvents.swift */,
-				716437C024FC6E6D00BAB6BC /* OnboardingBuilder.swift */,
-				716437C124FC6E6D00BAB6BC /* State */,
-				716437C424FC6E6D00BAB6BC /* View */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		716437C124FC6E6D00BAB6BC /* State */ = {
-			isa = PBXGroup;
-			children = (
-				716437C224FC6E6D00BAB6BC /* OnboardingState.swift */,
-				716437C324FC6E6D00BAB6BC /* Reducers */,
-			);
-			path = State;
-			sourceTree = "<group>";
-		};
-		716437C324FC6E6D00BAB6BC /* Reducers */ = {
-			isa = PBXGroup;
-			children = (
-				716437D524FC823C00BAB6BC /* UpdateStepReducer.swift */,
-			);
-			path = Reducers;
-			sourceTree = "<group>";
-		};
-		716437C424FC6E6D00BAB6BC /* View */ = {
-			isa = PBXGroup;
-			children = (
-				716437C524FC6E6D00BAB6BC /* OnboardingViewController.swift */,
-				716437C624FC6E6D00BAB6BC /* OnboardingView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		716437CE24FC6EA800BAB6BC /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				716437CF24FC6EBB00BAB6BC /* OnboardingStep.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		7164E697248DD4700035CE9B /* StockKit */ = {
@@ -2073,7 +2004,6 @@
 			isa = PBXGroup;
 			children = (
 				71A7C6B52505C95D0094C352 /* Browser */,
-				716437BC24FC6E6D00BAB6BC /* Onboarding */,
 				71D98E7E24F26B450089C85F /* Subscribe */,
 				71D98E5824F260CA0089C85F /* Profile */,
 				7164E697248DD4700035CE9B /* StockKit */,
@@ -2465,10 +2395,8 @@
 				71A1D2F2246E027D00D778A5 /* UIView+Dimmer.swift in Sources */,
 				71A7C6C22505C95D0094C352 /* BrowserView.swift in Sources */,
 				717A765624A16131005348F9 /* XmlTreeBuilder.swift in Sources */,
-				716437D624FC823C00BAB6BC /* UpdateStepReducer.swift in Sources */,
 				717F1BD9248A1140001DD426 /* SceneBuilder.swift in Sources */,
 				71A1D30C246E027D00D778A5 /* Device+AssetsPickerViewController.swift in Sources */,
-				716437D024FC6EBB00BAB6BC /* OnboardingStep.swift in Sources */,
 				71A1D2D4246E027D00D778A5 /* Double.swift in Sources */,
 				71A1D2F7246E027D00D778A5 /* AssetsManager+Sync.swift in Sources */,
 				717A764124A16131005348F9 /* SwiftSoup.swift in Sources */,
@@ -2509,7 +2437,6 @@
 				713ABC22246E39A000DD03EA /* HomeEvents.swift in Sources */,
 				717A765B24A16131005348F9 /* Whitelist.swift in Sources */,
 				71A1D308246E027D00D778A5 /* UIScreen+AssetsPickerViewController.swift in Sources */,
-				716437C824FC6E6D00BAB6BC /* OnboardingComponent.swift in Sources */,
 				71A1D302246E027D00D778A5 /* AssetsPhotoLayout.swift in Sources */,
 				717A765824A16131005348F9 /* Collector.swift in Sources */,
 				7165E48524F0FA2E00B59960 /* GlobalDefaults.swift in Sources */,
@@ -2567,7 +2494,6 @@
 				71A1D31A246E027D00D778A5 /* RadioSection.swift in Sources */,
 				717F1BDB248A1162001DD426 /* DetailBuilder.swift in Sources */,
 				71D98E3F24F1E3210089C85F /* SettingsReducers.swift in Sources */,
-				716437CD24FC6E6D00BAB6BC /* OnboardingView.swift in Sources */,
 				71A7C69C250571000094C352 /* StockModelParentObject+CoreDataClass.swift in Sources */,
 				71727CCD24E9060800AC25C7 /* ThinkReducer.swift in Sources */,
 				71A1D2D5246E027D00D778A5 /* String+Subscript.swift in Sources */,
@@ -2605,7 +2531,6 @@
 				717A765124A16131005348F9 /* Entities.swift in Sources */,
 				717A767024A16131005348F9 /* DataNode.swift in Sources */,
 				71478F8724790297007DF62D /* SwiftyJSON.swift in Sources */,
-				716437CC24FC6E6D00BAB6BC /* OnboardingViewController.swift in Sources */,
 				71478F7A24790297007DF62D /* SwifterFollowers.swift in Sources */,
 				71D98E6324F260CA0089C85F /* ProfileEvents.swift in Sources */,
 				717A764624A16131005348F9 /* Cleaner.swift in Sources */,
@@ -2621,11 +2546,9 @@
 				71A1D306246E027D00D778A5 /* AssetsEmptyView.swift in Sources */,
 				71478F7F24790297007DF62D /* Scanner++.swift in Sources */,
 				719AA33E2478B69A000F7CBD /* DataSet.swift in Sources */,
-				716437C924FC6E6D00BAB6BC /* OnboardingEvents.swift in Sources */,
 				717A763924A16131005348F9 /* NodeTraversor.swift in Sources */,
 				71A7C6A42505B2A50094C352 /* StockDateData.swift in Sources */,
 				71A1D2EF246E027D00D778A5 /* AssetsPickerConfig.swift in Sources */,
-				716437CA24FC6E6D00BAB6BC /* OnboardingBuilder.swift in Sources */,
 				716D147724CE96AE0075F86E /* Translate.swift in Sources */,
 				71A1D301246E027D00D778A5 /* AssetsNoPermissionView.swift in Sources */,
 				7164E6AA248DDB8C0035CE9B /* SearchCollectionCell.swift in Sources */,
@@ -2664,10 +2587,8 @@
 				71A2FF2E24F3425D00B8B650 /* ProfileSetupReducer.swift in Sources */,
 				71A7C6C62505C95D0094C352 /* BrowserComponent.swift in Sources */,
 				71A7C6A62505B2B90094C352 /* StockSearchData.swift in Sources */,
-				713D07BD2502F80D004A01A3 /* LoadModelReducer.swift in Sources */,
 				71A1D300246E027D00D778A5 /* PanoramaIconView.swift in Sources */,
 				71478F7B24790297007DF62D /* SwifterAuth.swift in Sources */,
-				716437CB24FC6E6D00BAB6BC /* OnboardingState.swift in Sources */,
 				71D98E8C24F26B450089C85F /* SubscribeView.swift in Sources */,
 				717A765724A16131005348F9 /* DocumentType.swift in Sources */,
 				71C135C9250DA6FE007F1F96 /* UIDevice.swift in Sources */,
@@ -2762,7 +2683,6 @@
 				71D98E6824F260CA0089C85F /* ProfileBuilder.swift in Sources */,
 				7110A56E248DCAD500F62940 /* SearchComponent.swift in Sources */,
 				71A1D30A246E027D00D778A5 /* String+AssetsPickerViewController.swift in Sources */,
-				716437C724FC6E6D00BAB6BC /* OnboardingStyle.swift in Sources */,
 				71A1D314246E027D00D778A5 /* OptionRow.swift in Sources */,
 				715A7E9425096188009E7244 /* BrowserModelCellHeader.swift in Sources */,
 				717A763B24A16131005348F9 /* DataUtil.swift in Sources */,

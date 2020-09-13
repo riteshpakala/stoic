@@ -84,7 +84,6 @@ class SubscriptionOption: GraniteView {
 //        } else {
 //            trialLabel.isHidden = true
 //        }
-        print("{TEST} \(product.productIdentifier)")
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in

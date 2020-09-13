@@ -30,10 +30,6 @@ public class SubscribeComponent: Component<SubscribeState> {
                 return
             }
             
-            for product in products {
-                print("{TEST} \(product.price)")
-            }
-            
             self?.sendEvent(SubscribeEvents.GetProducts(products: products))
         }
     }

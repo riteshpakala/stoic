@@ -429,8 +429,6 @@ extension StockKitComponent {
         var sentimentData: [VaderSentimentOutput] = []
         var tweetData: [Tweet] = []
         
-        print("{TEST} Sentiment \(payload.asString) \(aheadDateAsString) \(dateAsString)")
-        
         scraper.begin(
             using: payload,
             username: nil,

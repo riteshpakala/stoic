@@ -142,7 +142,6 @@ extension NSObject: BackendModel {
                     let convertedValues = childObj.compactMap { $0.backendModel }
                     convertedDictionary["dict"] = convertedValues
                     value = convertedDictionary
-                    print("{TEST} converting ns array")
                 }
             default:
                 if let childObj = child.value as? NSObject {

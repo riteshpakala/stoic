@@ -23,15 +23,11 @@ public class Translate: NSObject {
         success: TranslateSuccessHandler? = nil,
         failure: TranslateFailureHandler? = nil) {
         
-        print("{TEST} \(targetLangCode)")
         let HTTPSuccessHandler: HTTPRequest.SuccessHandler = { data, response in
             DispatchQueue.global(qos: .utility).async {
-                print("{TEST} \(data.count)")
                 guard let translation = String.init(
                     data: data,
                     encoding: self.dataEncoding) else { return }
-                print("{TEST} from: \(query)")
-                print("{TEST} to: \(translation)")
                 
                 success?(translation, response)
             }
@@ -46,9 +42,9 @@ public class Translate: NSObject {
                 withAllowedCharacters: .urlPathAllowed) ?? "",
             targetLangCode.addingPercentEncoding(
                 withAllowedCharacters: .urlPathAllowed) ?? "")
-        print("{TEST} \(finalPath)")
-        guard let url = URL(string: finalPath) else { print("{TEST} invalid url"); return }
-        print("{TEST} starting translation")
+      
+        guard let url = URL(string: finalPath) else { return }
+      
         let request = HTTPRequest(url: url, method: .GET, parameters: [:])
         request.successHandler = HTTPSuccessHandler
         request.failureHandler = failure

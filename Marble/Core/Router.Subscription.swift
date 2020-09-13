@@ -25,7 +25,6 @@ extension ServiceCenter {
 
             storage.update(GlobalDefaults.SubscriptionCheck, CFAbsoluteTimeGetCurrent())
         }
-        print("{LSV} \(CFAbsoluteTimeGetCurrent() - value)")
         
     }//5 Minutes
     

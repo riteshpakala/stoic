@@ -113,7 +113,7 @@ struct StandaloneModelSelectedReducer: Reducer {
         state: inout ReducerState,
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
-        print("{SVM} standalone selected")
+        
         sideEffects.append(
             .init(event: DashboardEvents.ShowDetail.stored(
                 event.model),

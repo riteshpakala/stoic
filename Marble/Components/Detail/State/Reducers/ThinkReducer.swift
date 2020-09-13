@@ -22,7 +22,6 @@ struct ThinkReducer: Reducer {
         let companyHashtag = companyName != nil ? "#"+companyName!.strip : ""
         let symbolHashtag = symbolName != nil ? "#"+symbolName!.strip : ""
         
-        print("{TEST} wowowow")
         let payload: StockSearchPayload =
             .init(
                 ticker: state.searchedStock.symbol,

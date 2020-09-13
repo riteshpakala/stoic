@@ -50,21 +50,17 @@ struct CheckCredentialStateReducer: Reducer {
                 provider.getCredentialState(forUserID: userData.identifier) { state, error in
                     switch state {
                         case .authorized:
-                            print("{TEST} authorized \(Auth.auth().currentUser == nil)")
                             componentToPass.sendEvent(ProfileEvents.ProfileSetup())
                             // Credentials are valid.
                             break
                         case .revoked:
-                            print("{AUTH} revoked")
                             try? Auth.auth().signOut()
                             // Credential revoked, log them out
                             break
                         case .notFound:
-                            print("{AUTH} not found")
                             // Credentials not found, show login UI
                             break
                         case .transferred:
-                            print("{AUTH} transferred")
                             break
                         @unknown default:
                             break

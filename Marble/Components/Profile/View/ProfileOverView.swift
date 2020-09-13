@@ -181,8 +181,6 @@ public class ProfileOverView: GraniteView {
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        print("{LSV} prof setup 12")
     }
     
     required init?(coder: NSCoder) {

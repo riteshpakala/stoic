@@ -11,12 +11,6 @@ import Granite
 import Firebase
 
 //MARK: Onboarding
-public protocol Onboardable: GraniteView {
-    var onboardingSteps: [OnboardingStep] { get }
-    var onboardingProperties: OnboardingProperties { get }
-    func committedStep(_ index: Int)
-}
-
 extension Onboardable {
     public var onboardingProperties: OnboardingProperties {
         .init(

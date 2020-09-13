@@ -43,7 +43,6 @@ struct ProfileDisclaimerResponseReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        print("{TEST} \(event.disclaimers.count)")
         state.disclaimers = event.disclaimers
     }
 }

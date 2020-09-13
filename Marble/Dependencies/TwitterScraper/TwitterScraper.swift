@@ -74,7 +74,6 @@ public class TwitterScraper: NSObject {
         progress: TwitterScraperProgressHandler? = nil,
         failure: HTTPRequest.FailureHandler? = nil) {
         
-        print("{TEST} hour: TEST BEGIN")
         cancel()
         reset()
         
@@ -206,7 +205,6 @@ public class TwitterScraper: NSObject {
                                     (!this.linkExists(in: text) || !noLinks),
                                     ((tickerQueryCount <= isUniqueTicker.mentions && text.count > query.count && tickerQueryCount >= 1) || (!isUniqueTicker.enabled)) {
                                     
-                                    print("{SVM} \((Double(time)?.date() ?? Date()).asString) \(text)")
                                     
                                     //
                                     this.results.append(

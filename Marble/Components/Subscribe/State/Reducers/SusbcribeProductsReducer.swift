@@ -21,7 +21,6 @@ struct SusbcribeProductsReducer: Reducer {
         
         state.products = event.products.sorted(by: { ($0.subscriptionPeriod?.unit.rawValue ?? 0) < ($1.subscriptionPeriod?.unit.rawValue ?? 0) })
         
-        print("{TEST} products \(event.products.count)")
     }
 }
 
@@ -58,7 +57,5 @@ struct SusbcribePurchaseResultReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         state.purchaseResult = .init(event.success, productID: event.product)
-        
-        print("{LSV} purchase result heard \(event.success)")
     }
 }

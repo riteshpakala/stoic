@@ -71,7 +71,6 @@ struct MergeModelReducer: Reducer {
         david.Cost = 1e3
         david.train(data: dataForDavid)
         
-        print("{SVM} \(mergeModel.engine)")
         //Merged model
         
         let modelIDs: [String] = allModelsToMerge.map { $0.id }
@@ -84,8 +83,6 @@ struct MergeModelReducer: Reducer {
                     $0.stock.asSearchStock?.exchangeName == baseStock.stock.exchangeName
                 
             }) else {
-                
-                print("{SVM} failed to find merge object")
             return
         }
         
@@ -111,7 +108,6 @@ struct MergeModelReducer: Reducer {
         sideEffects.append(
             .init(
                 event: BrowserEvents.CompiledModelCreationStatusUpdated.init(.none)))
-        print("{SVM} saved")
     
         /********
          

@@ -27,8 +27,7 @@ public class DetailComponent: Component<DetailState> {
             StockKitIsPreparedReducer.Reducible(),
             ThinkReducer.Reducible(),
             ThinkResponseReducer.Reducible(),
-            PredictionDidUpdateReducer.Reducible(),
-            LoadModelReducer.Reducible()
+            PredictionDidUpdateReducer.Reducible()
         ]
     }
     
