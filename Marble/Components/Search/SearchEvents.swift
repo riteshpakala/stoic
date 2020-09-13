@@ -9,7 +9,9 @@ import Granite
 import Foundation
 
 struct SearchEvents {
-    struct GenerateStockRotation: Event {
+    enum GenerateStockRotation: Event {
+        case free
+        case live
     }
     
     struct GenerateStockRotationResponse: Event {

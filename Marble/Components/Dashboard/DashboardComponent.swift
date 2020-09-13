@@ -49,5 +49,13 @@ public class DashboardComponent: Component<DashboardState> {
                 state: .init(GlobalDefaults.OnboardingDashboard)),
                  display: .fit)
         }
+        
+        //DEV:
+        if !service.center.welcomeCompleted {
+            push(AnnouncementBuilder.build(
+                self.service,
+                state: .init(GlobalDefaults.Welcome)),
+                display: .modalTop)
+        }
     }
 }

@@ -21,5 +21,12 @@ struct SubscriptionUpdatedSearchReducer: Reducer {
         let subscriptionStatus = component.service.storage.get(GlobalDefaults.Subscription.self)
         state.subscription = subscriptionStatus
         
+        switch GlobalDefaults.Subscription.from(subscriptionStatus) {
+        case .none:
+            sideEffects.append(.init(event: SearchEvents.GenerateStockRotation.free))
+        default:
+            sideEffects.append(.init(event: SearchEvents.GenerateStockRotation.live))
+            
+        }
     }
 }

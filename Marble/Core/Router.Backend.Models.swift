@@ -13,6 +13,7 @@ import Firebase
 //MARK: Backend
 extension ServiceCenter.BackendService {
     public enum Route: String {
+        case general = "general/"
         case global = "global/"
         case users = "users/"
         case stocks = "stocks/"
@@ -20,6 +21,8 @@ extension ServiceCenter.BackendService {
         case stockPredictions = "stocks/predictions"
         case globalStocksFreeRotation = "global/stocks/freeRotation"
         case disclaimerUpcoming = "disclaimer/upcoming"
+        case announcementUpcoming = "announcement/upcoming"
+        case announcementWelcome = "announcement/welcome"
         
         public enum Permission {
             case update

@@ -243,6 +243,14 @@
 		71C135C7250D9EC2007F1F96 /* Router.Onboarding.Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */; };
 		71C135C9250DA6FE007F1F96 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C8250DA6FE007F1F96 /* UIDevice.swift */; };
 		71C135CB250DE160007F1F96 /* ConsoleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135CA250DE160007F1F96 /* ConsoleLoader.swift */; };
+		71C135D9250E2926007F1F96 /* AnnouncementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135CF250E2926007F1F96 /* AnnouncementComponent.swift */; };
+		71C135DA250E2926007F1F96 /* AnnouncementBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135D0250E2926007F1F96 /* AnnouncementBuilder.swift */; };
+		71C135DB250E2926007F1F96 /* AnnouncementState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135D2250E2926007F1F96 /* AnnouncementState.swift */; };
+		71C135DC250E2926007F1F96 /* AnnouncementEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135D4250E2926007F1F96 /* AnnouncementEvents.swift */; };
+		71C135DD250E2926007F1F96 /* AnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135D6250E2926007F1F96 /* AnnouncementView.swift */; };
+		71C135DE250E2926007F1F96 /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135D7250E2926007F1F96 /* AnnouncementViewController.swift */; };
+		71C135DF250E2926007F1F96 /* AnnouncementStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135D8250E2926007F1F96 /* AnnouncementStyle.swift */; };
+		71C135E1250E3A87007F1F96 /* AnnouncementReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135E0250E3A87007F1F96 /* AnnouncementReducer.swift */; };
 		71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */; };
 		71C21A35248D88B500F6D5BF /* GetSearchResultsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */; };
 		71C40EF724EF951B0050C072 /* TongueSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C40EF624EF951B0050C072 /* TongueSettings.swift */; };
@@ -543,6 +551,14 @@
 		71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Browser.swift; sourceTree = "<group>"; };
 		71C135C8250DA6FE007F1F96 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		71C135CA250DE160007F1F96 /* ConsoleLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLoader.swift; sourceTree = "<group>"; };
+		71C135CF250E2926007F1F96 /* AnnouncementComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementComponent.swift; sourceTree = "<group>"; };
+		71C135D0250E2926007F1F96 /* AnnouncementBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementBuilder.swift; sourceTree = "<group>"; };
+		71C135D2250E2926007F1F96 /* AnnouncementState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementState.swift; sourceTree = "<group>"; };
+		71C135D4250E2926007F1F96 /* AnnouncementEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementEvents.swift; sourceTree = "<group>"; };
+		71C135D6250E2926007F1F96 /* AnnouncementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementView.swift; sourceTree = "<group>"; };
+		71C135D7250E2926007F1F96 /* AnnouncementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
+		71C135D8250E2926007F1F96 /* AnnouncementStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementStyle.swift; sourceTree = "<group>"; };
+		71C135E0250E3A87007F1F96 /* AnnouncementReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementReducer.swift; sourceTree = "<group>"; };
 		71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCSVReducer.swift; sourceTree = "<group>"; };
 		71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchResultsReducer.swift; sourceTree = "<group>"; };
 		71C40EF624EF951B0050C072 /* TongueSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TongueSettings.swift; sourceTree = "<group>"; };
@@ -1455,6 +1471,45 @@
 			path = Router.Onboarding;
 			sourceTree = "<group>";
 		};
+		71C135CE250E2926007F1F96 /* Announcement */ = {
+			isa = PBXGroup;
+			children = (
+				71C135CF250E2926007F1F96 /* AnnouncementComponent.swift */,
+				71C135D0250E2926007F1F96 /* AnnouncementBuilder.swift */,
+				71C135D1250E2926007F1F96 /* State */,
+				71C135D4250E2926007F1F96 /* AnnouncementEvents.swift */,
+				71C135D5250E2926007F1F96 /* View */,
+				71C135D8250E2926007F1F96 /* AnnouncementStyle.swift */,
+			);
+			path = Announcement;
+			sourceTree = "<group>";
+		};
+		71C135D1250E2926007F1F96 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				71C135D2250E2926007F1F96 /* AnnouncementState.swift */,
+				71C135D3250E2926007F1F96 /* Reducers */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		71C135D3250E2926007F1F96 /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+				71C135E0250E3A87007F1F96 /* AnnouncementReducer.swift */,
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
+		71C135D5250E2926007F1F96 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				71C135D6250E2926007F1F96 /* AnnouncementView.swift */,
+				71C135D7250E2926007F1F96 /* AnnouncementViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		71C40EF524EF94FE0050C072 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1466,6 +1521,7 @@
 		71D454D8246E05ED007E61FC /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				71C135CE250E2926007F1F96 /* Announcement */,
 				71A7C6B52505C95D0094C352 /* Browser */,
 				71D98E7E24F26B450089C85F /* Subscribe */,
 				71D98E5824F260CA0089C85F /* Profile */,
@@ -1830,6 +1886,7 @@
 				71A7C6C22505C95D0094C352 /* BrowserView.swift in Sources */,
 				717A765624A16131005348F9 /* XmlTreeBuilder.swift in Sources */,
 				717F1BD9248A1140001DD426 /* SceneBuilder.swift in Sources */,
+				71C135E1250E3A87007F1F96 /* AnnouncementReducer.swift in Sources */,
 				71A1D2D4246E027D00D778A5 /* Double.swift in Sources */,
 				717A764124A16131005348F9 /* SwiftSoup.swift in Sources */,
 				7145BCE024D215B20098D5D6 /* UIView+Emitters.swift in Sources */,
@@ -1878,6 +1935,7 @@
 				7127B0322485DD2E004C57F1 /* GlobalStyle.swift in Sources */,
 				71A7C6B02505BABB0094C352 /* ThinkPayload.swift in Sources */,
 				7127AFB42485B10B004C57F1 /* SceneView.swift in Sources */,
+				71C135DB250E2926007F1F96 /* AnnouncementState.swift in Sources */,
 				71D98E8924F26B450089C85F /* SubscribeState.swift in Sources */,
 				71A7C6C42505C95D0094C352 /* BrowserStyle.swift in Sources */,
 				717A766D24A16131005348F9 /* QueryParser.swift in Sources */,
@@ -1895,6 +1953,7 @@
 				715DB1BC24CBD9CD00E1D741 /* Triangle.swift in Sources */,
 				71C135C0250D67B1007F1F96 /* SubscriptionUpdatedBrowserReducer.swift in Sources */,
 				7127AFB82485B153004C57F1 /* SceneState.swift in Sources */,
+				71C135DF250E2926007F1F96 /* AnnouncementStyle.swift in Sources */,
 				71A7C6CC2505DC5D0094C352 /* DetailViewUpdateReducers.swift in Sources */,
 				71478F6824790297007DF62D /* SwifterAppOnlyClient.swift in Sources */,
 				71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */,
@@ -1919,6 +1978,7 @@
 				7107B82224D0CE1B00FADC28 /* StockKitModels.swift in Sources */,
 				71478F7D24790297007DF62D /* SwifterTweets.swift in Sources */,
 				719AA33C2478B69A000F7CBD /* SVM.swift in Sources */,
+				71C135DE250E2926007F1F96 /* AnnouncementViewController.swift in Sources */,
 				71DCBEE7250BF17000C12F4B /* RemoveModelReducer.swift in Sources */,
 				716437D224FC78D800BAB6BC /* Router.Onboarding.swift in Sources */,
 				71A1D2D3246E027D00D778A5 /* FileManager.swift in Sources */,
@@ -1940,6 +2000,7 @@
 				717A767024A16131005348F9 /* DataNode.swift in Sources */,
 				71478F8724790297007DF62D /* SwiftyJSON.swift in Sources */,
 				71478F7A24790297007DF62D /* SwifterFollowers.swift in Sources */,
+				71C135D9250E2926007F1F96 /* AnnouncementComponent.swift in Sources */,
 				71D98E6324F260CA0089C85F /* ProfileEvents.swift in Sources */,
 				717A764624A16131005348F9 /* Cleaner.swift in Sources */,
 				717A766524A16131005348F9 /* FormElement.swift in Sources */,
@@ -1982,6 +2043,7 @@
 				717A763724A16131005348F9 /* CssSelector.swift in Sources */,
 				717A765224A16131005348F9 /* BinarySearch.swift in Sources */,
 				719AA33F2478B69A000F7CBD /* Kernel.swift in Sources */,
+				71C135DA250E2926007F1F96 /* AnnouncementBuilder.swift in Sources */,
 				71A2FF2E24F3425D00B8B650 /* ProfileSetupReducer.swift in Sources */,
 				71A7C6C62505C95D0094C352 /* BrowserComponent.swift in Sources */,
 				71A7C6A62505B2B90094C352 /* StockSearchData.swift in Sources */,
@@ -2041,6 +2103,7 @@
 				71BC1C31248635F200B35DC1 /* CloseDetailReducer.swift in Sources */,
 				71A1D2D2246E027D00D778A5 /* Int.swift in Sources */,
 				71BC1C2D248620EF00B35DC1 /* DetailLongPressReducer.swift in Sources */,
+				71C135DC250E2926007F1F96 /* AnnouncementEvents.swift in Sources */,
 				71F5BA4E24847CE60085E8DD /* HomeView.swift in Sources */,
 				717A765E24A16131005348F9 /* Validate.swift in Sources */,
 				71478F7924790297007DF62D /* SwifterUsers.swift in Sources */,
@@ -2063,6 +2126,7 @@
 				717A75F524A14C7D005348F9 /* TwitterScraper.swift in Sources */,
 				71D98E6824F260CA0089C85F /* ProfileBuilder.swift in Sources */,
 				7110A56E248DCAD500F62940 /* SearchComponent.swift in Sources */,
+				71C135DD250E2926007F1F96 /* AnnouncementView.swift in Sources */,
 				715A7E9425096188009E7244 /* BrowserModelCellHeader.swift in Sources */,
 				717A763B24A16131005348F9 /* DataUtil.swift in Sources */,
 				71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */,

@@ -19,7 +19,7 @@ struct GetValidMarketDaysReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         //TODO: Set days here for fresh launches
-        
+        state.isPrepared = false
         if let component = component as? StockKitComponent {
             let currentDate = state.currentDateComponents
             component.getValidMarketDays(
@@ -77,7 +77,7 @@ struct GetValidMarketDaysResponseReducer: Reducer {
         }.sorted(by: { ($0.asDate ?? Date()).compare(($1.asDate ?? Date())) == .orderedDescending } )
         
         guard filteredForPrevious.count > 0 else {
-            print("{STOCKKIT} valid market days return - \(event.result.count)")
+            print("[StockKit] valid market days return - \(event.result.count)")
             return
         }
         
@@ -88,6 +88,7 @@ struct GetValidMarketDaysResponseReducer: Reducer {
         
         state.validTradingDays = (sanitizedStockData.enumerated().filter { $0.offset < state.rules.days }).map { $0.element }
         state.validHistoricalTradingDays = sanitizedStockData
+        print("[StockKit] isPrepared")
         state.isPrepared = true
     }
 }

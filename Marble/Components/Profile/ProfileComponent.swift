@@ -19,10 +19,15 @@ public class ProfileComponent: Component<ProfileState> {
             ProfileSetupOverViewReducer.Reducible(),
             ProfileDisclaimerReducer.Reducible(),
             ProfileDisclaimerResponseReducer.Reducible(),
+            ProfileSetupStockKitPreparedReducer.Reducible(),
             ProfileGetCSVResultsResponseReducer.Reducible(),
             SubcriptionUpdatedProfileReducer.Reducible(),
             SignOutReducer.Reducible(),
         ]
+    }
+    
+    var stockKit: StockKitComponent? {
+        return getSubComponent(StockKitComponent.self) as? StockKitComponent
     }
     
     override public func didLoad() {
@@ -36,6 +41,5 @@ public class ProfileComponent: Component<ProfileState> {
             self.service))
         
         sendEvent(ProfileEvents.CheckCredential(intent: .relogin))
-//        sendEvent(ProfileEvents.ShowSubscribe())
     }
 }

@@ -51,6 +51,16 @@ public class ProfileOverView: GraniteView {
         return view
     }()
     
+    lazy var profileModelsSubLabel: UILabel = {
+        let view: UILabel = .init()
+        view.text = "// models".localized.lowercased()
+        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        view.textColor = GlobalStyle.Colors.green
+        view.textAlignment = .left
+        view.isUserInteractionEnabled = false
+        return view
+    }()
+    
     lazy var statsDescription1: UILabel = {
         let view: UILabel = .init()
         view.text =
@@ -66,6 +76,20 @@ public class ProfileOverView: GraniteView {
     }()
     
     lazy var statsDescription2: UILabel = {
+        let view: UILabel = .init()
+        view.text =
+            """
+            /**** loading... */
+            """
+        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        view.textColor = GlobalStyle.Colors.orange
+        view.textAlignment = .left
+        view.isUserInteractionEnabled = false
+        view.numberOfLines = 0
+        return view
+    }()
+    
+    lazy var statsDescription3: UILabel = {
         let view: UILabel = .init()
         view.text =
             """
@@ -133,6 +157,8 @@ public class ProfileOverView: GraniteView {
                 statsDescription1,
                 profileStocksSubLabel,
                 statsDescription2,
+                profileModelsSubLabel,
+                statsDescription3,
                 .init(),
                 stackViewDisclaimers,
                 .init(),
@@ -203,11 +229,23 @@ public class ProfileOverView: GraniteView {
         - \(properties.accountAge) days old
         """
         
-        statsDescription2.text =
-        """
-        - most searched stock: $\(properties.mostSearchedStock)
-        - device's average error: \(round((properties.deviceAverageError)*100)/100)%
-        """
+        if properties.stockPredictions.isEmpty {
+            statsDescription2.text =
+            """
+            - most searched stock: $\(properties.mostSearchedStock)
+            """
+        } else {
+            statsDescription2.text =
+            """
+            - most searched stock: $\(properties.mostSearchedStock)
+            - device's average error: \(round((properties.deviceAverageError)*100)/100)%
+            """
+        }
+        
+        statsDescription3.text =
+            """
+            - models trained: \(properties.stockModels.count)
+            """
     }
     
     func updateSubscriptionAppearance() {
@@ -251,5 +289,6 @@ extension ProfileOverView: ConsoleLoaderDelegate {
     public func consoleLoaderUpdated(_ indicator: String) {
         self.statsDescription1.text = indicator
         self.statsDescription2.text = indicator
+        self.statsDescription3.text = indicator
     }
 }

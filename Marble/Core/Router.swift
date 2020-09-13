@@ -76,4 +76,9 @@ extension ServiceCenter {
     }
 }
     
+extension ServiceCenter {
+    var welcomeCompleted: Bool {
+        storage.get(GlobalDefaults.Welcome, defaultValue: false)
+    }
+}
 

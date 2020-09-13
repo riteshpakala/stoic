@@ -48,7 +48,7 @@ public class SearchViewController: GraniteViewController<SearchState> {
             async: .main)
         
         observeState(
-            \.stockRotation,
+            \.isLoadingRotation,
             handler: observeStockRotation(_:),
             async: .main)
         
@@ -60,11 +60,6 @@ public class SearchViewController: GraniteViewController<SearchState> {
         observeState(
             \.stockResultsActive,
             handler: observeStockSearchActive(_:),
-            async: .main)
-        
-        observeState(
-            \.subscription,
-            handler: observeSubscription(_:),
             async: .main)
     }
     
@@ -92,7 +87,9 @@ extension SearchViewController {
     }
     
     func observeStockRotation(
-        _ stocks: Change<[SearchStock]>) {
+        _ stocks: Change<Bool>) {
+        
+        guard stocks.newValue == false else { return }
         _view.collectionAccessory.collection.reloadData()
     }
     
@@ -105,13 +102,6 @@ extension SearchViewController {
         } else {
             _view.searchIndicator.stopAnimating()
         }
-    }
-    
-    func observeSubscription(
-        _ user: Change<Int>) {
-
-        _view.collection.reloadData()
-        _view.collectionAccessory.collection.reloadData()
     }
     
     func observeStockSearchActive(
@@ -155,6 +145,8 @@ extension SearchViewController: UITextFieldDelegate {
     public func textFieldShouldBeginEditing(
         _ textField: UITextField) -> Bool {
         _view.collectionAccessory.container.isHidden = component?.service.center.onboardingDashboardCompleted == false
+        
+        component?.sendEvent(SearchEvents.GenerateStockRotation.live)
         return true
     }
     
@@ -227,6 +219,11 @@ extension SearchViewController: UICollectionViewDelegate {
                     server: .search,
                     key: id)
             }
+            
+            component?.service.center.backend.put(
+                stock,
+                route: .general,
+                server: .search)
             
             bubbleEvent(
                 DashboardEvents.ShowDetail.search(stock))

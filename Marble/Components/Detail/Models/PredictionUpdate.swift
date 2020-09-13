@@ -14,6 +14,7 @@ class PredictionUpdate: NSObject, Codable {
     let stock: SearchStock
     let sentimentWeights: StockSentimentData
     let nextTradingDay: String
+    let thisTradingDay: String
     let close: Double
     
     public init(
@@ -22,6 +23,7 @@ class PredictionUpdate: NSObject, Codable {
         stock: SearchStock,
         sentimentWeights: StockSentimentData,
         nextTradingDay: String,
+        thisTradingDay: String,
         close: Double) {
         
         self.sentimentStrength = sentimentStrength
@@ -29,6 +31,7 @@ class PredictionUpdate: NSObject, Codable {
         self.stock = stock
         self.sentimentWeights = sentimentWeights
         self.nextTradingDay = nextTradingDay
+        self.thisTradingDay = thisTradingDay
         self.close = close
     }
     
@@ -53,7 +56,9 @@ class PredictionUpdate: NSObject, Codable {
             StockSentimentData.self,
             forKey: CustomCodingKey.model)) ?? StockSentimentData.zero
         
-        self.nextTradingDay = try container.decode(String.self, forKey: .nextTradingDay)
+        let nTD = try container.decode(String.self, forKey: .nextTradingDay)
+        self.nextTradingDay = nTD
+        self.thisTradingDay = (try? container.decode(String.self, forKey: .thisTradingDay)) ?? nTD
         self.close = try container.decode(Double.self, forKey: .close)
     }
     
@@ -63,6 +68,7 @@ class PredictionUpdate: NSObject, Codable {
         case stock
         case sentimentWeights
         case nextTradingDay
+        case thisTradingDay
         case close
         case time
     }

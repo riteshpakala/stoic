@@ -32,6 +32,14 @@ public class SearchComponent: Component<SearchState> {
             self.service))
         
         
-        sendEvent(SearchEvents.GenerateStockRotation())
+        let subscriptionStatus = service.storage.get(GlobalDefaults.Subscription.self)
+        
+        switch GlobalDefaults.Subscription.from(subscriptionStatus) {
+        case .none:
+            sendEvent(SearchEvents.GenerateStockRotation.free)
+        default:
+            sendEvent(SearchEvents.GenerateStockRotation.live)
+        }
+        
     }
 }

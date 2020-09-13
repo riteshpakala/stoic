@@ -14,6 +14,7 @@ class UserProperties: NSObject {
     let stockSearches: [SearchStock]
     let stockPredictions: [PredictionUpdate]
     var stockPredictionsTradingDayResults: [String: [String: StockData]] = [:]
+    let stockModels: [StockModel]
     
     var uniqueTradingDaysForSymbols: [String:[String]] {
         let mapped: [[String:[String]]] = stockPredictions.compactMap {
@@ -74,10 +75,12 @@ class UserProperties: NSObject {
     public init(
         accountAge: Int,
         stockSearches: [SearchStock],
-        stockPredictions: [PredictionUpdate]) {
+        stockPredictions: [PredictionUpdate],
+        stockModels: [StockModel]) {
         
         self.accountAge = accountAge
         self.stockSearches = stockSearches
         self.stockPredictions = stockPredictions
+        self.stockModels = stockModels
     }
 }

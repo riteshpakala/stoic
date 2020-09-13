@@ -24,13 +24,13 @@ struct ProfileSetupReducer: Reducer {
             state.userProperties = .init(
                 accountAge: 0,
                 stockSearches: [],
-                stockPredictions: [])
+                stockPredictions: [],
+                stockModels: [])
             
             component.service.center.updateSubscription()
             return
         }
         
-        print("{PROFILE} setup")
         guard let userData = try? component.service.center.keychain.retrieve() else {
             return
         }
@@ -61,23 +61,29 @@ struct ProfileSetupReducer: Reducer {
             print("{PROFILE} got the data")
             let stockSearches = data.compactMap {
                 SearchStock.initialize(from: $0) }
-            componentToPass
-                .service.center
-                .backend
-                .get(
-                route: .global,
-                server: .prediction,
-                key: user.uid) { data in
-                print("{PROFILE} got the second set of data")
-                let stockPredictions = data.compactMap {
-                    PredictionUpdate.initialize(from: $0) }
-
-                    print("{PROFILE} lets send the overview")
-                    componentToPass.sendEvent(
-                        ProfileEvents.ProfileSetupOverView.init(
-                            stockSearches: stockSearches,
-                            stockPredictions: stockPredictions))
-            }
+                
+                componentToPass.sendEvent(
+                ProfileEvents.ProfileSetupOverView.init(
+                    stockSearches: stockSearches,
+                    stockPredictions: []))
+                
+                //david.. //DEV:
+//            componentToPass
+//                .service.center
+//                .backend
+//                .get(
+//                route: .global,
+//                server: .prediction,
+//                key: user.uid) { data in
+//
+//                let stockPredictions = data.compactMap {
+//                    PredictionUpdate.initialize(from: $0) }
+//
+//                    componentToPass.sendEvent(
+//                        ProfileEvents.ProfileSetupOverView.init(
+//                            stockSearches: stockSearches,
+//                            stockPredictions: stockPredictions))
+//            }
         }
     }
 }
@@ -100,22 +106,54 @@ struct ProfileSetupOverViewReducer: Reducer {
             [.day],
             from: user.metadata.creationDate ?? Date(),
             to: Date()).day ?? 0
-            
+        
+        let modelObjects: [StockModelObject] = component.service.center.getStockModels(from: .main) ?? []
+        
+        let models = modelObjects.map({ StockModel.init(from: $0) })
+        
         state.userProperties = .init(
             accountAge: diffInDays,
             stockSearches: event.stockSearches,
-            stockPredictions: event.stockPredictions)
+            stockPredictions: event.stockPredictions,
+            stockModels: models)
         
-        guard let stockKit = component.getSubComponent(
-            StockKitComponent.self) as? StockKitComponent else {
+        state.recentPrediction = event.stockPredictions.first
+        
+        //david.. //DEV:
+        state.userProperties?.isPrepared = true
+        
+        //david.. //DEV:
+//        guard let stockKit = (component as? ProfileComponent)?.stockKit else {
+//            print("{PROFILE} stockKit fetch failed")
+//            return
+//        }
+//
+//        print("[StockKit] {Profile} is about to prepare \(event.stockPredictions.count)")
+//        stockKit.prepare()
+    }
+}
+
+struct ProfileSetupStockKitPreparedReducer: Reducer {
+    typealias ReducerEvent = StockKitEvents.StockKitIsPrepared
+    typealias ReducerState = ProfileState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        guard let stockKit = (component as? ProfileComponent)?.stockKit else {
+            print("[StockKit] {PROFILE} stockKit fetch failed")
             return
         }
         
-        if  let prediction = event.stockPredictions.first,
+        if  let prediction = state.recentPrediction,
             let symbolName = prediction.stock.symbolName {
+            print("{PROFILE} get CSV")
             stockKit.getCSV(
                 forTicker: symbolName,
-                date: .init(prediction.nextTradingDay))
+                date: .init(prediction.thisTradingDay))
         }
     }
 }
@@ -130,8 +168,13 @@ struct ProfileGetCSVResultsResponseReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        //david.. //DEV:
+        //lmao
+        //
         guard let stock = event.result.first,
               let userProperties = state.userProperties else {
+
+                print("{PROFILE} get CSV failed \(event.result.first == nil) \(state.userProperties == nil)")
             return
         }
         

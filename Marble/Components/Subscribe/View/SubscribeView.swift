@@ -183,6 +183,7 @@ public class SubscribeView: GraniteView {
     }
 	
     @objc func emailTeamTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
         emailTeam()
     }
     

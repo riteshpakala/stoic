@@ -179,4 +179,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
     public static var OnboardingDashboard: String = "OnboardingDashboard"
     public static var OnboardingDetail: String = "OnboardingDetail"
     public static var OnboardingBrowser: String = "OnboardingBrowser"
+    
+    //MARK: -- Welcome
+    public static var Welcome: String = "Welcome"
 }

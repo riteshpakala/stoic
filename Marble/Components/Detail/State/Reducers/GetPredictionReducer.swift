@@ -106,6 +106,9 @@ struct PredictionDidUpdateReducer: Reducer {
                 return
             }
             
+            let sorted = state.stockData?.sorted(by: {
+                ($0.dateData.asDate ?? Date()).compare($1.dateData.asDate ?? Date()) == .orderedDescending })
+            
             if  let id = Auth.auth().currentUser?.uid,
                 let nextTradingDay = stockKit.state.nextValidTradingDay?.asString {
                 
@@ -115,6 +118,7 @@ struct PredictionDidUpdateReducer: Reducer {
                     stock: state.searchedStock,
                     sentimentWeights: event.stockSentimentData,
                     nextTradingDay: nextTradingDay,
+                    thisTradingDay: sorted?.first?.dateData.asString ?? nextTradingDay,
                     close: event.close)
                 
                 component.service.center.backend.put(

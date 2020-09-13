@@ -17,7 +17,16 @@ public class StockKitComponent: Component<StockKitState> {
         ]
     }
     
+    private var throttle: Double? = nil
+    
     override public func didLoad() {
+        let isPremium = service.storage.get(GlobalDefaults.Subscription.self)
+        if GlobalDefaults.Subscription.from(isPremium).isActive {
+            throttle = 1.0.randomBetween(3.6)
+        } else {
+            throttle = 1.0.randomBetween(4.8)
+        }
+        
         observeState(
             \.isPrepared,
             handler: prepared(_:))
@@ -33,15 +42,30 @@ public class StockKitComponent: Component<StockKitState> {
     }
     
     func prepare() {
-        processEvent(StockKitEvents.GetValidMarketDays())
+        guard let throttleInterval = throttle else {
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) { [weak self] in
+            if self?.parent != nil, self?.hasRipped == false {
+                self?.bubbleEvent(StockKitEvents.GetValidMarketDays())
+            } else {
+                print("[StockKit] failed to launch validity")
+            }
+        }
     }
     
     func prepared(_ isPrepared: Change<Bool>) {
 //        guard nextValidTradingDay.newValue != nextValidTradingDay.oldValue else
 //        { return }
-        
-        if state.nextValidTradingDay != nil {
+
+        print("[StockKit] about to bubble prepearedness")
+        if state.nextValidTradingDay != nil, isPrepared.newValue == true {
+            print("[StockKit] bubbled prepearedness")
             bubbleEvent(StockKitEvents.StockKitIsPrepared())
+        } else {
+
+            print("[StockKit] failed to bubble prepearedness \(isPrepared.newValue) \(state.nextValidTradingDay)")
         }
     }
     
@@ -268,6 +292,7 @@ extension StockKitComponent {
                             ticker,
                             content: content,
                             forDates: dates), !stockData.isEmpty else {
+                                print("[StockKit] could not parse the CSV \(this.state.validHistoricalTradingDays?.count) \(dates.first?.asString)")
                            return
                         }
                         
@@ -360,6 +385,7 @@ extension StockKitComponent {
             monthToScrape = month
         }
         
+        print("[StockKit] pulling market days")
         let validMarketEndpointasString = "https://api.tradier.com/v1/markets/calendar?month=\(monthToScrape)&year=\(hittingPrevious ? prevYear : hittingAfter ? nextYear : year)"
         
         if let url = URL(string: validMarketEndpointasString) {
@@ -392,6 +418,7 @@ extension StockKitComponent {
                         }
                         
                         if hittingAfter {
+                            print("[StockKit] processing validity completeness \(self.stockDates.count)")
                             self.processEvent(
                                 StockKitEvents.ValidMarketDaysCompleted(
                                     result: self.stockDates))
@@ -547,6 +574,8 @@ extension StockKitComponent {
                     values = line.components(separatedBy: delimiter)
                     if let first = values.first {
                         stockDateData = dates.first(where: { $0.asString == first })
+                    } else {
+                        print("[StockKit] failed")
                     }
                 }
                 
