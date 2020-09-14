@@ -28,7 +28,7 @@ public class DashboardView: GraniteView {
             make.left.equalToSuperview().offset(-abs(112 - settings.tongueSize.width))
             make.bottom.equalTo(
                 self.safeAreaLayoutGuide.snp.bottom)
-                .offset(-GlobalStyle.padding*3)
+                .offset(-GlobalStyle.padding*(self.isIPad ? 6 : 3))
         }
         
         self.dim(animated: false, alpha: 1.0)

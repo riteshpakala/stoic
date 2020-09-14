@@ -243,7 +243,6 @@
 		71C135C3250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C2250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift */; };
 		71C135C5250D7D2C007F1F96 /* Router.Onboarding.Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C4250D7D2C007F1F96 /* Router.Onboarding.Detail.swift */; };
 		71C135C7250D9EC2007F1F96 /* Router.Onboarding.Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */; };
-		71C135C9250DA6FE007F1F96 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135C8250DA6FE007F1F96 /* UIDevice.swift */; };
 		71C135CB250DE160007F1F96 /* ConsoleLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135CA250DE160007F1F96 /* ConsoleLoader.swift */; };
 		71C135D9250E2926007F1F96 /* AnnouncementComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135CF250E2926007F1F96 /* AnnouncementComponent.swift */; };
 		71C135DA250E2926007F1F96 /* AnnouncementBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C135D0250E2926007F1F96 /* AnnouncementBuilder.swift */; };
@@ -553,7 +552,6 @@
 		71C135C2250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Dashboard.swift; sourceTree = "<group>"; };
 		71C135C4250D7D2C007F1F96 /* Router.Onboarding.Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Detail.swift; sourceTree = "<group>"; };
 		71C135C6250D9EC2007F1F96 /* Router.Onboarding.Browser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.Onboarding.Browser.swift; sourceTree = "<group>"; };
-		71C135C8250DA6FE007F1F96 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		71C135CA250DE160007F1F96 /* ConsoleLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLoader.swift; sourceTree = "<group>"; };
 		71C135CF250E2926007F1F96 /* AnnouncementComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementComponent.swift; sourceTree = "<group>"; };
 		71C135D0250E2926007F1F96 /* AnnouncementBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementBuilder.swift; sourceTree = "<group>"; };
@@ -1021,7 +1019,6 @@
 			children = (
 				715A7E9A2509790D009E7244 /* Array.swift */,
 				71DCBEEA250C2BAF00C12F4B /* Dictionary.swift */,
-				71C135C8250DA6FE007F1F96 /* UIDevice.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2066,7 +2063,6 @@
 				71478F7B24790297007DF62D /* SwifterAuth.swift in Sources */,
 				71D98E8C24F26B450089C85F /* SubscribeView.swift in Sources */,
 				717A765724A16131005348F9 /* DocumentType.swift in Sources */,
-				71C135C9250DA6FE007F1F96 /* UIDevice.swift in Sources */,
 				715A7E9225095E2B009E7244 /* StockKitPreparedTradingDayReducer.swift in Sources */,
 				715A7E96250973B6009E7244 /* ModelSelectionReducers.swift in Sources */,
 				717A766C24A16131005348F9 /* Attributes.swift in Sources */,

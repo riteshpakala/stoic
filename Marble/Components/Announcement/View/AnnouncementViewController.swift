@@ -79,6 +79,7 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
             } else if let id = component?.state.announcement?.id {
                 component?.service.storage.update(announcementKey, id)
             }
+            
         default:
             break
         }

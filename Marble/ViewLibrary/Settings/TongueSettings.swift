@@ -249,7 +249,7 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
                     make.right.equalToSuperview().offset(abs(self.frame.width - tongueSize.width))
                 }
                 
-                make.bottom.equalTo(superview?.safeAreaLayoutGuide.snp.bottom ?? self.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.padding*3)
+                make.bottom.equalTo(superview?.safeAreaLayoutGuide.snp.bottom ?? self.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.padding*(self.isIPad ? 6 : 3))
             }
         }
         
@@ -263,7 +263,7 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
                     make.right.equalTo(0)
                 }
                 
-                make.bottom.equalTo(superview?.safeAreaLayoutGuide.snp.bottom ?? self.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.padding*3)
+                make.bottom.equalTo(superview?.safeAreaLayoutGuide.snp.bottom ?? self.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.padding*(self.isIPad ? 6 : 3))
             }
         }
     }

@@ -10,11 +10,11 @@ import Foundation
 
 public class Announcement: NSObject {
     let message: String
-    let id: Int
+    let id: Int?
     let image: String
     let title: String
     
-    public init(message: String, id: Int = -1, image: String, title: String) {
+    public init(message: String, id: Int? = nil, image: String, title: String) {
         self.message = message
         self.id = id
         self.image = image

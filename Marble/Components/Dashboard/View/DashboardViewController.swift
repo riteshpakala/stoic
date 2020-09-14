@@ -76,6 +76,8 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         to size: CGSize,
         with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        
+        guard self.isIPhone else { return }
         if UIDevice.current.orientation == .landscapeLeft {
             _view.settings.edge = .right
         } else {
