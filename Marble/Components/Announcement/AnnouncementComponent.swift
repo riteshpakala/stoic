@@ -19,10 +19,14 @@ public class AnnouncementComponent: Component<AnnouncementState> {
     }
     
     override public func didLoad() {
-        if !service.center.welcomeCompleted {
-            sendEvent(AnnouncementEvents.Message.welcome)
-        } else {
-            sendEvent(AnnouncementEvents.Message.upcoming)
+        switch state.displayType {
+        case .remote:
+            if !service.center.welcomeCompleted {
+                sendEvent(AnnouncementEvents.Message.welcome)
+            } else {
+                sendEvent(AnnouncementEvents.Message.upcoming)
+            }
+        default: break
         }
     }
 }

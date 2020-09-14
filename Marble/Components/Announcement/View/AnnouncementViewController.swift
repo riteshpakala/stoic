@@ -28,6 +28,10 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
         .init(target: self, action: #selector(continueTapped))
     }()
     
+    private lazy var dismissGesture: UITapGestureRecognizer = {
+        .init(target: self, action: #selector(dismissTapped))
+    }()
+    
     override public func loadView() {
         self.view = AnnouncementView.init()
     }
@@ -50,6 +54,14 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
             \.announcement,
             handler: observeAnnouncement(_:),
             async: .main)
+        
+        switch component?.state.displayType {
+        case .alert(let message):
+            _view.theAlert.dismiss.addGestureRecognizer(dismissGesture)
+            _view.setupAlert(message)
+        default:
+            break
+        }
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -60,11 +72,17 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
     override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if shouldWelcome {
-            component?.service.storage.update(announcementKey, true)
-        } else if let id = component?.state.announcement?.id {
-            component?.service.storage.update(announcementKey, id)
+        switch component?.state.displayType {
+        case .remote:
+            if shouldWelcome {
+                component?.service.storage.update(announcementKey, true)
+            } else if let id = component?.state.announcement?.id {
+                component?.service.storage.update(announcementKey, id)
+            }
+        default:
+            break
         }
+        
     }
     
     override public func viewDidLayoutSubviews() {
@@ -91,15 +109,23 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
     
     @objc
     func agreeTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
         component?.service.storage.update(announcementKey, true)
         self.component?.removeFromParent(animated: true)
     }
     
     @objc
     func continueTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
         if let id = component?.state.announcement?.id {
             component?.service.storage.update(announcementKey, id)
         }
+        self.component?.removeFromParent(animated: true)
+    }
+    
+    @objc
+    func dismissTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
         self.component?.removeFromParent(animated: true)
     }
 }
@@ -109,8 +135,6 @@ extension AnnouncementViewController {
         _ announcementChange: Change<Announcement?>) {
         
         guard let announcementValue = announcementChange.newValue, let announcement = announcementValue else { return }
-        
-        
         
         if let url = URL.init(string: announcement.image) {
             DispatchQueue.global().async { [weak self] in

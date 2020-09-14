@@ -16,7 +16,7 @@ class AnnouncementBuilder {
         state: AnnouncementState = .init()) -> AnnouncementComponent {
         return AnnouncementComponent(
             service,
-            .init(),
+            state,
             AnnouncementViewController())
     }
 }

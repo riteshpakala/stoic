@@ -10,9 +10,16 @@ import Granite
 import Foundation
 
 public class AnnouncementState: State {
+    public enum AnnouncementDisplayType {
+        case remote
+        case alert(String)
+    }
+    
     @objc dynamic var announcement: Announcement? = nil
     var announcementKey: String?
-    public init(_ announcementKey: String? = nil) {
+    var displayType: AnnouncementDisplayType
+    public init(_ announcementKey: String? = nil, displayType: AnnouncementDisplayType = .remote) {
         self.announcementKey = announcementKey
+        self.displayType = displayType
     }
 }

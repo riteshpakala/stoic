@@ -165,7 +165,8 @@ public class AnnouncementView: GraniteView {
                 thePrivacyAgree.container,
                 theContinue.container,
                 emailLabel,
-                spacer
+                spacer,
+                theAlert.container
             ]
         )
         
@@ -189,6 +190,56 @@ public class AnnouncementView: GraniteView {
             action: #selector(self.emailTeamTapped(_:)))
     }()
     
+    lazy var theAlert: (container: UIView, label: UILabel, dismiss: UILabel) = {
+        let container: UIView = .init()
+        container.isHidden = true
+        
+        let effect: UIVisualEffect = UIBlurEffect.init(style: .regular)
+        let blur: UIVisualEffectView = .init(effect: effect)
+        blur.alpha = 0.66
+        container.addSubview(blur)
+        blur.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        let view: UILabel = .init()
+        view.text =
+            """
+            hello stoic
+            """
+        view.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        view.textColor = GlobalStyle.Colors.yellow
+        view.textAlignment = .center
+        view.isUserInteractionEnabled = false
+        view.numberOfLines = 0
+        
+        container.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        let label: UILabel = .init()
+        label.numberOfLines = 0
+        label.textColor = GlobalStyle.Colors.black
+        label.backgroundColor = GlobalStyle.Colors.orange
+        label.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        label.textAlignment = .center
+        label.layer.cornerRadius = 4.0
+        label.layer.masksToBounds = true
+        label.text = "close".lowercased()
+        label.sizeToFit()
+        label.isUserInteractionEnabled = true
+        
+        container.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.width.equalTo(label.frame.size.width + 24)
+            make.height.equalTo(label.frame.size.height + 8)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(container.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.padding)
+        }
+        
+        return (container, view, label)
+    }()
     
     private var loader: ConsoleLoader?
     override public init(frame: CGRect) {
@@ -242,6 +293,21 @@ public class AnnouncementView: GraniteView {
                 UIApplication.shared.openURL(url)
             }
         }
+    }
+    
+    func setupAlert(_ message: String) {
+        stackView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        for view in stackView.arrangedSubviews {
+            view.isHidden = true
+        }
+        theAlert.container.isHidden = false
+        theAlert.label.text = message
+        stackView.setNeedsLayout()
+        
+        backgroundColor = .clear
     }
     
     func setupPrivacy() {

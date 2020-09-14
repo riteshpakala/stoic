@@ -25,7 +25,7 @@ class Disclaimer: NSObject, Codable {
     public init(value: String) {
         self.value = value
         super.init()
-        print("{ANNOUNCEMENT} {DISCL} \(value)")
+        
         label.text = value
     }
 }

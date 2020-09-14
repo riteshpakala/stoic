@@ -25,6 +25,10 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
         return dataSource
     }()
     
+    private lazy var engineVersionGesture: UITapGestureRecognizer = {
+        .init(target: self, action: #selector(engineVersionTapped))
+    }()
+    
     override public func loadView() {
         self.view = BrowserView.init()
     }
@@ -35,6 +39,8 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        _view.predictionEngineVersion.addGestureRecognizer(engineVersionGesture)
         
         _view.collection.view.delegate = self
         _view.collection.view.register(
@@ -145,6 +151,18 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
             \.isCompiling,
             handler: observeIsCompiling(_:),
             async: .main)
+    }
+    
+    @objc
+    func engineVersionTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
+        
+        component?.push(
+            AnnouncementBuilder.build(
+                component!.service,
+                state: .init(
+                    displayType: .alert(component?.state.mergedModels.first?.engine ?? "unknown engine version"))),
+            display: .modal)
     }
 }
 

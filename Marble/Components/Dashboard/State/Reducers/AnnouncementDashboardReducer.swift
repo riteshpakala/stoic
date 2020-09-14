@@ -29,9 +29,6 @@ struct AnnouncementDashboardReducer: Reducer {
                         componentToPass.service,
                         state: .init(GlobalDefaults.Announcement)),
                         display: .modalTop)
-                    print("{ANNOUNCEMENT} \(id)")
-                } else {
-                    print("{ANNOUNCEMENT} \(value)")
                 }
         }
     }

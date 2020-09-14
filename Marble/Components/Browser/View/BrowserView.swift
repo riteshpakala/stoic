@@ -48,7 +48,7 @@ public class BrowserView: GraniteView {
         view.layer.borderWidth = 2.0
         view.layer.cornerRadius = 4.0
         view.textAlignment = .center
-        view.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = true
         view.sizeToFit()
         return view
     }()
