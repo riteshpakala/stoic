@@ -25,7 +25,7 @@ struct PresentAlertReducer: Reducer {
                 popover.sourceView = componenToPass.viewController?.view
                 
                 let midX = componenToPass.viewController?.view.frame.midX ?? UIScreen.main.bounds.width/2
-                let midY = componenToPass.viewController?.view.frame.height ?? UIScreen.main.bounds.height
+                let midY = (componenToPass.viewController?.view.frame.height ?? UIScreen.main.bounds.height)
                 
                 popover.sourceRect = CGRect(x: midX, y: midY, width: 0, height: 0)
                 popover.permittedArrowDirections = []

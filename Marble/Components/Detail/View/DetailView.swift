@@ -60,8 +60,8 @@ public class DetailView: GraniteView {
         loader = .init(self)
         self.frame.size = DetailStyle.consoleSizePredicting
         self.center = .init(
-            x: LSConst.Device.width/2,
-            y: LSConst.Device.height/2)
+            x: UIScreen.main.bounds.width/2,
+            y: UIScreen.main.bounds.height/2)
             
         
         addSubview(consoleView)

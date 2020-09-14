@@ -58,7 +58,9 @@ struct ShowSettingsReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        if let view = component.viewController?.view as? DashboardView {
+        let isOnboarding: Bool = component.getSubComponent(OnboardingComponent.self) != nil
+        
+        if let view = component.viewController?.view as? DashboardView, !isOnboarding {
             component.viewController?.view.bringSubviewToFront(view.settings)
         }
     }
