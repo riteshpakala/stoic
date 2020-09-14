@@ -20,6 +20,11 @@ struct GetValidMarketDaysReducer: Reducer {
         
         //TODO: Set days here for fresh launches
         state.isPrepared = false
+        
+        guard component.service.center.isOnline else {
+            return
+        }
+        
         if let component = component as? StockKitComponent {
             let currentDate = state.currentDateComponents
             component.getValidMarketDays(

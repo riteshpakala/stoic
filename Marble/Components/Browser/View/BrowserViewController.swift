@@ -56,26 +56,6 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
                     indexPath: indexPath,
                     object: object)
         })
-        
-        observeState(
-            \.nextValidTradingDay,
-            handler: observeTradingDay(_:),
-            async: .main)
-        
-        observeState(
-            \.currentCompiledCreationStatus,
-            handler: observeCompiledCreationStatus(_:),
-            async: .main)
-        
-        observeState(
-            \.compiledModelCreationData,
-            handler: observeCompiledCreationData(_:),
-            async: .main)
-        
-        observeState(
-            \.compiledModelCreationData?.modelsToMerge,
-            handler: observeCompiledMergeData(_:),
-            async: .main)
     }
     
     private func processCell(
@@ -140,11 +120,42 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
         if component.state.mergedModels.isEmpty {
             _view.setupEmptyView()
         }
+        
+        observeState(
+            \.nextValidTradingDay,
+            handler: observeTradingDay(_:),
+            async: .main)
+        
+        observeState(
+            \.currentCompiledCreationStatus,
+            handler: observeCompiledCreationStatus(_:),
+            async: .main)
+        
+        observeState(
+            \.compiledModelCreationData,
+            handler: observeCompiledCreationData(_:),
+            async: .main)
+        
+        observeState(
+            \.compiledModelCreationData?.modelsToMerge,
+            handler: observeCompiledMergeData(_:),
+            async: .main)
+        
+        observeState(
+            \.isCompiling,
+            handler: observeIsCompiling(_:),
+            async: .main)
     }
 }
 
 extension BrowserViewController {
     func observeTradingDay(_ day: Change<String>) {
+        
+        guard component?.service.center.isOnline == true else {
+            _view.isOffline = true
+            return
+        }
+        
         _view.updateTradingLabel("trading day".localized+": "+(day.newValue ?? "unknown"))
         
         if day.newValue != nil {
@@ -175,12 +186,19 @@ extension BrowserViewController {
     }
     
     func observeCompiledMergeData(_ data: Change<[String: BrowserCompiledModelCreationData.CompiledMergeModelData]?>) {
-        guard component?.state.currentCompiledStatus == .step2 else { return }
+        guard component?.state.currentCompiledStatus == .step2 || component?.state.currentCompiledStatus == .update else { return }
         print("{Browser} observed data model change")
         for cell in _view.collection.view.visibleCells {
             if let dataCell = cell as? BrowserModelCell {
                 dataCell.compiledModelCreationData = component?.state.compiledModelCreationData
             }
+        }
+    }
+    
+    func observeIsCompiling(_ data: Change<Bool>) {        if data.newValue == true {
+            _view.compile()
+        } else {
+            _view.compileFinished()
         }
     }
 }

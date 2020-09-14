@@ -119,8 +119,9 @@ public class StockModelMerged: NSObject {
     
     let id: String
     let stock: SearchStock
-    let stocks: [StockModel]
-    let engine: String
+    private(set) var stocks: [StockModel]
+    private(set) var mergedStocks: [StockModel]
+    private(set) var engine: String
     
     public init(from object: StockModelMergedObject) {
         self.id = object.id
@@ -131,14 +132,42 @@ public class StockModelMerged: NSObject {
                 companyName: "unknown")
         
         var stockModels: [StockModel] = []
+        var stockModelsMerged: [StockModel] = []
+        let mergedIDs: [String]? = object.currentModels?.mergedModelIDs
         object.models?.forEach { item in
             if let model = item as? StockModelObject {
-                stockModels.append(StockModel.init(from: model))
+                let modelToAdd = StockModel.init(from: model)
+                stockModels.append(modelToAdd)
+                
+                if let ids = mergedIDs, ids.contains(model.id) {
+                    stockModelsMerged.append(modelToAdd)
+                }
             }
         }
         
         self.engine = object.engine
         self.stocks = stockModels
+        self.mergedStocks = stockModelsMerged
+    }
+    
+    public func update(from object: StockModelMergedObject) {
+        var stockModels: [StockModel] = []
+        var stockModelsMerged: [StockModel] = []
+        let mergedIDs: [String]? = object.currentModels?.mergedModelIDs
+        object.models?.forEach { item in
+            if let model = item as? StockModelObject {
+                let modelToAdd = StockModel.init(from: model)
+                stockModels.append(modelToAdd)
+                
+                if let ids = mergedIDs, ids.contains(model.id) {
+                    stockModelsMerged.append(modelToAdd)
+                }
+            }
+        }
+        
+        self.engine = object.engine
+        self.stocks = stockModels
+        self.mergedStocks = stockModelsMerged
     }
     
     func calculateCompatibleModels(from models: [StockModel], base: StockModel, isRemoving: Bool = false) -> [StockModel] {
@@ -184,7 +213,6 @@ public class StockModelMerged: NSObject {
         }
         
         //day count disparity
-        
         //Above the max day in selection
         let filteredMaxDayDisparity: [StockModel] = filteredMaxStocks.filter {
             let components = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: maxDate)
@@ -193,7 +221,6 @@ public class StockModelMerged: NSObject {
             
             if  let dayDiff = components.day,
                 dayDiff + $0.trueDays == 0 {
-
                 return true
             } else if componentsLast.day == 0 {
                 return true
@@ -210,6 +237,7 @@ public class StockModelMerged: NSObject {
             
             let componentsLast = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: minStock.lastStock?.dateData.asDate ?? minDate)
             
+
             if  components.day == 0 {
                 return true
             } else if componentsLast.day == 0 {
@@ -224,5 +252,12 @@ public class StockModelMerged: NSObject {
         
         
         return compatibleStocks
+    }
+}
+
+extension Array where Element == StockModel {
+    var descending: [StockModel] {
+        return self.sorted(by: { ($0.tradingDay.asDate() ?? Date())
+            .compare(($1.tradingDay.asDate() ?? Date())) == .orderedDescending })
     }
 }

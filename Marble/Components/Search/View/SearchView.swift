@@ -82,9 +82,9 @@ public class SearchView: GraniteView {
         
         collection.contentInset = .init(
             top: GlobalStyle.spacing,
-            left: GlobalStyle.padding,
+            left: GlobalStyle.spacing,
             bottom: 0.0,
-            right: GlobalStyle.padding)
+            right: GlobalStyle.spacing)
         collection.backgroundColor = .clear
         collection.showsVerticalScrollIndicator = false
         collection.showsHorizontalScrollIndicator = false

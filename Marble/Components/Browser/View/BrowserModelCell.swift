@@ -319,7 +319,8 @@ public class BrowserModelCell: UICollectionViewCell {
                 compiledCreationDoneLabel.text = "done".localized.lowercased()
                 compiledCreationDoneLabel.sizeToFit()
                 widthOfDoneLabel?.update(offset: compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4)
-            case .step2:
+            case .step2, .update:
+                hideViewsForCreation()
                 compiledCreationDoneLabel.text = "confirm".localized.lowercased()
                 compiledCreationDoneLabel.sizeToFit()
                 widthOfDoneLabel?.update(offset: compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4)
@@ -825,22 +826,15 @@ extension BrowserModelCell {
     @objc func mergedModelLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began, currentCreationStatusStep == BrowserCompiledModelCreationStatus.none else { return }
         
+        impactOccured()
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let create: UIAlertAction = .init(title: "create".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
+        let create: UIAlertAction = .init(title: "new model".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
             }
-            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
-        })
-        
-        let update: UIAlertAction = .init(title: "update".localized.lowercased(), style: .default, handler: { [weak self] alert in
-            
-            DispatchQueue.main.async {
-                self?.compiledContainerView.undim()
-            }
-            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
+            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1, stock: self?.model?.stock.asSearchStock))
         })
         
         let cancel: UIAlertAction = .init(title: "cancel", style: .cancel, handler: { [weak self] alert in
@@ -849,7 +843,6 @@ extension BrowserModelCell {
             }
         })
         
-        controller.addAction(update)
         controller.addAction(create)
         controller.addAction(cancel)
         
@@ -860,31 +853,35 @@ extension BrowserModelCell {
     
     @objc func mergedModelTapped(_ sender: UITapGestureRecognizer) {
         guard let model = model else { return }
-        
+        impactOccured()
         guard lifecycle == .isReady else {
             didSelectUnPreparedModel()
             return
         }
         
-        bubble(BrowserEvents.MergeModelSelected.init(model))
+        bubble(BrowserEvents.MergeModelSelected.init(model, self.lifecycle))
     }
     
     @objc func createTapped(_ sender: UITapGestureRecognizer) {
         guard !self.collection.view.isDecelerating else { return }
-        bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
+        impactOccured()
+        bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1, stock: self.model?.stock.asSearchStock))
     }
     
     @objc func cancelTapped(_ sender: UITapGestureRecognizer) {
-        bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.none))
+        impactOccured()
+        bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.none, stock: self.model?.stock.asSearchStock))
     }
     
     @objc func doneTapped(_ sender: UITapGestureRecognizer) {
         switch currentCreationStatusStep {
         case .step1:
+            impactOccured()
             guard compiledModelCreationData != nil else { return }
-            bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step2))
-        case .step2:
-            bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step3))
+            bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step2, stock: self.model?.stock.asSearchStock))
+        case .step2, .update:
+            impactOccured()
+            bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step3, stock: self.model?.stock.asSearchStock))
         default:
             break
         }
@@ -898,15 +895,28 @@ extension BrowserModelCell {
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
             }
-            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
+            
+            if let model = self?.model, let lifecycle = self?.lifecycle {
+
+                self?.bubble(BrowserEvents.MergeModelSelected.init(model, lifecycle))
+            }
         })
         
-        let create: UIAlertAction = .init(title: "create".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
+        let update: UIAlertAction = .init(title: "update".localized.lowercased(), style: .default, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
             }
-            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1))
+            
+            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.update, stock: self?.model?.stock.asSearchStock))
+        })
+        
+        let create: UIAlertAction = .init(title: "new model".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.compiledContainerView.undim()
+            }
+            self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1, stock: self?.model?.stock.asSearchStock))
         })
         
         let cancel: UIAlertAction = .init(title: "cancel", style: .cancel, handler: { [weak self] alert in
@@ -923,6 +933,7 @@ extension BrowserModelCell {
             bubble(HomeEvents.PresentAlertController.init(controller))
         case .needsSyncing:
             controller.addAction(train)
+            controller.addAction(update)
             controller.addAction(cancel)
             self.compiledContainerView.dim()
             bubble(HomeEvents.PresentAlertController.init(controller))

@@ -17,6 +17,14 @@ struct ThinkReducer: Reducer {
         state: inout ReducerState,
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
+        
+        guard component.service.center.isOnline else {
+            state.predictionState = DetailView.DetailPredictionState.offline.rawValue
+            return
+        }
+        
+        state.predictionState = DetailView.DetailPredictionState.thinking.rawValue
+        
         let companyName = state.searchedStock.companyName
         let symbolName = state.searchedStock.symbolName
         let companyHashtag = companyName != nil ? "#"+companyName!.strip : ""
@@ -34,6 +42,11 @@ struct ThinkReducer: Reducer {
 //        state.consoleDetailPayload?.currentTradingDay
         guard let stockKit = component.getSubComponent(
             StockKitComponent.self) as? StockKitComponent else {
+            return
+        }
+        
+        guard stockKit.state.isPrepared else {
+            stockKit.prepare()
             return
         }
         
@@ -80,8 +93,8 @@ struct ThinkReducer: Reducer {
         }, progress: { text, count in
 
         },
-        failure: {  error in
-
+        failure: { error in
+            print("{OFFLINE} \(error)")
         })
     }
 }
@@ -96,6 +109,7 @@ struct ThinkResponseReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        state.predictionState = DetailView.DetailPredictionState.done.rawValue
         state.thinkPayload = event.payload
     }
 }

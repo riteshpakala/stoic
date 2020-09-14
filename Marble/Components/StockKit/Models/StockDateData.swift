@@ -55,3 +55,10 @@ public class StockDateData: NSObject, Codable, NSCoding, NSSecureCoding {
         coder.encode(isOpen, forKey: "isOpen")
     }
 }
+
+extension Array where Element == StockDateData {
+    var descending: [StockDateData] {
+        return self.sorted(by: { ($0.asDate ?? Date())
+            .compare(($1.asDate ?? Date())) == .orderedDescending })
+    }
+}

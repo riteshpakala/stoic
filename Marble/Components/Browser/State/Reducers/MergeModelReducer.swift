@@ -18,7 +18,7 @@ struct MergeModelReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        
+        state.isCompiling = true
         print("{Browser} merging model")
         
         guard let baseStock = state.compiledModelCreationData?.baseModel else {
@@ -40,74 +40,80 @@ struct MergeModelReducer: Reducer {
                 .compare($1.tradingDayDate) == .orderedAscending })
         
         
-        let dataForDavid = DataSet(
-            dataType: .Regression,
-            inputDimension: StockKitUtils.inDim,
-            outputDimension: StockKitUtils.outDim)
-        
-        do {
-            for model in allModelsToMerge {
-                if let dataSet = model.dataSet {
-                    for i in 0..<dataSet.labels.count {
-                        try dataForDavid.addDataPoint(
-                            input: dataSet.inputs[i],
-                            output: dataSet.outputs?[i] ?? [],
-                            label: dataSet.labels[i])
-                    }
-                }
-            }
-        } catch {
-            print("{SVM} Invalid data set created")
-        }
-        
-        let david = SVMModel(
-            problemType: .ϵSVMRegression,
-            kernelSettings:
-            KernelParameters(type: .Polynomial,
-                             degree: 3,
-                             gamma: 0.3,
-                             coef0: 0.0))
-//        david.delegate = self
-        david.Cost = 1e3
-        david.train(data: dataForDavid)
-        
-        //Merged model
-        
-        let modelIDs: [String] = allModelsToMerge.map { $0.id }
-        guard let vc = component.viewController as? BrowserViewController else {
-            return
-        }
-        let moc = vc.dataSource?.controller.managedObjectContext
-        guard let mergedObject: StockModelMergedObject = vc.dataSource?.controller.fetchedObjects?.first(where: {
-                    $0.stock.asSearchStock?.symbol == baseStock.stock.symbol &&
-                    $0.stock.asSearchStock?.exchangeName == baseStock.stock.exchangeName
-                
-            }) else {
-            return
-        }
-        
-        guard let model = david.archived,
-              let modelIDsData = modelIDs.archived,
-              let dataSet = dataForDavid.archived else {
-                
-              return
-        }
-        
-        moc?.perform {
-            mergedObject.setValue(model, forKey: "model")
-            mergedObject.setValue(modelIDsData, forKey: "currentModels")
-            mergedObject.setValue(dataSet, forKey: "dataSet")
+        let componentToPass = component
+        DispatchQueue.merge.async {
+            let dataForDavid = DataSet(
+                dataType: .Regression,
+                inputDimension: StockKitUtils.inDim,
+                outputDimension: StockKitUtils.outDim)
             
             do {
-                try moc?.save()
-            } catch let error {
-                print("{SVM} \(error)")
+                for model in allModelsToMerge {
+                    if let dataSet = model.dataSet {
+                        for i in 0..<dataSet.labels.count {
+                            try dataForDavid.addDataPoint(
+                                input: dataSet.inputs[i],
+                                output: dataSet.outputs?[i] ?? [],
+                                label: dataSet.labels[i])
+                        }
+                    }
+                }
+            } catch {
+                print("{SVM} Invalid data set created")
             }
+            
+            let david = SVMModel(
+                problemType: .ϵSVMRegression,
+                kernelSettings:
+                KernelParameters(type: .Polynomial,
+                                 degree: 3,
+                                 gamma: 0.3,
+                                 coef0: 0.0))
+    //        david.delegate = self
+            david.Cost = 1e3
+            david.train(data: dataForDavid)
+            
+            //Merged model
+            
+            let modelIDs: [String] = allModelsToMerge.map { $0.id }
+            guard let vc = componentToPass.viewController as? BrowserViewController else {
+                return
+            }
+            let moc = vc.dataSource?.controller.managedObjectContext
+            guard let mergedObject: StockModelMergedObject = vc.dataSource?.controller.fetchedObjects?.first(where: {
+                        $0.stock.asSearchStock?.symbol == baseStock.stock.symbol &&
+                        $0.stock.asSearchStock?.exchangeName == baseStock.stock.exchangeName
+                    
+                }) else {
+                return
+            }
+            
+            guard let model = david.archived,
+                  let modelIDsData = modelIDs.archived,
+                  let dataSet = dataForDavid.archived else {
+                    
+                  return
+            }
+            
+            moc?.perform {
+                mergedObject.setValue(model, forKey: "model")
+                mergedObject.setValue(modelIDsData, forKey: "currentModels")
+                mergedObject.setValue(dataSet, forKey: "dataSet")
+                
+                do {
+                    try moc?.save()
+
+                    componentToPass.sendEvent(
+                        BrowserEvents.UpdateMergedModel.init(
+                            model: mergedObject))
+                } catch let error {
+                    print("{SVM} \(error)")
+                }
+            }
+            
+            
+            
         }
-        
-        sideEffects.append(
-            .init(
-                event: BrowserEvents.CompiledModelCreationStatusUpdated.init(.none)))
     
         /********
          
@@ -134,4 +140,30 @@ struct MergeModelReducer: Reducer {
          */
         
     }
+}
+
+struct UpdateMergedModelReducer: Reducer {
+    typealias ReducerEvent = BrowserEvents.UpdateMergedModel
+    typealias ReducerState = BrowserState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+    
+        
+        let model = event.model
+        
+        if let index = state.mergedModels.firstIndex(where: { $0.id == model.id }) {
+            
+            state.mergedModels[index].update(from: model)
+        }
+        
+        
+        sideEffects.append(
+            .init(event: BrowserEvents
+                .CompiledModelCreationStatusUpdated.init(.none)))
+    }
+
 }

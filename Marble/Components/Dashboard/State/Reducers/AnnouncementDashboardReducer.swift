@@ -30,6 +30,8 @@ struct AnnouncementDashboardReducer: Reducer {
                         state: .init(GlobalDefaults.Announcement)),
                         display: .modalTop)
                     print("{ANNOUNCEMENT} \(id)")
+                } else {
+                    print("{ANNOUNCEMENT} \(value)")
                 }
         }
     }

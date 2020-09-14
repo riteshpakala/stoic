@@ -46,6 +46,13 @@ public class StockKitComponent: Component<StockKitState> {
             return
         }
         
+        guard service.center.isOnline else {
+            bubbleEvent(StockKitEvents.StockKitIsPrepared.init(
+                success: false,
+                nextTradingDayIsAvailable: false))
+            return
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) { [weak self] in
             if self?.parent != nil, self?.hasRipped == false {
                 self?.bubbleEvent(StockKitEvents.GetValidMarketDays())
@@ -56,17 +63,10 @@ public class StockKitComponent: Component<StockKitState> {
     }
     
     func prepared(_ isPrepared: Change<Bool>) {
-//        guard nextValidTradingDay.newValue != nextValidTradingDay.oldValue else
-//        { return }
-
-        print("[StockKit] about to bubble prepearedness")
-        if state.nextValidTradingDay != nil, isPrepared.newValue == true {
-            print("[StockKit] bubbled prepearedness")
-            bubbleEvent(StockKitEvents.StockKitIsPrepared())
-        } else {
-
-            print("[StockKit] failed to bubble prepearedness \(isPrepared.newValue) \(state.nextValidTradingDay)")
-        }
+        guard isPrepared.newValue == true else { return }
+        bubbleEvent(StockKitEvents.StockKitIsPrepared.init(
+            success: isPrepared.newValue == true,
+            nextTradingDayIsAvailable: state.nextValidTradingDay != nil))
     }
     
     //MARK: Sentiment Constants

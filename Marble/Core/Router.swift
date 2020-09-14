@@ -65,6 +65,32 @@ extension ServiceCenter {
     public var coreData: CoreDataManager {
         return CoreDataManager(name: "version0000")
     }
+    
+    public var isOnline: Bool {
+        self.updateReachability()
+        
+        return GlobalDefaults.Reachability.from(
+            storage.get(
+                GlobalDefaults.Reachability.self)).isOnline
+    }
+    
+    public func updateReachability() {
+        do {
+            let reachability = try Reachability()
+            
+            switch reachability.connection {
+                case .cellular:
+                    storage.update(GlobalDefaults.Reachability.cellular)
+                case .wifi:
+                    storage.update(GlobalDefaults.Reachability.wifi)
+                default:
+                    storage.update(GlobalDefaults.Reachability.unavailable)
+            }
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
 }
 
 extension ServiceCenter {

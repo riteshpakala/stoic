@@ -11,6 +11,10 @@ import UIKit
 import Firebase
 
 public class SearchViewController: GraniteViewController<SearchState> {
+    var isOnline: Bool {
+        return component?.service.center.isOnline == true
+    }
+    
     override public func loadView() {
         self.view = SearchView.init()
     }
@@ -145,7 +149,7 @@ extension SearchViewController: UITextFieldDelegate {
     public func textFieldShouldBeginEditing(
         _ textField: UITextField) -> Bool {
         _view.collectionAccessory.container.isHidden = component?.service.center.onboardingDashboardCompleted == false
-        
+        _view.collectionAccessory.collection.reloadData()
         component?.sendEvent(SearchEvents.GenerateStockRotation.live)
         return true
     }
@@ -233,7 +237,22 @@ extension SearchViewController: UICollectionViewDelegate {
         }
     }
 }
-extension SearchViewController: UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        if collectionView == _view.collectionAccessory.collection {
+            if isOnline {
+                return SearchStyle.headerCellSize
+            } else {
+                return SearchStyle.headerCellSizeOffline
+            }
+        } else {
+            return .zero
+        }
+    }
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
@@ -292,6 +311,7 @@ extension SearchViewController: UICollectionViewDataSource {
         if let searchHeaderCell = header as? SearchCollectionHeaderCell {
             let subscription: GlobalDefaults.Subscription = GlobalDefaults.Subscription.from(component?.state.subscription)
             searchHeaderCell.isPRO = subscription.isActive
+            searchHeaderCell.isOffline = !isOnline
         }
         
         return header

@@ -21,7 +21,8 @@ public class BrowserComponent: Component<BrowserState> {
             StandaloneModelSelectedReducer.Reducible(),
             MergedModelSelectedReducer.Reducible(),
             RemoveModelReducer.Reducible(),
-            SubscriptionUpdatedBrowserReducer.Reducible()
+            SubscriptionUpdatedBrowserReducer.Reducible(),
+            UpdateMergedModelReducer.Reducible()
         ]
     }
     
@@ -48,5 +49,16 @@ public class BrowserComponent: Component<BrowserState> {
                 state: .init(GlobalDefaults.OnboardingBrowser)),
                  display: .fit)
         }
+    }
+}
+
+extension DispatchQueue {
+    public class var merge: DispatchQueue {
+        return DispatchQueue.init(
+            label: "stoic.merging.model",
+            qos: .userInitiated,
+            attributes: .init(),
+            autoreleaseFrequency: .workItem,
+            target: nil)
     }
 }

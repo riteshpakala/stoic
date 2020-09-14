@@ -12,7 +12,11 @@ import CoreGraphics
 
 struct AnnouncementStyle {
     public static var privacyHeight: CGFloat {
-        160
+        if LSConst.Device.isIPad {
+            return 240
+        } else {
+            return 160
+        }
     }
     
     public static var imageHeight: CGFloat {

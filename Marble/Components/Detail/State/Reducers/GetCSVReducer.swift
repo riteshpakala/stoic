@@ -18,6 +18,10 @@ struct GetCSVReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        guard component.service.center.isOnline else {
+            state.predictionState = DetailView.DetailPredictionState.offline.rawValue
+            return
+        }
         
         state.csvDownloadTimer?.invalidate()
         state.csvDownloadTimer = nil

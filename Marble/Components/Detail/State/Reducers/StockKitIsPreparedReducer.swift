@@ -18,17 +18,53 @@ struct StockKitIsPreparedReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        guard state.predictionState != DetailView.DetailPredictionState.thinking.rawValue else {
+            if event.success {
+                sideEffects.append(.init(event: DetailEvents.Think()))
+            }
+            return
+        }
+        
         guard state.shouldPredict else {
-            state.progressLabelText = nil
-            state.predictionState = DetailView.DetailPredictionState.done.rawValue
+            
+            if !component.service.center.isOnline {
+                state.predictionState = DetailView.DetailPredictionState.offline.rawValue
+            }
+            
+            sideEffects.append(.init(event: DetailEvents.LoadOffline()))
             
             return
         }
         
+        guard event.success else {
+            state.predictionState = DetailView.DetailPredictionState.offline.rawValue
+            return
+        }
+        
         guard let symbolName = state.searchedStock.symbolName else { return }
+        state.predictionState = DetailView.DetailPredictionState.downloadingData.rawValue
         sideEffects.append(
             .init(
                 event: DetailEvents.GetCSV(
                     ticker: symbolName)))
+    }
+}
+
+struct LoadOfflineReducer: Reducer {
+    typealias ReducerEvent = DetailEvents.LoadOffline
+    typealias ReducerState = DetailState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        guard !state.shouldPredict else {
+            return
+        }
+        
+        state.progressLabelText = nil
+        state.predictionState = DetailView.DetailPredictionState.done.rawValue
     }
 }

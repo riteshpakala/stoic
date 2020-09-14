@@ -29,6 +29,7 @@ public class DetailViewController: GraniteViewController<DetailState> {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
         _view.consoleView.setTitle(component?.state.searchedStock.symbol)
         
         _view.consoleView.taskbarView.addGestureRecognizer(longPressGesture)
@@ -42,26 +43,6 @@ public class DetailViewController: GraniteViewController<DetailState> {
             self,
             action: #selector(self.closeButtonTapped),
             for: .touchUpInside)
-        
-        observeState(
-            \.newTranslation,
-            handler: observeTranslation(_:),
-            async: .main)
-        
-        observeState(
-            \.thinkPayload,
-            handler: observeThink(_:),
-            async: .main)
-        
-        observeState(
-            \.progressLabelText,
-            handler: observeProgressText(_:),
-            async: .main)
-        
-        observeState(
-            \.predictionState,
-            handler: observeStockPredictionState(_:),
-            async: .main)
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -87,6 +68,30 @@ public class DetailViewController: GraniteViewController<DetailState> {
         
         _view.frame.origin = .init(x: origin.y, y: origin.x)
         
+    }
+    
+    override public func bind(_ component: Component<DetailState>) {
+        super.bind(component)
+        
+        observeState(
+            \.newTranslation,
+            handler: observeTranslation(_:),
+            async: .main)
+        
+        observeState(
+            \.thinkPayload,
+            handler: observeThink(_:),
+            async: .main)
+        
+        observeState(
+            \.progressLabelText,
+            handler: observeProgressText(_:),
+            async: .main)
+        
+        observeState(
+            \.predictionState,
+            handler: observeStockPredictionState(_:),
+            async: .main)
     }
 }
 

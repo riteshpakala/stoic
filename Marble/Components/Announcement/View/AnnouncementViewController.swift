@@ -58,7 +58,7 @@ public class AnnouncementViewController: GraniteViewController<AnnouncementState
     }
     
     override public func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         
         if shouldWelcome {
             component?.service.storage.update(announcementKey, true)

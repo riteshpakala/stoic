@@ -84,6 +84,7 @@ class ConsoleDetailView: GraniteView {
     private var stockSymbol: String? = nil
     private var loader: ConsoleLoader?
     private var isThinking: Bool = false
+    private var isOffline: Bool = false
     override init(frame: CGRect) {
         self.baseFrame = frame
         super.init(frame: frame)
@@ -242,7 +243,38 @@ extension ConsoleDetailView: ConsoleDetailPredictionViewDelegate {
         self.loader?.begin()
     }
     
+    func updateIsOfflineAppearance(_ isOffline: Bool, force: Bool = false) {
+        self.isOffline = isOffline
+        if (isOffline && self.loader?.isLoading == true && self.isThinking) || force {
+            self.loader?.stop()
+            
+            if let consoleView = superview as? ConsoleView {
+                consoleView.tickerLabel.text = (stockSymbol ?? "")+" /* OFFLINE */"
+                consoleView.tickerLabel.textColor = GlobalStyle.Colors.red
+                
+            }
+            self.predictionView.stopAnimation()
+            self.loaderView.isHidden = true
+        } else if self.isThinking || force {
+            if self.loader?.isLoading == false {
+                self.loaderView.isHidden = false
+                if let consoleView = superview as? ConsoleView {
+                    
+                    consoleView.tickerLabel.text = (stockSymbol ?? "")+(self.loader?.defaultStatus ?? "")
+
+                    consoleView.tickerLabel.textColor = GlobalStyle.Colors.purple
+                }
+                self.loader?.begin()
+            }
+        }
+    }
+    
     func thinking() {
+        guard !isOffline else {
+            updateIsOfflineAppearance(isOffline, force: true)
+            return
+        }
+        
         self.loader?.begin()
         self.loaderView.isHidden = false
         
@@ -907,6 +939,17 @@ class ConsoleDetailPredictionView: GraniteView {
         bubbleEvent(DetailEvents.Think())
     }
     
+    func stopAnimation() {
+        DispatchQueue.main.async {
+            self.tapGesture.isEnabled = true
+            self.thinkTriggerContainer
+                .layer.sublayers?.removeAll(
+                where: {
+                    ($0 as? CAEmitterLayer) != nil
+            })
+        }
+    }
+    
     func updateModel(
         model: StockKitUtils.Models,
         stockData: [StockData]) {
@@ -921,14 +964,7 @@ class ConsoleDetailPredictionView: GraniteView {
         neutral: Double = 0.0,
         compound: Double = 0.0) {
         
-        DispatchQueue.main.async {
-            self.tapGesture.isEnabled = true
-            self.thinkTriggerContainer
-                .layer.sublayers?.removeAll(
-                where: {
-                    ($0 as? CAEmitterLayer) != nil
-            })
-        }
+        stopAnimation()
         
         guard let recentStock = self.stockData?.sorted(
             by: {

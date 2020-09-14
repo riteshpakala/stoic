@@ -48,6 +48,7 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
     var baseSelectedModel: IndexPath? = nil
     var selectedModel: IndexPath? = nil
     var inCompatibleModels: [StockModel] = []
+    var mergedModelIDs: [String] = [] // For updated use only
     
     var currentCreationStatusStep: BrowserCompiledModelCreationStatus = .none {
         didSet {
@@ -84,7 +85,7 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 
                 self.collection.view.reloadItems(at: indexPathsToReload)
                     
-            } else if currentCreationStatusStep == .step1 {
+            } else if currentCreationStatusStep == .step1 || currentCreationStatusStep == .update {
                 for cell in self.collection.view.visibleCells {
                     if let dataCell = cell as? BrowserModelDataCell {
                         dataCell.status = .compatible
@@ -97,6 +98,11 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
         didSet {
             var updateCompatibility: Bool = false
             var indexPathsToUpdate: [IndexPath] = []
+            
+            if compiledModelCreationData == nil {
+                mergedModelIDs = []
+            }
+            
             switch currentCreationStatusStep {
             case .step1:
                 let oldBaseModelIndexPath: IndexPath? = baseSelectedModel
@@ -118,16 +124,17 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                     indexPathsToUpdate.append(baseIndexPath)
                 }
                 updateCompatibility = true
-            case .step2:
+            case .step2, .update:
                 guard let modelDay = self.models?.first?.tradingDay,
                     baseSelectedModel == nil else { return }
                 
                 let idsOfModels: [String] = self.models?.compactMap({ $0.id }) ?? []
                 
                 if  let baseModelID = compiledModelCreationData?.baseModel.id,
-                    !idsOfModels.contains(baseModelID) {
-                    
-                    if let selectedModelIndex = compiledModelCreationData?.modelsToMerge[modelDay]?.indexPath {
+                    !idsOfModels.contains(baseModelID) || compiledModelCreationData?.isUpdating == true {
+
+                    if let selectedModelIndex = compiledModelCreationData?.modelsToMerge[modelDay]?.indexPath,
+                        currentCreationStatusStep == .step2 {
                         
                         let oldSelectedModelIndexPath = selectedModel
                         selectedModel = selectedModelIndex
@@ -137,6 +144,30 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                         } else if selectedModel != oldSelectedModelIndexPath {
                             indexPathsToUpdate.append(selectedModelIndex)
                         }
+                    } else if currentCreationStatusStep == .update,
+                        let baseModel = compiledModelCreationData?.baseModel {
+                        
+                        if mergedModelIDs.isEmpty {
+                            mergedModelIDs = ((compiledModelCreationData?.modelsToMerge.values.map { $0.model.id }) ?? []) + [baseModel.id]
+                        }
+
+                        let model: StockModel = compiledModelCreationData?.modelsToMerge[modelDay]?.model ?? baseModel
+                        
+                        if let index = self.models?.firstIndex(where: { $0.id == model.id }) {
+                            let selectedModelIndex: IndexPath = .init(item: index, section: 0)
+                            let oldSelectedModelIndexPath = selectedModel
+                            selectedModel = selectedModelIndex
+                            if let oldSelectedModel = oldSelectedModelIndexPath {
+
+                                indexPathsToUpdate.append(contentsOf: [oldSelectedModel, selectedModelIndex])
+                            } else if selectedModel != oldSelectedModelIndexPath {
+                                indexPathsToUpdate.append(selectedModelIndex)
+                            }
+                        } else if let oldSelectedModelIndexPath = selectedModel {
+                            selectedModel = nil
+                            indexPathsToUpdate.append(oldSelectedModelIndexPath)
+                        }
+
                     } else if let oldSelectedModelIndexPath = selectedModel {
                         selectedModel = nil
                         indexPathsToUpdate.append(oldSelectedModelIndexPath)
@@ -184,7 +215,6 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 self.inCompatibleModels = []
             }
             
-            
             guard !indexPathsToUpdate.isEmpty else { return }
             
             self.collection.view.reloadItems(at: indexPathsToUpdate.removingDuplicates())
@@ -227,6 +257,10 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
     override public func prepareForReuse() {
         super.prepareForReuse()
         models = nil
+        
+        if currentCreationStatusStep != .update {
+            mergedModelIDs = []
+        }
     }
 }
 
@@ -255,7 +289,7 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
                 indexPath == baseModelIndexPath {
                 dataCell.status = .baseModel
             } else if selectedModel == indexPath {
-                dataCell.status = .appendedModel
+                dataCell.status = (currentCreationStatusStep == .update && mergedModelIDs.contains(dataCell.model?.id ?? "")) ? .mergedModel : .appendedModel
             } else if inCompatibleModels.contains(models[indexPath.item]) {
                 dataCell.status = .inCompatible
             } else if self.currentCreationStatusStep != .none {
@@ -305,6 +339,7 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
             return
         }
         
+        impactOccured()
         guard currentCreationStatusStep != .none else {
             bubble(BrowserEvents.StandaloneModelSelected.init(model, indexPath: indexPath))
             return
@@ -313,7 +348,7 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
         switch currentCreationStatusStep {
         case .step1:
             bubble(BrowserEvents.BaseModelSelected.init(model, indexPath: indexPath))
-        case .step2:
+        case .step2, .update:
             guard dataCell.modelIsAvailableForSelection else { return }
             bubble(BrowserEvents.ModelToMerge.init(model, indexPath: indexPath))
         default:

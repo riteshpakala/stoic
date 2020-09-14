@@ -66,13 +66,13 @@ class SearchCollectionHeaderCell: UICollectionReusableView {
     
     var isPRO: Bool = false {
         didSet {
-            if isPRO {
-                label.text = "LIVE".localized.uppercased()
-                label.textColor = GlobalStyle.Colors.purple
-            } else {
-                label.text = "FREE".localized.uppercased()
-                label.textColor = GlobalStyle.Colors.orange
-            }
+            updateAppearance()
+        }
+    }
+    
+    var isOffline: Bool = false {
+        didSet {
+            updateAppearance()
         }
     }
     
@@ -96,5 +96,22 @@ class SearchCollectionHeaderCell: UICollectionReusableView {
         super.prepareForReuse()
         
         isPRO = false
+        isOffline = false
+    }
+    
+    func updateAppearance() {
+        guard !isOffline else {
+            label.text = "OFFLINE".localized.uppercased()
+            label.textColor = GlobalStyle.Colors.red
+            return
+        }
+        
+        if isPRO {
+            label.text = "LIVE".localized.uppercased()
+            label.textColor = GlobalStyle.Colors.purple
+        } else {
+            label.text = "FREE".localized.uppercased()
+            label.textColor = GlobalStyle.Colors.orange
+        }
     }
 }

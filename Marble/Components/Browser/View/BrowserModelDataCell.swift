@@ -15,6 +15,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
     public enum BrowserModelStatus {
         case baseModel
         case appendedModel
+        case mergedModel
         case inCompatible
         case compatible
         case none
@@ -134,7 +135,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
         didSet {
             guard status != oldValue else { return }
             switch status {
-            case .baseModel:
+            case .baseModel, .mergedModel:
                 baseModelSelected = true
                 modelIsAvailableForSelection = false
                 modelSelected = true

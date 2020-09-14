@@ -31,7 +31,7 @@ public class DetailState: State {
     
     var stockModel: StockModel? 
     
-    @objc dynamic var predictionState: String = DetailView.DetailPredictionState.downloadingData.rawValue
+    @objc dynamic var predictionState: String = DetailView.DetailPredictionState.preparing.rawValue
     
     var model: StockKitUtils.Models? = nil
     

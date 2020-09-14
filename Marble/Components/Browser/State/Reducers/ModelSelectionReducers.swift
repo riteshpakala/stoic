@@ -66,9 +66,8 @@ struct ModelToMergeReducer: Reducer {
                let modelData = data.modelsToMerge[modelDay],
                modelData.model.id == event.model.id {
                 
-                
                 let isBaseStockGreater = (baseStock.tradingDayDate).compare(event.model.tradingDayDate) == .orderedDescending
-                
+                //TODO:****** MAX AND MIN INSTEAD OF BASE, for update only, maybe not necessery
                 let datesToRemove = Array(mergedStocks.keys).filter {
                     
                     if isBaseStockGreater {
@@ -83,7 +82,6 @@ struct ModelToMergeReducer: Reducer {
                         state.compiledModelCreationData?.modelsToMerge.removeValue(forKey: date)
                     }
                 }
-                
             
                 let mergedStocks: [StockModel] = state.compiledModelCreationData?.modelsToMerge.values.compactMap({ $0.model }) ?? []
                 
@@ -192,11 +190,58 @@ struct MergedModelSelectedReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        
-        sideEffects.append(
-            .init(event: DashboardEvents.ShowDetail.stored(
-                event.model.asModel),
-                  bubbles: true))
-        
+        if event.lifecycle == .isReady {
+            sideEffects.append(
+                .init(event: DashboardEvents.ShowDetail.stored(
+                    event.model.asModel),
+                      bubbles: true))
+        } else if event.lifecycle == .needsSyncing,
+            let stock = event.model.stock.asSearchStock,
+            let objectDate = event.model.date,
+            let targetDate = state.nextValidTradingDay.asDate() {
+            
+//            let stockModelMerged: StockModelMerged = .init(from: event.model)
+            
+            let components = Calendar.nyCalendar.dateComponents(
+                [.day],
+                from: objectDate,
+                to: targetDate)
+            
+            guard let stockKit = (component as? BrowserComponent)?.stockKit,
+                let tradingDays = stockKit.state.validTradingDays?.descending,
+                let lastTradingDay = tradingDays.first?.asDate else {
+                return
+            }
+            
+//            let componentsLast = Calendar.nyCalendar.dateComponents(
+//                [.day],
+//                from: objectDate,
+//                to: lastTradingDay)
+            
+            let componentDiffOfValidAndTarget = Calendar.nyCalendar.dateComponents(
+                [.day],
+                from: lastTradingDay,
+                to: targetDate)
+            
+            //if this does not pass, make sure stockKit's testable flag is set to `false`
+            //haha
+            
+            if let objectAge = components.day,
+                let tradingDayAge = componentDiffOfValidAndTarget.day {
+                
+                
+                guard let updatePredictionDays = GlobalDefaults.PredictionDays.init(rawValue: objectAge - tradingDayAge) else { return }
+                
+                component.service.storage.update(updatePredictionDays)
+                
+                sideEffects.append(
+                    .init(event: DashboardEvents.ShowDetail.search(stock),
+                          bubbles: true))
+            }
+
+            
+//            let componentsLast = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: minStock.lastStock?.dateData.asDate ?? minDate)
+            
+        }
     }
 }

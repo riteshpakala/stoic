@@ -35,6 +35,20 @@ struct ShowDetailReducer: Reducer {
             component.pop(browser, animated: true)
         }
         
+        //Update settings options if a detail view was spawned
+        //with changed preferences
+        let settingsItem = GlobalDefaults.instance.writeableDefaults
+        for item in settingsItem {
+            if let index = state.settingsItems?.firstIndex(
+                where: { $0.label == item.key }) {
+                state.settingsItems?[index].reference = item
+                state.settingsItems?[index].value = item.asString
+            }
+        }
+        
+        state.settingsDidUpdate = state.settingsDidUpdate % 12
+        //
+        
         guard state.activeSearchedStocks.values.first(
             where: { $0.symbolName == searchStock?.symbolName }) == nil else {
                 

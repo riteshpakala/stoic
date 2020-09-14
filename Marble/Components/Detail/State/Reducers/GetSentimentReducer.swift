@@ -18,6 +18,11 @@ struct GetSentimentReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
+        guard component.service.center.isOnline else {
+            state.predictionState = DetailView.DetailPredictionState.offline.rawValue
+            return
+        }
+        
         state.sentimentDownloadTimer?.invalidate()
         state.sentimentDownloadTimer = nil
         state.progressLabelText = "\("\"\("What is the world saying about".localized) \(state.searchedStock.companyName ?? state.searchedStock.symbol)?\"")"

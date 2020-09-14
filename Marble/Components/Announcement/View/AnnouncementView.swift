@@ -246,10 +246,9 @@ public class AnnouncementView: GraniteView {
     
     func setupPrivacy() {
         let heightLeft = LSConst.Device.height - min(estimatedSize.width, estimatedSize.height)
-        print("{ANNOUNCEMENT} \(heightLeft)")
 
         thePrivacy.snp.makeConstraints { make in
-            make.height.equalTo((heightLeft > 0 && heightLeft < LSConst.Device.height) ? (heightLeft/2) - (GlobalStyle.largePadding*2) : AnnouncementStyle.privacyHeight)
+            make.height.equalTo((heightLeft > 0 && heightLeft < LSConst.Device.height && self.isIPhone) ? (heightLeft/2) - (GlobalStyle.largePadding*2) : AnnouncementStyle.privacyHeight)
         }
         
         thePrivacyTitle.isHidden = false

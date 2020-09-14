@@ -24,6 +24,7 @@ struct SearchStyle {
     static let amountOfCellsOnOnePage: CGFloat = 4.0
     static let cellSize: CGSize = .init(width: 120, height: 25)
     static let headerCellSize: CGSize = .init(width: 66, height: 25)
+    static let headerCellSizeOffline: CGSize = .init(width: 100, height: 25)
     static var collectionHeight: CGSize = {
         return .init(width: 0, height: cellSize.height+GlobalStyle.spacing)
     }()

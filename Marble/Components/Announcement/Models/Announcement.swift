@@ -14,7 +14,7 @@ public class Announcement: NSObject {
     let image: String
     let title: String
     
-    public init(message: String, id: Int = 0, image: String, title: String) {
+    public init(message: String, id: Int = -1, image: String, title: String) {
         self.message = message
         self.id = id
         self.image = image

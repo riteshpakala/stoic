@@ -10,6 +10,8 @@ import Foundation
 
 struct StockKitEvents {
     struct StockKitIsPrepared: Event {
+        let success: Bool
+        let nextTradingDayIsAvailable: Bool
     }
     struct GetValidMarketDays: Event {
     }

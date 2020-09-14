@@ -100,6 +100,12 @@ class ConsoleView: GraniteView {
         return baseFrame.size
     }
     
+    var isOffline: Bool = false {
+        didSet {
+            updateOfflineAppearance()
+        }
+    }
+    
     init(frame: CGRect, minimizedFrame: CGRect) {
         self.baseFrame = frame
         super.init(frame: frame)
@@ -190,10 +196,10 @@ extension ConsoleView {
     
     func changeViewState(){
         
-        statusView.isHidden = minimizeButton.tag == 0 || detailIsLoaded
-        progressView.isHidden = minimizeButton.tag == 0 || detailIsLoaded
-        detailView.isHidden = minimizeButton.tag == 0 || !detailIsLoaded
-        predictingIndicator.isHidden = minimizeButton.tag == 0 || detailIsLoaded
+        statusView.isHidden = !minimized || detailIsLoaded
+        progressView.isHidden = !minimized || detailIsLoaded
+        detailView.isHidden = !minimized || !detailIsLoaded
+        predictingIndicator.isHidden = !minimized || detailIsLoaded
         
         if minimizeButton.tag == 0 {
             detailView.minimized()
@@ -217,6 +223,30 @@ extension ConsoleView {
             }
             
             minimizeButton.tag = 0
+        }
+        
+        updateOfflineAppearance()
+    }
+    
+    func updateOfflineAppearance() {
+        guard !detailIsLoaded else {
+            if detailIsLoaded {
+                detailView.updateIsOfflineAppearance(isOffline)
+            }
+            return
+        }
+        
+        if isOffline {
+            statusView.text = "/**** OFFLINE */"
+            predictingIndicator.stop()
+            progressView.isHidden = true
+            statusView.textColor = GlobalStyle.Colors.red
+        } else {
+            if !predictingIndicator.animating {
+                predictingIndicator.start()
+            }
+            progressView.isHidden = false
+            statusView.textColor = GlobalStyle.Colors.purple
         }
     }
 }

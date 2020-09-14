@@ -280,7 +280,19 @@ extension StockModelMergedObject {
             let sd = NSSortDescriptor(key: "date", ascending: false)
             mutableLogs.sort(using: [sd])
             
-            return (mutableLogs.firstObject as? StockModelObject)?.date.date()
+            let ids = self.currentModels?.mergedModelIDs
+            
+            let obj = mutableLogs.first(where: {
+                if  let obj = ($0 as? StockModelObject),
+                    ids?.contains(obj.id) == true {
+                    
+                    return true
+                } else {
+                    return false
+                }
+            })
+            
+            return (obj as? StockModelObject)?.date.date()
         } else {
             return nil
         }

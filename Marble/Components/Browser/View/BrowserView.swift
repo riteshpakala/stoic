@@ -111,6 +111,31 @@ public class BrowserView: GraniteView {
         return view
     }()
     
+    lazy var loaderView: (container: UIView, label: UILabel) = {
+        let view: UIView = .init()
+        view.backgroundColor = GlobalStyle.Colors.purple.withAlphaComponent(0.36)
+        
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.purple
+        label.text = "/**** compiling... */"
+        label.sizeToFit()
+        label.backgroundColor = GlobalStyle.Colors.black
+        label.layer.cornerRadius = 4.0
+        label.layer.masksToBounds = true
+        
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.height.equalTo(label.font.lineHeight + 8)
+            make.width.equalTo(label.frame.size.width + GlobalStyle.padding)
+            make.center.equalToSuperview()
+        }
+        view.isHidden = true
+        
+        return (view, label)
+    }()
+    
     private(set) lazy var collection: (
         view: UICollectionView,
         layout: UICollectionViewLayout) = {
@@ -136,7 +161,21 @@ public class BrowserView: GraniteView {
         return (view, layout)
     }()
     
+    var isOffline: Bool = false {
+        didSet {
+            guard isOffline != oldValue else { return }
+            if isOffline {
+                nextTradingDayLabel.textColor = GlobalStyle.Colors.red
+                updateTradingLabel("OFFLINE")
+                undim()
+            } else {
+                nextTradingDayLabel.textColor = GlobalStyle.Colors.green
+            }
+        }
+    }
+    
     private var loader: ConsoleLoader?
+    private var isCompiling: Bool = false
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -167,6 +206,11 @@ public class BrowserView: GraniteView {
             make.width.equalTo(predictionEngineVersion.frame.size.width + GlobalStyle.spacing*4)
         }
         
+        addSubview(loaderView.container)
+        loaderView.container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         loader?.begin()
         self.dim()
     }
@@ -190,11 +234,29 @@ public class BrowserView: GraniteView {
 
 extension BrowserView: ConsoleLoaderDelegate {
     public func consoleLoaderUpdated(_ indicator: String) {
-        self.nextTradingDayLabel.text = indicator
+        if isCompiling {
+            self.loaderView.label.text = indicator
+        } else {
+            self.nextTradingDayLabel.text = indicator
+        }
     }
     
     public func updateTradingLabel(_ text: String) {
         loader?.stop()
         self.nextTradingDayLabel.text = text
+    }
+    
+    public func compile() {
+        loader?.stop()
+        loader = .init(self, baseText: "/**** compiling\(ConsoleLoader.seperator) */")
+        isCompiling = true
+        loaderView.container.isHidden = false
+        loader?.begin()
+    }
+    
+    public func compileFinished() {
+        loader?.stop()
+        isCompiling = false
+        loaderView.container.isHidden = true
     }
 }

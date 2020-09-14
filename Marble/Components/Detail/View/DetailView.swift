@@ -11,6 +11,9 @@ import UIKit
 
 public class DetailView: GraniteView {
     public enum DetailPredictionState: String {
+        case thinking = "thinking"
+        case offline = "offline"
+        case preparing = "preparing_data"
         case downloadingData = "downloading_data"
         case seekingSentiment = "seeking_emotions"
         case predicting = "predicting"
@@ -29,8 +32,13 @@ public class DetailView: GraniteView {
         return consoleView
     }()
     
-    var currentState: DetailPredictionState = .downloadingData {
+    var currentState: DetailPredictionState = .preparing {
         didSet {
+            if oldValue != .offline, currentState == .done {
+                consoleView.isOffline = false
+            } else if oldValue == .offline, currentState == .thinking {
+                consoleView.isOffline = false
+            }
             if currentState == .done {
                 loader?.stop()
                 self.consoleView.setStatus(nil)
@@ -38,17 +46,11 @@ public class DetailView: GraniteView {
                 if !consoleView.minimized {
                     self.frame.size = DetailStyle.consoleSizeExpanded
                 }
+            } else if currentState == .offline {
+                loader?.stop()
+                consoleView.isOffline = true
             }
         }
-    }
-    
-    var progressTimer: Timer? = nil
-    var currentIndicator: ProgressTimerIndicator = .zero
-    enum ProgressTimerIndicator: String {
-        case zero = ""
-        case one = "."
-        case two = ".."
-        case three = "..."
     }
     
     private var loader: ConsoleLoader?

@@ -13,7 +13,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
     public init() {}
     
     public static var allLSVDefaults: [LocalStorage.Value<LocalStorageValue>] {
-        return GlobalDefaults.defaults
+        return GlobalDefaults.defaults + GlobalDefaults.helperDefaults
     }
     
     public static var allVariableDefaults: [LocalStorage.Value<Any>] {
@@ -26,6 +26,12 @@ public struct GlobalDefaults: LocalStorageDefaults {
             LocalStorage.Value.init(Browser.none),
             LocalStorage.Value.init(SentimentStrength.low),
             LocalStorage.Value.init(PredictionDays.two),
+        ]
+    }
+    
+    public static var helperDefaults: [LocalStorage.Value<LocalStorageValue>] {
+        return [
+            LocalStorage.Value.init(Reachability.wifi),
         ]
     }
     
@@ -182,14 +188,50 @@ public struct GlobalDefaults: LocalStorageDefaults {
         }
     }
     
+    public enum Reachability: Int, LocalStorageValue {
+        case wifi
+        case cellular
+        case unavailable
+        
+        public var value: Int {
+            return self.rawValue
+        }
+        
+        public var asString: String {
+            switch self {
+            case .wifi: return "you are online, wifi connection"
+            case .cellular: return "you are online, cellular connection"
+            case .unavailable: return "you are not online"
+            }
+        }
+        
+        public var description: String {
+            "reachable".lowercased().localized
+        }
+        
+        public var permissions: LocalStorageReadWrite {
+            .internalReadAndWrite
+        }
+        
+        public var isOnline: Bool {
+            self != .unavailable
+        }
+        
+        public static func from(_ value: Int?) -> GlobalDefaults.Reachability {
+            if let value = value {
+                return GlobalDefaults.Reachability.init(rawValue: value) ?? GlobalDefaults.Reachability.unavailable
+            } else {
+                return GlobalDefaults.Reachability.unavailable
+            }
+        }
+    }
+    
     //MARK: -- Onboarding Defaults
     public static var OnboardingDashboard: String = "OnboardingDashboard"
     public static var OnboardingDetail: String = "OnboardingDetail"
     public static var OnboardingBrowser: String = "OnboardingBrowser"
     
-    //MARK: -- Welcome
-    public static var Welcome: String = "Welcome"
-    
     //MARK: -- Announcement
-    public static var Announcement: String = "Welcome"
+    public static var Welcome: String = "Welcome"
+    public static var Announcement: String = "Announcement"
 }

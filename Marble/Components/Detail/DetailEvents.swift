@@ -25,6 +25,9 @@ extension DetailEvents {
         let id: String
     }
     
+    struct LoadOffline: Event {
+    }
+    
     struct GetCSV: Event {
         let ticker: String
     }

@@ -30,12 +30,18 @@ struct BrowserEvents {
     
     public struct CompiledModelCreationStatusUpdated: Event {
         let status: BrowserCompiledModelCreationStatus
-        public init(_ status: BrowserCompiledModelCreationStatus) {
+        let stock: SearchStock?
+        public init(_ status: BrowserCompiledModelCreationStatus, stock: SearchStock? = nil) {
             self.status = status
+            self.stock = stock
         }
     }
     
     public struct MergeModel: Event {}
+    
+    public struct UpdateMergedModel: Event {
+        let model: StockModelMergedObject
+    }
     
     public struct StandaloneModelSelected: Event {
         let model: StockModel
@@ -48,8 +54,12 @@ struct BrowserEvents {
     
     public struct MergeModelSelected: Event {
         let model: StockModelMergedObject
-        public init(_ model: StockModelMergedObject) {
+        let lifecycle: StockModelMerged.Lifecycle
+        public init(
+            _ model: StockModelMergedObject,
+            _ lifecycle: StockModelMerged.Lifecycle) {
             self.model = model
+            self.lifecycle = lifecycle
         }
     }
     
@@ -59,6 +69,5 @@ struct BrowserEvents {
             self.id = id
         }
     }
-    
     
 }
