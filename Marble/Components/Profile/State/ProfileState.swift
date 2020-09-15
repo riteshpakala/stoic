@@ -14,8 +14,10 @@ public class ProfileState: State {
     @objc dynamic var disclaimers: [Disclaimer]? = nil
     @objc dynamic var user: UserData? = nil
     @objc dynamic var subscription: Int = GlobalDefaults.Subscription.none.rawValue
+    @objc dynamic var subscriptionUpdated: Bool = false
     var currentNonce: String?
     var recentPrediction: PredictionUpdate? = nil
+    var intent: ProfileEvents.CheckCredential.Intent = .login
     
     @objc dynamic var userProperties: UserProperties? = nil
     

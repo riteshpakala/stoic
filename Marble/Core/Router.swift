@@ -39,7 +39,11 @@ class AppDelegate: GraniteAppDelegate {
     }
     
     override func didBecomeActive() {
-        coordinator.service.center.requestSubscriptionUpdate()
+        if coordinator.service.center.requestSubscriptionUpdate() {
+            //request proceeded
+        } else {
+            //requests are only made in 12 min intervals
+        }
     }
 }
 

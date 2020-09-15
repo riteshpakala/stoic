@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Granite
+import Firebase
 
 class ContactView: UIStackView {
     lazy var theEmail: (container: UIView, label: UILabel) = {
@@ -75,6 +76,13 @@ class ContactView: UIStackView {
         return .init()
     }()
     
+    private var email: String = "team@linenandsole.com"
+    private var discord: String = "https://discord.gg/VFfE8PT"
+    
+    public static var main: Database {
+        Database.database(url: "https://stoic-45d04.firebaseio.com/")
+    }
+    
     init() {
         super.init(frame: .zero)
         self.addArrangedSubview(theEmail.container)
@@ -91,6 +99,20 @@ class ContactView: UIStackView {
         
         theEmail.container.snp.makeConstraints { make in
             make.height.equalTo(theEmail.label.font.lineHeight + 8)
+        }
+        
+        
+        DispatchQueue.init(label: "stoic.contact.fetch").async { [weak self] in
+            ContactView.main.reference()
+                .child("contact")
+                .observeSingleEvent(of: .value, with: { snapshot in
+                
+                    if let information = snapshot.value as? [String: String] {
+                        self?.email = information["email"] ?? (self?.email ?? "")
+                        self?.discord = information["discord"] ?? (self?.discord ?? "")
+                    }
+                
+            })
         }
     }
     
@@ -109,7 +131,6 @@ class ContactView: UIStackView {
     }
     
     func emailTeam() {
-        let email = "team@linenandsole.com"
         if let url = URL(string: "mailto:\(email)") {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url)
@@ -120,7 +141,7 @@ class ContactView: UIStackView {
     }
     
     func openDiscord() {
-        if let url = URL(string: "https://discord.gg/kVHAbc") {
+        if let url = URL(string: discord) {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url)
             } else {

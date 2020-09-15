@@ -87,6 +87,11 @@ public class ProfileViewController: GraniteViewController<ProfileState> {
             \.subscription,
             handler: observeSubscription(_:),
             async: .main)
+        
+        observeState(
+            \.subscriptionUpdated,
+            handler: observeSubscriptionUpdated(_:),
+            async: .main)
     }
 }
 
@@ -131,6 +136,16 @@ extension ProfileViewController {
         }
         
         _view.profileOverView.subscription = subscription
+    }
+    
+    func observeSubscriptionUpdated(
+        _ updated: Change<Bool>) {
+
+        guard let status = updated.newValue else {
+                return
+        }
+        
+        _view.profileOverView.subscriptionUpdated = status
     }
     
     func observeDisclaimers(

@@ -69,20 +69,24 @@ extension ServiceCenter {
         }
     }
     
-    func requestSubscriptionUpdate(_ time: Double = 300) {
+    func requestSubscriptionUpdate(_ time: Double = 720) -> Bool {
         let value = storage.get(GlobalDefaults.SubscriptionCheck, defaultValue: 0.0)
-        
-        if (CFAbsoluteTimeGetCurrent() - value) > time {
+        let elapsedTime = CFAbsoluteTimeGetCurrent() - value
+        print("{SUBSCRIBE} requested \(elapsedTime)")
+        if elapsedTime > time {
             updateSubscription()
-
-            storage.update(GlobalDefaults.SubscriptionCheck, CFAbsoluteTimeGetCurrent())
+            
+            return true
+        } else {
+            return false
         }
         
     }//5 Minutes
     
     func updateSubscription() {
+        storage.update(GlobalDefaults.SubscriptionCheck, CFAbsoluteTimeGetCurrent())
         self.checkSubscription { [weak self] subscription in
-            if let value = subscription.values.first(where:  { $0 != .none } ) {
+            if let value = subscription.values.first(where:  { $0 != .none } ), !subscription.isEmpty {
                 self?.storage.update(value)
             } else {
                 self?.storage.update(GlobalDefaults.Subscription.none)
@@ -115,10 +119,9 @@ extension ServiceCenter {
                         
                     }
                 }
-                
-                completion(subscription)
-                
             }
+            
+            completion(subscription)
         }
     }
     
@@ -130,7 +133,11 @@ extension ServiceCenter {
             self?.retrieveReceipt(productID: StoicProducts.monthlySub) { infoMonthly in
                 self?.retrieveReceipt(productID: StoicProducts.weeklySub) { infoWeekly in
                     let info = infoYearly + infoMonthly + infoWeekly
-
+                    guard !info.isEmpty else {
+                        
+                        completion(["":ServiceCenter.SubscriptionStatus.notPurchased])
+                        return
+                    }
                     self?.verifySubscription(receipts: info) { items in
                         if let items = items {
                             for key in items.keys {
@@ -147,7 +154,7 @@ extension ServiceCenter {
                                 switch purchaseResult {
                                 case .purchased(let date, let items):
                                     subStatus[key] = .purchased
-                                    print("{SUBSCRIBE} verify \(key) \(date.asString)")
+                                    print("{SUBSCRIBE} purchased \(key)")
                                 case .notPurchased:
                                     subStatus[key] = .notPurchased
                                     print("{SUBSCRIBE} not purchased \(key)")
@@ -174,6 +181,7 @@ extension ServiceCenter {
         var receipts: [String:Data] = [:]
         
         guard let currentUser = Auth.auth().currentUser?.uid else {
+            print("{SUBSCRIBE} no user detected")
             completion?(receipts)
             return
         }
@@ -226,6 +234,7 @@ extension ServiceCenter {
             sharedSecret: StoicProducts.sharedSecret)
         
         var receiptInfo: [String: ReceiptInfo] = [:]
+        var failed: Int = 0
         
         guard !receipts.isEmpty else {
             
@@ -234,18 +243,22 @@ extension ServiceCenter {
         }
         
         for key in receipts.keys {
-            guard let data = receipts[key] else { continue }
+            guard let data = receipts[key] else { failed += 1; continue }
             appleValidator.validate(receiptData: data) { result in
                 switch result {
                 case .success(let receipt):
                     receiptInfo[key] = receipt
-                    print("{SUBSCRIBE} verified \(key)")
+//                    print("{SUBSCRIBE} verified \(key)")
                     if receiptInfo.count == receipts.values.count {
                         completion?(receiptInfo)
                     }
                 default: completion?(nil); print("{SUBSCRIBE} could not verify")
                 }
             }
+        }
+        
+        if failed >= receipts.count {
+            completion?(nil)
         }
     }
 }

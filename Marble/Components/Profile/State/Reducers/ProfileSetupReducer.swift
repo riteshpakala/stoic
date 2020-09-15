@@ -18,6 +18,8 @@ struct ProfileSetupReducer: Reducer {
         state: inout ReducerState,
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
+
+        state.subscriptionUpdated = false
         
         guard let user = Auth.auth().currentUser else {
             state.user = nil
@@ -122,7 +124,11 @@ struct ProfileSetupOverViewReducer: Reducer {
         //david.. //DEV:
         state.userProperties?.isPrepared = true
 
-        component.service.center.updateSubscription()
+        let isRequesting = component.service.center.requestSubscriptionUpdate()
+        
+        if (!isRequesting && state.intent == .relogin) {
+            state.subscriptionUpdated = true
+        }
         
         //david.. //DEV:
 //        guard let stockKit = (component as? ProfileComponent)?.stockKit else {

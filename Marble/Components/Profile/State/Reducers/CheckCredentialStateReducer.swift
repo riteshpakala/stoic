@@ -22,7 +22,7 @@ struct CheckCredentialStateReducer: Reducer {
         component: inout Component<ReducerState>) {
             
         guard let nonce = state.currentNonce else { return }
-        
+        state.intent = event.intent
         if event.intent == .login {
             
             let appleIDProvider = ASAuthorizationAppleIDProvider()

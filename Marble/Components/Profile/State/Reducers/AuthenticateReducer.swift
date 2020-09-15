@@ -59,6 +59,7 @@ struct AuthenticateReducer: Reducer {
                 return
             }
             
+            componentToPass.service.center.updateSubscription()
             componentToPass.sendEvent(ProfileEvents.ProfileSetup())
         }
     }
@@ -76,7 +77,6 @@ struct SignOutReducer: Reducer {
         
         do {
             try Auth.auth().signOut()
-            
             sideEffects.append(.init(event: ProfileEvents.ProfileSetup()))
             
         } catch let error {

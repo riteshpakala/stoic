@@ -120,7 +120,8 @@ public class ProfileOverView: GraniteView {
         view.font = GlobalStyle.Fonts.courier(.medium, .bold)
         view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .center
-        view.isUserInteractionEnabled = true
+        view.isUserInteractionEnabled = false
+        view.alpha = 0.5
         view.addGestureRecognizer(subscribeTapGesture)
         return view
     }()
@@ -205,6 +206,18 @@ public class ProfileOverView: GraniteView {
     public var subscription: GlobalDefaults.Subscription = .none {
         didSet {
             updateSubscriptionAppearance()
+        }
+    }
+    
+    public var subscriptionUpdated: Bool = false {
+        didSet {
+            if subscriptionUpdated {
+                subscribeLabel.isUserInteractionEnabled = true
+                subscribeLabel.alpha = 1.0
+            } else {
+                subscribeLabel.isUserInteractionEnabled = false
+                subscribeLabel.alpha = 0.5
+            }
         }
     }
     
