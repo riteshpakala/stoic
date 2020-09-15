@@ -829,7 +829,7 @@ extension BrowserModelCell {
         impactOccured()
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let create: UIAlertAction = .init(title: "new model".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
+        let create: UIAlertAction = .init(title: "* new model".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
@@ -837,7 +837,7 @@ extension BrowserModelCell {
             self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1, stock: self?.model?.stock.asSearchStock))
         })
         
-        let cancel: UIAlertAction = .init(title: "cancel", style: .cancel, handler: { [weak self] alert in
+        let cancel: UIAlertAction = .init(title: "* cancel", style: .cancel, handler: { [weak self] alert in
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
             }
@@ -890,7 +890,7 @@ extension BrowserModelCell {
     func didSelectUnPreparedModel() {
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let train: UIAlertAction = .init(title: "train new model".localized.lowercased(), style: .default, handler: { [weak self] alert in
+        let train: UIAlertAction = .init(title: "* train new model".localized.lowercased(), style: .default, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
@@ -902,7 +902,7 @@ extension BrowserModelCell {
             }
         })
         
-        let update: UIAlertAction = .init(title: "update".localized.lowercased(), style: .default, handler: { [weak self] alert in
+        let update: UIAlertAction = .init(title: "* update".localized.lowercased(), style: .default, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
@@ -911,7 +911,7 @@ extension BrowserModelCell {
             self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.update, stock: self?.model?.stock.asSearchStock))
         })
         
-        let create: UIAlertAction = .init(title: "new model".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
+        let create: UIAlertAction = .init(title: "* new model".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
@@ -919,7 +919,7 @@ extension BrowserModelCell {
             self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1, stock: self?.model?.stock.asSearchStock))
         })
         
-        let cancel: UIAlertAction = .init(title: "cancel", style: .cancel, handler: { [weak self] alert in
+        let cancel: UIAlertAction = .init(title: "* cancel", style: .cancel, handler: { [weak self] alert in
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
             }

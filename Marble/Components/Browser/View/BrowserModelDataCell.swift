@@ -272,7 +272,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
         
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let remove: UIAlertAction = .init(title: "remove", style: .destructive, handler: { [weak self] alert in
+        let remove: UIAlertAction = .init(title: "* remove", style: .destructive, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
                 self?.undim()
@@ -280,7 +280,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
             self?.bubble(BrowserEvents.RemoveModel.init(self?.model?.id ?? ""))
         })
         
-        let cancel: UIAlertAction = .init(title: "cancel", style: .cancel, handler: { [weak self] alert in
+        let cancel: UIAlertAction = .init(title: "* cancel", style: .cancel, handler: { [weak self] alert in
             DispatchQueue.main.async {
                 self?.undim()
             }

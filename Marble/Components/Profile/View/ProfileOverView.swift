@@ -220,6 +220,10 @@ public class ProfileOverView: GraniteView {
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        signOutLabel.snp.makeConstraints { make in
+            make.height.equalTo(signOutLabel.font.lineHeight)
+        }
+        
         loader?.begin()
     }
     

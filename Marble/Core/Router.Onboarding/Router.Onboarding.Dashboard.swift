@@ -165,6 +165,7 @@ extension DashboardView: Onboardable {
     
     public func committedStep(_ index: Int) {
         if index == 1 {
+            print("{SHOWING HELPER BUG}")
             self.settings.showHelpers(forceActive: true)
         }else if index == 6 {
             self.bringSubviewToFront(self.settings)
