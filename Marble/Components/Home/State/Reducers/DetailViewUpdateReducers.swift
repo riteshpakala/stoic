@@ -9,8 +9,8 @@
 import Granite
 import Foundation
 
-struct DetailWillShowReducer: Reducer {
-    typealias ReducerEvent = DashboardEvents.ShowDetail
+struct UpdateSceneReducer: Reducer {
+    typealias ReducerEvent = SceneEvents.ChangeScene
     typealias ReducerState = HomeState
     
     func reduce(
@@ -21,7 +21,7 @@ struct DetailWillShowReducer: Reducer {
         
         sideEffects.append(
             .init(
-                event: SceneEvents.ChangeScene(scene: .minimized),
+                event: event,
                 target: SceneComponent.self))
     }
 }

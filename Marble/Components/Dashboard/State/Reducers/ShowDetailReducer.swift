@@ -70,9 +70,52 @@ struct ShowDetailReducer: Reducer {
                 return
         }
         
+        //Subscription handling
+        let isSubscribed = GlobalDefaults.Subscription.from(state.subscription).isActive
+        if ServiceCenter.SubscriptionBenefits.train12StocksSimul.isActive {
+            guard state.activeSearchedStocks.keys.count < (
+                ServiceCenter.SubscriptionBenefits.train12StocksSimul.numericalAlt ?? 4) - 1 ||
+            (isSubscribed && state.activeSearchedStocks.keys.count < (
+            ServiceCenter.SubscriptionBenefits.train12StocksSimul.numerical ?? 8) - 1) else {
+                if !isSubscribed {
+                    sideEffects.append(
+                        .init(
+                            event: HomeEvents.PresentAlert.init(
+                                ServiceCenter.SubscriptionBenefits.train12StocksSimul.alertAlt),
+                            bubbles: true))
+                } else {
+                    sideEffects.append(
+                        .init(
+                            event: HomeEvents.PresentAlert.init(
+                                ServiceCenter.SubscriptionBenefits.train12StocksSimul.alert),
+                            bubbles: true))
+                }
+                return
+            }
+        }
+        if ServiceCenter.SubscriptionBenefits.hiSentimentAccess.isActive {
+            let hiSentiment = component.service.storage.getObject(GlobalDefaults.SentimentStrength.self)
+            
+            if hiSentiment?.value == GlobalDefaults.SentimentStrength.hi.value, !isSubscribed {
+                sideEffects.append(
+                    .init(
+                        event: HomeEvents.PresentAlert.init(
+                            ServiceCenter.SubscriptionBenefits.hiSentimentAccess.alertAlt),
+                        bubbles: true))
+                return
+            }
+        }
+        //
+        
         guard let stock = searchStock else {
             return
         }
+        
+        sideEffects.append(
+            .init(
+                event: SceneEvents.ChangeScene.init(
+                    scene: .minimized),
+                bubbles: true))
         
         let detailComponent = DetailBuilder.build(component.service, stock, stockModel)
 

@@ -37,7 +37,9 @@ struct GenerateSettingsReducer: Reducer {
                 help: $0.description,
                 label: $0.key,
                 value: value,
+                detail: $0.value,
                 isResource: $0.resource != nil,
+                isSubscribed: GlobalDefaults.Subscription.from(state.subscription).isActive,
                 selector: DashboardEvents.UpdateSettings(label: $0.key),
                 reference: $0)
             
@@ -112,6 +114,7 @@ struct UpdateSettingsReducer: Reducer {
         
         state.settingsItems?[indexOfSettingsItem].reference = targetSettingsItem
         state.settingsItems?[indexOfSettingsItem].value = targetSettingsItem.asString
+        state.settingsItems?[indexOfSettingsItem].detail = targetSettingsItem.value
         
         state.settingsDidUpdate = state.settingsDidUpdate % 12
         

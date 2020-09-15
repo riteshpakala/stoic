@@ -305,6 +305,7 @@ public class BrowserModelCell: UICollectionViewCell {
     
     var currentCreationStatusStep: BrowserCompiledModelCreationStatus = .none {
         didSet {
+            guard willCreate else { return }
             self.compiledCreationStatusLabel.text = currentCreationStatusStep.rawValue.localized.lowercased()
             
             for cell in self.collection.view.visibleCells {
@@ -325,8 +326,9 @@ public class BrowserModelCell: UICollectionViewCell {
                 compiledCreationDoneLabel.sizeToFit()
                 widthOfDoneLabel?.update(offset: compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4)
             case .step3:
-                break
+                willCreate = false
             default:
+                willCreate = false
                 showViewForCreation()
                 compiledCreationDoneLabel.text = "done".localized.lowercased()
                 compiledCreationDoneLabel.sizeToFit()
@@ -336,6 +338,7 @@ public class BrowserModelCell: UICollectionViewCell {
     }
     var compiledModelCreationData: BrowserCompiledModelCreationData? = nil {
         didSet {
+            guard willCreate || isCreating else { return }
             for cell in self.collection.view.visibleCells {
                 if let dataCell = cell as? BrowserModelDataContainerCell {
                     dataCell.compiledModelCreationData = compiledModelCreationData
@@ -520,6 +523,8 @@ public class BrowserModelCell: UICollectionViewCell {
     var isCreating: Bool {
         currentCreationStatusStep != .none
     }
+    
+    private var willCreate: Bool = false
     
     var stock: SearchStock? = nil {
         didSet {
@@ -864,6 +869,7 @@ extension BrowserModelCell {
     
     @objc func createTapped(_ sender: UITapGestureRecognizer) {
         guard !self.collection.view.isDecelerating else { return }
+        self.willCreate = true
         impactOccured()
         bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1, stock: self.model?.stock.asSearchStock))
     }

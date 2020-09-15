@@ -118,7 +118,7 @@ public class ProfileOverView: GraniteView {
         let view: UILabel = .init()
         view.text = "subscribe".localized
         view.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        view.textColor = GlobalStyle.Colors.yellow
+        view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(subscribeTapGesture)

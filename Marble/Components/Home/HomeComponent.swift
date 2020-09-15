@@ -12,7 +12,7 @@ import UIKit
 public class HomeComponent: Component<HomeState> {
     override public var reducers: [AnyReducer] {
         [
-            DetailWillShowReducer.Reducible(),
+            UpdateSceneReducer.Reducible(),
             AllDetailsDidCloseReducer.Reducible(),
             PresentAlertControllerReducer.Reducible(),
             PresentAlertReducer.Reducible()

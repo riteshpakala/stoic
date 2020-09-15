@@ -17,6 +17,58 @@ extension ServiceCenter {
         case notPurchased
     }
     
+    public enum SubscriptionBenefits: String, CaseIterable {
+        case liveSearch = "see live stock searches from other `Stoics`"
+        case searchAnyStock = "search most stocks"
+        case train12StocksSimul = "train up to 7 stocks at a time"
+        case hiSentimentAccess = "access to `hi` sentiment strength"
+        
+        var isActive: Bool {
+            switch self {
+            case .liveSearch, .searchAnyStock, .train12StocksSimul, .hiSentimentAccess:
+                return true
+            }
+        }
+        
+        var numerical: Int? {
+            switch self {
+            case .train12StocksSimul:
+                return 8
+            default:
+                return nil
+            }
+        }
+        
+        var numericalAlt: Int? {
+            switch self {
+            case .train12StocksSimul:
+                return 4
+            default:
+                return nil
+            }
+        }
+        
+        var alert: String {
+            switch self {
+            case .train12StocksSimul:
+                return "you can only train up to 7 stocks at a time"
+            default:
+                return "unknown error"
+            }
+        }
+        
+        var alertAlt: String {
+            switch self {
+            case .train12StocksSimul:
+                return "you must be a Stoic PRO in order to train more models at the same time"
+            case .hiSentimentAccess:
+                return "you must be a Stoic PRO in order to use `hi` sentiment strength"
+            default:
+                return "unknown error"
+            }
+        }
+    }
+    
     func requestSubscriptionUpdate(_ time: Double = 300) {
         let value = storage.get(GlobalDefaults.SubscriptionCheck, defaultValue: 0.0)
         

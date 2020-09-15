@@ -36,13 +36,10 @@ public class SubscribeView: GraniteView {
         let view: UILabel = .init()
         view.text =
             """
-            - search any stock
-            - realtime `Stoic` user stock searches
-            - personal stock search tracking
-            - `high` Sentiment strength access
+            /**** loading... */
             """
-        view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
-        view.textColor = GlobalStyle.Colors.green
+        view.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        view.textColor = GlobalStyle.Colors.orange
         view.textAlignment = .left
         view.isUserInteractionEnabled = false
         view.numberOfLines = 0
@@ -87,13 +84,13 @@ public class SubscribeView: GraniteView {
     
     lazy var loaderView: (container: UIView, label: UILabel) = {
         let view: UIView = .init()
-        view.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.36)
+        view.backgroundColor = GlobalStyle.Colors.green.withAlphaComponent(0.36)
         
         let label: UILabel = .init()
         label.font = GlobalStyle.Fonts.courier(.medium, .bold)
         label.textAlignment = .center
-        label.textColor = GlobalStyle.Colors.orange
-        label.text = "/**** loading... */"
+        label.textColor = GlobalStyle.Colors.green
+        label.text = "/**** processing... */"
         label.sizeToFit()
         label.backgroundColor = GlobalStyle.Colors.black
         label.layer.cornerRadius = 4.0
@@ -161,6 +158,11 @@ public class SubscribeView: GraniteView {
         loaderView.container.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        subscriptionDescription.text = ServiceCenter.SubscriptionBenefits.allCases.filter({
+            $0.isActive })
+            .map({ "- "+$0.rawValue })
+            .joined(separator: "\n")
         
         beginLoader(forOptions: true)
     }

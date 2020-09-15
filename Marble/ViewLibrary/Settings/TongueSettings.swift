@@ -343,13 +343,27 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
             return cell
         }
         cell.valueLabel.font = GlobalStyle.Fonts.courier(.small, .bold)
-        if settingsItems[indexPath.item].isResource {
+        
+        let item = settingsItems[indexPath.item]
+        if item.isResource {
             cell.imageView.isHidden = false
-            cell.imageView.image = UIImage.init(named: settingsItems[indexPath.item].value)
+            cell.imageView.image = UIImage.init(named: item.value)
         } else {
             cell.imageView.isHidden = true
-            cell.valueLabel.text = settingsItems[indexPath.item].value
+            cell.valueLabel.text = item.value
         }
+        
+        cell.valueLabel.textColor = GlobalStyle.Colors.black
+        
+        //Subscription handling
+        if ServiceCenter.SubscriptionBenefits.hiSentimentAccess.isActive {
+            if item.detail == GlobalDefaults.SentimentStrength.hi.value,
+                item.label == GlobalDefaults.SentimentStrength.hi.key,
+                !item.isSubscribed {
+                cell.valueLabel.textColor = GlobalStyle.Colors.red
+            }
+        }
+        //
         
         return cell
     }
@@ -368,7 +382,9 @@ struct TongueSettingsModel<T> {
     var help: String
     var label: String
     var value: String
+    var detail: Int
     var isResource: Bool
+    var isSubscribed: Bool
     var reference: T
     var selector: Event
     
@@ -376,14 +392,18 @@ struct TongueSettingsModel<T> {
         help: String,
         label: String,
         value: String,
+        detail: Int,
         isResource: Bool,
+        isSubscribed: Bool,
         selector: Event,
         reference: T) {
         
         self.help = help
         self.label = label
         self.value = value
+        self.detail = detail
         self.isResource = isResource
+        self.isSubscribed = isSubscribed
         self.reference = reference
         self.selector = selector
     }

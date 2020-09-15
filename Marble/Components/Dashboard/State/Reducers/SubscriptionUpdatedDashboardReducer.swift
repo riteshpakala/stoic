@@ -31,8 +31,7 @@ struct ShowSubscribeReducer: Reducer {
         component.push(
             SubscribeBuilder.build(
                 component.service),
-            display: .modalTop
-        )
+            display: .modalTop)
     }
 }
 
@@ -48,6 +47,19 @@ struct SubscriptionUpdatedDashboardReducer: Reducer {
         
         let subscriptionStatus = component.service.storage.get(GlobalDefaults.Subscription.self)
         state.subscription = subscriptionStatus
+        
+        //Update settings options if a detail view was spawned
+        //with changed preferences
+        let settingsItem = GlobalDefaults.instance.writeableDefaults
+        for item in settingsItem {
+            if let index = state.settingsItems?.firstIndex(
+                where: { $0.label == item.key }) {
+                state.settingsItems?[index].isSubscribed = GlobalDefaults.Subscription.from(subscriptionStatus).isActive
+            }
+        }
+        
+        state.settingsDidUpdate = state.settingsDidUpdate % 12
+        //
         
         guard let subscription = component.getSubComponent(SubscribeComponent.self) else {
             return

@@ -14,7 +14,7 @@ class Disclaimer: NSObject, Codable {
         let view: UILabel = .init()
         view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
         view.textColor = GlobalStyle.Colors.marbleBrown
-        view.textAlignment = .left
+        view.textAlignment = .center
         view.isUserInteractionEnabled = false
         view.numberOfLines = 0
         return view

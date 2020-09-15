@@ -23,8 +23,7 @@ struct DetailLongPressStartedReducer: Reducer {
         
         sideEffects.append(
             .init(
-                event: DashboardEvents
-                    .DetailIsInteracting
+                event: DashboardEvents.DetailIsInteracting
                     .init(id: component.id), bubbles: true))
     }
 }
