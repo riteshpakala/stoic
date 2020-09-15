@@ -96,6 +96,8 @@ extension ServiceCenter {
         case nasdaq
         case nyse
     }
+    
+    public static let ReviewalRequest: Int = 12
 }
 
 extension ServiceCenter {

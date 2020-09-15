@@ -61,7 +61,7 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
 //            companyName: "Microsoft")))
         
         //DEV:
-        sendEvent(SubscribeEvents.Show())
+//        sendEvent(SubscribeEvents.Show())
     }
     
     override public func viewDidAppear(_ animated: Bool) {

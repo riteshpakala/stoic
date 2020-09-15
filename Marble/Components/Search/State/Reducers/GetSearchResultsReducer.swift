@@ -53,7 +53,7 @@ struct GetSearchResultsResponseReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         var sanitizedStocks: [SearchStock] = []
-        let validExchanges: [String] = ServiceCenter.Exchanges.allCases.map({ $0.rawValue.capitalized })
+        let validExchanges: [String] = ServiceCenter.Exchanges.allCases.map({ $0.rawValue.uppercased() })
         
         for item in event.result {
             let keys = item.keys

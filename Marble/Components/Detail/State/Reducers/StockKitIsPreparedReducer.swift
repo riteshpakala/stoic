@@ -7,6 +7,7 @@
 //
 import Granite
 import Foundation
+import StoreKit
 
 struct StockKitIsPreparedReducer: Reducer {
     typealias ReducerEvent = StockKitEvents.StockKitIsPrepared
@@ -42,6 +43,17 @@ struct StockKitIsPreparedReducer: Reducer {
         }
         
         guard let symbolName = state.searchedStock.symbolName else { return }
+        
+        //Request Review
+        let models: [StockModelObject]? = component.service.center.getStockModels(from: .background)
+        if  let count = models?.count,
+            count > 0,
+            count % ServiceCenter.ReviewalRequest == 0{
+        
+            SKStoreReviewController.requestReview()
+        }
+        //
+        
         state.predictionState = DetailView.DetailPredictionState.downloadingData.rawValue
         sideEffects.append(
             .init(
