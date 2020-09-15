@@ -140,7 +140,7 @@ extension DashboardView: Onboardable {
                     right: -GlobalStyle.spacing*2),
                 paddingPreferred: true),
             actionable: .init(keyPath: \.layer.bounds, view: self.subviews.first(where: { ($0 as? SearchView) != nil }) ?? self),
-            text: "you can search for most stocks using their $Ticker Symbol. give it a shot",
+            text: "you can search for most stocks using their $Ticker Symbol. give it a shot... (if you are not Stoic PRO try searching one of the stocks in the Free Rotation of the week above the keyboard)",
             order: 7)
     }
     

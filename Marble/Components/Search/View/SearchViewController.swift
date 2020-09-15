@@ -148,8 +148,6 @@ extension SearchViewController {
 extension SearchViewController: UITextFieldDelegate {
     public func textFieldShouldBeginEditing(
         _ textField: UITextField) -> Bool {
-        _view.collectionAccessory.container.isHidden = component?.service.center.onboardingDashboardCompleted == false
-        _view.collectionAccessory.collection.reloadData()
         component?.sendEvent(SearchEvents.GenerateStockRotation.live)
         return true
     }
@@ -231,7 +229,8 @@ extension SearchViewController: UICollectionViewDelegate {
             
             bubbleEvent(
                 DashboardEvents.ShowDetail.search(stock))
-        } else {
+        } else if component?.service.center.onboardingDashboardCompleted == true {
+            
             bubbleEvent(
                 DashboardEvents.ShowDetail.search(stock))
         }
@@ -320,7 +319,6 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
     private func isStockAvailable(_ stock: SearchStock) -> Bool {
         let symbol = stock.symbol
         let subscription: GlobalDefaults.Subscription = GlobalDefaults.Subscription.from(component?.state.subscription)
-        
         let stockRotation: [String] = component?.state.stockRotation.compactMap({ $0.symbol }) ?? []
         
         return stockRotation.contains(symbol) || subscription.isActive
