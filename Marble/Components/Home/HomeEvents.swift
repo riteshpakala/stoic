@@ -16,4 +16,10 @@ struct HomeEvents {
             self.alert = alert
         }
     }
+    public struct PresentAlert: Event {
+        let message: String
+        public init(_ message: String) {
+            self.message = message
+        }
+    }
 }

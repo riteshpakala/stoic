@@ -38,7 +38,7 @@ extension DetailView: Onboardable {
     public var introStep: OnboardingStep {
         OnboardingStep.init(
             reference: .init(textPadding: GlobalStyle.padding),
-            actionable: .init(keyPath: \.frame, view: self),
+            actionable: .init(keyPath: \.isHidden, view: self.consoleView.detailView),
             text: "a prediction retrieves stock data & sentiment from all over the web. Give it a moment to pull & process",
             order: 0)
     }
@@ -54,7 +54,8 @@ extension DetailView: Onboardable {
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
             text: "the trading date this window is predicting for",
-            order: 1)
+            order: 1,
+            isContinueHidden: false)
     }
     
     public var historicalDayStepPart1: OnboardingStep {

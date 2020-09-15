@@ -15,6 +15,7 @@ public class StockModel: NSObject {
     private(set) var model: SVMModel? = nil
     private(set) var dataSet: DataSet? = nil
     private(set) var lastStock: StockData? = nil
+    private(set) var isMerged: Bool
     
     public init(from object: StockModelObject) {
         self.id = object.id
@@ -29,12 +30,15 @@ public class StockModel: NSObject {
                 ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedDescending
                 
         } ).first
+        self.isMerged = object.merged?.currentModels?.mergedModelIDs?.contains(object.id) == true
     }
     
     public init(fromMerged object: StockModelMergedObject) {
         self.id = object.id
         self.searchStock = object.stock.asSearchStock
         self.sentiment = nil
+        self.isMerged = object.merged?.currentModels?.mergedModelIDs?.contains(object.id) == true
+        
         guard let models = object.models,
               let ids = object.currentModels?.mergedModelIDs else { return }
         
@@ -50,7 +54,6 @@ public class StockModel: NSObject {
         self.tradingDayTime = latestModel.date
         self.model = model
         self.dataSet = object.dataSet?.asDataSet
-        
         
         var historical: [StockData] = []
         var sentiment: [StockSentimentData] = []

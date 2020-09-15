@@ -139,15 +139,8 @@ public class AnnouncementView: GraniteView {
         return (view, label)
     }()
     
-    lazy var emailLabel: UILabel = {
-        let view: UILabel = .init()
-        view.text = "email: team@linenandsole.com\nfor feedback & suggestions".localized
-        view.font = GlobalStyle.Fonts.courier(.small, .bold)
-        view.textColor = GlobalStyle.Colors.purple
-        view.textAlignment = .center
-        view.isUserInteractionEnabled = true
-        view.numberOfLines = 0
-        view.addGestureRecognizer(emailTapGesture)
+    lazy var contact: ContactView = {
+        let view: ContactView = .init()
         view.isHidden = true
         return view
     }()
@@ -164,7 +157,7 @@ public class AnnouncementView: GraniteView {
                 thePrivacy,
                 thePrivacyAgree.container,
                 theContinue.container,
-                emailLabel,
+                contact,
                 spacer,
                 theAlert.container
             ]
@@ -182,12 +175,6 @@ public class AnnouncementView: GraniteView {
         let view: UIView = .init()
         view.isHidden = true
         return view
-    }()
-    
-    lazy var emailTapGesture: UITapGestureRecognizer = {
-        return UITapGestureRecognizer(
-            target: self,
-            action: #selector(self.emailTeamTapped(_:)))
     }()
     
     lazy var theAlert: (container: UIView, label: UILabel, dismiss: UILabel) = {
@@ -215,7 +202,9 @@ public class AnnouncementView: GraniteView {
         
         container.addSubview(view)
         view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(GlobalStyle.largePadding)
+            make.right.equalToSuperview().offset(-GlobalStyle.largePadding)
         }
         
         let label: UILabel = .init()
@@ -277,22 +266,6 @@ public class AnnouncementView: GraniteView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-	
-    @objc func emailTeamTapped(_ sender: UITapGestureRecognizer) {
-        feedbackGenerator.impactOccurred()
-        emailTeam()
-    }
-    
-    func emailTeam() {
-        let email = "team@linenandsole.com"
-        if let url = URL(string: "mailto:\(email)") {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
     }
     
     func setupAlert(_ message: String) {
@@ -356,7 +329,7 @@ public class AnnouncementView: GraniteView {
         announcementTitleLabel.text = "// "+announcement.title
         theMessage.text = announcement.message
         
-        emailLabel.isHidden = false
+        contact.isHidden = false
         
         announcementLabel.isHidden = false
         announcementTitleLabel.isHidden = false
@@ -373,6 +346,9 @@ public class AnnouncementView: GraniteView {
         } else {
             theContinue.container.isHidden = false
         }
+        
+        stackView.setNeedsLayout()
+        contact.setNeedsLayout()
     }
     
     var estimatedSize: CGSize {

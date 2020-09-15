@@ -23,6 +23,7 @@ public class ProfileComponent: Component<ProfileState> {
             ProfileGetCSVResultsResponseReducer.Reducible(),
             SubcriptionUpdatedProfileReducer.Reducible(),
             SignOutReducer.Reducible(),
+            ProfileResetOnboardingReducer.Reducible()
         ]
     }
     

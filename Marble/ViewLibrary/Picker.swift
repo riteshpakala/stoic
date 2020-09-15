@@ -131,6 +131,7 @@ class Picker: UITableView {
         
         self.register(PickerCell.self, forCellReuseIdentifier: "\(PickerCell.self)")
         
+        self.backgroundColor = GlobalStyle.Colors.black
         self.layer.borderColor = color.cgColor
         self.layer.borderWidth = 3.0
         self.delegate = self
@@ -181,7 +182,8 @@ class PickerCell: UITableViewCell {
             style: style,
             reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .clear
+        backgroundColor = GlobalStyle.Colors.black
+        contentView.backgroundColor = GlobalStyle.Colors.black
         
         self.selectionStyle = .none
         

@@ -18,7 +18,7 @@ public enum SearchStockKeys: String {
 
 public class SearchState: State {
     @objc dynamic var searchTimer: Timer? = nil
-    let searchDelay: TimeInterval = 1.2
+    let searchDelay: TimeInterval
     
     let validCountryCode: String = "US"
     let validIssueType: String = "STOCK"
@@ -28,4 +28,9 @@ public class SearchState: State {
     @objc dynamic var stockResultsActive: Bool = false
     @objc dynamic var subscription: Int = GlobalDefaults.Subscription.none.rawValue
     @objc dynamic var isLoadingRotation: Bool = false
+    
+    override init() {
+        searchDelay = 1.0.randomBetween(2.4)
+        super.init()
+    }
 }

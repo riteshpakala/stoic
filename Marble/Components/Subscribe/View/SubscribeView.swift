@@ -49,15 +49,8 @@ public class SubscribeView: GraniteView {
         return view
     }()
     
-    lazy var emailLabel: UILabel = {
-        let view: UILabel = .init()
-        view.text = "email: team@linenandsole.com\nfor feedback & suggestions".localized
-        view.font = GlobalStyle.Fonts.courier(.small, .bold)
-        view.textColor = GlobalStyle.Colors.purple
-        view.textAlignment = .center
-        view.isUserInteractionEnabled = true
-        view.numberOfLines = 0
-        view.addGestureRecognizer(emailTapGesture)
+    lazy var contact: ContactView = {
+        let view: ContactView = .init()
         return view
     }()
     
@@ -128,7 +121,7 @@ public class SubscribeView: GraniteView {
                 .init(),
                 stackViewSubscriptionOptions,
                 optionsLoadingLabel,
-                emailLabel,
+                contact,
                 spacer
             ]
         )
@@ -143,12 +136,6 @@ public class SubscribeView: GraniteView {
     
     lazy var spacer: UIView = {
         return .init()
-    }()
-    
-    lazy var emailTapGesture: UITapGestureRecognizer = {
-        return UITapGestureRecognizer(
-            target: self,
-            action: #selector(self.emailTeamTapped(_:)))
     }()
     
     private var loaderLabelWidthConstraint: Constraint?
@@ -180,22 +167,6 @@ public class SubscribeView: GraniteView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-	
-    @objc func emailTeamTapped(_ sender: UITapGestureRecognizer) {
-        feedbackGenerator.impactOccurred()
-        emailTeam()
-    }
-    
-    func emailTeam() {
-        let email = "team@linenandsole.com"
-        if let url = URL(string: "mailto:\(email)") {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
     }
     
     func updateLoaderAppearance(confirming: Bool) {

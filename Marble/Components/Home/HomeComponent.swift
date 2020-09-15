@@ -14,6 +14,7 @@ public class HomeComponent: Component<HomeState> {
         [
             DetailWillShowReducer.Reducible(),
             AllDetailsDidCloseReducer.Reducible(),
+            PresentAlertControllerReducer.Reducible(),
             PresentAlertReducer.Reducible()
         ]
     }

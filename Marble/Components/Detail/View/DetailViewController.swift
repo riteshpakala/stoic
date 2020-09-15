@@ -56,6 +56,19 @@ public class DetailViewController: GraniteViewController<DetailState> {
     }
     
     override public func viewDidLayoutSubviews() {
+        
+        if !isLaidOut {
+            if let view = self._view.superview {
+                self._view.center = .init(
+                    x: view.bounds.width/2,
+                    y: view.bounds.height/2)
+            } else {
+                self._view.center = .init(
+                    x: UIScreen.main.bounds.width/2,
+                    y: UIScreen.main.bounds.height/2)
+            }
+        }
+        
         super.viewDidLayoutSubviews()
     }
 	

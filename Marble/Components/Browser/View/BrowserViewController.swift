@@ -161,7 +161,7 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
             AnnouncementBuilder.build(
                 component!.service,
                 state: .init(
-                    displayType: .alert(component?.state.mergedModels.first?.engine ?? "unknown engine version"))),
+                    displayType: .alert(StockKitUtils.Models.engine))),
             display: .modal)
     }
 }
@@ -178,7 +178,6 @@ extension BrowserViewController {
         
         if day.newValue != nil {
             _view.collection.view.reloadData()
-            _view.undim()
         }
     }
     

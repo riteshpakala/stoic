@@ -243,3 +243,24 @@ struct ProfileGetCSVResultsResponseReducer: Reducer {
         }
     }
 }
+
+struct ProfileResetOnboardingReducer: Reducer {
+    typealias ReducerEvent = ProfileEvents.ResetOnboarding
+    typealias ReducerState = ProfileState
+
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        for item in GlobalDefaults.onboardingDefaults {
+            item.update(false)
+        }
+        
+        component.push(
+            AnnouncementBuilder.build(
+                component.service,
+                state: .init(displayType: .alert("onboarding has been reset. Restart the app to view the tutorial again"))), display: .modalTop)
+    }
+}

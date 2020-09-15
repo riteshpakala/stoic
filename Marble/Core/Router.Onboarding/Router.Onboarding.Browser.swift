@@ -72,6 +72,28 @@ extension BrowserView: Onboardable {
             continuePreferred: true)
     }
     
+    public var loadStep2: OnboardingStep {
+        guard let cell = collection.view.cellForItem(at: IndexPath.init(item: 0, section: 0)) as? BrowserModelCell else {
+            
+            return .empty
+        }
+        
+        return OnboardingStep.init(
+            reference: .init(
+                referenceView: cell.collection.view,
+                containerView: self.collection.view,
+                padding: .init(
+                    top: self.stackView.frame.origin.y,
+                    left: -self.stackView.frame.origin.x/2,
+                    bottom: 0,
+                    right: self.stackView.frame.origin.x)
+            ),
+            text: "holding a tap or long pressing a model will allow you to remove them",
+            order: 3,
+            isContinueHidden: false,
+            continuePreferred: true)
+    }
+    
     public var createStep: OnboardingStep {
         guard let cell = collection.view.cellForItem(at: IndexPath.init(item: 0, section: 0)) as? BrowserModelCell else {
             
@@ -89,7 +111,7 @@ extension BrowserView: Onboardable {
                     right: self.stackView.frame.origin.x)
             ),
             text: "tapping on `create` will allow you merge more than 1 together, if compatible. So 2 `1 day` models can become 1 `2 day` model",
-            order: 3,
+            order: 4,
             isContinueHidden: false,
             continuePreferred: true)
     }
@@ -112,7 +134,7 @@ extension BrowserView: Onboardable {
             ),
             actionable: .init(keyPath: \.isHidden, view: cell.compiledStackView),
             text: "even if you do not have more than 1 model yet, let's give it a try to see what's next. Tap `create` to continue",
-            order: 4)
+            order: 5)
     }
     
     public var createStep3: OnboardingStep {
@@ -139,7 +161,7 @@ extension BrowserView: Onboardable {
             ),
             actionable: .init(keyPath: \.layer.sublayers, view: cell2.collection.view),
             text: "the first step will require you to choose a `base model`. The following models selected will stack on top",
-            order: 5)
+            order: 6)
     }
     
     public var createStep4: OnboardingStep {
@@ -159,7 +181,7 @@ extension BrowserView: Onboardable {
                     right: self.stackView.frame.origin.x)
             ),
             text: "if you have more than 1 model, you will be able to see a realtime update of what is compatible & what is not with the `base model`",
-            order: 6,
+            order: 7,
             isContinueHidden: false,
             continuePreferred: true)
     }
@@ -183,7 +205,7 @@ extension BrowserView: Onboardable {
                     right: self.stackView.frame.origin.x)
             ),
             text: "tapping done & progressing through, will lead to the completion of the merge",
-            order: 7,
+            order: 8,
             isContinueHidden: false,
             continuePreferred: true)
     }

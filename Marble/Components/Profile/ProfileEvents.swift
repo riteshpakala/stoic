@@ -40,5 +40,7 @@ struct ProfileEvents {
         public let disclaimers: [Disclaimer]
     }
     
+    public struct ResetOnboarding: Event {}
+    
     public struct SignOut: Event {}
 }

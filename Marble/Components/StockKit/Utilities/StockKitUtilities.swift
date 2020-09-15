@@ -38,6 +38,7 @@ public struct StockKitUtils {
     }
     
     public struct Models {
+        public static let engine: String = "david.v0.00.00"
         let david: SVMModel
         
         public struct DataSet {

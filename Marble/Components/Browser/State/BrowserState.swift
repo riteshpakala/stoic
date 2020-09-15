@@ -56,7 +56,7 @@ public class BrowserState: State {
         return BrowserCompiledModelCreationStatus.init(rawValue: currentCompiledCreationStatus) ?? .none
     }
     
-    let mergedModels: [StockModelMerged]
+    var mergedModels: [StockModelMerged]
     
     public init(_ mergedModels: [StockModelMerged]) {
         self.mergedModels = mergedModels

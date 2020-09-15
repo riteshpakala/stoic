@@ -107,7 +107,7 @@ public class ProfileOverView: GraniteView {
         let view: UILabel = .init()
         view.text = "sign out".localized
         view.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        view.textColor = GlobalStyle.Colors.green
+        view.textColor = GlobalStyle.Colors.red
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(signOutTapGesture)
@@ -118,22 +118,26 @@ public class ProfileOverView: GraniteView {
         let view: UILabel = .init()
         view.text = "subscribe".localized
         view.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        view.textColor = GlobalStyle.Colors.green
+        view.textColor = GlobalStyle.Colors.yellow
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(subscribeTapGesture)
         return view
     }()
     
-    lazy var emailLabel: UILabel = {
+    lazy var onboardingLabel: UILabel = {
         let view: UILabel = .init()
-        view.text = "email: team@linenandsole.com\nfor feedback & suggestions".localized
-        view.font = GlobalStyle.Fonts.courier(.small, .bold)
-        view.textColor = GlobalStyle.Colors.purple
+        view.text = "reset onboarding".localized
+        view.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        view.textColor = GlobalStyle.Colors.green
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
-        view.numberOfLines = 0
-        view.addGestureRecognizer(emailTapGesture)
+        view.addGestureRecognizer(onboardingTapGesture)
+        return view
+    }()
+    
+    lazy var contact: ContactView = {
+        let view: ContactView = .init()
         return view
     }()
     
@@ -162,9 +166,10 @@ public class ProfileOverView: GraniteView {
                 .init(),
                 stackViewDisclaimers,
                 .init(),
-                signOutLabel,
-                emailLabel,
+                onboardingLabel,
                 subscribeLabel,
+                signOutLabel,
+                contact,
                 spacer
             ]
         )
@@ -181,23 +186,23 @@ public class ProfileOverView: GraniteView {
         return .init()
     }()
     
-    lazy var emailTapGesture: UITapGestureRecognizer = {
-        return UITapGestureRecognizer(
-            target: self,
-            action: #selector(self.emailTeamTapped(_:)))
-    }()
-    
-    lazy var subscribeTapGesture: UITapGestureRecognizer = {
+    var subscribeTapGesture: UITapGestureRecognizer {
         return UITapGestureRecognizer(
             target: self,
             action: #selector(self.subscribeTapped(_:)))
-    }()
+    }
     
-    lazy var signOutTapGesture: UITapGestureRecognizer = {
+    var signOutTapGesture: UITapGestureRecognizer {
         return UITapGestureRecognizer(
             target: self,
             action: #selector(self.signOutTapped(_:)))
-    }()
+    }
+    
+    var onboardingTapGesture: UITapGestureRecognizer {
+        return UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.onboardingTapped(_:)))
+    }
     
     public var subscription: GlobalDefaults.Subscription = .none {
         didSet {
@@ -258,11 +263,6 @@ public class ProfileOverView: GraniteView {
         }
     }
     
-    @objc func emailTeamTapped(_ sender: UITapGestureRecognizer) {
-        feedbackGenerator.impactOccurred()
-        emailTeam()
-    }
-    
     @objc func subscribeTapped(_ sender: UITapGestureRecognizer) {
         feedbackGenerator.impactOccurred()
         bubbleEvent(SubscribeEvents.Show())
@@ -273,15 +273,9 @@ public class ProfileOverView: GraniteView {
         bubble(ProfileEvents.SignOut())
     }
     
-    func emailTeam() {
-        let email = "team@linenandsole.com"
-        if let url = URL(string: "mailto:\(email)") {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
+    @objc func onboardingTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
+        bubble(ProfileEvents.ResetOnboarding())
     }
 }
 

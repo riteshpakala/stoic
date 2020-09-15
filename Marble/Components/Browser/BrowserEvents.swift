@@ -37,7 +37,16 @@ struct BrowserEvents {
         }
     }
     
-    public struct MergeModel: Event {}
+    public struct MergeModel: Event {
+        public enum MergeIntent {
+            case deletion(StockModel?)
+            case creation
+        }
+        let intent: MergeIntent
+        public init(intent: MergeIntent = .creation){
+            self.intent = intent
+        }
+    }
     
     public struct UpdateMergedModel: Event {
         let model: StockModelMergedObject

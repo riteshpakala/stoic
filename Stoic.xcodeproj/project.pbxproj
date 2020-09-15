@@ -255,6 +255,7 @@
 		71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */; };
 		71C21A35248D88B500F6D5BF /* GetSearchResultsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */; };
 		71C40EF724EF951B0050C072 /* TongueSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C40EF624EF951B0050C072 /* TongueSettings.swift */; };
+		71C56BFE2510418F00E58073 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C56BFD2510418F00E58073 /* Contact.swift */; };
 		71C58F562508354E00C342CE /* SwipeableHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C58F552508354E00C342CE /* SwipeableHelpers.swift */; };
 		71C58F582508369D00C342CE /* BrowserModelDataCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */; };
 		71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D32A24CCB70100535F3F /* WaveFormView.swift */; };
@@ -564,6 +565,7 @@
 		71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCSVReducer.swift; sourceTree = "<group>"; };
 		71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchResultsReducer.swift; sourceTree = "<group>"; };
 		71C40EF624EF951B0050C072 /* TongueSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TongueSettings.swift; sourceTree = "<group>"; };
+		71C56BFD2510418F00E58073 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		71C58F552508354E00C342CE /* SwipeableHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableHelpers.swift; sourceTree = "<group>"; };
 		71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelDataCardView.swift; sourceTree = "<group>"; };
 		71D2D32A24CCB70100535F3F /* WaveFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveFormView.swift; sourceTree = "<group>"; };
@@ -870,6 +872,7 @@
 				712F54672506DBED000384A7 /* PaddingLabel.swift */,
 				71725D9824F276E8003B0FF6 /* Disclaimer.swift */,
 				71C58F552508354E00C342CE /* SwipeableHelpers.swift */,
+				71C56BFD2510418F00E58073 /* Contact.swift */,
 			);
 			path = ViewLibrary;
 			sourceTree = "<group>";
@@ -2040,6 +2043,7 @@
 				717A766024A16131005348F9 /* Parser.swift in Sources */,
 				7127B0272485DCF7004C57F1 /* DashboardEvents.swift in Sources */,
 				717A766624A16131005348F9 /* Pattern.swift in Sources */,
+				71C56BFE2510418F00E58073 /* Contact.swift in Sources */,
 				71DCBEEB250C2BAF00C12F4B /* Dictionary.swift in Sources */,
 				71A7C699250571000094C352 /* StockModelObject+CoreDataClass.swift in Sources */,
 				71DCBEE9250C2A7600C12F4B /* Router.Subscription.swift in Sources */,

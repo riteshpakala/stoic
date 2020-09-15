@@ -269,6 +269,7 @@ public class BrowserModelDataCell: UICollectionViewCell {
     @objc
     func cellWasLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began, status == BrowserModelStatus.none else { return }
+        
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let remove: UIAlertAction = .init(title: "remove", style: .destructive, handler: { [weak self] alert in

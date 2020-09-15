@@ -21,20 +21,75 @@ struct MergeModelReducer: Reducer {
         state.isCompiling = true
         print("{Browser} merging model")
         
-        guard let baseStock = state.compiledModelCreationData?.baseModel else {
-            return
+        let stock: StockModel?
+        let merging: [StockModel]
+        switch event.intent {
+        case .creation:
+            guard let baseStock = state.compiledModelCreationData?.baseModel else {
+                stock = nil
+                merging = []
+                state.isCompiling = false
+                return
+            }
+            
+            guard let modelsToMerge = state.compiledModelCreationData?.modelsToMerge else {
+                stock = nil
+                merging = []
+                state.isCompiling = false
+                return
+            }
+            
+            guard state.mergedModels.first(where: { $0.stock.symbol == baseStock.stock.symbol && $0.stock.exchangeName == baseStock.stock.exchangeName }) != nil else {
+                stock = nil
+                merging = []
+                state.isCompiling = false
+                return
+            }
+            
+            stock = baseStock
+            merging = (modelsToMerge.values.map({ $0.model })) + [baseStock]
+        case .deletion(_):
+            //TODO: [WIP] deleting a model that is in a merged model
+            stock = nil
+            merging = []
+            state.isCompiling = false
+            break
+//            guard let baseStock = stockModel else {
+//                stock = nil
+//                merging = []
+//                state.isCompiling = false
+//                return
+//            }
+//
+//            guard let mergeModel = state.mergedModels.first(where: { $0.stock.symbol == baseStock.stock.symbol && $0.stock.exchangeName == baseStock.stock.exchangeName }) else {
+//                stock = nil
+//                merging = []
+//                state.isCompiling = false
+//                return
+//            }
+//
+//            let newModels = mergeModel.mergedStocks.filter { $0.id == baseStock.id }
+//
+//            guard !newModels.isEmpty else {
+//                stock = nil
+//                merging = []
+//                state.isCompiling = false
+//                if let mergeModelIndex = state.mergedModels.firstIndex(where: { $0.stock.symbol == baseStock.stock.symbol && $0.stock.exchangeName == baseStock.stock.exchangeName }) {
+//
+//                    state.mergedModels.remove(at: mergeModelIndex)
+//                }
+//                return
+//            }
+//
+//            stock = baseStock
+//            merging = newModels
         }
         
-        guard let modelsToMerge = state.compiledModelCreationData?.modelsToMerge else {
-            return
-        }
+        guard !merging.isEmpty, let baseStock = stock else {
+
+            state.isCompiling = false
+            return }
         
-        guard state.mergedModels.first(where: { $0.stock.symbol == baseStock.stock.symbol && $0.stock.exchangeName == baseStock.stock.exchangeName }) != nil else {
-            return
-        }
-        
-        var merging = modelsToMerge.values.map({ $0.model })
-        merging.append(baseStock)
         let allModelsToMerge = merging.sorted(by: {
             ($0.tradingDayDate)
                 .compare($1.tradingDayDate) == .orderedAscending })
@@ -110,9 +165,6 @@ struct MergeModelReducer: Reducer {
                     print("{SVM} \(error)")
                 }
             }
-            
-            
-            
         }
     
         /********

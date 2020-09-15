@@ -29,7 +29,7 @@ public class StockModelObject: StockModelParentObject, CoreDataManaged {
             in: context) ?? StockModelObject.entity()
         self.init(entity: entity, insertInto: context)
         self.id = UUID().uuidString
-        self.engine = "david.v0.00.00"
+        self.engine = StockKitUtils.Models.engine
     }
     
     public static func request() -> NSFetchRequest<Model> {

@@ -49,6 +49,19 @@ struct RemoveModelReducer: Reducer {
 
         })
         
+        let isMerged = object?.merged?.currentModels?.mergedModelIDs?.contains(object?.id ?? "") == true
+        
+        guard !isMerged else {
+            
+            component.push(
+                AnnouncementBuilder.build(
+                    component.service,
+                    state: .init(displayType: .alert("you can only remove models that are not merged yet".localized.lowercased()))),
+                display: .modalTop)
+            
+            return
+        }
+        
         guard object != nil else { return }
 
         moc.perform {

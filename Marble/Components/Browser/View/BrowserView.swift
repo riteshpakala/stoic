@@ -167,7 +167,6 @@ public class BrowserView: GraniteView {
             if isOffline {
                 nextTradingDayLabel.textColor = GlobalStyle.Colors.red
                 updateTradingLabel("OFFLINE")
-                undim()
             } else {
                 nextTradingDayLabel.textColor = GlobalStyle.Colors.green
             }
@@ -212,7 +211,6 @@ public class BrowserView: GraniteView {
         }
         
         loader?.begin()
-        self.dim()
     }
     
     required init?(coder: NSCoder) {

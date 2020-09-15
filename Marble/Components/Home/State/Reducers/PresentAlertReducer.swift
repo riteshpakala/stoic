@@ -9,7 +9,7 @@ import Granite
 import Foundation
 import UIKit
 
-struct PresentAlertReducer: Reducer {
+struct PresentAlertControllerReducer: Reducer {
     typealias ReducerEvent = HomeEvents.PresentAlertController
     typealias ReducerState = HomeState
     
@@ -32,5 +32,23 @@ struct PresentAlertReducer: Reducer {
             }
             UIApplication.topViewController()?.present(event.alert, animated: true, completion: nil)
         }
+    }
+}
+
+struct PresentAlertReducer: Reducer {
+    typealias ReducerEvent = HomeEvents.PresentAlert
+    typealias ReducerState = HomeState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        component.push(
+            AnnouncementBuilder.build(
+                component.service,
+                state: .init(displayType: .alert(event.message))),
+            display: .modalTop)
     }
 }

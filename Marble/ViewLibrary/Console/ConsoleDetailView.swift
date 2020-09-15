@@ -339,9 +339,11 @@ class ConsoleDetailHistoricalView: GraniteView, PickerDelegate {
     }()
     
     lazy var indicator: TriangleView = {
-        return .init(
+        let triangle: TriangleView = .init(
             frame: .zero,
             color: GlobalStyle.Colors.green)
+        triangle.backgroundColor = GlobalStyle.Colors.black
+        return triangle
     }()
     
     var expand: Bool = false {
