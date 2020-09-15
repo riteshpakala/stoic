@@ -11,5 +11,19 @@ import Foundation
 import UIKit
 
 struct SubscribeStyle {
-    static let optionSize: CGSize = .init(width: 60, height: 120)
+    static var optionSize: CGSize {
+        if LSConst.Device.isIPhoneX {
+            return .init(width: 60, height: 90)
+        } else {
+            return .init(width: 60, height: 120)
+        }
+    }
+    
+    static var imageSize: CGSize {
+        if LSConst.Device.isIPhoneX {
+            return .init(width: 60, height: 180)
+        } else {
+            return .init(width: 60, height: 240)
+        }
+    }
 }

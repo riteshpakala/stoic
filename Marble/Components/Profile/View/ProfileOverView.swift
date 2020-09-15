@@ -163,14 +163,12 @@ public class ProfileOverView: GraniteView {
                 statsDescription2,
                 profileModelsSubLabel,
                 statsDescription3,
-                .init(),
+                spacer,
                 stackViewDisclaimers,
-                .init(),
                 onboardingLabel,
                 subscribeLabel,
                 signOutLabel,
-                contact,
-                spacer
+                contact
             ]
         )
         
@@ -280,6 +278,18 @@ public class ProfileOverView: GraniteView {
     @objc func onboardingTapped(_ sender: UITapGestureRecognizer) {
         feedbackGenerator.impactOccurred()
         bubble(ProfileEvents.ResetOnboarding())
+    }
+    
+    func updateAppearance(landscape: Bool) {
+        if landscape {
+            stackViewDisclaimers.isHidden = true
+            onboardingLabel.isHidden = true
+            contact.isHidden = true
+        } else {
+            stackViewDisclaimers.isHidden = false
+            onboardingLabel.isHidden = false
+            contact.isHidden = false
+        }
     }
 }
 

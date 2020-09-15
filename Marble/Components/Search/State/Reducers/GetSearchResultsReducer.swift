@@ -53,6 +53,8 @@ struct GetSearchResultsResponseReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         var sanitizedStocks: [SearchStock] = []
+        let validExchanges: [String] = ServiceCenter.Exchanges.allCases.map({ $0.rawValue.capitalized })
+        
         for item in event.result {
             let keys = item.keys
             if  keys.contains(SearchStockKeys.countryCode.rawValue),
@@ -62,7 +64,9 @@ struct GetSearchResultsResponseReducer: Reducer {
                 keys.contains(SearchStockKeys.exchangeName.rawValue)
                 {
                     
-                    if item[SearchStockKeys.countryCode.rawValue] == state.validCountryCode, item[SearchStockKeys.issueType.rawValue] == state.validIssueType {
+                    if item[SearchStockKeys.countryCode.rawValue] == state.validCountryCode,
+                        item[SearchStockKeys.issueType.rawValue] == state.validIssueType,
+                        validExchanges.contains(item[SearchStockKeys.exchangeName.rawValue] ?? "") {
                         
                         
                         let searchStock: SearchStock = .init(

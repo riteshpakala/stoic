@@ -53,6 +53,18 @@ public class ProfileViewController: GraniteViewController<ProfileState> {
         sendEvent(ProfileEvents.CheckCredential(intent: .login))
     }
     
+    override public func willTransition(
+        to newCollection: UITraitCollection,
+        with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        if self.orientationIsIPhoneLandscape {
+            _view.profileOverView.updateAppearance(landscape: true)
+        } else if self.orientationIsIPhonePortrait {
+            _view.profileOverView.updateAppearance(landscape: false)
+        }
+    }
+    
     override public func bind(_ component: Component<ProfileState>) {
         super.bind(component)
         

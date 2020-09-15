@@ -60,7 +60,6 @@ struct AuthenticateReducer: Reducer {
             }
             
             componentToPass.sendEvent(ProfileEvents.ProfileSetup())
-            componentToPass.service.center.updateSubscription()
         }
     }
 }

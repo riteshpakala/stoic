@@ -62,17 +62,6 @@ public class SubscribeView: GraniteView {
         return view
     }()
     
-    lazy var stackViewDisclaimers: GraniteStackView = {
-        let view: GraniteStackView = GraniteStackView.init()
-        
-        view.axis = .vertical
-        view.alignment = .fill
-        view.distribution = .fill
-        view.spacing = GlobalStyle.padding
-        
-        return view
-    }()
-    
     lazy var optionsLoadingLabel: UILabel = {
         let label: UILabel = .init()
         label.font = GlobalStyle.Fonts.courier(.medium, .bold)
@@ -107,31 +96,46 @@ public class SubscribeView: GraniteView {
         return (view, label)
     }()
     
+    lazy var theImage: UIImageView = {
+        let view: UIImageView = .init()
+        view.backgroundColor = .clear
+        view.contentMode = .scaleAspectFit
+        view.image = UIImage.init(named: "subscription.preview")
+        return view
+    }()
+    
     lazy var stackView: GraniteStackView = {
         let view: GraniteStackView = GraniteStackView.init(
             arrangedSubviews: [
                 subscribeLabel,
                 subscribeSubLabel,
                 subscriptionDescription,
-                .init(),
-                stackViewDisclaimers,
-                .init(),
+                theImage,
+                spacer,
                 stackViewSubscriptionOptions,
                 optionsLoadingLabel,
-                contact,
-                spacer
+                spacer2,
+                contact
             ]
         )
         
         view.axis = .vertical
         view.alignment = .fill
         view.distribution = .fill
-        view.spacing = GlobalStyle.largePadding
+        view.spacing = LSConst.Device.isIPhone6 ? GlobalStyle.spacing*2 : (LSConst.Device.isIPhone6Plus ? GlobalStyle.padding : GlobalStyle.largePadding)
         
         return view
     }()
     
     lazy var spacer: UIView = {
+        return .init()
+    }()
+    
+    lazy var spacer2: UIView = {
+        return .init()
+    }()
+    
+    lazy var spacer3: UIView = {
         return .init()
     }()
     
@@ -144,14 +148,21 @@ public class SubscribeView: GraniteView {
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.top.left.equalToSuperview()
+            make.top.equalToSuperview()
                 .offset(GlobalStyle.largePadding).priority(999)
-            make.right.bottom.equalToSuperview()
+            make.left.equalTo(self.safeAreaLayoutGuide.snp.left)
+                .offset(GlobalStyle.largePadding).priority(999)
+            make.right.equalTo(self.safeAreaLayoutGuide.snp.right)
                 .offset(-GlobalStyle.largePadding).priority(999)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.largePadding).priority(999)
         }
         
         optionsLoadingLabel.snp.makeConstraints { make in
             make.height.equalTo(SubscribeStyle.optionSize.height)
+        }
+        
+        theImage.snp.makeConstraints { make in
+            make.height.equalTo(SubscribeStyle.imageSize.height)
         }
         
         addSubview(loaderView.container)
@@ -184,13 +195,13 @@ public class SubscribeView: GraniteView {
             guard isLoading else { return }
             self.loader?.begin()
         } else {
-            loaderView.label.textColor = GlobalStyle.Colors.orange
-            loaderView.label.text = "/**** loading... */"
-            loaderView.container.backgroundColor = GlobalStyle.Colors.orange.withAlphaComponent(0.36)
+            loaderView.label.textColor = GlobalStyle.Colors.green
+            loaderView.label.text = "/**** processing... */"
+            loaderView.container.backgroundColor = GlobalStyle.Colors.green.withAlphaComponent(0.36)
             
             let isLoading = self.loader?.isLoading == true
             self.loader?.stop()
-            self.loader = .init(self, baseText: "/**** confirming\(ConsoleLoader.seperator) */")
+            self.loader = .init(self, baseText: "/**** processing\(ConsoleLoader.seperator) */")
             loaderView.label.text = self.loader?.defaultStatus
             guard isLoading else { return }
             self.loader?.begin()
@@ -198,6 +209,20 @@ public class SubscribeView: GraniteView {
         
         loaderView.label.sizeToFit()
         loaderLabelWidthConstraint?.update(offset: loaderView.label.frame.size.width + GlobalStyle.padding)
+    }
+    
+    func updateAppearance(landscape: Bool) {
+        if landscape {
+            theImage.isHidden = true
+            stackViewSubscriptionOptions.isHidden = true
+            spacer2.isHidden = true
+        } else {
+            theImage.isHidden = false
+            stackViewSubscriptionOptions.isHidden = false
+            spacer2.isHidden = false
+        }
+        
+        stackView.setNeedsDisplay()
     }
 }
 

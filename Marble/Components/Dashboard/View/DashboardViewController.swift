@@ -59,6 +59,9 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
 //            exchangeName: "NASDAQ",
 //            symbolName: "MSFT",
 //            companyName: "Microsoft")))
+        
+        //DEV:
+        sendEvent(SubscribeEvents.Show())
     }
     
     override public func viewDidAppear(_ animated: Bool) {

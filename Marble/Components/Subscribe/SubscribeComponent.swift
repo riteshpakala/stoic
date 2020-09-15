@@ -13,8 +13,6 @@ import UIKit
 public class SubscribeComponent: Component<SubscribeState> {
     override public var reducers: [AnyReducer] {
         [
-            SubscribeDisclaimerReducer.Reducible(),
-            SubscribeDisclaimerResponseReducer.Reducible(),
             SusbcribeProductsReducer.Reducible(),
             SusbcribeSelectedProductReducer.Reducible(),
             SusbcribePurchaseResultReducer.Reducible(),

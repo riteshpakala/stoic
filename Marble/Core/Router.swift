@@ -91,6 +91,11 @@ extension ServiceCenter {
             print(error.localizedDescription)
         }
     }
+    
+    public enum Exchanges: String, CaseIterable {
+        case nasdaq
+        case nyse
+    }
 }
 
 extension ServiceCenter {

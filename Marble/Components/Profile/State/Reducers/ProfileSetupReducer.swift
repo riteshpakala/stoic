@@ -26,8 +26,8 @@ struct ProfileSetupReducer: Reducer {
                 stockSearches: [],
                 stockPredictions: [],
                 stockModels: [])
-            
             component.service.center.updateSubscription()
+            
             return
         }
         
@@ -101,7 +101,7 @@ struct ProfileSetupOverViewReducer: Reducer {
 
         print("{PROFILE} lets setup the overview \(Auth.auth().currentUser == nil)")
         guard let user = Auth.auth().currentUser else { return }
-            
+        
         let diffInDays = Calendar.nyCalendar.dateComponents(
             [.day],
             from: user.metadata.creationDate ?? Date(),
@@ -121,6 +121,8 @@ struct ProfileSetupOverViewReducer: Reducer {
         
         //david.. //DEV:
         state.userProperties?.isPrepared = true
+
+        component.service.center.updateSubscription()
         
         //david.. //DEV:
 //        guard let stockKit = (component as? ProfileComponent)?.stockKit else {

@@ -25,11 +25,6 @@ public class SubscribeViewController: GraniteViewController<SubscribeState> {
         super.viewDidLoad()
         
         observeState(
-            \.disclaimers,
-            handler: observeDisclaimers(_:),
-            async: .main)
-        
-        observeState(
             \.products,
             handler: observeProducts(_:),
             async: .main)
@@ -58,31 +53,22 @@ public class SubscribeViewController: GraniteViewController<SubscribeState> {
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
+    
+    override public func willTransition(
+        to newCollection: UITraitCollection,
+        with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        if self.orientationIsIPhoneLandscape {
+            _view.updateAppearance(landscape: true)
+        } else if self.orientationIsIPhonePortrait {
+            _view.updateAppearance(landscape: false)
+        }
+    }
 }
 
 //MARK: Observers
 extension SubscribeViewController {
-    func observeDisclaimers(
-        _ disclaimerChange: Change<[Disclaimer]?>) {
-        guard  let disclaimers = disclaimerChange.newValue,
-               let disclaimerCheck = disclaimers else {
-            return
-        }
-        
-        let labels: [(UILabel, String)] = disclaimerCheck.compactMap { ($0.label, $0.value) }
-        
-        _view.stackViewDisclaimers.arrangedSubviews.forEach { view in
-            view.removeFromSuperview()
-            _view.stackViewDisclaimers.removeArrangedSubview(view)
-        }
-        
-        for label in labels {
-            label.0.text = label.1
-            _view.stackViewDisclaimers.addArrangedSubview(label.0)
-        }
-        
-        _view.stackViewDisclaimers.layoutIfNeeded()
-    }
     
     func observeProducts(
         _ products: Change<[SKProduct]>) {
@@ -93,6 +79,7 @@ extension SubscribeViewController {
         
         _view.optionsLoadingLabel.isHidden = true
         _view.stackViewSubscriptionOptions.isHidden = false
+        _view.updateLoaderAppearance(confirming: false)
         for product in products {
             let option = SubscriptionOption.init(product: product)
             _view.stackViewSubscriptionOptions.addArrangedSubview(option)
