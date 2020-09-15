@@ -167,6 +167,7 @@ public class AnnouncementView: GraniteView {
         view.alignment = .fill
         view.distribution = .fill
         view.spacing = GlobalStyle.largePadding
+        view.setCustomSpacing(GlobalStyle.padding, after: theContinue.container)
         
         return view
     }()
@@ -246,7 +247,7 @@ public class AnnouncementView: GraniteView {
                 .offset(GlobalStyle.largePadding).priority(999)
             make.right.equalTo(self.safeAreaLayoutGuide.snp.right)
                 .offset(-GlobalStyle.largePadding).priority(999)
-            make.bottom.equalToSuperview().priority(999)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).priority(999)
         }
         
         thePrivacyAgree.container.snp.makeConstraints { make in

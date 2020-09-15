@@ -71,7 +71,7 @@ extension DashboardView: Onboardable {
                     left: 0,
                     bottom: -(self.settings.container.frame.height*4/5),
                 right: -abs(self.settings.container.frame.width - self.settings.tongueView.frame.width))),
-            text: "profile is what it sounds like, view account stats that update on each forecast. longer you use this app the more interesting your device history will become",
+            text: "profile is what it sounds like, view account stats that update on each forecast. Longer you use this app the more interesting your device history will become",
             order: 3,
             isContinueHidden: false)
     }
@@ -105,7 +105,7 @@ extension DashboardView: Onboardable {
             
         return OnboardingStep.init(
             reference: reference,
-            text: "sentiment strength modifies the intensity of how & how much data to process from the web regarding emotion. higher settings increases prediction time, but tends to lead to more accurate results",
+            text: "sentiment strength modifies the intensity of how & how much data to process from the web regarding emotion. Higher settings increases prediction time, but tends to lead to more accurate results",
             order: 5,
             isContinueHidden: false)
     }
@@ -124,7 +124,7 @@ extension DashboardView: Onboardable {
             
         return OnboardingStep.init(
             reference: reference,
-            text: "the number of days to learn from can be adjusted as well. from a day before the next valid trading window to 12 days to the past. prediction time greatly increases, especially if your sentiment strength is high. But, again... tends to lead to more interesting results",
+            text: "the number of days to learn from can be adjusted as well. from a day before the next valid trading window to 12 days to the past. Prediction time greatly increases, especially if your sentiment strength is high. But, again... tends to lead to more interesting results",
             order: 6,
             isContinueHidden: false)
     }

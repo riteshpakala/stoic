@@ -25,6 +25,7 @@ extension BrowserView: Onboardable {
                 introStep,
                 introStep2,
                 loadStep,
+                loadStep2,
                 createStep,
                 createStep2,
                 createStep3,
@@ -45,7 +46,7 @@ extension BrowserView: Onboardable {
     public var introStep2: OnboardingStep {
         OnboardingStep.init(
             reference: .init(textPadding: GlobalStyle.padding),
-            text: "the models you train can then be merged to build larger, more precise models depending on the various settings and combinations you come up with",
+            text: "the models you train can then be merged to build larger, more precise models depending on the various settings & combinations you come up with",
             order: 1,
             isContinueHidden: false)
     }
@@ -88,7 +89,7 @@ extension BrowserView: Onboardable {
                     bottom: 0,
                     right: self.stackView.frame.origin.x)
             ),
-            text: "holding a tap or long pressing a model will allow you to remove them",
+            text: "holding a tap or long pressing a model will allow you to remove them as well",
             order: 3,
             isContinueHidden: false,
             continuePreferred: true)
