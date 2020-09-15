@@ -19,27 +19,27 @@ public class ProfileComponent: Component<ProfileState> {
             ProfileSetupOverViewReducer.Reducible(),
             ProfileDisclaimerReducer.Reducible(),
             ProfileDisclaimerResponseReducer.Reducible(),
-            ProfileSetupStockKitPreparedReducer.Reducible(),
-            ProfileGetCSVResultsResponseReducer.Reducible(),
+//            ProfileSetupStockKitPreparedReducer.Reducible(),
+//            ProfileGetCSVResultsResponseReducer.Reducible(),
             SubcriptionUpdatedProfileReducer.Reducible(),
             SignOutReducer.Reducible(),
             ProfileResetOnboardingReducer.Reducible()
         ]
     }
     
-    var stockKit: StockKitComponent? {
-        return getSubComponent(StockKitComponent.self) as? StockKitComponent
-    }
+//    var stockKit: StockKitComponent? {
+//        return getSubComponent(StockKitComponent.self) as? StockKitComponent
+//    }
     
     override public func didLoad() {
-        push(
-            StockKitBuilder.build(
-            state: .init(
-                sentimentStrength: service.storage.get(
-                    GlobalDefaults.SentimentStrength.self),
-                predictionDays: service.storage.get(
-                    GlobalDefaults.PredictionDays.self)),
-            self.service))
+//        push(
+//            StockKitBuilder.build(
+//            state: .init(
+//                sentimentStrength: service.storage.get(
+//                    GlobalDefaults.SentimentStrength.self),
+//                predictionDays: service.storage.get(
+//                    GlobalDefaults.PredictionDays.self)),
+//            self.service))
         
         sendEvent(ProfileEvents.CheckCredential(intent: .relogin))
     }

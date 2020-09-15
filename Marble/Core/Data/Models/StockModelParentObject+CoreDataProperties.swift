@@ -18,5 +18,6 @@ extension StockModelParentObject {
     @NSManaged public var dataSet: Data?
     @NSManaged public var merged: StockModelMergedObject?
     @NSManaged public var stock: Data
+    @NSManaged public var timestamp: Double
 
 }

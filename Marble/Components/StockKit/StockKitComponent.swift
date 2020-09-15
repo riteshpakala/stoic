@@ -70,18 +70,6 @@ public class StockKitComponent: Component<StockKitState> {
     }
     
     //MARK: Sentiment Constants
-    let classifier: SentimentPolarity = .init()
-    let options: NSLinguisticTagger.Options = [
-        .omitWhitespace,
-        .omitPunctuation,
-        .omitOther]
-    
-    lazy var tagger: NSLinguisticTagger = {
-        .init(
-          tagSchemes: NSLinguisticTagger.availableTagSchemes(forLanguage: "en"),
-          options: Int(options.rawValue)
-        )
-    }()
     var crawls: Int = 0
     var sentiments: [StockSentimentData] = []
     
@@ -608,50 +596,5 @@ extension StockKitComponent {
         }
 
         return items
-    }
-}
-
-extension StockKitComponent {
-    func predictionSentimentScore(
-        with tweets : [SentimentPolarityInput],
-        _ model: SentimentPolarity) -> (pos: Double?, neutral: Double?, negative: Double?)? {
-
-        var score: (pos: Double?, neutral: Double?, negative: Double?)? = nil
-        do{
-            let predictions = try model.predictions(inputs: tweets)
-            
-            
-            for (prediction) in predictions {
-                score = (prediction.classProbability["Pos"], prediction.classProbability["Neutral"],  prediction.classProbability["Neg"])
-            }
-        }catch{
-            print("error predicting \(error)")
-        }
-        return score
-    }
-
-    func features(from text: String) -> [String: Double] {
-        
-        var wordCounts = [String: Double]()
-
-        tagger.string = text
-        let range = NSRange(location: 0, length: text.utf16.count)
-
-        // Tokenize and count the sentence
-        tagger.enumerateTags(in: range, scheme: .nameType, options: options) { _, tokenRange, _, _ in
-            let token = (text as NSString).substring(with: tokenRange).lowercased()
-            // Skip small words
-            guard token.count >= 3 else {
-              return
-            }
-
-            if let value = wordCounts[token] {
-                wordCounts[token] = value + 1.0
-            } else {
-                wordCounts[token] = 1.0
-            }
-        }
-
-        return wordCounts
     }
 }

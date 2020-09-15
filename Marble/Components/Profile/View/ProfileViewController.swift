@@ -32,25 +32,6 @@ public class ProfileViewController: GraniteViewController<ProfileState> {
                 target: self,
                 action: #selector(self.signInTapped(_:))))
         
-        observeState(
-            \.user,
-            handler: observeUser(_:),
-            async: .main)
-        
-        observeState(
-            \.userProperties,
-            handler: observeUserProperties(_:),
-            async: .main)
-        
-        observeState(
-            \.disclaimers,
-            handler: observeDisclaimers(_:),
-            async: .main)
-        
-        observeState(
-            \.subscription,
-            handler: observeSubscription(_:),
-            async: .main)
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -70,6 +51,30 @@ public class ProfileViewController: GraniteViewController<ProfileState> {
     @objc
     func signInTapped(_ sender: UITapGestureRecognizer) {
         sendEvent(ProfileEvents.CheckCredential(intent: .login))
+    }
+    
+    override public func bind(_ component: Component<ProfileState>) {
+        super.bind(component)
+        
+        observeState(
+            \.user,
+            handler: observeUser(_:),
+            async: .main)
+        
+        observeState(
+            \.userProperties,
+            handler: observeUserProperties(_:),
+            async: .main)
+        
+        observeState(
+            \.disclaimers,
+            handler: observeDisclaimers(_:),
+            async: .main)
+        
+        observeState(
+            \.subscription,
+            handler: observeSubscription(_:),
+            async: .main)
     }
 }
 

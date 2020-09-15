@@ -39,6 +39,12 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
     
     var models: [StockModel]? = nil {
         didSet {
+            sortedModels = models?.sorted(by: { $0.timestamp > $1.timestamp })
+        }
+    }
+    
+    var sortedModels: [StockModel]? = nil {
+        didSet {
             DispatchQueue.main.async {
                 self.collection.view.reloadData()
             }
@@ -76,7 +82,7 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 
                 
                 for modelToRemove in self.inCompatibleModels {
-                    if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
+                    if let index = self.sortedModels?.firstIndex(where: { $0.id == modelToRemove.id }) {
                         
                         indexPathsToReload.append(.init(item: index, section: 0))
                     }
@@ -107,7 +113,7 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
             case .step1:
                 let oldBaseModelIndexPath: IndexPath? = baseSelectedModel
                 
-                if models?.firstIndex(where: { $0.id == compiledModelCreationData?.baseModel.id }) != nil {
+                if sortedModels?.firstIndex(where: { $0.id == compiledModelCreationData?.baseModel.id }) != nil {
                     baseSelectedModel = compiledModelCreationData?.baseModelIndexPath
                 } else {
                     baseSelectedModel = nil
@@ -125,10 +131,10 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 }
                 updateCompatibility = true
             case .step2, .update:
-                guard let modelDay = self.models?.first?.tradingDay,
+                guard let modelDay = self.sortedModels?.first?.tradingDay,
                     baseSelectedModel == nil else { return }
                 
-                let idsOfModels: [String] = self.models?.compactMap({ $0.id }) ?? []
+                let idsOfModels: [String] = self.sortedModels?.compactMap({ $0.id }) ?? []
                 
                 if  let baseModelID = compiledModelCreationData?.baseModel.id,
                     !idsOfModels.contains(baseModelID) || compiledModelCreationData?.isUpdating == true {
@@ -153,7 +159,7 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
 
                         let model: StockModel = compiledModelCreationData?.modelsToMerge[modelDay]?.model ?? baseModel
                         
-                        if let index = self.models?.firstIndex(where: { $0.id == model.id }) {
+                        if let index = self.sortedModels?.firstIndex(where: { $0.id == model.id }) {
                             let selectedModelIndex: IndexPath = .init(item: index, section: 0)
                             let oldSelectedModelIndexPath = selectedModel
                             selectedModel = selectedModelIndex
@@ -182,12 +188,12 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 
                 let compatibleIds = compatible.map { $0.id }
                 
-                let inCompatible = self.models?.filter { !compatibleIds.contains($0.id) } ?? []
+                let inCompatible = self.sortedModels?.filter { !compatibleIds.contains($0.id) } ?? []
 
                 //Indices for new models that are incompatible
                 for modelToRemove in inCompatible {
                     
-                    if let index = self.models?.firstIndex(where: {
+                    if let index = self.sortedModels?.firstIndex(where: {
                         $0.id == modelToRemove.id &&
                             !self.inCompatibleModels.contains($0) }) {
                         
@@ -198,7 +204,7 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 
                 //Indices for old models that are now compatible
                 for modelToRemove in self.inCompatibleModels {
-                    if let index = self.models?.firstIndex(where: { compatibleIds.contains(modelToRemove.id) && $0.id == modelToRemove.id }) {
+                    if let index = self.sortedModels?.firstIndex(where: { compatibleIds.contains(modelToRemove.id) && $0.id == modelToRemove.id }) {
                         
                         indexPathsToUpdate.append(.init(item: index, section: 0))
                     }
@@ -207,7 +213,7 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
                 self.inCompatibleModels = inCompatible
             } else if currentCreationStatusStep != .none {
                 for modelToRemove in self.inCompatibleModels {
-                    if let index = self.models?.firstIndex(where: { $0.id == modelToRemove.id }) {
+                    if let index = self.sortedModels?.firstIndex(where: { $0.id == modelToRemove.id }) {
                         
                         indexPathsToUpdate.append(.init(item: index, section: 0))
                     }
@@ -257,6 +263,7 @@ public class BrowserModelDataContainerCell: UICollectionViewCell {
     override public func prepareForReuse() {
         super.prepareForReuse()
         models = nil
+        sortedModels = nil
         
         if currentCreationStatusStep != .update {
             mergedModelIDs = []
@@ -268,7 +275,7 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int) -> Int {
-        return models?.count ?? 0
+        return sortedModels?.count ?? 0
     }
     
     public func collectionView(
@@ -283,7 +290,7 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
             return cell
         }
         
-        if let models = models {
+        if let models = sortedModels {
             dataCell.model = models[indexPath.item]
             if let baseModelIndexPath = baseSelectedModel,
                 indexPath == baseModelIndexPath {
@@ -309,7 +316,7 @@ extension BrowserModelDataContainerCell: UICollectionViewDataSource, UICollectio
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        guard let models = self.models else { return .zero }
+        guard let models = self.sortedModels else { return .zero }
         let ratio: CGFloat
         if models.count > 1 {
             ratio = BrowserStyle.browserDataModelMultipleCellWidthRatio

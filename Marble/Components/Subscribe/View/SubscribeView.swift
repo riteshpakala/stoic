@@ -218,24 +218,3 @@ extension SubscribeView: ConsoleLoaderDelegate {
         loader?.stop()
     }
 }
-
-//class GraniteStackView: GraniteStackView, EventResponder {
-//    var responder: EventResponder?
-//
-//    override func addSubview(_ view: UIView) {
-//        super.addSubview(view)
-//
-//        if let graniteView = view as? EventResponder {
-//            graniteView.responder = self
-//        }
-//    }
-//
-//    override func insertSubview(_ view: UIView, at index: Int) {
-//        super.insertSubview(view, at: index)
-//
-//        if let graniteView = view as? EventResponder,
-//            graniteView.responder == nil {
-//            graniteView.responder = self
-//        }
-//    }
-//}

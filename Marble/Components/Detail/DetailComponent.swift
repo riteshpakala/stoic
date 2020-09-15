@@ -57,4 +57,10 @@ public class DetailComponent: Component<DetailState> {
                  display: .fit)
         }
     }
+    
+    override public func rip() {
+        super.rip()
+        
+        state.scraper.cancel()
+    }
 }

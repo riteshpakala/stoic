@@ -47,6 +47,7 @@ extension ServiceCenter {
             if mergedModel == nil {
                 merged.stock = preparedData.stock
                 merged.order = Int64(mergedModels?.count ?? 0)
+                merged.timestamp = Date().timeIntervalSince1970
             }
             
             let object = StockModelObject.init(context: moc)
@@ -60,6 +61,7 @@ extension ServiceCenter {
             object.historicalTradingData = preparedData.historicalData
             object.stock = preparedData.stock
             object.dataSet = preparedData.dataSet
+            object.timestamp = Date().timeIntervalSince1970
             
             merged.addToModels(object)
             

@@ -9,8 +9,4 @@ import Granite
 import Foundation
 
 public class HomeState: State {
-    var test = 0
-    
-    var sentimentClassifier: SentimentClassifier = .init()
-    var sentimentPolarity: SentimentPolarity = .init()
 }

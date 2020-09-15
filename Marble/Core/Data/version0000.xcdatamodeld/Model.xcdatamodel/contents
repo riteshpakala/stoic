@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="StockModelMergedObject" representedClassName=".StockModelMergedObject" parentEntity="StockModelParentObject" syncable="YES">
         <attribute name="currentModels" optional="YES" attributeType="Binary" customClassName=".Array&lt;Any&gt;"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="order" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="models" optional="YES" toMany="YES" deletionRule="No Action" ordered="YES" destinationEntity="StockModelParentObject" inverseName="merged" inverseEntity="StockModelParentObject"/>
     </entity>
@@ -20,11 +21,12 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="model" optional="YES" attributeType="Binary"/>
         <attribute name="stock" optional="YES" attributeType="Binary"/>
+        <attribute name="timestamp" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="merged" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="StockModelMergedObject" inverseName="models" inverseEntity="StockModelMergedObject"/>
     </entity>
     <elements>
-        <element name="StockModelMergedObject" positionX="-76.8671875" positionY="-421.73828125" width="128" height="88"/>
+        <element name="StockModelMergedObject" positionX="-76.8671875" positionY="-421.73828125" width="128" height="103"/>
         <element name="StockModelObject" positionX="131.546875" positionY="-397.37890625" width="128" height="148"/>
-        <element name="StockModelParentObject" positionX="-63" positionY="36" width="128" height="133"/>
+        <element name="StockModelParentObject" positionX="-63" positionY="36" width="128" height="148"/>
     </elements>
 </model>

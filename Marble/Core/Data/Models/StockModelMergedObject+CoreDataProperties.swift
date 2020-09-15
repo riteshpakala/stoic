@@ -18,6 +18,7 @@ extension StockModelMergedObject {
     @NSManaged public var models: NSOrderedSet?
     @NSManaged public var currentModels: Data?
     @NSManaged public var order: Int64
+    @NSManaged public var isFavorite: NSNumber?
 }
 
 // MARK: Generated accessors for models

@@ -16,6 +16,7 @@ public class StockModel: NSObject {
     private(set) var dataSet: DataSet? = nil
     private(set) var lastStock: StockData? = nil
     private(set) var isMerged: Bool
+    private(set) var timestamp: Double
     
     public init(from object: StockModelObject) {
         self.id = object.id
@@ -25,6 +26,7 @@ public class StockModel: NSObject {
         self.tradingDayTime = object.date
         self.model = object.model?.model
         self.dataSet = object.dataSet?.asDataSet
+        self.timestamp = object.timestamp
         self.lastStock = object.historicalTradingData.asStockData?.sorted(
             by: {
                 ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedDescending
@@ -37,6 +39,7 @@ public class StockModel: NSObject {
         self.id = object.id
         self.searchStock = object.stock.asSearchStock
         self.sentiment = nil
+        self.timestamp = object.timestamp
         self.isMerged = object.merged?.currentModels?.mergedModelIDs?.contains(object.id) == true
         
         guard let models = object.models,

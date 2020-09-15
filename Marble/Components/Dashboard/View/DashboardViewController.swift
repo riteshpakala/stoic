@@ -67,9 +67,9 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         _view.undim(animated: true)
     }
     
-    override public func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
+    override public func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        _view.parent = nil
     }
 	
     override public func viewWillTransition(
