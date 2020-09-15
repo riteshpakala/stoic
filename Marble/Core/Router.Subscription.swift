@@ -222,7 +222,7 @@ extension ServiceCenter {
         completion: (([String: ReceiptInfo]?) -> Void)? = nil) {
         
         let appleValidator = AppleReceiptValidator(
-            service: .sandbox,
+            service: .production,
             sharedSecret: StoicProducts.sharedSecret)
         
         var receiptInfo: [String: ReceiptInfo] = [:]

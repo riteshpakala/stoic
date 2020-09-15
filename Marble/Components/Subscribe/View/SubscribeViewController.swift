@@ -132,7 +132,7 @@ extension SubscribeViewController: SKRequestDelegate {
         }
         
         let appleValidator = AppleReceiptValidator(
-            service: .sandbox,
+            service: .production,
             sharedSecret: StoicProducts.sharedSecret)
         
         SwiftyStoreKit.verifyReceipt(using: appleValidator, forceRefresh: false) { [weak self] result in
