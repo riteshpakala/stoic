@@ -8,6 +8,8 @@
 
 import Granite
 import Foundation
+import CoreGraphics
 
 struct ProfileStyle {
+    static let appleButtonHeight: CGFloat = 36
 }

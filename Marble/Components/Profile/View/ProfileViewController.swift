@@ -50,6 +50,8 @@ public class ProfileViewController: GraniteViewController<ProfileState> {
     
     @objc
     func signInTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
+        _view.signInPressed()
         sendEvent(ProfileEvents.CheckCredential(intent: .login))
     }
     
@@ -99,7 +101,7 @@ public class ProfileViewController: GraniteViewController<ProfileState> {
 extension ProfileViewController {
     func observeUser(
         _ user: Change<UserData?>) {
-        
+        _view.resetSignIn()
         guard let userChange = user.newValue,
               let user = userChange else {
                 
@@ -194,5 +196,6 @@ extension ProfileViewController: ASAuthorizationControllerDelegate, ASAuthorizat
         
         // Handle error.
         print("Sign in with Apple errored: \(error)")
+        _view.resetSignIn()
     }
 }

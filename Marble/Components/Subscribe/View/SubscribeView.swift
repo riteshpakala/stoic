@@ -38,7 +38,14 @@ public class SubscribeView: GraniteView {
             """
             /**** loading... */
             """
-        view.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        
+        if LSConst.Device.isIPhone6Plus {
+
+            view.font = GlobalStyle.Fonts.courier(.subMedium, .bold)
+        } else {
+
+            view.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        }
         view.textColor = GlobalStyle.Colors.orange
         view.textAlignment = .left
         view.isUserInteractionEnabled = false
@@ -48,6 +55,11 @@ public class SubscribeView: GraniteView {
     
     lazy var contact: ContactView = {
         let view: ContactView = .init()
+        return view
+    }()
+    
+    lazy var eula: EULAView = {
+        let view: EULAView = .init()
         return view
     }()
     
@@ -115,7 +127,8 @@ public class SubscribeView: GraniteView {
                 stackViewSubscriptionOptions,
                 optionsLoadingLabel,
                 spacer2,
-                contact
+                contact,
+                eula
             ]
         )
         
@@ -123,6 +136,9 @@ public class SubscribeView: GraniteView {
         view.alignment = .fill
         view.distribution = .fill
         view.spacing = LSConst.Device.isIPhone6 ? GlobalStyle.spacing*2 : (LSConst.Device.isIPhone6Plus ? GlobalStyle.padding : GlobalStyle.largePadding)
+        view.setCustomSpacing(0, after: theImage)
+        view.setCustomSpacing(LSConst.Device.isIPhoneX ? GlobalStyle.spacing : view.spacing, after: spacer2)
+        view.setCustomSpacing(GlobalStyle.spacing*2, after: contact)
         
         return view
     }()

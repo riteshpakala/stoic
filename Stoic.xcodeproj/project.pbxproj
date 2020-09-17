@@ -181,6 +181,7 @@
 		717FADBC24E8730600E2391D /* Granite in Frameworks */ = {isa = PBXBuildFile; productRef = 717FADBB24E8730600E2391D /* Granite */; };
 		71829C902501ED49002D267E /* version0000.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71829C8E2501ED49002D267E /* version0000.xcdatamodeld */; };
 		71829C922501ED7A002D267E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71829C912501ED7A002D267E /* CoreDataManager.swift */; };
+		718BE5742512EA7E00371546 /* EULAVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718BE5732512EA7E00371546 /* EULAVView.swift */; };
 		719AA33C2478B69A000F7CBD /* SVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA3382478B69A000F7CBD /* SVM.swift */; };
 		719AA33E2478B69A000F7CBD /* DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA33A2478B69A000F7CBD /* DataSet.swift */; };
 		719AA33F2478B69A000F7CBD /* Kernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AA33B2478B69A000F7CBD /* Kernel.swift */; };
@@ -254,7 +255,7 @@
 		71C21A33248D87BA00F6D5BF /* GetCSVReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */; };
 		71C21A35248D88B500F6D5BF /* GetSearchResultsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */; };
 		71C40EF724EF951B0050C072 /* TongueSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C40EF624EF951B0050C072 /* TongueSettings.swift */; };
-		71C56BFE2510418F00E58073 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C56BFD2510418F00E58073 /* Contact.swift */; };
+		71C56BFE2510418F00E58073 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C56BFD2510418F00E58073 /* ContactView.swift */; };
 		71C58F562508354E00C342CE /* SwipeableHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C58F552508354E00C342CE /* SwipeableHelpers.swift */; };
 		71C58F582508369D00C342CE /* BrowserModelDataCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */; };
 		71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D32A24CCB70100535F3F /* WaveFormView.swift */; };
@@ -484,6 +485,7 @@
 		717FADB824E8710F00E2391D /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../granite; sourceTree = "<group>"; };
 		71829C8F2501ED49002D267E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		71829C912501ED7A002D267E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		718BE5732512EA7E00371546 /* EULAVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULAVView.swift; sourceTree = "<group>"; };
 		719AA3382478B69A000F7CBD /* SVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVM.swift; sourceTree = "<group>"; };
 		719AA3392478B69A000F7CBD /* SVMTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVMTests.swift; sourceTree = "<group>"; };
 		719AA33A2478B69A000F7CBD /* DataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSet.swift; sourceTree = "<group>"; };
@@ -563,7 +565,7 @@
 		71C21A32248D87BA00F6D5BF /* GetCSVReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCSVReducer.swift; sourceTree = "<group>"; };
 		71C21A34248D88B500F6D5BF /* GetSearchResultsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSearchResultsReducer.swift; sourceTree = "<group>"; };
 		71C40EF624EF951B0050C072 /* TongueSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TongueSettings.swift; sourceTree = "<group>"; };
-		71C56BFD2510418F00E58073 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		71C56BFD2510418F00E58073 /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		71C58F552508354E00C342CE /* SwipeableHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableHelpers.swift; sourceTree = "<group>"; };
 		71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelDataCardView.swift; sourceTree = "<group>"; };
 		71D2D32A24CCB70100535F3F /* WaveFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveFormView.swift; sourceTree = "<group>"; };
@@ -870,7 +872,8 @@
 				712F54672506DBED000384A7 /* PaddingLabel.swift */,
 				71725D9824F276E8003B0FF6 /* Disclaimer.swift */,
 				71C58F552508354E00C342CE /* SwipeableHelpers.swift */,
-				71C56BFD2510418F00E58073 /* Contact.swift */,
+				71C56BFD2510418F00E58073 /* ContactView.swift */,
+				718BE5732512EA7E00371546 /* EULAVView.swift */,
 			);
 			path = ViewLibrary;
 			sourceTree = "<group>";
@@ -1945,6 +1948,7 @@
 				717A766724A16131005348F9 /* HtmlTreeBuilderState.swift in Sources */,
 				7127B0322485DD2E004C57F1 /* GlobalStyle.swift in Sources */,
 				71A7C6B02505BABB0094C352 /* ThinkPayload.swift in Sources */,
+				718BE5742512EA7E00371546 /* EULAVView.swift in Sources */,
 				7127AFB42485B10B004C57F1 /* SceneView.swift in Sources */,
 				71C135DB250E2926007F1F96 /* AnnouncementState.swift in Sources */,
 				71D98E8924F26B450089C85F /* SubscribeState.swift in Sources */,
@@ -2039,7 +2043,7 @@
 				717A766024A16131005348F9 /* Parser.swift in Sources */,
 				7127B0272485DCF7004C57F1 /* DashboardEvents.swift in Sources */,
 				717A766624A16131005348F9 /* Pattern.swift in Sources */,
-				71C56BFE2510418F00E58073 /* Contact.swift in Sources */,
+				71C56BFE2510418F00E58073 /* ContactView.swift in Sources */,
 				71DCBEEB250C2BAF00C12F4B /* Dictionary.swift in Sources */,
 				71A7C699250571000094C352 /* StockModelObject+CoreDataClass.swift in Sources */,
 				71DCBEE9250C2A7600C12F4B /* Router.Subscription.swift in Sources */,
@@ -2319,7 +2323,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StoicDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = W86P37BZ85;
 				INFOPLIST_FILE = Marble/Runtime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2340,7 +2344,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = W86P37BZ85;
 				INFOPLIST_FILE = Marble/Runtime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

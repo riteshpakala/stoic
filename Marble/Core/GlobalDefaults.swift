@@ -25,7 +25,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
             LocalStorage.Value.init(Subscription.none),
             LocalStorage.Value.init(Browser.none),
             LocalStorage.Value.init(SentimentStrength.low),
-            LocalStorage.Value.init(PredictionDays.two),
+            LocalStorage.Value.init(PredictionDays.four),
         ]
     }
     

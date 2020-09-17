@@ -11,13 +11,17 @@ import Foundation
 import UIKit
 
 public class ProfileView: GraniteView {
-    lazy var signInLabel: UILabel = {
-        let view: UILabel = .init()
-        view.text = "sign in with apple".localized
-        view.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        view.textColor = GlobalStyle.Colors.green
-        view.textAlignment = .center
+    lazy var signInLabel: UIImageView = {
+        let view: UIImageView = .init()
+        view.contentMode = .scaleAspectFit
         view.isUserInteractionEnabled = true
+        view.image = UIImage.init(named: "appleid.button")
+        view.layer.shadowColor = GlobalStyle.Colors.green.withAlphaComponent(0.66).cgColor
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 4.0
+        view.layer.masksToBounds = false
+        view.layer.cornerRadius = 4.0
         return view
     }()
     
@@ -47,7 +51,7 @@ public class ProfileView: GraniteView {
         signInLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(signInLabel.font.lineHeight)
+            make.height.equalTo(ProfileStyle.appleButtonHeight)
         }
     }
     
@@ -55,4 +59,13 @@ public class ProfileView: GraniteView {
         fatalError("init(coder:) has not been implemented")
     }
 	
+    func signInPressed() {
+        signInLabel.layer.shadowColor = GlobalStyle.Colors.purple.withAlphaComponent(0.66).cgColor
+        signInLabel.alpha = 0.5
+    }
+    
+    func resetSignIn() {
+        signInLabel.layer.shadowColor = GlobalStyle.Colors.green.withAlphaComponent(0.66).cgColor
+        signInLabel.alpha = 1.0
+    }
 }
