@@ -194,6 +194,7 @@ extension ProfileViewController: ASAuthorizationControllerDelegate, ASAuthorizat
         controller: ASAuthorizationController,
         didCompleteWithError error: Error) {
         
+        bubbleEvent(HomeEvents.PresentAlert.init("something went wrong, authenticating your account"))
         // Handle error.
         print("Sign in with Apple errored: \(error)")
         _view.resetSignIn()

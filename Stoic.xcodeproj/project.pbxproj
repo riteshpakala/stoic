@@ -483,6 +483,7 @@
 		717F1BDA248A1162001DD426 /* DetailBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBuilder.swift; sourceTree = "<group>"; };
 		717F1BDC248A117D001DD426 /* DashboardBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardBuilder.swift; sourceTree = "<group>"; };
 		717FADB824E8710F00E2391D /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../granite; sourceTree = "<group>"; };
+		7180D2742513E86C006EBFC8 /* StoicRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StoicRelease.entitlements; sourceTree = "<group>"; };
 		71829C8F2501ED49002D267E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		71829C912501ED7A002D267E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		718BE5732512EA7E00371546 /* EULAVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULAVView.swift; sourceTree = "<group>"; };
@@ -1201,6 +1202,7 @@
 		71A1D126246E01E300D778A5 = {
 			isa = PBXGroup;
 			children = (
+				7180D2742513E86C006EBFC8 /* StoicRelease.entitlements */,
 				71D98E6924F269E90089C85F /* StoicDebug.entitlements */,
 				717FADB824E8710F00E2391D /* granite */,
 				71A1D131246E01E300D778A5 /* Marble */,
@@ -2323,7 +2325,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StoicDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = W86P37BZ85;
 				INFOPLIST_FILE = Marble/Runtime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2343,8 +2345,9 @@
 			baseConfigurationReference = B50CA4F992D9BE8565D5B3BB /* Pods-Stoic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StoicRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = W86P37BZ85;
 				INFOPLIST_FILE = Marble/Runtime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

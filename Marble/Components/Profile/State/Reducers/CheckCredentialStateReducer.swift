@@ -24,20 +24,43 @@ struct CheckCredentialStateReducer: Reducer {
         guard let nonce = state.currentNonce else { return }
         state.intent = event.intent
         if event.intent == .login {
+            let userData = try? component.service.center.keychain.retrieve()
             
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             let request = appleIDProvider.createRequest()
             request.requestedScopes = [.fullName, .email]
             request.nonce = ProfileState.sha256(nonce)
-
-            let requests = [ASAuthorizationAppleIDProvider().createRequest(),
-                            ASAuthorizationPasswordProvider().createRequest(),
-                            request]
             
-            let authorizationController = ASAuthorizationController(authorizationRequests: requests)
-            authorizationController.delegate = component.viewController as? ProfileViewController
-            authorizationController.presentationContextProvider = component.viewController as? ProfileViewController
-            authorizationController.performRequests()
+            let componentToPass = component
+            if let user = userData?.identifier {
+                appleIDProvider.getCredentialState(forUserID: user) { state, error in
+                    switch state {
+                        case .authorized:
+                            let requests = [ASAuthorizationAppleIDProvider().createRequest(),
+                                            ASAuthorizationPasswordProvider().createRequest(),
+                                            request]
+                            let authorizationController = ASAuthorizationController(authorizationRequests: requests)
+                            authorizationController.delegate = componentToPass.viewController as? ProfileViewController
+                            authorizationController.presentationContextProvider = componentToPass.viewController as? ProfileViewController
+                            
+                            authorizationController.performRequests()
+                            // Credentials are valid.
+                            break
+                        case .revoked, .notFound, .transferred:
+                            let requests = [request]
+                            let authorizationController = ASAuthorizationController(authorizationRequests: requests)
+                            authorizationController.delegate = componentToPass.viewController as? ProfileViewController
+                            authorizationController.presentationContextProvider = componentToPass.viewController as? ProfileViewController
+                            
+                            authorizationController.performRequests()
+                            //proceed signup
+                            print("{PROFILE} proceed signup")
+                        @unknown default:
+                            break
+                        }
+                }
+            }
+            
             
         } else if event.intent == .relogin {
             do {
