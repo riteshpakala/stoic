@@ -8,6 +8,7 @@
 
 import Granite
 import Foundation
+import StoreKit
 
 struct SusbcribeProductsReducer: Reducer {
     typealias ReducerEvent = SubscribeEvents.GetProducts
@@ -37,11 +38,21 @@ struct SusbcribeSelectedProductReducer: Reducer {
         
         state.isLoading = true
         let componentToPass = component
-        StoicProducts.store.buyProduct(event.product) { success, productId in
-            componentToPass.sendEvent(
-                SubscribeEvents.PurchaseResult.init(
-                    product: productId,
-                    success: success))
+        
+        
+        SwiftyStoreKit.purchaseProduct(event.product) { result in
+            switch result {
+            case .success(_):
+                componentToPass.sendEvent(
+                    SubscribeEvents.PurchaseResult.init(
+                        product: event.product,
+                        success: true))
+            default:
+                componentToPass.sendEvent(
+                    SubscribeEvents.PurchaseResult.init(
+                        product: event.product,
+                        success: false))
+            }
         }
     }
 }
@@ -61,6 +72,8 @@ struct SusbcribePurchaseResultReducer: Reducer {
             state.isLoading = false
         }
         
-        state.purchaseResult = .init(event.success, productID: event.product)
+        guard let id = event.product?.productIdentifier else { return }
+        print("{SUBSCRIBE} product-id: \(id)")
+        state.purchaseResult = .init(event.success, productID: id)
     }
 }

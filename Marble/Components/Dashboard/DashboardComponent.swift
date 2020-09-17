@@ -23,7 +23,8 @@ public class DashboardComponent: Component<DashboardState> {
             ShowSettingsReducer.Reducible(),
             SubscriptionUpdatedDashboardReducer.Reducible(),
             ShowSubscribeReducer.Reducible(),
-            AnnouncementDashboardReducer.Reducible()
+            AnnouncementDashboardReducer.Reducible(),
+            RefreshSubscribeReducer.Reducible()
         ]
     }
     

@@ -39,10 +39,16 @@ class AppDelegate: GraniteAppDelegate {
     }
     
     override func didBecomeActive() {
-        if coordinator.service.center.requestSubscriptionUpdate() {
-            //request proceeded
-        } else {
-            //requests are only made in 12 min intervals
+        SwiftyStoreKit.completeTransactions(atomically: true) { [weak self]
+            purchases in
+            for purchase in purchases {
+                if purchase.transaction.transactionState == .purchased || purchase.transaction.transactionState == .restored {
+                    SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    _ = self?.coordinator.service.center.requestSubscriptionUpdate()
+                } else {
+                    _ = self?.coordinator.service.center.requestSubscriptionUpdate()
+                }
+            }
         }
     }
 }

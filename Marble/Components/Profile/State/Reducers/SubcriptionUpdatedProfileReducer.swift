@@ -21,5 +21,28 @@ struct SubcriptionUpdatedProfileReducer: Reducer {
         let subscriptionStatus = component.service.storage.get(GlobalDefaults.Subscription.self)
         state.subscription = subscriptionStatus
         state.subscriptionUpdated = true
+        
+        if state.isRestoring == true {
+            state.isRestoring = false
+            
+            if GlobalDefaults.Subscription.from(subscriptionStatus) == .none {
+                sideEffects.append(.init(event: HomeEvents.PresentAlert("no active subscriptions found"), bubbles: true))
+            }
+        }
+    }
+}
+
+struct SubcriptionRefreshProfileReducer: Reducer {
+    typealias ReducerEvent = SubscribeEvents.Refresh
+    typealias ReducerState = ProfileState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        state.isRestoring = true
+        state.subscriptionUpdated = false
     }
 }

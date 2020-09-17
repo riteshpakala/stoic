@@ -10,6 +10,20 @@ import Foundation
 import Firebase
 import UIKit
 
+struct RefreshSubscribeReducer: Reducer {
+    typealias ReducerEvent = SubscribeEvents.Refresh
+    typealias ReducerState = DashboardState
+    
+    func reduce(
+        event: ReducerEvent,
+        state: inout ReducerState,
+        sideEffects: inout [EventBox],
+        component: inout Component<ReducerState>) {
+        
+        component.service.center.updateSubscription()
+    }
+}
+
 struct ShowSubscribeReducer: Reducer {
     typealias ReducerEvent = SubscribeEvents.Show
     typealias ReducerState = DashboardState

@@ -12,6 +12,7 @@ import StoreKit
 
 struct SubscribeEvents {
     public struct Show: Event {}
+    public struct Refresh: Event {}
     public struct GetDisclaimer: Event {
     }
     public struct GetDisclaimerResponse: Event {
@@ -24,7 +25,7 @@ struct SubscribeEvents {
         let product: SKProduct
     }
     public struct PurchaseResult: Event {
-        let product: ProductID?
+        let product: SKProduct?
         let success: Bool
     }
     

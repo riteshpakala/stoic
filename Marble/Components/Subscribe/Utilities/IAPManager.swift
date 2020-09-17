@@ -44,8 +44,8 @@ extension IAPManager {
         productsRequestCompletionHandler = completionHandler
 
         productsRequest = SKProductsRequest(productIdentifiers: productIDs)
-        productsRequest!.delegate = self
-        productsRequest!.start()
+        productsRequest?.delegate = self
+        productsRequest?.start()
     }
 
     public func buyProduct(_ product: SKProduct, _ completionHandler: @escaping ProductPurchaseCompletionHandler) {

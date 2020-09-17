@@ -38,13 +38,7 @@ public class ProfileView: GraniteView {
         
         addSubview(profileOverView)
         profileOverView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-                .offset(GlobalStyle.largePadding).priority(999)
-            make.left.equalTo(self.safeAreaLayoutGuide.snp.left)
-                .offset(GlobalStyle.largePadding).priority(999)
-            make.right.equalTo(self.safeAreaLayoutGuide.snp.right)
-                .offset(-GlobalStyle.largePadding).priority(999)
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.largePadding).priority(999)
+            make.edges.equalToSuperview()
         }
         
         addSubview(signInLabel)

@@ -126,11 +126,23 @@ public class ProfileOverView: GraniteView {
         return view
     }()
     
+    lazy var restoreLabel: UILabel = {
+        let view: UILabel = .init()
+        view.text = "restore purchases".localized
+        view.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        view.textColor = GlobalStyle.Colors.green
+        view.textAlignment = .center
+        view.isUserInteractionEnabled = false
+        view.alpha = 0.5
+        view.addGestureRecognizer(restoreTapGesture)
+        return view
+    }()
+    
     lazy var onboardingLabel: UILabel = {
         let view: UILabel = .init()
         view.text = "reset onboarding".localized
         view.font = GlobalStyle.Fonts.courier(.medium, .bold)
-        view.textColor = GlobalStyle.Colors.green
+        view.textColor = GlobalStyle.Colors.orange
         view.textAlignment = .center
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(onboardingTapGesture)
@@ -153,6 +165,31 @@ public class ProfileOverView: GraniteView {
         return view
     }()
     
+    lazy var loaderRestoreView: (container: UIView, label: UILabel) = {
+        let view: UIView = .init()
+        view.backgroundColor = GlobalStyle.Colors.green.withAlphaComponent(0.36)
+        
+        let label: UILabel = .init()
+        label.font = GlobalStyle.Fonts.courier(.medium, .bold)
+        label.textAlignment = .center
+        label.textColor = GlobalStyle.Colors.green
+        label.text = "/**** restoring... */"
+        label.sizeToFit()
+        label.backgroundColor = GlobalStyle.Colors.black
+        label.layer.cornerRadius = 4.0
+        label.layer.masksToBounds = true
+        
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.height.equalTo(label.font.lineHeight + 8)
+            make.width.equalTo(label.frame.size.width + GlobalStyle.padding)
+            make.center.equalToSuperview()
+        }
+        view.isHidden = true
+        
+        return (view, label)
+    }()
+    
     lazy var stackView: UIStackView = {
         let view: UIStackView = UIStackView.init(
             arrangedSubviews: [
@@ -168,6 +205,7 @@ public class ProfileOverView: GraniteView {
                 stackViewDisclaimers,
                 onboardingLabel,
                 subscribeLabel,
+                restoreLabel,
                 signOutLabel,
                 contact
             ]
@@ -189,6 +227,12 @@ public class ProfileOverView: GraniteView {
         return UITapGestureRecognizer(
             target: self,
             action: #selector(self.subscribeTapped(_:)))
+    }
+    
+    var restoreTapGesture: UITapGestureRecognizer {
+        return UITapGestureRecognizer(
+            target: self,
+            action: #selector(self.restoreTapped(_:)))
     }
     
     var signOutTapGesture: UITapGestureRecognizer {
@@ -214,14 +258,25 @@ public class ProfileOverView: GraniteView {
             if subscriptionUpdated {
                 subscribeLabel.isUserInteractionEnabled = true
                 subscribeLabel.alpha = 1.0
+                restoreLabel.isUserInteractionEnabled = true
+                restoreLabel.alpha = 1.0
+                loaderRestoreView.container.isHidden = true
+                
+                if isRestoring {
+                    self.loader?.stop()
+                    isRestoring = false
+                }
             } else {
                 subscribeLabel.isUserInteractionEnabled = false
                 subscribeLabel.alpha = 0.5
+                restoreLabel.isUserInteractionEnabled = false
+                restoreLabel.alpha = 0.5
             }
         }
     }
     
     private var loader: ConsoleLoader?
+    private var isRestoring: Bool = false
     public init() {
         super.init(frame: .zero)
         loader = .init(self, baseText: "/**** loading\(ConsoleLoader.seperator) */")
@@ -229,10 +284,21 @@ public class ProfileOverView: GraniteView {
         
         addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview()
+                .offset(GlobalStyle.largePadding).priority(999)
+            make.left.equalTo(self.safeAreaLayoutGuide.snp.left)
+                .offset(GlobalStyle.largePadding).priority(999)
+            make.right.equalTo(self.safeAreaLayoutGuide.snp.right)
+                .offset(-GlobalStyle.largePadding).priority(999)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-GlobalStyle.largePadding).priority(999)
         }
         signOutLabel.snp.makeConstraints { make in
             make.height.equalTo(signOutLabel.font.lineHeight)
+        }
+        
+        addSubview(loaderRestoreView.container)
+        loaderRestoreView.container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
         loader?.begin()
@@ -272,15 +338,27 @@ public class ProfileOverView: GraniteView {
         if subscription.isActive {
             profileLabel.text = "* account".localized.lowercased()+" // PRO"
             subscribeLabel.isHidden = true
+            restoreLabel.isHidden = true
         } else {
             profileLabel.text = "* account".localized.lowercased()
             subscribeLabel.isHidden = false
+            restoreLabel.isHidden = false
         }
     }
     
     @objc func subscribeTapped(_ sender: UITapGestureRecognizer) {
         feedbackGenerator.impactOccurred()
         bubbleEvent(SubscribeEvents.Show())
+    }
+    
+    @objc func restoreTapped(_ sender: UITapGestureRecognizer) {
+        feedbackGenerator.impactOccurred()
+        bubbleEvent(SubscribeEvents.Refresh())
+        isRestoring = true
+        loaderRestoreView.container.isHidden = false
+        loader?.stop()
+        loader = .init(self, baseText: "/**** restoring\(ConsoleLoader.seperator) */")
+        loader?.begin()
     }
     
     @objc func signOutTapped(_ sender: UITapGestureRecognizer) {
@@ -308,8 +386,12 @@ public class ProfileOverView: GraniteView {
 
 extension ProfileOverView: ConsoleLoaderDelegate {
     public func consoleLoaderUpdated(_ indicator: String) {
-        self.statsDescription1.text = indicator
-        self.statsDescription2.text = indicator
-        self.statsDescription3.text = indicator
+        if isRestoring {
+            self.loaderRestoreView.label.text = indicator
+        } else {
+            self.statsDescription1.text = indicator
+            self.statsDescription2.text = indicator
+            self.statsDescription3.text = indicator
+        }
     }
 }

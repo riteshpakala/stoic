@@ -100,6 +100,46 @@ extension ServiceCenter {
         }
     }
     
+    func restoreSubscription() {
+        SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] results in
+            if results.restoreFailedPurchases.count > 0 {
+                self?.storage.update(GlobalDefaults.Subscription.none)
+                print("Restore Failed: \(results.restoreFailedPurchases)")
+            } else if results.restoredPurchases.count > 0 {
+                for purchase in results.restoredPurchases {
+                    // fetch content from your server, then:
+                    
+                    print("{RESTORE} \(purchase.productId)")
+                    
+                    switch purchase.productId {
+                    case StoicProducts.weeklySub:
+                        self?.storage.update(GlobalDefaults.Subscription.weekly)
+                    case StoicProducts.monthlySub:
+                        self?.storage.update(GlobalDefaults.Subscription.monthly)
+                    case StoicProducts.yearlySub:
+                        self?.storage.update(GlobalDefaults.Subscription.yearly)
+                    default:
+                        self?.storage.update(GlobalDefaults.Subscription.none)
+                    }
+                    
+                    if purchase.needsFinishTransaction {
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+                }
+                print("Restore Success: \(results.restoredPurchases)")
+            } else {
+                self?.storage.update(GlobalDefaults.Subscription.none)
+                print("Nothing to Restore")
+            }
+            
+            DispatchQueue.main.async {
+                if let delegate = UIApplication.shared.delegate as? GraniteAppDelegate {
+                    delegate.coordinator.rootComponent.forwardEvent(ServiceCenter.Events.SubscriptionUpdated())
+                }
+            }
+        }
+    }
+    
     
     func checkSubscription(completion: @escaping (([String: GlobalDefaults.Subscription]) -> Void)) {
         checkSubscriptionStatus { status in
@@ -160,7 +200,7 @@ extension ServiceCenter {
                                     print("{SUBSCRIBE} not purchased \(key)")
                                 case .expired(let expiryDate, let items):
                                     subStatus[key] = .expired
-                                    print("{SUBSCRIBE} expired \(key)")
+                                    print("{SUBSCRIBE} expired \(key) \(expiryDate)")
                                 }
                             }
                             completion(subStatus)
