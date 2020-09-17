@@ -310,28 +310,31 @@ public class ProfileOverView: GraniteView {
     
     func setProperties(_ properties: UserProperties) {
         loader?.stop()
-        statsDescription1.text =
-        """
-        - \(properties.accountAge) days old
-        """
         
-        if properties.stockPredictions.isEmpty {
-            statsDescription2.text =
+        DispatchQueue.main.async {
+            self.statsDescription1.text =
             """
-            - most searched stock: $\(properties.mostSearchedStock)
+            - \(properties.accountAge) days old
             """
-        } else {
-            statsDescription2.text =
-            """
-            - most searched stock: $\(properties.mostSearchedStock)
-            - device's average error: \(round((properties.deviceAverageError)*100)/100)%
-            """
+            
+            if properties.stockPredictions.isEmpty {
+                self.statsDescription2.text =
+                """
+                - most searched stock: $\(properties.mostSearchedStock)
+                """
+            } else {
+                self.statsDescription2.text =
+                """
+                - most searched stock: $\(properties.mostSearchedStock)
+                - device's average error: \(round((properties.deviceAverageError)*100)/100)%
+                """
+            }
+            
+            self.statsDescription3.text =
+                """
+                - models trained: \(properties.stockModels.count)
+                """
         }
-        
-        statsDescription3.text =
-            """
-            - models trained: \(properties.stockModels.count)
-            """
     }
     
     func updateSubscriptionAppearance() {
@@ -386,6 +389,7 @@ public class ProfileOverView: GraniteView {
 
 extension ProfileOverView: ConsoleLoaderDelegate {
     public func consoleLoaderUpdated(_ indicator: String) {
+        guard loader?.isLoading == true else { return }
         if isRestoring {
             self.loaderRestoreView.label.text = indicator
         } else {

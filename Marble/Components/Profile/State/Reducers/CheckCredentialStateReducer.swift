@@ -59,6 +59,13 @@ struct CheckCredentialStateReducer: Reducer {
                             break
                         }
                 }
+            } else {
+                let requests = [request]
+                let authorizationController = ASAuthorizationController(authorizationRequests: requests)
+                authorizationController.delegate = componentToPass.viewController as? ProfileViewController
+                authorizationController.presentationContextProvider = componentToPass.viewController as? ProfileViewController
+                
+                authorizationController.performRequests()
             }
             
             

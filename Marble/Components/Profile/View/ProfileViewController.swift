@@ -171,6 +171,16 @@ extension ProfileViewController {
         
         _view.profileOverView.stackViewDisclaimers.layoutIfNeeded()
     }
+    
+    func observeASAuthRequestUpdated(
+        _ updated: Change<Bool>) {
+
+        guard let status = updated.newValue else {
+                return
+        }
+        
+        _view.profileOverView.subscriptionUpdated = status
+    }
 }
 
 //MARK: Apple Auth
