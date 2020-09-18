@@ -38,7 +38,7 @@ public class StockKitComponent: Component<StockKitState> {
         searchTask?.cancel()
         csvTask?.cancel()
         validMarketDaysTask?.cancel()
-        scraper.cancel()
+        oracle.cancel()
     }
     
     func prepare() {
@@ -80,7 +80,7 @@ public class StockKitComponent: Component<StockKitState> {
     var searchTask: URLSessionTask? = nil
     var csvTask: URLSessionTask? = nil
     var validMarketDaysTask: URLSessionTask? = nil
-    let scraper = TwitterScraper()
+    let oracle = TweetOracle()
     var disable: Bool = false
 }
 
@@ -326,6 +326,7 @@ extension StockKitComponent {
                     result: sentiments))
             return
         }
+        
         guard let date = validTradingDays[crawls].asDate else { return }
         
         guard let aheadDate = state.advanceDate1Day(
@@ -435,6 +436,7 @@ extension StockKitComponent {
             validMarketDaysTask?.resume()
         }
     }
+    
     func pullTweets(
         forSearch payload: StockSearchPayload,
         dateAsString: String,
@@ -444,46 +446,40 @@ extension StockKitComponent {
         var sentimentData: [VaderSentimentOutput] = []
         var tweetData: [Tweet] = []
         
-        scraper.begin(
+        oracle.begin(
             using: payload,
-            username: nil,
-            near: nil,
             since: aheadDateAsString,
             until: dateAsString,
             count: state.rules.tweets,
-            filterLangCode: state.rules.baseLangCode,
-            
-        success:  { [weak self] (results, reponse) in
-            for result in results{
-                let vaderSentiment = VaderSentiment.predict(result.text)
-                
-                if vaderSentiment.compound != .zero {
-                    sentimentData.append(vaderSentiment)
-                    tweetData.append(result)
+            langCode: state.rules.baseLangCode,
+            success: { [weak self] (results) in
+                print("{SENTIMENT} passed \(results.count)")
+                for result in results{
+                    tweetData.append(result.0)
+                    sentimentData.append(result.1)
                 }
+    
+                self?.pushSentiment(
+                    date,
+                    aheadDateAsString,
+                    dateAsString,
+                    sentimentData,
+                    tweetData,
+                    payload)
+                
+                self?.bubbleEvent(
+                    StockKitEvents.SentimentProgress(
+                        text: "",
+                        fraction: (Double(self?.crawls ?? 1) - 1)/Double(self?.state.rules.days ?? 1)))
+    
+            },
+            progress: {[weak self] progress in
+                
+            },
+            failure: { [weak self] (error) in
+                
             }
-            
-            self?.pushSentiment(
-                date,
-                aheadDateAsString,
-                dateAsString,
-                sentimentData,
-                tweetData,
-                payload)
-        }, progress: { [weak self] text, count in
-            guard let this = self else { return }
-            
-            let sentimentGatheredValueTotal: Double = Double(this.sentiments.map { $0.positives.count }.reduce(0, +))
-            let sentimentGatheredDiff: Double = abs(sentimentGatheredValueTotal - Double(this.sentiments.count*this.state.rules.tweets))
-            let sentimentMaxGathered: Double = Double(this.state.rules.days * this.state.rules.tweets) - Double(sentimentGatheredDiff)
-            this.bubbleEvent(
-                StockKitEvents.SentimentProgress(
-                    text: text,
-                    fraction: (count+sentimentGatheredValueTotal)/sentimentMaxGathered))
-        },
-        failure: {  error in
-            
-        })
+        )
     }
     
     func pushSentiment(

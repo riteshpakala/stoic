@@ -7726,7 +7726,7 @@ rekindle  1.0
 rekindles  1.0
 rekindled  1.0
 rise  1.0
-rose  1.0
+rose  2.0
 up  1.0
 upside  1.0
 sensible  1.0

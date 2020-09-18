@@ -155,6 +155,7 @@ class ConsoleDetailView: GraniteView {
         thinkingStopped()
         if let sentiment = payload?.stockSentimentData {
             sentimentView.updateSlider(sentiment)
+            
             sentimentChanged(
                 sentiment.posAverage,
                 negative: sentiment.negAverage,

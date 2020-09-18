@@ -25,7 +25,7 @@ public struct GlobalDefaults: LocalStorageDefaults {
             LocalStorage.Value.init(Subscription.none),
             LocalStorage.Value.init(Browser.none),
             LocalStorage.Value.init(SentimentStrength.low),
-            LocalStorage.Value.init(PredictionDays.four),
+            LocalStorage.Value.init(PredictionDays.two),
         ]
     }
     
@@ -63,9 +63,9 @@ public struct GlobalDefaults: LocalStorageDefaults {
         
         public var value: Int {
             switch self {
-            case .low: return 1
-            case .med: return 4
-            case .hi: return 7
+            case .low: return 4
+            case .med: return 7
+            case .hi: return 12
             }
         }
         
@@ -95,11 +95,11 @@ public struct GlobalDefaults: LocalStorageDefaults {
         case five
         case six
         case seven
-        case eight
-        case nine
-        case ten
-        case eleven
-        case twelve
+//        case eight
+//        case nine
+//        case ten
+//        case eleven
+//        case twelve
         
         public var value: Int {
             return self.rawValue + 1
@@ -115,6 +115,10 @@ public struct GlobalDefaults: LocalStorageDefaults {
         
         public var permissions: LocalStorageReadWrite {
             return .readAndWrite
+        }
+        
+        public static var hi: [Int] {
+            return [PredictionDays.five.value, PredictionDays.six.value, PredictionDays.seven.value]
         }
     }
     

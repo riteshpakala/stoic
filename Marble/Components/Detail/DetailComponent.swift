@@ -61,6 +61,6 @@ public class DetailComponent: Component<DetailState> {
     override public func rip() {
         super.rip()
         
-        state.scraper.cancel()
+        state.oracle.cancel()
     }
 }

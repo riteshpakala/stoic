@@ -61,41 +61,36 @@ struct ThinkReducer: Reducer {
         var sentimentData: [VaderSentimentOutput] = []
         var tweetData: [Tweet] = []
         
-        state.scraper.begin(
+        print("{TEST} \(theDetailDate.asString) \(aheadDate.asString)")
+        state.oracle.begin(
             using: payload,
-            username: nil,
-            near: nil,
             since: theDetailDate.asString,
-            until: aheadDate.asString,
+            until: theDetailDate.asString,
             count: 1,
-            filterLangCode: PredictionRules().baseLangCode,
-
-        success:  {[weak component] (results, reponse) in
-            for result in results {
-                let vaderSentiment = VaderSentiment.predict(result.text)
-                if vaderSentiment.compound != .zero {
-                    sentimentData.append(vaderSentiment)
-                    tweetData.append(result)
+            langCode: PredictionRules().baseLangCode,
+            immediate: true,
+            success:  {[weak component] (results) in
+                for result in results{
+                    tweetData.append(result.0)
+                    sentimentData.append(result.1)
+                    print("{SENTIMENT} \(result.1.asString)")
                 }
-            }
-            
-            let stockSentiment: StockSentimentData = .init(
-                date: theDetailDate,
-                dateAsString: aheadDate.asString,
-                stockDateRefAsString: theDetailDate.asString,
-                sentimentData: sentimentData,
-                tweetData: tweetData)
-            
-            component?.sendEvent(
-                DetailEvents.ThinkResponse.init(
-                    payload: .init(
-                        sentiment: stockSentiment)))
-        }, progress: { text, count in
-
-        },
-        failure: { error in
-            print("{OFFLINE} \(error)")
-        })
+                
+                let stockSentiment: StockSentimentData = .init(
+                    date: theDetailDate,
+                    dateAsString: aheadDate.asString,
+                    stockDateRefAsString: theDetailDate.asString,
+                    sentimentData: sentimentData,
+                    tweetData: tweetData)
+                
+                component?.sendEvent(
+                    DetailEvents.ThinkResponse.init(
+                        payload: .init(
+                            sentiment: stockSentiment)))
+            },
+            failure: { error in
+                print("{OFFLINE} \(error)")
+            })
     }
 }
 

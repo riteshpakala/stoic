@@ -140,7 +140,18 @@ public enum JSONSwifter : Equatable, CustomStringConvertible {
     static func parse(JSONSwifterData: Data) throws -> JSONSwifter {
         do {
             let object = try JSONSerialization.jsonObject(with: JSONSwifterData, options: .mutableContainers)
+            
             return JSONSwifter(object)
+        } catch {
+            throw SwifterError(message: "\(error)", kind: .jsonParseError)
+        }
+    }
+    
+    static func parse2(JSONSwifterData: Data) throws -> JSON {
+        do {
+            let jsonData = try JSON(data: JSONSwifterData)
+            
+            return jsonData
         } catch {
             throw SwifterError(message: "\(error)", kind: .jsonParseError)
         }

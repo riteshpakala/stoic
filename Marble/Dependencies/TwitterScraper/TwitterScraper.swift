@@ -18,6 +18,7 @@ public class TwitterScraper: NSObject {
     
     let dataEncoding: String.Encoding = .utf8
     
+    var swifter: Swifter
     var results: [Tweet] = []
     var defaultHourlyTweets: Int = 4
     var cursorHour: Int = 20
@@ -58,6 +59,10 @@ public class TwitterScraper: NSObject {
     }
     private var _sinceDate: String? = nil
     
+    public override init() {
+        swifter = .init(consumerKey: "YfotrHzdTUfA1swS0MQj3cqdg", consumerSecret: "BrCZ67oKoROeZJUPJ46bEqj8kNrJVE2MtHJDwrprMclpRqtDTE", appOnly: true)
+    }
+    
     public func begin(using payload: StockSearchPayload,
         username: String? = nil,
         near: String? = nil,
@@ -80,7 +85,7 @@ public class TwitterScraper: NSObject {
         self.searchPayload = payload
         self._sinceDate = since
         
-        searchTweet(
+        searchTweet2(
             using: searchQuery,
             username: username,
             near: near,
@@ -96,6 +101,62 @@ public class TwitterScraper: NSObject {
             success: success,
             progress: progress,
             failure: failure)
+    }
+    
+    public func searchTweet2(
+        using query: String,
+        username: String? = nil,
+        near: String? = nil,
+        since: String,
+        until: String? = nil,
+        count: Int = 0,
+        refresh: String = "",
+        filterLangCode: String? = nil,
+        isUniqueTicker: (enabled: Bool, mentions: Int) = (true, 2),
+        noLinks: Bool = false,
+        cleanLinks: Bool = false,
+        isSpread: Bool = false,
+        success: TwitterScraperSuccessHandler? = nil,
+        progress: TwitterScraperProgressHandler? = nil,
+        failure: HTTPRequest.FailureHandler? = nil) {
+        
+        swifter.authorizeAppOnly(success: { (token, response) in
+            
+            
+            self.swifter.searchTweet(
+                using: query,
+                lang: filterLangCode,
+                count: 100,
+                until: until,
+                success: { (test, test2) in
+                    print("{TEST} 12 \(test.array?.count)")
+            },
+                failure: { error in
+                    print("{TEST} \(error.localizedDescription)")
+            })
+            
+//            self.swifter.searchTweet2(
+//                using: query,
+//                fromDate: "202008180209",
+//                toDate: "202008190209",
+//                maxResults: "100",
+//                success: { (test, test2) in
+//                   if let dict = test.dictionary {
+//                        if let items = dict["results"] {
+//                            print("{TEST} \(items.exists())")
+//
+//                            print("{TEST} \(items.array)")
+//                        }
+//                    }
+//            },
+//                failure: { error in
+//                    print("{TEST} \(error.localizedDescription)")
+//            })
+        }, failure: { (faulre) in
+        
+            print("{TEST} \(faulre.localizedDescription)")
+        })
+        
     }
     
     public func searchTweet(
@@ -130,6 +191,7 @@ public class TwitterScraper: NSObject {
         
         cursorTweets = cursorTweets <= 0 ? defaultHourlyTweets : cursorTweets
         
+        print("{TEST} begin")
         let JSONSwifterSuccessHandler: HTTPRequest.SuccessHandler = { [weak self] data, response in
             
             DispatchQueue.global(qos: .utility).async {
@@ -138,6 +200,7 @@ public class TwitterScraper: NSObject {
                     let jsonData = try JSON(data: data)
                     let refreshCursor: String = jsonData.dictionaryValue["min_position"]?.string ?? refresh
                     
+                    print("{JSON} jsonData")
                     guard let items = jsonData.dictionaryValue["items_html"] else { return }
                     
                     let doc: Document = try SwiftSoup.parse(items.string ?? "")
@@ -170,6 +233,8 @@ public class TwitterScraper: NSObject {
                                 
                                 let targetDate = (since.asDate() ?? Date()).dateComponents()
                                 let tweetDate = (Double(time)?.date() ?? Date()).dateComponents()
+                                
+                                print("{TEST} tweet captured")
                                 guard tweetDate.day <= targetDate.day &&
                                     tweetDate.month <= targetDate.month &&
                                     tweetDate.year <= targetDate.year else {
@@ -193,7 +258,7 @@ public class TwitterScraper: NSObject {
     //
     //                                print("{TEST} time \(localDate)")
     //                            }
-                                
+                                print("{TEST} found a valid tweet")
                                 let timeComponents = Double(time)?.date().timeComponents()
                                 let hour: Int = timeComponents?.hour ?? 0
                                 let minute: Int = timeComponents?.minute ?? 0
@@ -257,6 +322,7 @@ public class TwitterScraper: NSObject {
                         if case 200...299 = response.statusCode, data.isEmpty {
                             success?(self?.results ?? [], response)
                         } else {
+                            print("{TEST} error \(error.localizedDescription)")
                             failure?(error)
                         }
                     }
@@ -266,15 +332,20 @@ public class TwitterScraper: NSObject {
         
         let path: String = "https://twitter.com/i/search/timeline?f=tweets&q=%@&src=typd&max_position=%@"
        
+        let path2: String = "https://api.twitter.com/1.1/tweets/search/30day/development.json?query=%@"
+        
         let pathData: String = " "+query+"\(isSpread ? self._max_id : "")"+" since:"+since+" until:"+(until ?? since)
         
-        let finalPath = String(
-            format: path,
-            pathData.addingPercentEncoding(
-                withAllowedCharacters: .urlPathAllowed) ?? "",
-            refresh.addingPercentEncoding(
-                withAllowedCharacters: .urlPathAllowed) ?? "")
+        let pathData2: String = query+"&maxResults=12&fromDate=201512220000&toDate=201712220000"
         
+        let finalPath = String(
+            format: path2,
+            pathData2.addingPercentEncoding(
+                withAllowedCharacters: .urlPathAllowed) ?? "")/*,
+            refresh.addingPercentEncoding(
+                withAllowedCharacters: .urlPathAllowed) ?? "")*/
+        
+        print("{TEST} tweet \(finalPath)")
         activeRequest = self.get(
             finalPath,
             downloadProgress: JSONSwifterDownloadProgressHandler,

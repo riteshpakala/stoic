@@ -55,6 +55,7 @@ struct GetSentimentReducer: Reducer {
         
         let companyHashtag = companyName != nil ? "#"+companyName!.strip : ""
         let symbolHashtag = symbolName != nil ? "#"+symbolName!.strip : ""
+        
         kit.getSentiment(
             forSearch: .init(
                 ticker: ticker,

@@ -73,7 +73,7 @@ public class BrowserView: GraniteView {
         label.font = GlobalStyle.Fonts.courier(.medium, .bold)
         label.textAlignment = .center
         label.textColor = GlobalStyle.Colors.orange
-        label.text = "You don't have any models, search for a stock to train a model & it will appear here. Train more than 1 to combine them into a more refined version over time".localized.lowercased()
+        label.text = "you don't have any models, search for a stock to train a model & it will appear here. Train more than 1 to combine them into a more refined version over time".localized
         label.numberOfLines = 0
         return label
     }()

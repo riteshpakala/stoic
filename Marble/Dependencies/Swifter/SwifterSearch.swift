@@ -72,4 +72,63 @@ public extension Swifter {
             }, failure: failure)
     }
     
+    func searchTweet12(using query: String,
+                     geocode: String? = nil,
+                     lang: String? = nil,
+                     locale: String? = nil,
+                     resultType: String? = nil,
+                     count: Int? = nil,
+                     until: String? = nil,
+                     sinceID: String? = nil,
+                     maxID: String? = nil,
+                     includeEntities: Bool? = nil,
+                     callback: String? = nil,
+                     tweetMode: TweetMode = TweetMode.default,
+                     success: JSONDataSuccessHandler? = nil,
+                     failure: @escaping FailureHandler) {
+        let path = "search/tweets.json"
+
+        var parameters = [String: Any]()
+        parameters["q"] = query
+        parameters["geocode"] ??= geocode
+        parameters["lang"] ??= lang
+        parameters["locale"] ??= locale
+        parameters["result_type"] ??= resultType
+        parameters["count"] ??= count
+        parameters["until"] ??= until
+        parameters["since_id"] ??= sinceID
+        parameters["max_id"] ??= maxID
+        parameters["include_entities"] ??= includeEntities
+        parameters["callback"] ??= callback
+        parameters["tweet_mode"] ??= tweetMode.stringValue
+
+        self.getJSON2(path: path, baseURL: .api, parameters: parameters, success: { json, response in
+            success?(json, response)
+            }, failure: failure)
+    }
+    
+    func searchTweet2(using query: String,
+                     tag: String? = nil,
+                     fromDate: String? = nil,
+                     toDate: String? = nil,
+                     maxResults: String? = nil,
+                     next: String? = nil,
+                     tweetMode: TweetMode = TweetMode.default,
+                     success: JSONDataSuccessHandler? = nil,
+                     failure: @escaping FailureHandler) {
+        let path = "tweets/search/30day/development.json"
+
+        var parameters = [String: Any]()
+        parameters["query"] = query
+        parameters["tag"] ??= tag
+        parameters["fromDate"] ??= fromDate
+        parameters["toDate"] ??= toDate
+        parameters["maxResults"] ??= maxResults
+        parameters["next"] ??= next
+
+        self.getJSON2(path: path, baseURL: .api, parameters: parameters, success: { json, response in
+            success?(json, response)
+            }, failure: failure)
+    }
+    
 }

@@ -358,7 +358,16 @@ class TongueSettings<T>: GraniteView, UICollectionViewDelegate, UICollectionView
         //Subscription handling
         if ServiceCenter.SubscriptionBenefits.hiSentimentAccess.isActive {
             if item.detail == GlobalDefaults.SentimentStrength.hi.value,
-                item.label == GlobalDefaults.SentimentStrength.hi.key,
+                item.label == GlobalDefaults.SentimentStrength.key,
+                !item.isSubscribed {
+                cell.valueLabel.textColor = GlobalStyle.Colors.red
+            }
+        }
+        
+        if ServiceCenter.SubscriptionBenefits.daysTrainedAccess.isActive {
+            
+            if GlobalDefaults.PredictionDays.hi.contains(item.detail),
+                item.label == GlobalDefaults.PredictionDays.key,
                 !item.isSubscribed {
                 cell.valueLabel.textColor = GlobalStyle.Colors.red
             }

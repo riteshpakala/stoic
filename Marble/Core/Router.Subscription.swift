@@ -22,10 +22,11 @@ extension ServiceCenter {
         case searchAnyStock = "search most stocks"
         case train12StocksSimul = "train up to 7 stocks at a time"
         case hiSentimentAccess = "access to `hi` sentiment strength"
+        case daysTrainedAccess = "access to more training days"
         
         var isActive: Bool {
             switch self {
-            case .liveSearch, .searchAnyStock, .train12StocksSimul, .hiSentimentAccess:
+            case .liveSearch, .searchAnyStock, .train12StocksSimul, .hiSentimentAccess, .daysTrainedAccess:
                 return true
             }
         }
@@ -63,6 +64,8 @@ extension ServiceCenter {
                 return "you must be a Stoic PRO in order to train more models at the same time"
             case .hiSentimentAccess:
                 return "you must be a Stoic PRO in order to use `hi` sentiment strength"
+            case .daysTrainedAccess:
+                return "you must be a Stoic PRO in order to use higher training days"
             default:
                 return "unknown error"
             }

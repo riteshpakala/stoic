@@ -105,6 +105,22 @@ struct ShowDetailReducer: Reducer {
                 return
             }
         }
+        if ServiceCenter.SubscriptionBenefits.daysTrainedAccess.isActive {
+            let hiTrainingDays = component.service.storage.getObject(GlobalDefaults.PredictionDays.self)
+            
+            if let value = hiTrainingDays?.value,
+               GlobalDefaults.PredictionDays.hi.contains(value),
+               !isSubscribed {
+                sideEffects.append(
+                    .init(
+                        event: HomeEvents.PresentAlert.init(
+                            ServiceCenter.SubscriptionBenefits.daysTrainedAccess.alertAlt),
+                        bubbles: true))
+                return
+            } else if hiTrainingDays?.value == nil{
+                return
+            }
+        }
         //
         
         guard let stock = searchStock else {

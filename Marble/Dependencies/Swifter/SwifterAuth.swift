@@ -184,7 +184,7 @@ public extension Swifter {
                     let credentialToken = Credential.OAuthAccessToken(key: accessToken!, secret: "")
                     
                     self.client.credential = Credential(accessToken: credentialToken)
-                    
+                    print("{TEST} got credential \(credentialToken)")
                     success?(credentialToken, response)
                 } else {
                     let error = SwifterError(message: "Cannot find bearer token in server response",

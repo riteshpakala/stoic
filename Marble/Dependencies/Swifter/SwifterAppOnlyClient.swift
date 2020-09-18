@@ -47,7 +47,7 @@ internal class AppOnlyClient: SwifterClientProtocol, SwifterAppProtocol {
              success: HTTPRequest.SuccessHandler?,
              failure: HTTPRequest.FailureHandler?) -> HTTPRequest {
         let url = URL(string: path, relativeTo: baseURL.url)
-        
+    
         let request = HTTPRequest(url: url!, method: .GET, parameters: parameters)
         request.downloadProgressHandler = downloadProgress
         request.successHandler = success

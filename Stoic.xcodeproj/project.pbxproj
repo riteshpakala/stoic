@@ -14,6 +14,7 @@
 		710993F724F4A81100EAA482 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710993F624F4A81100EAA482 /* IAPManager.swift */; };
 		710993F924F4A93300EAA482 /* Products.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710993F824F4A93300EAA482 /* Products.swift */; };
 		710993FB24F4AA0100EAA482 /* SusbcribeProductsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710993FA24F4AA0100EAA482 /* SusbcribeProductsReducer.swift */; };
+		7110006E25144E7900DD63DB /* TweetOracle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110006D25144E7900DD63DB /* TweetOracle.swift */; };
 		7110A56A248DCAD500F62940 /* SearchStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A560248DCAD500F62940 /* SearchStyle.swift */; };
 		7110A56B248DCAD500F62940 /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A562248DCAD500F62940 /* SearchState.swift */; };
 		7110A56C248DCAD500F62940 /* SearchBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A564248DCAD500F62940 /* SearchBuilder.swift */; };
@@ -315,6 +316,7 @@
 		710993F624F4A81100EAA482 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		710993F824F4A93300EAA482 /* Products.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Products.swift; sourceTree = "<group>"; };
 		710993FA24F4AA0100EAA482 /* SusbcribeProductsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SusbcribeProductsReducer.swift; sourceTree = "<group>"; };
+		7110006D25144E7900DD63DB /* TweetOracle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetOracle.swift; sourceTree = "<group>"; };
 		7110A560248DCAD500F62940 /* SearchStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStyle.swift; sourceTree = "<group>"; };
 		7110A562248DCAD500F62940 /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		7110A564248DCAD500F62940 /* SearchBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBuilder.swift; sourceTree = "<group>"; };
@@ -692,6 +694,14 @@
 				710993F624F4A81100EAA482 /* IAPManager.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		7110006C25144E5200DD63DB /* TweetOracle */ = {
+			isa = PBXGroup;
+			children = (
+				7110006D25144E7900DD63DB /* TweetOracle.swift */,
+			);
+			path = TweetOracle;
 			sourceTree = "<group>";
 		};
 		7110A55F248DCAD500F62940 /* Search */ = {
@@ -1259,6 +1269,7 @@
 		71A1D162246E027D00D778A5 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				7110006C25144E5200DD63DB /* TweetOracle */,
 				716D147524CE96960075F86E /* Translate */,
 				717A75F824A16118005348F9 /* SwiftSoup */,
 				717A75F324A14C00005348F9 /* TwitterScraper */,
@@ -2113,6 +2124,7 @@
 				717F1BD7248A0BCB001DD426 /* HomeBuilder.swift in Sources */,
 				7164E692248DCE770035CE9B /* String+Localization.swift in Sources */,
 				717A765D24A16131005348F9 /* Comment.swift in Sources */,
+				7110006E25144E7900DD63DB /* TweetOracle.swift in Sources */,
 				71478F8524790297007DF62D /* SwifterTag.swift in Sources */,
 				71A7C69D250571000094C352 /* StockModelParentObject+CoreDataProperties.swift in Sources */,
 				71BC1C2F2486326800B35DC1 /* String+Size.swift in Sources */,

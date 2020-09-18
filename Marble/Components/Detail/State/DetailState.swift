@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public class DetailState: State {
-    let scraper = TwitterScraper()
+    let oracle = TweetOracle()
     
     var csvDownloadTimer: Timer? = nil
     let csvDelay: TimeInterval = 1.2

@@ -89,7 +89,9 @@ public class Swifter {
     public typealias SuccessHandler = (JSONSwifter) -> Void
     public typealias CursorSuccessHandler = (JSONSwifter, _ previousCursor: String?, _ nextCursor: String?) -> Void
     public typealias JSONSwifterSuccessHandler = (JSONSwifter, _ response: HTTPURLResponse) -> Void
+    public typealias JSONDataSuccessHandler = (JSON, _ response: HTTPURLResponse) -> Void
     public typealias SearchResultHandler = (JSONSwifter, _ searchMetadata: JSONSwifter) -> Void
+    public typealias SearchResultHandler2 = (JSON) -> Void
     public typealias FailureHandler = (_ error: Error) -> Void
     
     
@@ -193,6 +195,47 @@ public class Swifter {
         }
     }
     
+    @discardableResult
+    internal func JSONSwifterRequest2(path: String,
+                              baseURL: TwitterURL,
+                              method: HTTPMethodType,
+                              parameters: [String: Any],
+                              uploadProgress: HTTPRequest.UploadProgressHandler? = nil,
+                              downloadProgress: JSONSwifterSuccessHandler? = nil,
+                              success: JSONDataSuccessHandler? = nil,
+                              failure: HTTPRequest.FailureHandler? = nil) -> HTTPRequest {
+        
+        let JSONSwifterDownloadProgressHandler: HTTPRequest.DownloadProgressHandler = { [weak self] data, _, _, response in
+            if let progress = downloadProgress {
+                self?.handleStreamProgress(data: data, response: response, handler: progress)
+            }
+        }
+        
+        let JSONSwifterSuccessHandler: HTTPRequest.SuccessHandler = { data, response in
+            DispatchQueue.global(qos: .utility).async {
+                do {
+                    let JSONSwifterResult = try JSONSwifter.parse2(JSONSwifterData: data)
+                    DispatchQueue.main.async {
+                        success?(JSONSwifterResult, response)
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        failure?(error)
+                    }
+                }
+            }
+        }
+        
+        switch method {
+        case .GET:
+            return self.client.get(path, baseURL: baseURL, parameters: parameters,
+                                   uploadProgress: uploadProgress, downloadProgress: JSONSwifterDownloadProgressHandler,
+                                   success: JSONSwifterSuccessHandler, failure: failure)
+        default:
+            fatalError("This HTTP Method is not supported")
+        }
+    }
+    
     private func handleStreamProgress(data: Data, response: HTTPURLResponse, handler: JSONSwifterSuccessHandler? = nil) {
         let chunkSeparator = "\r\n"
         if var JSONSwifterString = String(data: data, encoding: .utf8) {
@@ -222,6 +265,19 @@ public class Swifter {
                           success: JSONSwifterSuccessHandler?,
                           failure: HTTPRequest.FailureHandler?) -> HTTPRequest {
         return self.JSONSwifterRequest(path: path, baseURL: baseURL, method: .GET, parameters: parameters,
+                                uploadProgress: uploadProgress, downloadProgress: downloadProgress,
+                                success: success, failure: failure)
+    }
+    
+    @discardableResult
+    internal func getJSON2(path: String,
+                          baseURL: TwitterURL,
+                          parameters: [String: Any],
+                          uploadProgress: HTTPRequest.UploadProgressHandler? = nil,
+                          downloadProgress: JSONSwifterSuccessHandler? = nil,
+                          success: JSONDataSuccessHandler?,
+                          failure: HTTPRequest.FailureHandler?) -> HTTPRequest {
+        return self.JSONSwifterRequest2(path: path, baseURL: baseURL, method: .GET, parameters: parameters,
                                 uploadProgress: uploadProgress, downloadProgress: downloadProgress,
                                 success: success, failure: failure)
     }
