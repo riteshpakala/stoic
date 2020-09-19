@@ -46,6 +46,6 @@ public struct StockSearchPayload {
     
     var asArray: [String] {
         //Removed ticker option, twitter is blocking the `$` op usage
-        [symbolName, companyHashtag, companyName, symbolHashtag, symbolName]
+        [symbolName, symbolHashtag, companyName, companyHashtag, symbolHashtag, symbolName]
     }
 }

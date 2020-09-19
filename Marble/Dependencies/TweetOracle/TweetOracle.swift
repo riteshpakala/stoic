@@ -32,8 +32,10 @@ class TweetOracle: NSObject {
     private var results: [(Tweet, VaderSentimentOutput)] = []
     private var emptyPageCount: Int = 0
     private var maxEmptyPages: Int = 4
+    private var cycleCount: Int = 0
+    private var maxCycleCount: Int = 4
     var searchQuery: String {
-        searchPayload?.cycle(emptyPageCount) ?? ""
+        searchPayload?.cycle(cycleCount) ?? ""
     }
     private var isAuthorized: Bool = false
     private var shouldCancel: Bool = false
@@ -91,7 +93,7 @@ class TweetOracle: NSObject {
         
         self.searchPayload = payload
         let oracle: TweetOraclePayload = .init(
-            query: self.searchQuery,
+            query: payload.ticker,
             fromDate: since,
             toDate: until,
             next: nil,
@@ -121,11 +123,13 @@ class TweetOracle: NSObject {
     
     func search(
         _ oracle: TweetOraclePayload,
+        queryToRefreshWith: String? = nil,
         success: TwitterOracleSuccessHandler? = nil,
         progress: TwitterOracleProgressHandler? = nil,
         failure: TwitterOracleFailureHandler? = nil) {
+        let query = queryToRefreshWith ?? self.searchQuery
         self.swifter.searchTweet(
-            using: oracle.query,
+            using: query,
             lang: oracle.lang,
             count: 100,
             until: oracle.toDate,
@@ -167,7 +171,8 @@ class TweetOracle: NSObject {
                             //Flags
                             
                             let theCashtag: Bool = !metadata.symbols.isEmpty && metadata.symbols.count <= 6 && (metadata.symbols.map({ $0.lowercased() }).contains(oracle.query.lowercased()) || text.lowercased().components(separatedBy: oracle.ticker.lowercased()).count > 1)
-                                
+                            
+                            let theCompany: Bool = self.cycleCount > 0 && text.lowercased().components(separatedBy: query).count > 1
                             //
 //                            let theDate: Bool
 //                            let targetDate = (oracle.fromDate.asDate() ?? Date()).dateComponents()
@@ -182,45 +187,60 @@ class TweetOracle: NSObject {
                             //
                             
                             
-                            let theURLs: Bool = metadata.urls.isEmpty
+                            let theURLs: Bool = metadata.urls.isEmpty || (self.cycleCount > 0 && metadata.urls.count <= 1)
                             
                             let collected: [String] = self.results.map({ $0.0.text.lowercased() })
                             let theDupe: Bool = !collected.contains(text.lowercased())
                             
-                            if theCashtag, theURLs, theDupe {
+                            if (theCashtag || theCompany), theURLs, theDupe {
 
                                 let prediction = VaderSentiment.predict(metadata.text)
                                 let theSentiment: Bool = prediction.compound != 0
                                 
                                 if theSentiment {
 //                                    print(metadata.toString)
-//                                    print("%%%%%%%%%\n \(prediction.asString) \n%%%%%%\n\n")
-                                    
+//                                    print("%%%%%%%%%\n query: \(query) :: \(prediction.asString) \n%%%%%%\n\n")
                                     self.results.append((metadata.asTweet, prediction))
                                     
                                     if oracle.immediate {
                                         break
                                     }
                                 }
+                            } else {
+//                                print(metadata.toString)
+//                                print("###########\n errror :: query: \(query) \n###########\n\n")
                             }
                         }
                         
                         guard !self.shouldCancel else { return }
                         
                         if (((self.results.count < oracle.sentimentCount) || self.results.isEmpty) &&
-                            self.emptyPageCount < self.maxEmptyPages) {
+                            (self.emptyPageCount < self.maxEmptyPages || self.cycleCount < self.maxCycleCount )) {
 
                             var oracleToRefresh: TweetOraclePayload = oracle
-                            if let id = test2.object?["next_results"]?.string {
+                            if let id = test2.object?["next_results"]?.string, self.emptyPageCount < self.maxEmptyPages {
                                 let maxId = id.components(separatedBy: "&q").first?.components(separatedBy: "?max_id=").last ?? id
                                 
 //                                print("{TEST} parsing max \(maxId)")
                                 oracleToRefresh.maxId = maxId
                             }
                             
+                            
+                            if self.emptyPageCount < self.maxEmptyPages {
+                                self.emptyPageCount+=1
+                            } else {
+                                oracleToRefresh.maxId = nil
+                                self.cycleCount+=1
+                                self.emptyPageCount = 0
+                            }
+                            
                             print("{SENTIMENT} refresh \(self.emptyPageCount)")
-                            self.emptyPageCount+=1
-                            self.search(oracleToRefresh, success: success, progress: progress, failure: failure)
+                            self.search(
+                                oracleToRefresh,
+                                queryToRefreshWith: self.emptyPageCount == 0 ? nil : query,
+                                success: success,
+                                progress: progress,
+                                failure: failure)
 //                            print("{TEST} \(self.results.count) refresh \(oracleToRefresh.maxId)")
                         } else {
                             print("{SENTIMENT} final \(self.results.count)")
@@ -243,6 +263,7 @@ class TweetOracle: NSObject {
     func reset() {
         results.removeAll()
         self.emptyPageCount = 0
+        self.cycleCount = 0
     }
 }
 

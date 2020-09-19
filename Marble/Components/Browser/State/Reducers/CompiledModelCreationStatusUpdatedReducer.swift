@@ -19,7 +19,7 @@ struct CompiledModelCreationStatusUpdatedReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         state.currentCompiledCreationStatus = event.status.rawValue
-        
+        print("{TEST} \(event.status)")
         switch event.status {
         case .update:
             guard let stock = event.stock else { return }

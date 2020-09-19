@@ -305,7 +305,7 @@ public class BrowserModelCell: UICollectionViewCell {
     
     var currentCreationStatusStep: BrowserCompiledModelCreationStatus = .none {
         didSet {
-            guard willCreate else { return }
+            
             self.compiledCreationStatusLabel.text = currentCreationStatusStep.rawValue.localized.lowercased()
             
             for cell in self.collection.view.visibleCells {
@@ -313,14 +313,16 @@ public class BrowserModelCell: UICollectionViewCell {
                     dataCell.currentCreationStatusStep = currentCreationStatusStep
                 }
             }
-            
+
             switch currentCreationStatusStep {
             case .step1:
+                guard willCreate else { break }
                 hideViewsForCreation()
                 compiledCreationDoneLabel.text = "done".localized.lowercased()
                 compiledCreationDoneLabel.sizeToFit()
                 widthOfDoneLabel?.update(offset: compiledCreationDoneLabel.frame.size.width + GlobalStyle.spacing*4)
             case .step2, .update:
+                guard willCreate else { break }
                 hideViewsForCreation()
                 compiledCreationDoneLabel.text = "confirm".localized.lowercased()
                 compiledCreationDoneLabel.sizeToFit()
@@ -839,6 +841,8 @@ extension BrowserModelCell {
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
             }
+
+            self?.willCreate = true
             self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1, stock: self?.model?.stock.asSearchStock))
         })
         
@@ -914,6 +918,7 @@ extension BrowserModelCell {
                 self?.compiledContainerView.undim()
             }
             
+            self?.willCreate = true
             self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.update, stock: self?.model?.stock.asSearchStock))
         })
         
@@ -922,6 +927,8 @@ extension BrowserModelCell {
             DispatchQueue.main.async {
                 self?.compiledContainerView.undim()
             }
+            
+            self?.willCreate = true
             self?.bubble(BrowserEvents.CompiledModelCreationStatusUpdated.init(.step1, stock: self?.model?.stock.asSearchStock))
         })
         

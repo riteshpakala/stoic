@@ -9,8 +9,8 @@ import Granite
 import Foundation
 
 public struct PredictionRules {
-    var days: Int = 7
-    var maxDays: Int = 12
+    var days: Int = 2
+    var maxDays: Int = 7
     var historicalDays: Int = 36
     var baseLangCode: String = "en"
     var tweets: Int = 1
