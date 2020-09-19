@@ -43,6 +43,27 @@ struct GetPredictionReducer: Reducer {
             withStockData: validTradingData,
             stockSentimentData: stockSentimentData)
         
+        // { CoreData } Insertion
+        if let stockDataOfTradingDay = stockKit.state.nextValidTradingDay,
+              let model = state.model?.david,
+              let dataSet = state.model?.david.dataSet {
+
+            let id = component.service.center.saveStockPredictions(
+                .init(
+                    date: stockDataOfTradingDay,
+                    model: model,
+                    stock: state.searchedStock,
+                    sentimentStrength: stockKit.state.rules.tweets,
+                    predictionDays: stockKit.state.rules.days,
+                    sentimentData: stockSentimentData,
+                    historicalData: validTradingData,
+                    dataSet: dataSet),
+                with: .background)
+            
+            state.modelID = id
+        }
+        
+        // { ConsoleDetail } Update UI for prediction
         if let model = state.model {
             state.consoleDetailPayload = ConsoleDetailPayload.init(
                 currentTradingDay: stockKit.state.nextValidTradingDay?.asString ?? "",
@@ -55,25 +76,6 @@ struct GetPredictionReducer: Reducer {
         
         state.progressLabelText = nil
         state.predictionState = DetailView.DetailPredictionState.done.rawValue
-        
-        // { CoreData } Insertion
-        guard let stockDataOfTradingDay = stockKit.state.nextValidTradingDay,
-              let model = state.model?.david,
-              let dataSet = state.model?.david.dataSet else {
-            return
-        }
-
-        component.service.center.saveStockPredictions(
-            .init(
-                date: stockDataOfTradingDay,
-                model: model,
-                stock: state.searchedStock,
-                sentimentStrength: stockKit.state.rules.tweets,
-                predictionDays: stockKit.state.rules.days,
-                sentimentData: stockSentimentData,
-                historicalData: validTradingData,
-                dataSet: dataSet),
-            with: .background)
     }
 }
 
@@ -119,7 +121,8 @@ struct PredictionDidUpdateReducer: Reducer {
                     sentimentWeights: event.stockSentimentData,
                     nextTradingDay: nextTradingDay,
                     thisTradingDay: sorted?.first?.dateData.asString ?? nextTradingDay,
-                    close: event.close)
+                    close: event.close,
+                    id: state.modelID ?? "")
                 
                 component.service.center.backend.put(
                     predictionUpdate,

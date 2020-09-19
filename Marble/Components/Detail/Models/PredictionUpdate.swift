@@ -16,6 +16,7 @@ class PredictionUpdate: NSObject, Codable {
     let nextTradingDay: String
     let thisTradingDay: String
     let close: Double
+    let id: String
     
     public init(
         sentimentStrength: Int,
@@ -24,7 +25,8 @@ class PredictionUpdate: NSObject, Codable {
         sentimentWeights: StockSentimentData,
         nextTradingDay: String,
         thisTradingDay: String,
-        close: Double) {
+        close: Double,
+        id: String) {
         
         self.sentimentStrength = sentimentStrength
         self.predictionDays = predictionDays
@@ -33,6 +35,7 @@ class PredictionUpdate: NSObject, Codable {
         self.nextTradingDay = nextTradingDay
         self.thisTradingDay = thisTradingDay
         self.close = close
+        self.id = id
     }
     
     var key: String {
@@ -60,6 +63,7 @@ class PredictionUpdate: NSObject, Codable {
         self.nextTradingDay = nTD
         self.thisTradingDay = (try? container.decode(String.self, forKey: .thisTradingDay)) ?? nTD
         self.close = try container.decode(Double.self, forKey: .close)
+        self.id = (try? container.decode(String.self, forKey: .id)) ?? ""
     }
     
     enum DTOKeys: String, CodingKey {
@@ -71,5 +75,6 @@ class PredictionUpdate: NSObject, Codable {
         case thisTradingDay
         case close
         case time
+        case id
     }
 }

@@ -39,6 +39,8 @@ public class DetailState: State {
     
     var predictionDidUpdate: Int = 4
     
+    var modelID: String? = nil
+    
     init(_ searchedStock: SearchStock, _ stockModel: StockModel?) {
         self.searchedStock = searchedStock
         self.stockModel = stockModel

@@ -23,7 +23,7 @@ extension ServiceCenter {
     
     func saveStockPredictions(
         _ prediction: StockModelObjectPayload,
-        with context: CoreDataThread) {
+        with context: CoreDataThread) -> String? {
         
         let moc: NSManagedObjectContext
         
@@ -35,10 +35,10 @@ extension ServiceCenter {
         }
         
         guard let preparedData = ServiceCenter.prepareData(from: prediction) else {
-            return
+            return nil
         }
         
-        
+        let uid: String = UUID.init().uuidString
         moc.perform {
             let mergedModels: [StockModelMergedObject]? = try? moc.fetch(StockModelMergedObject.request())
             let mergedModel = mergedModels?.first(where: { $0.stock.asSearchStock?.symbol == prediction.stock.symbol && $0.stock.asSearchStock?.exchangeName == prediction.stock.exchangeName })
@@ -62,6 +62,7 @@ extension ServiceCenter {
             object.stock = preparedData.stock
             object.dataSet = preparedData.dataSet
             object.timestamp = Date().timeIntervalSince1970
+            object.id = uid
             
             merged.addToModels(object)
             
@@ -71,6 +72,8 @@ extension ServiceCenter {
                 print ("{CoreData} \(error.localizedDescription)")
             }
         }
+        
+        return uid
     }
     
     public static func prepareData(

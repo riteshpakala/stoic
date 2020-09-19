@@ -75,7 +75,7 @@ struct LoadOfflineReducer: Reducer {
         guard !state.shouldPredict else {
             return
         }
-        
+        state.modelID = state.stockModel?.id
         state.progressLabelText = nil
         state.predictionState = DetailView.DetailPredictionState.done.rawValue
     }
