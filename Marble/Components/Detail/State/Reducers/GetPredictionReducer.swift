@@ -135,7 +135,7 @@ struct PredictionDidUpdateReducer: Reducer {
         state.predictionDidUpdate %= 4
         state.predictionDidUpdate += 1
         
-        if state.newTranslation == .zero && state.lastTranslation == .zero {
+        if !state.hasMoved {
             state.newTranslation = .init(
                 x: 0,
                 y: -DetailStyle.consoleSizeExpanded.height/4)

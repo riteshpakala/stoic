@@ -29,6 +29,11 @@ public class SearchView: GraniteView {
         textField.smartInsertDeleteType = .no
         textField.backgroundColor = .clear
         textField.inputAccessoryView = collectionAccessory.container
+        
+        if #available(iOS 13.0, *) {
+            textField.overrideUserInterfaceStyle = .dark
+        }
+        
         return textField
     }()
     

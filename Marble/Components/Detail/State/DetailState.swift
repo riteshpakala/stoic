@@ -18,7 +18,7 @@ public class DetailState: State {
     var sentimentDownloadTimer: Timer? = nil
     let sentimentDelay: TimeInterval = 1.2
     
-    
+    var hasMoved: Bool = false
     var lastTranslation: CGPoint = .zero
     @objc dynamic var newTranslation: CGPoint = .zero
     @objc dynamic var progressLabelText: String? = nil

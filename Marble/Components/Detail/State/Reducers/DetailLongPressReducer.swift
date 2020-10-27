@@ -42,6 +42,8 @@ struct DetailLongPressChangedReducer: Reducer {
             x: event.translation.x - state.lastTranslation.x,
             y: event.translation.y - state.lastTranslation.y)
         
+        state.hasMoved = true
+        
         state.newTranslation = difference
         state.lastTranslation = event.translation
     }
