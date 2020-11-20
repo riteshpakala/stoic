@@ -259,6 +259,26 @@
 		71C56BFE2510418F00E58073 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C56BFD2510418F00E58073 /* ContactView.swift */; };
 		71C58F562508354E00C342CE /* SwipeableHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C58F552508354E00C342CE /* SwipeableHelpers.swift */; };
 		71C58F582508369D00C342CE /* BrowserModelDataCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */; };
+		71CD54A625684AC80015B6A5 /* ConsoleDetailLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54A525684AC70015B6A5 /* ConsoleDetailLineView.swift */; };
+		71CD54B4256879360015B6A5 /* RHLinePlotConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54AB256879360015B6A5 /* RHLinePlotConfig.swift */; };
+		71CD54B5256879360015B6A5 /* Misc.Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54AC256879360015B6A5 /* Misc.Visual.swift */; };
+		71CD54B6256879360015B6A5 /* RHLinePlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54AD256879360015B6A5 /* RHLinePlot.swift */; };
+		71CD54B7256879360015B6A5 /* RHLinePlot+NotSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54AE256879360015B6A5 /* RHLinePlot+NotSegmented.swift */; };
+		71CD54B8256879360015B6A5 /* RHLinePlot+Segmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54AF256879360015B6A5 /* RHLinePlot+Segmented.swift */; };
+		71CD54B9256879360015B6A5 /* GlowingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54B0256879360015B6A5 /* GlowingIndicator.swift */; };
+		71CD54BA256879360015B6A5 /* PressAndHorizontalDragGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54B1256879360015B6A5 /* PressAndHorizontalDragGesture.swift */; };
+		71CD54BB256879360015B6A5 /* RHInteractiveLinePlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54B2256879360015B6A5 /* RHInteractiveLinePlot.swift */; };
+		71CD54BC256879360015B6A5 /* LinePlotValueStick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54B3256879360015B6A5 /* LinePlotValueStick.swift */; };
+		71CD54CF256879720015B6A5 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54C4256879710015B6A5 /* Haptic.swift */; };
+		71CD54D0256879720015B6A5 /* StocksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54C5256879710015B6A5 /* StocksAPI.swift */; };
+		71CD54D1256879720015B6A5 /* TimeDisplayModeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54C6256879710015B6A5 /* TimeDisplayModeSelector.swift */; };
+		71CD54D2256879720015B6A5 /* RobinhoodPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54C7256879710015B6A5 /* RobinhoodPage.swift */; };
+		71CD54D3256879720015B6A5 /* RobinhoodPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54C8256879710015B6A5 /* RobinhoodPageViewModel.swift */; };
+		71CD54D4256879720015B6A5 /* StockAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54C9256879710015B6A5 /* StockAPIResponse.swift */; };
+		71CD54D5256879720015B6A5 /* TimeDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54CA256879710015B6A5 /* TimeDisplayMode.swift */; };
+		71CD54D6256879720015B6A5 /* Misc.Plot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54CB256879710015B6A5 /* Misc.Plot.swift */; };
+		71CD54D7256879720015B6A5 /* MovingNumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54CD256879720015B6A5 /* MovingNumbersView.swift */; };
+		71CD54D8256879720015B6A5 /* RobinhoodPageBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CD54CE256879720015B6A5 /* RobinhoodPageBusinessLogic.swift */; };
 		71D2D32B24CCB70100535F3F /* WaveFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D32A24CCB70100535F3F /* WaveFormView.swift */; };
 		71D7CD8E248C913600C7180D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71D7CD8D248C913600C7180D /* GoogleService-Info.plist */; };
 		71D98E3F24F1E3210089C85F /* SettingsReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D98E3E24F1E3210089C85F /* SettingsReducers.swift */; };
@@ -571,6 +591,26 @@
 		71C56BFD2510418F00E58073 /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		71C58F552508354E00C342CE /* SwipeableHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableHelpers.swift; sourceTree = "<group>"; };
 		71C58F572508369D00C342CE /* BrowserModelDataCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserModelDataCardView.swift; sourceTree = "<group>"; };
+		71CD54A525684AC70015B6A5 /* ConsoleDetailLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleDetailLineView.swift; sourceTree = "<group>"; };
+		71CD54AB256879360015B6A5 /* RHLinePlotConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RHLinePlotConfig.swift; sourceTree = "<group>"; };
+		71CD54AC256879360015B6A5 /* Misc.Visual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.Visual.swift; sourceTree = "<group>"; };
+		71CD54AD256879360015B6A5 /* RHLinePlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RHLinePlot.swift; sourceTree = "<group>"; };
+		71CD54AE256879360015B6A5 /* RHLinePlot+NotSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RHLinePlot+NotSegmented.swift"; sourceTree = "<group>"; };
+		71CD54AF256879360015B6A5 /* RHLinePlot+Segmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RHLinePlot+Segmented.swift"; sourceTree = "<group>"; };
+		71CD54B0256879360015B6A5 /* GlowingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlowingIndicator.swift; sourceTree = "<group>"; };
+		71CD54B1256879360015B6A5 /* PressAndHorizontalDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PressAndHorizontalDragGesture.swift; sourceTree = "<group>"; };
+		71CD54B2256879360015B6A5 /* RHInteractiveLinePlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RHInteractiveLinePlot.swift; sourceTree = "<group>"; };
+		71CD54B3256879360015B6A5 /* LinePlotValueStick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinePlotValueStick.swift; sourceTree = "<group>"; };
+		71CD54C4256879710015B6A5 /* Haptic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
+		71CD54C5256879710015B6A5 /* StocksAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StocksAPI.swift; sourceTree = "<group>"; };
+		71CD54C6256879710015B6A5 /* TimeDisplayModeSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeDisplayModeSelector.swift; sourceTree = "<group>"; };
+		71CD54C7256879710015B6A5 /* RobinhoodPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobinhoodPage.swift; sourceTree = "<group>"; };
+		71CD54C8256879710015B6A5 /* RobinhoodPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobinhoodPageViewModel.swift; sourceTree = "<group>"; };
+		71CD54C9256879710015B6A5 /* StockAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockAPIResponse.swift; sourceTree = "<group>"; };
+		71CD54CA256879710015B6A5 /* TimeDisplayMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeDisplayMode.swift; sourceTree = "<group>"; };
+		71CD54CB256879710015B6A5 /* Misc.Plot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.Plot.swift; sourceTree = "<group>"; };
+		71CD54CD256879720015B6A5 /* MovingNumbersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovingNumbersView.swift; sourceTree = "<group>"; };
+		71CD54CE256879720015B6A5 /* RobinhoodPageBusinessLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobinhoodPageBusinessLogic.swift; sourceTree = "<group>"; };
 		71D2D32A24CCB70100535F3F /* WaveFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveFormView.swift; sourceTree = "<group>"; };
 		71D7CD8D248C913600C7180D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		71D98E3E24F1E3210089C85F /* SettingsReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsReducers.swift; sourceTree = "<group>"; };
@@ -875,6 +915,7 @@
 		7127B0612485EEA2004C57F1 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				71CD54AA256879250015B6A5 /* Plot */,
 				71C40EF524EF94FE0050C072 /* Settings */,
 				715DB1B624CB460800E1D741 /* Console */,
 				715DB1B924CB60DC00E1D741 /* Picker.swift */,
@@ -1044,6 +1085,7 @@
 				71C135CA250DE160007F1F96 /* ConsoleLoader.swift */,
 				7127B0622485EEAB004C57F1 /* ConsoleView.swift */,
 				715DB1B724CB461B00E1D741 /* ConsoleDetailView.swift */,
+				71CD54A525684AC70015B6A5 /* ConsoleDetailLineView.swift */,
 			);
 			path = Console;
 			sourceTree = "<group>";
@@ -1545,6 +1587,48 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		71CD54AA256879250015B6A5 /* Plot */ = {
+			isa = PBXGroup;
+			children = (
+				71CD54C4256879710015B6A5 /* Haptic.swift */,
+				71CD54CB256879710015B6A5 /* Misc.Plot.swift */,
+				71CD54CC256879710015B6A5 /* MovingNumber */,
+				71CD54C7256879710015B6A5 /* RobinhoodPage.swift */,
+				71CD54CE256879720015B6A5 /* RobinhoodPageBusinessLogic.swift */,
+				71CD54C8256879710015B6A5 /* RobinhoodPageViewModel.swift */,
+				71CD54C9256879710015B6A5 /* StockAPIResponse.swift */,
+				71CD54C5256879710015B6A5 /* StocksAPI.swift */,
+				71CD54CA256879710015B6A5 /* TimeDisplayMode.swift */,
+				71CD54C6256879710015B6A5 /* TimeDisplayModeSelector.swift */,
+				71CD54C0256879560015B6A5 /* Visual */,
+			);
+			path = Plot;
+			sourceTree = "<group>";
+		};
+		71CD54C0256879560015B6A5 /* Visual */ = {
+			isa = PBXGroup;
+			children = (
+				71CD54B0256879360015B6A5 /* GlowingIndicator.swift */,
+				71CD54B3256879360015B6A5 /* LinePlotValueStick.swift */,
+				71CD54AC256879360015B6A5 /* Misc.Visual.swift */,
+				71CD54B1256879360015B6A5 /* PressAndHorizontalDragGesture.swift */,
+				71CD54B2256879360015B6A5 /* RHInteractiveLinePlot.swift */,
+				71CD54AD256879360015B6A5 /* RHLinePlot.swift */,
+				71CD54AE256879360015B6A5 /* RHLinePlot+NotSegmented.swift */,
+				71CD54AF256879360015B6A5 /* RHLinePlot+Segmented.swift */,
+				71CD54AB256879360015B6A5 /* RHLinePlotConfig.swift */,
+			);
+			path = Visual;
+			sourceTree = "<group>";
+		};
+		71CD54CC256879710015B6A5 /* MovingNumber */ = {
+			isa = PBXGroup;
+			children = (
+				71CD54CD256879720015B6A5 /* MovingNumbersView.swift */,
+			);
+			path = MovingNumber;
+			sourceTree = "<group>";
+		};
 		71D454D8246E05ED007E61FC /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -1911,9 +1995,11 @@
 				71A7C6A02505B24C0094C352 /* StockSentimentData.swift in Sources */,
 				71478F7224790297007DF62D /* JSON.swift in Sources */,
 				71A7C6C22505C95D0094C352 /* BrowserView.swift in Sources */,
+				71CD54D5256879720015B6A5 /* TimeDisplayMode.swift in Sources */,
 				717A765624A16131005348F9 /* XmlTreeBuilder.swift in Sources */,
 				717F1BD9248A1140001DD426 /* SceneBuilder.swift in Sources */,
 				71C135E1250E3A87007F1F96 /* AnnouncementReducer.swift in Sources */,
+				71CD54B9256879360015B6A5 /* GlowingIndicator.swift in Sources */,
 				71A1D2D4246E027D00D778A5 /* Double.swift in Sources */,
 				717A764124A16131005348F9 /* SwiftSoup.swift in Sources */,
 				7145BCE024D215B20098D5D6 /* UIView+Emitters.swift in Sources */,
@@ -1972,10 +2058,12 @@
 				71C58F562508354E00C342CE /* SwipeableHelpers.swift in Sources */,
 				717A763F24A16131005348F9 /* CharacterReader.swift in Sources */,
 				71C40EF724EF951B0050C072 /* TongueSettings.swift in Sources */,
+				71CD54B8256879360015B6A5 /* RHLinePlot+Segmented.swift in Sources */,
 				71C135BC250D6704007F1F96 /* SubscriptionUpdatedSearchReducer.swift in Sources */,
 				717A763A24A16131005348F9 /* Evaluator.swift in Sources */,
 				71D98E9324F26D920089C85F /* SubscriptionOption.swift in Sources */,
 				716D6787248ECD1E00E1B3CC /* GetValidMarketDaysReducer.swift in Sources */,
+				71CD54D2256879720015B6A5 /* RobinhoodPage.swift in Sources */,
 				71C21A35248D88B500F6D5BF /* GetSearchResultsReducer.swift in Sources */,
 				7127B02D2485DCF7004C57F1 /* DetailComponent.swift in Sources */,
 				715DB1BC24CBD9CD00E1D741 /* Triangle.swift in Sources */,
@@ -1989,7 +2077,9 @@
 				7164E6A7248DD4700035CE9B /* StockKitBuilder.swift in Sources */,
 				71D98E4324F255E20089C85F /* GenerateStockRotationReducer.swift in Sources */,
 				717A764524A16131005348F9 /* StreamReader.swift in Sources */,
+				71CD54B7256879360015B6A5 /* RHLinePlot+NotSegmented.swift in Sources */,
 				71A7C6A22505B2860094C352 /* StockData.swift in Sources */,
+				71CD54CF256879720015B6A5 /* Haptic.swift in Sources */,
 				71A28AA3246E0F4100446141 /* HomeViewController.swift in Sources */,
 				717A764A24A16131005348F9 /* Node.swift in Sources */,
 				717F1BDB248A1162001DD426 /* DetailBuilder.swift in Sources */,
@@ -2004,6 +2094,7 @@
 				71478F312479027D007DF62D /* SentimentClassifier.mlmodel in Sources */,
 				717A766F24A16131005348F9 /* Element.swift in Sources */,
 				7107B82224D0CE1B00FADC28 /* StockKitModels.swift in Sources */,
+				71CD54A625684AC80015B6A5 /* ConsoleDetailLineView.swift in Sources */,
 				71478F7D24790297007DF62D /* SwifterTweets.swift in Sources */,
 				71290D00250ED40200E48F55 /* Announcement.swift in Sources */,
 				719AA33C2478B69A000F7CBD /* SVM.swift in Sources */,
@@ -2034,9 +2125,12 @@
 				717A764624A16131005348F9 /* Cleaner.swift in Sources */,
 				717A766524A16131005348F9 /* FormElement.swift in Sources */,
 				71478F7324790297007DF62D /* SwifterSavedSearches.swift in Sources */,
+				71CD54D3256879720015B6A5 /* RobinhoodPageViewModel.swift in Sources */,
+				71CD54D1256879720015B6A5 /* TimeDisplayModeSelector.swift in Sources */,
 				717A764424A16131005348F9 /* Elements.swift in Sources */,
 				710993F124F4430800EAA482 /* UserProperties.swift in Sources */,
 				717A764224A16131005348F9 /* ParseErrorList.swift in Sources */,
+				71CD54D4256879720015B6A5 /* StockAPIResponse.swift in Sources */,
 				71A7C6C82505D3BF0094C352 /* BrowserModelCell.swift in Sources */,
 				71478F7124790297007DF62D /* SwifterPlaces.swift in Sources */,
 				71478F7F24790297007DF62D /* Scanner++.swift in Sources */,
@@ -2045,6 +2139,8 @@
 				71A7C6A42505B2A50094C352 /* StockDateData.swift in Sources */,
 				716D147724CE96AE0075F86E /* Translate.swift in Sources */,
 				7164E6AA248DDB8C0035CE9B /* SearchCollectionCell.swift in Sources */,
+				71CD54D8256879720015B6A5 /* RobinhoodPageBusinessLogic.swift in Sources */,
+				71CD54B5256879360015B6A5 /* Misc.Visual.swift in Sources */,
 				716D147024CE2F9B0075F86E /* VaderSentiment.swift in Sources */,
 				7127B02E2485DCF7004C57F1 /* DetailEvents.swift in Sources */,
 				71478F7E24790297007DF62D /* SwifterHelp.swift in Sources */,
@@ -2052,6 +2148,7 @@
 				717A763624A16131005348F9 /* SimpleDictionary.swift in Sources */,
 				717A765024A16131005348F9 /* Attribute.swift in Sources */,
 				710993F924F4A93300EAA482 /* Products.swift in Sources */,
+				71CD54D7256879720015B6A5 /* MovingNumbersView.swift in Sources */,
 				712F54662506C970000384A7 /* BrowserModelDataCell.swift in Sources */,
 				717A766024A16131005348F9 /* Parser.swift in Sources */,
 				7127B0272485DCF7004C57F1 /* DashboardEvents.swift in Sources */,
@@ -2085,6 +2182,7 @@
 				717A766C24A16131005348F9 /* Attributes.swift in Sources */,
 				717A766E24A16131005348F9 /* StructuralEvaluator.swift in Sources */,
 				7164E6A3248DD4700035CE9B /* StockKitEvents.swift in Sources */,
+				71CD54D6256879720015B6A5 /* Misc.Plot.swift in Sources */,
 				71A7C69B250571000094C352 /* StockModelMergedObject+CoreDataProperties.swift in Sources */,
 				71D98E8A24F26B450089C85F /* SubscribeStyle.swift in Sources */,
 				71D98E8E24F26B450089C85F /* SubscribeEvents.swift in Sources */,
@@ -2101,6 +2199,7 @@
 				71478F8124790297007DF62D /* SwifterTimelines.swift in Sources */,
 				71B7AB12248E0C0A001E7891 /* GetPredictionReducer.swift in Sources */,
 				71B7AB10248E0ACE001E7891 /* GetSentimentReducer.swift in Sources */,
+				71CD54B6256879360015B6A5 /* RHLinePlot.swift in Sources */,
 				71A2FF3024F343DE00B8B650 /* ProfileOverView.swift in Sources */,
 				7127B0662485EFCD004C57F1 /* DetailStyle.swift in Sources */,
 				717A766924A16131005348F9 /* OrderedSet.swift in Sources */,
@@ -2118,13 +2217,16 @@
 				7110A56B248DCAD500F62940 /* SearchState.swift in Sources */,
 				71C135C7250D9EC2007F1F96 /* Router.Onboarding.Browser.swift in Sources */,
 				717A764324A16131005348F9 /* CharacterExt.swift in Sources */,
+				71CD54BA256879360015B6A5 /* PressAndHorizontalDragGesture.swift in Sources */,
 				71829C922501ED7A002D267E /* CoreDataManager.swift in Sources */,
 				71C135C3250D7D1A007F1F96 /* Router.Onboarding.Dashboard.swift in Sources */,
 				71C135C5250D7D2C007F1F96 /* Router.Onboarding.Detail.swift in Sources */,
 				717F1BD7248A0BCB001DD426 /* HomeBuilder.swift in Sources */,
+				71CD54D0256879720015B6A5 /* StocksAPI.swift in Sources */,
 				7164E692248DCE770035CE9B /* String+Localization.swift in Sources */,
 				717A765D24A16131005348F9 /* Comment.swift in Sources */,
 				7110006E25144E7900DD63DB /* TweetOracle.swift in Sources */,
+				71CD54BC256879360015B6A5 /* LinePlotValueStick.swift in Sources */,
 				71478F8524790297007DF62D /* SwifterTag.swift in Sources */,
 				71A7C69D250571000094C352 /* StockModelParentObject+CoreDataProperties.swift in Sources */,
 				71BC1C2F2486326800B35DC1 /* String+Size.swift in Sources */,
@@ -2134,6 +2236,7 @@
 				71A1D2D2246E027D00D778A5 /* Int.swift in Sources */,
 				71BC1C2D248620EF00B35DC1 /* DetailLongPressReducer.swift in Sources */,
 				71C135DC250E2926007F1F96 /* AnnouncementEvents.swift in Sources */,
+				71CD54B4256879360015B6A5 /* RHLinePlotConfig.swift in Sources */,
 				71F5BA4E24847CE60085E8DD /* HomeView.swift in Sources */,
 				717A765E24A16131005348F9 /* Validate.swift in Sources */,
 				71478F7924790297007DF62D /* SwifterUsers.swift in Sources */,
@@ -2143,6 +2246,7 @@
 				717A766B24A16131005348F9 /* StringBuilder.swift in Sources */,
 				71725D9E24F28389003B0FF6 /* CheckCredentialStateReducer.swift in Sources */,
 				710993F724F4A81100EAA482 /* IAPManager.swift in Sources */,
+				71CD54BB256879360015B6A5 /* RHInteractiveLinePlot.swift in Sources */,
 				7164E6A2248DD4700035CE9B /* StockKitState.swift in Sources */,
 				717A765C24A16131005348F9 /* HtmlTreeBuilder.swift in Sources */,
 				71478F6924790297007DF62D /* HMAC.swift in Sources */,
@@ -2344,7 +2448,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.00.02;
+				MARKETING_VERSION = 1.00.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.linenandsole.stoic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -2367,7 +2471,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.00.02;
+				MARKETING_VERSION = 1.00.03;
 				PRODUCT_BUNDLE_IDENTIFIER = com.linenandsole.stoic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

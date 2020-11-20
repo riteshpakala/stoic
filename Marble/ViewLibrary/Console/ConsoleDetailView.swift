@@ -40,6 +40,10 @@ class PredictWorkItem {
 }
 
 class ConsoleDetailView: GraniteView {
+    lazy var lineView: ConsoleDetailLineView = {
+        return .init()
+    }()
+    
     lazy var headerView: ConsoleDetailHeaderView = {
         return .init()
     }()
@@ -90,45 +94,50 @@ class ConsoleDetailView: GraniteView {
         super.init(frame: frame)
         
         loader = .init(self, baseText: " /* thinking\(ConsoleLoader.seperator) */")
-        addSubview(headerView)
-        addSubview(sentimentView)
-        addSubview(disclaimerView)
-        addSubview(predictionView)
-        addSubview(historicalView)
-        addSubview(loaderView)
         
-        headerView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.12)
-        }
-        
-        historicalView.snp.makeConstraints { make in
-            make.top.equalTo(headerView.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.24)
-        }
-        
-        sentimentView.snp.makeConstraints { make in
-            make.top.equalTo(historicalView.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.24)
-        }
-        
-        predictionView.snp.makeConstraints { make in
-            make.top.equalTo(sentimentView.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.24)
-        }
-        
-        disclaimerView.snp.makeConstraints { make in
-            make.top.equalTo(predictionView.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.16)
-        }
-        
-        loaderView.snp.makeConstraints { make in
+        addSubview(lineView)
+        lineView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+//        addSubview(headerView)
+//        addSubview(sentimentView)
+//        addSubview(disclaimerView)
+//        addSubview(predictionView)
+//        addSubview(historicalView)
+//        addSubview(loaderView)
+//
+//        headerView.snp.makeConstraints { make in
+//            make.top.left.right.equalToSuperview()
+//            make.height.equalTo(baseSize.height*0.12)
+//        }
+//
+//        historicalView.snp.makeConstraints { make in
+//            make.top.equalTo(headerView.snp.bottom)
+//            make.left.right.equalToSuperview()
+//            make.height.equalTo(baseSize.height*0.24)
+//        }
+//
+//        sentimentView.snp.makeConstraints { make in
+//            make.top.equalTo(historicalView.snp.bottom)
+//            make.left.right.equalToSuperview()
+//            make.height.equalTo(baseSize.height*0.24)
+//        }
+//
+//        predictionView.snp.makeConstraints { make in
+//            make.top.equalTo(sentimentView.snp.bottom)
+//            make.left.right.equalToSuperview()
+//            make.height.equalTo(baseSize.height*0.24)
+//        }
+//
+//        disclaimerView.snp.makeConstraints { make in
+//            make.top.equalTo(predictionView.snp.bottom)
+//            make.left.right.equalToSuperview()
+//            make.height.equalTo(baseSize.height*0.16)
+//        }
+//
+//        loaderView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
         
         predictionView.delegate = self
         sentimentView.delegate = self
@@ -149,6 +158,8 @@ class ConsoleDetailView: GraniteView {
         predictionView.updateModel(
             model: payload.model,
             stockData: payload.historicalTradingData)
+        
+        lineView.updateData(payload)
     }
     
     func updateThink(_ payload: ThinkPayload?) {
@@ -162,6 +173,10 @@ class ConsoleDetailView: GraniteView {
                 neutral: sentiment.neuAverage,
                 compound: sentiment.compoundAverage)
         }
+    }
+    
+    func updatePage(_ component: RobinhoodPage.PageComponent) {
+        lineView.updatePage(component)
     }
     
     override func hitTest(
@@ -297,6 +312,10 @@ extension ConsoleDetailView: ConsoleDetailPredictionViewDelegate {
         }
         
         isThinking = false
+    }
+    
+    func predictionUpdate(_ output: Double) {
+        lineView.predictionUpdate(output)
     }
 }
 
@@ -838,6 +857,7 @@ extension UISlider {
 //MARK: Prediction
 protocol ConsoleDetailPredictionViewDelegate: class {
     func thinking()
+    func predictionUpdate(_ output: Double)
 }
 class ConsoleDetailPredictionView: GraniteView {
     weak var delegate: ConsoleDetailPredictionViewDelegate?
@@ -1012,6 +1032,7 @@ class ConsoleDetailPredictionView: GraniteView {
                     return
                 }
                 
+                self?.delegate?.predictionUpdate(output)
                 print("[Prediction Output] :: \(output)")
                 
                 self?.predictionLabel.text = StockKitUtils.Models.DataSet.outputLabel(output)

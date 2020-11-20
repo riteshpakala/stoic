@@ -8,6 +8,7 @@
 import Granite
 import Foundation
 import UIKit
+import SwiftUI
 
 public class DetailViewController: GraniteViewController<DetailState> {
     
@@ -43,6 +44,9 @@ public class DetailViewController: GraniteViewController<DetailState> {
             self,
             action: #selector(self.closeButtonTapped),
             for: .touchUpInside)
+        
+        
+        _view.consoleView.detailView.updatePage(RobinhoodPage.create(from: self))
     }
     
     override public func viewDidAppear(_ animated: Bool) {
