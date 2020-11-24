@@ -53,6 +53,10 @@ public class DetailState: State {
 }
 
 extension DetailState {
+    var isCached: Bool {
+        stockModel != nil
+    }
+    
     var shouldPredict: Bool {
         stockModel == nil
     }

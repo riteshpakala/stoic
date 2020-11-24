@@ -29,7 +29,7 @@ public struct RHLinePlotConfig {
     public var glowingIndicatorWidth: CGFloat = 8.0
     
     /// Line width of the line plot. Default is `1.5`
-    public var plotLineWidth: CGFloat = 1.5
+    public var plotLineWidth: CGFloat = 2.2
     
     /// If all values are equal, we will draw a straight line. Default is 0.5 which draws a line at the middle.
     public var relativeYForStraightLine: CGFloat = 0.5
@@ -66,8 +66,8 @@ public struct RHLinePlotConfig {
     
     // MARK:- RHInteractiveLinePlot
     
-    public var valueStickWidth: CGFloat = 1.2
-    public var valueStickColor: Color = .gray
+    public var valueStickWidth: CGFloat = 2.2
+    public var valueStickColor: Color = Color.init(GlobalStyle.Colors.purple)
     
     /// Padding from the highest point of line plot to value stick. If `0`, the top of value stick will be at the same level of the highest point in plot.
     public var valueStickTopPadding: CGFloat = 28

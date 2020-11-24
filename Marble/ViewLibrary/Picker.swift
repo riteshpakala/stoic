@@ -9,6 +9,53 @@
 import Foundation
 import UIKit
 
+class GenericPicker: Picker, UITableViewDataSource {
+    var data: [String] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.reloadData()
+            }
+        }
+    }
+    
+    override init(color: UIColor) {
+        super.init(color: color)
+        self.dataSource = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int) -> Int {
+        data.count + expandedPadding
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.dequeueReusableCell(
+            withIdentifier: "\(PickerCell.self)",
+            for: indexPath)
+        
+        if  let tradingCell = cell as? PickerCell,
+            indexPath.item < data.count {
+            
+            tradingCell.label.text = data[indexPath.item]
+            tradingCell.label.textColor = color
+        }
+        
+        return cell
+    }
+    
+    override func scrollTo(_ index: Int, animated: Bool = false) {
+        guard index < data.count else { return }
+        super.scrollTo(index, animated: animated)
+    }
+}
+
 class StockDatePicker: Picker, UITableViewDataSource {
     var data: [StockData] = [] {
         didSet {

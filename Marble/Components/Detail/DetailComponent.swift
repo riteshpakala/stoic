@@ -56,6 +56,10 @@ public class DetailComponent: Component<DetailState> {
                 state: .init(GlobalDefaults.OnboardingDetail)),
                  display: .fit)
         }
+        
+        if state.isCached {
+            sendEvent(StockKitEvents.StockKitIsPrepared.init(success: true, nextTradingDayIsAvailable: false))
+        }
     }
     
     override public func rip() {

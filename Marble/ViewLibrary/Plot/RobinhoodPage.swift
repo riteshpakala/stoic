@@ -73,13 +73,12 @@ struct RobinhoodPage: View {
     }
     
     var showGlowingIndicator: Bool {
-        true
-//        switch timeDisplayMode {
-//        case .hourly:
-//            return true // simulate today's data
-//        default:
-//            return false
-//        }
+        switch timeDisplayMode {
+        case .hourly:
+            return true // simulate today's data
+        default:
+            return false
+        }
     }
     
     // MARK: Body
@@ -87,9 +86,14 @@ struct RobinhoodPage: View {
         let firstPrice = plotData.first?.price ?? 0
         let lastPrice = plotData.last?.price ?? 0
         let themeColor = firstPrice <= lastPrice ? rhThemeColor : rhRedThemeColor
-        return VStack {
-            plotBody(plotData: plotData)
-            stockHeaderAndPrice(plotData: plotData)
+        return ZStack {
+            VStack {
+                plotBody(plotData: plotData)
+            }
+            VStack {
+                Spacer()
+                stockHeaderAndPrice(plotData: plotData)
+            }.padding(.bottom, GlobalStyle.largePadding)
 //            TimeDisplayModeSelector(
 //                currentTimeDisplayOption: $timeDisplayMode,
 //                eligibleModes: TimeDisplayOption.allCases
@@ -199,7 +203,7 @@ extension RobinhoodPage {
         },
             valueStickLabel: { value in
                 Text("\(dateString)")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color(GlobalStyle.Colors.purple))
                     .font(Font.init(GlobalStyle.Fonts.courier(.medium, .bold)))
         })
             //.frame(height: 280)
