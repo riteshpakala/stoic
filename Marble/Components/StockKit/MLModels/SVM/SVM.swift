@@ -88,6 +88,8 @@ public class SVMModel: NSObject, NSCoding, NSSecureCoding {
         let probabilityA: [Double] = (coder.decodeObject(forKey: "probabilityA") as? [Double]) ?? []
         let probabilityB: [Double] = (coder.decodeObject(forKey: "probabilityB") as? [Double]) ?? []
 
+        let dataSet: DataSet? = try? coder.decodeTopLevelObject(forKey: "dataSet") as? DataSet
+        
         self.init(
             problemType: SVMType(rawValue: typeValue) ?? .ϵSVMRegression,
             kernelSettings: KernelParameters(
@@ -106,7 +108,7 @@ public class SVMModel: NSObject, NSCoding, NSSecureCoding {
         self.coefficients = coefficients
         self.probabilityA = probabilityA
         self.probabilityB = probabilityB
-        
+        self.dataSet = dataSet
     }
     
     public func encode(with coder: NSCoder){
@@ -120,6 +122,7 @@ public class SVMModel: NSObject, NSCoding, NSSecureCoding {
         coder.encode(coefficients, forKey: "coefficients")
         coder.encode(probabilityA, forKey: "probabilityA")
         coder.encode(probabilityB, forKey: "probabilityB")
+        coder.encode(dataSet, forKey: "dataSet")
     }
     
     public init?(load data: NSDictionary)//(loadFromFile path: String)

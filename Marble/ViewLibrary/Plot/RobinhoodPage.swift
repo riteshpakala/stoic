@@ -88,8 +88,8 @@ struct RobinhoodPage: View {
         let lastPrice = plotData.last?.price ?? 0
         let themeColor = firstPrice <= lastPrice ? rhThemeColor : rhRedThemeColor
         return VStack {
-            stockHeaderAndPrice(plotData: plotData)
             plotBody(plotData: plotData)
+            stockHeaderAndPrice(plotData: plotData)
 //            TimeDisplayModeSelector(
 //                currentTimeDisplayOption: $timeDisplayMode,
 //                eligibleModes: TimeDisplayOption.allCases
@@ -208,14 +208,14 @@ extension RobinhoodPage {
     
     func stockHeaderAndPrice(plotData: PlotData) -> some View {
         return HStack {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
 //                Text("\(Self.symbol)")
 //                    .rhFont(style: .title1, weight: .heavy)
                 buildMovingPriceLabel(plotData: plotData)
-            }
-            Spacer()
+            }.frame(minWidth: 0, maxWidth: .infinity)
+            Spacer().frame(minWidth: 0, maxWidth: .infinity)
         }
-        .padding(.horizontal, GlobalStyle.spacing)
+        .padding(.horizontal, GlobalStyle.padding)
     }
     
     func buildMovingPriceLabel(plotData: PlotData) -> some View {

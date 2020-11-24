@@ -97,36 +97,8 @@ struct MergeModelReducer: Reducer {
         
         let componentToPass = component
         DispatchQueue.merge.async {
-            let dataForDavid = DataSet(
-                dataType: .Regression,
-                inputDimension: StockKitUtils.inDim,
-                outputDimension: StockKitUtils.outDim)
             
-            do {
-                for model in allModelsToMerge {
-                    if let dataSet = model.dataSet {
-                        for i in 0..<dataSet.labels.count {
-                            try dataForDavid.addDataPoint(
-                                input: dataSet.inputs[i],
-                                output: dataSet.outputs?[i] ?? [],
-                                label: dataSet.labels[i])
-                        }
-                    }
-                }
-            } catch {
-                print("{SVM} Invalid data set created")
-            }
-            
-            let david = SVMModel(
-                problemType: .ϵSVMRegression,
-                kernelSettings:
-                KernelParameters(type: .Polynomial,
-                                 degree: 3,
-                                 gamma: 0.3,
-                                 coef0: 0.0))
-    //        david.delegate = self
-            david.Cost = 1e3
-            david.train(data: dataForDavid)
+            let david = StockKitModels.merge(modelObjects: allModelsToMerge)
             
             //Merged model
             
@@ -144,16 +116,13 @@ struct MergeModelReducer: Reducer {
             }
             
             guard let model = david.archived,
-                  let modelIDsData = modelIDs.archived,
-                  let dataSet = dataForDavid.archived else {
-                    
+                  let modelIDsData = modelIDs.archived else {
                   return
             }
             
             moc?.perform {
                 mergedObject.setValue(model, forKey: "model")
                 mergedObject.setValue(modelIDsData, forKey: "currentModels")
-                mergedObject.setValue(dataSet, forKey: "dataSet")
                 
                 do {
                     try moc?.save()

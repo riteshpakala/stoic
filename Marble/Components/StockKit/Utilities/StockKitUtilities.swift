@@ -45,20 +45,28 @@ public struct StockKitUtils {
             let stock: StockData
             let open: Double
             let close: Double
+            let high: Double
+            let low: Double
             let volume: Double
             let rsi: RSI
             let features: Momentum
             let averages: Averages
             let sentiment: StockSentimentData
             
+            let modelType: StockKitModels.ModelType
+            
             init(
                 _ stock: StockData,
                 _ sentiment: StockSentimentData,
+                modelType: StockKitModels.ModelType = .none,
                 updated: Bool = false) {
                 
                 self.stock = stock
+                self.modelType = modelType
                 self.open = (updated ? stock.open : stock.lastStockData.open)
                 self.close = (updated ? stock.close : stock.lastStockData.close)
+                self.high = (updated ? stock.high : stock.lastStockData.high)
+                self.low = (updated ? stock.low : stock.lastStockData.low)
                 self.volume = updated ? stock.volume : stock.lastStockData.volume
                 self.rsi = (updated ? stock.updatedRSI : (stock.rsi ?? .zero))
                 self.features = stock.features ?? .zero
@@ -68,16 +76,64 @@ public struct StockKitUtils {
             }
             
             public var asArray: [Double] {
-                [
-                 averages.momentum,
-                 averages.volatility,
-                 volume / averages.volume,
-                 close / averages.sma20,
-                 sentiment.posAverage,
-                 sentiment.negAverage,
-                 sentiment.neuAverage,
-                 sentiment.compoundAverage
-                ]
+                switch modelType {
+                case .open:
+                    return [
+                            averages.momentum,
+                            averages.volatility,
+                            volume / averages.volume,
+                            open / averages.sma20,
+                            sentiment.posAverage,
+                            sentiment.negAverage,
+                            sentiment.neuAverage,
+                            sentiment.compoundAverage
+                       ]
+                case .close, .none:
+                    return [
+                            averages.momentum,
+                            averages.volatility,
+                            volume / averages.volume,
+                            close / averages.sma20,
+                            sentiment.posAverage,
+                            sentiment.negAverage,
+                            sentiment.neuAverage,
+                            sentiment.compoundAverage
+                       ]
+                case .high:
+                    return [
+                            averages.momentum,
+                            averages.volatility,
+                            volume / averages.volume,
+                            high / averages.sma20,
+                            sentiment.posAverage,
+                            sentiment.negAverage,
+                            sentiment.neuAverage,
+                            sentiment.compoundAverage
+                       ]
+                case .low:
+                    return [
+                            averages.momentum,
+                            averages.volatility,
+                            volume / averages.volume,
+                            low / averages.sma20,
+                            sentiment.posAverage,
+                            sentiment.negAverage,
+                            sentiment.neuAverage,
+                            sentiment.compoundAverage
+                       ]
+                case .volume:
+                    return [
+                            averages.momentum,
+                            averages.volatility,
+                            volume / averages.volume,
+                            sentiment.posAverage,
+                            sentiment.negAverage,
+                            sentiment.neuAverage,
+                            sentiment.compoundAverage
+                       ]
+                
+                }
+                
             }
             
             public var inDim: Int {
@@ -89,7 +145,29 @@ public struct StockKitUtils {
             }
             
             public var output: [Double] {
-                [stock.close]
+                switch modelType {
+                case .open:
+                    return [
+                        stock.open
+                       ]
+                case .close, .none:
+                    return [
+                        stock.close
+                       ]
+                case .high:
+                    return [
+                        stock.high
+                       ]
+                case .low:
+                    return [
+                        stock.low
+                       ]
+                case .volume:
+                    return [
+                        stock.volume
+                       ]
+                
+                }
             }
             
             static func outputLabel(_ variable: Double) -> String {

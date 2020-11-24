@@ -88,54 +88,9 @@ public class StockKitComponent: Component<StockKitState> {
 extension StockKitComponent: SVMModelDelegate {
     func predict(
         withStockData stockData: [StockData],
-        stockSentimentData sentimentData: [StockSentimentData]) -> StockKitUtils.Models {
+        stockSentimentData sentimentData: [StockSentimentData]) -> StockKitModels {
         
-        let dataForDavid = DataSet(
-            dataType: .Regression,
-            inputDimension: StockKitUtils.inDim,
-            outputDimension: StockKitUtils.outDim)
-        
-        let sortedStockData = stockData.sorted(
-            by: {
-                ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedAscending })
-        
-        
-        let sortedSentimentStockData = sentimentData.sorted(
-            by: {
-                ($0.date).compare($1.date) == .orderedAscending })
-        
-        for (i, stock) in sortedStockData.enumerated() {
-            do {
-                guard sortedSentimentStockData.count > i else { continue }
-                let sentiment = sortedSentimentStockData[i]
-                let dataSet = StockKitUtils.Models.DataSet(
-                    stock,
-                    sentiment)
-                
-                print(dataSet.description)
-                
-                try dataForDavid.addDataPoint(
-                    input: dataSet.asArray,
-                    output: dataSet.output,
-                    label: stock.dateData.asString)
-            }
-            catch {
-                print("Invalid data set created")
-            }
-        }
-        
-        let david = SVMModel(
-            problemType: .ϵSVMRegression,
-            kernelSettings:
-            KernelParameters(type: .Polynomial,
-                             degree: 3,
-                             gamma: 0.3,
-                             coef0: 0.0))
-        david.delegate = self
-        david.Cost = 1e3
-        david.train(data: dataForDavid)
-        
-        return StockKitUtils.Models(david: david)
+        return StockKitModels.generate(stockData: stockData, sentimentData: sentimentData)
     }
     
     func SVMProgress(

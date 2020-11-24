@@ -12,9 +12,9 @@ public class StockModel: NSObject {
     let id: String
     private(set) var searchStock: SearchStock? = nil
     private(set) var consoleDetailPayload: ConsoleDetailPayload? = nil
-    private(set) var model: SVMModel? = nil
-    private(set) var dataSet: DataSet? = nil
+    private(set) var model: StockKitModels? = nil
     private(set) var lastStock: StockData? = nil
+    private(set) var firstStock: StockData? = nil
     private(set) var isMerged: Bool
     private(set) var timestamp: Double
     
@@ -25,13 +25,14 @@ public class StockModel: NSObject {
         self.sentiment = GlobalDefaults.SentimentStrength.init(rawValue: Int(object.sentimentStrength)) ?? .low
         self.tradingDayTime = object.date
         self.model = object.model?.model
-        self.dataSet = object.dataSet?.asDataSet
         self.timestamp = object.timestamp
-        self.lastStock = object.historicalTradingData.asStockData?.sorted(
+        let sorted = object.historicalTradingData.asStockData?.sorted(
             by: {
                 ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedDescending
                 
-        } ).first
+        } )
+        self.lastStock = sorted?.first
+        self.firstStock = sorted?.last
         self.isMerged = object.merged?.currentModels?.mergedModelIDs?.contains(object.id) == true
     }
     
@@ -56,7 +57,6 @@ public class StockModel: NSObject {
         
         self.tradingDayTime = latestModel.date
         self.model = model
-        self.dataSet = object.dataSet?.asDataSet
         
         var historical: [StockData] = []
         var sentiment: [StockSentimentData] = []
@@ -80,7 +80,7 @@ public class StockModel: NSObject {
             stockSentimentData: sentiment,
             days: predictionDays,
             maxDays: predictionDays,
-            model: .init(david: model))
+            model: model)
     }
     
     public var stock: SearchStock {
@@ -177,6 +177,8 @@ public class StockModelMerged: NSObject {
     }
     
     func calculateCompatibleModels(from models: [StockModel], base: StockModel, isRemoving: Bool = false) -> [StockModel] {
+        
+        
         //First add stocks added into list
         var compatibleStocks: [StockModel] = (models + [base]).sorted(
             by: { ($0.tradingDay.asDate() ?? Date())
@@ -223,7 +225,7 @@ public class StockModelMerged: NSObject {
         let filteredMaxDayDisparity: [StockModel] = filteredMaxStocks.filter {
             let components = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: maxDate)
             
-            let componentsLast = Calendar.nyCalendar.dateComponents([.day], from: $0.lastStock?.dateData.asDate ?? $0.tradingDayDate, to: maxDate)
+            let componentsLast = Calendar.nyCalendar.dateComponents([.day], from: $0.firstStock?.dateData.asDate ?? $0.tradingDayDate, to: maxDate)
             
             if  let dayDiff = components.day,
                 dayDiff + $0.trueDays == 0 {
@@ -243,7 +245,6 @@ public class StockModelMerged: NSObject {
             
             let componentsLast = Calendar.nyCalendar.dateComponents([.day], from: $0.tradingDayDate, to: minStock.lastStock?.dateData.asDate ?? minDate)
             
-
             if  components.day == 0 {
                 return true
             } else if componentsLast.day == 0 {

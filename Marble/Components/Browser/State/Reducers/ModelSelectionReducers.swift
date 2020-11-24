@@ -56,7 +56,7 @@ struct ModelToMergeReducer: Reducer {
         
         guard  let baseStock = state.compiledModelCreationData?.baseModel,
                let mergedModel = state.mergedModels.first(where: { $0.stock.symbol == stockSymbol && $0.stock.exchangeName == stockExchange } ) else {
-                
+            
             return
         }
         

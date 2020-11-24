@@ -30,29 +30,29 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         
         
         //DEV:
-        guard let predictions = component?.service.center.getMergedStockModels(from: .main) else {
-            print("{CoreData} none found")
-            return
-        }
-        print("{CoreData} \(predictions.count)")
-
-        var stockModel: StockModel? = nil
-        if let prediction = predictions.first {
-            print("{CoreData} \(prediction.models?.count)")
-
-            prediction.models?.forEach { model in
-                if let stockModel2 = model as? StockModelObject {
-                    stockModel = StockModel.init(from: stockModel2)
-                }
-
-            }
-//            let model = StockModel.init(from: prediction)
+//        guard let predictions = component?.service.center.getMergedStockModels(from: .main) else {
+//            print("{CoreData} none found")
+//            return
+//        }
+//        print("{CoreData} \(predictions.count)")
 //
-            if stockModel != nil {
-
-                sendEvent(DashboardEvents.ShowDetail.stored(stockModel!))
-            }
-        }
+//        var stockModel: StockModel? = nil
+//        if let prediction = predictions.first {
+//            print("{CoreData} \(prediction.models?.count)")
+//
+//            prediction.models?.forEach { model in
+//                if let stockModel2 = model as? StockModelObject {
+//                    stockModel = StockModel.init(from: stockModel2)
+//                }
+//
+//            }
+////            let model = StockModel.init(from: prediction)
+////
+//            if stockModel != nil {
+//
+//                sendEvent(DashboardEvents.ShowDetail.stored(stockModel!))
+//            }
+//        }
         
         //DEV:
 //        sendEvent(DashboardEvents.ShowDetail.search(.init(

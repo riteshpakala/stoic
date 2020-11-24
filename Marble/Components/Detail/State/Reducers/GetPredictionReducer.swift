@@ -45,19 +45,18 @@ struct GetPredictionReducer: Reducer {
         
         // { CoreData } Insertion
         if let stockDataOfTradingDay = stockKit.state.nextValidTradingDay,
-              let model = state.model?.david,
-              let dataSet = state.model?.david.dataSet {
+            let models = state.model,
+            let model = models.current {
 
             let id = component.service.center.saveStockPredictions(
                 .init(
                     date: stockDataOfTradingDay,
-                    model: model,
+                    models: models,
                     stock: state.searchedStock,
                     sentimentStrength: stockKit.state.rules.tweets,
                     predictionDays: stockKit.state.rules.days,
                     sentimentData: stockSentimentData,
-                    historicalData: validTradingData,
-                    dataSet: dataSet),
+                    historicalData: validTradingData),
                 with: .background)
             
             state.modelID = id

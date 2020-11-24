@@ -60,7 +60,6 @@ extension ServiceCenter {
             object.sentimentTradingData = preparedData.sentimentData
             object.historicalTradingData = preparedData.historicalData
             object.stock = preparedData.stock
-            object.dataSet = preparedData.dataSet
             object.timestamp = Date().timeIntervalSince1970
             object.id = uid
             
@@ -78,9 +77,9 @@ extension ServiceCenter {
     
     public static func prepareData(
         from prediction: StockModelObjectPayload) ->
-        (modelData: Data, sentimentData: Data, historicalData: Data, stock: Data, dataSet: Data)? {
+        (modelData: Data, sentimentData: Data, historicalData: Data, stock: Data)? {
             
-        let modelData: Data? = prediction.model.archived
+        let modelData: Data? = prediction.models.archived
         
         let sentimentData: Data?
         do {
@@ -116,49 +115,43 @@ extension ServiceCenter {
             searchStockData = nil
             print("{CoreData} historical \(error)")
         }
-            
-        let dataSetData: Data? = prediction.dataSet.archived
         
         guard let model = modelData,
             let sentiment = sentimentData,
             let historical = historicalData,
-            let stock = searchStockData,
-            let dataSet = dataSetData else {
+            let stock = searchStockData else {
             
             return nil
         }
         
-        return (model, sentiment, historical, stock, dataSet)
+        return (model, sentiment, historical, stock)
     }
 }
 
 public class StockModelObjectPayload: NSObject {
     let date: StockDateData
-    let model: SVMModel
+    let models: StockKitModels
     let stock: SearchStock
     let sentimentStrength: Int
     let predictionDays: Int
     let sentimentData: [StockSentimentData]
     let historicalData: [StockData]
-    let dataSet: DataSet
     
     public init(
         date: StockDateData,
-        model: SVMModel,
+        models: StockKitModels,
         stock: SearchStock,
         sentimentStrength: Int,
         predictionDays: Int,
         sentimentData: [StockSentimentData],
-        historicalData: [StockData],
-        dataSet: DataSet) {
+        historicalData: [StockData]) {
         self.date = date
-        self.model = model
+        self.models = models
         self.stock = stock
         self.sentimentStrength = sentimentStrength
         self.predictionDays = predictionDays
         self.sentimentData = sentimentData
         self.historicalData = historicalData
-        self.dataSet = dataSet
     }
 }
 
@@ -170,8 +163,8 @@ extension NSObject {
                     withRootObject: self,
                     requiringSecureCoding: true)
         } catch let error {
-            return nil
             print("{CoreData} \(error.localizedDescription)")
+            return nil
         }
     }
 }
@@ -183,10 +176,11 @@ extension Array where Element == String {
 }
 
 extension Data {
-    public var model: SVMModel? {
+    public var model: StockKitModels? {
+        
         do {
             if let object = try NSKeyedUnarchiver
-                .unarchiveTopLevelObjectWithData(self) as? SVMModel {
+                .unarchiveTopLevelObjectWithData(self) as? StockKitModels {
                 return object
             }
         } catch let error {
@@ -235,19 +229,6 @@ extension Data {
         return nil
     }
     
-    public var asDataSet: DataSet? {
-        do {
-           if let object = try NSKeyedUnarchiver
-               .unarchiveTopLevelObjectWithData(self) as? DataSet {
-               return object
-           }
-        } catch let error {
-           print("{CoreData} \(error)")
-        }
-        
-        return nil
-    }
-    
     public var mergedModelIDs: [String]? {
         return (try? JSONDecoder().decode([String].self, from: self))
     }
@@ -268,7 +249,7 @@ extension StockModelObject {
             stockSentimentData: sentiment,
             days: Int(self.predictionDays),
             maxDays: Int(self.predictionDays),
-            model: .init(david: model))
+            model: model)
     }
 }
 

@@ -45,7 +45,7 @@ public class StockKitState: State {
         let date: Date
         if testable {
             let prevDate = Date()
-            date = advanceDate1Day(date: prevDate, value: -5) ?? prevDate
+            date = advanceDate1Day(date: prevDate, value: -4) ?? prevDate
         } else {
             date = Date()
         }
