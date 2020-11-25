@@ -49,7 +49,7 @@ public struct RHLinePlotConfig {
     /// Use laser stroke mode to plot lines.
     ///
     /// Note that your plot will be automatically shrinked so that the blurry part fits inside the canvas.
-    public var useLaserLightLinePlotStyle: Bool = false
+    public var useLaserLightLinePlotStyle: Bool = true
     
     /// Use drawing group for laser light mode.
     ///

@@ -52,7 +52,8 @@ class ConsoleDetailLineView: GraniteView {
         super.init(frame: frame)
         
         
-        clipsToBounds = true
+        clipsToBounds = false
+        layer.masksToBounds = false
     }
     
     required init?(coder: NSCoder) {
@@ -73,15 +74,18 @@ class ConsoleDetailLineView: GraniteView {
         currentPage = component.page
         addSubview(component.host)
         component.host.snp.makeConstraints { make in
-            make.top.equalTo(GlobalStyle.padding)
-            make.right.bottom.left.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
     
     func predictionUpdate(_ output: Double) {
         guard let payload = self.payload else { return }
         print("{TEST} \(payload.currentTradingDay) \(payload.currentTradingDay.asDate())")
-        currentPage?.someModel.plotData?.append((payload.currentTradingDay.asDate() ?? Date(), CGFloat(output)))
+        currentPage?.someModel.predictionPlotData = [(payload.currentTradingDay.asDate() ?? Date(), CGFloat(output))]
+    }
+    
+    func dayAdded() {
+        
     }
 }
 

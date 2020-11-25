@@ -99,11 +99,12 @@ struct MovingNumbersView<Element: View>: View {
         }
         
         // All elements are centered (digit stack, comma, dot)
-        let finalResultView = HStack(alignment: .center, spacing: 0) {
+        let finalResultView = HStack(alignment: .center, spacing: 1) {
             ForEach(allElements) { (element) in
                 self.viewFromElement(element)
                     .transition(self.elementTransition)
                     .animation(self.digitStackAnimation)
+                    .background(with: Color.init(GlobalStyle.Colors.black.withAlphaComponent(0.75)))
             }
         }
         .frame(width: fixedWidth, alignment: .leading)

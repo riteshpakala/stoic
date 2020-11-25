@@ -21,6 +21,10 @@ class GenericPicker: Picker, UITableViewDataSource {
     override init(color: UIColor) {
         super.init(color: color)
         self.dataSource = self
+        self.layer.borderWidth = 0.0
+        self.backgroundColor = .clear
+        self.separatorStyle = .none
+        self.showsVerticalScrollIndicator = false
     }
     
     required init?(coder: NSCoder) {
@@ -48,6 +52,10 @@ class GenericPicker: Picker, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        Haptic.onChangeLineSegment()
     }
     
     override func scrollTo(_ index: Int, animated: Bool = false) {
@@ -229,8 +237,8 @@ class PickerCell: UITableViewCell {
             style: style,
             reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = GlobalStyle.Colors.black
-        contentView.backgroundColor = GlobalStyle.Colors.black
+        backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.5)
+        contentView.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.5)
         
         self.selectionStyle = .none
         

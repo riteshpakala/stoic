@@ -18,6 +18,7 @@ public struct GlobalStyle {
         static let orange: UIColor = UIColor(hex: "#FFCD00")
         static let blue: UIColor = UIColor(hex: "#00FFFD")
         static let red: UIColor = UIColor(hex: "#AA1313")
+        static let redNeon: UIColor = UIColor(hex: "#D90000")
         static let marbleBrown: UIColor = UIColor(hex: "#786E5D")
         static let graniteGray: UIColor = UIColor(hex: "#808080")
         

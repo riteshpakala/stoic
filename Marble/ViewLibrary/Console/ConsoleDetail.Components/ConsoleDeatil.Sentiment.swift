@@ -128,7 +128,7 @@ class ConsoleDetailSentimentView: GraniteView {
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = .clear
+        backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.5)
         
         addSubview(hStack)
         addSubview(emotionLabel)
@@ -139,8 +139,8 @@ class ConsoleDetailSentimentView: GraniteView {
         hStack.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(GlobalStyle.padding)
             make.right.equalToSuperview().offset(-GlobalStyle.padding)
-            make.centerY.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.75)
+            make.bottom.equalTo(-GlobalStyle.largePadding)
         }
         
         refineSlider.snp.makeConstraints { make in

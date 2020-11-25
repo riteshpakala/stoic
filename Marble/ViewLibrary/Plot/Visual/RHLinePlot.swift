@@ -14,6 +14,8 @@ public struct RHLinePlot<Indicator: View>: View {
     /// (i.e. CGFloat/CGPoint conversion) along the road.
     public typealias Value = CGFloat
     
+    let nonPredictionCount: Int
+    
     /// Values to plot
     let values: [Value]
     
@@ -45,7 +47,8 @@ public struct RHLinePlot<Indicator: View>: View {
     /// Plot Config
     @Environment(\.rhLinePlotConfig) var rhLinePlotConfig
     
-    public init(values: [Value],
+    public init(nonPredictionCount: Int,
+                values: [Value],
                 occupyingRelativeWidth: CGFloat = 1,
                 showGlowingIndicator: Bool = false,
                 lineSegmentStartingIndices: [Int]? = nil,
@@ -62,6 +65,7 @@ public struct RHLinePlot<Indicator: View>: View {
             }
         }
         #endif
+        self.nonPredictionCount = nonPredictionCount
         self.values = values
         self.showGlowingIndicator = showGlowingIndicator
         self.occupyingRelativeWidth = occupyingRelativeWidth
@@ -110,13 +114,15 @@ public struct RHLinePlot<Indicator: View>: View {
 
 // Default glowing indicator
 public extension RHLinePlot where Indicator == GlowingIndicator {
-    init(values: [Value],
+    init(nonPredictionCount: Int,
+         values: [Value],
          occupyingRelativeWidth: CGFloat = 1,
          showGlowingIndicator: Bool = false,
          lineSegmentStartingIndices: [Int]? = nil,
          activeSegment: Int? = nil
     ) {
         self.init(
+            nonPredictionCount: nonPredictionCount,
             values: values,
             occupyingRelativeWidth:
             occupyingRelativeWidth,
@@ -158,6 +164,7 @@ extension RHLinePlot {
             // No active segment, all are 1s
             return 1.0
         }
+        
         return activeSegment == segment ? 1.0 : self.rhLinePlotConfig.opacityOfUnselectedSegment
     }
 }
@@ -198,7 +205,7 @@ func getAdjustedStrokeEdgesCanvasFrame(proxy: GeometryProxy, rhLinePlotConfig: R
 struct RHLinePlot_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            RHLinePlot(values: [1,2,3,6,3,4,6])
+            RHLinePlot(nonPredictionCount: 0, values: [1,2,3,6,3,4,6])
         }.previewLayout(.fixed(width: 300, height: 300))
     }
 }

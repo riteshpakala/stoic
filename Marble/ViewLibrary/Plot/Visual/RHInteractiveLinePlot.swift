@@ -22,6 +22,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
         // case cacheLookup
     }
     
+    let nonPredictionCount: Int
     let values: [Value]
     let lineSegmentStartingIndices: [Int]?
     let showGlowingIndicator: Bool
@@ -49,6 +50,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
     @Environment(\.rhLinePlotConfig) var rhPlotConfig
     
     public init(
+        nonPredictionCount: Int,
         values: [Value],
         occupyingRelativeWidth: CGFloat = 1.0,
         showGlowingIndicator: Bool = false,
@@ -61,6 +63,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
         @ViewBuilder
         valueStickLabel: @escaping (Value) -> StickLabel
     ) {
+        self.nonPredictionCount = nonPredictionCount
         self.values = values
         self.occupyingRelativeWidth = occupyingRelativeWidth
         self.lineSegmentStartingIndices = lineSegmentStartingIndices
@@ -93,6 +96,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
     
     func linePlot() -> some View {
         return RHLinePlot(
+            nonPredictionCount: nonPredictionCount,
             values: values,
             occupyingRelativeWidth: occupyingRelativeWidth,
             showGlowingIndicator: showGlowingIndicator,
@@ -129,6 +133,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
         let valueStickOffset = getValueStickOffset(canvas: relativeWidthCanvas)
         
         let canvasWidthWithoutAdjust = proxy.size.width
+        let canvasHeightWithoutAdjust = proxy.size.height
         
         // Clamp to not go out of plot bounds
         // We need proxy here to calculate the label size dynamically
@@ -143,10 +148,11 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
             let centeringClamped = centering.clamp(
                 low: -canvasWidthWithoutAdjust/2 + labelWidth/2,
                 high: canvasWidthWithoutAdjust/2 - labelWidth/2)
-            return CGAffineTransform(translationX: centeringClamped, y: 0)
+            return CGAffineTransform(translationX: centeringClamped, y: -(GlobalStyle.largePadding*2 + GlobalStyle.padding))
         }
         
-        return VStack(spacing: rhPlotConfig.spaceBetweenValueStickAndStickLabel) {
+        let valueStickYOffset = (canvasHeightWithoutAdjust/2 + (GlobalStyle.largePadding*2 + GlobalStyle.padding*2 + GlobalStyle.spacing))
+        return ZStack {//(spacing: rhPlotConfig.spaceBetweenValueStickAndStickLabel) {
             
             // Value Stick Label
             // HACK: We get a dynamic size of value stick label through `overlay`.
@@ -161,15 +167,15 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
             // Line Plot
             linePlot()
                 .padding(EdgeInsets(
-                    top: rhPlotConfig.valueStickTopPadding,
+                    top: 0,
                     leading: 0,
-                    bottom: rhPlotConfig.valueStickBottomPadding,
+                    bottom: 0,
                     trailing: 0))
                 .overlay(
                     // Value Stick
                     LinePlotValueStick(lineWidth: rhPlotConfig.valueStickWidth)
-                        .opacity(stickAndLabelOpacity)
-                        .offset(x: valueStickOffset-(rhPlotConfig.valueStickWidth/2))
+                        .opacity(isDragging ? 0.75 : 0.0)
+                        .offset(x: valueStickOffset-(rhPlotConfig.valueStickWidth/2), y: -valueStickYOffset)
                         .foregroundColor(rhPlotConfig.valueStickColor),
                     alignment: .leading
             )
@@ -183,6 +189,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
 // Default indicator
 public extension RHInteractiveLinePlot where Indicator == GlowingIndicator {
     init(
+        nonPredictionCount: Int,
         values: [Value],
         occupyingRelativeWidth: CGFloat = 1.0,
         showGlowingIndicator: Bool = false,
@@ -194,6 +201,7 @@ public extension RHInteractiveLinePlot where Indicator == GlowingIndicator {
         valueStickLabel: @escaping (Value) -> StickLabel
     ) {
         self.init(
+            nonPredictionCount: nonPredictionCount,
             values: values,
             occupyingRelativeWidth: occupyingRelativeWidth,
             showGlowingIndicator: showGlowingIndicator,

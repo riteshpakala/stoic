@@ -90,10 +90,7 @@ class ConsoleDetailPredictionView: GraniteView {
             addSubview(thinkTriggerContainer)
             thinkTriggerContainer.addSubview(thinkTrigger)
             thinkTriggerContainer.snp.makeConstraints { make in
-                make.width.equalToSuperview().multipliedBy(0.49)
-                make.right.equalTo(-GlobalStyle.spacing)
-                make.top.equalTo(GlobalStyle.spacing)
-                make.bottom.equalToSuperview()
+                make.edges.equalToSuperview()
             }
             thinkTrigger.snp.makeConstraints { make in
                 make.center.equalToSuperview()

@@ -13,6 +13,7 @@ import UIKit
 class SomePlotData: ObservableObject {
     typealias PlotData = RobinhoodPageViewModel.PlotData
     @Published var plotData: PlotData?
+    @Published var predictionPlotData: PlotData = []
 }
 struct RobinhoodPage: View {
     typealias PageComponent = (page: RobinhoodPage, host: UIView)
@@ -20,7 +21,7 @@ struct RobinhoodPage: View {
     static let symbol = "IBM"
     
     @State var timeDisplayMode: TimeDisplayOption = .daily
-    @State var isLaserModeOn = false
+    @State var isLaserModeOn = true
     @State var currentIndex: Int? = nil
 //    @ObservedObject var viewModel = RobinhoodPageViewModel(symbol: symbol)
     @ObservedObject var someModel = SomePlotData()
@@ -32,13 +33,29 @@ struct RobinhoodPage: View {
         hostController.view.translatesAutoresizingMaskIntoConstraints = false
         from.addChild(hostController)
         hostController.view.backgroundColor = .clear
+        hostController.view.clipsToBounds = false
+        hostController.view.layer.masksToBounds = false
         return (page, hostController.view)
     }
     
     
     
-    var currentPlotData: PlotData? {
-        someModel.plotData
+    var currentPlotData: PlotData {
+        someModel.plotData ?? []
+//        switch timeDisplayMode {
+//        case .hourly:
+//            return viewModel.intradayPlotData
+//        case .daily:
+//            return viewModel.dailyPlotData
+//        case .weekly:
+//            return viewModel.weeklyPlotData
+//        case .monthly:
+//            return viewModel.monthlyPlotData
+//        }
+    }
+    
+    var currentPredictionPlotData: PlotData {
+        someModel.predictionPlotData
 //        switch timeDisplayMode {
 //        case .hourly:
 //            return viewModel.intradayPlotData
@@ -52,7 +69,6 @@ struct RobinhoodPage: View {
     }
     
     var plotDataSegments: [Int]? {
-        guard let currentPlotData = currentPlotData else { return nil }
         switch timeDisplayMode {
         case .hourly:
             return RobinhoodPageViewModel.segmentByHours(values: currentPlotData)
@@ -83,17 +99,17 @@ struct RobinhoodPage: View {
     
     // MARK: Body
     func readyPageContent(plotData: PlotData) -> some View {
-        let firstPrice = plotData.first?.price ?? 0
-        let lastPrice = plotData.last?.price ?? 0
-        let themeColor = firstPrice <= lastPrice ? rhThemeColor : rhRedThemeColor
+//        let firstPrice = plotData.first?.price ?? 0
+//        let lastPrice = plotData.last?.price ?? 0
+//        let themeColor = firstPrice <= lastPrice ? rhThemeColor : rhRedThemeColor
         return ZStack {
             VStack {
                 plotBody(plotData: plotData)
             }
-            VStack {
-                Spacer()
+            VStack(alignment: .leading, spacing: 0) {
                 stockHeaderAndPrice(plotData: plotData)
-            }.padding(.bottom, GlobalStyle.largePadding)
+                Spacer()
+            }.padding(.top, GlobalStyle.largePadding + GlobalStyle.padding)
 //            TimeDisplayModeSelector(
 //                currentTimeDisplayOption: $timeDisplayMode,
 //                eligibleModes: TimeDisplayOption.allCases
@@ -160,10 +176,10 @@ struct RobinhoodPage: View {
     
     var body: some View {
         VStack {
-            if currentPlotData == nil {
+            if currentPlotData.isEmpty {
                 Text("Loading...")
             } else {
-                readyPageContent(plotData: currentPlotData!)
+                readyPageContent(plotData: currentPlotData + currentPredictionPlotData)
             }
         }
         .accentColor(rhThemeColor)
@@ -185,9 +201,10 @@ extension RobinhoodPage {
         // For value stick
         let dateString = plotData[currentIndex].time.asString
         
-        let themeColor = values.last! >= values.first! ? rhThemeColor : rhRedThemeColor
+//        let themeColor = values.last! >= values.first! ? rhThemeColor : rhRedThemeColor
         
         return RHInteractiveLinePlot(
+            nonPredictionCount: currentPlotData.count,
             values: values,
             occupyingRelativeWidth: plotRelativeWidth,
             showGlowingIndicator: showGlowingIndicator,
@@ -207,31 +224,32 @@ extension RobinhoodPage {
                     .font(Font.init(GlobalStyle.Fonts.courier(.medium, .bold)))
         })
             //.frame(height: 280)
-            .foregroundColor(themeColor)
+//            .foregroundColor(themeColor)
     }
     
     func stockHeaderAndPrice(plotData: PlotData) -> some View {
         return HStack {
-            VStack(alignment: .center, spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
 //                Text("\(Self.symbol)")
 //                    .rhFont(style: .title1, weight: .heavy)
                 buildMovingPriceLabel(plotData: plotData)
             }.frame(minWidth: 0, maxWidth: .infinity)
             Spacer().frame(minWidth: 0, maxWidth: .infinity)
         }
-        .padding(.horizontal, GlobalStyle.padding)
+        .padding(.horizontal, 0.0)
     }
     
     func buildMovingPriceLabel(plotData: PlotData) -> some View {
         let currentIndex = self.currentIndex ?? (plotData.count - 1)
         return HStack(spacing: 2) {
-            Text("$")
+            
+            Text("$").background(with: Color.init(GlobalStyle.Colors.black.withAlphaComponent(0.75)))
             MovingNumbersView(
                 number: Double(plotData[currentIndex].price),
                 numberOfDecimalPlaces: 2,
                 verticalDigitSpacing: 0,
                 animationDuration: 0.3,
-                fixedWidth: 100) { (digit) in
+                fixedWidth: 120) { (digit) in
                     Text(digit)
             }
             .mask(LinearGradient(
@@ -243,8 +261,15 @@ extension RobinhoodPage {
                 startPoint: .top,
                 endPoint: .bottom))
         }.font(Font.init(GlobalStyle.Fonts.courier(.large, .bold)))
-//        .rhFont(style: .title1, weight: .heavy)
     }
+}
+
+extension View {
+  func background(with color: Color) -> some View {
+    background(GeometryReader { geometry in
+      Rectangle().path(in: geometry.frame(in: .local)).foregroundColor(color)
+    })
+  }
 }
 
 struct RobinhoodPage_Previews: PreviewProvider {

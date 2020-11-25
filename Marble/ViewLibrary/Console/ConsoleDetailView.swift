@@ -125,21 +125,20 @@ class ConsoleDetailView: GraniteView {
 //
         modelPickerView.snp.makeConstraints { make in
             make.top.equalTo(GlobalStyle.padding)
-            make.right.equalTo(-GlobalStyle.largePadding)
+            make.right.equalTo(-GlobalStyle.padding)
             make.height.equalTo(baseSize.height*0.2)
             make.width.equalToSuperview().multipliedBy(0.36)
         }
         
         sentimentView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.2)
-            make.bottom.equalTo(-GlobalStyle.padding)
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(baseSize.height*0.2 + GlobalStyle.largePadding)
         }
 //
         predictionView.snp.makeConstraints { make in
-            make.bottom.equalTo(sentimentView.snp.top).offset(-GlobalStyle.padding)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.12)
+            make.bottom.equalTo(sentimentView.snp.top).offset(-GlobalStyle.largePadding)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(baseSize.height*0.12)
         }
 //
 //        disclaimerView.snp.makeConstraints { make in
@@ -153,8 +152,7 @@ class ConsoleDetailView: GraniteView {
 //        }
         
         lineView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-            make.bottom.equalTo(sentimentView.snp.top).offset(-GlobalStyle.padding)
+            make.edges.equalToSuperview()
         }
         
         predictionView.delegate = self
@@ -219,10 +217,10 @@ class ConsoleDetailView: GraniteView {
                         height: historicalIndicator.height + historicalIndicator.origin.y))
 
         if  adjHistoricalTableViewFrame.contains(point),
-            historicalView.expand,
+            modelPickerView.expand,
             !adjHistoricalIndicatorFrame.contains(point) {
             
-            return historicalView.historicDatePicker
+            return modelPickerView.modelPicker
         } else {
             return super.hitTest(point, with: event)
         }
