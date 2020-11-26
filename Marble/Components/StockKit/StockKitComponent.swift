@@ -108,7 +108,8 @@ extension StockKitComponent: SVMModelDelegate {
 extension StockKitComponent {
     func getValidMarketDays(
         forMonth month: String,
-        forYear year: String) {
+        forYear year: String,
+        target: EventResponder? = nil) {
         
         let sanitizedMonth: String
         let previousMonth: String
@@ -174,7 +175,8 @@ extension StockKitComponent {
             forNextMonth: nextMonth,
             forYear: year,
             forPreviousYear: previousYear,
-            forNextYear: nextYear)
+            forNextYear: nextYear,
+            target: target)
         
     }
     
@@ -314,7 +316,8 @@ extension StockKitComponent {
         forNextYear nextYear: String,
         hittingPrevious: Bool = false,
         hittingPrevious2: Bool = false,
-        hittingAfter: Bool = false) {
+        hittingAfter: Bool = false,
+        target: EventResponder? = nil) {
         
         validMarketDaysTask?.cancel()
         
@@ -363,7 +366,7 @@ extension StockKitComponent {
                         
                         if hittingAfter {
                             print("[StockKit] processing validity completeness \(self.stockDates.count)")
-                            self.processEvent(
+                            (target ?? self).sendEvent(
                                 StockKitEvents.ValidMarketDaysCompleted(
                                     result: self.stockDates))
                         } else {
@@ -377,7 +380,8 @@ extension StockKitComponent {
                                 forNextYear: nextYear,
                                 hittingPrevious: hittingPrevious2,
                                 hittingPrevious2: !hittingPrevious2 && !hittingPrevious,
-                                hittingAfter: hittingPrevious)
+                                hittingAfter: hittingPrevious,
+                                target: target)
                         }
                     }
                 }

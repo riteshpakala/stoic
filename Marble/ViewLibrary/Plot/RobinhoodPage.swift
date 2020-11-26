@@ -14,6 +14,7 @@ class SomePlotData: ObservableObject {
     typealias PlotData = RobinhoodPageViewModel.PlotData
     @Published var plotData: PlotData?
     @Published var predictionPlotData: PlotData = []
+    @Published var trueDays: Int?
 }
 struct RobinhoodPage: View {
     typealias PageComponent = (page: RobinhoodPage, host: UIView)
@@ -21,7 +22,7 @@ struct RobinhoodPage: View {
     static let symbol = "IBM"
     
     @State var timeDisplayMode: TimeDisplayOption = .daily
-    @State var isLaserModeOn = true
+    @State var isLaserModeOn = false
     @State var currentIndex: Int? = nil
 //    @ObservedObject var viewModel = RobinhoodPageViewModel(symbol: symbol)
     @ObservedObject var someModel = SomePlotData()
@@ -102,14 +103,14 @@ struct RobinhoodPage: View {
 //        let firstPrice = plotData.first?.price ?? 0
 //        let lastPrice = plotData.last?.price ?? 0
 //        let themeColor = firstPrice <= lastPrice ? rhThemeColor : rhRedThemeColor
-        return ZStack {
+        return VStack {
+            
+            VStack(alignment: .leading, spacing: 0) {
+                stockHeaderAndPrice(plotData: plotData)
+            }.padding(.top, GlobalStyle.padding).padding(.leading, GlobalStyle.padding)
             VStack {
                 plotBody(plotData: plotData)
             }
-            VStack(alignment: .leading, spacing: 0) {
-                stockHeaderAndPrice(plotData: plotData)
-                Spacer()
-            }.padding(.top, GlobalStyle.largePadding + GlobalStyle.padding)
 //            TimeDisplayModeSelector(
 //                currentTimeDisplayOption: $timeDisplayMode,
 //                eligibleModes: TimeDisplayOption.allCases
@@ -204,7 +205,7 @@ extension RobinhoodPage {
 //        let themeColor = values.last! >= values.first! ? rhThemeColor : rhRedThemeColor
         
         return RHInteractiveLinePlot(
-            nonPredictionCount: currentPlotData.count,
+            nonPredictionCount: someModel.trueDays ?? currentPlotData.count,
             values: values,
             occupyingRelativeWidth: plotRelativeWidth,
             showGlowingIndicator: showGlowingIndicator,
@@ -229,11 +230,12 @@ extension RobinhoodPage {
     
     func stockHeaderAndPrice(plotData: PlotData) -> some View {
         return HStack {
-            VStack(alignment: .leading, spacing: 0) {
-//                Text("\(Self.symbol)")
-//                    .rhFont(style: .title1, weight: .heavy)
-                buildMovingPriceLabel(plotData: plotData)
-            }.frame(minWidth: 0, maxWidth: .infinity)
+//            VStack(alignment: .leading, spacing: 0) {
+////                Text("\(Self.symbol)")
+////                    .rhFont(style: .title1, weight: .heavy)
+//                buildMovingPriceLabel(plotData: plotData)
+//            }.frame(minWidth: 0, maxWidth: .infinity)
+            buildMovingPriceLabel(plotData: plotData)
             Spacer().frame(minWidth: 0, maxWidth: .infinity)
         }
         .padding(.horizontal, 0.0)

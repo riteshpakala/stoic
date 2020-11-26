@@ -62,7 +62,7 @@ public struct RHLinePlotConfig {
     /// By default only the line skeletons (*paths*) exactly fits in the canvas,** without considering the `plotLineWidth`**.
     /// So when you increase the line width, the edge of the extreme values could go out of the canvas.
     /// You can provide a set of edges to consider to adjust to fit in canvas.
-    public var adjustedEdgesToFitLineStrokeInCanvas: Edge.Set = []
+    public var adjustedEdgesToFitLineStrokeInCanvas: Edge.Set = [.top, .bottom]
     
     // MARK:- RHInteractiveLinePlot
     

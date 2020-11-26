@@ -18,11 +18,13 @@ extension RHLinePlot {
         // FIX: Here we make the canvas virtually larger to provide padding
         // so that when the edges are cut off, blurry part is still there.
         let adjustedEachBorderDueToBlur: CGFloat = {
-            if rhLinePlotConfig.useLaserLightLinePlotStyle {
-                return 0.75 * rhLinePlotConfig.plotLineWidth
-            } else {
-                return 0
-            }
+            print("{TEST 2} \(rhLinePlotConfig.useLaserLightLinePlotStyle)")
+//            if rhLinePlotConfig.useLaserLightLinePlotStyle {
+//                return 7.5 * rhLinePlotConfig.plotLineWidth
+//            } else {
+//                return 0
+//            }
+            return 5.7 * rhLinePlotConfig.plotLineWidth
         }()
         let largerCanvas = canvasFrame.insetBy(dx: -adjustedEachBorderDueToBlur, dy: -adjustedEachBorderDueToBlur)
         
@@ -43,7 +45,7 @@ extension RHLinePlot {
         func drawSegment(path: inout Path, segment: (from: Int, to: Int)) {
             let segmentValues = values[segment.from..<segment.to]
             
-            
+            print("{TEST 4} c \(nonPredictionCount) \(segmentValues.count)")
             // The starting point of this segment (previous data point)
             // Note that when from is 0, this will be -1.
             let previousIndex = segment.from - 1
@@ -66,6 +68,8 @@ extension RHLinePlot {
                     CGPoint(
                         x: pathBaseX + currentX,
                         y: pathBaseY + HEIGHT/2))
+                
+                print("{TEST} my ass is burnt")
                 return
             }
             
@@ -96,7 +100,7 @@ extension RHLinePlot {
         func drawPredictionSegment(path: inout Path, segment: (from: Int, to: Int)) {
             let segmentValues = values[segment.from..<segment.to]
             
-            
+            print("{TEST 4} v \(nonPredictionCount) \(segmentValues.count)")
             // The starting point of this segment (previous data point)
             // Note that when from is 0, this will be -1.
             let previousIndex = segment.from - 1
@@ -119,6 +123,7 @@ extension RHLinePlot {
                     CGPoint(
                         x: pathBaseX + currentX,
                         y: pathBaseY + HEIGHT/2))
+                print("{TEST} heu")
                 return
             }
             
@@ -183,11 +188,30 @@ extension RHLinePlot {
                     }
                 )
             } else {
-                return AnyView(path.stroke(style: StrokeStyle(
-                    lineWidth: lineWidth,
-                    lineCap: .round,
-                    lineJoin: .round
-                )).opacity(self.getOpacity(forSegment: i)))
+                return AnyView(
+                    
+                    ZStack {
+                        
+                        path.stroke(style: StrokeStyle(
+                            lineWidth: lineWidth,
+                            lineCap: .round,
+                            lineJoin: .round
+                        )).opacity(self.getOpacity(forSegment: i))
+                        .foregroundColor(themeColor)
+                        
+//                        pathPrediction.stroke(style: StrokeStyle(
+//                            lineWidth: lineWidth,
+//                            lineCap: .round,
+//                            lineJoin: .round
+//                        )).opacity(self.getOpacity(forSegment: i))
+//                        .foregroundColor(Color.init(GlobalStyle.Colors.purple))
+                        pathPrediction.laserLightStroke(lineWidth: lineWidth)
+                            // much more responsive for laser mode to opacity animation,
+                            // but we have to fix its unintended effects.
+                            .drawingGroup()
+                            .opacity(0.84)
+                            .foregroundColor(Color.init(GlobalStyle.Colors.purple))
+                    })
             }
         }
         

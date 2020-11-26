@@ -14,6 +14,10 @@ struct StockKitEvents {
         let nextTradingDayIsAvailable: Bool
     }
     struct GetValidMarketDays: Event {
+        let target: EventResponder?
+        public init(target: EventResponder? = nil) {
+            self.target = target
+        }
     }
     struct ValidMarketDaysCompleted: Event {
         let result: [StockDateData]

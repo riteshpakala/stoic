@@ -26,9 +26,10 @@ public class DetailComponent: Component<DetailState> {
             GetPredictionProgressReducer.Reducible(),
             StockKitIsPreparedReducer.Reducible(),
             ThinkReducer.Reducible(),
+            ThinkGotValidTradingDaysReducer.Reducible(),
             ThinkResponseReducer.Reducible(),
             PredictionDidUpdateReducer.Reducible(),
-            LoadOfflineReducer.Reducible()
+            LoadOfflineReducer.Reducible(),
         ]
     }
     

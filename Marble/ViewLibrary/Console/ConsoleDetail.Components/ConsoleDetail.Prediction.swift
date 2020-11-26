@@ -128,6 +128,7 @@ class ConsoleDetailPredictionView: GraniteView {
             renderMode: .backToFront,
             color: GlobalStyle.Colors.purple)
         sender.isEnabled = false
+        
         bubbleEvent(DetailEvents.Think())
     }
     
@@ -226,16 +227,5 @@ class ConsoleDetailPredictionView: GraniteView {
                 
             }
         }
-    }
-    
-    public func addADay() {
-        
-    }
-    
-    struct LastPrediction {
-        let positive: Double = 0.5
-        let negative: Double = 0.5
-        let neutral: Double = 0.0
-        let compound: Double = 0.0
     }
 }

@@ -93,6 +93,7 @@ class ConsoleDetailView: GraniteView {
     private var loader: ConsoleLoader?
     private var isThinking: Bool = false
     private var isOffline: Bool = false
+    private var payload: ConsoleDetailPayload? = nil
     
     private var interactedWithPlot: Bool = false
     
@@ -124,9 +125,9 @@ class ConsoleDetailView: GraniteView {
 //        }
 //
         modelPickerView.snp.makeConstraints { make in
-            make.top.equalTo(GlobalStyle.padding)
-            make.right.equalTo(-GlobalStyle.padding)
-            make.height.equalTo(baseSize.height*0.2)
+            make.top.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalTo(GlobalStyle.Fonts.courier(.large, .bold).lineHeight + GlobalStyle.padding + GlobalStyle.padding/2)
             make.width.equalToSuperview().multipliedBy(0.36)
         }
         
@@ -152,7 +153,8 @@ class ConsoleDetailView: GraniteView {
 //        }
         
         lineView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalTo(sentimentView.snp.top).offset(-GlobalStyle.padding)
         }
         
         predictionView.delegate = self
@@ -179,19 +181,28 @@ class ConsoleDetailView: GraniteView {
             stockData: payload.historicalTradingData)
         
         lineView.updateData(payload)
+        
+        self.payload = payload
     }
     
     func updateThink(_ payload: ThinkPayload?) {
         thinkingStopped()
-        if let sentiment = payload?.stockSentimentData {
-            sentimentView.updateSlider(sentiment)
-            
-            sentimentChanged(
-                sentiment.posAverage,
-                negative: sentiment.negAverage,
-                neutral: sentiment.neuAverage,
-                compound: sentiment.compoundAverage)
+        
+        guard let newPayload = payload?.payload else {
+            return
         }
+        
+        print("{TEST} updating data")
+        updateData(newPayload)
+//        if let sentiment = payload?.stockSentimentData {
+//            sentimentView.updateSlider(sentiment)
+//
+//            sentimentChanged(
+//                sentiment.posAverage,
+//                negative: sentiment.negAverage,
+//                neutral: sentiment.neuAverage,
+//                compound: sentiment.compoundAverage)
+//        }
     }
     
     func updatePage(_ component: RobinhoodPage.PageComponent) {

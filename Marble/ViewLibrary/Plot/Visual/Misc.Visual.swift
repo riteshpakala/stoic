@@ -78,10 +78,10 @@ extension Path {
     func laserLightStroke(lineWidth: CGFloat, color: Color = .white) -> some View {
         let content = self
         return ZStack {
-            content.stroke(lineWidth: lineWidth*3)
-                .blur(radius: 3*lineWidth)
             content.stroke(lineWidth: lineWidth*2)
                 .blur(radius: 2*lineWidth)
+            content.stroke(lineWidth: lineWidth*1)
+                .blur(radius: 1*lineWidth)
             content.stroke(color, style: StrokeStyle(
                 lineWidth: lineWidth,
                 lineCap: .round,

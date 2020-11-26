@@ -237,8 +237,8 @@ class PickerCell: UITableViewCell {
             style: style,
             reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.5)
-        contentView.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.5)
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
         
         self.selectionStyle = .none
         

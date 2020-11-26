@@ -62,7 +62,10 @@ class ConsoleDetailLineView: GraniteView {
     
     func updateData(_ payload: ConsoleDetailPayload) {
         self.payload = payload
+        
         currentPage?.someModel.plotData = payload.historicalTradingData.map( { ($0.dateData.asDate ?? Date(), CGFloat($0.close))  } )
+        print("{TEST 3} \(payload.days) \(currentPage?.someModel.plotData?.count)")
+        currentPage?.someModel.trueDays = payload.days
         
     }
     

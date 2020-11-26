@@ -8,11 +8,19 @@
 
 import Foundation
 
-
 class ThinkPayload: NSObject {
-    var stockSentimentData: StockSentimentData? = nil
+    var payload: ConsoleDetailPayload
     public init(
-        sentiment: StockSentimentData) {
-        self.stockSentimentData = sentiment
+        payload: ConsoleDetailPayload) {
+        self.payload = payload
     }
 }
+
+
+//class ThinkPayload: NSObject {
+//    var stockSentimentData: StockSentimentData? = nil
+//    public init(
+//        sentiment: StockSentimentData) {
+//        self.stockSentimentData = sentiment
+//    }
+//}

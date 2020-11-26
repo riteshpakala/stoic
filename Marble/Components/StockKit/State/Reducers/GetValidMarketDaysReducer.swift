@@ -29,7 +29,8 @@ struct GetValidMarketDaysReducer: Reducer {
             let currentDate = state.currentDateComponents
             component.getValidMarketDays(
                 forMonth: String(currentDate.month),
-                forYear: String(currentDate.year))
+                forYear: String(currentDate.year),
+                target: event.target)
         }
     }
 }

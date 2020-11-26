@@ -29,6 +29,16 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
             async: .main)
         
         
+//        Cryptowatcher().getMarketPrice(exchange: "coinbase-pro", pair: "btcusd").then { response in
+//          let price = response.result.price
+//          let remainingAllowance = response.allowance.remaining
+//
+//            print("{TEST 2} \(price)")
+//          // Use the values to do something fun
+//        }.onError { error in
+//          // Handle the error
+//            print("{TEST 2} \(error.localizedDescription)")
+//        }
         //DEV:
         guard let predictions = component?.service.center.getMergedStockModels(from: .main) else {
             print("{CoreData} none found")
@@ -37,7 +47,8 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         print("{CoreData} \(predictions.count)")
 
         var stockModel: StockModel? = nil
-        if let prediction = predictions.first {
+        let prediction = predictions[1]
+//        if let prediction = predictions[1] {
             print("{CoreData} \(prediction.models?.count)")
 
             prediction.models?.forEach { model in
@@ -52,7 +63,7 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
 
                 sendEvent(DashboardEvents.ShowDetail.stored(stockModel!))
             }
-        }
+//        }
         
         //DEV:
 //        sendEvent(DashboardEvents.ShowDetail.search(.init(

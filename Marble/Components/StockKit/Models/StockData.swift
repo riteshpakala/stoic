@@ -12,6 +12,10 @@ import Foundation
 public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
     public static var supportsSecureCoding: Bool = true
     
+    public static var empty: StockData {
+        return .init(symbolName: "", dateData: .init(""), open: 0.0, high: 0.0, low: 0.0, close: 0.0, adjClose: 0.0, volume: 0.0)
+    }
+    
     var symbolName: String
     var dateData: StockDateData
     var open: Double

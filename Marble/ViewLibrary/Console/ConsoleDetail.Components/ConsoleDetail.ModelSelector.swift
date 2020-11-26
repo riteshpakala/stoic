@@ -34,14 +34,17 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
                         make.height.equalTo(self.expandSize)
                         make.top.equalToSuperview().offset(self.modelPicker.frame.origin.y)
                     }
+                    
+                    self.modelPicker.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.75)
                 } else {
                     self.modelPicker.snp.remakeConstraints { make in
                         make.left.equalToSuperview()
                         make.width.equalToSuperview()
-                        make.height.equalToSuperview().multipliedBy(0.66)
+                        make.height.equalToSuperview()
                         make.centerY.equalToSuperview()
                     }
                     
+                    self.modelPicker.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.0)
                     self.modelPicker.scrollTo(self.currentIndex, animated: true)
                 }
             }
@@ -84,10 +87,7 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
         addSubview(indicator)
         
         self.modelPicker.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.66)
-            make.centerY.equalToSuperview()
+            make.edges.equalToSuperview()
         }
         
         self.indicator.snp.makeConstraints { make in
@@ -105,7 +105,7 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
     }
     
     public func updateData(_ data: StockKitModels) {
-        cellHeight = self.frame.height*0.66
+        cellHeight = self.frame.height
             
         modelPicker.data = StockKitModels.ModelType.allCases.map { "\($0)" }
         modelPicker.expandedPadding = Int(cellsToViewWhenExpanded - 1)

@@ -204,6 +204,125 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
         
     }
     
+    public static func appendADay(models: StockKitModels, stockData: [StockData], sentimentData: StockSentimentData, tradingDay: String) -> (StockData, StockKitModels)? {
+        
+        guard let recentStock = stockData.sorted(
+            by: {
+                ($0.dateData.asDate ?? Date())
+                    .compare(($1.dateData.asDate ?? Date())) == .orderedDescending
+            }).first else {
+            return nil
+        }
+        
+        let newStock: StockData = StockData.empty
+        for type in ModelType.allCases {
+            guard let model = models.model(forType: type) else {
+                continue
+            }
+            
+            let testData = DataSet(
+               dataType: .Regression,
+               inputDimension: type.inDim,
+               outputDimension: StockKitUtils.outDim)
+            
+            do {
+                let dataSet = StockKitUtils.Models.DataSet(
+                    recentStock,
+                    sentimentData,
+                    modelType: type,
+                    updated: true)
+                
+                print("********************\nPREDICTING\n\(dataSet.description)")
+                
+                try testData.addTestDataPoint(
+                   input: dataSet.asArray)
+            }
+            catch {
+               print("Invalid data set created")
+            }
+            
+            model.predictValues(data: testData)
+            
+            if let output = testData.singleOutput(index: 0) {
+                switch type {
+                case .open:
+                    newStock.open = output
+                case .close:
+                    newStock.close = output
+                    newStock.adjClose = output
+                case .high:
+                    newStock.high = output
+                case .low:
+                    newStock.low = output
+                case .volume:
+                    newStock.volume = output
+                default:
+                    continue
+                }
+                
+            }
+
+        }
+        
+        newStock.dateData = .init(tradingDay)
+        var historicalData = recentStock.historicalData
+        historicalData?.append(recentStock)
+        newStock.historicalData = historicalData
+        newStock.features = Momentum(
+            momentum: newStock.close > recentStock.close ? 1 : -1,
+            volatility: (newStock.close - recentStock.close)/recentStock.close,
+            dayAverage: (newStock.close + newStock.open)/2)
+        
+        var modelsToAppend: [Model] = []
+        for type in ModelType.allCases {
+            guard let model = models.model(forType: type), let dataForDavid = model.dataSet else {
+                continue
+            }
+
+            print("[MODEL GENERATION] Adding a day to a model for \(type) \(tradingDay)")
+            let dataSet = StockKitUtils.Models.DataSet(
+                newStock,
+                sentimentData,
+                modelType: type)
+
+            do {
+                try dataForDavid.addDataPoint(
+                    input: dataSet.asArray,
+                    output: dataSet.output,
+                    label: newStock.dateData.asString)
+            }
+            catch {
+               print("Invalid data set created")
+            }
+
+            let david = SVMModel(
+                problemType: .ϵSVMRegression,
+                kernelSettings:
+                KernelParameters(type: .Polynomial,
+                                 degree: 3,
+                                 gamma: 0.3,
+                                 coef0: 0.0))
+
+            david.Cost = 1e3
+            david.train(data: dataForDavid)
+
+            print("[MODEL GENERATION] Completed adding a day to model for \(type)")
+
+            modelsToAppend.append(type.model(for: david))
+            
+        }
+        
+        return (newStock, StockKitModels.init(models: modelsToAppend))
+        
+    }
+    
+    struct LastPrediction {
+        let positive: Double = 0.5
+        let negative: Double = 0.5
+        let neutral: Double = 0.0
+        let compound: Double = 0.0
+    }
+    
     public var open: SVMModel?
     public var close: SVMModel?
     public var high: SVMModel?

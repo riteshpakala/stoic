@@ -45,8 +45,7 @@ struct GetPredictionReducer: Reducer {
         
         // { CoreData } Insertion
         if let stockDataOfTradingDay = stockKit.state.nextValidTradingDay,
-            let models = state.model,
-            let model = models.current {
+            let models = state.model {
 
             let id = component.service.center.saveStockPredictions(
                 .init(
@@ -68,7 +67,7 @@ struct GetPredictionReducer: Reducer {
                 currentTradingDay: stockKit.state.nextValidTradingDay?.asString ?? "",
                 historicalTradingData: validTradingData,
                 stockSentimentData: stockSentimentData,
-                days: stockKit.state.rules.days,
+                days: state.originalDaysTrained ?? stockKit.state.rules.days,
                 maxDays: stockKit.state.rules.maxDays,
                 model: model)
         }
@@ -102,32 +101,35 @@ struct PredictionDidUpdateReducer: Reducer {
         sideEffects: inout [EventBox],
         component: inout Component<ReducerState>) {
         
-        if state.predictionDidUpdate >= 4 {
-            guard let stockKit = (component as? DetailComponent)?.stockKit else {
-                return
-            }
+        guard let stockKit = (component as? DetailComponent)?.stockKit else {
+            return
+        }
+        
+        let sorted = state.stockData?.sorted(by: {
+            ($0.dateData.asDate ?? Date()).compare($1.dateData.asDate ?? Date()) == .orderedDescending })
+        
+        if  let id = Auth.auth().currentUser?.uid,
+            let nextTradingDay = stockKit.state.nextValidTradingDay?.asString {
             
-            let sorted = state.stockData?.sorted(by: {
-                ($0.dateData.asDate ?? Date()).compare($1.dateData.asDate ?? Date()) == .orderedDescending })
+            let predictionUpdate: PredictionUpdate = .init(
+                sentimentStrength: component.service.storage.get(GlobalDefaults.SentimentStrength.self),
+                predictionDays: component.service.storage.get(GlobalDefaults.PredictionDays.self),
+                stock: state.searchedStock,
+                sentimentWeights: event.stockSentimentData,
+                nextTradingDay: nextTradingDay,
+                thisTradingDay: sorted?.first?.dateData.asString ?? nextTradingDay,
+                close: event.close,
+                id: state.modelID ?? "")
             
-            if  let id = Auth.auth().currentUser?.uid,
-                let nextTradingDay = stockKit.state.nextValidTradingDay?.asString {
-                
-                let predictionUpdate: PredictionUpdate = .init(
-                    sentimentStrength: component.service.storage.get(GlobalDefaults.SentimentStrength.self),
-                    predictionDays: component.service.storage.get(GlobalDefaults.PredictionDays.self),
-                    stock: state.searchedStock,
-                    sentimentWeights: event.stockSentimentData,
-                    nextTradingDay: nextTradingDay,
-                    thisTradingDay: sorted?.first?.dateData.asString ?? nextTradingDay,
-                    close: event.close,
-                    id: state.modelID ?? "")
-                
-                component.service.center.backend.put(
-                    predictionUpdate,
-                    route: .global,
-                    server: .prediction,
-                    key: id+"/"+predictionUpdate.key)
+            state.lastPrediction = predictionUpdate
+            
+            if state.predictionDidUpdate >= 4 {
+                //TODO: better prediction tracking
+//                component.service.center.backend.put(
+//                    predictionUpdate,
+//                    route: .global,
+//                    server: .prediction,
+//                    key: id+"/"+predictionUpdate.key)
             }
         }
         

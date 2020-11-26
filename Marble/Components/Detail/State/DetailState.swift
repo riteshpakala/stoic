@@ -37,7 +37,9 @@ public class DetailState: State {
     
     var consoleDetailPayload: ConsoleDetailPayload? = nil
     
+    var originalDaysTrained: Int?
     var predictionDidUpdate: Int = 4
+    var lastPrediction: PredictionUpdate? = nil
     
     var modelID: String? = nil
     
@@ -49,6 +51,7 @@ public class DetailState: State {
         self.consoleDetailPayload = stockModel?.consoleDetailPayload
         self.stockData = stockModel?.consoleDetailPayload?.historicalTradingData
         self.stockSentimentData = stockModel?.consoleDetailPayload?.stockSentimentData
+        self.originalDaysTrained = stockModel?.consoleDetailPayload?.model.current?.dataSet?.size 
     }
 }
 

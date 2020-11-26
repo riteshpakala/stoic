@@ -81,7 +81,6 @@ class RobinhoodPageViewModel: ObservableObject {
     }
     
     static func segmentByHours(values: PlotData) -> [Int] {
-        print("{TEST} \(values)")
         let calendar = Calendar.current
         var segments = [Int]()
         

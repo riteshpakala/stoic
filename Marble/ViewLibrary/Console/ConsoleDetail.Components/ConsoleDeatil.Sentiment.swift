@@ -128,7 +128,7 @@ class ConsoleDetailSentimentView: GraniteView {
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.5)
+        backgroundColor = .clear
         
         addSubview(hStack)
         addSubview(emotionLabel)
