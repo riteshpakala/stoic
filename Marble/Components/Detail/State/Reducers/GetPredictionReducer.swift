@@ -108,8 +108,9 @@ struct PredictionDidUpdateReducer: Reducer {
         let sorted = state.stockData?.sorted(by: {
             ($0.dateData.asDate ?? Date()).compare($1.dateData.asDate ?? Date()) == .orderedDescending })
         
-        if  let id = Auth.auth().currentUser?.uid,
-            let nextTradingDay = stockKit.state.nextValidTradingDay?.asString {
+        
+        let tradingDay = state.isCached ? state.consoleDetailPayload?.currentTradingDay : stockKit.state.nextValidTradingDay?.asString
+        if  let nextTradingDay = tradingDay {
             
             let predictionUpdate: PredictionUpdate = .init(
                 sentimentStrength: component.service.storage.get(GlobalDefaults.SentimentStrength.self),
@@ -123,7 +124,7 @@ struct PredictionDidUpdateReducer: Reducer {
             
             state.lastPrediction = predictionUpdate
             
-            if state.predictionDidUpdate >= 4 {
+            if let id = Auth.auth().currentUser?.uid {
                 //TODO: better prediction tracking
 //                component.service.center.backend.put(
 //                    predictionUpdate,

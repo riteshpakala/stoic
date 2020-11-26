@@ -185,7 +185,7 @@ public struct StockKitUtils {
                     SMA_20: \(averages.sma20)
                     \(sentiment.toString)
                     Momentum: \(features.momentum)
-                    - Prev_Stock_Close: \(stock.historicalData?.first?.dateData.asString ?? "⚠️") - \(stock.historicalData?.first?.close ?? 0.0)
+                    - Prev_Stock_Close: \(stock.lastStockData.dateData.asString) - \(stock.lastStockData.close)
                     Volatility: \(features.volatility)
                     Momentum_AVG: \(averages.momentum)
                     Volatility_AVG: \(averages.volatility)

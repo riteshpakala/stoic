@@ -19,6 +19,10 @@ public struct RHLinePlot<Indicator: View>: View {
     /// Values to plot
     let values: [Value]
     
+    let dates: [Date]
+    let nonPredictionDates: [Date]
+    let predictionDates: [Date]
+    
     /// If `true`, show glowing indicator at the last value
     let showGlowingIndicator: Bool
     
@@ -49,6 +53,9 @@ public struct RHLinePlot<Indicator: View>: View {
     
     public init(nonPredictionCount: Int,
                 values: [Value],
+                dates: [Date],
+                nonPredictionDates: [Date],
+                predictionDates: [Date],
                 occupyingRelativeWidth: CGFloat = 1,
                 showGlowingIndicator: Bool = false,
                 lineSegmentStartingIndices: [Int]? = nil,
@@ -67,6 +74,9 @@ public struct RHLinePlot<Indicator: View>: View {
         #endif
         self.nonPredictionCount = nonPredictionCount
         self.values = values
+        self.dates = dates
+        self.nonPredictionDates = nonPredictionDates
+        self.predictionDates = predictionDates
         self.showGlowingIndicator = showGlowingIndicator
         self.occupyingRelativeWidth = occupyingRelativeWidth
         
@@ -116,6 +126,9 @@ public struct RHLinePlot<Indicator: View>: View {
 public extension RHLinePlot where Indicator == GlowingIndicator {
     init(nonPredictionCount: Int,
          values: [Value],
+         dates: [Date],
+         nonPredictionDates: [Date],
+         predictionDates: [Date],
          occupyingRelativeWidth: CGFloat = 1,
          showGlowingIndicator: Bool = false,
          lineSegmentStartingIndices: [Int]? = nil,
@@ -124,6 +137,9 @@ public extension RHLinePlot where Indicator == GlowingIndicator {
         self.init(
             nonPredictionCount: nonPredictionCount,
             values: values,
+            dates: dates,
+            nonPredictionDates: nonPredictionDates,
+            predictionDates: predictionDates,
             occupyingRelativeWidth:
             occupyingRelativeWidth,
             showGlowingIndicator: showGlowingIndicator,
@@ -159,13 +175,13 @@ extension RHLinePlot {
         return CGSize(width: canvasFrame.minX + x, height: canvasFrame.minY + y)
     }
     
-    func getOpacity(forSegment segment: Int) -> Double {
+    func getOpacity(forSegment segment: Int, customOpacity: Double = 1.0) -> Double {
         guard let activeSegment = self.activeSegment else {
             // No active segment, all are 1s
-            return 1.0
+            return customOpacity
         }
         
-        return activeSegment == segment ? 1.0 : self.rhLinePlotConfig.opacityOfUnselectedSegment
+        return activeSegment == segment ? customOpacity : self.rhLinePlotConfig.opacityOfUnselectedSegment
     }
 }
 
@@ -205,7 +221,7 @@ func getAdjustedStrokeEdgesCanvasFrame(proxy: GeometryProxy, rhLinePlotConfig: R
 struct RHLinePlot_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            RHLinePlot(nonPredictionCount: 0, values: [1,2,3,6,3,4,6])
+            RHLinePlot(nonPredictionCount: 0, values: [1,2,3,6,3,4,6], dates: [], nonPredictionDates: [], predictionDates: [])
         }.previewLayout(.fixed(width: 300, height: 300))
     }
 }

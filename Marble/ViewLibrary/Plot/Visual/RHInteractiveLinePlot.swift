@@ -24,6 +24,9 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
     
     let nonPredictionCount: Int
     let values: [Value]
+    let dates: [Date]
+    let nonPredictionDates: [Date]
+    let predictionDates: [Date]
     let lineSegmentStartingIndices: [Int]?
     let showGlowingIndicator: Bool
     
@@ -52,6 +55,9 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
     public init(
         nonPredictionCount: Int,
         values: [Value],
+        dates: [Date],
+        nonPredictionDates: [Date],
+        predictionDates: [Date],
         occupyingRelativeWidth: CGFloat = 1.0,
         showGlowingIndicator: Bool = false,
         lineSegmentStartingIndices: [Int]? = nil,
@@ -65,6 +71,9 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
     ) {
         self.nonPredictionCount = nonPredictionCount
         self.values = values
+        self.dates = dates
+        self.nonPredictionDates = nonPredictionDates
+        self.predictionDates = predictionDates
         self.occupyingRelativeWidth = occupyingRelativeWidth
         self.lineSegmentStartingIndices = lineSegmentStartingIndices
         self.didSelectValueAtIndex = didSelectValueAtIndex
@@ -98,6 +107,9 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
         return RHLinePlot(
             nonPredictionCount: nonPredictionCount,
             values: values,
+            dates: dates,
+            nonPredictionDates: nonPredictionDates,
+            predictionDates: predictionDates,
             occupyingRelativeWidth: occupyingRelativeWidth,
             showGlowingIndicator: showGlowingIndicator,
             lineSegmentStartingIndices: lineSegmentStartingIndices,
@@ -191,6 +203,9 @@ public extension RHInteractiveLinePlot where Indicator == GlowingIndicator {
     init(
         nonPredictionCount: Int,
         values: [Value],
+        dates: [Date],
+        nonPredictionDates: [Date],
+        predictionDates: [Date],
         occupyingRelativeWidth: CGFloat = 1.0,
         showGlowingIndicator: Bool = false,
         lineSegmentStartingIndices: [Int]? = nil,
@@ -203,6 +218,9 @@ public extension RHInteractiveLinePlot where Indicator == GlowingIndicator {
         self.init(
             nonPredictionCount: nonPredictionCount,
             values: values,
+            dates: dates,
+            nonPredictionDates: nonPredictionDates,
+            predictionDates: predictionDates,
             occupyingRelativeWidth: occupyingRelativeWidth,
             showGlowingIndicator: showGlowingIndicator,
             lineSegmentStartingIndices: lineSegmentStartingIndices,

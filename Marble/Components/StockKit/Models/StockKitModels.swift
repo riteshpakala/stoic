@@ -96,6 +96,15 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
                 return .volume(model)
             }
         }
+        
+        var symbol: String {
+            switch self {
+            case .volume:
+                return ""
+            default:
+                return "$"
+            }
+        }
     }
     
     public static func generate(stockData: [StockData], sentimentData: [StockSentimentData]) -> StockKitModels {
@@ -259,15 +268,16 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
                 default:
                     continue
                 }
-                
             }
-
         }
         
         newStock.dateData = .init(tradingDay)
         var historicalData = recentStock.historicalData
         historicalData?.append(recentStock)
+        
         newStock.historicalData = historicalData
+        
+        newStock.count = historicalData?.count ?? 0
         newStock.features = Momentum(
             momentum: newStock.close > recentStock.close ? 1 : -1,
             volatility: (newStock.close - recentStock.close)/recentStock.close,
@@ -329,7 +339,7 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
     public var low: SVMModel?
     public var volume: SVMModel?
     
-    public var currentType: ModelType = .none
+    public var currentType: ModelType = .open
     public var current: SVMModel? {
         switch currentType {
         case .open:

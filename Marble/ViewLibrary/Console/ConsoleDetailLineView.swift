@@ -63,10 +63,11 @@ class ConsoleDetailLineView: GraniteView {
     func updateData(_ payload: ConsoleDetailPayload) {
         self.payload = payload
         
-        currentPage?.someModel.plotData = payload.historicalTradingData.map( { ($0.dateData.asDate ?? Date(), CGFloat($0.close))  } )
-        print("{TEST 3} \(payload.days) \(currentPage?.someModel.plotData?.count)")
+        currentPage?.someModel.plotData = payload.historicalTradingData.prefix(payload.days).map( { ($0.dateData.asDate ?? Date(), CGFloat($0.charateristic(forModelType: payload.model.currentType)))  } )
+        
         currentPage?.someModel.trueDays = payload.days
         
+        currentPage?.someModel.modelType = payload.model.currentType
     }
     
     func updateThink(_ payload: ThinkPayload?) {
@@ -83,8 +84,8 @@ class ConsoleDetailLineView: GraniteView {
     
     func predictionUpdate(_ output: Double) {
         guard let payload = self.payload else { return }
-        print("{TEST} \(payload.currentTradingDay) \(payload.currentTradingDay.asDate())")
-        currentPage?.someModel.predictionPlotData = [(payload.currentTradingDay.asDate() ?? Date(), CGFloat(output))]
+        
+        currentPage?.someModel.predictionPlotData = payload.historicalTradingData.suffix(payload.historicalTradingData.count - payload.days).map( { ($0.dateData.asDate ?? Date(), CGFloat($0.charateristic(forModelType: payload.model.currentType)))  } ) + [(payload.currentTradingDay.asDate() ?? Date(), CGFloat(output))]
     }
     
     func dayAdded() {

@@ -31,6 +31,8 @@ struct ThinkReducer: Reducer {
             return
         }
         
+        state.predictionState = DetailView.DetailPredictionState.thinking.rawValue
+        
         stockKit.getValidMarketDays(forMonth: String(components.month), forYear: String(components.year), target: component)
     }
 }
@@ -58,15 +60,15 @@ struct ThinkGotValidTradingDaysReducer: Reducer {
         }
         
         let validDays = event.result.filter { $0.isOpen }
-        let upcomingDates = validDays.filter { $0.dateComponents.month > components.month || ($0.dateComponents.month == components.month && $0.dateComponents.day > components.day) }
+        let upcomingDates = validDays.filter { $0.dateComponents.month > components.month || ($0.dateComponents.month == components.month && $0.dateComponents.day > components.day) || ($0.dateComponents.year > components.year) }
         
         guard let nextDate = upcomingDates.sorted(by: { ($0.asDate ?? Date()).compare(($1.asDate ?? Date())) == .orderedAscending } ).first else {
             return
         }
         
-        guard let lastPrediction = state.lastPrediction else { print("{TEST 2} nada"); return }
+        guard let lastPrediction = state.lastPrediction else { return }
         
-        guard let models = StockKitModels.appendADay(models: payload.model, stockData: payload.historicalTradingData, sentimentData: lastPrediction.sentimentWeights, tradingDay: nextDate.asString) else { return }
+        guard let models = StockKitModels.appendADay(models: payload.model, stockData: payload.historicalTradingData, sentimentData: lastPrediction.sentimentWeights, tradingDay: payload.currentTradingDay) else { return }
         
         state.stockSentimentData?.append(lastPrediction.sentimentWeights)
         state.model = models.1
@@ -79,7 +81,6 @@ struct ThinkGotValidTradingDaysReducer: Reducer {
         state.consoleDetailPayload = newPayload
         
         sideEffects.append(EventBox.init(event: DetailEvents.ThinkResponse.init(payload: .init(payload: newPayload))))
-        print("{TEST 3} \(nextDate.asString) \(payload.currentTradingDay)")
     }
 }
 
@@ -182,8 +183,6 @@ struct ThinkResponseReducer: Reducer {
         component: inout Component<ReducerState>) {
         
         state.predictionState = DetailView.DetailPredictionState.done.rawValue
-        state.thinkPayload = event.payload
-        
-        print("{TEST 2} updated think")
+//        state.thinkPayload = event.payload
     }
 }

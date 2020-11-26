@@ -10,8 +10,13 @@ import Granite
 import Foundation
 import UIKit
 
-//MARK: Historical
+//MARK: Model Selector
+protocol ConsoleDetailModelViewDelegate: class {
+    func updateModel(_ type: StockKitModels.ModelType)
+}
 class ConsoleDetailModelView: GraniteView, PickerDelegate {
+    weak var delegate: ConsoleDetailModelViewDelegate?
+    
     lazy var modelPicker: GenericPicker = {
         return .init(color: GlobalStyle.Colors.purple)
     }()
@@ -22,6 +27,10 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
             color: GlobalStyle.Colors.purple)
         triangle.backgroundColor = GlobalStyle.Colors.black
         return triangle
+    }()
+    
+    lazy var indicatorContainer: UIView = {
+        return .init()
     }()
     
     var expand: Bool = false {
@@ -35,6 +44,7 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
                         make.top.equalToSuperview().offset(self.modelPicker.frame.origin.y)
                     }
                     
+                    self.modelPicker.expandedPadding = Int(self.cellsToViewWhenExpanded - 1)
                     self.modelPicker.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.75)
                 } else {
                     self.modelPicker.snp.remakeConstraints { make in
@@ -45,6 +55,7 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
                     }
                     
                     self.modelPicker.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.0)
+                    self.modelPicker.expandedPadding = 0
                     self.modelPicker.scrollTo(self.currentIndex, animated: true)
                 }
             }
@@ -84,20 +95,27 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
         modelPicker.pickerDelegate = self
         
         addSubview(modelPicker)
-        addSubview(indicator)
+        addSubview(indicatorContainer)
         
         self.modelPicker.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
+        indicatorContainer.addSubview(indicator)
+        self.indicatorContainer.snp.makeConstraints { make in
+            make.right.top.bottom.equalToSuperview()
+            make.width.equalTo(50)
+        }
+        
         self.indicator.snp.makeConstraints { make in
             make.right.equalTo(modelPicker.snp.right).offset(-GlobalStyle.padding)
             make.centerY.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.19)
+            make.height.equalToSuperview().multipliedBy(0.24)
             make.width.equalTo(indicator.snp.height).multipliedBy(1.3)
         }
         
-        indicator.addGestureRecognizer(tapGestureTableView)
+        self.indicator.isUserInteractionEnabled = false
+        indicatorContainer.addGestureRecognizer(tapGestureTableView)
     }
     
     required init?(coder: NSCoder) {
@@ -107,12 +125,16 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
     public func updateData(_ data: StockKitModels) {
         cellHeight = self.frame.height
             
-        modelPicker.data = StockKitModels.ModelType.allCases.map { "\($0)" }
+        modelPicker.data = StockKitModels.ModelType.allCases.filter { $0 != .none }.map { "\($0)" }
         modelPicker.expandedPadding = Int(cellsToViewWhenExpanded - 1)
     }
     
     func updateModel() {
+        guard let newType = StockKitModels.ModelType.init(rawValue: currentIndex) else {
+            return
+        }
         
+        delegate?.updateModel(newType)
     }
     
     @objc

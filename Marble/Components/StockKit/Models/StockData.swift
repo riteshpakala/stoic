@@ -16,6 +16,21 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         return .init(symbolName: "", dateData: .init(""), open: 0.0, high: 0.0, low: 0.0, close: 0.0, adjClose: 0.0, volume: 0.0)
     }
     
+    func charateristic(forModelType type: StockKitModels.ModelType) -> Double {
+        switch type {
+        case .open:
+            return open
+        case .close, .none:
+            return close
+        case .volume:
+            return volume
+        case .high:
+            return high
+        case .low:
+            return low
+        }
+    }
+    
     var symbolName: String
     var dateData: StockDateData
     var open: Double

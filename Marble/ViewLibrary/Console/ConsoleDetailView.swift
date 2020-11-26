@@ -157,6 +157,7 @@ class ConsoleDetailView: GraniteView {
             make.bottom.equalTo(sentimentView.snp.top).offset(-GlobalStyle.padding)
         }
         
+        modelPickerView.delegate = self
         predictionView.delegate = self
         sentimentView.delegate = self
         clipsToBounds = true
@@ -167,6 +168,8 @@ class ConsoleDetailView: GraniteView {
     }
     
     func updateData(_ payload: ConsoleDetailPayload) {
+        thinkingStopped()
+        
         stockSymbol = "$"+(payload.historicalTradingData.first?.symbolName ?? "")
         headerView.updateTradingDay(payload.currentTradingDay)
         
@@ -176,14 +179,15 @@ class ConsoleDetailView: GraniteView {
             payload.historicalTradingData.reversed(),
             payload.stockSentimentData)
         
+        lineView.updateData(payload)
+        
         predictionView.updateModel(
             model: payload.model,
             stockData: payload.historicalTradingData)
         
-        lineView.updateData(payload)
-        
         self.payload = payload
     }
+    
     
     func updateThink(_ payload: ThinkPayload?) {
         thinkingStopped()
@@ -192,7 +196,6 @@ class ConsoleDetailView: GraniteView {
             return
         }
         
-        print("{TEST} updating data")
         updateData(newPayload)
 //        if let sentiment = payload?.stockSentimentData {
 //            sentimentView.updateSlider(sentiment)
@@ -215,7 +218,7 @@ class ConsoleDetailView: GraniteView {
         
         let historicalFrame = modelPickerView.frame
         let historicalTableViewFrame = modelPickerView.modelPicker.frame
-        let historicalIndicator = modelPickerView.indicator.frame
+        let historicalIndicator = modelPickerView.indicatorContainer.frame
         
         let adjHistoricalTableViewFrame: CGRect = .init(
             origin: historicalFrame.origin,
@@ -235,6 +238,14 @@ class ConsoleDetailView: GraniteView {
         } else {
             return super.hitTest(point, with: event)
         }
+    }
+}
+
+extension ConsoleDetailView: ConsoleDetailModelViewDelegate {
+    func updateModel(_ type: StockKitModels.ModelType) {
+        guard let mutablePayload = self.payload else { return }
+        mutablePayload.model.currentType = type
+        updateData(mutablePayload)
     }
 }
 

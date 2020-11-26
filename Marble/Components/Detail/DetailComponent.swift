@@ -47,8 +47,11 @@ public class DetailComponent: Component<DetailState> {
                     GlobalDefaults.PredictionDays.self)),
             self.service))
         
-        
-        stockKit?.prepare()
+        if state.isCached {
+            sendEvent(StockKitEvents.StockKitIsPrepared.init(success: true, nextTradingDayIsAvailable: false))
+        } else {
+            stockKit?.prepare()
+        }
         
         //Onboarding
         if !service.center.onboardingDetailCompleted {
@@ -56,10 +59,6 @@ public class DetailComponent: Component<DetailState> {
                 self.service,
                 state: .init(GlobalDefaults.OnboardingDetail)),
                  display: .fit)
-        }
-        
-        if state.isCached {
-            sendEvent(StockKitEvents.StockKitIsPrepared.init(success: true, nextTradingDayIsAvailable: false))
         }
     }
     

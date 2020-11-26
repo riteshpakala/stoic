@@ -148,14 +148,19 @@ class ConsoleDetailPredictionView: GraniteView {
         stockData: [StockData]) {
         self.model = model
         self.stockData = stockData
+        
         predict()
     }
     
+    private var lastSentimentPositive: Double = 0.5
+    private var lastSentimentNegative: Double = 0.5
+    private var lastSentimentNeutral: Double = 0.0
+    private var lastSentimentCompound: Double = 0.0
     public func predict(
-        positive: Double = 0.5,
-        negative: Double = 0.5,
-        neutral: Double = 0.0,
-        compound: Double = 0.0) {
+        positive: Double? = nil,
+        negative: Double? = nil,
+        neutral: Double? = nil,
+        compound: Double? = nil) {
         
         stopAnimation()
         
@@ -177,10 +182,10 @@ class ConsoleDetailPredictionView: GraniteView {
                outputDimension: StockKitUtils.outDim)
             
             let sentimentWeights = StockSentimentData.emptyWithValues(
-                positive: positive,
-                negative: negative,
-                neutral: neutral,
-                compound: compound)
+                positive: positive ?? self?.lastSentimentPositive ?? 0.5,
+                negative: negative ?? self?.lastSentimentNegative ?? 0.5,
+                neutral: neutral ?? self?.lastSentimentNeutral ?? 0.5,
+                compound: compound ?? self?.lastSentimentCompound ?? 0.5)
             
             do {
                 let dataSet = StockKitUtils.Models.DataSet(
@@ -198,16 +203,15 @@ class ConsoleDetailPredictionView: GraniteView {
                print("Invalid data set created")
             }
             
-            //DEV:
             self?.model?.current?.predictValues(data: testData)
-            
-            if let set = self?.model?.current?.dataSet {
-                for item in set.inputs {
-                    print("{TEST} \(item)")
-                }
-            }
        
             DispatchQueue.main.async {
+                
+                self?.lastSentimentPositive = positive ?? self?.lastSentimentPositive ?? 0.0
+                self?.lastSentimentNegative = negative ?? self?.lastSentimentNegative ?? 0.0
+                self?.lastSentimentNeutral = neutral ?? self?.lastSentimentNeutral ?? 0.0
+                self?.lastSentimentCompound = compound ?? self?.lastSentimentCompound ?? 0.0
+                
                 guard let output = testData.singleOutput(index: 0) else {
                     self?.predictionLabel.text = "open: $⚠️\nclose: $⚠️"
                     return

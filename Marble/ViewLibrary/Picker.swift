@@ -211,6 +211,8 @@ extension Picker: UITableViewDelegate {
         didSelectRowAt indexPath: IndexPath) {
         
         pickerDelegate?.didSelect(index: indexPath.item)
+        
+        scrollTo(indexPath.item)
     }
     
     func tableView(

@@ -14,7 +14,9 @@ class SomePlotData: ObservableObject {
     typealias PlotData = RobinhoodPageViewModel.PlotData
     @Published var plotData: PlotData?
     @Published var predictionPlotData: PlotData = []
+    @Published var predictionDateData: PlotData = []
     @Published var trueDays: Int?
+    @Published var modelType: StockKitModels.ModelType = .none
 }
 struct RobinhoodPage: View {
     typealias PageComponent = (page: RobinhoodPage, host: UIView)
@@ -99,17 +101,17 @@ struct RobinhoodPage: View {
     }
     
     // MARK: Body
-    func readyPageContent(plotData: PlotData) -> some View {
+    func readyPageContent(plotData: PlotData, predictionPlotData: PlotData) -> some View {
 //        let firstPrice = plotData.first?.price ?? 0
 //        let lastPrice = plotData.last?.price ?? 0
 //        let themeColor = firstPrice <= lastPrice ? rhThemeColor : rhRedThemeColor
         return VStack {
             
             VStack(alignment: .leading, spacing: 0) {
-                stockHeaderAndPrice(plotData: plotData)
+                stockHeaderAndPrice(plotData: plotData+predictionPlotData)
             }.padding(.top, GlobalStyle.padding).padding(.leading, GlobalStyle.padding)
             VStack {
-                plotBody(plotData: plotData)
+                plotBody(plotData: plotData, predictionPlotData: predictionPlotData)
             }
 //            TimeDisplayModeSelector(
 //                currentTimeDisplayOption: $timeDisplayMode,
@@ -180,7 +182,7 @@ struct RobinhoodPage: View {
             if currentPlotData.isEmpty {
                 Text("Loading...")
             } else {
-                readyPageContent(plotData: currentPlotData + currentPredictionPlotData)
+                readyPageContent(plotData: currentPlotData, predictionPlotData: currentPredictionPlotData)
             }
         }
         .accentColor(rhThemeColor)
@@ -196,17 +198,24 @@ struct RobinhoodPage: View {
 
 // MARK:- Components
 extension RobinhoodPage {
-    func plotBody(plotData: PlotData) -> some View {
-        let values = plotData.map { $0.price }
+    func plotBody(plotData: PlotData, predictionPlotData: PlotData) -> some View {
+        let combined = (plotData + predictionPlotData)
+        let values = combined.map { $0.price }
+        let dates = combined.map { $0.time }
+        let nonPredictionDates = plotData.map { $0.time }
+        let predictionDates = predictionPlotData.map { $0.time }
         let currentIndex = self.currentIndex ?? (values.count - 1)
         // For value stick
-        let dateString = plotData[currentIndex].time.asString
+        let dateString = combined[currentIndex].time.asString
         
 //        let themeColor = values.last! >= values.first! ? rhThemeColor : rhRedThemeColor
         
         return RHInteractiveLinePlot(
             nonPredictionCount: someModel.trueDays ?? currentPlotData.count,
             values: values,
+            dates: dates,
+            nonPredictionDates: nonPredictionDates,
+            predictionDates: predictionDates,
             occupyingRelativeWidth: plotRelativeWidth,
             showGlowingIndicator: showGlowingIndicator,
             lineSegmentStartingIndices: plotDataSegments,
@@ -245,13 +254,13 @@ extension RobinhoodPage {
         let currentIndex = self.currentIndex ?? (plotData.count - 1)
         return HStack(spacing: 2) {
             
-            Text("$").background(with: Color.init(GlobalStyle.Colors.black.withAlphaComponent(0.75)))
+            Text(someModel.modelType.symbol).background(with: Color.init(GlobalStyle.Colors.black.withAlphaComponent(0.75))).frame(width: someModel.modelType == .volume ? 0 : 20)
             MovingNumbersView(
                 number: Double(plotData[currentIndex].price),
                 numberOfDecimalPlaces: 2,
                 verticalDigitSpacing: 0,
                 animationDuration: 0.3,
-                fixedWidth: 120) { (digit) in
+                fixedWidth: 240) { (digit) in
                     Text(digit)
             }
             .mask(LinearGradient(
@@ -261,7 +270,7 @@ extension RobinhoodPage {
                     Gradient.Stop(color: .black, location: 0.8),
                     Gradient.Stop(color: .clear, location: 1.0)]),
                 startPoint: .top,
-                endPoint: .bottom))
+                    endPoint: .bottom))
         }.font(Font.init(GlobalStyle.Fonts.courier(.large, .bold)))
     }
 }

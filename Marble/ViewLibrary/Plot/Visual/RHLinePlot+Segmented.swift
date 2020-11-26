@@ -18,7 +18,6 @@ extension RHLinePlot {
         // FIX: Here we make the canvas virtually larger to provide padding
         // so that when the edges are cut off, blurry part is still there.
         let adjustedEachBorderDueToBlur: CGFloat = {
-            print("{TEST 2} \(rhLinePlotConfig.useLaserLightLinePlotStyle)")
 //            if rhLinePlotConfig.useLaserLightLinePlotStyle {
 //                return 7.5 * rhLinePlotConfig.plotLineWidth
 //            } else {
@@ -44,8 +43,8 @@ extension RHLinePlot {
         // Draw each segment
         func drawSegment(path: inout Path, segment: (from: Int, to: Int)) {
             let segmentValues = values[segment.from..<segment.to]
+            let segmentedDates = dates[segment.from..<segment.to]
             
-            print("{TEST 4} c \(nonPredictionCount) \(segmentValues.count)")
             // The starting point of this segment (previous data point)
             // Note that when from is 0, this will be -1.
             let previousIndex = segment.from - 1
@@ -69,7 +68,6 @@ extension RHLinePlot {
                         x: pathBaseX + currentX,
                         y: pathBaseY + HEIGHT/2))
                 
-                print("{TEST} my ass is burnt")
                 return
             }
             
@@ -81,7 +79,7 @@ extension RHLinePlot {
             
             // Draw segments of (currentX, nextX)
             for (i, v) in segmentValues.enumerated() {
-                guard i < nonPredictionCount else { break }
+                guard !predictionDates.contains(segmentedDates[i]) else { break }
                 let nextX = currentX + lineSectionLength
                 let nextY = (1 - inverseValueHeightDifference! * CGFloat(v - lowest)) * HEIGHT
                 if currentX < 0 {
@@ -92,15 +90,14 @@ extension RHLinePlot {
                 }
                 currentX = nextX
                 currentY = nextY
-                
             }
             
         }
         
-        func drawPredictionSegment(path: inout Path, segment: (from: Int, to: Int)) {
+        func drawPredictionSegment(path: inout Path, segment: (from: Int, to: Int), index: Int) {
             let segmentValues = values[segment.from..<segment.to]
+            let segmentedDates = dates[segment.from..<segment.to]
             
-            print("{TEST 4} v \(nonPredictionCount) \(segmentValues.count)")
             // The starting point of this segment (previous data point)
             // Note that when from is 0, this will be -1.
             let previousIndex = segment.from - 1
@@ -123,7 +120,6 @@ extension RHLinePlot {
                     CGPoint(
                         x: pathBaseX + currentX,
                         y: pathBaseY + HEIGHT/2))
-                print("{TEST} heu")
                 return
             }
             
@@ -137,9 +133,10 @@ extension RHLinePlot {
             for (i, v) in segmentValues.enumerated() {
                 let nextX = currentX + lineSectionLength
                 let nextY = (1 - inverseValueHeightDifference! * CGFloat(v - lowest)) * HEIGHT
-                
-                if i + 1 >= nonPredictionCount {
-                    if i + 1 == nonPredictionCount {
+               
+                if predictionDates.contains(segmentedDates[i]) || segmentedDates[i] == nonPredictionDates.last {
+                    
+                    if segmentedDates[i] == nonPredictionDates.last {
                         // *Handle when previousIndex is -1,  currentX will be negative. We won't addLine here yet, just move.
                         path.move(to: CGPoint(x: pathBaseX + nextX, y: pathBaseY + nextY))
                     } else {
@@ -162,7 +159,7 @@ extension RHLinePlot {
             }
             
             let pathPrediction = Path { path in
-                return drawPredictionSegment(path: &path, segment: s)
+                return drawPredictionSegment(path: &path, segment: s, index: i)
             }
             
             /**
@@ -209,8 +206,8 @@ extension RHLinePlot {
                             // much more responsive for laser mode to opacity animation,
                             // but we have to fix its unintended effects.
                             .drawingGroup()
-                            .opacity(0.84)
-                            .foregroundColor(Color.init(GlobalStyle.Colors.purple))
+                            .opacity(self.getOpacity(forSegment: i, customOpacity: 0.84))
+                            .foregroundColor(themeColor)
                     })
             }
         }
