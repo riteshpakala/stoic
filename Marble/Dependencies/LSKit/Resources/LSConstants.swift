@@ -137,18 +137,27 @@ struct LSConst {
         static var isIPhoneXMax : Bool {
             return max(width, height) >= 896
         }
+        
+        static var isIPhone : Bool {
+            return UIDevice.current.userInterfaceIdiom == .phone
+        }
+        
         static var isIPad : Bool {
             return UIDevice.current.userInterfaceIdiom == .pad
         }
+        
         static var isLandscapeLeft : Bool {
             return UIDevice.current.orientation == .landscapeLeft
         }
+        
         static var isLandscapeRight : Bool {
             return UIDevice.current.orientation == .landscapeRight
         }
+        
         static var isPortrait : Bool {
             return UIDevice.current.orientation != .landscapeLeft || UIDevice.current.orientation != .landscapeRight
         }
+        
         static var isDarkMode: Bool {
             if #available(iOS 12.0, *) {
                 return UIScreen.main.traitCollection.userInterfaceStyle == .dark
@@ -156,6 +165,7 @@ struct LSConst {
                 return false
             }
         }
+        
         static var isConnected : Bool = false
     }
     

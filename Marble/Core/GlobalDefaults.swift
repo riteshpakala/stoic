@@ -150,7 +150,13 @@ public struct GlobalDefaults: LocalStorageDefaults {
         }
         
         public var isActive: Bool {
+            #if DEBUG
+            print("{TEST} isActive")
+            return true
+            #else
+            
             return self != Subscription.none
+            #endif
         }
         
         public static func from(_ value: Int?) -> GlobalDefaults.Subscription {

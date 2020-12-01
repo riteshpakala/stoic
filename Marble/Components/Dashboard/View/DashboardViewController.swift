@@ -40,36 +40,40 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
 //            print("{TEST 2} \(error.localizedDescription)")
 //        }
         //DEV:
-        guard let predictions = component?.service.center.getMergedStockModels(from: .main) else {
-            print("{CoreData} none found")
-            return
-        }
-        print("{CoreData} \(predictions.count)")
-
-        var stockModel: StockModel? = nil
-        let prediction = predictions[1]
-//        if let prediction = predictions[1] {
-            print("{CoreData} \(prediction.models?.count)")
-
-            prediction.models?.forEach { model in
-                if let stockModel2 = model as? StockModelObject {
-                    stockModel = StockModel.init(from: stockModel2)
-                }
-
-            }
-//            let model = StockModel.init(from: prediction)
-//
-            if stockModel != nil {
-
-                sendEvent(DashboardEvents.ShowDetail.stored(stockModel!))
-            }
+//        guard let predictions = component?.service.center.getMergedStockModels(from: .main) else {
+//            print("{CoreData} none found")
+//            return
 //        }
-        
+//        print("{CoreData} \(predictions.count)")
+//
+//        var stockModel: StockModel? = nil
+//        let prediction = predictions[0]
+////        if let prediction = predictions[1] {
+//            print("{CoreData} \(prediction.models?.count)")
+//
+//            prediction.models?.forEach { model in
+//                if let stockModel2 = model as? StockModelObject {
+//                    stockModel = StockModel.init(from: stockModel2)
+//                }
+//
+//            }
+////            let model = StockModel.init(from: prediction)
+////
+//            if stockModel != nil {
+//
+//                sendEvent(DashboardEvents.ShowDetail.stored(stockModel!))
+//            }
+//        }
+        ///////////// for the coreData logic above*
         //DEV:
 //        sendEvent(DashboardEvents.ShowDetail.search(.init(
 //            exchangeName: "NASDAQ",
-//            symbolName: "MSFT",
-//            companyName: "Microsoft")))
+//            symbolName: "SHOP",
+//            companyName: "Shopify")))
+        
+        let vaderTestOutput = VaderSentiment.predict("What is it that makes so sticky? How durable are its competitive advantages? ")
+        print("{TEST 4} \(vaderTestOutput.asString)")
+        
         
         //DEV:
 //        sendEvent(SubscribeEvents.Show())

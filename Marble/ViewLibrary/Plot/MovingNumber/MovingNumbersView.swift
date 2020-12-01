@@ -84,7 +84,7 @@ struct MovingNumbersView<Element: View>: View {
         // Example: 123.45
         
         // Whole - 123
-        let wholeElements = getWholeVisualElements(whole: Int(whole)) // [3,2,1]
+        let wholeElements = getWholeVisualElements(whole: Int(whole.isNaN ? 0 : whole)) // [3,2,1]
         
         let negativeElement: [VisualElementType] = isNegative ? [.minus] : []
         let allElements: [VisualElementType]

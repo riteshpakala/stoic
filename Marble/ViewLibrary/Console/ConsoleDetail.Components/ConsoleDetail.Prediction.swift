@@ -24,10 +24,13 @@ class ConsoleDetailPredictionView: GraniteView {
         view.clipsToBounds = false
         return view
     }()
+    
     lazy var thinkTrigger: UIView = {
         let view: UIView = .init()
         view.isUserInteractionEnabled = true
         view.clipsToBounds = false
+        view.backgroundColor = GlobalStyle.Colors.black.withAlphaComponent(0.75)
+        
         return view
     }()
     

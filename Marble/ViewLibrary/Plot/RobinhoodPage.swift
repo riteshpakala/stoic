@@ -21,7 +21,6 @@ class SomePlotData: ObservableObject {
 struct RobinhoodPage: View {
     typealias PageComponent = (page: RobinhoodPage, host: UIView)
     typealias PlotData = RobinhoodPageViewModel.PlotData
-    static let symbol = "IBM"
     
     @State var timeDisplayMode: TimeDisplayOption = .daily
     @State var isLaserModeOn = false

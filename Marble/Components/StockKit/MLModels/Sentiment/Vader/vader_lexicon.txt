@@ -7768,3 +7768,5 @@ surge  3.0
 surges  3.0
 surged  3.0
 skyrocket  3.0
+record-setting 1.0
+sticky    1.1    0.53852    [0, 2, 1, 1, 1, 1, 2, 1, 1, 1]

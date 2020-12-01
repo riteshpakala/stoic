@@ -114,6 +114,8 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
             make.width.equalTo(indicator.snp.height).multipliedBy(1.3)
         }
         
+        modelPicker.expandedPadding = Int(cellsToViewWhenExpanded - 1)
+        
         self.indicator.isUserInteractionEnabled = false
         indicatorContainer.addGestureRecognizer(tapGestureTableView)
     }
@@ -126,7 +128,6 @@ class ConsoleDetailModelView: GraniteView, PickerDelegate {
         cellHeight = self.frame.height
             
         modelPicker.data = StockKitModels.ModelType.allCases.filter { $0 != .none }.map { "\($0)" }
-        modelPicker.expandedPadding = Int(cellsToViewWhenExpanded - 1)
     }
     
     func updateModel() {

@@ -140,7 +140,7 @@ class ConsoleDetailSentimentView: GraniteView {
             make.left.equalToSuperview().offset(GlobalStyle.padding)
             make.right.equalToSuperview().offset(-GlobalStyle.padding)
             make.height.equalToSuperview().multipliedBy(0.75)
-            make.bottom.equalTo(-GlobalStyle.largePadding)
+            make.bottom.equalTo(-GlobalStyle.padding)
         }
         
         refineSlider.snp.makeConstraints { make in
@@ -153,11 +153,11 @@ class ConsoleDetailSentimentView: GraniteView {
         
         seperator1.snp.makeConstraints { make in
             make.width.equalTo(GlobalStyle.spacing/2)
-            make.height.equalToSuperview().multipliedBy(0.66)
+            make.height.equalToSuperview().multipliedBy(0.6)
         }
         seperator2.snp.makeConstraints { make in
             make.width.equalTo(GlobalStyle.spacing/2)
-            make.height.equalToSuperview().multipliedBy(0.66)
+            make.height.equalToSuperview().multipliedBy(0.6)
         }
         
         refineLabel.sizeToFit()

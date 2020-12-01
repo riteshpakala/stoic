@@ -76,7 +76,7 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
         var inDim: Int {
             switch self {
             case .volume:
-                return 7
+                return 6
             default:
                 return 8
             }
@@ -275,13 +275,9 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
         var historicalData = recentStock.historicalData
         historicalData?.append(recentStock)
         
-        newStock.historicalData = historicalData
-        
-        newStock.count = historicalData?.count ?? 0
-        newStock.features = Momentum(
-            momentum: newStock.close > recentStock.close ? 1 : -1,
-            volatility: (newStock.close - recentStock.close)/recentStock.close,
-            dayAverage: (newStock.close + newStock.open)/2)
+        if let historical = historicalData, let maxRSI = recentStock.rsi?.maxRSI {
+            _ = newStock.update(historicalTradingData: historical, rsiMax: maxRSI)
+        }
         
         var modelsToAppend: [Model] = []
         for type in ModelType.allCases {

@@ -133,11 +133,11 @@ class ConsoleDetailView: GraniteView {
         
         sentimentView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(baseSize.height*0.2 + GlobalStyle.largePadding)
+            make.height.equalTo(baseSize.height*0.2 + GlobalStyle.padding)
         }
 //
         predictionView.snp.makeConstraints { make in
-            make.bottom.equalTo(sentimentView.snp.top).offset(-GlobalStyle.largePadding)
+            make.bottom.equalTo(sentimentView.snp.top).offset(-GlobalStyle.padding)
             make.centerX.equalToSuperview()
             make.size.equalTo(baseSize.height*0.12)
         }

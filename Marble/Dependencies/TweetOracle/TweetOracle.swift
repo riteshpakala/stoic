@@ -196,10 +196,11 @@ class TweetOracle: NSObject {
 
                                 let prediction = VaderSentiment.predict(metadata.text)
                                 let theSentiment: Bool = prediction.compound != 0
-                                
+                                print("%%%%%%%%%\n Sentiment Candidate \n%%%%%%\n\n")
+                                print(metadata.toString)
+                                print("%%%%%%%%%\n query: \(query) :: \(prediction.asString) \n%%%%%%\n\n")
                                 if theSentiment {
-//                                    print(metadata.toString)
-//                                    print("%%%%%%%%%\n query: \(query) :: \(prediction.asString) \n%%%%%%\n\n")
+                                    
                                     self.results.append((metadata.asTweet, prediction))
                                     
                                     if oracle.immediate {

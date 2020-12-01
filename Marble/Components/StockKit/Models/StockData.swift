@@ -42,18 +42,10 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
     var count: Int = 0
     var historicalData: [StockData]? = nil {
         didSet {
-            guard let history = historicalData else { return }
-            
-            let historicalFeatures = history.map { $0.features }
-            let sumOfMomentums: Double = Double(historicalFeatures.map { $0?.momentum ?? 0 }.reduce(0, +))
-            let sumOfVolatilities: Double = (historicalFeatures.map { $0?.volatility ?? 0.0 }.reduce(0, +))
-            let volumeAVG = Double(history.map { $0.volume }.reduce(0, +)) / Double(history.count)
-            let sma20 = Double(historicalFeatures.suffix(20).map { $0?.dayAverage ?? 0 }.reduce(0, +)) / (20.0)
-            averages = Averages(
-                momentum: sumOfMomentums/Double(historicalFeatures.count),
-                volatility: sumOfVolatilities/Double(historicalFeatures.count),
-                volume: volumeAVG,
-                sma20: sma20)
+            guard var history = historicalData else { return }
+            averages = Averages(history: history)
+            history.append(self)
+            updatedAverages = Averages(history: history)
         }
     }
     
@@ -69,33 +61,18 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
     // The averages that "lead" to this stocks stats
     var averages: Averages? = nil
     // The averages including this stock's data
-    var updatedAverages: Averages? {
-        guard let thisFeature = features,
-              let history = historicalData else { return nil}
-        
-        let historicalFeatures = history.map { $0.features }
-        let sumOfMomentums: Double = Double(historicalFeatures.map { $0?.momentum ?? 0 }.reduce(0, +) + thisFeature.momentum)
-        let sumOfVolatilities: Double = (historicalFeatures.map { $0?.volatility ?? 0.0 }.reduce(0, +)) + thisFeature.volatility
-        let volumeAVG = (Double(history.map { $0.volume }.reduce(0, +)) + self.volume) / Double(history.count + 1)
-        let sma20 = Double(historicalFeatures.suffix(19).map { $0?.dayAverage ?? 0 }.reduce(0, +) + thisFeature.dayAverage) / (20.0)
-        
-        return Averages(
-            momentum: sumOfMomentums/Double(historicalFeatures.count + 1),
-            volatility: sumOfVolatilities/Double(historicalFeatures.count + 1),
-            volume: volumeAVG,
-            sma20: sma20)
-    }
-    
+    var updatedAverages: Averages? = nil
     
     var updatedRSI: RSI {
-        if let history = historicalData?.suffix(PredictionRules().rsiMaxHistorical) {
+        if let history = historicalData?.suffix(rsi?.maxRSI ?? PredictionRules().rsiMaxHistorical) {
             return RSI(
                 open: StockKitUtils.calculateRsi(
                     history.map { $0.open } + [open]),
                 close: StockKitUtils.calculateRsi(
-                    history.map { $0.close } + [close]))
+                    history.map { $0.close } + [close]),
+                maxRSI: rsi?.maxRSI ?? PredictionRules().rsiMaxHistorical)
         } else {
-            return rsi ?? .init(open: 0.5, close: 0.5)
+            return rsi ?? .init(open: 0.5, close: 0.5, maxRSI: rsi?.maxRSI ?? PredictionRules().rsiMaxHistorical)
         }
     }
     
@@ -132,6 +109,7 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         let rsi = coder.decodeObject(forKey: "rsi") as? RSI
         let features = coder.decodeObject(forKey: "features") as? Momentum
         let averages = coder.decodeObject(forKey: "averages") as? Averages
+        let updatedAverages = coder.decodeObject(forKey: "updatedAverages") as? Averages
 
         self.init(
             symbolName: symbolName,
@@ -147,6 +125,7 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         self.rsi = rsi
         self.features = features
         self.averages = averages
+        self.updatedAverages = updatedAverages
         self.count = historicalData?.count ?? 0
     }
     
@@ -163,6 +142,7 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         coder.encode(rsi, forKey: "rsi")
         coder.encode(features, forKey: "features")
         coder.encode(averages, forKey: "averages")
+        coder.encode(updatedAverages, forKey: "updatedAverages")
     }
     
     public func update(
@@ -183,10 +163,7 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
                 let stock = sortedHistory[i]
                 let nextStock = sortedHistory[i+1]
                 
-                stock.features = Momentum(
-                    momentum: stock.close > nextStock.close ? 1 : -1,
-                    volatility: (stock.close - nextStock.close)/nextStock.close,
-                    dayAverage: (stock.close + stock.open)/2)
+                stock.features = Momentum(prevStock: stock, nextStock: nextStock)
                 
                 sortedHistory[i] = stock
             }
@@ -205,10 +182,7 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         }
         
         if let nextStock = sortedHistory.first {
-            self.features = Momentum(
-                momentum: self.close > nextStock.close ? 1 : -1,
-                volatility: (self.close - nextStock.close)/nextStock.close,
-                dayAverage: (self.close + self.open)/2)
+            self.features = Momentum(prevStock: self, nextStock: nextStock)
         }
         
         self.historicalData = sortedHistory
@@ -218,7 +192,8 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
                 open: StockKitUtils.calculateRsi(
                     cleanedHistoryForRSI.map { $0.open }),
                 close: StockKitUtils.calculateRsi(
-                    cleanedHistoryForRSI.map { $0.close }))
+                    cleanedHistoryForRSI.map { $0.close }),
+                maxRSI: rsiMax)
         }
         
         count = self.historicalData?.count ?? 0
