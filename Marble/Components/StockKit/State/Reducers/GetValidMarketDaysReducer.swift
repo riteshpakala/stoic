@@ -73,13 +73,12 @@ struct GetValidMarketDaysResponseReducer: Reducer {
         
         state.nextValidTradingDay = filteredForValidCurrent.first
         //
-        
         //MARK: Filter the valid trading days up to the next trading day
         var filteredForPrevious = stockDateDataOpen.filter {
                ($0.dateComponents.month == currentMonth
                && $0.dateComponents.day < currentDay) ||
-               ($0.dateComponents.month < currentMonth) ||
-               ($0.dateComponents.year < currentYear )
+               ($0.dateComponents.month < currentMonth && $0.dateComponents.year <= currentYear) ||
+               ($0.dateComponents.year < currentYear)
         }.sorted(by: { ($0.asDate ?? Date()).compare(($1.asDate ?? Date())) == .orderedDescending } )
         
         guard filteredForPrevious.count > 0 else {

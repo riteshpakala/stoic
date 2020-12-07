@@ -29,6 +29,8 @@ class TweetOracle: NSObject {
     let swifter: Swifter
     private var searchPayload: StockSearchPayload?
 
+    
+    let stoicSentiment: StoicSentimentModel = .init()
     private var results: [(Tweet, VaderSentimentOutput)] = []
     private var emptyPageCount: Int = 0
     private var maxEmptyPages: Int = 4
@@ -156,7 +158,7 @@ class TweetOracle: NSObject {
                             let symbols: [String] = (entities?["symbols"]?.array?.map({ $0.object?["text"]?.string ?? "" })) ?? []
                             let text: String = object?["text"]?.string ?? ""
                             let createdAt = object?["created_at"]?.string ?? ""
-                            
+                           
                             let metadata: TweetMetadata = .init(
                                 name: name,
                                 followersCount: Int(followers),
@@ -186,21 +188,22 @@ class TweetOracle: NSObject {
 //                            }
                             //
                             
-                            
-                            let theURLs: Bool = metadata.urls.isEmpty || (self.cycleCount > 0 && metadata.urls.count <= 1)
+                            //TODO: Used to be no links, but we should scrape the link soon
+                            // ...
+                            //
+                            let theURLs: Bool = metadata.urls.isEmpty || (text.count > 24)
                             
                             let collected: [String] = self.results.map({ $0.0.text.lowercased() })
                             let theDupe: Bool = !collected.contains(text.lowercased())
                             
                             if (theCashtag || theCompany), theURLs, theDupe {
 
-                                let prediction = VaderSentiment.predict(metadata.text)
-                                let theSentiment: Bool = prediction.compound != 0
-                                print("%%%%%%%%%\n Sentiment Candidate \n%%%%%%\n\n")
-                                print(metadata.toString)
-                                print("%%%%%%%%%\n query: \(query) :: \(prediction.asString) \n%%%%%%\n\n")
-                                if theSentiment {
-                                    
+                                if let prediction = self.stoicSentiment.predict(metadata.text) {
+//                                let theSentiment: Bool = prediction.compound != 0
+                                    print("%%%%%%%%%\n Sentiment Candidate \n%%%%%%\n\n")
+                                    print(metadata.toString)
+                                    print(prediction.asString)
+                                    print("%%%%%%%%%\n query: \(query) :: \(prediction.asString) \n%%%%%%\n\n")
                                     self.results.append((metadata.asTweet, prediction))
                                     
                                     if oracle.immediate {
@@ -208,6 +211,7 @@ class TweetOracle: NSObject {
                                     }
                                 }
                             } else {
+                                print("{TEST-error} \(metadata.text) \(theCashtag) \(theCompany) \(theURLs) \(theDupe)")
 //                                print(metadata.toString)
 //                                print("###########\n errror :: query: \(query) \n###########\n\n")
                             }

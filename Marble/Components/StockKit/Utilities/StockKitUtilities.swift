@@ -38,7 +38,6 @@ public struct StockKitUtils {
     }
     
     public struct Models {
-        public static let engine: String = "david.v0.00.00"
         let david: SVMModel
         
         public struct DataSet {
@@ -72,11 +71,6 @@ public struct StockKitUtils {
                 self.features = stock.features ?? .zero
                 self.averages = (updated ? stock.updatedAverages : stock.averages) ?? .zero
                 self.sentiment = sentiment
-                
-                if updated {
-                    print("{TEST 4} \(stock.updatedAverages?.momentum(forModelType: modelType))")
-                }
-                
             }
             
             public var asArray: [Double] {
@@ -89,8 +83,7 @@ public struct StockKitUtils {
                             open / averages.sma20,
                             sentiment.posAverage,
                             sentiment.negAverage,
-                            sentiment.neuAverage,
-                            sentiment.compoundAverage
+                            sentiment.neuAverage
                        ]
                 case .close, .none:
                     return [
@@ -100,8 +93,7 @@ public struct StockKitUtils {
                             close / averages.sma20,
                             sentiment.posAverage,
                             sentiment.negAverage,
-                            sentiment.neuAverage,
-                            sentiment.compoundAverage
+                            sentiment.neuAverage
                        ]
                 case .high:
                     return [
@@ -111,8 +103,7 @@ public struct StockKitUtils {
                             high / averages.sma20,
                             sentiment.posAverage,
                             sentiment.negAverage,
-                            sentiment.neuAverage,
-                            sentiment.compoundAverage
+                            sentiment.neuAverage
                        ]
                 case .low:
                     return [
@@ -122,8 +113,7 @@ public struct StockKitUtils {
                             low / averages.sma20,
                             sentiment.posAverage,
                             sentiment.negAverage,
-                            sentiment.neuAverage,
-                            sentiment.compoundAverage
+                            sentiment.neuAverage
                        ]
                 case .volume:
                     return [
@@ -131,8 +121,7 @@ public struct StockKitUtils {
                             volume / averages.volume,
                             sentiment.posAverage,
                             sentiment.negAverage,
-                            sentiment.neuAverage,
-                            sentiment.compoundAverage
+                            sentiment.neuAverage
                        ]
                 
                 }

@@ -21,7 +21,7 @@ struct SubscribeStyle {
     
     static var imageSize: CGSize {
         if LSConst.Device.isIPhoneX {
-            return .init(width: 60, height: 180)
+            return .init(width: 60, height: 160)
         } else {
             return .init(width: 60, height: 240)
         }

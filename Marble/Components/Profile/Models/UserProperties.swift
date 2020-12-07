@@ -60,7 +60,9 @@ class UserProperties: NSObject {
             if let symbolName = prediction.stock.symbolName {
 
                 if let stockData = stockPredictionsTradingDayResults[symbolName]?[prediction.nextTradingDay] {
-                    totalPredictionErrors += (prediction.close - stockData.close) / stockData.close
+                    
+                    let stockValue = stockData.charateristic(forModelType: StockKitModels.ModelType.forValue(prediction.type))
+                    totalPredictionErrors += (prediction.value - stockValue) / stockValue
                 }
             }
         }

@@ -38,16 +38,16 @@ class ConsoleDetailSentimentView: GraniteView {
         return view
     }()
     
-    lazy var refineSlider: UISlider = {
-        let view: UISlider = .init(frame: .zero)
+    lazy var refineSlider: CustomSlider = {
+        let view: CustomSlider = .init(frame: .zero)
         view.tintColor = GlobalStyle.Colors.orange
-        view.setValue(0.0, animated: false)
+        view.setValue(0.5, animated: false)
         view.addTarget(self, action: #selector(self.sliderValue(_:)), for: .valueChanged)
         return view
     }()
     
-    lazy var slider: UISlider = {
-        let view: UISlider = .init(frame: .zero)
+    lazy var slider: CustomSlider = {
+        let view: CustomSlider = .init(frame: .zero)
         view.tintColor = GlobalStyle.Colors.orange
         view.setValue(0.5, animated: false)
         view.addTarget(self, action: #selector(self.sliderValue(_:)), for: .valueChanged)
@@ -56,13 +56,13 @@ class ConsoleDetailSentimentView: GraniteView {
     
     lazy var seperator1: UIView = {
         let label = UIView.init()
-        label.backgroundColor = GlobalStyle.Colors.orange
+        label.backgroundColor = .clear
         return label
     }()
     
     lazy var seperator2: UIView = {
         let label = UIView.init()
-        label.backgroundColor = GlobalStyle.Colors.orange
+        label.backgroundColor = .clear
         return label
     }()
     
@@ -72,6 +72,7 @@ class ConsoleDetailSentimentView: GraniteView {
         label.textColor = GlobalStyle.Colors.orange
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.numberOfLines = 1
+        label.isHidden = true
         label.text = "neutral".localized
         return label
     }()
@@ -82,7 +83,8 @@ class ConsoleDetailSentimentView: GraniteView {
         label.textColor = GlobalStyle.Colors.orange
         label.font = GlobalStyle.Fonts.courier(.small, .bold)
         label.numberOfLines = 1
-        label.text = "[50%:50%]"
+        label.text = "[25%:25%]"
+        label.isHidden = true
         return label
     }()
     
@@ -114,15 +116,15 @@ class ConsoleDetailSentimentView: GraniteView {
                 refineSlider,
                 seperator1,
                 slider,
-                seperator2,
-                compoundSlider])
+                seperator2])
+//                compoundSlider])
         stack.alignment = .center
         stack.distribution = .fill
         stack.axis = .horizontal
-        stack.setCustomSpacing(GlobalStyle.padding, after: refineSlider)
-        stack.setCustomSpacing(GlobalStyle.padding, after: seperator1)
-        stack.setCustomSpacing(GlobalStyle.padding, after: slider)
-        stack.setCustomSpacing(GlobalStyle.padding, after: seperator2)
+        stack.setCustomSpacing(GlobalStyle.padding + GlobalStyle.spacing, after: refineSlider)
+        stack.setCustomSpacing(GlobalStyle.padding + GlobalStyle.spacing, after: seperator1)
+        stack.setCustomSpacing(GlobalStyle.padding + GlobalStyle.spacing, after: slider)
+//        stack.setCustomSpacing(GlobalStyle.padding, after: seperator2)
         return stack
     }()
     
@@ -133,36 +135,35 @@ class ConsoleDetailSentimentView: GraniteView {
         addSubview(hStack)
         addSubview(emotionLabel)
         addSubview(refineLabel)
-        addSubview(compoundLabel)
+//        addSubview(compoundLabel)
         addSubview(emotionTitleLabel)
         
         hStack.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(GlobalStyle.padding)
-            make.right.equalToSuperview().offset(-GlobalStyle.padding)
+            make.right.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.75)
             make.bottom.equalTo(-GlobalStyle.padding)
         }
         
         refineSlider.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.24)
+            make.width.equalToSuperview().multipliedBy(0.27)
         }
         
-        compoundSlider.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.24)
-        }
+//        compoundSlider.snp.makeConstraints { make in
+//            make.width.equalToSuperview().multipliedBy(0.24)
+//        }
         
         seperator1.snp.makeConstraints { make in
             make.width.equalTo(GlobalStyle.spacing/2)
-            make.height.equalToSuperview().multipliedBy(0.6)
         }
+        
         seperator2.snp.makeConstraints { make in
             make.width.equalTo(GlobalStyle.spacing/2)
-            make.height.equalToSuperview().multipliedBy(0.6)
         }
         
         refineLabel.sizeToFit()
         emotionLabel.sizeToFit()
-        compoundLabel.sizeToFit()
+//        compoundLabel.sizeToFit()
         emotionTitleLabel.sizeToFit()
         
         refineLabel.snp.makeConstraints { make in
@@ -171,30 +172,23 @@ class ConsoleDetailSentimentView: GraniteView {
         emotionLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.25)
         }
-        compoundLabel.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(0.25)
-        }
+//        compoundLabel.snp.makeConstraints { make in
+//            make.width.equalToSuperview().multipliedBy(0.25)
+//        }
         
-        emotionTitleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(GlobalStyle.padding)
-            make.right.equalToSuperview().offset(-GlobalStyle.padding)
-            make.top.equalToSuperview()
-            make.height.equalTo(emotionTitleLabel.frame.height)
-        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        
-        emotionLabel.center = .init(
-            x: self.center.x,
-            y: hStack.frame.maxY)
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//
+//        emotionLabel.center = .init(
+//            x: self.center.x + (self.frame.width * 0.2),
+//            y: hStack.frame.maxY)
+//    }
     
     func updateSlider(
         _ sentiment: StockSentimentData) {
@@ -203,13 +197,10 @@ class ConsoleDetailSentimentView: GraniteView {
                 Float(sentiment.neuAverage),
                 animated: true)
             
+            
+            let newMax = (1.0 - sentiment.neuAverage)
             self.slider.setValue(
-                Float(0.5 + (0.5*(sentiment.posAverage-sentiment.negAverage))),
-                animated: true)
-            
-            
-            self.compoundSlider.setValue(
-                Float(0.5*(1.0 + sentiment.compoundAverage)),
+                Float(newMax + (newMax*(sentiment.posAverage-sentiment.negAverage))),
                 animated: true)
             
             self.updateEmotionCharacteristics(
@@ -244,14 +235,13 @@ class ConsoleDetailSentimentView: GraniteView {
         var compound = round((compoundValue1 - compoundValue2)*100)/100
         compound = compound > -0.01 && compound < 0.01 ? 0.0 : compound
         
-        updateEmotionCharacteristics(
+        self.updateEmotionCharacteristics(
             neuPercent: neuPercent,
             negPercent: negPercent,
             posPercent: posPercent,
             compound: compound)
         
-        
-        updateEmotionTrack()
+        self.updateEmotionTrack()
         
         delegate?.sentimentChanged(
             Double(posValue),
@@ -270,7 +260,7 @@ class ConsoleDetailSentimentView: GraniteView {
         
         refineLabel.text = "Δ:\(neuPercent)%"
         emotionLabel.text = "[\(negPercent)%:\(posPercent)%]"
-        compoundLabel.text = "λ:\(compound)"
+//        compoundLabel.text = "λ:\(compound)"
         
         var characteristics: [SentimentDetail] = []
         
@@ -302,11 +292,20 @@ class ConsoleDetailSentimentView: GraniteView {
         
         let finalStatement: String = characteristics.map { $0.rawValue.localized }.joined(separator: " ")
         emotionTitleLabel.text = finalStatement
+        emotionTitleLabel.frame.size = .init(width: self.frame.width, height: emotionLabel.frame.size.height)
     }
     
     func updateEmotionTrack() {
+        guard slider.thumbCenterX != .zero && refineSlider.thumbCenterX != .zero else { return }
+        emotionLabel.isHidden = false
         refineLabel.isHidden = false
-        compoundLabel.isHidden = false
+        emotionTitleLabel.isHidden = false
+//        compoundLabel.isHidden = false
+        
+//        emotionTitleLabel.sizeToFit()
+        emotionTitleLabel.center = .init(
+            x: self.center.x + (GlobalStyle.padding*3) + (GlobalStyle.spacing*3),
+            y: self.frame.minY + (GlobalStyle.spacing))
         
         emotionLabel.center = .init(
             x: slider.thumbCenterX + GlobalStyle.padding,
@@ -316,15 +315,34 @@ class ConsoleDetailSentimentView: GraniteView {
             x: refineSlider.thumbCenterX + GlobalStyle.padding,
             y: hStack.frame.maxY)
         
-        compoundLabel.center = .init(
-            x: compoundSlider.thumbCenterX + GlobalStyle.padding,
-            y: hStack.frame.maxY)
+//        compoundLabel.center = .init(
+//            x: compoundSlider.thumbCenterX + GlobalStyle.padding,
+//            y: hStack.frame.maxY)
     }
 }
-extension UISlider {
+extension CustomSlider {
     var thumbCenterX: CGFloat {
         let trackRect = self.trackRect(forBounds: frame)
         let thumbRect = self.thumbRect(forBounds: bounds, trackRect: trackRect, value: value)
         return thumbRect.midX
     }
+}
+
+class CustomSlider: UISlider {
+
+    private let trackHeight: CGFloat = 8
+
+    override func trackRect(forBounds bounds: CGRect) -> CGRect {
+        let point = CGPoint(x: bounds.minX, y: bounds.midY)
+        return CGRect(origin: point, size: CGSize(width: bounds.width, height: trackHeight))
+    }
+
+//    private let thumbWidth: Float = 52
+//    lazy var startingOffset: Float = 0 - (thumbWidth / 2)
+//    lazy var endingOffset: Float = thumbWidth
+//
+//    override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
+//        let xTranslation =  startingOffset + (minimumValue + endingOffset) / maximumValue * value
+//        return super.thumbRect(forBounds: bounds, trackRect: rect.applying(CGAffineTransform(translationX: CGFloat(xTranslation), y: 0)), value: value)
+//    }
 }

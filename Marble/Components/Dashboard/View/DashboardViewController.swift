@@ -28,7 +28,6 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
             handler: observeSettingsDidUpdate(_:),
             async: .main)
         
-        
 //        Cryptowatcher().getMarketPrice(exchange: "coinbase-pro", pair: "btcusd").then { response in
 //          let price = response.result.price
 //          let remainingAllowance = response.allowance.remaining
@@ -68,11 +67,11 @@ public class DashboardViewController: GraniteViewController<DashboardState> {
         //DEV:
 //        sendEvent(DashboardEvents.ShowDetail.search(.init(
 //            exchangeName: "NASDAQ",
-//            symbolName: "SHOP",
-//            companyName: "Shopify")))
+//            symbolName: "MSFT",
+//            companyName: "Microsoft")))
         
-        let vaderTestOutput = VaderSentiment.predict("What is it that makes so sticky? How durable are its competitive advantages? ")
-        print("{TEST 4} \(vaderTestOutput.asString)")
+//        let vaderTestOutput = VaderSentiment.predict("What is it that makes so sticky? How durable are its competitive advantages? ")
+//        print("{TEST 4} \(vaderTestOutput.asString)")
         
         
         //DEV:

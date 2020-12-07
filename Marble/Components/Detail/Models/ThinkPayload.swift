@@ -10,9 +10,11 @@ import Foundation
 
 class ThinkPayload: NSObject {
     var payload: ConsoleDetailPayload
+    var sentiment: StockSentimentData
     public init(
-        payload: ConsoleDetailPayload) {
+        payload: ConsoleDetailPayload, sentiment: StockSentimentData) {
         self.payload = payload
+        self.sentiment = sentiment
     }
 }
 

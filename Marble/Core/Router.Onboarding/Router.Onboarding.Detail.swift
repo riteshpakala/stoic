@@ -23,9 +23,8 @@ extension DetailView: Onboardable {
         get {
             [
                 introStep,
-                nextTradingDayStep,
-                historicalDayStepPart1,
-                historicalDayStepPart2,
+                modelSelectorStepPart1,
+                modelSelectorStepPart2,
                 sentimentStepPart1,
                 sentimentStepPart2,
                 predictionStepPart1,
@@ -43,57 +42,42 @@ extension DetailView: Onboardable {
             order: 0)
     }
     
-    public var nextTradingDayStep: OnboardingStep {
+    public var modelSelectorStepPart1: OnboardingStep {
         OnboardingStep.init(
             reference: .init(
-                referenceView: consoleView.detailView.headerView,
-                containerView: consoleView.detailView,
-                padding: .init(
-                    top: -GlobalStyle.spacing,
-                    left: -GlobalStyle.spacing,
-                    bottom: GlobalStyle.spacing,
-                    right: -GlobalStyle.spacing*2)),
-            text: "the trading date this window is predicting for",
-            order: 1,
-            isContinueHidden: false)
-    }
-    
-    public var historicalDayStepPart1: OnboardingStep {
-        OnboardingStep.init(
-            reference: .init(
-                referenceView: consoleView.detailView.historicalView,
+                referenceView: consoleView.detailView.modelPickerView,
                 containerView: consoleView.detailView,
                 padding: .init(
                     top: 0,
                     left: -GlobalStyle.spacing,
                     bottom: 0,
                     right: -GlobalStyle.spacing*2)),
-            actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.historicalView.indicator),
-            text: "you can view data of past dates here, tap the triangle",
-            order: 2)
+            actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.modelPickerView.indicator),
+            text: "multiple models are generated, tap the triangle",
+            order: 1)
     }
     
-    public var historicalDayStepPart2: OnboardingStep {
-        let cellHeight = consoleView.detailView.historicalView.cellHeight
-        let cells = consoleView.detailView.historicalView.cellsToViewWhenExpanded - 1.0
+    public var modelSelectorStepPart2: OnboardingStep {
+        let cellHeight = consoleView.detailView.modelPickerView.cellHeight
+        let cells = consoleView.detailView.modelPickerView.cellsToViewWhenExpanded - 1.0
         return OnboardingStep.init(
             reference: .init(
-                referenceView: consoleView.detailView.historicalView.historicDatePicker,
-                containerView: consoleView.detailView.historicalView,
+                referenceView: consoleView.detailView.modelPickerView.modelPicker,
+                containerView: consoleView.detailView.modelPickerView,
                 padding: .init(
                     top: -consoleView.detailView.frame.origin.y,
                     left: 0,
                     bottom: cellHeight*cells,
                     right: 0)),
-            actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.historicalView.indicator),
-            text: "tap on another date; collapse it to continue",
-            order: 3)
+            actionable: .init(keyPath: \.layer.transform, view: self.consoleView.detailView.modelPickerView.indicator),
+            text: "tap on another model for a stock characteristic; collapse it to continue",
+            order: 2)
     }
     
     public var sentimentStepPart1: OnboardingStep {
         OnboardingStep.init(
             reference: .init(
-                referenceView: consoleView.detailView.sentimentView,
+                referenceView: consoleView.detailView.hStack,
                 containerView: consoleView.detailView,
                 padding: .init(
                     top: GlobalStyle.spacing,
@@ -102,13 +86,13 @@ extension DetailView: Onboardable {
                     right: -GlobalStyle.spacing*2)),
             actionable: .init(keyPath: \.isHidden, view: self.consoleView.detailView.sentimentView.refineLabel),
             text: "adjust these sentiment knobs to get realtime predictions",
-            order: 4)
+            order: 3)
     }
     
     public var sentimentStepPart2: OnboardingStep {
         OnboardingStep.init(
             reference: .init(
-                referenceView: consoleView.detailView.sentimentView,
+                referenceView: consoleView.detailView.hStack,
                 containerView: consoleView.detailView,
                 padding: .init(
                     top: GlobalStyle.spacing,
@@ -116,57 +100,39 @@ extension DetailView: Onboardable {
                     bottom: GlobalStyle.spacing,
                     right: -GlobalStyle.spacing*2)),
             text: "the middle is negative & positive weights. The left is used to refine. The right is used to remove potential bias",
-            order: 5,
+            order: 4,
             isContinueHidden: false)
     }
     
     public var predictionStepPart1: OnboardingStep {
         OnboardingStep.init(
             reference: .init(
-                referenceView: consoleView.detailView.predictionView,
+                referenceView: consoleView.detailView.hStack,
                 containerView: consoleView.detailView,
-                padding: .init(
-                    top: -GlobalStyle.spacing,
-                    left: -GlobalStyle.spacing,
-                    bottom: 0,
-                    right: -GlobalStyle.spacing*2)),
+                padding: .zero),
             actionable: .init(keyPath: \.layer.sublayers, view: self.consoleView.detailView.predictionView.thinkTriggerContainer),
-            text: "tap the ball to provide a suggestion of sentiment. The web is filled with emotion, we're going to grab some based on the trading day",
-            order: 6)
+            text: "tap the ball to provide a suggestion for the day following your last prediction day.",
+            order: 5)
     }
     
     public var predictionStepPart2: OnboardingStep {
         OnboardingStep.init(
-            reference: .init(
-                referenceView: consoleView.detailView.sentimentView,
-                containerView: consoleView.detailView,
-                padding: .init(
-                    top: GlobalStyle.spacing,
-                    left: -GlobalStyle.spacing,
-                    bottom: GlobalStyle.spacing + consoleView.detailView.predictionView.frame.height,
-                    right: -GlobalStyle.spacing*2)),
-            actionable: .init(keyPath: \.isHidden, view: self.consoleView.detailView.loaderView),
-            text: "give it a moment to find valuable info to work with",
-            order: 7)
+            reference: .init(textPadding: GlobalStyle.padding),
+            text: "the accuracy may decrease if more days are added than the amount of days trained.",
+            order: 6,
+            isContinueHidden: false)
     }
     
     public var predictionStepPart3: OnboardingStep {
         OnboardingStep.init(
-            reference: .init(
-                referenceView: consoleView.detailView.sentimentView,
-                containerView: consoleView.detailView,
-                padding: .init(
-                    top: GlobalStyle.spacing,
-                    left: -GlobalStyle.spacing,
-                    bottom: GlobalStyle.spacing + consoleView.detailView.predictionView.frame.height,
-                    right: -GlobalStyle.spacing*2)),
-            text: "after you are done, head to the `model browser` to see your stored, offline models",
-            order: 8,
+            reference: .init(textPadding: GlobalStyle.padding),
+            text: "after you are done, head to the `model browser` to see your stored, offline, models",
+            order: 7,
             isContinueHidden: false)
     }
     
     public func committedStep(_ index: Int) {
-        if index == 7 {
+        if index == 6 {
             guard let superview = self.superview as? DashboardView else {
                 return
             }

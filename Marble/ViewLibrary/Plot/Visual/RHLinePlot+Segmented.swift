@@ -43,7 +43,7 @@ extension RHLinePlot {
         // Draw each segment
         func drawSegment(path: inout Path, segment: (from: Int, to: Int)) {
             let segmentValues = values[segment.from..<segment.to]
-            let segmentedDates = dates[segment.from..<segment.to]
+            let segmentedDates = Array(dates[segment.from..<segment.to])
             
             // The starting point of this segment (previous data point)
             // Note that when from is 0, this will be -1.
@@ -96,7 +96,7 @@ extension RHLinePlot {
         
         func drawPredictionSegment(path: inout Path, segment: (from: Int, to: Int), index: Int) {
             let segmentValues = values[segment.from..<segment.to]
-            let segmentedDates = dates[segment.from..<segment.to]
+            let segmentedDates = Array(dates[segment.from..<segment.to])
             
             // The starting point of this segment (previous data point)
             // Note that when from is 0, this will be -1.

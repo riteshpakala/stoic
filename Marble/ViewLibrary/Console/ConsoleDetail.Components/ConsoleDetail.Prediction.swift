@@ -85,6 +85,7 @@ class ConsoleDetailPredictionView: GraniteView {
                 make.top.equalTo(self.vStack.snp.bottom).offset(GlobalStyle.spacing)
                 make.bottom.equalToSuperview()
             }
+            
             thinkTrigger.snp.makeConstraints { make in
                 make.center.equalToSuperview()
                 make.width.height.equalTo(emitterSize)
@@ -95,12 +96,12 @@ class ConsoleDetailPredictionView: GraniteView {
             thinkTriggerContainer.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
+            
             thinkTrigger.snp.makeConstraints { make in
                 make.center.equalToSuperview()
                 make.width.height.equalTo(emitterSize)
             }
         }
-        
         
         layoutIfNeeded()
         
@@ -155,9 +156,9 @@ class ConsoleDetailPredictionView: GraniteView {
         predict()
     }
     
-    private var lastSentimentPositive: Double = 0.5
-    private var lastSentimentNegative: Double = 0.5
-    private var lastSentimentNeutral: Double = 0.0
+    private var lastSentimentPositive: Double = 0.25
+    private var lastSentimentNegative: Double = 0.25
+    private var lastSentimentNeutral: Double = 0.5
     private var lastSentimentCompound: Double = 0.0
     public func predict(
         positive: Double? = nil,
@@ -185,10 +186,10 @@ class ConsoleDetailPredictionView: GraniteView {
                outputDimension: StockKitUtils.outDim)
             
             let sentimentWeights = StockSentimentData.emptyWithValues(
-                positive: positive ?? self?.lastSentimentPositive ?? 0.5,
-                negative: negative ?? self?.lastSentimentNegative ?? 0.5,
+                positive: positive ?? self?.lastSentimentPositive ?? 0.25,
+                negative: negative ?? self?.lastSentimentNegative ?? 0.25,
                 neutral: neutral ?? self?.lastSentimentNeutral ?? 0.5,
-                compound: compound ?? self?.lastSentimentCompound ?? 0.5)
+                compound: compound ?? self?.lastSentimentCompound ?? 0.0)
             
             do {
                 let dataSet = StockKitUtils.Models.DataSet(
@@ -226,9 +227,11 @@ class ConsoleDetailPredictionView: GraniteView {
                 self?.predictionLabel.text = StockKitUtils.Models.DataSet.outputLabel(output)
 
                 guard !output.isNaN else { return }
+                
                 self?.bubbleEvent(
                     DetailEvents.PredictionDidUpdate(
-                        close: output,
+                        type: self?.model?.currentType ?? .none,
+                        value: output,
                         stockSentimentData: sentimentWeights),
                     async: DispatchQueue.init(label: "stoic.prediction.didUpdate"))
                 

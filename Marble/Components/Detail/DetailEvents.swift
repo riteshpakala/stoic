@@ -40,13 +40,18 @@ extension DetailEvents {
     }
     
     struct PredictionDidUpdate: Event {
-        let close: Double
+        let type: StockKitModels.ModelType
+        let value: Double
         let stockSentimentData: StockSentimentData
     }
 }
 
 extension DetailEvents {
     struct Think: Event {
+    }
+    struct ThinkSentimentResponse: Event {
+        let sentiment: StockSentimentData
+        let tradingDays: [StockDateData]
     }
     struct ThinkResponse: Event {
         let payload: ThinkPayload

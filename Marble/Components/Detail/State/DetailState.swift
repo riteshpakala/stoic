@@ -43,6 +43,10 @@ public class DetailState: State {
     
     var modelID: String? = nil
     
+    var isCachedOriginal: Bool {
+        (self.originalDaysTrained ?? 0) < (self.consoleDetailPayload?.historicalTradingData.count ?? 0)
+    }
+    
     init(_ searchedStock: SearchStock, _ stockModel: StockModel?) {
         self.searchedStock = searchedStock
         self.stockModel = stockModel

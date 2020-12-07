@@ -161,7 +161,7 @@ public class BrowserViewController: GraniteViewController<BrowserState> {
             AnnouncementBuilder.build(
                 component!.service,
                 state: .init(
-                    displayType: .alert("engine: "+StockKitUtils.Models.engine))),
+                    displayType: .alert("engine: "+StockKitModels.engine))),
             display: .modal)
     }
 }

@@ -22,6 +22,7 @@
 		7110A56E248DCAD500F62940 /* SearchComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A566248DCAD500F62940 /* SearchComponent.swift */; };
 		7110A56F248DCAD500F62940 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A568248DCAD500F62940 /* SearchViewController.swift */; };
 		7110A570248DCAD500F62940 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110A569248DCAD500F62940 /* SearchView.swift */; };
+		71160C11257E0E0D0056AF58 /* StoicRNN_10.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71160C10257E0E0D0056AF58 /* StoicRNN_10.mlmodel */; };
 		7127AFA624859BBF004C57F1 /* alexander.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 7127AFA524859BBF004C57F1 /* alexander.mtl */; };
 		7127AFA824859D37004C57F1 /* alexander.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7127AFA724859D37004C57F1 /* alexander.jpg */; };
 		7127AFAA24859FC8004C57F1 /* alexander.obj in Resources */ = {isa = PBXBuildFile; fileRef = 7127AFA924859FC8004C57F1 /* alexander.obj */; };
@@ -89,7 +90,6 @@
 		71478F8524790297007DF62D /* SwifterTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F5824790296007DF62D /* SwifterTag.swift */; };
 		71478F8624790297007DF62D /* SwifterSpam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F5924790296007DF62D /* SwifterSpam.swift */; };
 		71478F8724790297007DF62D /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F5C24790296007DF62D /* SwiftyJSON.swift */; };
-		71478F8F24790BD8007DF62D /* SentimentPolarity.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */; };
 		714A82E1246E30BA006A7120 /* HomeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E0246E30BA006A7120 /* HomeComponent.swift */; };
 		714A82E3246E30C9006A7120 /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714A82E2246E30C9006A7120 /* HomeState.swift */; };
 		7153FEB8250E451A005449D5 /* AnnouncementDashboardReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7153FEB7250E451A005449D5 /* AnnouncementDashboardReducer.swift */; };
@@ -175,6 +175,10 @@
 		717A766F24A16131005348F9 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717A763324A16131005348F9 /* Element.swift */; };
 		717A767024A16131005348F9 /* DataNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717A763424A16131005348F9 /* DataNode.swift */; };
 		717A767124A16131005348F9 /* NodeVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717A763524A16131005348F9 /* NodeVisitor.swift */; };
+		717C151E257CDE2100543931 /* Lemmatizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717C151D257CDE2100543931 /* Lemmatizer.swift */; };
+		717C1523257CDE2500543931 /* StoicSentimentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717C1522257CDE2500543931 /* StoicSentimentModel.swift */; };
+		717C1540257CE0F300543931 /* Words.json in Resources */ = {isa = PBXBuildFile; fileRef = 717C153F257CE0F300543931 /* Words.json */; };
+		717C1545257CE55B00543931 /* re.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717C1544257CE55B00543931 /* re.swift */; };
 		717F1BD7248A0BCB001DD426 /* HomeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BD6248A0BCB001DD426 /* HomeBuilder.swift */; };
 		717F1BD9248A1140001DD426 /* SceneBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BD8248A1140001DD426 /* SceneBuilder.swift */; };
 		717F1BDB248A1162001DD426 /* DetailBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717F1BDA248A1162001DD426 /* DetailBuilder.swift */; };
@@ -389,6 +393,7 @@
 		7110A566248DCAD500F62940 /* SearchComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchComponent.swift; sourceTree = "<group>"; };
 		7110A568248DCAD500F62940 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7110A569248DCAD500F62940 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		71160C10257E0E0D0056AF58 /* StoicRNN_10.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = StoicRNN_10.mlmodel; sourceTree = "<group>"; };
 		7127AFA524859BBF004C57F1 /* alexander.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = alexander.mtl; sourceTree = "<group>"; };
 		7127AFA724859D37004C57F1 /* alexander.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alexander.jpg; sourceTree = "<group>"; };
 		7127AFA924859FC8004C57F1 /* alexander.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = alexander.obj; sourceTree = "<group>"; };
@@ -458,7 +463,6 @@
 		71478F5924790296007DF62D /* SwifterSpam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterSpam.swift; sourceTree = "<group>"; };
 		71478F5C24790296007DF62D /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		71478F5D24790296007DF62D /* SwiftyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftyJSON.h; sourceTree = "<group>"; };
-		71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentPolarity.mlmodel; sourceTree = "<group>"; };
 		714A82E0246E30BA006A7120 /* HomeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeComponent.swift; sourceTree = "<group>"; };
 		714A82E2246E30C9006A7120 /* HomeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
 		7153FEB7250E451A005449D5 /* AnnouncementDashboardReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDashboardReducer.swift; sourceTree = "<group>"; };
@@ -545,6 +549,10 @@
 		717A763324A16131005348F9 /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		717A763424A16131005348F9 /* DataNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataNode.swift; sourceTree = "<group>"; };
 		717A763524A16131005348F9 /* NodeVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeVisitor.swift; sourceTree = "<group>"; };
+		717C151D257CDE2100543931 /* Lemmatizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lemmatizer.swift; sourceTree = "<group>"; };
+		717C1522257CDE2500543931 /* StoicSentimentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoicSentimentModel.swift; sourceTree = "<group>"; };
+		717C153F257CE0F300543931 /* Words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Words.json; sourceTree = "<group>"; };
+		717C1544257CE55B00543931 /* re.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = re.swift; sourceTree = "<group>"; };
 		717F1BD6248A0BCB001DD426 /* HomeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBuilder.swift; sourceTree = "<group>"; };
 		717F1BD8248A1140001DD426 /* SceneBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneBuilder.swift; sourceTree = "<group>"; };
 		717F1BDA248A1162001DD426 /* DetailBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBuilder.swift; sourceTree = "<group>"; };
@@ -1074,7 +1082,11 @@
 			isa = PBXGroup;
 			children = (
 				716D146E24CE1AEB0075F86E /* Vader */,
-				71478F8E24790BD7007DF62D /* SentimentPolarity.mlmodel */,
+				71160C10257E0E0D0056AF58 /* StoicRNN_10.mlmodel */,
+				717C153F257CE0F300543931 /* Words.json */,
+				717C1522257CDE2500543931 /* StoicSentimentModel.swift */,
+				717C1544257CE55B00543931 /* re.swift */,
+				717C151D257CDE2100543931 /* Lemmatizer.swift */,
 				71478F302479027D007DF62D /* SentimentClassifier.mlmodel */,
 			);
 			path = Sentiment;
@@ -2025,6 +2037,7 @@
 				716D147324CE2FB20075F86E /* vader_lexicon.txt in Resources */,
 				716D147424CE2FB20075F86E /* emoji_utf8_lexicon.txt in Resources */,
 				71478F8324790297007DF62D /* Launch Screen.storyboard in Resources */,
+				717C1540257CE0F300543931 /* Words.json in Resources */,
 				71A1D2CD246E027D00D778A5 /* terms.txt in Resources */,
 				7127AFA624859BBF004C57F1 /* alexander.mtl in Resources */,
 			);
@@ -2184,7 +2197,6 @@
 				717A764724A16131005348F9 /* String.swift in Sources */,
 				71305F7F246E038A00E64718 /* Router.swift in Sources */,
 				71478F7624790297007DF62D /* SwifterMessages.swift in Sources */,
-				71478F8F24790BD8007DF62D /* SentimentPolarity.mlmodel in Sources */,
 				717A765524A16131005348F9 /* Token.swift in Sources */,
 				717A765424A16131005348F9 /* ParseError.swift in Sources */,
 				71478F6524790296007DF62D /* SwifterLists.swift in Sources */,
@@ -2290,6 +2302,7 @@
 				71DCBEE7250BF17000C12F4B /* RemoveModelReducer.swift in Sources */,
 				716437D224FC78D800BAB6BC /* Router.Onboarding.swift in Sources */,
 				71A1D2D3246E027D00D778A5 /* FileManager.swift in Sources */,
+				717C151E257CDE2100543931 /* Lemmatizer.swift in Sources */,
 				71D2A780256F0FC40019754A /* Cryptowatcher+Aggregates.swift in Sources */,
 				7110A56A248DCAD500F62940 /* SearchStyle.swift in Sources */,
 				71478F6624790296007DF62D /* Operator++.swift in Sources */,
@@ -2314,6 +2327,7 @@
 				71478F7A24790297007DF62D /* SwifterFollowers.swift in Sources */,
 				71D2A7BA256F103E0019754A /* PromiseBlocks.swift in Sources */,
 				71C135D9250E2926007F1F96 /* AnnouncementComponent.swift in Sources */,
+				71160C11257E0E0D0056AF58 /* StoicRNN_10.mlmodel in Sources */,
 				71D98E6324F260CA0089C85F /* ProfileEvents.swift in Sources */,
 				717A764624A16131005348F9 /* Cleaner.swift in Sources */,
 				717A766524A16131005348F9 /* FormElement.swift in Sources */,
@@ -2342,6 +2356,7 @@
 				716D147024CE2F9B0075F86E /* VaderSentiment.swift in Sources */,
 				7127B02E2485DCF7004C57F1 /* DetailEvents.swift in Sources */,
 				71478F7E24790297007DF62D /* SwifterHelp.swift in Sources */,
+				717C1545257CE55B00543931 /* re.swift in Sources */,
 				7110A570248DCAD500F62940 /* SearchView.swift in Sources */,
 				717A763624A16131005348F9 /* SimpleDictionary.swift in Sources */,
 				717A765024A16131005348F9 /* Attribute.swift in Sources */,
@@ -2446,6 +2461,7 @@
 				71BC1C2D248620EF00B35DC1 /* DetailLongPressReducer.swift in Sources */,
 				71C135DC250E2926007F1F96 /* AnnouncementEvents.swift in Sources */,
 				71CD54B4256879360015B6A5 /* RHLinePlotConfig.swift in Sources */,
+				717C1523257CDE2500543931 /* StoicSentimentModel.swift in Sources */,
 				71F5BA4E24847CE60085E8DD /* HomeView.swift in Sources */,
 				717A765E24A16131005348F9 /* Validate.swift in Sources */,
 				71478F7924790297007DF62D /* SwifterUsers.swift in Sources */,
@@ -2653,14 +2669,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StoicDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = W86P37BZ85;
 				INFOPLIST_FILE = Marble/Runtime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.00.03;
+				MARKETING_VERSION = 1.00.05;
 				PRODUCT_BUNDLE_IDENTIFIER = com.linenandsole.stoic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -2676,14 +2692,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StoicRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = W86P37BZ85;
 				INFOPLIST_FILE = Marble/Runtime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.00.03;
+				MARKETING_VERSION = 1.00.05;
 				PRODUCT_BUNDLE_IDENTIFIER = com.linenandsole.stoic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

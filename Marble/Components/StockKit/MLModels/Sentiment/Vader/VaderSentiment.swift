@@ -24,7 +24,7 @@ public class VaderSentimentOutput: NSObject, Codable, NSCoding, NSSecureCoding {
     }
     
     var asString: String {
-        return "{VADER} pos: \(pos) neg: \(neg) neu: \(neu) compound: \(compound)"
+        return "{STOIC-SENTIMENT} pos: \(pos) neg: \(neg) neu: \(neu) compound: \(compound)"
     }
     
     public required convenience init?(coder: NSCoder) {

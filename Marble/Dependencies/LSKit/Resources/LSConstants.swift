@@ -124,7 +124,7 @@ struct LSConst {
             return UIScreen.main.bounds
         }
         static var isIPhoneX : Bool {
-            return max(width, height) <= 812
+            return max(width, height) <= 844
         }
         static var isIPhone6 : Bool {
             return max(width, height) <= 667

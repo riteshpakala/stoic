@@ -18,7 +18,7 @@ public enum StockPrediction {
 public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
     public static var supportsSecureCoding: Bool = true
     
-    public static let engine: String = "david.v0.00.00"
+    public static let engine: String = "david.v0.01.10"
 
 //    var open: Double
 //    var high: Double
@@ -76,9 +76,9 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
         var inDim: Int {
             switch self {
             case .volume:
-                return 6
+                return 5
             default:
-                return 8
+                return 7
             }
         }
         
@@ -105,6 +105,16 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
                 return "$"
             }
         }
+        
+        public static func forValue(_ string: String) -> ModelType {
+            for type in ModelType.allCases {
+                if "\(type)" == string {
+                    return type
+                }
+            }
+            
+            return .none
+        }
     }
     
     public static func generate(stockData: [StockData], sentimentData: [StockSentimentData]) -> StockKitModels {
@@ -126,7 +136,7 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
                 inputDimension: type.inDim,
                 outputDimension: StockKitUtils.outDim)
             
-            print("[MODEL GENERATION] Creating model for \(type)")
+            print("[MODEL GENERATION] Creating model for \(type) \(sortedStockData.isEmpty)")
             for (i, stock) in sortedStockData.enumerated() {
                 do {
                     guard sortedSentimentStockData.count > i else { continue }
@@ -136,7 +146,7 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
                         sentiment,
                         modelType: type)
                     
-                    
+                    print(stock.toString)
                     try dataForDavid.addDataPoint(
                         input: dataSet.asArray,
                         output: dataSet.output,

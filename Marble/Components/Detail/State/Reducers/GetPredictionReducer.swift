@@ -70,6 +70,7 @@ struct GetPredictionReducer: Reducer {
                 days: state.originalDaysTrained ?? stockKit.state.rules.days,
                 maxDays: stockKit.state.rules.maxDays,
                 model: model)
+            state.originalDaysTrained = state.consoleDetailPayload?.days
         }
         
         state.progressLabelText = nil
@@ -108,7 +109,6 @@ struct PredictionDidUpdateReducer: Reducer {
         let sorted = state.stockData?.sorted(by: {
             ($0.dateData.asDate ?? Date()).compare($1.dateData.asDate ?? Date()) == .orderedDescending })
         
-        
         let tradingDay = state.isCached ? state.consoleDetailPayload?.currentTradingDay : stockKit.state.nextValidTradingDay?.asString
         if  let nextTradingDay = tradingDay {
             
@@ -119,18 +119,19 @@ struct PredictionDidUpdateReducer: Reducer {
                 sentimentWeights: event.stockSentimentData,
                 nextTradingDay: nextTradingDay,
                 thisTradingDay: sorted?.first?.dateData.asString ?? nextTradingDay,
-                close: event.close,
+                value: event.value,
+                type: "\(event.type)",
                 id: state.modelID ?? "")
             
             state.lastPrediction = predictionUpdate
             
             if let id = Auth.auth().currentUser?.uid {
                 //TODO: better prediction tracking
-//                component.service.center.backend.put(
-//                    predictionUpdate,
-//                    route: .global,
-//                    server: .prediction,
-//                    key: id+"/"+predictionUpdate.key)
+                component.service.center.backend.put(
+                    predictionUpdate,
+                    route: .global,
+                    server: .prediction,
+                    key: id+"/"+predictionUpdate.key)
             }
         }
         

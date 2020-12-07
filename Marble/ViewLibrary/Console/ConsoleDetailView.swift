@@ -68,6 +68,17 @@ class ConsoleDetailView: GraniteView {
         return .init()
     }()
     
+    lazy var hStack: GraniteStackView = {
+        let stack = GraniteStackView.init(
+            arrangedSubviews: [
+                sentimentView,
+                predictionView])
+        stack.alignment = .center
+        stack.distribution = .fill
+        stack.axis = .horizontal
+        return stack
+    }()
+    
     var currentPredictionWorkItem: PredictWorkItem? = nil {
         didSet {
             oldValue?.cancel()
@@ -107,9 +118,9 @@ class ConsoleDetailView: GraniteView {
         addSubview(modelPickerView)
 //        addSubview(headerView)
         
-        addSubview(sentimentView)
+        addSubview(hStack)
 //        addSubview(disclaimerView)
-        addSubview(predictionView)
+//        addSubview(predictionView)
 //        addSubview(historicalView)
 //        addSubview(loaderView)
 //
@@ -131,15 +142,14 @@ class ConsoleDetailView: GraniteView {
             make.width.equalToSuperview().multipliedBy(0.36)
         }
         
-        sentimentView.snp.makeConstraints { make in
+        hStack.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(baseSize.height*0.2 + GlobalStyle.padding)
         }
 //
         predictionView.snp.makeConstraints { make in
-            make.bottom.equalTo(sentimentView.snp.top).offset(-GlobalStyle.padding)
-            make.centerX.equalToSuperview()
-            make.size.equalTo(baseSize.height*0.12)
+            make.width.equalToSuperview().multipliedBy(0.24)
+            make.bottom.equalTo(GlobalStyle.padding)
         }
 //
 //        disclaimerView.snp.makeConstraints { make in
@@ -192,20 +202,15 @@ class ConsoleDetailView: GraniteView {
     func updateThink(_ payload: ThinkPayload?) {
         thinkingStopped()
         
-        guard let newPayload = payload?.payload else {
-            return
+        if let sentiment = payload?.sentiment {
+            sentimentView.updateSlider(sentiment)
+
+            sentimentChanged(
+                sentiment.posAverage,
+                negative: sentiment.negAverage,
+                neutral: sentiment.neuAverage,
+                compound: sentiment.compoundAverage)
         }
-        
-        updateData(newPayload)
-//        if let sentiment = payload?.stockSentimentData {
-//            sentimentView.updateSlider(sentiment)
-//
-//            sentimentChanged(
-//                sentiment.posAverage,
-//                negative: sentiment.negAverage,
-//                neutral: sentiment.neuAverage,
-//                compound: sentiment.compoundAverage)
-//        }
     }
     
     func updatePage(_ component: RobinhoodPage.PageComponent) {
@@ -281,7 +286,7 @@ extension ConsoleDetailView: ConsoleDetailSentimentViewDelegate {
         negative: Double,
         neutral: Double,
         compound: Double) {
-        
+
         currentPredictionWorkItem = .init(
             DispatchWorkItem.init(
                 block: {
