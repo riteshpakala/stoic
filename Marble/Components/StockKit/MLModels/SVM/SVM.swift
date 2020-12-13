@@ -30,8 +30,19 @@ protocol SVMModelDelegate: class {
     func SVMProgress(_ iterations: Int, _ maxIterations: Int)
 }
 
-public class SVMModel: NSObject, NSCoding, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public class SVMModel: Codable, Equatable {
+    public static func == (lhs: SVMModel, rhs: SVMModel) -> Bool {
+        lhs.numClasses == rhs.numClasses &&
+            lhs.labels == rhs.labels &&
+            lhs.ρ == rhs.ρ &&
+            lhs.totalSupportVectors == rhs.totalSupportVectors &&
+            lhs.supportVectorCount == rhs.supportVectorCount &&
+            lhs.coefficients == rhs.coefficients &&
+            lhs.probabilityA == rhs.probabilityA &&
+            lhs.probabilityB == rhs.probabilityB
+    }
+    
+//    public static var supportsSecureCoding: Bool = true
     
     weak var delegate: SVMModelDelegate?
     var dataSet: DataSet? = nil
@@ -76,19 +87,36 @@ public class SVMModel: NSObject, NSCoding, NSSecureCoding {
         probability = copyFrom.probability
     }
     
-    public required convenience init?(coder: NSCoder) {
-        let typeValue: Int = coder.decodeInteger(forKey: "type")
-        let numClasses: Int = coder.decodeInteger(forKey: "numClasses")
-        let labels: [Int] = (coder.decodeObject(forKey: "labels") as? [Int]) ?? []
-        let ρ: [Double] = (coder.decodeObject(forKey: "p") as? [Double]) ?? []
-        let totalSupportVectors: Int = coder.decodeInteger(forKey: "totalSupportVectors")
-        let supportVectorCount: [Int] = (coder.decodeObject(forKey: "supportVectorCount") as? [Int]) ?? []
-        let supportVector: [[Double]] = (coder.decodeObject(forKey: "supportVector") as? [[Double]]) ?? []
-        let coefficients: [[Double]] = (coder.decodeObject(forKey: "coefficients") as? [[Double]]) ?? []
-        let probabilityA: [Double] = (coder.decodeObject(forKey: "probabilityA") as? [Double]) ?? []
-        let probabilityB: [Double] = (coder.decodeObject(forKey: "probabilityB") as? [Double]) ?? []
+    enum CodingKeys: String, CodingKey {
+        case type
+        case numClasses
+        case labels
+        case p
+        case totalSupportVectors
+        case supportVectorCount
+        case supportVector
+        case coefficients
+        case probabilityA
+        case probabilityB
+        case dataSet
+    }
+    
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let typeValue: Int = try container.decode(Int.self, forKey: .type)
+        let numClasses: Int = try container.decode(Int.self, forKey: .numClasses)
+        let labels: [Int] = try container.decode([Int].self, forKey: .labels)
+        let ρ: [Double] = try container.decode([Double].self, forKey: .p)
+        let totalSupportVectors: Int = try container.decode(Int.self, forKey: .totalSupportVectors)
+        let supportVectorCount: [Int] = try container.decode([Int].self, forKey: .supportVectorCount)
+        let supportVector: [[Double]] = try container.decode([[Double]].self, forKey: .supportVector)
+        let coefficients: [[Double]] = try container.decode([[Double]].self, forKey: .coefficients)
+        let probabilityA: [Double] = try container.decode([Double].self, forKey: .probabilityA)
+        let probabilityB: [Double] = try container.decode([Double].self, forKey: .probabilityB)
 
-        let dataSet: DataSet? = try? coder.decodeTopLevelObject(forKey: "dataSet") as? DataSet
+        let dataSet: DataSet = try container.decode(DataSet.self, forKey: .dataSet)
+//        let dataSet: DataSet? = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataSetData) as? DataSet
         
         self.init(
             problemType: SVMType(rawValue: typeValue) ?? .ϵSVMRegression,
@@ -111,18 +139,24 @@ public class SVMModel: NSObject, NSCoding, NSSecureCoding {
         self.dataSet = dataSet
     }
     
-    public func encode(with coder: NSCoder){
-        coder.encode(type.rawValue, forKey: "type")
-        coder.encode(numClasses, forKey: "numClasses")
-        coder.encode(labels, forKey: "labels")
-        coder.encode(ρ, forKey: "p")
-        coder.encode(totalSupportVectors, forKey: "totalSupportVectors")
-        coder.encode(supportVectorCount, forKey: "supportVectorCount")
-        coder.encode(supportVector, forKey: "supportVector")
-        coder.encode(coefficients, forKey: "coefficients")
-        coder.encode(probabilityA, forKey: "probabilityA")
-        coder.encode(probabilityB, forKey: "probabilityB")
-        coder.encode(dataSet, forKey: "dataSet")
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(type.rawValue, forKey: .type)
+        try container.encode(numClasses, forKey: .numClasses)
+        try container.encode(labels, forKey: .labels)
+        try container.encode(ρ, forKey: .p)
+        try container.encode(totalSupportVectors, forKey: .totalSupportVectors)
+        try container.encode(supportVectorCount, forKey: .supportVectorCount)
+        try container.encode(supportVector, forKey: .supportVector)
+        try container.encode(coefficients, forKey: .coefficients)
+        try container.encode(probabilityA, forKey: .probabilityA)
+        try container.encode(probabilityB, forKey: .probabilityB)
+        
+        if let dataSet = self.dataSet {
+//            let dataSetArchived = try NSKeyedArchiver.archivedData(withRootObject: dataSet, requiringSecureCoding: false)
+            try container.encode(dataSet, forKey: .dataSet)
+        }
     }
     
     public init?(load data: NSDictionary)//(loadFromFile path: String)

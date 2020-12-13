@@ -169,6 +169,19 @@ extension NSObject {
     }
 }
 
+open class Archiveable: Codable {}
+extension Archiveable {
+    public var archived: Data? {
+        let encoder = JSONEncoder()
+        do {
+            return try encoder.encode(self)
+        } catch let error {
+            print("{CoreData} \(error.localizedDescription)")
+            return nil
+        }
+    }
+}
+
 extension Array where Element == String {
     public var archived: Data? {
         return try? JSONEncoder().encode(self)
@@ -177,12 +190,9 @@ extension Array where Element == String {
 
 extension Data {
     public var model: StockKitModels? {
-        
+        let jsonDecoder: JSONDecoder = .init()
         do {
-            if let object = try NSKeyedUnarchiver
-                .unarchiveTopLevelObjectWithData(self) as? StockKitModels {
-                return object
-            }
+            return try jsonDecoder.decode(StockKitModels.self, from: self)
         } catch let error {
             print("{CoreData} \(error)")
         }

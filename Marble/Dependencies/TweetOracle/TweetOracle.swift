@@ -200,10 +200,12 @@ class TweetOracle: NSObject {
 
                                 if let prediction = self.stoicSentiment.predict(metadata.text) {
 //                                let theSentiment: Bool = prediction.compound != 0
+                                    #if DEBUG
                                     print("%%%%%%%%%\n Sentiment Candidate \n%%%%%%\n\n")
                                     print(metadata.toString)
                                     print(prediction.asString)
                                     print("%%%%%%%%%\n query: \(query) :: \(prediction.asString) \n%%%%%%\n\n")
+                                    #endif
                                     self.results.append((metadata.asTweet, prediction))
                                     
                                     if oracle.immediate {
@@ -211,7 +213,9 @@ class TweetOracle: NSObject {
                                     }
                                 }
                             } else {
+                                #if DEBUG
                                 print("{TEST-error} \(metadata.text) \(theCashtag) \(theCompany) \(theURLs) \(theDupe)")
+                                #endif
 //                                print(metadata.toString)
 //                                print("###########\n errror :: query: \(query) \n###########\n\n")
                             }

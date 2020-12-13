@@ -173,9 +173,9 @@ public class StockSentimentData: NSObject, Codable, NSCoding, NSSecureCoding {
     
     public static var neutral: StockSentimentData {
         return StockSentimentData.emptyWithValues(
-            positive: 0.5,
-            negative: 0.5,
-            neutral: 0.0,
+            positive: 0.25,
+            negative: 0.25,
+            neutral: 0.5,
             compound: 0.0)
     }
 }

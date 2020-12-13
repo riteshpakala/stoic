@@ -50,6 +50,7 @@
 		712F54682506DBED000384A7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712F54672506DBED000384A7 /* PaddingLabel.swift */; };
 		71305F7F246E038A00E64718 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71305F73246E038A00E64718 /* Router.swift */; };
 		713ABC22246E39A000DD03EA /* HomeEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713ABC21246E39A000DD03EA /* HomeEvents.swift */; };
+		714192A62585979F00994F25 /* UploadModelReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714192A52585979F00994F25 /* UploadModelReducer.swift */; };
 		7145BCE024D215B20098D5D6 /* UIView+Emitters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */; };
 		71478F312479027D007DF62D /* SentimentClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71478F302479027D007DF62D /* SentimentClassifier.mlmodel */; };
 		71478F6224790296007DF62D /* Data++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71478F3424790296007DF62D /* Data++.swift */; };
@@ -421,6 +422,7 @@
 		712F54672506DBED000384A7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		71305F73246E038A00E64718 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		713ABC21246E39A000DD03EA /* HomeEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEvents.swift; sourceTree = "<group>"; };
+		714192A52585979F00994F25 /* UploadModelReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModelReducer.swift; sourceTree = "<group>"; };
 		7145BCDF24D215B20098D5D6 /* UIView+Emitters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Emitters.swift"; sourceTree = "<group>"; };
 		71478F302479027D007DF62D /* SentimentClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SentimentClassifier.mlmodel; sourceTree = "<group>"; };
 		71478F3424790296007DF62D /* Data++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data++.swift"; sourceTree = "<group>"; };
@@ -1616,6 +1618,7 @@
 				715A7E9725097662009E7244 /* CompiledModelCreationStatusUpdatedReducer.swift */,
 				715A7E9C2509CA09009E7244 /* MergeModelReducer.swift */,
 				71DCBEE6250BF17000C12F4B /* RemoveModelReducer.swift */,
+				714192A52585979F00994F25 /* UploadModelReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -2168,6 +2171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				717A766824A16131005348F9 /* TokenQueue.swift in Sources */,
+				714192A62585979F00994F25 /* UploadModelReducer.swift in Sources */,
 				71C58F582508369D00C342CE /* BrowserModelDataCardView.swift in Sources */,
 				71725D9924F276E8003B0FF6 /* Disclaimer.swift in Sources */,
 				7164E6A4248DD4700035CE9B /* StockKitComponent.swift in Sources */,
@@ -2669,7 +2673,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StoicDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = W86P37BZ85;
 				INFOPLIST_FILE = Marble/Runtime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2692,7 +2696,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StoicRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = W86P37BZ85;
 				INFOPLIST_FILE = Marble/Runtime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -272,6 +272,18 @@ public class BrowserModelDataCell: UICollectionViewCell {
         
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        #if DEBUG
+        let upload: UIAlertAction = .init(title: "* upload", style: .destructive, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.undim()
+            }
+            self?.bubble(BrowserEvents.UploadModel.init(
+                            self?.model))
+        })
+        controller.addAction(upload)
+        #endif
+        
         let remove: UIAlertAction = .init(title: "* remove", style: .destructive, handler: { [weak self] alert in
             
             DispatchQueue.main.async {

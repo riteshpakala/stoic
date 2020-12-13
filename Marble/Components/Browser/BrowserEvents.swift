@@ -79,4 +79,10 @@ struct BrowserEvents {
         }
     }
     
+    public struct UploadModel: Event {
+        let model: StockModel?
+        public init(_ model: StockModel?) {
+            self.model = model
+        }
+    }
 }

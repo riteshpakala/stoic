@@ -30,6 +30,7 @@ extension ServiceCenter {
             
             public enum Files {
                 case subscription
+                case models
                 
                 public struct Receipts {
                     public static var subscription: StorageReference {
@@ -37,10 +38,18 @@ extension ServiceCenter {
                     }
                 }
                 
+                public struct Models {
+                    public static var root: StorageReference {
+                        Storage.storage(url: "gs://stoic-45d04-models-us").reference()
+                    }
+                }
+                
                 var connect: StorageReference {
                     switch self {
                     case .subscription:
                         return BackendService.Core.Files.Receipts.subscription
+                    case .models:
+                        return BackendService.Core.Files.Models.root
                     }
                 }
             }

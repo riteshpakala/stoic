@@ -15,10 +15,10 @@ public enum StockPrediction {
     case close
 }
 
-public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public class StockKitModels: Archiveable {
+//    public static var supportsSecureCoding: Bool = true
     
-    public static let engine: String = "david.v0.01.10"
+    public static let engine: String = "david.v00.01.10"
 
 //    var open: Double
 //    var high: Double
@@ -408,15 +408,32 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
                 volume = svmModel
             }
         }
+        super.init()
     }
     
-    public required convenience init?(coder: NSCoder) {
-        let openModel: SVMModel? = try? coder.decodeTopLevelObject(forKey: "open") as? SVMModel
-        let closeModel: SVMModel? = try? coder.decodeTopLevelObject(forKey: "close") as? SVMModel
-        let highModel: SVMModel? = try? coder.decodeTopLevelObject(forKey: "high") as? SVMModel
-        let lowModel: SVMModel? = try? coder.decodeTopLevelObject(forKey: "low") as? SVMModel
-        let volumeModel: SVMModel? = try? coder.decodeTopLevelObject(forKey: "volume") as? SVMModel
-        let currentType: Int = coder.decodeInteger(forKey: "currentType")
+    enum CodingKeys: String, CodingKey {
+        case open
+        case close
+        case high
+        case low
+        case volume
+        case currentType
+    }
+    
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let openModel: SVMModel = try container.decode(SVMModel.self, forKey: .open)
+        
+        let closeModel: SVMModel = try container.decode(SVMModel.self, forKey: .close)
+        
+        let highModel: SVMModel = try container.decode(SVMModel.self, forKey: .high)
+        
+        let lowModel: SVMModel = try container.decode(SVMModel.self, forKey: .low)
+        
+        let volumeModel: SVMModel = try container.decode(SVMModel.self, forKey: .volume)
+        
+        let typeValue: Int = try container.decode(Int.self, forKey: .currentType)
         
         self.init(
             models: [])
@@ -426,15 +443,24 @@ public class StockKitModels: NSObject, NSCoding, NSSecureCoding {
         self.high = highModel
         self.low = lowModel
         self.volume = volumeModel
-        self.currentType = ModelType.init(rawValue: currentType) ?? .none
+        self.currentType = ModelType.init(rawValue: typeValue) ?? .none
     }
     
-    public func encode(with coder: NSCoder){
-        coder.encode(open, forKey: "open")
-        coder.encode(close, forKey: "close")
-        coder.encode(high, forKey: "high")
-        coder.encode(low, forKey: "low")
-        coder.encode(volume, forKey: "volume")
-        coder.encode(currentType.rawValue, forKey: "currentType")
+    public override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let open = self.open, let close = self.close, let high = self.high, let low = self.low, let volume = self.volume {
+            try container.encode(open, forKey: .open)
+            
+            try container.encode(close, forKey: .close)
+            
+            try container.encode(high, forKey: .high)
+            
+            try container.encode(low, forKey: .low)
+            
+            try container.encode(volume, forKey: .volume)
+            
+            try container.encode(currentType.rawValue, forKey: .currentType)
+        }
     }
 }

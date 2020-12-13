@@ -29,8 +29,8 @@ enum DataIndexError: Error {
 }
 
 
-public class DataSet: NSObject, NSCoding, NSSecureCoding {
-    public static var supportsSecureCoding: Bool = true
+public class DataSet: Codable {
+//    public static var supportsSecureCoding: Bool = true
     
     let dataType : DataSetType
     let inputDimension: Int
@@ -55,7 +55,6 @@ public class DataSet: NSObject, NSCoding, NSSecureCoding {
         else {
             classes = []
         }
-        super.init()
     }
     
     public init?(fromDataSet: DataSet, withEntries: [Int])
@@ -73,7 +72,7 @@ public class DataSet: NSObject, NSCoding, NSSecureCoding {
         else {
             classes = []
         }
-        super.init()
+        
         //  Copy the entries
         do {
             try includeEntries(fromDataSet: fromDataSet, withEntries: withEntries)
@@ -83,12 +82,22 @@ public class DataSet: NSObject, NSCoding, NSSecureCoding {
         }
     }
     
-    public required convenience init?(coder: NSCoder) {
-        let inDim: Int = coder.decodeInteger(forKey: "inputDimension")
-        let outDim: Int = coder.decodeInteger(forKey: "outputDimension")
-        let inputs: [[Double]] = coder.decodeObject(forKey: "inputs") as? [[Double]] ?? [[]]
-        let outputs: [[Double]] = coder.decodeObject(forKey: "outputs") as? [[Double]] ?? [[]]
-        let labels: [String] = (coder.decodeObject(forKey: "labels") as? [String]) ?? []
+    enum CodingKeys: String, CodingKey {
+        case inputDimension
+        case outputDimension
+        case inputs
+        case outputs
+        case labels
+    }
+    
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let inDim: Int = try container.decode(Int.self, forKey: .inputDimension)
+        let outDim: Int = try container.decode(Int.self, forKey: .outputDimension)
+        let inputs: [[Double]] = try container.decode([[Double]].self, forKey: .inputs)
+        let outputs: [[Double]] = try container.decode([[Double]].self, forKey: .outputs)
+        let labels: [String] = try container.decode([String].self, forKey: .labels)
 
         self.init(
             dataType: .Regression,
@@ -100,12 +109,14 @@ public class DataSet: NSObject, NSCoding, NSSecureCoding {
         self.labels = labels
     }
     
-    public func encode(with coder: NSCoder){
-        coder.encode(inputDimension, forKey: "inputDimension")
-        coder.encode(outputDimension, forKey: "outputDimension")
-        coder.encode(inputs, forKey: "inputs")
-        coder.encode(outputs, forKey: "outputs")
-        coder.encode(labels, forKey: "labels")
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(inputDimension, forKey: .inputDimension)
+        try container.encode(outputDimension, forKey: .outputDimension)
+        try container.encode(inputs, forKey: .inputs)
+        try container.encode(outputs, forKey: .outputs)
+        try container.encode(labels, forKey: .labels)
     }
     
     public func includeEntries(fromDataSet: DataSet, withEntries: [Int]) throws
