@@ -836,6 +836,18 @@ extension BrowserModelCell {
         impactOccured()
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        #if DEBUG
+        let upload: UIAlertAction = .init(title: "* upload", style: .destructive, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.undim()
+            }
+            
+            self?.bubble(BrowserEvents.UploadMergedModel.init(self?.model))
+        })
+        controller.addAction(upload)
+        #endif
+        
         let create: UIAlertAction = .init(title: "* new model".localized.lowercased(), style: .destructive, handler: { [weak self] alert in
             
             DispatchQueue.main.async {
@@ -899,6 +911,18 @@ extension BrowserModelCell {
     
     func didSelectUnPreparedModel() {
         let controller = UIAlertController.init(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        #if DEBUG
+        let upload: UIAlertAction = .init(title: "* upload", style: .destructive, handler: { [weak self] alert in
+            
+            DispatchQueue.main.async {
+                self?.undim()
+            }
+            
+            self?.bubble(BrowserEvents.UploadMergedModel.init(self?.model))
+        })
+        controller.addAction(upload)
+        #endif
         
         let train: UIAlertAction = .init(title: "* train new model".localized.lowercased(), style: .default, handler: { [weak self] alert in
             

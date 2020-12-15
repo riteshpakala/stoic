@@ -27,7 +27,6 @@ class StoicSentimentModel {
         let cleaned = cleanTweet(utterance)
         let words = lemmatizer.lemmatize(text: cleaned).compactMap { $0.0 } //$0.1 for lemma -- $0.0 Do not take lemma but original word !!!
         
-        print("{TEST 4} \(words)")
         guard words.count > 0 else { return nil }
         
         var embedding = [Int]()

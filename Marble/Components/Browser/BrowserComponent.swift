@@ -23,7 +23,8 @@ public class BrowserComponent: Component<BrowserState> {
             RemoveModelReducer.Reducible(),
             SubscriptionUpdatedBrowserReducer.Reducible(),
             UpdateMergedModelReducer.Reducible(),
-            UploadModelReducer.Reducible()
+            UploadModelReducer.Reducible(),
+            UploadMergedModelReducer.Reducible()
         ]
     }
     

@@ -45,7 +45,7 @@ public class StockKitState: State {
         let date: Date
         if testable {
             let prevDate = Date()
-            date = advanceDate1Day(date: prevDate, value: -4) ?? prevDate
+            date = advanceDate1Day(date: prevDate, value: -1) ?? prevDate
         } else {
             date = Date()
         }
@@ -94,7 +94,7 @@ public class StockKitState: State {
         
         if testable {
             rules.maxDays = 30
-            rules.days = 1
+            rules.days = 12
         } else {
             rules.days = predictionDays <= rules.maxDays ? predictionDays : rules.days
         }

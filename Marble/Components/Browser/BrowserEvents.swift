@@ -85,4 +85,11 @@ struct BrowserEvents {
             self.model = model
         }
     }
+    
+    public struct UploadMergedModel: Event {
+        let model: StockModelMergedObject?
+        public init(_ model: StockModelMergedObject?) {
+            self.model = model
+        }
+    }
 }

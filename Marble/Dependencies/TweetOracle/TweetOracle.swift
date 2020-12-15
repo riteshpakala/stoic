@@ -130,6 +130,141 @@ class TweetOracle: NSObject {
         progress: TwitterOracleProgressHandler? = nil,
         failure: TwitterOracleFailureHandler? = nil) {
         let query = queryToRefreshWith ?? self.searchQuery
+        
+//        self.swifter.searchTweet2(
+//            using: query,
+//            fromDate: oracle.fromDate.replaceAll(of: "-", with: "")+"0000",
+//            toDate: oracle.toDate.replaceAll(of: "-", with: "")+"0000",
+//            maxResults: "100",
+//            success: { (test, test2) in
+//               if let dict = test.dictionary {
+//                    if let items = dict["results"] {
+//                        print("{TEST} \(items.exists())")
+//
+//                        for item in items.array! {
+//                            guard !self.shouldCancel else { break }
+//
+//                            let object =  item.dictionary
+//
+//                            let user = object?["user"]
+//                            let name = object?["screen_name"]?.string ?? ""
+//                            let followers = object?["followers_count"]?.double ?? 0.0
+//
+//                            let retweets = object?["retweet_count"]?.double ?? 0.0
+//                            let favorites = object?["favorite_count"]?.double ?? 0.0
+//
+//                            let entities = object?["entities"]?.dictionary
+//                            let urls: [String] = (entities?["urls"]?.array?.map({ $0.dictionary?["expanded_url"]?.string ?? "" })) ?? []
+//                            let symbols: [String] = (entities?["symbols"]?.array?.map({ $0.dictionary?["text"]?.string ?? "" })) ?? []
+//                            let text: String = object?["text"]?.string ?? ""
+//                            let createdAt = object?["created_at"]?.string ?? ""
+//
+//                            let metadata: TweetMetadata = .init(
+//                                name: name,
+//                                followersCount: Int(followers),
+//                                retweetCount: Int(retweets),
+//                                favouritesCount: Int(favorites),
+//                                urls: urls,
+//                                symbols: symbols,
+//                                text: text,
+//                                createdAt: createdAt)
+//
+//
+//                            //Flags
+//
+//                            let theCashtag: Bool = !metadata.symbols.isEmpty && metadata.symbols.count <= 6 && (metadata.symbols.map({ $0.lowercased() }).contains(oracle.query.lowercased()) || text.lowercased().components(separatedBy: oracle.ticker.lowercased()).count > 1)
+//
+//                            let theCompany: Bool = self.cycleCount > 0 && text.lowercased().components(separatedBy: query).count > 1
+//                            //
+////                            let theDate: Bool
+////                            let targetDate = (oracle.fromDate.asDate() ?? Date()).dateComponents()
+////                            let tweetDate = metadata.asDate.dateComponents()
+////                            if tweetDate.day <= targetDate.day &&
+////                                tweetDate.month <= targetDate.month &&
+////                                tweetDate.year <= targetDate.year {
+////                                theDate = true
+////                            } else {
+////                                theDate = false
+////                            }
+//                            //
+//
+//                            //TODO: Used to be no links, but we should scrape the link soon
+//                            // ...
+//                            //
+//                            let theURLs: Bool = metadata.urls.isEmpty || (text.count > 24)
+//
+//                            let collected: [String] = self.results.map({ $0.0.text.lowercased() })
+//                            let theDupe: Bool = !collected.contains(text.lowercased())
+//
+//                            if (theCashtag || theCompany), theURLs, theDupe {
+//
+//                                if let prediction = self.stoicSentiment.predict(metadata.text) {
+////                                let theSentiment: Bool = prediction.compound != 0
+//                                    #if DEBUG
+//                                    print("%%%%%%%%%\n Sentiment Candidate \n%%%%%%\n\n")
+//                                    print(metadata.toString)
+//                                    print(prediction.asString)
+//                                    print("%%%%%%%%%\n query: \(query) :: \(prediction.asString) \n%%%%%%\n\n")
+//                                    #endif
+//                                    self.results.append((metadata.asTweet, prediction))
+//
+//                                    if oracle.immediate {
+//                                        break
+//                                    }
+//                                }
+//                            } else {
+//                                #if DEBUG
+//                                print("{TEST-error} \(metadata.text) \(theCashtag) \(theCompany) \(theURLs) \(theDupe)")
+//                                #endif
+////                                print(metadata.toString)
+////                                print("###########\n errror :: query: \(query) \n###########\n\n")
+//                            }
+//                        }
+//
+////                        guard !self.shouldCancel else { return }
+////
+////                        if (((self.results.count < oracle.sentimentCount) || self.results.isEmpty) &&
+////                            (self.emptyPageCount < self.maxEmptyPages || self.cycleCount < self.maxCycleCount )) {
+////
+////                            var oracleToRefresh: TweetOraclePayload = oracle
+////                            if self.emptyPageCount < self.maxEmptyPages {
+////                                let maxId = id.components(separatedBy: "&q").first?.components(separatedBy: "?max_id=").last ?? id
+////
+//////                                print("{TEST} parsing max \(maxId)")
+////                                oracleToRefresh.maxId = maxId
+////                            }
+////
+////
+////                            if self.emptyPageCount < self.maxEmptyPages {
+////                                self.emptyPageCount+=1
+////                            } else {
+////                                oracleToRefresh.maxId = nil
+////                                self.cycleCount+=1
+////                                self.emptyPageCount = 0
+////                            }
+////
+////                            print("{SENTIMENT} refresh \(self.emptyPageCount)")
+////                            self.search(
+////                                oracleToRefresh,
+////                                queryToRefreshWith: self.emptyPageCount == 0 ? nil : query,
+////                                success: success,
+////                                progress: progress,
+////                                failure: failure)
+//////                            print("{TEST} \(self.results.count) refresh \(oracleToRefresh.maxId)")
+////                        } else {
+//                            print("{SENTIMENT} final \(self.results.count)")
+//                            success?(Array(self.results.prefix(oracle.sentimentCount)))
+//                            self.reset()
+////                        }
+//                    }
+//                }
+//        },
+//            failure: { error in
+//                print("{TEST} \(error.localizedDescription)")
+//        })
+        
+        //////// PRODUCTION
+        
         self.swifter.searchTweet(
             using: query,
             lang: oracle.lang,
@@ -140,25 +275,25 @@ class TweetOracle: NSObject {
             success: { (test, test2) in
                 DispatchQueue.global(qos: .utility).async {
                     if let array = test.array {
-                        
+
                         for item in array {
                             guard !self.shouldCancel else { break }
                             
                             let object = item.object
-                            
+
                             let user = object?["user"]
                             let name = user?.object?["screen_name"]?.string ?? ""
                             let followers = user?.object?["followers_count"]?.double ?? 0.0
-                            
+
                             let retweets = object?["retweet_count"]?.double ?? 0.0
                             let favorites = object?["favorite_count"]?.double ?? 0.0
-                            
+
                             let entities = object?["entities"]?.object
                             let urls: [String] = (entities?["urls"]?.array?.map({ $0.object?["expanded_url"]?.string ?? "" })) ?? []
                             let symbols: [String] = (entities?["symbols"]?.array?.map({ $0.object?["text"]?.string ?? "" })) ?? []
                             let text: String = object?["text"]?.string ?? ""
                             let createdAt = object?["created_at"]?.string ?? ""
-                           
+
                             let metadata: TweetMetadata = .init(
                                 name: name,
                                 followersCount: Int(followers),
@@ -168,12 +303,12 @@ class TweetOracle: NSObject {
                                 symbols: symbols,
                                 text: text,
                                 createdAt: createdAt)
-                            
-                            
+
+
                             //Flags
-                            
+
                             let theCashtag: Bool = !metadata.symbols.isEmpty && metadata.symbols.count <= 6 && (metadata.symbols.map({ $0.lowercased() }).contains(oracle.query.lowercased()) || text.lowercased().components(separatedBy: oracle.ticker.lowercased()).count > 1)
-                            
+
                             let theCompany: Bool = self.cycleCount > 0 && text.lowercased().components(separatedBy: query).count > 1
                             //
 //                            let theDate: Bool
@@ -187,15 +322,15 @@ class TweetOracle: NSObject {
 //                                theDate = false
 //                            }
                             //
-                            
+
                             //TODO: Used to be no links, but we should scrape the link soon
                             // ...
                             //
                             let theURLs: Bool = metadata.urls.isEmpty || (text.count > 24)
-                            
+
                             let collected: [String] = self.results.map({ $0.0.text.lowercased() })
                             let theDupe: Bool = !collected.contains(text.lowercased())
-                            
+
                             if (theCashtag || theCompany), theURLs, theDupe {
 
                                 if let prediction = self.stoicSentiment.predict(metadata.text) {
@@ -207,7 +342,7 @@ class TweetOracle: NSObject {
                                     print("%%%%%%%%%\n query: \(query) :: \(prediction.asString) \n%%%%%%\n\n")
                                     #endif
                                     self.results.append((metadata.asTweet, prediction))
-                                    
+
                                     if oracle.immediate {
                                         break
                                     }
@@ -220,21 +355,22 @@ class TweetOracle: NSObject {
 //                                print("###########\n errror :: query: \(query) \n###########\n\n")
                             }
                         }
-                        
+
                         guard !self.shouldCancel else { return }
-                        
+
                         if (((self.results.count < oracle.sentimentCount) || self.results.isEmpty) &&
                             (self.emptyPageCount < self.maxEmptyPages || self.cycleCount < self.maxCycleCount )) {
 
                             var oracleToRefresh: TweetOraclePayload = oracle
-                            if let id = test2.object?["next_results"]?.string, self.emptyPageCount < self.maxEmptyPages {
+                            if let id = test2.object?["next_results"]?.string,
+                               self.emptyPageCount < self.maxEmptyPages {
                                 let maxId = id.components(separatedBy: "&q").first?.components(separatedBy: "?max_id=").last ?? id
-                                
+
 //                                print("{TEST} parsing max \(maxId)")
                                 oracleToRefresh.maxId = maxId
                             }
-                            
-                            
+
+
                             if self.emptyPageCount < self.maxEmptyPages {
                                 self.emptyPageCount+=1
                             } else {
@@ -242,7 +378,7 @@ class TweetOracle: NSObject {
                                 self.cycleCount+=1
                                 self.emptyPageCount = 0
                             }
-                            
+
                             print("{SENTIMENT} refresh \(self.emptyPageCount)")
                             self.search(
                                 oracleToRefresh,
