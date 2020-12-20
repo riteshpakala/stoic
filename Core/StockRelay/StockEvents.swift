@@ -12,11 +12,13 @@ import Combine
 
 public struct StockEvents {
     public struct StockTradingDay: GraniteEvent {
-        public var expedition: GraniteBaseExpedition = TradingDayExpedition.Discovery()
     }
     
     public struct UpdateStockData: GraniteEvent {
-        public var expedition: GraniteBaseExpedition = UpdateStockDataExpedition.Discovery()
+    }
+    
+    public struct NewStockData: GraniteEvent {
+        let data: [StockData]
     }
 }
 

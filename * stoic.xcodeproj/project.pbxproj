@@ -21,6 +21,16 @@
 		713D25B0258E42BF005FB4D4 /* ClockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AB258E42BF005FB4D4 /* ClockRelay.swift */; };
 		713D25B1258E42BF005FB4D4 /* ClockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AD258E42BF005FB4D4 /* ClockState.swift */; };
 		713D25B2258E42BF005FB4D4 /* ClockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AD258E42BF005FB4D4 /* ClockState.swift */; };
+		71AACC8C258EC74000E1C0B3 /* StockModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACC8B258EC74000E1C0B3 /* StockModels.swift */; };
+		71AACC95258EC7D100E1C0B3 /* StockModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACC8B258EC74000E1C0B3 /* StockModels.swift */; };
+		71AACCDD258EC8E000E1C0B3 /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCDC258EC8E000E1C0B3 /* StockData.swift */; };
+		71AACCE3258EC8F600E1C0B3 /* StockDateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCE2258EC8F600E1C0B3 /* StockDateData.swift */; };
+		71AACCE9258EC94A00E1C0B3 /* StockIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCE8258EC94A00E1C0B3 /* StockIndicators.swift */; };
+		71AACCEE258EC95300E1C0B3 /* StockDateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCE2258EC8F600E1C0B3 /* StockDateData.swift */; };
+		71AACCF3258EC95500E1C0B3 /* StockIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCE8258EC94A00E1C0B3 /* StockIndicators.swift */; };
+		71AACCF8258EC95800E1C0B3 /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCDC258EC8E000E1C0B3 /* StockData.swift */; };
+		71AACD15258ED46600E1C0B3 /* AssetGridNewStocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACD14258ED46600E1C0B3 /* AssetGridNewStocks.swift */; };
+		71AACD16258ED46600E1C0B3 /* AssetGridNewStocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACD14258ED46600E1C0B3 /* AssetGridNewStocks.swift */; };
 		71D63CAD258E9216003B0BAF /* UpdateStockDataExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63CAC258E9216003B0BAF /* UpdateStockDataExpedition.swift */; };
 		71D63CAE258E9216003B0BAF /* UpdateStockDataExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63CAC258E9216003B0BAF /* UpdateStockDataExpedition.swift */; };
 		71D63CCC258E92B1003B0BAF /* MainComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63CC8258E92B1003B0BAF /* MainComponent.swift */; };
@@ -78,6 +88,11 @@
 		711532D2258E695000D478E2 /* AssetClockUpdatedExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetClockUpdatedExpedition.swift; sourceTree = "<group>"; };
 		713D25AB258E42BF005FB4D4 /* ClockRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockRelay.swift; sourceTree = "<group>"; };
 		713D25AD258E42BF005FB4D4 /* ClockState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockState.swift; sourceTree = "<group>"; };
+		71AACC8B258EC74000E1C0B3 /* StockModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModels.swift; sourceTree = "<group>"; };
+		71AACCDC258EC8E000E1C0B3 /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
+		71AACCE2258EC8F600E1C0B3 /* StockDateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDateData.swift; sourceTree = "<group>"; };
+		71AACCE8258EC94A00E1C0B3 /* StockIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockIndicators.swift; sourceTree = "<group>"; };
+		71AACD14258ED46600E1C0B3 /* AssetGridNewStocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetGridNewStocks.swift; sourceTree = "<group>"; };
 		71D63CAC258E9216003B0BAF /* UpdateStockDataExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStockDataExpedition.swift; sourceTree = "<group>"; };
 		71D63CC8258E92B1003B0BAF /* MainComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainComponent.swift; sourceTree = "<group>"; };
 		71D63CCA258E92B1003B0BAF /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainState.swift; sourceTree = "<group>"; };
@@ -142,6 +157,7 @@
 		71140293258DB5E700BA387D /* StockRelay */ = {
 			isa = PBXGroup;
 			children = (
+				71AACC8A258EC72000E1C0B3 /* Models */,
 				71140295258DB5E700BA387D /* State */,
 				71140294258DB5E700BA387D /* StockEvents.swift */,
 				71140297258DB5E700BA387D /* StockRelay.swift */,
@@ -170,6 +186,7 @@
 		711532CD258E693C00D478E2 /* Expeditions */ = {
 			isa = PBXGroup;
 			children = (
+				71AACD14258ED46600E1C0B3 /* AssetGridNewStocks.swift */,
 				711532D2258E695000D478E2 /* AssetClockUpdatedExpedition.swift */,
 			);
 			path = Expeditions;
@@ -190,6 +207,24 @@
 				713D25AD258E42BF005FB4D4 /* ClockState.swift */,
 			);
 			path = State;
+			sourceTree = "<group>";
+		};
+		71AACC8A258EC72000E1C0B3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				71AACC8B258EC74000E1C0B3 /* StockModels.swift */,
+				71AACCE8258EC94A00E1C0B3 /* StockIndicators.swift */,
+				71AACCE2258EC8F600E1C0B3 /* StockDateData.swift */,
+				71AACCDC258EC8E000E1C0B3 /* StockData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		71AACD08258ED45100E1C0B3 /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Expeditions;
 			sourceTree = "<group>";
 		};
 		71D63CB3258E921A003B0BAF /* Update */ = {
@@ -348,6 +383,7 @@
 		71EE708D258D9072005B2B8E /* State */ = {
 			isa = PBXGroup;
 			children = (
+				71AACD08258ED45100E1C0B3 /* Expeditions */,
 				71EE708E258D9072005B2B8E /* AssetGridItemState.swift */,
 			);
 			path = State;
@@ -519,8 +555,11 @@
 				71D63CCE258E92B1003B0BAF /* MainState.swift in Sources */,
 				71EE7079258D8F88005B2B8E /* AssetGridState.swift in Sources */,
 				711402C8258DBC2F00BA387D /* TradingDayExpedition.swift in Sources */,
+				71AACCE9258EC94A00E1C0B3 /* StockIndicators.swift in Sources */,
 				7114029A258DB5E700BA387D /* StockRelay.swift in Sources */,
+				71AACC8C258EC74000E1C0B3 /* StockModels.swift in Sources */,
 				71D63CD0258E92B1003B0BAF /* MainEvents.swift in Sources */,
+				71AACCE3258EC8F600E1C0B3 /* StockDateData.swift in Sources */,
 				71140298258DB5E700BA387D /* StockEvents.swift in Sources */,
 				71EE7092258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
 				71EE7075258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
@@ -531,7 +570,9 @@
 				713D25AF258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
 				71EE7007258D347F005B2B8E /* __stoicApp.swift in Sources */,
 				713D25B1258E42BF005FB4D4 /* ClockState.swift in Sources */,
+				71AACD15258ED46600E1C0B3 /* AssetGridNewStocks.swift in Sources */,
 				71D63CAD258E9216003B0BAF /* UpdateStockDataExpedition.swift in Sources */,
+				71AACCDD258EC8E000E1C0B3 /* StockData.swift in Sources */,
 				71EE7094258D9072005B2B8E /* AssetGridItemEvents.swift in Sources */,
 				711532D3258E695000D478E2 /* AssetClockUpdatedExpedition.swift in Sources */,
 				71D63CCC258E92B1003B0BAF /* MainComponent.swift in Sources */,
@@ -545,9 +586,12 @@
 				71D63CCF258E92B1003B0BAF /* MainState.swift in Sources */,
 				711402A7258DB9E700BA387D /* StockRelay.swift in Sources */,
 				71EE700A258D347F005B2B8E /* ContentView.swift in Sources */,
+				71AACCEE258EC95300E1C0B3 /* StockDateData.swift in Sources */,
 				711402D1258DBD0900BA387D /* TradingDayExpedition.swift in Sources */,
+				71AACC95258EC7D100E1C0B3 /* StockModels.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
 				71D63CD1258E92B1003B0BAF /* MainEvents.swift in Sources */,
+				71AACCF3258EC95500E1C0B3 /* StockIndicators.swift in Sources */,
 				71EE7093258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
 				71EE7076258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
 				71EE7091258D9072005B2B8E /* AssetGridItemComponent.swift in Sources */,
@@ -557,7 +601,9 @@
 				713D25B2258E42BF005FB4D4 /* ClockState.swift in Sources */,
 				71EE7095258D9072005B2B8E /* AssetGridItemEvents.swift in Sources */,
 				71D63CAE258E9216003B0BAF /* UpdateStockDataExpedition.swift in Sources */,
+				71AACD16258ED46600E1C0B3 /* AssetGridNewStocks.swift in Sources */,
 				71EE7008258D347F005B2B8E /* __stoicApp.swift in Sources */,
+				71AACCF8258EC95800E1C0B3 /* StockData.swift in Sources */,
 				711532DC258E695200D478E2 /* AssetClockUpdatedExpedition.swift in Sources */,
 				711402B1258DB9ED00BA387D /* StockEvents.swift in Sources */,
 				71D63CCD258E92B1003B0BAF /* MainComponent.swift in Sources */,

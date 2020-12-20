@@ -19,7 +19,6 @@ struct AssetClockUpdatedExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         print("{TEST} as well as me \(state.count)")
-        state.payload = .init(object: state.count)
         state.count += 1
     }
 }

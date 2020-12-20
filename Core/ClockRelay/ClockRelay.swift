@@ -15,7 +15,7 @@ public struct ClockRelay: GraniteRelay {
     public var command: GraniteService<ClockCenter, ClockState> = .init()
     
     class Clock {
-        let currentTimePublisher = Timer.TimerPublisher(interval: 1.0, runLoop: .main, mode: .default)
+        let currentTimePublisher = Timer.TimerPublisher(interval: 1.0, runLoop: .main, mode: .common)
         let cancellable: AnyCancellable?
 
         init() {
@@ -44,5 +44,8 @@ public struct ClockRelay: GraniteRelay {
         for event in command.events {
             command.subject.send(event)
         }
+        
+        gameClock.cancellable?.cancel()
+        state.effectCancellables.forEach { $0.cancel() }
     }
 }

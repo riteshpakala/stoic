@@ -29,15 +29,15 @@ public struct AssetGridItemComponent: GraniteComponent {
             Spacer().frame(width: 12)
             
             VStack(alignment: .leading) {
-                Text("$MSFT").multilineTextAlignment(.leading)
-                Text("volume: 35m").multilineTextAlignment(.leading)
+                Text("$\(state.stockData.symbolName)").multilineTextAlignment(.leading)
+                Text("volume: \(state.stockData.volume)").multilineTextAlignment(.leading)
             }
             
             Spacer()
             
             VStack {
                 Text("+4.5%")
-                Text("$\(state.price)")
+                Text("$\(state.stockData.close)")
             }
             
             Spacer().frame(width: 12)

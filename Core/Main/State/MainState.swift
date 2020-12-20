@@ -14,9 +14,5 @@ public class MainState: GraniteState {
 }
 
 public class MainCenter: GraniteCenter<MainState> {
-    public override var relays: [AnyGraniteRelay] {
-        [
-            StockRelay()
-        ]
-    }
+    let stockRelay: StockRelay = .init()
 }

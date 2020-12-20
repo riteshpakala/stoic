@@ -16,7 +16,6 @@ public struct MainComponent: GraniteComponent {
     
     public var body: some View {
         AssetGridComponent()
-//            .shareRelay(AssetGridEvents.ClockUpdated(),
-//                        from: relay(StockRelay.self))
+            .shareRelay(relay(StockRelay.self))
     }
 }

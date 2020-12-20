@@ -11,8 +11,8 @@ import SwiftUI
 import Combine
 
 public class AssetGridItemState: GraniteState {
-    var price: Int {
-        payload?.object as? Int ?? 0
+    var stockData: StockData {
+        payload?.object as? StockData ?? .empty
     }
     
     
@@ -20,5 +20,6 @@ public class AssetGridItemState: GraniteState {
 }
 
 public class AssetGridItemCenter: GraniteCenter<AssetGridItemState> {
-
+    
 }
+

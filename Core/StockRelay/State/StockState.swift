@@ -15,10 +15,19 @@ public class StockState: GraniteState {
 }
 
 public class StockCenter: GraniteCenter<StockState> {
-    public override var relays: [AnyGraniteRelay] {
+    let clockRelay = ClockRelay(StockEvents.UpdateStockData())
+    
+    public override var expeditions: [GraniteBaseExpedition] {
         [
-            ClockRelay(StockEvents.UpdateStockData(), latch: true)
+            TradingDayExpedition.Discovery(),
+            UpdateStockDataExpedition.Discovery(),
+            NewStockDataExpedition.Discovery()
         ]
     }
+    
+    public enum APIKeys {
+        case yahoo(url: String)
+    }
+    
 }
 
