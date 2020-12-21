@@ -21,6 +21,89 @@
 		713D25B0258E42BF005FB4D4 /* ClockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AB258E42BF005FB4D4 /* ClockRelay.swift */; };
 		713D25B1258E42BF005FB4D4 /* ClockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AD258E42BF005FB4D4 /* ClockState.swift */; };
 		713D25B2258E42BF005FB4D4 /* ClockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AD258E42BF005FB4D4 /* ClockState.swift */; };
+		7143414925905E53001F26A4 /* MenloFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143414825905E53001F26A4 /* MenloFont.swift */; };
+		7143415325905E5B001F26A4 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143415225905E5B001F26A4 /* Fonts.swift */; };
+		7143417125906012001F26A4 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143415225905E5B001F26A4 /* Fonts.swift */; };
+		7143417825906410001F26A4 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143417725906410001F26A4 /* Brand.swift */; };
+		7143418325906441001F26A4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143418225906441001F26A4 /* Color.swift */; };
+		71434188259067CA001F26A4 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143417725906410001F26A4 /* Brand.swift */; };
+		7143418D259067D5001F26A4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143418225906441001F26A4 /* Color.swift */; };
+		714342E325907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342E025907253001F26A4 /* InnerShadowViewModifiers.swift */; };
+		714342E425907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342E025907253001F26A4 /* InnerShadowViewModifiers.swift */; };
+		714342E525907253001F26A4 /* InnerShadowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342E125907253001F26A4 /* InnerShadowModel.swift */; };
+		714342E625907253001F26A4 /* InnerShadowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342E125907253001F26A4 /* InnerShadowModel.swift */; };
+		714342E725907253001F26A4 /* InnerShadowExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342E225907253001F26A4 /* InnerShadowExtensions.swift */; };
+		714342E825907253001F26A4 /* InnerShadowExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342E225907253001F26A4 /* InnerShadowExtensions.swift */; };
+		714342FF25907622001F26A4 /* UINumericType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FA25907621001F26A4 /* UINumericType.swift */; };
+		7143430025907622001F26A4 /* UINumericType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FA25907621001F26A4 /* UINumericType.swift */; };
+		7143430125907622001F26A4 /* RepresentableAsDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FB25907621001F26A4 /* RepresentableAsDouble.swift */; };
+		7143430225907622001F26A4 /* RepresentableAsDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FB25907621001F26A4 /* RepresentableAsDouble.swift */; };
+		7143430325907622001F26A4 /* RepresentableAsCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FC25907621001F26A4 /* RepresentableAsCGFloat.swift */; };
+		7143430425907622001F26A4 /* RepresentableAsCGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FC25907621001F26A4 /* RepresentableAsCGFloat.swift */; };
+		7143430525907622001F26A4 /* RepresentableAsInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FD25907621001F26A4 /* RepresentableAsInt.swift */; };
+		7143430625907622001F26A4 /* RepresentableAsInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FD25907621001F26A4 /* RepresentableAsInt.swift */; };
+		7143430725907622001F26A4 /* RepresentableAsFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FE25907622001F26A4 /* RepresentableAsFloat.swift */; };
+		7143430825907622001F26A4 /* RepresentableAsFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714342FE25907622001F26A4 /* RepresentableAsFloat.swift */; };
+		71434318259076EB001F26A4 /* Comparible+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143430E259076EB001F26A4 /* Comparible+Convenience.swift */; };
+		71434319259076EB001F26A4 /* Comparible+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143430E259076EB001F26A4 /* Comparible+Convenience.swift */; };
+		7143431A259076EB001F26A4 /* String+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143430F259076EB001F26A4 /* String+Convenience.swift */; };
+		7143431B259076EB001F26A4 /* String+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143430F259076EB001F26A4 /* String+Convenience.swift */; };
+		7143431C259076EB001F26A4 /* Double+Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434310259076EB001F26A4 /* Double+Angle.swift */; };
+		7143431D259076EB001F26A4 /* Double+Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434310259076EB001F26A4 /* Double+Angle.swift */; };
+		7143431E259076EB001F26A4 /* Float+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434311259076EB001F26A4 /* Float+Convenience.swift */; };
+		7143431F259076EB001F26A4 /* Float+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434311259076EB001F26A4 /* Float+Convenience.swift */; };
+		71434320259076EB001F26A4 /* Collection+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434312259076EB001F26A4 /* Collection+Convenience.swift */; };
+		71434321259076EB001F26A4 /* Collection+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434312259076EB001F26A4 /* Collection+Convenience.swift */; };
+		71434322259076EB001F26A4 /* Float+Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434313259076EB001F26A4 /* Float+Angle.swift */; };
+		71434323259076EB001F26A4 /* Float+Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434313259076EB001F26A4 /* Float+Angle.swift */; };
+		71434324259076EB001F26A4 /* Int+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434314259076EB001F26A4 /* Int+Convenience.swift */; };
+		71434325259076EB001F26A4 /* Int+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434314259076EB001F26A4 /* Int+Convenience.swift */; };
+		71434326259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434315259076EB001F26A4 /* FloatingPoint+Convenience.swift */; };
+		71434327259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434315259076EB001F26A4 /* FloatingPoint+Convenience.swift */; };
+		71434328259076EB001F26A4 /* Int+Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434316259076EB001F26A4 /* Int+Angle.swift */; };
+		71434329259076EB001F26A4 /* Int+Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434316259076EB001F26A4 /* Int+Angle.swift */; };
+		7143432A259076EB001F26A4 /* Double+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434317259076EB001F26A4 /* Double+Convenience.swift */; };
+		7143432B259076EB001F26A4 /* Double+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434317259076EB001F26A4 /* Double+Convenience.swift */; };
+		71434338259076EE001F26A4 /* CGRect+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434331259076EE001F26A4 /* CGRect+Convenience.swift */; };
+		71434339259076EE001F26A4 /* CGRect+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434331259076EE001F26A4 /* CGRect+Convenience.swift */; };
+		7143433A259076EE001F26A4 /* CGFloat+Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434332259076EE001F26A4 /* CGFloat+Angle.swift */; };
+		7143433B259076EE001F26A4 /* CGFloat+Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434332259076EE001F26A4 /* CGFloat+Angle.swift */; };
+		7143433C259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434333259076EE001F26A4 /* CGPoint+Convenience.swift */; };
+		7143433D259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434333259076EE001F26A4 /* CGPoint+Convenience.swift */; };
+		7143433E259076EE001F26A4 /* CGSize+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434334259076EE001F26A4 /* CGSize+Convenience.swift */; };
+		7143433F259076EE001F26A4 /* CGSize+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434334259076EE001F26A4 /* CGSize+Convenience.swift */; };
+		71434340259076EE001F26A4 /* CGVector+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434335259076EE001F26A4 /* CGVector+Convenience.swift */; };
+		71434341259076EE001F26A4 /* CGVector+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434335259076EE001F26A4 /* CGVector+Convenience.swift */; };
+		71434342259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434336259076EE001F26A4 /* CGFloat+Convenience.swift */; };
+		71434343259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434336259076EE001F26A4 /* CGFloat+Convenience.swift */; };
+		71434344259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434337259076EE001F26A4 /* CGAffineTransform+Convenience.swift */; };
+		71434345259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434337259076EE001F26A4 /* CGAffineTransform+Convenience.swift */; };
+		71434353259076F4001F26A4 /* Angle+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434B259076F4001F26A4 /* Angle+Convenience.swift */; };
+		71434354259076F4001F26A4 /* Angle+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434B259076F4001F26A4 /* Angle+Convenience.swift */; };
+		71434355259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434C259076F4001F26A4 /* UnitPoint+Convenience.swift */; };
+		71434356259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434C259076F4001F26A4 /* UnitPoint+Convenience.swift */; };
+		71434357259076F4001F26A4 /* LinearGradient+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434D259076F4001F26A4 /* LinearGradient+Convenience.swift */; };
+		71434358259076F4001F26A4 /* LinearGradient+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434D259076F4001F26A4 /* LinearGradient+Convenience.swift */; };
+		71434359259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434E259076F4001F26A4 /* GeometryProxy+Convenience.swift */; };
+		7143435A259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434E259076F4001F26A4 /* GeometryProxy+Convenience.swift */; };
+		7143435B259076F4001F26A4 /* Path+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434F259076F4001F26A4 /* Path+Convenience.swift */; };
+		7143435C259076F4001F26A4 /* Path+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143434F259076F4001F26A4 /* Path+Convenience.swift */; };
+		7143435D259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434350259076F4001F26A4 /* EdgeInsets+Convenience.swift */; };
+		7143435E259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434350259076F4001F26A4 /* EdgeInsets+Convenience.swift */; };
+		7143435F259076F4001F26A4 /* Color+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434351259076F4001F26A4 /* Color+Convenience.swift */; };
+		71434360259076F4001F26A4 /* Color+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434351259076F4001F26A4 /* Color+Convenience.swift */; };
+		71434361259076F4001F26A4 /* Edge+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434352259076F4001F26A4 /* Edge+Convenience.swift */; };
+		71434362259076F4001F26A4 /* Edge+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71434352259076F4001F26A4 /* Edge+Convenience.swift */; };
+		7143436D25907725001F26A4 /* MathOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143436C25907725001F26A4 /* MathOperators.swift */; };
+		7143436E25907725001F26A4 /* MathOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143436C25907725001F26A4 /* MathOperators.swift */; };
+		714343932590786E001F26A4 /* RenderedIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714343922590786E001F26A4 /* RenderedIf.swift */; };
+		714343942590786E001F26A4 /* RenderedIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714343922590786E001F26A4 /* RenderedIf.swift */; };
+		7143439E2590787E001F26A4 /* RenderIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143439D2590787E001F26A4 /* RenderIf.swift */; };
+		7143439F2590787E001F26A4 /* RenderIf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143439D2590787E001F26A4 /* RenderIf.swift */; };
+		714343A92590789A001F26A4 /* GeometryFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714343A82590789A001F26A4 /* GeometryFunctions.swift */; };
+		714343AA2590789A001F26A4 /* GeometryFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714343A82590789A001F26A4 /* GeometryFunctions.swift */; };
+		714343D625907DB5001F26A4 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714343D525907DB5001F26A4 /* Double.swift */; };
+		714343D725907DB5001F26A4 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714343D525907DB5001F26A4 /* Double.swift */; };
 		71AACC8C258EC74000E1C0B3 /* StockModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACC8B258EC74000E1C0B3 /* StockModels.swift */; };
 		71AACC95258EC7D100E1C0B3 /* StockModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACC8B258EC74000E1C0B3 /* StockModels.swift */; };
 		71AACCDD258EC8E000E1C0B3 /* StockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AACCDC258EC8E000E1C0B3 /* StockData.swift */; };
@@ -88,6 +171,49 @@
 		711532D2258E695000D478E2 /* AssetClockUpdatedExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetClockUpdatedExpedition.swift; sourceTree = "<group>"; };
 		713D25AB258E42BF005FB4D4 /* ClockRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockRelay.swift; sourceTree = "<group>"; };
 		713D25AD258E42BF005FB4D4 /* ClockState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockState.swift; sourceTree = "<group>"; };
+		713D729D258EE95800E00203 /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../granite; sourceTree = "<group>"; };
+		7143414825905E53001F26A4 /* MenloFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenloFont.swift; sourceTree = "<group>"; };
+		7143415225905E5B001F26A4 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		7143417725906410001F26A4 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
+		7143418225906441001F26A4 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		714342E025907253001F26A4 /* InnerShadowViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerShadowViewModifiers.swift; sourceTree = "<group>"; };
+		714342E125907253001F26A4 /* InnerShadowModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerShadowModel.swift; sourceTree = "<group>"; };
+		714342E225907253001F26A4 /* InnerShadowExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerShadowExtensions.swift; sourceTree = "<group>"; };
+		714342FA25907621001F26A4 /* UINumericType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINumericType.swift; sourceTree = "<group>"; };
+		714342FB25907621001F26A4 /* RepresentableAsDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepresentableAsDouble.swift; sourceTree = "<group>"; };
+		714342FC25907621001F26A4 /* RepresentableAsCGFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepresentableAsCGFloat.swift; sourceTree = "<group>"; };
+		714342FD25907621001F26A4 /* RepresentableAsInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepresentableAsInt.swift; sourceTree = "<group>"; };
+		714342FE25907622001F26A4 /* RepresentableAsFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepresentableAsFloat.swift; sourceTree = "<group>"; };
+		7143430E259076EB001F26A4 /* Comparible+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Comparible+Convenience.swift"; sourceTree = "<group>"; };
+		7143430F259076EB001F26A4 /* String+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Convenience.swift"; sourceTree = "<group>"; };
+		71434310259076EB001F26A4 /* Double+Angle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Angle.swift"; sourceTree = "<group>"; };
+		71434311259076EB001F26A4 /* Float+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Convenience.swift"; sourceTree = "<group>"; };
+		71434312259076EB001F26A4 /* Collection+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Convenience.swift"; sourceTree = "<group>"; };
+		71434313259076EB001F26A4 /* Float+Angle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Angle.swift"; sourceTree = "<group>"; };
+		71434314259076EB001F26A4 /* Int+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Convenience.swift"; sourceTree = "<group>"; };
+		71434315259076EB001F26A4 /* FloatingPoint+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Convenience.swift"; sourceTree = "<group>"; };
+		71434316259076EB001F26A4 /* Int+Angle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Angle.swift"; sourceTree = "<group>"; };
+		71434317259076EB001F26A4 /* Double+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Convenience.swift"; sourceTree = "<group>"; };
+		71434331259076EE001F26A4 /* CGRect+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Convenience.swift"; sourceTree = "<group>"; };
+		71434332259076EE001F26A4 /* CGFloat+Angle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Angle.swift"; sourceTree = "<group>"; };
+		71434333259076EE001F26A4 /* CGPoint+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Convenience.swift"; sourceTree = "<group>"; };
+		71434334259076EE001F26A4 /* CGSize+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+Convenience.swift"; sourceTree = "<group>"; };
+		71434335259076EE001F26A4 /* CGVector+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGVector+Convenience.swift"; sourceTree = "<group>"; };
+		71434336259076EE001F26A4 /* CGFloat+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Convenience.swift"; sourceTree = "<group>"; };
+		71434337259076EE001F26A4 /* CGAffineTransform+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Convenience.swift"; sourceTree = "<group>"; };
+		7143434B259076F4001F26A4 /* Angle+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Angle+Convenience.swift"; sourceTree = "<group>"; };
+		7143434C259076F4001F26A4 /* UnitPoint+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UnitPoint+Convenience.swift"; sourceTree = "<group>"; };
+		7143434D259076F4001F26A4 /* LinearGradient+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LinearGradient+Convenience.swift"; sourceTree = "<group>"; };
+		7143434E259076F4001F26A4 /* GeometryProxy+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GeometryProxy+Convenience.swift"; sourceTree = "<group>"; };
+		7143434F259076F4001F26A4 /* Path+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Path+Convenience.swift"; sourceTree = "<group>"; };
+		71434350259076F4001F26A4 /* EdgeInsets+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EdgeInsets+Convenience.swift"; sourceTree = "<group>"; };
+		71434351259076F4001F26A4 /* Color+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Convenience.swift"; sourceTree = "<group>"; };
+		71434352259076F4001F26A4 /* Edge+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Edge+Convenience.swift"; sourceTree = "<group>"; };
+		7143436C25907725001F26A4 /* MathOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathOperators.swift; sourceTree = "<group>"; };
+		714343922590786E001F26A4 /* RenderedIf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderedIf.swift; sourceTree = "<group>"; };
+		7143439D2590787E001F26A4 /* RenderIf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderIf.swift; sourceTree = "<group>"; };
+		714343A82590789A001F26A4 /* GeometryFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometryFunctions.swift; sourceTree = "<group>"; };
+		714343D525907DB5001F26A4 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		71AACC8B258EC74000E1C0B3 /* StockModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockModels.swift; sourceTree = "<group>"; };
 		71AACCDC258EC8E000E1C0B3 /* StockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockData.swift; sourceTree = "<group>"; };
 		71AACCE2258EC8F600E1C0B3 /* StockDateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDateData.swift; sourceTree = "<group>"; };
@@ -111,7 +237,6 @@
 		71EE7000258D347F005B2B8E /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		71EE7004258D347F005B2B8E /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		71EE7006258D347F005B2B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		71EE701F258D34DD005B2B8E /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../../Documents/repositories/granite; sourceTree = "<group>"; };
 		71EE7071258D8F88005B2B8E /* AssetGridEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetGridEvents.swift; sourceTree = "<group>"; };
 		71EE7072258D8F88005B2B8E /* AssetGridComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetGridComponent.swift; sourceTree = "<group>"; };
 		71EE7074258D8F88005B2B8E /* AssetGridState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetGridState.swift; sourceTree = "<group>"; };
@@ -209,6 +334,176 @@
 			path = State;
 			sourceTree = "<group>";
 		};
+		7143414525905DDA001F26A4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				714343DC2590837B001F26A4 /* Design */,
+				7143418125906437001F26A4 /* Extensions */,
+				71434176259063FC001F26A4 /* Brand */,
+				7143414625905DE2001F26A4 /* Fonts */,
+				71EE6FE0258D347E005B2B8E /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7143414625905DE2001F26A4 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				7143414725905E3F001F26A4 /* Menlo */,
+				7143415225905E5B001F26A4 /* Fonts.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		7143414725905E3F001F26A4 /* Menlo */ = {
+			isa = PBXGroup;
+			children = (
+				7143414825905E53001F26A4 /* MenloFont.swift */,
+			);
+			path = Menlo;
+			sourceTree = "<group>";
+		};
+		71434176259063FC001F26A4 /* Brand */ = {
+			isa = PBXGroup;
+			children = (
+				7143417725906410001F26A4 /* Brand.swift */,
+			);
+			path = Brand;
+			sourceTree = "<group>";
+		};
+		7143418125906437001F26A4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7143418225906441001F26A4 /* Color.swift */,
+				714343D525907DB5001F26A4 /* Double.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		714342DF25907253001F26A4 /* InnerShadows */ = {
+			isa = PBXGroup;
+			children = (
+				714342E025907253001F26A4 /* InnerShadowViewModifiers.swift */,
+				714342E125907253001F26A4 /* InnerShadowModel.swift */,
+				714342E225907253001F26A4 /* InnerShadowExtensions.swift */,
+			);
+			path = InnerShadows;
+			sourceTree = "<group>";
+		};
+		714342ED25907603001F26A4 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				7143430D259076EB001F26A4 /* Foundation */,
+				714342FC25907621001F26A4 /* RepresentableAsCGFloat.swift */,
+				714342FB25907621001F26A4 /* RepresentableAsDouble.swift */,
+				714342FE25907622001F26A4 /* RepresentableAsFloat.swift */,
+				714342FD25907621001F26A4 /* RepresentableAsInt.swift */,
+				714342FA25907621001F26A4 /* UINumericType.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		7143430D259076EB001F26A4 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				7143430E259076EB001F26A4 /* Comparible+Convenience.swift */,
+				7143430F259076EB001F26A4 /* String+Convenience.swift */,
+				71434310259076EB001F26A4 /* Double+Angle.swift */,
+				71434311259076EB001F26A4 /* Float+Convenience.swift */,
+				71434312259076EB001F26A4 /* Collection+Convenience.swift */,
+				71434313259076EB001F26A4 /* Float+Angle.swift */,
+				71434314259076EB001F26A4 /* Int+Convenience.swift */,
+				71434315259076EB001F26A4 /* FloatingPoint+Convenience.swift */,
+				71434316259076EB001F26A4 /* Int+Angle.swift */,
+				71434317259076EB001F26A4 /* Double+Convenience.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		71434330259076EE001F26A4 /* CoreGraphics */ = {
+			isa = PBXGroup;
+			children = (
+				71434331259076EE001F26A4 /* CGRect+Convenience.swift */,
+				71434332259076EE001F26A4 /* CGFloat+Angle.swift */,
+				71434333259076EE001F26A4 /* CGPoint+Convenience.swift */,
+				71434334259076EE001F26A4 /* CGSize+Convenience.swift */,
+				71434335259076EE001F26A4 /* CGVector+Convenience.swift */,
+				71434336259076EE001F26A4 /* CGFloat+Convenience.swift */,
+				71434337259076EE001F26A4 /* CGAffineTransform+Convenience.swift */,
+			);
+			path = CoreGraphics;
+			sourceTree = "<group>";
+		};
+		7143434A259076F4001F26A4 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				7143434B259076F4001F26A4 /* Angle+Convenience.swift */,
+				7143434C259076F4001F26A4 /* UnitPoint+Convenience.swift */,
+				7143434D259076F4001F26A4 /* LinearGradient+Convenience.swift */,
+				7143434E259076F4001F26A4 /* GeometryProxy+Convenience.swift */,
+				7143434F259076F4001F26A4 /* Path+Convenience.swift */,
+				71434350259076F4001F26A4 /* EdgeInsets+Convenience.swift */,
+				71434351259076F4001F26A4 /* Color+Convenience.swift */,
+				71434352259076F4001F26A4 /* Edge+Convenience.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		7143436B25907725001F26A4 /* Operators */ = {
+			isa = PBXGroup;
+			children = (
+				7143436C25907725001F26A4 /* MathOperators.swift */,
+			);
+			path = Operators;
+			sourceTree = "<group>";
+		};
+		714343BB25907B10001F26A4 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				714343BC25907B1C001F26A4 /* Render */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		714343BC25907B1C001F26A4 /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				714343A82590789A001F26A4 /* GeometryFunctions.swift */,
+				7143439D2590787E001F26A4 /* RenderIf.swift */,
+				714343922590786E001F26A4 /* RenderedIf.swift */,
+				7143434A259076F4001F26A4 /* SwiftUI */,
+				71434330259076EE001F26A4 /* CoreGraphics */,
+			);
+			path = Render;
+			sourceTree = "<group>";
+		};
+		714343DC2590837B001F26A4 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				714343DD25908381001F26A4 /* System */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		714343DD25908381001F26A4 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				714343DE25908385001F26A4 /* Shadows */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		714343DE25908385001F26A4 /* Shadows */ = {
+			isa = PBXGroup;
+			children = (
+				7143436B25907725001F26A4 /* Operators */,
+				714343BB25907B10001F26A4 /* Design */,
+				714342ED25907603001F26A4 /* Types */,
+				714342DF25907253001F26A4 /* InnerShadows */,
+			);
+			path = Shadows;
+			sourceTree = "<group>";
+		};
 		71AACC8A258EC72000E1C0B3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,7 +551,7 @@
 		71EE6FD8258D347B005B2B8E = {
 			isa = PBXGroup;
 			children = (
-				71EE701F258D34DD005B2B8E /* granite */,
+				713D729D258EE95800E00203 /* granite */,
 				71EE7024258D34ED005B2B8E /* Core */,
 				71EE6FDD258D347C005B2B8E /* Shared */,
 				71EE6FE7258D347E005B2B8E /* iOS */,
@@ -271,9 +566,9 @@
 		71EE6FDD258D347C005B2B8E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				7143414525905DDA001F26A4 /* Resources */,
 				71EE6FDE258D347C005B2B8E /* __stoicApp.swift */,
 				71EE6FDF258D347C005B2B8E /* ContentView.swift */,
-				71EE6FE0258D347E005B2B8E /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -552,29 +847,71 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71434359259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
+				7143433E259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
+				71434357259076F4001F26A4 /* LinearGradient+Convenience.swift in Sources */,
+				714343932590786E001F26A4 /* RenderedIf.swift in Sources */,
+				7143431E259076EB001F26A4 /* Float+Convenience.swift in Sources */,
+				71434342259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
+				71434353259076F4001F26A4 /* Angle+Convenience.swift in Sources */,
 				71D63CCE258E92B1003B0BAF /* MainState.swift in Sources */,
+				71434322259076EB001F26A4 /* Float+Angle.swift in Sources */,
 				71EE7079258D8F88005B2B8E /* AssetGridState.swift in Sources */,
+				7143415325905E5B001F26A4 /* Fonts.swift in Sources */,
+				7143417825906410001F26A4 /* Brand.swift in Sources */,
+				7143433C259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
 				711402C8258DBC2F00BA387D /* TradingDayExpedition.swift in Sources */,
+				714342E525907253001F26A4 /* InnerShadowModel.swift in Sources */,
+				7143430525907622001F26A4 /* RepresentableAsInt.swift in Sources */,
+				7143430725907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
+				71434320259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
+				7143433A259076EE001F26A4 /* CGFloat+Angle.swift in Sources */,
+				7143435D259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */,
+				71434340259076EE001F26A4 /* CGVector+Convenience.swift in Sources */,
+				71434324259076EB001F26A4 /* Int+Convenience.swift in Sources */,
+				7143439E2590787E001F26A4 /* RenderIf.swift in Sources */,
 				71AACCE9258EC94A00E1C0B3 /* StockIndicators.swift in Sources */,
+				71434326259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,
 				7114029A258DB5E700BA387D /* StockRelay.swift in Sources */,
+				71434328259076EB001F26A4 /* Int+Angle.swift in Sources */,
 				71AACC8C258EC74000E1C0B3 /* StockModels.swift in Sources */,
 				71D63CD0258E92B1003B0BAF /* MainEvents.swift in Sources */,
+				7143436D25907725001F26A4 /* MathOperators.swift in Sources */,
+				7143418325906441001F26A4 /* Color.swift in Sources */,
 				71AACCE3258EC8F600E1C0B3 /* StockDateData.swift in Sources */,
+				7143431A259076EB001F26A4 /* String+Convenience.swift in Sources */,
 				71140298258DB5E700BA387D /* StockEvents.swift in Sources */,
+				714342FF25907622001F26A4 /* UINumericType.swift in Sources */,
 				71EE7092258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
+				7143431C259076EB001F26A4 /* Double+Angle.swift in Sources */,
+				7143435B259076F4001F26A4 /* Path+Convenience.swift in Sources */,
 				71EE7075258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
+				71434355259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
 				71EE7009258D347F005B2B8E /* ContentView.swift in Sources */,
+				71434318259076EB001F26A4 /* Comparible+Convenience.swift in Sources */,
+				714342E725907253001F26A4 /* InnerShadowExtensions.swift in Sources */,
 				71EE7090258D9072005B2B8E /* AssetGridItemComponent.swift in Sources */,
+				7143414925905E53001F26A4 /* MenloFont.swift in Sources */,
 				71140299258DB5E700BA387D /* StockState.swift in Sources */,
+				714342E325907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */,
+				7143430325907622001F26A4 /* RepresentableAsCGFloat.swift in Sources */,
+				7143435F259076F4001F26A4 /* Color+Convenience.swift in Sources */,
 				71EE7077258D8F88005B2B8E /* AssetGridComponent.swift in Sources */,
+				71434338259076EE001F26A4 /* CGRect+Convenience.swift in Sources */,
+				71434344259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */,
 				713D25AF258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
+				714343A92590789A001F26A4 /* GeometryFunctions.swift in Sources */,
 				71EE7007258D347F005B2B8E /* __stoicApp.swift in Sources */,
 				713D25B1258E42BF005FB4D4 /* ClockState.swift in Sources */,
 				71AACD15258ED46600E1C0B3 /* AssetGridNewStocks.swift in Sources */,
 				71D63CAD258E9216003B0BAF /* UpdateStockDataExpedition.swift in Sources */,
+				7143432A259076EB001F26A4 /* Double+Convenience.swift in Sources */,
+				7143430125907622001F26A4 /* RepresentableAsDouble.swift in Sources */,
 				71AACCDD258EC8E000E1C0B3 /* StockData.swift in Sources */,
+				71434361259076F4001F26A4 /* Edge+Convenience.swift in Sources */,
 				71EE7094258D9072005B2B8E /* AssetGridItemEvents.swift in Sources */,
 				711532D3258E695000D478E2 /* AssetClockUpdatedExpedition.swift in Sources */,
+				714343D625907DB5001F26A4 /* Double.swift in Sources */,
 				71D63CCC258E92B1003B0BAF /* MainComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,30 +920,71 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7143431F259076EB001F26A4 /* Float+Convenience.swift in Sources */,
+				714343942590786E001F26A4 /* RenderedIf.swift in Sources */,
+				7143431B259076EB001F26A4 /* String+Convenience.swift in Sources */,
 				71D63CCF258E92B1003B0BAF /* MainState.swift in Sources */,
+				7143430025907622001F26A4 /* UINumericType.swift in Sources */,
 				711402A7258DB9E700BA387D /* StockRelay.swift in Sources */,
 				71EE700A258D347F005B2B8E /* ContentView.swift in Sources */,
+				714342E825907253001F26A4 /* InnerShadowExtensions.swift in Sources */,
 				71AACCEE258EC95300E1C0B3 /* StockDateData.swift in Sources */,
+				7143435E259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */,
 				711402D1258DBD0900BA387D /* TradingDayExpedition.swift in Sources */,
 				71AACC95258EC7D100E1C0B3 /* StockModels.swift in Sources */,
+				71434325259076EB001F26A4 /* Int+Convenience.swift in Sources */,
+				71434343259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
+				7143417125906012001F26A4 /* Fonts.swift in Sources */,
+				71434323259076EB001F26A4 /* Float+Angle.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
+				7143430425907622001F26A4 /* RepresentableAsCGFloat.swift in Sources */,
+				714343AA2590789A001F26A4 /* GeometryFunctions.swift in Sources */,
 				71D63CD1258E92B1003B0BAF /* MainEvents.swift in Sources */,
+				71434329259076EB001F26A4 /* Int+Angle.swift in Sources */,
+				71434362259076F4001F26A4 /* Edge+Convenience.swift in Sources */,
+				7143436E25907725001F26A4 /* MathOperators.swift in Sources */,
+				71434319259076EB001F26A4 /* Comparible+Convenience.swift in Sources */,
 				71AACCF3258EC95500E1C0B3 /* StockIndicators.swift in Sources */,
+				71434345259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */,
 				71EE7093258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
 				71EE7076258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
+				71434360259076F4001F26A4 /* Color+Convenience.swift in Sources */,
+				71434358259076F4001F26A4 /* LinearGradient+Convenience.swift in Sources */,
 				71EE7091258D9072005B2B8E /* AssetGridItemComponent.swift in Sources */,
+				7143430625907622001F26A4 /* RepresentableAsInt.swift in Sources */,
+				71434341259076EE001F26A4 /* CGVector+Convenience.swift in Sources */,
 				711402AC258DB9EA00BA387D /* StockState.swift in Sources */,
 				71EE7078258D8F88005B2B8E /* AssetGridComponent.swift in Sources */,
 				713D25B0258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
+				71434356259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
 				713D25B2258E42BF005FB4D4 /* ClockState.swift in Sources */,
+				71434354259076F4001F26A4 /* Angle+Convenience.swift in Sources */,
+				7143418D259067D5001F26A4 /* Color.swift in Sources */,
+				71434321259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
+				7143435A259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
+				714342E625907253001F26A4 /* InnerShadowModel.swift in Sources */,
+				714343D725907DB5001F26A4 /* Double.swift in Sources */,
 				71EE7095258D9072005B2B8E /* AssetGridItemEvents.swift in Sources */,
+				7143433B259076EE001F26A4 /* CGFloat+Angle.swift in Sources */,
 				71D63CAE258E9216003B0BAF /* UpdateStockDataExpedition.swift in Sources */,
+				71434327259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,
 				71AACD16258ED46600E1C0B3 /* AssetGridNewStocks.swift in Sources */,
 				71EE7008258D347F005B2B8E /* __stoicApp.swift in Sources */,
+				7143431D259076EB001F26A4 /* Double+Angle.swift in Sources */,
+				71434188259067CA001F26A4 /* Brand.swift in Sources */,
+				7143432B259076EB001F26A4 /* Double+Convenience.swift in Sources */,
+				7143430225907622001F26A4 /* RepresentableAsDouble.swift in Sources */,
 				71AACCF8258EC95800E1C0B3 /* StockData.swift in Sources */,
 				711532DC258E695200D478E2 /* AssetClockUpdatedExpedition.swift in Sources */,
 				711402B1258DB9ED00BA387D /* StockEvents.swift in Sources */,
+				7143439F2590787E001F26A4 /* RenderIf.swift in Sources */,
+				7143433F259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
+				7143435C259076F4001F26A4 /* Path+Convenience.swift in Sources */,
+				7143433D259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
 				71D63CCD258E92B1003B0BAF /* MainComponent.swift in Sources */,
+				714342E425907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */,
+				7143430825907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
+				71434339259076EE001F26A4 /* CGRect+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,9 +20,16 @@ public struct AssetGridComponent: GraniteComponent {
     
     public var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns) {
+            LazyVGrid(columns: columns, spacing: 0) {
                 ForEach(0..<state.stockData.count, id: \.self) { index in
-                    AssetGridItemComponent().payload(.init(object: state.stockData[index])).frame(minWidth: 300, idealWidth: 414, maxWidth: 420, minHeight: 48, idealHeight: 50, maxHeight: 75, alignment: .leading)
+                    AssetGridItemComponent().payload(.init(object: state.stockData[index]))
+                        .frame(minWidth: 300,
+                               idealWidth: 414,
+                               maxWidth: 420,
+                               minHeight: 48,
+                               idealHeight: 50,
+                               maxHeight: 75,
+                               alignment: .leading)
                 }
             }
         }
