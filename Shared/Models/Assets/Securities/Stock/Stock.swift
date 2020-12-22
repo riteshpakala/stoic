@@ -52,3 +52,41 @@ extension Stock {
         changeAbsolute
     }
 }
+
+//MARK: -- Extensions
+
+extension StockData {
+    public var asStock: Stock {
+        return .init(
+            ticker: symbolName,
+            date: dateData.asDate ?? Date(),
+            open: open,
+            high: high,
+            low: low,
+            close: close,
+            volume: volume,
+            changePercent: (close - lastStockData.close) / close,
+            changeAbsolute: (close - lastStockData.close))
+    }
+}
+
+extension StockServiceModels.Quotes.QuoteResponse.QuoteResult {
+    public var asStock: Stock {
+            let open: Double = regularMarketPrice ?? 0.0
+            let high: Double = regularMarketDayHigh ?? 0.0
+            let low: Double = regularMarketDayHigh ?? 0.0
+            let close: Double = regularMarketDayLow ?? 0.0
+            let volume: Double = Double(regularMarketVolume ?? 0)
+        
+        return Stock.init(
+            ticker: symbol,
+            date: Date(),
+            open: open,
+            high: high,
+            low: low,
+            close: close,
+            volume: volume,
+            changePercent: regularMarketChangePercent ?? 0.0,
+            changeAbsolute: regularMarketChange ?? 0.0)
+    }
+}

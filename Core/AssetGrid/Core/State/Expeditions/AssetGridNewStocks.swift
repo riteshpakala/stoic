@@ -17,6 +17,7 @@ struct AssetGridNewStockDataExpedition: GraniteExpedition {
     func reduce(
         event: ExpeditionEvent,
         state: ExpeditionState,
+        connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
 //        state.stockData = event.data

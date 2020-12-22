@@ -9,15 +9,19 @@ import Foundation
 import GraniteUI
 
 struct CryptoEvents {
-    public struct UpdateCategory: GraniteEvent {
-        
-    }
+    public struct GetMovers: GraniteEvent {}
     
-    public struct CategoryResult: GraniteEvent {
-        let cryptocurrencies: [CryptoCurrency]
+    public struct GlobalCategoryResult: GraniteEvent {
+        let losers: [CryptoCurrency]
+        let gainers: [CryptoCurrency]
+        let topVolume: [CryptoCurrency]
         
-        public init(_ cryptocurrencies: [CryptoCurrency]) {
-            self.cryptocurrencies = cryptocurrencies
+        public init(_ topVolume: [CryptoCurrency],
+                    _ gainers: [CryptoCurrency],
+                    _ losers: [CryptoCurrency]) {
+            self.topVolume = topVolume
+            self.gainers = gainers
+            self.losers = losers
         }
     }
 }

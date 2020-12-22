@@ -1,6 +1,6 @@
 import Foundation
 
-extension CryptoModels {
+extension CryptoServiceModels {
     /// A pair of assets. Each pair has a base and a quote. For example, `btceur` has base `btc` and quote `eur`.
     struct Pair: Codable {
         let symbol: String

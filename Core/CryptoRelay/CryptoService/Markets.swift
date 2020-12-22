@@ -1,6 +1,6 @@
 import Foundation
 
-extension CryptoModels {
+extension CryptoServiceModels {
     /// A market is a `pair` listed on an `exchange`. For example, pair `btceur` on exchange `kraken` is a market.
     struct Market: Codable {
         let exchange: String

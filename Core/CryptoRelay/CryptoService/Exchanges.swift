@@ -1,6 +1,6 @@
 import Foundation
 
-extension CryptoModels {
+extension CryptoServiceModels {
     /// Exchanges are where all the action happens!
     struct Exchange: Codable {
         let symbol: String
@@ -28,7 +28,7 @@ extension CryptoModels {
     }
 }
 
-extension CryptoModels.Exchange {
+extension CryptoServiceModels.Exchange {
     /// Symbols for each exchange at the time of writing.
     /// See `getExchangeIndex` to retreive information about current exchanges.
     enum Symbol: String {

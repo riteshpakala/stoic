@@ -104,12 +104,10 @@
 		710889F32591BC8C00795EDF /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889F22591BC8C00795EDF /* Categories.swift */; };
 		710889F82591BD1B00795EDF /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889F22591BC8C00795EDF /* Categories.swift */; };
 		710889FE2591BD9F00795EDF /* TopVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889FD2591BD9F00795EDF /* TopVolume.swift */; };
-		71088A092591C20100795EDF /* UpdateCryptoCategoryExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71088A082591C20100795EDF /* UpdateCryptoCategoryExpedition.swift */; };
 		71088A132591C21600795EDF /* CryptoEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71088A122591C21600795EDF /* CryptoEvents.swift */; };
 		71088A182591C22400795EDF /* CryptoEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71088A122591C21600795EDF /* CryptoEvents.swift */; };
-		71088A1D2591C2C900795EDF /* UpdateCryptoCategoryExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71088A082591C20100795EDF /* UpdateCryptoCategoryExpedition.swift */; };
-		7108EFF72591CB57006A14DA /* TopVolumeCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7108EFF62591CB57006A14DA /* TopVolumeCryptoExpedition.swift */; };
-		7108EFF82591CB57006A14DA /* TopVolumeCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7108EFF62591CB57006A14DA /* TopVolumeCryptoExpedition.swift */; };
+		7108EFF72591CB57006A14DA /* MoversCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7108EFF62591CB57006A14DA /* MoversCryptoExpedition.swift */; };
+		7108EFF82591CB57006A14DA /* MoversCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7108EFF62591CB57006A14DA /* MoversCryptoExpedition.swift */; };
 		71140298258DB5E700BA387D /* StockEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140294258DB5E700BA387D /* StockEvents.swift */; };
 		71140299258DB5E700BA387D /* StockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140296258DB5E700BA387D /* StockState.swift */; };
 		7114029A258DB5E700BA387D /* StockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140297258DB5E700BA387D /* StockRelay.swift */; };
@@ -225,6 +223,22 @@
 		71D63CCF258E92B1003B0BAF /* MainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63CCA258E92B1003B0BAF /* MainState.swift */; };
 		71D63CD0258E92B1003B0BAF /* MainEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63CCB258E92B1003B0BAF /* MainEvents.swift */; };
 		71D63CD1258E92B1003B0BAF /* MainEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63CCB258E92B1003B0BAF /* MainEvents.swift */; };
+		71D63EC52592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63EC42592667E0085D718 /* GetMoversCryptoExpedition.swift */; };
+		71D63EC62592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63EC42592667E0085D718 /* GetMoversCryptoExpedition.swift */; };
+		71D63ED4259269B90085D718 /* GetMoversStockExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63ED3259269B90085D718 /* GetMoversStockExpedition.swift */; };
+		71D63ED5259269B90085D718 /* GetMoversStockExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63ED3259269B90085D718 /* GetMoversStockExpedition.swift */; };
+		71D63EEC25926B860085D718 /* StockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63EEB25926B860085D718 /* StockService.swift */; };
+		71D63EED25926B860085D718 /* StockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63EEB25926B860085D718 /* StockService.swift */; };
+		71D63EF42592A9010085D718 /* StockService.Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63EF32592A9010085D718 /* StockService.Quotes.swift */; };
+		71D63EF52592A9010085D718 /* StockService.Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63EF32592A9010085D718 /* StockService.Quotes.swift */; };
+		71D63EFB2592A90D0085D718 /* StockService.Movers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63EFA2592A90D0085D718 /* StockService.Movers.swift */; };
+		71D63EFC2592A90D0085D718 /* StockService.Movers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63EFA2592A90D0085D718 /* StockService.Movers.swift */; };
+		71D63F062592A9800085D718 /* StockService.Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F052592A9800085D718 /* StockService.Utilities.swift */; };
+		71D63F072592A9800085D718 /* StockService.Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F052592A9800085D718 /* StockService.Utilities.swift */; };
+		71D63F0D2592ABE30085D718 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F0C2592ABE30085D718 /* Array.swift */; };
+		71D63F0E2592ABE30085D718 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F0C2592ABE30085D718 /* Array.swift */; };
+		71D63F252592B9090085D718 /* StockCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F242592B9090085D718 /* StockCryptoExpedition.swift */; };
+		71D63F262592B9090085D718 /* StockCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F242592B9090085D718 /* StockCryptoExpedition.swift */; };
 		71EE6FFA258D347F005B2B8E /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE6FF9258D347E005B2B8E /* Tests_iOS.swift */; };
 		71EE7005258D347F005B2B8E /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE7004258D347F005B2B8E /* Tests_macOS.swift */; };
 		71EE7007258D347F005B2B8E /* __stoicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE6FDE258D347C005B2B8E /* __stoicApp.swift */; };
@@ -316,9 +330,8 @@
 		710889622591B29800795EDF /* Cryptowatcher+Exchanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cryptowatcher+Exchanges.swift"; sourceTree = "<group>"; };
 		710889F22591BC8C00795EDF /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		710889FD2591BD9F00795EDF /* TopVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TopVolume.swift; path = ../../../../../../../../../TopVolume.swift; sourceTree = "<group>"; };
-		71088A082591C20100795EDF /* UpdateCryptoCategoryExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCryptoCategoryExpedition.swift; sourceTree = "<group>"; };
 		71088A122591C21600795EDF /* CryptoEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoEvents.swift; sourceTree = "<group>"; };
-		7108EFF62591CB57006A14DA /* TopVolumeCryptoExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopVolumeCryptoExpedition.swift; sourceTree = "<group>"; };
+		7108EFF62591CB57006A14DA /* MoversCryptoExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoversCryptoExpedition.swift; sourceTree = "<group>"; };
 		71140294258DB5E700BA387D /* StockEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockEvents.swift; sourceTree = "<group>"; };
 		71140296258DB5E700BA387D /* StockState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockState.swift; sourceTree = "<group>"; };
 		71140297258DB5E700BA387D /* StockRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockRelay.swift; sourceTree = "<group>"; };
@@ -378,6 +391,14 @@
 		71D63CC8258E92B1003B0BAF /* MainComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainComponent.swift; sourceTree = "<group>"; };
 		71D63CCA258E92B1003B0BAF /* MainState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainState.swift; sourceTree = "<group>"; };
 		71D63CCB258E92B1003B0BAF /* MainEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainEvents.swift; sourceTree = "<group>"; };
+		71D63EC42592667E0085D718 /* GetMoversCryptoExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMoversCryptoExpedition.swift; sourceTree = "<group>"; };
+		71D63ED3259269B90085D718 /* GetMoversStockExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetMoversStockExpedition.swift; path = Core/StockRelay/State/Expeditions/GetMoversStockExpedition.swift; sourceTree = SOURCE_ROOT; };
+		71D63EEB25926B860085D718 /* StockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockService.swift; sourceTree = "<group>"; };
+		71D63EF32592A9010085D718 /* StockService.Quotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockService.Quotes.swift; sourceTree = "<group>"; };
+		71D63EFA2592A90D0085D718 /* StockService.Movers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockService.Movers.swift; sourceTree = "<group>"; };
+		71D63F052592A9800085D718 /* StockService.Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockService.Utilities.swift; sourceTree = "<group>"; };
+		71D63F0C2592ABE30085D718 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		71D63F242592B9090085D718 /* StockCryptoExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCryptoExpedition.swift; sourceTree = "<group>"; };
 		71EE6FDE258D347C005B2B8E /* __stoicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = __stoicApp.swift; sourceTree = "<group>"; };
 		71EE6FDF258D347C005B2B8E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		71EE6FE0258D347E005B2B8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -482,7 +503,7 @@
 		7108892C2591B21F00795EDF /* CryptoRelay */ = {
 			isa = PBXGroup;
 			children = (
-				710889382591B29800795EDF /* Cryptowatcher */,
+				710889382591B29800795EDF /* CryptoService */,
 				7108892E2591B24700795EDF /* State */,
 				7108892D2591B24700795EDF /* CryptoRelay.swift */,
 				71088A122591C21600795EDF /* CryptoEvents.swift */,
@@ -499,7 +520,7 @@
 			path = State;
 			sourceTree = "<group>";
 		};
-		710889382591B29800795EDF /* Cryptowatcher */ = {
+		710889382591B29800795EDF /* CryptoService */ = {
 			isa = PBXGroup;
 			children = (
 				7108893D2591B29800795EDF /* Then */,
@@ -517,7 +538,7 @@
 				710889612591B29800795EDF /* Exchanges.swift */,
 				710889622591B29800795EDF /* Cryptowatcher+Exchanges.swift */,
 			);
-			path = Cryptowatcher;
+			path = CryptoService;
 			sourceTree = "<group>";
 		};
 		7108893D2591B29800795EDF /* Then */ = {
@@ -670,7 +691,7 @@
 		71088A072591C1DE00795EDF /* Expeditions */ = {
 			isa = PBXGroup;
 			children = (
-				71088A082591C20100795EDF /* UpdateCryptoCategoryExpedition.swift */,
+				71D63EC42592667E0085D718 /* GetMoversCryptoExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -678,6 +699,7 @@
 		7108EFF42591CB2F006A14DA /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				71D63F232592B8F50085D718 /* Stock */,
 				7108EFF52591CB39006A14DA /* CryptoCurrencies */,
 			);
 			path = Categories;
@@ -686,7 +708,7 @@
 		7108EFF52591CB39006A14DA /* CryptoCurrencies */ = {
 			isa = PBXGroup;
 			children = (
-				7108EFF62591CB57006A14DA /* TopVolumeCryptoExpedition.swift */,
+				7108EFF62591CB57006A14DA /* MoversCryptoExpedition.swift */,
 			);
 			path = CryptoCurrencies;
 			sourceTree = "<group>";
@@ -694,6 +716,7 @@
 		71140293258DB5E700BA387D /* StockRelay */ = {
 			isa = PBXGroup;
 			children = (
+				71D63EE625926ABE0085D718 /* StockService */,
 				71AACC8A258EC72000E1C0B3 /* Models */,
 				71140295258DB5E700BA387D /* State */,
 				71140294258DB5E700BA387D /* StockEvents.swift */,
@@ -714,7 +737,8 @@
 		711402C6258DBBAC00BA387D /* Expeditions */ = {
 			isa = PBXGroup;
 			children = (
-				71D63CB3258E921A003B0BAF /* Update */,
+				71D63CB3258E921A003B0BAF /* Test */,
+				71D63ED3259269B90085D718 /* GetMoversStockExpedition.swift */,
 				711402C7258DBC2F00BA387D /* TradingDayExpedition.swift */,
 			);
 			path = Expeditions;
@@ -789,6 +813,7 @@
 			children = (
 				7143418225906441001F26A4 /* Color.swift */,
 				714343D525907DB5001F26A4 /* Double.swift */,
+				71D63F0C2592ABE30085D718 /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -935,12 +960,12 @@
 			path = Expeditions;
 			sourceTree = "<group>";
 		};
-		71D63CB3258E921A003B0BAF /* Update */ = {
+		71D63CB3258E921A003B0BAF /* Test */ = {
 			isa = PBXGroup;
 			children = (
 				71D63CAC258E9216003B0BAF /* UpdateStockDataExpedition.swift */,
 			);
-			path = Update;
+			path = Test;
 			sourceTree = "<group>";
 		};
 		71D63CC7258E92B1003B0BAF /* Main */ = {
@@ -959,6 +984,25 @@
 				71D63CCA258E92B1003B0BAF /* MainState.swift */,
 			);
 			path = State;
+			sourceTree = "<group>";
+		};
+		71D63EE625926ABE0085D718 /* StockService */ = {
+			isa = PBXGroup;
+			children = (
+				71D63EEB25926B860085D718 /* StockService.swift */,
+				71D63F052592A9800085D718 /* StockService.Utilities.swift */,
+				71D63EF32592A9010085D718 /* StockService.Quotes.swift */,
+				71D63EFA2592A90D0085D718 /* StockService.Movers.swift */,
+			);
+			path = StockService;
+			sourceTree = "<group>";
+		};
+		71D63F232592B8F50085D718 /* Stock */ = {
+			isa = PBXGroup;
+			children = (
+				71D63F242592B9090085D718 /* StockCryptoExpedition.swift */,
+			);
+			path = Stock;
 			sourceTree = "<group>";
 		};
 		71EE6FD8258D347B005B2B8E = {
@@ -1262,24 +1306,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71D63EFB2592A90D0085D718 /* StockService.Movers.swift in Sources */,
 				71434359259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
 				7143433E259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
-				71088A092591C20100795EDF /* UpdateCryptoCategoryExpedition.swift in Sources */,
 				710889152591B09A00795EDF /* Stock.swift in Sources */,
+				71D63EF42592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				710889FE2591BD9F00795EDF /* TopVolume.swift in Sources */,
 				7108897B2591B29800795EDF /* PromiseError.swift in Sources */,
 				710889792591B29800795EDF /* WhenAll.swift in Sources */,
 				71434357259076F4001F26A4 /* LinearGradient+Convenience.swift in Sources */,
 				7108897D2591B29800795EDF /* Promise+Unwrap.swift in Sources */,
 				710889672591B29800795EDF /* Cryptowatcher+Markets.swift in Sources */,
+				71D63F062592A9800085D718 /* StockService.Utilities.swift in Sources */,
 				714343932590786E001F26A4 /* RenderedIf.swift in Sources */,
 				7143431E259076EB001F26A4 /* Float+Convenience.swift in Sources */,
 				710889AF2591B29800795EDF /* Aggregates.swift in Sources */,
 				71434342259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
 				71434353259076F4001F26A4 /* Angle+Convenience.swift in Sources */,
 				71D63CCE258E92B1003B0BAF /* MainState.swift in Sources */,
+				71D63F252592B9090085D718 /* StockCryptoExpedition.swift in Sources */,
 				7108896F2591B29800795EDF /* Promise+Recover.swift in Sources */,
-				7108EFF72591CB57006A14DA /* TopVolumeCryptoExpedition.swift in Sources */,
+				7108EFF72591CB57006A14DA /* MoversCryptoExpedition.swift in Sources */,
 				71434322259076EB001F26A4 /* Float+Angle.swift in Sources */,
 				7108899F2591B29800795EDF /* Promise+Helpers.swift in Sources */,
 				71EE7079258D8F88005B2B8E /* AssetGridState.swift in Sources */,
@@ -1292,10 +1339,12 @@
 				7143433C259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
 				711402C8258DBC2F00BA387D /* TradingDayExpedition.swift in Sources */,
 				714342E525907253001F26A4 /* InnerShadowModel.swift in Sources */,
+				71D63EC52592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */,
 				7143430525907622001F26A4 /* RepresentableAsInt.swift in Sources */,
 				710889A72591B29800795EDF /* Markets.swift in Sources */,
 				7143430725907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
 				710889A52591B29800795EDF /* Pairs.swift in Sources */,
+				71D63EEC25926B860085D718 /* StockService.swift in Sources */,
 				7108890D2591B08300795EDF /* Security.swift in Sources */,
 				710889B12591B29800795EDF /* Exchanges.swift in Sources */,
 				71434320259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
@@ -1314,10 +1363,12 @@
 				7114029A258DB5E700BA387D /* StockRelay.swift in Sources */,
 				710889F32591BC8C00795EDF /* Categories.swift in Sources */,
 				71434328259076EB001F26A4 /* Int+Angle.swift in Sources */,
+				71D63ED4259269B90085D718 /* GetMoversStockExpedition.swift in Sources */,
 				71AACC8C258EC74000E1C0B3 /* StockModels.swift in Sources */,
 				710889322591B24700795EDF /* CryptoState.swift in Sources */,
 				710889632591B29800795EDF /* Assets.swift in Sources */,
 				710889932591B29800795EDF /* Promise+Error.swift in Sources */,
+				71D63F0D2592ABE30085D718 /* Array.swift in Sources */,
 				710889912591B29800795EDF /* Promise+Zip.swift in Sources */,
 				710889732591B29800795EDF /* Promise+Finally.swift in Sources */,
 				71D63CD0258E92B1003B0BAF /* MainEvents.swift in Sources */,
@@ -1398,13 +1449,13 @@
 				711402A7258DB9E700BA387D /* StockRelay.swift in Sources */,
 				710889642591B29800795EDF /* Assets.swift in Sources */,
 				71EE700A258D347F005B2B8E /* ContentView.swift in Sources */,
+				71D63ED5259269B90085D718 /* GetMoversStockExpedition.swift in Sources */,
 				714342E825907253001F26A4 /* InnerShadowExtensions.swift in Sources */,
 				710889682591B29800795EDF /* Cryptowatcher+Markets.swift in Sources */,
 				71AACCEE258EC95300E1C0B3 /* StockDateData.swift in Sources */,
 				710889722591B29800795EDF /* Promise+Race.swift in Sources */,
 				7143435E259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */,
 				711402D1258DBD0900BA387D /* TradingDayExpedition.swift in Sources */,
-				71088A1D2591C2C900795EDF /* UpdateCryptoCategoryExpedition.swift in Sources */,
 				71AACC95258EC7D100E1C0B3 /* StockModels.swift in Sources */,
 				7108898A2591B29800795EDF /* Async.swift in Sources */,
 				71434325259076EB001F26A4 /* Int+Convenience.swift in Sources */,
@@ -1419,10 +1470,12 @@
 				7108898C2591B29800795EDF /* Promise+First.swift in Sources */,
 				710889A02591B29800795EDF /* Promise+Helpers.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
+				71D63EFC2592A90D0085D718 /* StockService.Movers.swift in Sources */,
 				7143430425907622001F26A4 /* RepresentableAsCGFloat.swift in Sources */,
 				710889702591B29800795EDF /* Promise+Recover.swift in Sources */,
 				714343AA2590789A001F26A4 /* GeometryFunctions.swift in Sources */,
 				71D63CD1258E92B1003B0BAF /* MainEvents.swift in Sources */,
+				71D63F0E2592ABE30085D718 /* Array.swift in Sources */,
 				71434329259076EB001F26A4 /* Int+Angle.swift in Sources */,
 				71434362259076F4001F26A4 /* Edge+Convenience.swift in Sources */,
 				7143436E25907725001F26A4 /* MathOperators.swift in Sources */,
@@ -1436,6 +1489,7 @@
 				710889782591B29800795EDF /* Await+Operators.swift in Sources */,
 				71EE7093258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
 				710889822591B29800795EDF /* PromiseBlocks.swift in Sources */,
+				71D63EC62592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */,
 				71EE7076258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
 				710889AC2591B29800795EDF /* Fetchable.swift in Sources */,
 				71434360259076F4001F26A4 /* Color+Convenience.swift in Sources */,
@@ -1448,6 +1502,7 @@
 				710889C72591B3AC00795EDF /* Stock.swift in Sources */,
 				71434341259076EE001F26A4 /* CGVector+Convenience.swift in Sources */,
 				710889BD2591B3A900795EDF /* Security.swift in Sources */,
+				71D63EED25926B860085D718 /* StockService.swift in Sources */,
 				710889882591B29800795EDF /* Promise+Timeout.swift in Sources */,
 				711402AC258DB9EA00BA387D /* StockState.swift in Sources */,
 				71EE7078258D8F88005B2B8E /* AssetGridComponent.swift in Sources */,
@@ -1462,7 +1517,7 @@
 				71434321259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
 				710889662591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
 				7143435A259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
-				7108EFF82591CB57006A14DA /* TopVolumeCryptoExpedition.swift in Sources */,
+				7108EFF82591CB57006A14DA /* MoversCryptoExpedition.swift in Sources */,
 				714342E625907253001F26A4 /* InnerShadowModel.swift in Sources */,
 				714343D725907DB5001F26A4 /* Double.swift in Sources */,
 				710889A42591B29800795EDF /* Cryptowatcher.swift in Sources */,
@@ -1485,6 +1540,7 @@
 				710889312591B24700795EDF /* CryptoRelay.swift in Sources */,
 				710889F82591BD1B00795EDF /* Categories.swift in Sources */,
 				710889962591B29800795EDF /* Promise+Progress.swift in Sources */,
+				71D63EF52592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				710889842591B29800795EDF /* Promise+Chain.swift in Sources */,
 				7143432B259076EB001F26A4 /* Double+Convenience.swift in Sources */,
 				7143430225907622001F26A4 /* RepresentableAsDouble.swift in Sources */,
@@ -1496,6 +1552,7 @@
 				7108897A2591B29800795EDF /* WhenAll.swift in Sources */,
 				7143433F259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
 				7143435C259076F4001F26A4 /* Path+Convenience.swift in Sources */,
+				71D63F072592A9800085D718 /* StockService.Utilities.swift in Sources */,
 				710889742591B29800795EDF /* Promise+Finally.swift in Sources */,
 				7108896E2591B29800795EDF /* PromiseState.swift in Sources */,
 				7143433D259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
@@ -1503,6 +1560,7 @@
 				714342E425907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */,
 				7143430825907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
 				71434339259076EE001F26A4 /* CGRect+Convenience.swift in Sources */,
+				71D63F262592B9090085D718 /* StockCryptoExpedition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

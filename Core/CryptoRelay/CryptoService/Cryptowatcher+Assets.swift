@@ -8,9 +8,9 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetAssetIndex` representing the response.
      */
-    func getAssetIndex() -> Promise<CryptoModels.GetAssetIndex> {
+    func getAssetIndex() -> Promise<CryptoServiceModels.GetAssetIndex> {
         let url = "\(baseURL)/assets"
-        return fetch(url, type: CryptoModels.GetAssetIndex.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetAssetIndex.self).then(decodeResult)
     }
     
     /**
@@ -21,8 +21,8 @@ extension Cryptowatcher {
      - Parameter asset: A `String` representing an `Asset`.
      - Returns: A `Promise` for a `GetAsset` representing the response.
      */
-    func getAsset(asset: String) -> Promise<CryptoModels.GetAsset> {
+    func getAsset(asset: String) -> Promise<CryptoServiceModels.GetAsset> {
         let url = "\(baseURL)/assets/\(asset)"
-        return fetch(url, type: CryptoModels.GetAsset.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetAsset.self).then(decodeResult)
     }
 }

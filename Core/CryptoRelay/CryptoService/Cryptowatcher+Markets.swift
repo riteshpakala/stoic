@@ -8,9 +8,9 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetMarketIndex` representing the response.
      */
-    func getMarketIndex() -> Promise<CryptoModels.GetMarketIndex> {
+    func getMarketIndex() -> Promise<CryptoServiceModels.GetMarketIndex> {
         let url = "\(baseURL)/markets"
-        return fetch(url, type: CryptoModels.GetMarketIndex.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetMarketIndex.self).then(decodeResult)
     }
     
     /**
@@ -24,9 +24,9 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetMarket` representing the response.
      */
-    func getMarket(exchange: String, pair: String) -> Promise<CryptoModels.GetMarket> {
+    func getMarket(exchange: String, pair: String) -> Promise<CryptoServiceModels.GetMarket> {
         let url = "\(baseURL)/markets/\(exchange)/\(pair)"
-        return fetch(url, type: CryptoModels.GetMarket.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetMarket.self).then(decodeResult)
     }
     
     /**
@@ -40,9 +40,9 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetMarketPrice` representing the response.
      */
-    func getMarketPrice(exchange: String, pair: String) -> Promise<CryptoModels.GetMarketPrice> {
+    func getMarketPrice(exchange: String, pair: String) -> Promise<CryptoServiceModels.GetMarketPrice> {
         let url = "\(baseURL)/markets/\(exchange)/\(pair)/price"
-        return fetch(url, type: CryptoModels.GetMarketPrice.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetMarketPrice.self).then(decodeResult)
     }
     
     /**
@@ -61,9 +61,9 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetMarketSummary` representing the response.
      */
-    func getMarketSummary(exchange: String, pair: String) -> Promise<CryptoModels.GetMarketSummary> {
+    func getMarketSummary(exchange: String, pair: String) -> Promise<CryptoServiceModels.GetMarketSummary> {
         let url = "\(baseURL)/markets/\(exchange)/\(pair)/summary"
-        return fetch(url, type: CryptoModels.GetMarketSummary.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetMarketSummary.self).then(decodeResult)
     }
     
     /**
@@ -82,7 +82,7 @@ extension Cryptowatcher {
      - Returns: A `Promise` for a `GetMarketSummary` representing the response.
      
      */
-    func getMarketTrades(exchange: String, pair:String, limit: Int?, since: Int?) -> Promise<CryptoModels.GetMarketTrades> {
+    func getMarketTrades(exchange: String, pair:String, limit: Int?, since: Int?) -> Promise<CryptoServiceModels.GetMarketTrades> {
         var url = "\(baseURL)/markets/\(exchange)/\(pair)/trades"
         var params: Dictionary<String, String> = [:]
         
@@ -98,7 +98,7 @@ extension Cryptowatcher {
             url.append("?\(qs)")
         }
         
-        return fetch(url, type: CryptoModels.GetMarketTrades.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetMarketTrades.self).then(decodeResult)
     }
     
     /**
@@ -112,9 +112,9 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetMarketOrderBook` representing the response.
      */
-    func getMarketOrderBook(exchange: String, pair: String) -> Promise<CryptoModels.GetMarketOrderBook> {
+    func getMarketOrderBook(exchange: String, pair: String) -> Promise<CryptoServiceModels.GetMarketOrderBook> {
         let url = "\(baseURL)/markets/\(exchange)/\(pair)/orderbook"
-        return fetch(url, type: CryptoModels.GetMarketOrderBook.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetMarketOrderBook.self).then(decodeResult)
     }
     
     /**
@@ -133,7 +133,7 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetMarketOHLC` representing the response.
      */
-    func getMarketOHLC(exchange: String, pair: String, before: Int?, after: Int?, periods: [Int]?) -> Promise<CryptoModels.GetMarketOHLC> {
+    func getMarketOHLC(exchange: String, pair: String, before: Int?, after: Int?, periods: [Int]?) -> Promise<CryptoServiceModels.GetMarketOHLC> {
         var url = "\(baseURL)/markets/\(exchange)/\(pair)/ohlc"
         var params: Dictionary<String, String> = [:]
         
@@ -155,6 +155,6 @@ extension Cryptowatcher {
             url.append("?\(qs)")
         }
         
-        return fetch(url, type: CryptoModels.GetMarketOHLC.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetMarketOHLC.self).then(decodeResult)
     }
 }

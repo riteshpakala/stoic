@@ -1,6 +1,6 @@
 import Foundation
 
-struct CryptoModels {
+struct CryptoServiceModels {
     /// An asset can be a crypto or fiat currency.
     struct Asset: Codable {
         let symbol: String

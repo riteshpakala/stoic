@@ -11,6 +11,30 @@ import SwiftUI
 import Combine
 
 public struct StockEvents {
+    public struct GetMovers: GraniteEvent {}
+    public struct MoversData: GraniteEvent {
+        let data: [StockServiceModels.Movers]
+    }
+    public struct MoverStockQuotes: GraniteEvent {
+        let movers: StockServiceModels.Movers
+        let quotes: [StockServiceModels.Quotes]
+    }
+    
+    public struct GlobalCategoryResult: GraniteEvent {
+        let losers: [Stock]
+        let gainers: [Stock]
+        let topVolume: [Stock]
+        
+        public init(_ topVolume: [Stock],
+                    _ gainers: [Stock],
+                    _ losers: [Stock]) {
+            self.topVolume = topVolume
+            self.gainers = gainers
+            self.losers = losers
+        }
+    }
+    
+    //
     public struct StockTradingDay: GraniteEvent {
     }
     

@@ -16,6 +16,7 @@ struct AssetClockUpdatedExpedition: GraniteExpedition {
     func reduce(
         event: ExpeditionEvent,
         state: ExpeditionState,
+        connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         print("{TEST} as well as me \(state.count)")

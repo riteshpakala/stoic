@@ -5,7 +5,7 @@ struct Cryptowatcher: CryptoFetchable {
     let baseURL = "https://api.cryptowat.ch"
 }
 
-extension CryptoModels {
+extension CryptoServiceModels {
     /**
      Represents the CPU allowance related to a request.
      
@@ -46,7 +46,7 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetApiInfo` representing the response.
      */
-    func getApiInfo() -> Promise<CryptoModels.GetApiInfo> {
-        return fetch(baseURL, type: CryptoModels.GetApiInfo.self).then(decodeResult)
+    func getApiInfo() -> Promise<CryptoServiceModels.GetApiInfo> {
+        return fetch(baseURL, type: CryptoServiceModels.GetApiInfo.self).then(decodeResult)
     }
 }

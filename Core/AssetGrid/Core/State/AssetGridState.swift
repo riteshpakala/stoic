@@ -19,7 +19,8 @@ public class AssetGridCenter: GraniteCenter<AssetGridState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             AssetGridNewStockDataExpedition.Discovery(),
-            TopVolumeCryptoExpedition.Discovery()
+            MoversCryptoExpedition.Discovery(),
+            MoversStockExpedition.Discovery()
         ]
     }
 }

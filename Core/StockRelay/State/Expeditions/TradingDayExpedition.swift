@@ -16,6 +16,7 @@ struct TradingDayExpedition: GraniteExpedition {
     func reduce(
         event: ExpeditionEvent,
         state: ExpeditionState,
+        connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         print("{TEST} \(CFAbsoluteTimeGetCurrent())")

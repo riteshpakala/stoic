@@ -16,16 +16,17 @@ struct UpdateStockDataExpedition: GraniteExpedition {
     func reduce(
         event: ExpeditionEvent,
         state: ExpeditionState,
+        connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        let service: StockDataService = .init()
         
         let todaysDate: Date = Date.today
         let testDate: Date = Date.today.advanceDate(value: -7)
         
         print("{TEST} \(testDate)")
-        publisher = service
-            .searchPublisher(matching: "MSFT",
+        publisher = state
+            .service
+            .getStock(matching: "MSFT",
                              from: "\(Int(testDate.timeIntervalSince1970))",//"1591833600",
                              to: "\(Int(todaysDate.timeIntervalSince1970))")
             .replaceError(with: [])
@@ -93,6 +94,7 @@ struct NewStockDataExpedition: GraniteExpedition {
     func reduce(
         event: ExpeditionEvent,
         state: ExpeditionState,
+        connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
     

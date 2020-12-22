@@ -17,11 +17,11 @@ public class CryptoState: GraniteState {
 }
 
 public class CryptoCenter: GraniteCenter<CryptoState> {
-    let clockRelay = ClockRelay(CryptoEvents.UpdateCategory())
+//    let clockRelay = ClockRelay(CryptoEvents.GetMovers())
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            UpdateCryptoCategoryExpedition.Discovery()
+            GetMoversCryptoExpedition.Discovery()
         ]
     }
 }

@@ -8,9 +8,9 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetExchangeIndex` representing the response.
      */
-    func getExchangeIndex() -> Promise<CryptoModels.GetExchangeIndex> {
+    func getExchangeIndex() -> Promise<CryptoServiceModels.GetExchangeIndex> {
         let url = "\(baseURL)/exchanges"
-        return fetch(url, type: CryptoModels.GetExchangeIndex.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetExchangeIndex.self).then(decodeResult)
     }
     
     /**
@@ -21,9 +21,9 @@ extension Cryptowatcher {
      - Parameter exchange: A `String` representing the exchange.
      - Returns: A `Promise` for a `GetExchange` representing the response.
      */
-    func getExchange(exchange: String) -> Promise<CryptoModels.GetExchange> {
+    func getExchange(exchange: String) -> Promise<CryptoServiceModels.GetExchange> {
         let url = "\(baseURL)/exchanges/exchange"
-        return fetch(url, type: CryptoModels.GetExchange.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetExchange.self).then(decodeResult)
     }
     
     /**
@@ -34,7 +34,7 @@ extension Cryptowatcher {
      - Parameter exchange: An `Exchange.Symbol` representing the exchange.
      - Returns: A `Promise` for a `GetExchange` representing the response.
      */
-    func getExchange(exchange: CryptoModels.Exchange.Symbol) -> Promise<CryptoModels.GetExchange> {
+    func getExchange(exchange: CryptoServiceModels.Exchange.Symbol) -> Promise<CryptoServiceModels.GetExchange> {
         return getExchange(exchange: exchange.rawValue)
     }
 }

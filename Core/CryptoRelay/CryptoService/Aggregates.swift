@@ -1,6 +1,6 @@
 import Foundation
 
-extension CryptoModels {
+extension CryptoServiceModels {
     /**
      Represents a `getAggregatePrices` response.
      

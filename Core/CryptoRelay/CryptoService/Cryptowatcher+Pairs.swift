@@ -8,9 +8,9 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetPairIndex` representing the response.
      */
-    func getPairIndex() -> Promise<CryptoModels.GetPairIndex> {
+    func getPairIndex() -> Promise<CryptoServiceModels.GetPairIndex> {
         let url = "\(baseURL)/pairs"
-        return fetch(url, type: CryptoModels.GetPairIndex.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetPairIndex.self).then(decodeResult)
     }
     
     /**
@@ -21,8 +21,8 @@ extension Cryptowatcher {
      - Parameter pair: A `String` representing the pair (ex. `"ethbtc"`).
      - Returns: A `Promise` for a `GetPair` representing the response.
      */
-    func getPair(pair: String) -> Promise<CryptoModels.GetPair> {
+    func getPair(pair: String) -> Promise<CryptoServiceModels.GetPair> {
         let url = "\(baseURL)/pairs/\(pair)"
-        return fetch(url, type: CryptoModels.GetPair.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetPair.self).then(decodeResult)
     }
 }

@@ -11,9 +11,9 @@ extension Cryptowatcher {
     
      - Returns: A `Promise` for a `GetAggregatePrices` representing the response.
     */
-    func getAggregatePrices() -> Promise<CryptoModels.GetAggregatePrices> {
+    func getAggregatePrices() -> Promise<CryptoServiceModels.GetAggregatePrices> {
         let url = "\(baseURL)/markets/prices"
-        return fetch(url, type: CryptoModels.GetAggregatePrices.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetAggregatePrices.self).then(decodeResult)
     }
     
     /**
@@ -25,13 +25,13 @@ extension Cryptowatcher {
      
      - Returns: A `Promise` for a `GetAggregateSummaries` representing the response.
      */
-    func getAggregateSummaries() -> Promise<CryptoModels.GetAggregateSummaries> {
+    func getAggregateSummaries() -> Promise<CryptoServiceModels.GetAggregateSummaries> {
         let url = "\(baseURL)/markets/summaries"
-        return fetch(url, type: CryptoModels.GetAggregateSummaries.self).then(decodeResult)
+        return fetch(url, type: CryptoServiceModels.GetAggregateSummaries.self).then(decodeResult)
     }
     
-    func getAggregateSummariesPublisher() -> AnyPublisher<CryptoFetchResult<CryptoModels.GetAggregateSummaries>, URLError>? {
+    func getAggregateSummariesPublisher() -> AnyPublisher<CryptoFetchResult<CryptoServiceModels.GetAggregateSummaries>, URLError>? {
         let url = "\(baseURL)/markets/summaries"
-        return fetchPublisher(url, type: CryptoModels.GetAggregateSummaries.self)
+        return fetchPublisher(url, type: CryptoServiceModels.GetAggregateSummaries.self)
     }
 }

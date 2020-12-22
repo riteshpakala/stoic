@@ -16,6 +16,6 @@ public struct MainComponent: GraniteComponent {
     
     public var body: some View {
         AssetGridComponent()
-            .shareRelay(relay(CryptoRelay.self))
+            .shareRelay(relay(StockRelay.self))
     }
 }

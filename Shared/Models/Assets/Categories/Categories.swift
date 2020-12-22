@@ -13,7 +13,8 @@ public enum CategoryType {
     case holdings
     case recentlyViewed
     case topVolume
-    case winners
+    case gainers
+    case losers
 }
 
 public enum CategoryScope {
