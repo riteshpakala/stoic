@@ -11,10 +11,9 @@ import SwiftUI
 import Combine
 
 public class AssetGridItemState: GraniteState {
-    var stockData: StockData {
-        payload?.object as? StockData ?? .empty
+    var security: Security {
+        payload?.object as? Security ?? EmptySecurity()
     }
-    
     
     var input: String = ""
 }

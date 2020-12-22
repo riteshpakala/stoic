@@ -19,10 +19,8 @@ struct AssetGridNewStockDataExpedition: GraniteExpedition {
         state: ExpeditionState,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-    
-        
-        state.stockData = event.data
-        state.payload = .init(object: event.data)
+//        state.stockData = event.data
+//        state.payload = .init(object: event.data)
         
         print("{TEST} grid stocks updated \(event.data.count)")
     }

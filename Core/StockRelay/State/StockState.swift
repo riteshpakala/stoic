@@ -15,7 +15,7 @@ public class StockState: GraniteState {
 }
 
 public class StockCenter: GraniteCenter<StockState> {
-    let clockRelay = ClockRelay(StockEvents.UpdateStockData())
+//    let clockRelay = ClockRelay(StockEvents.UpdateStockData())
     
     public override var expeditions: [GraniteBaseExpedition] {
         [

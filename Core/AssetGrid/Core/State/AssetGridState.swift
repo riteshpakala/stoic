@@ -12,13 +12,14 @@ import Combine
 
 public class AssetGridState: GraniteState {
     var count: Int = 0
-    var stockData: [StockData] = []
+    var securityData: [Security] = []
 }
 
 public class AssetGridCenter: GraniteCenter<AssetGridState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            AssetGridNewStockDataExpedition.Discovery()
+            AssetGridNewStockDataExpedition.Discovery(),
+            TopVolumeCryptoExpedition.Discovery()
         ]
     }
 }
