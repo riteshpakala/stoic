@@ -136,19 +136,6 @@ public struct StockKitUtils {
     }
 }
 
-open class Archiveable: Codable {}
-extension Archiveable {
-    public var archived: Data? {
-        let encoder = JSONEncoder()
-        do {
-            return try encoder.encode(self)
-        } catch let error {
-            print("{CoreData} \(error.localizedDescription)")
-            return nil
-        }
-    }
-}
-
 public class StockKitModels: Archiveable {
     
     public static let engine: String = "david.v00.01.10"

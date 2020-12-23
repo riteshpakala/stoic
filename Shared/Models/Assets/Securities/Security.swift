@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SecurityType {
+public enum SecurityType: Int64 {
     case cryptoCurrency
     case stock
 }

@@ -130,6 +130,24 @@
 		7118A22E259313FD007E7EAB /* TonalCreateEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A228259313FD007E7EAB /* TonalCreateEvents.swift */; };
 		7118A24425931468007E7EAB /* GetMoversStockExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A24325931468007E7EAB /* GetMoversStockExpedition.swift */; };
 		7118A24525931468007E7EAB /* GetMoversStockExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A24325931468007E7EAB /* GetMoversStockExpedition.swift */; };
+		7123B1032593C29F00E5BD69 /* version0001.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1012593C29F00E5BD69 /* version0001.xcdatamodeld */; };
+		7123B1232593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B11D2593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift */; };
+		7123B1242593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B11D2593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift */; };
+		7123B1252593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B11E2593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift */; };
+		7123B1262593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B11E2593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift */; };
+		7123B1272593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B11F2593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift */; };
+		7123B1282593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B11F2593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift */; };
+		7123B1292593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1202593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift */; };
+		7123B12A2593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1202593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift */; };
+		7123B12B2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1212593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift */; };
+		7123B12C2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1212593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift */; };
+		7123B12D2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1222593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift */; };
+		7123B12E2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1222593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift */; };
+		7123B13C2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B13B2593CB4D00E5BD69 /* Security.CoreData.swift */; };
+		7123B13D2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B13B2593CB4D00E5BD69 /* Security.CoreData.swift */; };
+		7123B1432593CC8C00E5BD69 /* DataHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1422593CC8C00E5BD69 /* DataHandling.swift */; };
+		7123B1442593CC8C00E5BD69 /* DataHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1422593CC8C00E5BD69 /* DataHandling.swift */; };
+		7123B1492593CF5900E5BD69 /* version0001.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7123B1012593C29F00E5BD69 /* version0001.xcdatamodeld */; };
 		713D25AF258E42BF005FB4D4 /* ClockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AB258E42BF005FB4D4 /* ClockRelay.swift */; };
 		713D25B0258E42BF005FB4D4 /* ClockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AB258E42BF005FB4D4 /* ClockRelay.swift */; };
 		713D25B1258E42BF005FB4D4 /* ClockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AD258E42BF005FB4D4 /* ClockState.swift */; };
@@ -367,6 +385,15 @@
 		7118A227259313FD007E7EAB /* TonalCreateState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCreateState.swift; sourceTree = "<group>"; };
 		7118A228259313FD007E7EAB /* TonalCreateEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCreateEvents.swift; sourceTree = "<group>"; };
 		7118A24325931468007E7EAB /* GetMoversStockExpedition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMoversStockExpedition.swift; sourceTree = "<group>"; };
+		7123B1022593C29F00E5BD69 /* version0001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = version0001.xcdatamodel; sourceTree = "<group>"; };
+		7123B11D2593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SecurityObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7123B11E2593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StockDataObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7123B11F2593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SecurityObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7123B1202593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CryptoDataObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7123B1212593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CryptoDataObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7123B1222593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StockDataObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7123B13B2593CB4D00E5BD69 /* Security.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.CoreData.swift; sourceTree = "<group>"; };
+		7123B1422593CC8C00E5BD69 /* DataHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandling.swift; sourceTree = "<group>"; };
 		713D25AB258E42BF005FB4D4 /* ClockRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockRelay.swift; sourceTree = "<group>"; };
 		713D25AD258E42BF005FB4D4 /* ClockState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockState.swift; sourceTree = "<group>"; };
 		713D729D258EE95800E00203 /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../granite; sourceTree = "<group>"; };
@@ -516,6 +543,7 @@
 				710889122591B08B00795EDF /* CryptoCurrency */,
 				710889132591B09100795EDF /* Stock */,
 				7108890C2591B08300795EDF /* Security.swift */,
+				7123B13B2593CB4D00E5BD69 /* Security.CoreData.swift */,
 			);
 			path = Securities;
 			sourceTree = "<group>";
@@ -844,6 +872,29 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		7123B1002593C25300E5BD69 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				7123B11C2593C6CB00E5BD69 /* Models */,
+				7123B1012593C29F00E5BD69 /* version0001.xcdatamodeld */,
+				7123B1422593CC8C00E5BD69 /* DataHandling.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		7123B11C2593C6CB00E5BD69 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7123B11E2593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift */,
+				7123B1222593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift */,
+				7123B11D2593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift */,
+				7123B11F2593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift */,
+				7123B1202593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift */,
+				7123B1212593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		713D25AA258E42BF005FB4D4 /* ClockRelay */ = {
 			isa = PBXGroup;
 			children = (
@@ -865,7 +916,6 @@
 			isa = PBXGroup;
 			children = (
 				714343DC2590837B001F26A4 /* Design */,
-				7143418125906437001F26A4 /* Extensions */,
 				71434176259063FC001F26A4 /* Brand */,
 				7143414625905DE2001F26A4 /* Fonts */,
 				71EE6FE0258D347E005B2B8E /* Assets.xcassets */,
@@ -1177,6 +1227,8 @@
 		71EE6FDD258D347C005B2B8E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				7143418125906437001F26A4 /* Extensions */,
+				7123B1002593C25300E5BD69 /* CoreData */,
 				710889032591B05F00795EDF /* Models */,
 				7143414525905DDA001F26A4 /* Resources */,
 				71EE6FDE258D347C005B2B8E /* __stoicApp.swift */,
@@ -1495,13 +1547,18 @@
 				7108899D2591B29800795EDF /* VoidPromise.swift in Sources */,
 				71D63F402592BBAB0085D718 /* AssetGridItemContainerState.swift in Sources */,
 				71D63F702592BFC40085D718 /* AssetSectionEvents.swift in Sources */,
+				7123B1252593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift in Sources */,
 				7143433C259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
+				7123B12B2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
 				711402C8258DBC2F00BA387D /* TradingDayExpedition.swift in Sources */,
 				714342E525907253001F26A4 /* InnerShadowModel.swift in Sources */,
+				7123B1292593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */,
 				71D63EC52592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */,
 				7118A22D259313FD007E7EAB /* TonalCreateEvents.swift in Sources */,
 				7143430525907622001F26A4 /* RepresentableAsInt.swift in Sources */,
+				7123B1032593C29F00E5BD69 /* version0001.xcdatamodeld in Sources */,
 				710889A72591B29800795EDF /* Markets.swift in Sources */,
+				7123B1232593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift in Sources */,
 				7143430725907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
 				710889A52591B29800795EDF /* Pairs.swift in Sources */,
 				71AE03142593168F007A4AE0 /* GetStockHistoryExpedition.swift in Sources */,
@@ -1522,12 +1579,14 @@
 				710889752591B29800795EDF /* Promise+BridgeError.swift in Sources */,
 				710889A32591B29800795EDF /* Cryptowatcher.swift in Sources */,
 				7114029A258DB5E700BA387D /* StockRelay.swift in Sources */,
+				7123B12D2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
 				710889F32591BC8C00795EDF /* Categories.swift in Sources */,
 				71434328259076EB001F26A4 /* Int+Angle.swift in Sources */,
 				71AACC8C258EC74000E1C0B3 /* StockModels.swift in Sources */,
 				710889322591B24700795EDF /* CryptoState.swift in Sources */,
 				710889632591B29800795EDF /* Assets.swift in Sources */,
 				710889932591B29800795EDF /* Promise+Error.swift in Sources */,
+				7123B1432593CC8C00E5BD69 /* DataHandling.swift in Sources */,
 				71D63F0D2592ABE30085D718 /* Array.swift in Sources */,
 				710889912591B29800795EDF /* Promise+Zip.swift in Sources */,
 				710889732591B29800795EDF /* Promise+Finally.swift in Sources */,
@@ -1551,6 +1610,7 @@
 				7143435B259076F4001F26A4 /* Path+Convenience.swift in Sources */,
 				710889652591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
 				71EE7075258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
+				7123B1272593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift in Sources */,
 				71434355259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
 				710889972591B29800795EDF /* Promise+Validate.swift in Sources */,
 				7118A1E92593134A007E7EAB /* TonalState.swift in Sources */,
@@ -1593,6 +1653,7 @@
 				71AE032025931AD1007A4AE0 /* StockHistoryExpedition.swift in Sources */,
 				71EE7094258D9072005B2B8E /* AssetGridItemEvents.swift in Sources */,
 				714343D625907DB5001F26A4 /* Double.swift in Sources */,
+				7123B13C2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */,
 				71D63CCC258E92B1003B0BAF /* MainComponent.swift in Sources */,
 				710889992591B29800795EDF /* Promise+Delay.swift in Sources */,
 			);
@@ -1628,14 +1689,18 @@
 				71434343259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
 				710889332591B24700795EDF /* CryptoState.swift in Sources */,
 				7143417125906012001F26A4 /* Fonts.swift in Sources */,
+				7123B1262593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift in Sources */,
 				7108896A2591B29800795EDF /* Cryptowatcher+Aggregates.swift in Sources */,
 				71434323259076EB001F26A4 /* Float+Angle.swift in Sources */,
+				7123B1242593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift in Sources */,
 				7108898C2591B29800795EDF /* Promise+First.swift in Sources */,
 				710889A02591B29800795EDF /* Promise+Helpers.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
+				7123B12C2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
 				7118A1E82593134A007E7EAB /* TonalEvents.swift in Sources */,
 				71D63EFC2592A90D0085D718 /* StockService.Movers.swift in Sources */,
 				7118A1EA2593134A007E7EAB /* TonalState.swift in Sources */,
+				7123B1282593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift in Sources */,
 				7143430425907622001F26A4 /* RepresentableAsCGFloat.swift in Sources */,
 				710889702591B29800795EDF /* Promise+Recover.swift in Sources */,
 				714343AA2590789A001F26A4 /* GeometryFunctions.swift in Sources */,
@@ -1652,11 +1717,14 @@
 				71AACCF3258EC95500E1C0B3 /* StockIndicators.swift in Sources */,
 				7108899C2591B29800795EDF /* Promise+Then.swift in Sources */,
 				71434345259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */,
+				7123B12A2593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */,
 				7108896C2591B29800795EDF /* Promise+Retry.swift in Sources */,
+				7123B1442593CC8C00E5BD69 /* DataHandling.swift in Sources */,
 				710889782591B29800795EDF /* Await+Operators.swift in Sources */,
 				71EE7093258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
 				710889822591B29800795EDF /* PromiseBlocks.swift in Sources */,
 				71D63EC62592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */,
+				7123B12E2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
 				71EE7076258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
 				710889AC2591B29800795EDF /* Fetchable.swift in Sources */,
 				71434360259076F4001F26A4 /* Color+Convenience.swift in Sources */,
@@ -1698,6 +1766,7 @@
 				710889A82591B29800795EDF /* Markets.swift in Sources */,
 				71434327259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,
 				7118A1EC2593134A007E7EAB /* TonalComponent.swift in Sources */,
+				7123B1492593CF5900E5BD69 /* version0001.xcdatamodeld in Sources */,
 				7118A22A259313FD007E7EAB /* TonalCreateComponent.swift in Sources */,
 				7118A22C259313FD007E7EAB /* TonalCreateState.swift in Sources */,
 				710889B22591B29800795EDF /* Exchanges.swift in Sources */,
@@ -1731,6 +1800,7 @@
 				7108896E2591B29800795EDF /* PromiseState.swift in Sources */,
 				7143433D259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
 				71D63CCD258E92B1003B0BAF /* MainComponent.swift in Sources */,
+				7123B13D2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */,
 				714342E425907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */,
 				7143430825907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
 				71D63F4A2592BC210085D718 /* MoversSecurityExpedition.swift in Sources */,
@@ -2125,6 +2195,19 @@
 			productName = GraniteUI;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		7123B1012593C29F00E5BD69 /* version0001.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7123B1022593C29F00E5BD69 /* version0001.xcdatamodel */,
+			);
+			currentVersion = 7123B1022593C29F00E5BD69 /* version0001.xcdatamodel */;
+			path = version0001.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 71EE6FD9258D347B005B2B8E /* Project object */;
 }

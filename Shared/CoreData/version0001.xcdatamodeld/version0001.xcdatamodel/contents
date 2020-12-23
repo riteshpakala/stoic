@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B5022a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CryptoDataObject" representedClassName=".CryptoDataObject" parentEntity="SecurityObject" syncable="YES"/>
+    <entity name="SecurityObject" representedClassName=".SecurityObject" isAbstract="YES" syncable="YES">
+        <attribute name="changeAbsoluteValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="changePercentValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="data" attributeType="Binary"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="highValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="indicator" attributeType="String"/>
+        <attribute name="lastValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lowValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="securityType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ticker" attributeType="String"/>
+        <attribute name="volumeValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="StockDataObject" representedClassName=".StockDataObject" parentEntity="SecurityObject" syncable="YES"/>
+    <elements>
+        <element name="StockDataObject" positionX="-63" positionY="-18" width="128" height="29"/>
+        <element name="SecurityObject" positionX="-54" positionY="-9" width="128" height="194"/>
+        <element name="CryptoDataObject" positionX="-36" positionY="9" width="128" height="29"/>
+    </elements>
+</model>

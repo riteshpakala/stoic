@@ -39,7 +39,7 @@ public struct StockEvents {
         let symbol: String
         let daysAgo: Int
         
-        public init(symbol: String, daysAgo: Int = 1825)//730 = 2 years - 1825 = 5 years
+        public init(symbol: String, daysAgo: Int = 120)//730 = 2 years - 1825 = 5 years
         {
             self.symbol = symbol
             self.daysAgo = daysAgo
