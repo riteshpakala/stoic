@@ -1,8 +1,8 @@
 //
-//  AssetGridEvents.swift
+//  TonalCreateEvents.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 12/18/20.
+//  Created by Ritesh Pakala on 12/22/20.
 //  Copyright (c) 2020 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
@@ -10,6 +10,5 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-struct AssetGridEvents {
-    
+struct TonalCreateEvents {
 }

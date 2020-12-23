@@ -35,14 +35,19 @@ public class StockService {
                     if let content = String(data: data, encoding: .utf8),
                        let stockData = StockServiceUtilities.parseCSV(ticker: ticker, content: content) {
                         
-                        for i in 0..<stockData.count - 1 {
+                        guard stockData.count >= 60 else {
+                            fatalError("Stock History should be more than 60 days in the past, so 30 day past indicators can be included")
+                        }
+                        
+                        for i in 0..<max(stockData.count - 31, 1) {
                             _ = stockData[i].update(
-                                historicalTradingData: stockData.suffix(stockData.count - (i + 1)),
+                                historicalTradingData: Array(stockData[i + 1...i + 30]),
                                 rsiMax: 20)
                         }
                         
-                        return stockData
+                        return stockData.filter( { $0.dateData.asString != $0.lastStockData.dateData.asString } )
                     } else {
+                        print(response)
                         return nil
                     }
                 

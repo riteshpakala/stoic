@@ -20,12 +20,12 @@ public class StockCenter: GraniteCenter<StockState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             TradingDayExpedition.Discovery(),
-            UpdateStockDataExpedition.Discovery(),
-            NewStockDataExpedition.Discovery(),
-            
+            //
             GetMoversStockExpedition.Discovery(),
             MoversDataExpedition.Discovery(),
-            MoversStockQuotesExpedition.Discovery()
+            MoversStockQuotesExpedition.Discovery(),
+            //
+            GetStockHistoryExpedition.Discovery(),
         ]
     }
     

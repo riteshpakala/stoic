@@ -31,7 +31,7 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                         
                         Text("crypto")
                             .granite_innerShadow(
-                            Brand.Colors.marble,
+                            Brand.Colors.white,
                             radius: 3,
                             offset: .init(x: 2, y: 2))
                         .multilineTextAlignment(.leading)
@@ -41,7 +41,7 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                         
                         Text("price")
                             .granite_innerShadow(
-                            Brand.Colors.marble,
+                            Brand.Colors.white,
                             radius: 3,
                             offset: .init(x: 2, y: 2))
                         .multilineTextAlignment(.trailing)
@@ -51,7 +51,7 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                         
                         Text("change")
                             .granite_innerShadow(
-                            Brand.Colors.marble,
+                            Brand.Colors.white,
                             radius: 3,
                             offset: .init(x: 2, y: 2))
                         .multilineTextAlignment(.trailing)

@@ -17,7 +17,9 @@ public struct MainComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        AssetSectionComponent(state: .init(title: "Top Volume"))
-            .shareRelay(relay(CryptoRelay.self))
+//        AssetSectionComponent(state: .init(title: "Top Volume"))
+//            .shareRelay(relay(CryptoRelay.self))
+        
+        TonalCreateComponent().shareRelays(relays([CryptoRelay.self, StockRelay.self]))
     }
 }

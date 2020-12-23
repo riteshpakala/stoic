@@ -77,14 +77,15 @@ public struct StockServiceUtilities {
                         close:close,
                         adjClose:adjClose,
                         volume: volume)
-
                     // Put the values into the tuple and add it to the items array
 
-                    items?.append(item)
+                    items?.insert(item, at: 0)
                 }
             }
         }
 
-        return items
+        return items/*?.sorted(
+                    by: {
+                        ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedDescending })*/
     }
 }

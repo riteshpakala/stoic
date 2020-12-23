@@ -11,6 +11,7 @@ import SwiftUI
 import Combine
 
 public struct StockEvents {
+    //MARK: -- Movers
     public struct GetMovers: GraniteEvent {}
     public struct MoversData: GraniteEvent {
         let data: [StockServiceModels.Movers]
@@ -19,7 +20,6 @@ public struct StockEvents {
         let movers: StockServiceModels.Movers
         let quotes: [StockServiceModels.Quotes]
     }
-    
     public struct GlobalCategoryResult: GraniteEvent {
         let losers: [Stock]
         let gainers: [Stock]
@@ -34,15 +34,23 @@ public struct StockEvents {
         }
     }
     
-    //
-    public struct StockTradingDay: GraniteEvent {
+    //MARK: -- Stock History
+    public struct GetStockHistory: GraniteEvent {
+        let symbol: String
+        let daysAgo: Int
+        
+        public init(symbol: String, daysAgo: Int = 1825)//730 = 2 years - 1825 = 5 years
+        {
+            self.symbol = symbol
+            self.daysAgo = daysAgo
+        }
     }
-    
-    public struct UpdateStockData: GraniteEvent {
-    }
-    
-    public struct NewStockData: GraniteEvent {
+    public struct StockHistory: GraniteEvent {
         let data: [StockData]
+    }
+    
+    //MARK: -- Misc
+    public struct StockTradingDay: GraniteEvent {
     }
 }
 

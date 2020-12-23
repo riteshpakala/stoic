@@ -27,7 +27,6 @@ public class AssetSectionState: GraniteState {
 public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            AssetGridNewStockDataExpedition.Discovery(),
             MoversCryptoExpedition.Discovery(),
             MoversStockExpedition.Discovery()
         ]
