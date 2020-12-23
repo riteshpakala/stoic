@@ -11,7 +11,7 @@ import Combine
 
 struct MoversCryptoExpedition: GraniteExpedition {
     typealias ExpeditionEvent = CryptoEvents.GlobalCategoryResult
-    typealias ExpeditionState = AssetGridState
+    typealias ExpeditionState = AssetSectionState
     
     func reduce(
         event: ExpeditionEvent,
@@ -20,6 +20,6 @@ struct MoversCryptoExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         state.securityData = event.topVolume
-        state.payload = .init(object: state.securityData)
+//        state.payload = .init(object: state.securityData)
     }
 }

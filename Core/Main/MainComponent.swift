@@ -14,8 +14,10 @@ public struct MainComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<MainCenter, MainState> = .init()
     
+    public init() {}
+    
     public var body: some View {
-        AssetGridComponent()
-            .shareRelay(relay(StockRelay.self))
+        AssetSectionComponent(state: .init(title: "Top Volume"))
+            .shareRelay(relay(CryptoRelay.self))
     }
 }

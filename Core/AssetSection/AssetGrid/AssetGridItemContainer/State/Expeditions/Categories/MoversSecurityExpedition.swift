@@ -1,16 +1,17 @@
 //
-//  StockCryptoExpedition.swift
+//  MoversSecurityExpeditionExpedition.swift
 //  * stoic
 //
 //  Created by Ritesh Pakala on 12/22/20.
+//  Copyright (c) 2020 ___ORGANIZATIONNAME___. All rights reserved.
 //
 import GraniteUI
 import SwiftUI
 import Combine
 
-struct MoversStockExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = StockEvents.GlobalCategoryResult
-    typealias ExpeditionState = AssetGridState
+struct MoversSecurityExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = AssetGridItemContainerEvents.UpdateSecurities
+    typealias ExpeditionState = AssetGridItemContainerState
     
     func reduce(
         event: ExpeditionEvent,
@@ -18,7 +19,5 @@ struct MoversStockExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        state.securityData = event.topVolume
-        state.payload = .init(object: state.securityData)
     }
 }

@@ -17,7 +17,7 @@ public class CryptoState: GraniteState {
 }
 
 public class CryptoCenter: GraniteCenter<CryptoState> {
-//    let clockRelay = ClockRelay(CryptoEvents.GetMovers())
+    let clockRelay = ClockRelay(CryptoEvents.GetMovers())
     
     public override var expeditions: [GraniteBaseExpedition] {
         [

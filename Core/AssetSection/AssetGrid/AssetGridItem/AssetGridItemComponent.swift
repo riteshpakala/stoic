@@ -14,8 +14,7 @@ public struct AssetGridItemComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<AssetGridItemCenter, AssetGridItemState> = .init()
     
-    public init() {
-    }
+    public init() {}
     
     public var body: some View {
         VStack(spacing: 0) {
@@ -34,7 +33,6 @@ public struct AssetGridItemComponent: GraniteComponent {
                                     .granite_innerShadow(radius: 3)
                                     .cornerRadius(6.0))
                     .shadow(radius: 3, x: 2, y: 2)
-                
                 
                 Spacer().frame(width: 12)
                 
@@ -73,7 +71,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                 
                 Spacer().frame(width: 12)
                 
-                VStack(spacing: 2) {
+                VStack(alignment: .center, spacing: 2) {
                     Spacer()
                     Text("\(state.security.changePercentValue, specifier: "%.2f")%")
                         .granite_innerShadow(
@@ -81,12 +79,16 @@ public struct AssetGridItemComponent: GraniteComponent {
                             radius: 4,
                             offset: .init(x: 1, y: 2))
                         .frame(height: 12, alignment: .bottom)
+                    
                     Color.green.clipShape(Circle())
                         .frame(width: 6, height: 6, alignment: .top)
                     Spacer()
-                }.padding(.trailing, 12).foregroundColor(Brand.Colors.marble)
+                }
+                .padding(.trailing, 12)
+                .foregroundColor(Brand.Colors.marble)
+                .fixedSize()
                 
-            }.background(Brand.Colors.black)
+            }
             
             Rectangle().frame(height: 1.0, alignment: .leading).foregroundColor(.black)
         }
