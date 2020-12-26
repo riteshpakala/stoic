@@ -75,6 +75,8 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
             low: value.price.low,
             volume: value.volume,
             changePercent: value.price.change.percentage,
-            changeAbsolute: value.price.change.absolute)
+            changeAbsolute: value.price.change.absolute,
+            interval: .day,
+            exchangeName: exchange)
     }
 }

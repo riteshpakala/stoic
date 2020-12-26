@@ -21,13 +21,13 @@ public struct StockEvents {
         let quotes: [StockServiceModels.Quotes]
     }
     public struct GlobalCategoryResult: GraniteEvent {
-        let losers: [Stock]
-        let gainers: [Stock]
-        let topVolume: [Stock]
+        let losers: [Security]
+        let gainers: [Security]
+        let topVolume: [Security]
         
-        public init(_ topVolume: [Stock],
-                    _ gainers: [Stock],
-                    _ losers: [Stock]) {
+        public init(_ topVolume: [Security],
+                    _ gainers: [Security],
+                    _ losers: [Security]) {
             self.topVolume = topVolume
             self.gainers = gainers
             self.losers = losers
@@ -36,19 +36,39 @@ public struct StockEvents {
     
     //MARK: -- Stock History
     public struct GetStockHistory: GraniteEvent {
-        let symbol: String
+        let ticker: String
         let daysAgo: Int
         
-        public init(symbol: String, daysAgo: Int = 120)//730 = 2 years - 1825 = 5 years
+        public init(ticker: String, daysAgo: Int = 2400)//730 = 2 years - 1825 = 5 years
         {
-            self.symbol = symbol
+            self.ticker = ticker
             self.daysAgo = daysAgo
         }
     }
-    public struct StockHistory: GraniteEvent {
-        let data: [StockData]
-    }
     
+    //MARK: -- Stock Interval
+    public struct GetStockInterval: GraniteEvent {
+        let symbol: String
+        let fromDate: Int64
+        let toDate: Int64
+        let interval: SecurityInterval
+        
+        public init(symbol: String, fromDate: Int64, toDate: Int64, interval: SecurityInterval)
+        {
+            self.symbol = symbol
+            self.fromDate = fromDate
+            self.toDate = toDate
+            self.interval = interval
+        }
+    }
+    public struct StockHistory: GraniteEvent {
+        let data: [StockServiceModels.Stock]
+        let interval: SecurityInterval
+    }
+    public struct StockInterval: GraniteEvent {
+        let data: [StockServiceModels.Stock]
+        let interval: SecurityInterval
+    }
     //MARK: -- Misc
     public struct StockTradingDay: GraniteEvent {
     }

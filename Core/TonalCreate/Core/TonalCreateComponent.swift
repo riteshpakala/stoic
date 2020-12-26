@@ -16,10 +16,13 @@ public struct TonalCreateComponent: GraniteComponent {
     
     public init() {}
     
+    public func onCommit() {
+        
+    }
     public var body: some View {
         VStack {
             Button("$MSFT",
-                   action: sendEvent(StockEvents.GetStockHistory.init(symbol: "MSFT")))
-        }.frame(width: 300, height: 500, alignment: .center).onAppear(perform: sendEvent(StockEvents.GetStockHistory.init(symbol: "MSFT")))
+                   action: sendEvent(TonalCreateEvents.Set("MSFT")))
+        }.frame(width: 300, height: 500, alignment: .center).onAppear(perform: sendEvent(TonalCreateEvents.Set("MSFT")))
     }
 }

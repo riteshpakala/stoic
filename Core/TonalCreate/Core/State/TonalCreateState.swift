@@ -16,7 +16,10 @@ public class TonalCreateState: GraniteState {
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
+            SetTheToneExpedition.Discovery(),
             StockHistoryExpedition.Discovery(),
+            
+            FindTheToneExpedition.Discovery()
         ]
     }
 }

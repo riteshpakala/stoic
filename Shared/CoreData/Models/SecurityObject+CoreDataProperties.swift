@@ -17,6 +17,8 @@ extension SecurityObject {
     }
 
     @NSManaged public var ticker: String
+    @NSManaged public var exchangeName: String
+    @NSManaged public var intervalType: String
     @NSManaged public var securityType: Int64
     @NSManaged public var indicator: String
     @NSManaged public var lastValue: Double
@@ -26,7 +28,6 @@ extension SecurityObject {
     @NSManaged public var changeAbsoluteValue: Double
     @NSManaged public var volumeValue: Double
     @NSManaged public var date: Date
-    @NSManaged public var data: Data
 
 }
 

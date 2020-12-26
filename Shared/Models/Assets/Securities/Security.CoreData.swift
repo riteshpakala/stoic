@@ -18,5 +18,15 @@ extension Security {
         security.lowValue = lowValue
         security.changePercentValue = changePercentValue
         security.volumeValue = volumeValue
+        security.exchangeName = exchangeName
+        security.intervalType = interval.rawValue
+        security.date = date
+    }
+    
+    public func apply(to quote: QuoteObject) {
+        quote.exchangeName = exchangeName
+        quote.ticker = ticker
+        quote.intervalType = interval.rawValue
+        quote.securityType = securityType.rawValue
     }
 }

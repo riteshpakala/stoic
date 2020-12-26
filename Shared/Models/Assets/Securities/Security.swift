@@ -12,7 +12,13 @@ public enum SecurityType: Int64 {
     case stock
 }
 
+public enum SecurityInterval: String {
+    case day = "1d"
+    case hour = "1h"
+}
+
 public protocol Security: Asset {
+    var date: Date { get set }
     var indicator: String { get }
     var ticker: String { get set }
     var securityType: SecurityType { get }
@@ -25,9 +31,13 @@ public protocol Security: Asset {
     var changePercentValue: Double { get }
     var changeAbsoluteValue: Double { get }
     
+    var exchangeName: String { get set }
+    
     var volumeValue: Double { get }
     
     var isGainer: Bool { get }
+    
+    var interval: SecurityInterval { get set }
 }
 
 extension Security {
@@ -61,6 +71,8 @@ public struct SecurityCharacteristics {
 }
 
 public struct EmptySecurity: Security {
+    public var date: Date = Date.today
+    
     public var indicator: String = "?"
     public var ticker: String = "?"
     
@@ -76,4 +88,8 @@ public struct EmptySecurity: Security {
     
     public var changePercentValue: Double { 0.0 }
     public var changeAbsoluteValue: Double { 0.0 }
+    
+    public var interval: SecurityInterval = .day
+    
+    public var exchangeName: String = "?"
 }

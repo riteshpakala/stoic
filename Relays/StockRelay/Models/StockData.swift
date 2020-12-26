@@ -11,7 +11,7 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
     public static var supportsSecureCoding: Bool = true
     
     public static var empty: StockData {
-        return .init(symbolName: "", dateData: .init(""), open: 0.0, high: 0.0, low: 0.0, close: 0.0, adjClose: 0.0, volume: 0.0)
+        return .init(symbolName: "", dateData: .init(""), open: 0.0, high: 0.0, low: 0.0, close: 0.0, volume: 0.0)
     }
     
     func charateristic(forModelType type: StockKitModels.ModelType) -> Double {
@@ -35,7 +35,6 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
     var high: Double
     var low: Double
     var close: Double
-    var adjClose: Double //X-Dividend
     var volume: Double
     var count: Int = 0
     var historicalData: [StockData]? = nil {
@@ -81,7 +80,6 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         high: Double,
         low: Double,
         close: Double,
-        adjClose: Double,
         volume: Double) {
         
         self.symbolName = symbolName
@@ -90,7 +88,6 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         self.high = high
         self.low = low
         self.close = close
-        self.adjClose = adjClose
         self.volume = volume
     }
     
@@ -101,7 +98,6 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         let high: Double = coder.decodeDouble(forKey: "high")
         let low: Double = coder.decodeDouble(forKey: "low")
         let close: Double = coder.decodeDouble(forKey: "close")
-        let adjClose: Double = coder.decodeDouble(forKey: "adjClose")
         let volume: Double = coder.decodeDouble(forKey: "volume")
         let historicalData = coder.decodeObject(forKey: "historicalData") as? [StockData]
         let rsi = coder.decodeObject(forKey: "rsi") as? RSI
@@ -116,7 +112,6 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
             high: high,
             low: low,
             close: close,
-            adjClose: adjClose,
             volume: volume)
 
         self.historicalData = historicalData
@@ -134,7 +129,6 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
         coder.encode(high, forKey: "high")
         coder.encode(low, forKey: "low")
         coder.encode(close, forKey: "close")
-        coder.encode(adjClose, forKey: "adjClose")
         coder.encode(volume, forKey: "volume")
         coder.encode(historicalData, forKey: "historicalData")
         coder.encode(rsi, forKey: "rsi")
@@ -206,7 +200,6 @@ public class StockData: NSObject, Codable, NSCoding, NSSecureCoding {
             high: \(high)
             low: \(low)
             close: \(close)
-            adjClose: \(adjClose)
             volume: \(volume)
             '''''''''''''''''''''''''''''
             """

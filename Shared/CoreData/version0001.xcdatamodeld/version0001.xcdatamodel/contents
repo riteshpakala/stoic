@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B5022a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CryptoDataObject" representedClassName=".CryptoDataObject" parentEntity="SecurityObject" syncable="YES"/>
+    <entity name="QuoteObject" representedClassName=".QuoteObject" syncable="YES">
+        <attribute name="exchangeName" attributeType="String"/>
+        <attribute name="intervalType" attributeType="String"/>
+        <attribute name="securityType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ticker" attributeType="String"/>
+        <relationship name="securities" toMany="YES" deletionRule="No Action" destinationEntity="SecurityObject" inverseName="quote" inverseEntity="SecurityObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="ticker"/>
+                <constraint value="securityType"/>
+                <constraint value="intervalType"/>
+                <constraint value="exchangeName"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
     <entity name="SecurityObject" representedClassName=".SecurityObject" isAbstract="YES" syncable="YES">
         <attribute name="changeAbsoluteValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="changePercentValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="data" attributeType="Binary"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="exchangeName" attributeType="String"/>
         <attribute name="highValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="indicator" attributeType="String"/>
+        <attribute name="intervalType" attributeType="String"/>
         <attribute name="lastValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="lowValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="securityType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="ticker" attributeType="String"/>
         <attribute name="volumeValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="quote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="securities" inverseEntity="QuoteObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="date"/>
+                <constraint value="ticker"/>
+                <constraint value="exchangeName"/>
+                <constraint value="intervalType"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="StockDataObject" representedClassName=".StockDataObject" parentEntity="SecurityObject" syncable="YES"/>
     <elements>
-        <element name="StockDataObject" positionX="-63" positionY="-18" width="128" height="29"/>
-        <element name="SecurityObject" positionX="-54" positionY="-9" width="128" height="194"/>
-        <element name="CryptoDataObject" positionX="-36" positionY="9" width="128" height="29"/>
+        <element name="CryptoDataObject" positionX="-15.463134765625" positionY="-21.51837158203125" width="128" height="29"/>
+        <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="104"/>
+        <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="238"/>
+        <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="29"/>
     </elements>
 </model>

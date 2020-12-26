@@ -15,7 +15,7 @@ struct CryptoEvents {
         let losers: [CryptoCurrency]
         let gainers: [CryptoCurrency]
         let topVolume: [CryptoCurrency]
-        
+
         public init(_ topVolume: [CryptoCurrency],
                     _ gainers: [CryptoCurrency],
                     _ losers: [CryptoCurrency]) {

@@ -16,6 +16,8 @@ public struct CryptoCurrency: Security {
     public var volume: Double
     public var changePercent: Double
     public var changeAbsolute: Double
+    public var interval: SecurityInterval
+    public var exchangeName: String
 }
 
 extension CryptoCurrency {

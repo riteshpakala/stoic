@@ -73,9 +73,9 @@ struct MoversStockQuotesExpedition: GraniteExpedition {
         
         let gainersResponse = event.movers.finance.result.first(where: { $0.canonicalName == StockServiceModels.Quotes.Keys.gainers }).map( { item in item.quotes.map { $0.symbol } }) ?? []
         
-        let topVolumeQuotes = data.result.filter { topVolumeResponse.contains($0.symbol) }.map { $0.asStock }
-        let losersQuotes = data.result.filter { losersResponse.contains($0.symbol) }.map { $0.asStock }
-        let gainersQuotes = data.result.filter { gainersResponse.contains($0.symbol) }.map { $0.asStock }
+        let topVolumeQuotes = data.result.filter { topVolumeResponse.contains($0.symbol) }.map { $0.asStock() }
+        let losersQuotes = data.result.filter { losersResponse.contains($0.symbol) }.map { $0.asStock() }
+        let gainersQuotes = data.result.filter { gainersResponse.contains($0.symbol) }.map { $0.asStock() }
         
         connection.request(StockEvents.GlobalCategoryResult.init(topVolumeQuotes, gainersQuotes, losersQuotes))
         print("{TEST} got Quotes")

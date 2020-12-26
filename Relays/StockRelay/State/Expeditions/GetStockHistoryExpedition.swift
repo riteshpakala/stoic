@@ -19,27 +19,19 @@ struct GetStockHistoryExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        let todaysDate: Date = Date.today
+        let todaysDate: Date = Date.today//.advanceDate(value: -30)//Calendar.nyCalendar.date(byAdding: .hour, value: -1, to: Date.today) ?? Date.today
+            
         let testDate: Date = Date.today.advanceDate(value: -1*abs(event.daysAgo))
         
-        print("{TEST} hey")
-//        publisher = state
-//            .service
-//            .getStock(matching: event.symbol,
-//                             from: "\(Int(testDate.timeIntervalSince1970))",//"1591833600",
-//                             to: "\(Int(todaysDate.timeIntervalSince1970))")
-//            .replaceError(with: [])
-//            .map { StockEvents.StockHistory(data: $0) }
-//            .eraseToAnyPublisher()
-        
-        if let objects = getSecurity() {
-            for object in objects {
-                if let stockData = object.data.asStockData {
-                    print(stockData.dateData.asString)
-                    print(stockData.historicalData?.count)
-                }
-            }
-        }
+        publisher = state
+            .service
+            .getStockChart(matching: event.ticker,
+                             from: "\(Int(testDate.timeIntervalSince1970))",//"1591833600",
+                             to: "\(Int(todaysDate.timeIntervalSince1970))",
+                             interval: .day)
+            .replaceError(with: [])
+            .map { StockEvents.StockHistory(data: $0, interval: .day) }
+            .eraseToAnyPublisher()
     }
     
     func getSecurity() -> [SecurityObject]? {

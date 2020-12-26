@@ -11,4 +11,17 @@ import SwiftUI
 import Combine
 
 struct TonalCreateEvents {
+    struct Set: GraniteEvent {
+        let ticker: String
+        public init(_ ticker: String) {
+            self.ticker = ticker
+        }
+    }
+    
+    struct Find: GraniteEvent {
+        let quote: QuoteObject
+        public init(_ quote: QuoteObject) {
+            self.quote = quote
+        }
+    }
 }

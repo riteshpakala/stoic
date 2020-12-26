@@ -65,7 +65,6 @@ public struct StockServiceUtilities {
                     let high = Double(values[2]),
                     let low = Double(values[3]),
                     let close = Double(values[4]),
-                    let adjClose = Double(values[5]),
                     let volume = Double(values[6]) {
 
                     let item: StockData = StockData.init(
@@ -75,7 +74,6 @@ public struct StockServiceUtilities {
                         high:high,
                         low:low,
                         close:close,
-                        adjClose:adjClose,
                         volume: volume)
                     // Put the values into the tuple and add it to the items array
 
