@@ -1,12 +1,12 @@
 //
-//  FindTheToneExpedition.swift
+//  StockHistoryExpedition.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 12/25/20.
+//  Created by Ritesh Pakala on 12/22/20.
+//  Copyright (c) 2020 ___ORGANIZATIONNAME___. All rights reserved.
 //
-
-import Foundation
 import GraniteUI
+import SwiftUI
 import Combine
 
 struct FindTheToneExpedition: GraniteExpedition {
@@ -19,54 +19,168 @@ struct FindTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        let securities = event.quote.securities
-        let days: Int = 7
-        //
+        state.stage = .find
         
-        let orderedSecurities = Array(securities.sorted(by: { $0.date.compare($1.date) == .orderedDescending })).filter( { $0.date.compare("2016-01-29".asDate() ?? Date.today) == .orderedDescending } )
-        
-        let count = orderedSecurities.count
-        
-        print("{TEST} found \(count)")
-        
-        var volatilities: [Date:Double] = [:]
-        
-        print(orderedSecurities.count)
-        for (index, security) in orderedSecurities.enumerated() {
+        if let quote = getQuote()?.first(where: { $0.ticker == event.ticker && $0.intervalType == SecurityInterval.day.rawValue }) {
             
-            let trailing = orderedSecurities.suffix(orderedSecurities.count - index)
-            let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
-            let mean = sum/Double(trailing.count)
-            
-            let deviations = trailing.map({ abs($0.lastValue - mean) }).reduce(0.0, +)
-            let avgDeviation = deviations/Double(trailing.count)
-            
-            volatilities[security.date] = avgDeviation
+            connection.request(TonalCreateEvents.Set(quote))
+        } else {
+            connection.request(StockEvents.GetStockHistory.init(ticker: event.ticker))
         }
-        
-        for security in orderedSecurities {
-            print("date: \(security.date) // volatility: \(volatilities[security.date])")
-        }
-//        print("\(orderedSecurities.last?.date)")
-        let targetComparables = Array(orderedSecurities.prefix(days))
-        
-//        let volatilitiesTruth = targetComparables.compactMap { $0.averages?.volatility(forModelType: .close) }
-//        let avgVolatilitiesTruth = Double(volatilitiesTruth.reduce(0.0, +)) / Double(volatilitiesTruth.count)
-//
-        let chunks = orderedSecurities.chunked(into: 7)
-        let scrapeTop = Array(chunks.suffix(chunks.count - 1))
-//
-//        var candidates : [[StockData]] = [[]]
-//        for chunk in scrapeTop {
-////            let volatilities = chunk.compactMap { $0.averages?.volatility(forModelType: .close) }
-////            let avgVolatilities = Double(volatilities.reduce(0.0, +)) / Double(volatilities.count)
-////
-////            let accuracy = abs(avgVolatilitiesTruth / avgVolatilities)
-////
-////            if accuracy > 0.9 && accuracy <= 1.2 {
-////                candidates.append(chunk)
-////            }
-//        }
         
     }
+    
+    func getQuote() -> [QuoteObject]? {
+        let moc: NSManagedObjectContext
+        if Thread.isMainThread {
+            moc = coreData.main
+        } else {
+            moc = coreData.background
+        }
+        
+        return try? moc.fetch(QuoteObject.fetchRequest())
+    }
 }
+
+struct StockHistoryExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = StockEvents.StockHistory
+    typealias ExpeditionState = TonalCreateState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        guard let stocks = event.data.first?.asStocks(interval: event.interval) else {
+            return
+        }
+        
+        save(data: stocks) { quote in
+            if let object = quote {
+                connection.request(TonalCreateEvents.Set(object))
+            }
+        }
+    }
+    
+    func save(data: [Stock], completion: @escaping ((QuoteObject?) -> Void)) {
+        guard let referenceStock = data.first else { completion(nil); return }
+        let moc: NSManagedObjectContext
+        if Thread.isMainThread {
+            moc = coreData.main
+        } else {
+            moc = coreData.background
+        }
+        
+        moc.perform {
+            
+            do {
+                let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
+                
+                let quote: QuoteObject = quotes.first(where: { $0.exchangeName == referenceStock.exchangeName && $0.ticker == referenceStock.ticker && $0.securityType == referenceStock.securityType.rawValue && $0.intervalType == referenceStock.interval.rawValue }) ?? QuoteObject.init(context: moc)
+                
+                referenceStock.apply(to: quote)
+                
+                for stock in data {
+                    let object = StockDataObject.init(context: moc)
+                    stock.apply(to: object)
+                    quote.addToSecurities(object)
+                }
+                
+                try moc.save()
+                
+                print ("{CoreData} saved")
+                completion(quote)
+            } catch let error {
+                print ("{CoreData} \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+    }
+    
+//    func save(data: [StockData]) {
+//        let moc: NSManagedObjectContext
+//        if Thread.isMainThread {
+//            moc = coreData.main
+//        } else {
+//            moc = coreData.background
+//        }
+//
+//        moc.perform {
+//            for stockData in data {
+//                guard
+//                    let archivedData = stockData.archived,
+//                    let date = stockData.dateData.asDate else { return }
+//
+//                let stock = stockData.asStock
+//
+//                let object = SecurityObject.init(context: moc)
+//                object.date = date
+//                object.data = archivedData
+//
+//                stock.apply(to: object)
+//            }
+//
+//            do {
+//                try moc.save()
+//                print ("{CoreData} saved")
+//            } catch let error {
+//                print ("{CoreData} \(error.localizedDescription)")
+//            }
+//        }
+//    }
+}
+
+//    func saveStockPredictions(
+//        _ prediction: StockModelObjectPayload,
+//        with context: CoreDataThread) -> String? {
+//
+//        let moc: NSManagedObjectContext
+//
+//        switch context {
+//        case .background:
+//            moc = coreData.background
+//        case .main:
+//            moc = coreData.main
+//        }
+//
+//        guard let preparedData = ServiceCenter.prepareData(from: prediction) else {
+//            return nil
+//        }
+//
+//        let uid: String = UUID.init().uuidString
+//        moc.perform {
+//            let mergedModels: [StockModelMergedObject]? = try? moc.fetch(StockModelMergedObject.request())
+//            let mergedModel = mergedModels?.first(where: { $0.stock.asSearchStock?.symbol == prediction.stock.symbol && $0.stock.asSearchStock?.exchangeName == prediction.stock.exchangeName })
+//            let merged = mergedModel ?? StockModelMergedObject.init(context: moc)
+//
+//            if mergedModel == nil {
+//                merged.stock = preparedData.stock
+//                merged.order = Int64(mergedModels?.count ?? 0)
+//                merged.timestamp = Date().timeIntervalSince1970
+//            }
+//
+//            let object = StockModelObject.init(context: moc)
+//            object.model = preparedData.modelData
+//            object.date = prediction.date.asDate?.timeIntervalSince1970 ?? 0.0
+//            object.predictionDays = Int64(prediction.predictionDays)
+//            object.sentimentStrength = Int64(prediction.sentimentStrength)
+//            object.ticker = prediction.stock.symbolName ?? ""
+//            object.exchange = prediction.stock.exchangeName ?? ""
+//            object.sentimentTradingData = preparedData.sentimentData
+//            object.historicalTradingData = preparedData.historicalData
+//            object.stock = preparedData.stock
+//            object.timestamp = Date().timeIntervalSince1970
+//            object.id = uid
+//
+//            merged.addToModels(object)
+//
+//            do {
+//                try moc.save()
+//            } catch let error {
+//                print ("{CoreData} \(error.localizedDescription)")
+//            }
+//        }
+//
+//        return uid
+//    }

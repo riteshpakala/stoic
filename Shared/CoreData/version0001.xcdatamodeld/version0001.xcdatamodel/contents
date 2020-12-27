@@ -39,11 +39,17 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="StockDataObject" representedClassName=".StockDataObject" parentEntity="SecurityObject" syncable="YES"/>
+    <entity name="StockDataObject" representedClassName=".StockDataObject" parentEntity="SecurityObject" syncable="YES">
+        <attribute name="close" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="high" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="low" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="open" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="volume" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
     <elements>
         <element name="CryptoDataObject" positionX="-15.463134765625" positionY="-21.51837158203125" width="128" height="29"/>
         <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="104"/>
         <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="238"/>
-        <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="29"/>
+        <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>
     </elements>
 </model>

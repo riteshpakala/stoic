@@ -26,9 +26,9 @@ struct GetStockHistoryExpedition: GraniteExpedition {
         publisher = state
             .service
             .getStockChart(matching: event.ticker,
-                             from: "\(Int(testDate.timeIntervalSince1970))",//"1591833600",
+                           from: "\(Int(testDate.timeIntervalSince1970))",//"1591833600",
                              to: "\(Int(todaysDate.timeIntervalSince1970))",
-                             interval: .day)
+                            interval: .day)
             .replaceError(with: [])
             .map { StockEvents.StockHistory(data: $0, interval: .day) }
             .eraseToAnyPublisher()

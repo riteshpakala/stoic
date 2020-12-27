@@ -96,7 +96,7 @@ extension StockServiceModels.Quotes.QuoteResponse.QuoteResult {
 }
 
 extension StockServiceModels.Stock {
-    public func asStocks(interval: SecurityInterval = .day) -> [Security] {
+    public func asStocks(interval: SecurityInterval = .day) -> [Stock] {
         guard let result = chart.result.first else { return [] }
         
         guard let quote = result.indicators.quote.first else { return [] }
@@ -130,3 +130,9 @@ extension StockServiceModels.Stock {
         return stocks
     }
 }
+
+//extension SecurityObject {
+//    public func asStocks(interval: SecurityInterval = .day) -> Security {
+//        return Stock.init(ticker: ticker, date: date, open: dat, high: <#T##Double#>, low: <#T##Double#>, close: <#T##Double#>, volume: <#T##Double#>, changePercent: <#T##Double#>, changeAbsolute: <#T##Double#>, interval: <#T##SecurityInterval#>, exchangeName: <#T##String#>)
+//    }
+//}

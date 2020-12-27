@@ -15,6 +15,10 @@ extension String {
 }
 
 extension Date {
+    var asString: String {
+        return Calendar.nyDateFormatter.string(from: self)
+    }
+    
     func advanceDate(value: Int = 1) -> Date {
         return Calendar.nyCalendar.date(byAdding: .day, value: value, to: self) ?? self
     }

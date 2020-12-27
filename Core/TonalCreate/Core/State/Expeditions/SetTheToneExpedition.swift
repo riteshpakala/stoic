@@ -1,12 +1,11 @@
 //
-//  StockHistoryExpedition.swift
+//  FindTheToneExpedition.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 12/22/20.
-//  Copyright (c) 2020 ___ORGANIZATIONNAME___. All rights reserved.
+//  Created by Ritesh Pakala on 12/25/20.
 //
+import Foundation
 import GraniteUI
-import SwiftUI
 import Combine
 
 struct SetTheToneExpedition: GraniteExpedition {
@@ -19,32 +18,96 @@ struct SetTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        state.stage = .set
         
-        if let quote = getQuote()?.first(where: { $0.ticker == event.ticker && $0.intervalType == SecurityInterval.day.rawValue }) {
+        let securities = event.quote.securities
+        let days: Int = 7
+        //
+        
+        let orderedSecurities = Array(securities.sorted(by: { $0.date.compare($1.date) == .orderedDescending }))
+        
+        let count = orderedSecurities.count
+        
+        print("{TEST} found \(count)")
+        
+        var volatilities: [Date:Double] = [:]
+        var volatilityCoeffecients: [Date:Double] = [:]
+        
+        for (index, security) in orderedSecurities.enumerated() {
+            // Standard deviation calculation for yearly variance
+            //
+            let trailing = orderedSecurities.suffix(orderedSecurities.count - index).prefix(24)
+            let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
+            let mean = sum/Double(trailing.count)
             
-            print("{TEST} setting")
-            
-            connection.request(TonalCreateEvents.Find(quote))
-        } else {
-            connection.request(StockEvents.GetStockHistory.init(ticker: "MSFT"))
+            let deviations = trailing.map({ pow($0.lastValue - mean, 2) }).reduce(0.0, +)
+            let avgDeviation = deviations/Double(trailing.count - 1)
+            //            print(mean)
+            let standardDeviation = sqrt(avgDeviation)
+            volatilities[security.date] = standardDeviation
+            volatilityCoeffecients[security.date] = standardDeviation/mean
         }
         
-    }
-    
-    func getQuote() -> [QuoteObject]? {
-        let moc: NSManagedObjectContext
-        if Thread.isMainThread {
-            moc = coreData.main
-        } else {
-            moc = coreData.background
+        let targetComparables = Array(orderedSecurities.prefix(days))
+        
+        let chunks = orderedSecurities.chunked(into: days)
+        let scrapeTop = Array(chunks.suffix(chunks.count - 1))
+
+        var candidates : [TonalRange] = []
+        for chunk in scrapeTop {
+            guard chunk.count == days else { continue }
+            
+            var similarities: [Double] = []
+            for i in 0..<chunk.count {
+                let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
+                let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
+                similarities.append(targetCoeffecient/chunkDayCoeffecient)
+            }
+            
+            if similarities.filter( { !($0 <= 1.2 && $0 >= 0.75) } ).isEmpty {
+                let dates: [Date] = chunk.map { $0.date }
+                
+                let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
+                    TonalSimilarity.init(date: $0.element,
+                                         similarity: similarities[$0.offset]) }
+                
+                let tIndicators: [TonalIndicators] = dates.map {
+                    TonalIndicators.init(date: $0,
+                                         volatility: volatilities[$0] ?? 0.0,
+                                         volatilityCoeffecient: volatilityCoeffecients[$0] ?? 0.0 ) }
+                
+                candidates.append(.init(objects: chunk, tSimilarities, tIndicators))
+            }
         }
         
-        return try? moc.fetch(QuoteObject.fetchRequest())
+        state.payload = .init(object: candidates)
+        
+//        for (index, candidate) in candidates.enumerated() {
+//            print("%%%%%%%%%%%%%%%%%%")
+//            print("\(candidates.count) // \(candidate.similarities.count) // \(candidate.indicators.count)")
+//            print("Dates: \(candidate.dates.first)")
+//            print("Volatilities: \(candidate.similarities.map { $0.similarity })")
+//        }
+        
     }
 }
 
-struct StockHistoryExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = StockEvents.StockHistory
+
+//MARK: -- BACKUP
+
+/*
+//
+//  FindTheToneExpedition.swift
+//  * stoic
+//
+//  Created by Ritesh Pakala on 12/25/20.
+//
+import Foundation
+import GraniteUI
+import Combine
+
+struct FindTheToneExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = TonalCreateEvents.Find
     typealias ExpeditionState = TonalCreateState
     
     func reduce(
@@ -53,135 +116,105 @@ struct StockHistoryExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let stocks = event.data.first?.asStocks(interval: event.interval) else {
-            return
-        }
+        let securities = event.quote.securities
+        let days: Int = 7
+        //
         
-        save(data: stocks) { quote in
-            if let object = quote {
-                connection.request(TonalCreateEvents.Find(object))
-            }
-        }
-    }
-    
-    func save(data: [Security], completion: @escaping ((QuoteObject?) -> Void)) {
-        guard let referenceStock = data.first else { completion(nil); return }
-        let moc: NSManagedObjectContext
-        if Thread.isMainThread {
-            moc = coreData.main
-        } else {
-            moc = coreData.background
-        }
+        let orderedSecurities = Array(securities.sorted(by: { $0.date.compare($1.date) == .orderedDescending })).filter( { $0.date.compare("2016-01-29".asDate() ?? Date.today) == .orderedDescending } )
         
-        moc.perform {
+        let count = orderedSecurities.count
+        
+        print("{TEST} found \(count)")
+        
+        var volatilities: [Date:Double] = [:]
+        var volatilityCoeffecients: [Date:Double] = [:]
+        
+        for (index, security) in orderedSecurities.enumerated() {
+//            let nextStockIndex = min(index + 1, orderedSecurities.count - 1)
+//            let nextStock = orderedSecurities[nextStockIndex]
+//            let volatility = security.lastValue - nextStock.lastValue
+//            let coeffecient = volatility/nextStock.lastValue
+//
+//            volatilities[security.date] = volatility
+//            volatilityCoeffecients[security.date] = coeffecient
+//            let components = security.date.dateComponents()
+//            if components.year == 2016, components.month == 1 {
+//                print(sum)
+//                print(deviations)
+//                print(trailing)
+//            }
             
-            do {
-                let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
+            // Standard deviation calculation for yearly variance
+            //
+            let trailing = orderedSecurities.suffix(orderedSecurities.count - index).prefix(24)
+            let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
+            let mean = sum/Double(trailing.count)
+            
+            let deviations = trailing.map({ pow($0.lastValue - mean, 2) }).reduce(0.0, +)
+            let avgDeviation = deviations/Double(trailing.count - 1)
+            //            print(mean)
+            let standardDeviation = sqrt(avgDeviation)
+            volatilities[security.date] = standardDeviation
+            volatilityCoeffecients[security.date] = standardDeviation/mean
+        }
+        
+//        for security in orderedSecurities {
+//            print("date: \(security.date) // volatilities: \(volatilityCoeffecients[security.date])")
+//        }
+
+//
+//
+//        print("\(orderedSecurities.last?.date)")
+        let targetComparables = Array(orderedSecurities.prefix(days))
+        
+        let chunks = orderedSecurities.chunked(into: days)
+        let scrapeTop = Array(chunks.suffix(chunks.count - 1))
+
+        var candidates : [TonalRange] = []
+        var coeffecients: [[Double]] = []
+        var coeffecientAverages: [Double] = []
+        for chunk in scrapeTop {
+            guard chunk.count == days else { continue }
+            
+            
+            var similarities: [Double] = []
+            for i in 0..<chunk.count {
+                let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
+                let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
+                similarities.append(targetCoeffecient/chunkDayCoeffecient)
+            }
+            
+//            let sumOfSimilarities = similarities.map({ abs($0) }).reduce(0.0, +)
+//            let avgOfSimilarities = sumOfSimilarities/Double(similarities.count)
+            
+            if similarities.filter( { !($0 <= 1.2 && $0 >= 0.75) } ).isEmpty {
+                let dates: [Date] = chunk.map { $0.date }
                 
-                let quote: QuoteObject = quotes.first(where: { $0.exchangeName == referenceStock.exchangeName && $0.ticker == referenceStock.ticker && $0.securityType == referenceStock.securityType.rawValue && $0.intervalType == referenceStock.interval.rawValue }) ?? QuoteObject.init(context: moc)
+                let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
+                    TonalSimilarity.init(date: $0.element,
+                                         similarity: similarities[$0.offset]) }
                 
-                referenceStock.apply(to: quote)
-                
-                for stock in data {
-                    let object = SecurityObject.init(context: moc)
-                    stock.apply(to: object)
-                    quote.addToSecurities(object)
-                }
-                
-                try moc.save()
-                
-                print ("{CoreData} saved")
-                completion(quote)
-            } catch let error {
-                print ("{CoreData} \(error.localizedDescription)")
-                completion(nil)
+                let tIndicators: [TonalIndicators] = dates.map {
+                    TonalIndicators.init(date: $0,
+                                         volatility: volatilities[$0],
+                                         volatilityCoeffecient: volatilityCoeffecients[$0] ) }
+//                candidates.append(chunk)
+//                coeffecients.append(similarities)
+//                coeffecientAverages.append(avgOfSimilarities)
             }
         }
+        
+//        state.payload = .init(object: state.securityData)
+        
+        for (index, candidate) in candidates.enumerated() {
+            print("%%%%%%%%%%%%%%%%%%")
+            print("\(candidates.count) // \(coeffecients.count) // \(coeffecientAverages.count)")
+            print("Dates: \(candidate.first?.date)")
+            print("Volatilities: \(coeffecients[index])")
+            print("Average: \(coeffecientAverages[index])")
+        }
+        
     }
-    
-//    func save(data: [StockData]) {
-//        let moc: NSManagedObjectContext
-//        if Thread.isMainThread {
-//            moc = coreData.main
-//        } else {
-//            moc = coreData.background
-//        }
-//
-//        moc.perform {
-//            for stockData in data {
-//                guard
-//                    let archivedData = stockData.archived,
-//                    let date = stockData.dateData.asDate else { return }
-//
-//                let stock = stockData.asStock
-//
-//                let object = SecurityObject.init(context: moc)
-//                object.date = date
-//                object.data = archivedData
-//
-//                stock.apply(to: object)
-//            }
-//
-//            do {
-//                try moc.save()
-//                print ("{CoreData} saved")
-//            } catch let error {
-//                print ("{CoreData} \(error.localizedDescription)")
-//            }
-//        }
-//    }
 }
 
-//    func saveStockPredictions(
-//        _ prediction: StockModelObjectPayload,
-//        with context: CoreDataThread) -> String? {
-//
-//        let moc: NSManagedObjectContext
-//
-//        switch context {
-//        case .background:
-//            moc = coreData.background
-//        case .main:
-//            moc = coreData.main
-//        }
-//
-//        guard let preparedData = ServiceCenter.prepareData(from: prediction) else {
-//            return nil
-//        }
-//
-//        let uid: String = UUID.init().uuidString
-//        moc.perform {
-//            let mergedModels: [StockModelMergedObject]? = try? moc.fetch(StockModelMergedObject.request())
-//            let mergedModel = mergedModels?.first(where: { $0.stock.asSearchStock?.symbol == prediction.stock.symbol && $0.stock.asSearchStock?.exchangeName == prediction.stock.exchangeName })
-//            let merged = mergedModel ?? StockModelMergedObject.init(context: moc)
-//
-//            if mergedModel == nil {
-//                merged.stock = preparedData.stock
-//                merged.order = Int64(mergedModels?.count ?? 0)
-//                merged.timestamp = Date().timeIntervalSince1970
-//            }
-//
-//            let object = StockModelObject.init(context: moc)
-//            object.model = preparedData.modelData
-//            object.date = prediction.date.asDate?.timeIntervalSince1970 ?? 0.0
-//            object.predictionDays = Int64(prediction.predictionDays)
-//            object.sentimentStrength = Int64(prediction.sentimentStrength)
-//            object.ticker = prediction.stock.symbolName ?? ""
-//            object.exchange = prediction.stock.exchangeName ?? ""
-//            object.sentimentTradingData = preparedData.sentimentData
-//            object.historicalTradingData = preparedData.historicalData
-//            object.stock = preparedData.stock
-//            object.timestamp = Date().timeIntervalSince1970
-//            object.id = uid
-//
-//            merged.addToModels(object)
-//
-//            do {
-//                try moc.save()
-//            } catch let error {
-//                print ("{CoreData} \(error.localizedDescription)")
-//            }
-//        }
-//
-//        return uid
-//    }
+*/

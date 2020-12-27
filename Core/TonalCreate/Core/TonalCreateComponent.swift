@@ -19,10 +19,14 @@ public struct TonalCreateComponent: GraniteComponent {
     public func onCommit() {
         
     }
+    
     public var body: some View {
         VStack {
-            Button("$MSFT",
-                   action: sendEvent(TonalCreateEvents.Set("MSFT")))
-        }.frame(width: 300, height: 500, alignment: .center).onAppear(perform: sendEvent(TonalCreateEvents.Set("MSFT")))
+            if (state.stage == .set) {
+                TonalSetComponent().payload(state.payload).listen(to: command)
+            } else if (state.stage == .tune) {
+                
+            }
+        }.frame(width: 300, height: 500, alignment: .center).onAppear(perform: sendEvent(TonalCreateEvents.Find("MSFT")))
     }
 }
