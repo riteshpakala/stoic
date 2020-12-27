@@ -29,9 +29,5 @@ public class StockCenter: GraniteCenter<StockState> {
         ]
     }
     
-    public enum APIKeys {
-        case yahoo(url: String)
-    }
-    
 }
 

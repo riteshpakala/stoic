@@ -11,7 +11,14 @@ import SwiftUI
 import Combine
 
 public class TonalState: GraniteState {
+    let service: TonalService = .init()
 }
 
 public class TonalCenter: GraniteCenter<TonalState> {
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            GetSentimentExpedition.Discovery(),
+            TonalHistoryExpedition.Discovery(),
+        ]
+    }
 }

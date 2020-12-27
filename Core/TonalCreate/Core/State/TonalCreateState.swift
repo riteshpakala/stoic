@@ -22,9 +22,10 @@ public class TonalCreateState: GraniteState {
 }
 
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
+    let tonalRelay: TonalRelay = .init()
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            
             FindTheToneExpedition.Discovery(),
             StockHistoryExpedition.Discovery(),
             

@@ -28,8 +28,6 @@ public class StockService {
     public func yahooV8(matching ticker: String, from pastEpoch: String, to futureEpoch: String, interval: SecurityInterval) -> String {
         return "https://query1.finance.yahoo.com/v8/finance/chart/\(ticker)?period1=\(pastEpoch)&period2=\(futureEpoch)&region=US&lang=en-US&includePrePost=true&interval=\(interval.rawValue)&corsDomain=finance.yahoo.com&.tsrc=finance"
     }
-
-    
 }
 
 public struct StockServiceModels {

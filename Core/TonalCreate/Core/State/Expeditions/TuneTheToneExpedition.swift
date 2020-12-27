@@ -21,5 +21,8 @@ struct TuneTheToneExpedition: GraniteExpedition {
         
 //        state.stage = .tune
         print("{TEST} tuning")
+        
+        connection.request(TonalEvents.GetSentiment.init(range: event.range))
     }
 }
+
