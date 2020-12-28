@@ -13,13 +13,16 @@ import Combine
 public struct StockEvents {
     //MARK: -- Movers
     public struct GetMovers: GraniteEvent {}
+    
     public struct MoversData: GraniteEvent {
         let data: [StockServiceModels.Movers]
     }
+    
     public struct MoverStockQuotes: GraniteEvent {
         let movers: StockServiceModels.Movers
         let quotes: [StockServiceModels.Quotes]
     }
+    
     public struct GlobalCategoryResult: GraniteEvent {
         let losers: [Security]
         let gainers: [Security]
@@ -61,14 +64,21 @@ public struct StockEvents {
             self.interval = interval
         }
     }
-    public struct StockHistory: GraniteEvent {
+    
+    public struct History: GraniteEvent {
+        let data: [StockServiceModels.Stock]
+        let interval: SecurityInterval
+        
+        public var beam: Bool {
+            true
+        }
+    }
+    
+    public struct Interval: GraniteEvent {
         let data: [StockServiceModels.Stock]
         let interval: SecurityInterval
     }
-    public struct StockInterval: GraniteEvent {
-        let data: [StockServiceModels.Stock]
-        let interval: SecurityInterval
-    }
+    
     //MARK: -- Misc
     public struct StockTradingDay: GraniteEvent {
     }

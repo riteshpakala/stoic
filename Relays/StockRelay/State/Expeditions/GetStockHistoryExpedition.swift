@@ -30,7 +30,7 @@ struct GetStockHistoryExpedition: GraniteExpedition {
                              to: "\(Int(todaysDate.timeIntervalSince1970))",
                             interval: .day)
             .replaceError(with: [])
-            .map { StockEvents.StockHistory(data: $0, interval: .day) }
+            .map { StockEvents.History(data: $0, interval: .day) }
             .eraseToAnyPublisher()
     }
     

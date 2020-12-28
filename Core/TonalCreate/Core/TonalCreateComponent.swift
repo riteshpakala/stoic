@@ -22,11 +22,12 @@ public struct TonalCreateComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            if (state.stage == .set) {
-                TonalSetComponent().payload(state.payload).listen(to: command)
-            } else if (state.stage == .tune) {
-                
+            TonalSetComponent().payload(state.payload).listen(to: command)
+            
+            if (state.stage == .tune) {
+                TonalTuneComponent().payload(state.payload).listen(to: command)
             }
+            
         }.frame(width: 300, height: 500, alignment: .center).onAppear(perform: sendEvent(TonalCreateEvents.Find("MSFT")))
     }
 }

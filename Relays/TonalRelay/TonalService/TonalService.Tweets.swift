@@ -9,9 +9,9 @@ import Foundation
 import Combine
 
 extension TonalService {
-    public func getTweets(matching query: String, since pastDate: Date, until toDate: Date) -> AnyPublisher<[TonalServiceModels.Tweets], URLError> {
+    public func getTweets(matching query: String, since pastDate: Date, until toDate: Date, count: Int = 100) -> AnyPublisher<[TonalServiceModels.Tweets], URLError> {
         guard
-            let urlComponents = URLComponents(string: stoicV1(matching: query, since: pastDate.asString, until: toDate.asString))
+            let urlComponents = URLComponents(string: stoicV1(matching: query, since: pastDate.asString, until: toDate.asString, count: count))
             else { preconditionFailure("Can't create url components...") }
 
         guard
@@ -52,7 +52,7 @@ extension TonalService {
                     
                     guard let metaObject = meta else { return nil }
                     
-                    return [TonalServiceModels.Tweets.init(result: metaObject)]
+                    return [TonalServiceModels.Tweets.init(result: metaObject, query: query)]
                 
                 }.eraseToAnyPublisher()
     }
@@ -65,6 +65,7 @@ extension TonalServiceModels {
         }
         
         let result: [Meta]
+        let query: String
         
         public struct Prepare: Codable {
             let result: String

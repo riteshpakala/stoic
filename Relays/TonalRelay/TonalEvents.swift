@@ -20,6 +20,12 @@ struct TonalEvents {
         }
     }
     
+    public struct ProcessSentiment: GraniteEvent {
+        let sinceDate: Date
+        let untilDate: Date
+        let ticker: String
+    }
+    
     public struct TonalHistory: GraniteEvent {
         let data: [TonalServiceModels.Tweets]
         
@@ -27,5 +33,13 @@ struct TonalEvents {
         {
             self.data = data
         }
+    }
+    
+    public struct TonalSounds: GraniteEvent {
+        let sounds: [TonalSound]
+    }
+    
+    public struct History: GraniteEvent {
+        let sentiment: TonalSentiment
     }
 }

@@ -28,7 +28,8 @@ class StoicSentimentModel {
         return try! JSONDecoder().decode(Array<String>.self, from: Data(contentsOf: Bundle.main.url(forResource:"Classes", withExtension: "json")!))
     }()
     
-    func predict(_ utterance: String) -> SentimentOutput? {
+    func predict(_ utterance: String, matching: String) -> SentimentOutput? {
+        guard shouldInfer(utterance, matching: matching) else { return nil }
         guard let model = self.model else { return nil }
         
         let cleaned = cleanTweet(utterance)
@@ -125,6 +126,14 @@ class StoicSentimentModel {
         }
         
         return (prediction.output1, gru_data)
+    }
+    
+    func shouldInfer(_ text: String, matching: String) -> Bool {
+        let tickerThreshold: Bool = TonalUtilities.Social.getTickers(text).count < 3
+        let linkThreshold: Bool = TonalUtilities.Social.getLinks(text).isEmpty || text.count > 24
+        let queryExists: Bool = text.lowercased().contains(matching.lowercased())
+        
+        return true
     }
 }
 

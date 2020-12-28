@@ -44,6 +44,12 @@ public struct TonalRange {
     }
 }
 
+extension TonalRange {
+    var ticker: String {
+        objects.first?.ticker ?? "error-ticker"
+    }
+}
+
 public struct TonalSimilarity {
     let date: Date
     let similarity: Double

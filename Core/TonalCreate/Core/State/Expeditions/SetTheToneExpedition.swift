@@ -80,7 +80,7 @@ struct SetTheToneExpedition: GraniteExpedition {
             }
         }
         
-        state.payload = .init(object: candidates)
+        state.payload = .init(object: Tone.init(range: candidates))
         
 //        for (index, candidate) in candidates.enumerated() {
 //            print("%%%%%%%%%%%%%%%%%%")

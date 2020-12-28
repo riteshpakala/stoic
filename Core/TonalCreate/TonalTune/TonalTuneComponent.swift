@@ -17,6 +17,28 @@ public struct TonalTuneComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        VStack {}
+        VStack {
+            Brand.Colors.black.overlay(
+                VStack {
+                    if state.tone.sentiment == nil {
+                        Text("loading...").granite_innerShadow(
+                            Brand.Colors.white,
+                            radius: 3,
+                            offset: .init(x: 2, y: 2))
+                            .multilineTextAlignment(.center)
+                            .font(Fonts.live(.subheadline, .regular))
+                    } else {
+                        Text(state.tonalSentiment.stats).granite_innerShadow(
+                            Brand.Colors.white,
+                            radius: 3,
+                            offset: .init(x: 2, y: 2))
+                            .multilineTextAlignment(.center)
+                            .font(Fonts.live(.subheadline, .regular))
+                    }
+                }
+            )
+            .frame(width: 120, height: 75, alignment: .center)
+            .cornerRadius(8)
+        }
     }
 }

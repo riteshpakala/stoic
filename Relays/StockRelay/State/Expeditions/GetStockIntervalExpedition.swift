@@ -40,7 +40,7 @@ struct GetStockIntervalExpedition: GraniteExpedition {
                     print("{TEST} \(volume.compactMap({ $0 }).min())")
                 }
                 
-                return StockEvents.StockInterval(data: $0, interval: event.interval) }
+                return StockEvents.Interval(data: $0, interval: event.interval) }
             .eraseToAnyPublisher()
     }
 }

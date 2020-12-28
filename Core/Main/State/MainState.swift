@@ -16,4 +16,5 @@ public class MainState: GraniteState {
 public class MainCenter: GraniteCenter<MainState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
+    let tonalRelay: TonalRelay = .init()
 }

@@ -10,7 +10,7 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-public enum TonalStage {
+public enum TonalCreateStage {
     case none
     case find
     case set
@@ -18,12 +18,14 @@ public enum TonalStage {
 }
 
 public class TonalCreateState: GraniteState {
-    var stage: TonalStage = .none
+    var stage: TonalCreateStage = .none
+    
+    var tone: Tone {
+        payload?.object as? Tone ?? .init()
+    }
 }
 
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
-    let tonalRelay: TonalRelay = .init()
-    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             FindTheToneExpedition.Discovery(),
@@ -32,6 +34,7 @@ public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
             SetTheToneExpedition.Discovery(),
             
             TuneTheToneExpedition.Discovery(),
+            TonalSentimentHistoryExpedition.Discovery()
         ]
     }
 }

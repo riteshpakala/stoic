@@ -11,8 +11,12 @@ import SwiftUI
 import Combine
 
 public class TonalSetState: GraniteState {
+    var tone: Tone {
+        payload?.object as? Tone ?? .init()
+    }
+    
     var tonalRangeData: [TonalRange] {
-        payload?.object as? [TonalRange] ?? []
+        tone.range ?? []
     }
     
     var chunkedRangeDate: [[TonalRange]] {

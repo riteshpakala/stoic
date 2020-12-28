@@ -19,10 +19,27 @@ struct TuneTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-//        state.stage = .tune
+        state.stage = .tune
         print("{TEST} tuning")
         
-        connection.request(TonalEvents.GetSentiment.init(range: event.range))
+        state.payload = .init(object: Tone.init(range: state.tone.range, selectedRange: event.range))
+        
+        connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
     }
 }
 
+struct TonalSentimentHistoryExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = TonalEvents.History
+    typealias ExpeditionState = TonalCreateState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        print(event.sentiment.stats)
+        
+        state.payload = .init(object: Tone.init(range: state.tone.range, sentiment: event.sentiment, selectedRange: state.tone.selectedRange))
+    }
+}

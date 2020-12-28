@@ -10,15 +10,26 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+public enum TonalStage {
+    case none
+    case searching
+    case predicting
+    case compiling
+}
+
 public class TonalState: GraniteState {
+    let modelThreads: Int = 6
     let service: TonalService = .init()
+    var stage: TonalStage = .none
 }
 
 public class TonalCenter: GraniteCenter<TonalState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetSentimentExpedition.Discovery(),
+            ProcessSentimentExpedition.Discovery(),
             TonalHistoryExpedition.Discovery(),
+            TonalSoundsExpedition.Discovery()
         ]
     }
 }

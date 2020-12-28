@@ -11,6 +11,13 @@ import SwiftUI
 import Combine
 
 public class TonalTuneState: GraniteState {
+    var tone: Tone {
+        payload?.object as? Tone ?? .init()
+    }
+    
+    var tonalSentiment: TonalSentiment {
+        tone.sentiment ?? .empty
+    }
 }
 
 public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
