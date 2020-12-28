@@ -29,8 +29,8 @@ public struct AssetSectionComponent: GraniteComponent {
                 .padding(.leading, 12)
             
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                AssetGridComponent().payload(.init(object: state.securityData))
-                AssetGridComponent().payload(.init(object: state.securityData))
+                AssetGridComponent().payload(state.payload)
+                AssetGridComponent().payload(state.payload)
             }
         }.background(Color.black)
     }

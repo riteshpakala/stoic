@@ -23,5 +23,9 @@ struct CryptoEvents {
             self.gainers = gainers
             self.losers = losers
         }
+        
+        var beam: Bool {
+            true
+        }
     }
 }

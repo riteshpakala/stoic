@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension TonalServiceModels {
     struct TonalSounds {
@@ -32,7 +33,7 @@ extension TonalServiceModels {
 
 extension TonalServiceModels.TonalSounds {
     var dateParams: (sinceDate: Date, untilDate: Date) {
-        guard let sinceDate = range?.dates.last?.advanceDate(value: -1),
+        guard let sinceDate = range?.dates.last?.advanceDate(value: -2),
               let untilDate = range?.dates.first?.advanceDate(value: 1) else { return (Date.today, Date.today) }
         
         return (sinceDate, untilDate)

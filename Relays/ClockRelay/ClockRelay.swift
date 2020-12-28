@@ -45,6 +45,8 @@ public struct ClockRelay: GraniteRelay {
             command.subject.send(event)
         }
         
+        //TODO: should be continous, this is just
+        //for testing
         gameClock.cancellable?.cancel()
         state.effectCancellables.forEach { $0.cancel() }
     }

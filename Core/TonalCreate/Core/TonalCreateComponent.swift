@@ -14,10 +14,13 @@ public struct TonalCreateComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<TonalCreateCenter, TonalCreateState> = .init()
     
-    public init() {}
     
-    public func onCommit() {
+    public init() {
         
+    }
+    
+    var tonalCenter: TonalCenter? {
+        relay(TonalRelay.self)?.mirrorMe(TonalCenter.self)
     }
     
     public var body: some View {
@@ -25,8 +28,15 @@ public struct TonalCreateComponent: GraniteComponent {
             TonalSetComponent().payload(state.payload).listen(to: command)
             
             if (state.stage == .tune) {
+                Text("\(state.sentimentLoadingProgress)")
                 TonalTuneComponent().payload(state.payload).listen(to: command)
             }
+            
+//            GraniteLink(
+//                relay(TonalRelay.self),
+//                \TonalCenter.progress,
+//                target: _state.sentimentLoadingProgress)
+            
             
         }.frame(width: 300, height: 500, alignment: .center).onAppear(perform: sendEvent(TonalCreateEvents.Find("MSFT")))
     }

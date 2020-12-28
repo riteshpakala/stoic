@@ -20,6 +20,8 @@ public enum TonalCreateStage {
 public class TonalCreateState: GraniteState {
     var stage: TonalCreateStage = .none
     
+    var sentimentLoadingProgress: Double = 0.0
+    
     var tone: Tone {
         payload?.object as? Tone ?? .init()
     }

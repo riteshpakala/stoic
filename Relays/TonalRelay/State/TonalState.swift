@@ -19,11 +19,24 @@ public enum TonalStage {
 
 public class TonalState: GraniteState {
     let modelThreads: Int = 6
+    let dataChunks: Int = 3
     let service: TonalService = .init()
     var stage: TonalStage = .none
+    var sentimentProgress: Double {
+        service
+        .soundAggregate
+        .progress(
+            threads: modelThreads,
+            dateChunks: dataChunks)
+    }
 }
 
 public class TonalCenter: GraniteCenter<TonalState> {
+    
+    public var progress: Double {
+        state.sentimentProgress
+    }
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetSentimentExpedition.Discovery(),

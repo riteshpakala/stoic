@@ -23,8 +23,8 @@ struct GetSentimentExpedition: GraniteExpedition {
         
         state.stage = .searching
         
-        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: 3)
-         
+        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: state.dataChunks)
+        
         for chunk in chunks {
             let sorted = chunk.sorted(by: { $0.compare($1) == .orderedDescending })
 
@@ -54,6 +54,8 @@ struct ProcessSentimentExpedition: GraniteExpedition {
         
         let days = abs(event.untilDate.timeIntervalSince(event.sinceDate).date().dateComponents().day)
         
+            print(event.sinceDate)
+            print(event.untilDate)
         publisher = state
             .service
             .getTweets(matching: event.ticker, since: event.sinceDate, until: event.untilDate, count: days*360)
@@ -98,7 +100,7 @@ struct TonalHistoryExpedition: GraniteExpedition {
                                             content: result.content,
                                             sentiment: prediction))
                         
-                        print("{TEST} updated thread \(index + 1)")
+//                        print("{TEST} updated thread \(index + 1)")
                     }
                 }
 
@@ -129,8 +131,8 @@ struct TonalSoundsExpedition: GraniteExpedition {
         
         state.service.soundAggregate.sounds.append(event.sounds)
         
-        print("Sentiment prediction progress: \(state.service.soundAggregate.progress(threads: state.modelThreads, dateChunks: 3))")
-        if state.service.soundAggregate.progress(threads: state.modelThreads, dateChunks: 3) >= 1.0 && state.stage != .compiling {
+        print("Sentiment prediction progress: \(state.sentimentProgress)")
+        if state.sentimentProgress >= 1.0 && state.stage != .compiling {
             print("compiling")
             let compiled = state.service.soundAggregate.compiled
             state.service.reset()

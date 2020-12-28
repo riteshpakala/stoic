@@ -19,7 +19,8 @@ struct MoversCryptoExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        print("{TEST} heard")
         state.securityData = event.topVolume
-//        state.payload = .init(object: state.securityData)
+        state.payload = .init(object: state.securityData)
     }
 }
