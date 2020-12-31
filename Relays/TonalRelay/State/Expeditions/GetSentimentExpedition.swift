@@ -58,7 +58,7 @@ struct ProcessSentimentExpedition: GraniteExpedition {
             print(event.untilDate)
         publisher = state
             .service
-            .getTweets(matching: event.ticker, since: event.sinceDate, until: event.untilDate, count: days*360)
+            .getTweets(matching: event.ticker, since: event.sinceDate, until: event.untilDate, count: days*state.dataScale)
             .replaceError(with: [])
             .map { TonalEvents.TonalHistory(data: $0) }
             .eraseToAnyPublisher()
@@ -88,8 +88,8 @@ struct TonalHistoryExpedition: GraniteExpedition {
         
         for (index, chunk) in chunks.enumerated() {
             //Threaded inference
-            let query = tweet.query
             thread.async {
+                let query = tweet.query
                 let model: StoicSentimentModel = .init()
                 var sounds: [TonalSound] = []
                 for result in chunk {

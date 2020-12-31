@@ -32,11 +32,6 @@ public struct TonalCreateComponent: GraniteComponent {
                 TonalTuneComponent().payload(state.payload).listen(to: command)
             }
             
-//            GraniteLink(
-//                relay(TonalRelay.self),
-//                \TonalState.sentimentProgress,
-//                target: _state.sentimentLoadingProgress)
-            
             
         }.frame(width: 300, height: 500, alignment: .center).onAppear(perform: sendEvent(TonalCreateEvents.Find("MSFT")))
     }

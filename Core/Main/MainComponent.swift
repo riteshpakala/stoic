@@ -16,10 +16,17 @@ public struct MainComponent: GraniteComponent {
     
     public init() {}
     
+    
     public var body: some View {
 //        AssetSectionComponent(state: .init(title: "Top Volume"))
 //            .shareRelay(relay(CryptoRelay.self))
         
-        TonalCreateComponent().shareRelays(relays([CryptoRelay.self, StockRelay.self, TonalRelay.self]))
+//        TonalCreateComponent().shareRelays(relays([CryptoRelay.self, StockRelay.self, TonalRelay.self]))
+        
+        VStack {
+            
+            ExperienceComponent()
+        }
+        
     }
 }

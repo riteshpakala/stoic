@@ -18,8 +18,9 @@ public enum TonalStage {
 }
 
 public class TonalState: GraniteState {
-    let modelThreads: Int = 1
+    let modelThreads: Int = 6
     let dataChunks: Int = 3
+    let dataScale: Int = 360
     let service: TonalService = .init()
     var stage: TonalStage = .none
     var sentimentProgress: Double {
