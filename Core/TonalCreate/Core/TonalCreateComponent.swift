@@ -14,13 +14,13 @@ public struct TonalCreateComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<TonalCreateCenter, TonalCreateState> = .init()
     
-    
     public init() {
         
     }
     
-    var tonalCenter: TonalCenter? {
-        relay(TonalRelay.self)?.mirrorMe(TonalCenter.self)
+    public func link() {
+        command.link(\TonalState.sentimentProgress,
+                     target:\.sentimentLoadingProgress)
     }
     
     public var body: some View {
@@ -34,7 +34,7 @@ public struct TonalCreateComponent: GraniteComponent {
             
 //            GraniteLink(
 //                relay(TonalRelay.self),
-//                \TonalCenter.progress,
+//                \TonalState.sentimentProgress,
 //                target: _state.sentimentLoadingProgress)
             
             
