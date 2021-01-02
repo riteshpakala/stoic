@@ -18,7 +18,18 @@ struct MoversStockExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        state.securityData = event.losers
-//        state.payload = .init(object: state.securityData)
+        switch state.windowType {
+        case .topVolume:
+            state.securityData = event.topVolume
+            state.payload = .init(object: state.securityData)
+        case .winners:
+            state.securityData = event.gainers
+        case .losers:
+            state.securityData = event.losers
+        default:
+            state.securityData = []
+        }
+        
+        state.payload = .init(object: state.securityData)
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 extension StockService {
-    public func getMovers(count: Int = 5) -> AnyPublisher<[StockServiceModels.Movers], URLError> {
+    public func getMovers(count: Int = 12) -> AnyPublisher<[StockServiceModels.Movers], URLError> {
         guard
             var urlComponents = URLComponents(string: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers")
             else { preconditionFailure("Can't create url components...") }

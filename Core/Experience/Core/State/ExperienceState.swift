@@ -10,6 +10,10 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+#if os(iOS)
+import UIKit
+#endif
+
 public class ExperienceState: GraniteState {
     var isDesktop: Bool {
         #if os(macOS)
@@ -19,14 +23,44 @@ public class ExperienceState: GraniteState {
         #endif
     }
     
+    var isIPad: Bool {
+        #if os(iOS)
+        return UIDevice.current.userInterfaceIdiom == .pad
+        #else
+        return false
+        #endif
+    }
+    
+    var isIPhone: Bool {
+        #if os(iOS)
+        return UIDevice.current.userInterfaceIdiom == .phone
+        #else
+        return false
+        #endif
+    }
+    
     var maxWindows: CGSize {
-        isDesktop ? .init(4, 3) : .init(3, 4)//iPad can have 3, although mobile should be 1 width, mobile should also be scrollable the rest fixed
+        isDesktop ? .init(3, 3) : .init(3, 4)//iPad can have 3, although mobile should be 1 width, mobile should also be scrollable the rest fixed
     }
     
     var activeWindows: [[WindowConfig]] = []
+    
+    let config: ExperienceConfig
+    
+    public init(_ config: ExperienceConfig) {
+        self.config = config
+    }
+    
+    required init() {
+        self.config = .none
+    }
 }
 
 public class ExperienceCenter: GraniteCenter<ExperienceState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    let tonalRelay: TonalRelay = .init()
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             BootExpedition.Discovery(),
@@ -36,7 +70,7 @@ public class ExperienceCenter: GraniteCenter<ExperienceState> {
     public var environmentMinSize: CGSize {
         return .init(
             CGFloat(state.activeWindows.count == 0 ?
-                        Int(EnvironmentStyle.minWidth) :
+                        Int(ExperienceStyle.minWidth) :
                         state.activeWindows[0].count)*WindowStyle.minWidth,
             CGFloat(state.activeWindows.count)*WindowStyle.minHeight)
     }
@@ -44,7 +78,7 @@ public class ExperienceCenter: GraniteCenter<ExperienceState> {
     public var environmentMaxSize: CGSize {
         return .init(
             CGFloat(state.activeWindows.count == 0 ?
-                        Int(EnvironmentStyle.minWidth) :
+                        Int(ExperienceStyle.minWidth) :
                         state.activeWindows[0].count)*WindowStyle.maxWidth,
             CGFloat(state.activeWindows.count)*WindowStyle.maxHeight)
     }

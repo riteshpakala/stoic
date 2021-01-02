@@ -16,34 +16,29 @@ public struct ExperienceComponent: GraniteComponent {
     
     public init() {}
     
-    
     var layout: [GridItem] {
         .init(repeating: GridItem(.flexible()), count: Int(state.maxWindows.width))
     }
     
     public var body: some View {
+        
         VStack {
-            
-                //Max Windows Height
+            //Max Windows Height
             LazyVGrid(columns: layout, spacing: Brand.Padding.small) {
-                    ForEach(state.activeWindows, id: \.self) { row in
-                        ForEach(row, id: \.self) { config in
-                            
-                            window(config).id(UUID()).onTapGesture(perform: {
-                                print(config.detail)
-                            })
-                            
-                        }
+                ForEach(state.activeWindows, id: \.self) { row in
+                    ForEach(row, id: \.self) { config in
+                        window(config).id(UUID()).onTapGesture(perform: {
+                            print(config.detail)
+                        })
                     }
                 }
+            }
             
-            
-        }
-        .frame(minWidth: command.center.environmentMinSize.width,
-               maxWidth: .infinity,
-               minHeight: command.center.environmentMinSize.height,
-               maxHeight: .infinity,
-               alignment: .center)
+        }.frame(minWidth: command.center.environmentMinSize.width,
+                maxWidth: .infinity,
+                minHeight: command.center.environmentMinSize.height,
+                maxHeight: .infinity,
+                alignment: .center)
         .onAppear(perform: sendEvent(ExperienceEvents.Boot()))
     }
 }
@@ -51,6 +46,8 @@ public struct ExperienceComponent: GraniteComponent {
 extension ExperienceComponent {
     func window(_ config: WindowConfig) -> some View {
         return WindowComponent(state: .init(config))
-            .background(config.index.x % 2 == 0 ? Color.yellow : Color.green)
+            .shareRelays(relays([CryptoRelay.self, StockRelay.self, TonalRelay.self]))
+            .background(Brand.Colors.black)
     }
 }
+

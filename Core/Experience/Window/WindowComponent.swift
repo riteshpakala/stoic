@@ -18,7 +18,22 @@ public struct WindowComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            Text("Window")
+            
+            switch state.config.kind {
+            case .topVolume(let securityType),
+                 .winners(let securityType),
+                 .losers(let securityType):
+                AssetSectionComponent(
+                    state: .init(windowType: state.config.kind,
+                                 securityType))
+                    .shareRelays(relays([CryptoRelay.self, StockRelay.self]))
+            case .portfolio:
+                PortfolioComponent()
+            default:
+                EmptyView.init()
+            }
+            
+                        
         }.frame(
             idealWidth: state.config.style.idealWidth,
             maxWidth: .infinity,

@@ -20,7 +20,18 @@ struct MoversCryptoExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         print("{TEST} heard")
-        state.securityData = event.topVolume
+        switch state.windowType {
+        case .topVolume:
+            state.securityData = event.topVolume
+            state.payload = .init(object: state.securityData)
+        case .winners:
+            state.securityData = event.gainers
+        case .losers:
+            state.securityData = event.losers
+        default:
+            state.securityData = []
+        }
+        
         state.payload = .init(object: state.securityData)
     }
 }

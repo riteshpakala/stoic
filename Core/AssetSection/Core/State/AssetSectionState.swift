@@ -12,23 +12,34 @@ import Combine
 
 public class AssetSectionState: GraniteState {
     var securityData: [Security] = []
-    var title: String
+    var securityType: SecurityType
+    var windowType: WindowType
     
-    public init(title: String) {
-        self.title = title
+    public init(windowType: WindowType, _ securityType: SecurityType) {
+        self.windowType = windowType
+        self.securityType = securityType
         super.init()
     }
     
     required init() {
-        self.title = ""
+        self.windowType = .unassigned
+        self.securityType = .unassigned
     }
 }
 
 public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
+    
+    private var moverExpeditions: GraniteBaseExpedition {
+        if state.securityType == .stock {
+            return MoversStockExpedition.Discovery()
+        } else {
+            return MoversCryptoExpedition.Discovery()
+        }
+    }
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            MoversCryptoExpedition.Discovery(),
-            MoversStockExpedition.Discovery()
+            moverExpeditions
         ]
     }
 }

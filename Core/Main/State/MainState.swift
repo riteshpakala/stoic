@@ -11,10 +11,9 @@ import SwiftUI
 import Combine
 
 public class MainState: GraniteState {
+    
+    var folder: String?
 }
 
 public class MainCenter: GraniteCenter<MainState> {
-    let stockRelay: StockRelay = .init()
-    let cryptoRelay: CryptoRelay = .init()
-    let tonalRelay: TonalRelay = .init()
 }

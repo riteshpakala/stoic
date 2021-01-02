@@ -8,8 +8,9 @@
 import Foundation
 
 public enum SecurityType: Int64 {
-    case cryptoCurrency
+    case crypto
     case stock
+    case unassigned
 }
 
 public enum SecurityInterval: String {

@@ -49,26 +49,29 @@ public struct WindowConfig: Hashable, Identifiable {
     }
 }
 
-public enum WindowType {
+public enum WindowType: Hashable {
     case modelCreation
     case savedModels
     case publicModels
     case favorites
     case recents
-    case topVolume
-    case winnersAndLosers
+    case topVolume(SecurityType)
+    case winners(SecurityType)
+    case losers(SecurityType)
     case securityDetail
     case header
     case search
     case cta
     case modelCarousel
     case portfolio
+    case holdings
     case special
     case unassigned
     
     var max: Int {
         switch self {
-        case .winnersAndLosers,
+        case .winners,
+             .losers,
              .topVolume,
              .recents,
              .publicModels,
@@ -78,6 +81,19 @@ public enum WindowType {
             return 10000
         default:
             return 1
+        }
+    }
+    
+    var label: String {
+        switch self {
+        case .topVolume(let securityType) :
+            return "Top Volume // \("\(securityType)".capitalized)"
+        case .winners(let securityType) :
+            return "Winners // \("\(securityType)".capitalized)"
+        case .losers(let securityType) :
+            return "Losers // \("\(securityType)".capitalized)"
+        default:
+            return ""
         }
     }
 }

@@ -19,7 +19,7 @@ public struct AssetSectionComponent: GraniteComponent {
     public var body: some View {
         VStack(alignment: .leading, spacing: Brand.Padding.xSmall) {
             Spacer().frame(height: Brand.Padding.large)
-            Text(state.title)
+            Text(state.windowType.label)
                 .granite_innerShadow(
                 Brand.Colors.white,
                 radius: 4,
@@ -29,7 +29,6 @@ public struct AssetSectionComponent: GraniteComponent {
                 .padding(.leading, 12)
             
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                AssetGridComponent().payload(state.payload)
                 AssetGridComponent().payload(state.payload)
             }
         }.background(Color.black)

@@ -26,7 +26,7 @@ extension CryptoCurrency {
     }
     
     public var securityType: SecurityType {
-        .cryptoCurrency
+        .crypto
     }
     
     public var lastValue: Double {

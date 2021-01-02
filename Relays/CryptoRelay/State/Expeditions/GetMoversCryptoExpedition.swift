@@ -40,7 +40,7 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
 
                 let summariesVolume = summariesSortedByVolume.prefix(state.max)
                 let summariesGainers = summariesSortedByChange.prefix(state.max)
-                let summariesLosers = summariesSortedByChange.suffix(state.max)
+                let summariesLosers = summariesSortedByChange.suffix(state.max).sorted(by: { $0.value.price.change.percentage < $1.value.price.change.percentage })
                 
                 let topVolume: [CryptoCurrency] = summariesVolume.map {
                     cryptoCurrency(state.exchange, state.currency, $0.key, $0.value)

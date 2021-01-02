@@ -13,7 +13,7 @@ import Combine
 public class CryptoState: GraniteState {
     var currency: String = "usd"
     var exchange: String = "coinbase-pro"
-    var max: Int = 5
+    var max: Int = 12
 }
 
 public class CryptoCenter: GraniteCenter<CryptoState> {
