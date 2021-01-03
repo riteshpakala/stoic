@@ -19,12 +19,12 @@ struct FindTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        state.stage = .find
+//        state.stage = .find
         
         if let quote = getQuote()?.first(where: { $0.ticker == event.ticker && $0.intervalType == SecurityInterval.day.rawValue }) {
             connection.request(TonalCreateEvents.Set(quote))
         } else {
-            connection.request(StockEvents.GetStockHistory.init(ticker: event.ticker))
+            connection.request(StockEvents.GetStockHistory.init(ticker: event.ticker), beam: true)
         }
     }
     

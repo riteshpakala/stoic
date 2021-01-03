@@ -17,20 +17,33 @@ public struct TonalSetComponent: GraniteComponent {
     public init() {}
     
     let columns = [
-        GridItem(.flexible()),
+        GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),
     ]
     
     public var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: Brand.Padding.medium) {
-                ForEach(0..<state.chunkedRangeDate.count, id: \.self) { tonalChunkIndex in
+        VStack {
+            VStack {
+                HStack {
+                    Text("Select a range")
+                        .granite_innerShadow(
+                        Brand.Colors.white,
+                        radius: 3,
+                        offset: .init(x: 2, y: 2))
+                        .multilineTextAlignment(.leading)
+                        .font(Fonts.live(.subheadline, .regular))
                     
-                    HStack(spacing: Brand.Padding.medium) {
-                        ForEach(0..<state.chunkedRangeDate[tonalChunkIndex].count, id: \.self) { tonalRangeIndex in
+                    Spacer()
+                }.padding(.top, Brand.Padding.large).padding(.bottom, Brand.Padding.medium)
+            }.padding(.leading, Brand.Padding.large).padding(.trailing, Brand.Padding.large)
+            
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
+                    ForEach(0..<state.tonalRangeData.count, id: \.self) { tonalRangeIndex in
+                        
+                        VStack {
+                            Color.black.overlay(
                             
-                            Brand.Colors.black.overlay(
-                            
-                                Text(state.chunkedRangeDate[tonalChunkIndex][tonalRangeIndex].dateInfoShortDisplay)
+                                Text(state.tonalRangeData[tonalRangeIndex].dateInfoShortDisplay)
                                     .granite_innerShadow(
                                     Brand.Colors.white,
                                     radius: 3,
@@ -38,19 +51,28 @@ public struct TonalSetComponent: GraniteComponent {
                                     .multilineTextAlignment(.center)
                                     .font(Fonts.live(.subheadline, .regular))
                             )
-                            .frame(width: 120, height: 75, alignment: .center)
+                            .frame(maxWidth: .infinity, minHeight: 75, maxHeight: 120, alignment: .center)
                             .cornerRadius(8)
                             .onTapGesture(perform:
                                             sendEvent(TonalCreateEvents.Tune(
-                                                        state.chunkedRangeDate[tonalChunkIndex][tonalRangeIndex]),
+                                                        state.tonalRangeData[tonalRangeIndex]),
                                                       contact: true))
-                           
                             
+                            Text(state.tonalRangeData[tonalRangeIndex].avgSimilarityDisplay)
+                                .granite_innerShadow(
+                                state.tonalRangeData[tonalRangeIndex].avgSimilarityColor,
+                                radius: 3,
+                                offset: .init(x: 2, y: 2))
+                                .multilineTextAlignment(.center)
+                                .font(Fonts.live(.subheadline, .regular))
                         }
+                        .padding(.leading, Brand.Padding.medium)
+                        .padding(.trailing, Brand.Padding.medium)
+                        
                     }
-                    
                 }
-            }
-        }
+            }.padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }

@@ -19,7 +19,7 @@ struct TuneTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        state.stage = .tune
+//        state.stage = .tune
         print("{TEST} tuning")
         
         state.payload = .init(object: Tone.init(range: state.tone.range, selectedRange: event.range))

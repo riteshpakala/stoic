@@ -50,22 +50,33 @@ public struct WindowConfig: Hashable, Identifiable {
 }
 
 public enum WindowType: Hashable {
-    case modelCreation
     case savedModels
     case publicModels
+    
     case favorites
     case recents
+    
     case topVolume(SecurityType)
     case winners(SecurityType)
     case losers(SecurityType)
+    
     case securityDetail
+    
     case header
     case search
+    
     case cta
+    
     case modelCarousel
+    
     case portfolio
     case holdings
+    
     case special
+    
+    case modelCreate(TonalCreateStage)
+    
+    case securityPredictor
     case unassigned
     
     var max: Int {

@@ -18,7 +18,7 @@ struct SetTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        state.stage = .set
+//        state.stage = .set
         
         let securities = event.quote.securities
         let days: Int = 7

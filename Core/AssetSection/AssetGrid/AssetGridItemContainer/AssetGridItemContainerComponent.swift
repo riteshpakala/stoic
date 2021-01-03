@@ -67,7 +67,11 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                 
                 VStack(alignment: .leading, spacing: 0.0) {
                     ForEach(0..<state.securityData.count, id: \.self) { index in
-                        AssetGridItemComponent().payload(.init(object: state.securityData[index]))
+                        AssetGridItemComponent().payload(.init(object: state.securityData[index])).onTapGesture(
+                            perform: sendEvent(
+                                AssetGridItemContainerEvents
+                                    .SecurityTapped(
+                                        state.securityData[index]), contact: true))
                     }
                 }.padding(.leading, Brand.Padding.large)
             }

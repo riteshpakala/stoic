@@ -18,25 +18,45 @@ public enum TonalCreateStage {
 }
 
 public class TonalCreateState: GraniteState {
-    var stage: TonalCreateStage = .none
+    var stage: TonalCreateStage = .none {
+        didSet {
+            print("{TEST} \(stage)")
+        }
+    }
     
     var sentimentLoadingProgress: Double = 0.0
     
     var tone: Tone {
         payload?.object as? Tone ?? .init()
     }
+    
+    public init(_ stage: TonalCreateStage) {
+        self.stage = stage
+    }
+    
+    required init() {
+        self.stage = .none
+    }
 }
 
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
+    private var toneExpeditions: [GraniteBaseExpedition] {
+        switch state.stage {
+        case .find:
+            return [FindTheToneExpedition.Discovery(),
+                    StockHistoryExpedition.Discovery()]
+        case .set:
+            return [SetTheToneExpedition.Discovery()]
+        case .tune:
+            return [TuneTheToneExpedition.Discovery(),
+                    TonalSentimentHistoryExpedition.Discovery()]
+        default:
+            return []
+        }
+        
+    }
+    
     public override var expeditions: [GraniteBaseExpedition] {
-        [
-            FindTheToneExpedition.Discovery(),
-            StockHistoryExpedition.Discovery(),
-            
-            SetTheToneExpedition.Discovery(),
-            
-            TuneTheToneExpedition.Discovery(),
-            TonalSentimentHistoryExpedition.Discovery()
-        ]
+        toneExpeditions
     }
 }

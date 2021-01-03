@@ -14,4 +14,10 @@ struct AssetGridItemContainerEvents {
     public struct UpdateSecurities: GraniteEvent {
         
     }
+    public struct SecurityTapped: GraniteEvent {
+        public let security: Security
+        public init(_ security: Security) {
+            self.security = security
+        }
+    }
 }

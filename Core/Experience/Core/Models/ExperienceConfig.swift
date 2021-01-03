@@ -33,6 +33,12 @@ public struct ExperienceConfig {
                              [.favorites, .special, .special],
                              [.holdings, .special, .special]
                         ])
+            case .modelCreate:
+                return .init(windows: [
+                             [.modelCreate(.find), .modelCreate(.tune), .securityPredictor],
+                             [.unassigned, .unassigned, .unassigned],
+                             [.modelCreate(.set), .unassigned, .unassigned]
+                        ])
             default:
                 return .init(windows: [])
             }

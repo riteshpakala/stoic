@@ -35,7 +35,7 @@ public struct MainComponent: GraniteComponent {
         } else {
             HStack {
                 ControlBar(isIPhone: false, selectedFolder: _state.folder)
-                ExperienceComponent(state: .init(.init(kind: .portfolio)))
+                ExperienceComponent(state: .init(.init(kind: .modelCreate)))
             }
         }
         

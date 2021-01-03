@@ -21,7 +21,6 @@ struct MoversStockExpedition: GraniteExpedition {
         switch state.windowType {
         case .topVolume:
             state.securityData = event.topVolume
-            state.payload = .init(object: state.securityData)
         case .winners:
             state.securityData = event.gainers
         case .losers:

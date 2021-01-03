@@ -14,8 +14,6 @@ extension StockService {
             var urlComponents = URLComponents(string: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes")
             else { preconditionFailure("Can't create url components...") }
         
-        
-        
         let regionQuery: URLQueryItem = .init(name: "region", value: "US")
         let symbolsQuery: URLQueryItem = .init(name: "symbols", value: symbols)
         

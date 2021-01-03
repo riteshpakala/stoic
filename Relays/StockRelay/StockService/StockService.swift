@@ -17,6 +17,11 @@ public class StockService {
         self.decoder = decoder
     }
     
+    public enum Exchanges: String {
+        case nasdaq
+        case nyse
+    }
+    
     public func yahooV7(matching ticker: String, from pastEpoch: String, to futureEpoch: String) -> String {
         return "https://query1.finance.yahoo.com/v7/finance/download/\(ticker)?period1=\(pastEpoch)&period2=\(futureEpoch)&interval=1h&events=history"
     }
@@ -27,6 +32,10 @@ public class StockService {
     
     public func yahooV8(matching ticker: String, from pastEpoch: String, to futureEpoch: String, interval: SecurityInterval) -> String {
         return "https://query1.finance.yahoo.com/v8/finance/chart/\(ticker)?period1=\(pastEpoch)&period2=\(futureEpoch)&region=US&lang=en-US&includePrePost=true&interval=\(interval.rawValue)&corsDomain=finance.yahoo.com&.tsrc=finance"
+    }
+    
+    public func cnbcSearch(matching ticker: String) -> String {
+        return "https://symlookup.cnbc.com/symservice/symlookup.do?prefix=\(ticker)&partnerid=20064&pgok=1&pgsize=50"
     }
 }
 

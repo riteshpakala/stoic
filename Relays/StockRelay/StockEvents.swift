@@ -11,6 +11,25 @@ import SwiftUI
 import Combine
 
 public struct StockEvents {
+    public struct Search: GraniteEvent {
+        let query: String
+        public init(_ query: String) {
+            self.query = query
+        }
+    }
+    
+    public struct SearchDataResult: GraniteEvent {
+        let data: [StockServiceModels.Search]
+    }
+    
+    public struct SearchQuoteResults: GraniteEvent {
+        let quotes: [StockServiceModels.Quotes]
+    }
+    
+    public struct SearchResult: GraniteEvent {
+        let result: [Security]
+    }
+    
     //MARK: -- Movers
     public struct GetMovers: GraniteEvent {}
     

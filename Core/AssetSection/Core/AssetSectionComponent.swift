@@ -29,7 +29,9 @@ public struct AssetSectionComponent: GraniteComponent {
                 .padding(.leading, 12)
             
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                AssetGridComponent().payload(state.payload)
+                AssetGridComponent()
+                    .listen(to: command)
+                    .payload(state.payload)
             }
         }.background(Color.black)
     }

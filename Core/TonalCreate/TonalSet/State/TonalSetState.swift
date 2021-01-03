@@ -18,10 +18,6 @@ public class TonalSetState: GraniteState {
     var tonalRangeData: [TonalRange] {
         tone.range ?? []
     }
-    
-    var chunkedRangeDate: [[TonalRange]] {
-        tonalRangeData.chunked(into: 2)
-    }
 }
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {

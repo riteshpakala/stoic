@@ -25,14 +25,23 @@ public struct TonalCreateComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            TonalSetComponent().payload(state.payload).listen(to: command)
-            
-            if (state.stage == .tune) {
-                Text("\(state.sentimentLoadingProgress)")
+            switch state.stage {
+            case .find:
+                TonalFindComponent().shareRelays(relays([StockRelay.self, CryptoRelay.self])).listen(to: command)
+            case .set:
+                TonalSetComponent().payload(state.payload).listen(to: command)
+            case .tune:
                 TonalTuneComponent().payload(state.payload).listen(to: command)
+            default:
+                EmptyView.init()
             }
             
+//            if (state.stage == .tune) {
+//                Text("\(state.sentimentLoadingProgress)")
+//                TonalTuneComponent().payload(state.payload).listen(to: command)
+//            }
             
-        }.frame(width: 300, height: 500, alignment: .center).onAppear(perform: sendEvent(TonalCreateEvents.Find("MSFT")))
+            
+        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }

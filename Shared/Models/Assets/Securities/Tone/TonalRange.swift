@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public struct TonalRange {
     let objects: [SecurityObject]
@@ -41,6 +42,18 @@ public struct TonalRange {
     
     var dateInfoShortDisplay: String {
         return "\((dates.first ?? Date.today).asString)\n-\n\((dates.last ?? Date.today).asString)"
+    }
+    
+    var avgSimilarity: Double {
+        return similarities.map({ $0.similarity }).reduce(0, +)/similarities.count.asDouble
+    }
+    
+    var avgSimilarityDisplay: String {
+        return "\((avgSimilarity*100).asInt)% Similar"
+    }
+    
+    var avgSimilarityColor: Color {
+        avgSimilarity > 0.6 ? Brand.Colors.green : (avgSimilarity > 0.4 ? Brand.Colors.yellow : Brand.Colors.red)
     }
 }
 

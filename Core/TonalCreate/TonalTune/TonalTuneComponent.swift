@@ -28,7 +28,8 @@ public struct TonalTuneComponent: GraniteComponent {
                             .multilineTextAlignment(.center)
                             .font(Fonts.live(.subheadline, .regular))
                     } else {
-                        Text(state.tonalSentiment.stats).granite_innerShadow(
+                        Text(state.tonalSentiment.stats)
+                            .granite_innerShadow(
                             Brand.Colors.white,
                             radius: 3,
                             offset: .init(x: 2, y: 2))
@@ -39,6 +40,9 @@ public struct TonalTuneComponent: GraniteComponent {
             )
             .frame(width: 120, height: 75, alignment: .center)
             .cornerRadius(8)
-        }
+            
+            
+            SentimentSliderComponent()
+        }.padding(.leading, Brand.Padding.large).padding(.trailing, Brand.Padding.large)
     }
 }

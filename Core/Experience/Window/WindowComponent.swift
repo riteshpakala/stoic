@@ -18,7 +18,7 @@ public struct WindowComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            
+        
             switch state.config.kind {
             case .topVolume(let securityType),
                  .winners(let securityType),
@@ -29,6 +29,12 @@ public struct WindowComponent: GraniteComponent {
                     .shareRelays(relays([CryptoRelay.self, StockRelay.self]))
             case .portfolio:
                 PortfolioComponent()
+            case .search:
+                SearchComponent()
+                
+            case .modelCreate(let stage):
+                TonalCreateComponent(state: .init(stage))
+                    .shareRelays(relays([TonalRelay.self, CryptoRelay.self, StockRelay.self]))
             default:
                 EmptyView.init()
             }
