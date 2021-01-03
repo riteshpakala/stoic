@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 public class MainState: GraniteState {
-    
+    var count: Int = 0
     var folder: String?
 }
 

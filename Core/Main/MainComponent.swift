@@ -11,7 +11,6 @@ import SwiftUI
 import Combine
 
 public struct MainComponent: GraniteComponent {
-    @ObservedObject
     public var command: GraniteCommand<MainCenter, MainState> = .init()
     
     public init() {}
@@ -27,17 +26,26 @@ public struct MainComponent: GraniteComponent {
         
 //        TonalCreateComponent().shareRelays(relays([CryptoRelay.self, StockRelay.self, TonalRelay.self]))
         
-        if experience.state.isIPhone {
-            VStack {
-                ExperienceComponent(state: .init(.init(kind: .portfolio)))
-                ControlBar(isIPhone: true, selectedFolder: _state.folder)
-            }
-        } else {
-            HStack {
-                ControlBar(isIPhone: false, selectedFolder: _state.folder)
-                ExperienceComponent(state: .init(.init(kind: .modelCreate)))
-            }
+        
+        Rectangle().frame(width: 100, height: 100, alignment: .center).onTapGesture {
+            
+            _state.count.wrappedValue += 1
+            print(state.count)
         }
+        
+        
+        
+//        if experience.state.isIPhone {
+//            VStack {
+//                ExperienceComponent(state: .init(.init(kind: .portfolio)))
+//                ControlBar(isIPhone: true, selectedFolder: _state.folder)
+//            }
+//        } else {
+//            HStack {
+//                ControlBar(isIPhone: false, selectedFolder: _state.folder)
+//                ExperienceComponent(state: .init(.init(kind: .modelCreate)))
+//            }
+//        }
         
     }
 }

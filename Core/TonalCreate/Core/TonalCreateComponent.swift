@@ -27,7 +27,7 @@ public struct TonalCreateComponent: GraniteComponent {
         VStack {
             switch state.stage {
             case .find:
-                TonalFindComponent().shareRelays(relays([StockRelay.self, CryptoRelay.self])).listen(to: command)
+                TonalFindComponent().shareRelays(relays([StockRelay.self, CryptoRelay.self, ExperienceRelay.self])).listen(to: command)
             case .set:
                 TonalSetComponent().payload(state.payload).listen(to: command)
             case .tune:
@@ -42,6 +42,9 @@ public struct TonalCreateComponent: GraniteComponent {
 //            }
             
             
-        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        }
+        .frame(maxWidth: .infinity,
+               maxHeight: .infinity,
+               alignment: .center)
     }
 }

@@ -49,7 +49,8 @@ public struct ExperienceComponent: GraniteComponent {
                                col < state.activeWindows[row].count,
                                state.activeWindows[row][col].kind != .unassigned {
                                 window(state.activeWindows[row][col]).id(UUID()).onTapGesture(perform: {
-                                    print(state.activeWindows[col][row].detail)
+                                    
+                                    print(state.activeWindows[row][col].detail)
                                 })
                             }
                         }
@@ -79,7 +80,7 @@ public struct ExperienceComponent: GraniteComponent {
 extension ExperienceComponent {
     func window(_ config: WindowConfig) -> some View {
         return WindowComponent(state: .init(config))
-            .shareRelays(relays([CryptoRelay.self, StockRelay.self, TonalRelay.self]))
+            .shareRelays(relays)
             .background(Color.black)
     }
 }

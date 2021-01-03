@@ -42,11 +42,10 @@ public class TonalCreateState: GraniteState {
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
     private var toneExpeditions: [GraniteBaseExpedition] {
         switch state.stage {
-        case .find:
-            return [FindTheToneExpedition.Discovery(),
-                    StockHistoryExpedition.Discovery()]
         case .set:
-            return [SetTheToneExpedition.Discovery()]
+            return [FindTheToneExpedition.Discovery(),
+                    SetTheToneExpedition.Discovery(),
+                    StockHistoryExpedition.Discovery()]
         case .tune:
             return [TuneTheToneExpedition.Discovery(),
                     TonalSentimentHistoryExpedition.Discovery()]
@@ -57,6 +56,10 @@ public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
     }
     
     public override var expeditions: [GraniteBaseExpedition] {
-        toneExpeditions
+        toneExpeditions + [
+        
+            ExperienceTonalCreateForwardExpedition.Discovery()
+        
+        ]
     }
 }

@@ -8,12 +8,14 @@
 import Foundation
 
 struct Tone {
+    let ticker: String?
     let range: [TonalRange]?
     let sentiment: TonalSentiment?
     let selectedRange: TonalRange?
     
-    public init(range: [TonalRange]? = nil, sentiment: TonalSentiment? = nil, selectedRange: TonalRange? = nil) {
+    public init(ticker: String? = nil, range: [TonalRange]? = nil, sentiment: TonalSentiment? = nil, selectedRange: TonalRange? = nil) {
         
+        self.ticker = ticker
         self.range = range
         self.sentiment = sentiment
         self.selectedRange = selectedRange

@@ -19,8 +19,8 @@ struct TonalCreateEvents {
     }
     
     struct Find: GraniteEvent {
-        let ticker: String
-        public init(_ ticker: String) {
+        let ticker: String?
+        public init(_ ticker: String?) {
             self.ticker = ticker
         }
     }

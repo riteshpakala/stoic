@@ -34,7 +34,7 @@ public struct WindowComponent: GraniteComponent {
                 
             case .modelCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
-                    .shareRelays(relays([TonalRelay.self, CryptoRelay.self, StockRelay.self]))
+                    .shareRelays(relays)
             default:
                 EmptyView.init()
             }

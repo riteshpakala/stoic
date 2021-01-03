@@ -15,6 +15,10 @@ public class TonalSetState: GraniteState {
         payload?.object as? Tone ?? .init()
     }
     
+    var ticker: String? {
+        tone.ticker
+    }
+    
     var tonalRangeData: [TonalRange] {
         tone.range ?? []
     }

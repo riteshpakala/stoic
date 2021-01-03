@@ -73,6 +73,7 @@ public struct TonalSetComponent: GraniteComponent {
                 }
             }.padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
-        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }

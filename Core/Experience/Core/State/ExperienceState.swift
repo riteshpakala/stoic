@@ -47,6 +47,7 @@ public class ExperienceState: GraniteState {
     
     let config: ExperienceConfig
     
+    var count:Int = 0
     public init(_ config: ExperienceConfig) {
         self.config = config
     }
@@ -60,6 +61,8 @@ public class ExperienceCenter: GraniteCenter<ExperienceState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
+    
+    let experienceRelay: ExperienceRelay = .init()
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
