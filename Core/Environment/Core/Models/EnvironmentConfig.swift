@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ExperienceConfig {
+public struct EnvironmentConfig {
     public struct Page {
         let windows: [[WindowType]]
     }
@@ -47,12 +47,12 @@ public struct ExperienceConfig {
     
     let kind: PageType
     
-    static var none: ExperienceConfig {
+    static var none: EnvironmentConfig {
         return .init(kind: .home)
     }
 }
 
-public struct ExperienceStyle {
+public struct EnvironmentStyle {
     static var idealWidth: CGFloat = 375
     static var idealHeight: CGFloat = 420
     static var minWidth: CGFloat = 320

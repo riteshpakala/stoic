@@ -14,12 +14,18 @@ public struct TonalFindComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<TonalFindCenter, TonalFindState> = .init()
     
+//    @Environment(\.toneManager) var toneManager: ToneManager
+    
     public init() {}
     
     public var body: some View {
         VStack {
             Spacer().frame(height: Brand.Padding.large)
-            SearchComponent().shareRelays(relays([StockRelay.self, CryptoRelay.self]))
+//            SearchComponent()
+//                .shareRelays(relays([StockRelay.self, CryptoRelay.self]))
+//                .environment(\.searchManager, toneManager.searchManager)
+            
+            Text("\(state.dependencies.identifier)")
             AssetGridComponent()
                 .listen(to: command)
                 .payload(state.payload)

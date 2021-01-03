@@ -14,7 +14,7 @@ import Combine
 import UIKit
 #endif
 
-public class ExperienceState: GraniteState {
+public class EnvironmentState: GraniteState {
     var isDesktop: Bool {
         #if os(macOS)
         return true
@@ -45,10 +45,10 @@ public class ExperienceState: GraniteState {
     
     var activeWindows: [[WindowConfig]] = []
     
-    let config: ExperienceConfig
+    let config: EnvironmentConfig
     
     var count:Int = 0
-    public init(_ config: ExperienceConfig) {
+    public init(_ config: EnvironmentConfig) {
         self.config = config
     }
     
@@ -57,12 +57,16 @@ public class ExperienceState: GraniteState {
     }
 }
 
-public class ExperienceCenter: GraniteCenter<ExperienceState> {
+public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
     
     let experienceRelay: ExperienceRelay = .init()
+    
+    //Dependencies
+    var toneManager: ToneManager = .init(identifier: "root")
+    //
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
@@ -73,7 +77,7 @@ public class ExperienceCenter: GraniteCenter<ExperienceState> {
     public var environmentMinSize: CGSize {
         return .init(
             CGFloat(state.activeWindows.count == 0 ?
-                        Int(ExperienceStyle.minWidth) :
+                        Int(EnvironmentStyle.minWidth) :
                         state.activeWindows[0].count)*WindowStyle.minWidth,
             CGFloat(state.activeWindows.count)*WindowStyle.minHeight)
     }
@@ -81,7 +85,7 @@ public class ExperienceCenter: GraniteCenter<ExperienceState> {
     public var environmentMaxSize: CGSize {
         return .init(
             CGFloat(state.activeWindows.count == 0 ?
-                        Int(ExperienceStyle.minWidth) :
+                        Int(EnvironmentStyle.minWidth) :
                         state.activeWindows[0].count)*WindowStyle.maxWidth,
             CGFloat(state.activeWindows.count)*WindowStyle.maxHeight)
     }

@@ -10,9 +10,9 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-public struct ExperienceComponent: GraniteComponent {
+public struct EnvironmentComponent: GraniteComponent {
     @ObservedObject
-    public var command: GraniteCommand<ExperienceCenter, ExperienceState> = .init()
+    public var command: GraniteCommand<EnvironmentCenter, EnvironmentState> = .init()
     
     public init() {}
     
@@ -73,15 +73,17 @@ public struct ExperienceComponent: GraniteComponent {
                 minHeight: command.center.environmentMinSize.height,
                 maxHeight: .infinity,
                 alignment: .center)
-        .onAppear(perform: sendEvent(ExperienceEvents.Boot()))
+        .onAppear(perform: sendEvent(EnvironmentEvents.Boot()))
     }
 }
 
-extension ExperienceComponent {
+extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
         return WindowComponent(state: .init(config))
             .shareRelays(relays)
+            .environment(\.dependencies, state.dependencyManager)
             .background(Color.black)
     }
 }
+
 

@@ -10,15 +10,15 @@ import SwiftUI
 import Combine
 
 struct BootExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = ExperienceEvents.Boot
-    typealias ExpeditionState = ExperienceState
+    typealias ExpeditionEvent = EnvironmentEvents.Boot
+    typealias ExpeditionState = EnvironmentState
     
     func reduce(
         event: ExpeditionEvent,
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        let page: ExperienceConfig.Page = state.config.kind.page
+        let page: EnvironmentConfig.Page = state.config.kind.page
         
         var windows: [[WindowConfig]] = []
         

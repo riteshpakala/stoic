@@ -11,27 +11,17 @@ import SwiftUI
 import Combine
 
 public struct MainComponent: GraniteComponent {
+    @ObservedObject
     public var command: GraniteCommand<MainCenter, MainState> = .init()
     
     public init() {}
-    
-    var experience: ExperienceComponent {
-        ExperienceComponent()
-    }
-    
+
     
     public var body: some View {
 //        AssetSectionComponent(state: .init(title: "Top Volume"))
 //            .shareRelay(relay(CryptoRelay.self))
         
 //        TonalCreateComponent().shareRelays(relays([CryptoRelay.self, StockRelay.self, TonalRelay.self]))
-        
-        
-        Rectangle().frame(width: 100, height: 100, alignment: .center).onTapGesture {
-            
-            _state.count.wrappedValue += 1
-            print(state.count)
-        }
         
         
         
@@ -41,10 +31,10 @@ public struct MainComponent: GraniteComponent {
 //                ControlBar(isIPhone: true, selectedFolder: _state.folder)
 //            }
 //        } else {
-//            HStack {
-//                ControlBar(isIPhone: false, selectedFolder: _state.folder)
-//                ExperienceComponent(state: .init(.init(kind: .modelCreate)))
-//            }
+            HStack {
+                ControlBar(isIPhone: false, selectedFolder: _state.folder)
+                EnvironmentComponent(state: .init(.init(kind: .modelCreate)))
+            }
 //        }
         
     }

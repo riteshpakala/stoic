@@ -14,6 +14,8 @@ public struct WindowComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<WindowCenter, WindowState> = .init()
     
+    @Environment(\.toneManager) var toneManager: ToneManager
+    
     public init() {}
     
     public var body: some View {
@@ -35,6 +37,7 @@ public struct WindowComponent: GraniteComponent {
             case .modelCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
                     .shareRelays(relays)
+                    .environment(\.dependencies, state.dependencies)
             default:
                 EmptyView.init()
             }

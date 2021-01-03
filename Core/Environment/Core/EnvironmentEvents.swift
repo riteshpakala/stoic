@@ -10,6 +10,6 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-struct ExperienceEvents {
+struct EnvironmentEvents {
     struct Boot: GraniteEvent {}
 }

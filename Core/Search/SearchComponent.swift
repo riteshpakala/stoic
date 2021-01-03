@@ -14,6 +14,8 @@ public struct SearchComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<SearchCenter, SearchState> = .init()
     
+    @Environment(\.searchManager) var searchManager: SearchManager
+    
     public init() {}
     
     public var body: some View {
@@ -26,9 +28,12 @@ public struct SearchComponent: GraniteComponent {
                         .frame(width: 20, height: 20, alignment: .leading)
                         .padding(.leading, Brand.Padding.medium)
                     
-                    TextField("search markets", text: _state.query)
-                        .onChange(of: state.query, perform: { q in
-                            sendEvent(SearchEvents.Query(q))
+                    TextField("search markets", text: searchManager.$search.query)
+                        .onChange(of: searchManager.search.query,
+                                  perform: { q in
+                            
+                            print("{TEST} \(q)")
+                            return sendEvent(SearchEvents.Query(q))
                         })
                         .background(Color.clear)
                         .textFieldStyle(PlainTextFieldStyle())

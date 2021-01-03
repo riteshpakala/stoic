@@ -14,9 +14,9 @@ public struct TonalCreateComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<TonalCreateCenter, TonalCreateState> = .init()
     
-    public init() {
-        
-    }
+    @Environment(\.toneManager) var toneManager: ToneManager
+    
+    public init() {}
     
     public func link() {
         command.link(\TonalState.sentimentProgress,
@@ -27,11 +27,21 @@ public struct TonalCreateComponent: GraniteComponent {
         VStack {
             switch state.stage {
             case .find:
-                TonalFindComponent().shareRelays(relays([StockRelay.self, CryptoRelay.self, ExperienceRelay.self])).listen(to: command)
+                TonalFindComponent()
+                    .shareRelays(
+                        relays([StockRelay.self,
+                                CryptoRelay.self,
+                                ExperienceRelay.self]))
+                    .listen(to: command)
+                    .environment(\.dependencies, state.dependencies)
             case .set:
-                TonalSetComponent().payload(state.payload).listen(to: command)
+                TonalSetComponent()
+                    .payload(state.payload)
+                    .listen(to: command)
             case .tune:
-                TonalTuneComponent().payload(state.payload).listen(to: command)
+                TonalTuneComponent()
+                    .payload(state.payload)
+                    .listen(to: command)
             default:
                 EmptyView.init()
             }

@@ -122,18 +122,18 @@
 		711484B7259E0C7B00464684 /* WindowComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484B1259E0C7B00464684 /* WindowComponent.swift */; };
 		711484B8259E0C7B00464684 /* WindowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484B3259E0C7B00464684 /* WindowState.swift */; };
 		711484B9259E0C7B00464684 /* WindowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484B3259E0C7B00464684 /* WindowState.swift */; };
-		711484D2259E0E2E00464684 /* ExperienceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484CE259E0E2E00464684 /* ExperienceComponent.swift */; };
-		711484D3259E0E2E00464684 /* ExperienceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484CE259E0E2E00464684 /* ExperienceComponent.swift */; };
-		711484D4259E0E2E00464684 /* ExperienceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484D0259E0E2E00464684 /* ExperienceState.swift */; };
-		711484D5259E0E2E00464684 /* ExperienceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484D0259E0E2E00464684 /* ExperienceState.swift */; };
-		711484D6259E0E2E00464684 /* ExperienceEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484D1259E0E2E00464684 /* ExperienceEvents.swift */; };
-		711484D7259E0E2E00464684 /* ExperienceEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484D1259E0E2E00464684 /* ExperienceEvents.swift */; };
+		711484D2259E0E2E00464684 /* EnvironmentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484CE259E0E2E00464684 /* EnvironmentComponent.swift */; };
+		711484D3259E0E2E00464684 /* EnvironmentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484CE259E0E2E00464684 /* EnvironmentComponent.swift */; };
+		711484D4259E0E2E00464684 /* EnvironmentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484D0259E0E2E00464684 /* EnvironmentState.swift */; };
+		711484D5259E0E2E00464684 /* EnvironmentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484D0259E0E2E00464684 /* EnvironmentState.swift */; };
+		711484D6259E0E2E00464684 /* EnvironmentEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484D1259E0E2E00464684 /* EnvironmentEvents.swift */; };
+		711484D7259E0E2E00464684 /* EnvironmentEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484D1259E0E2E00464684 /* EnvironmentEvents.swift */; };
 		711484EF259E119200464684 /* WindowConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484EE259E119200464684 /* WindowConfig.swift */; };
 		711484F8259E11BB00464684 /* WindowConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484EE259E119200464684 /* WindowConfig.swift */; };
 		711484FF259E15A700464684 /* BootExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484FE259E15A700464684 /* BootExpedition.swift */; };
 		71148500259E15A700464684 /* BootExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711484FE259E15A700464684 /* BootExpedition.swift */; };
-		71148506259E24F900464684 /* ExperienceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71148505259E24F900464684 /* ExperienceConfig.swift */; };
-		71148507259E24F900464684 /* ExperienceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71148505259E24F900464684 /* ExperienceConfig.swift */; };
+		71148506259E24F900464684 /* EnvironmentConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71148505259E24F900464684 /* EnvironmentConfig.swift */; };
+		71148507259E24F900464684 /* EnvironmentConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71148505259E24F900464684 /* EnvironmentConfig.swift */; };
 		7118A1E72593134A007E7EAB /* TonalEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A1E32593134A007E7EAB /* TonalEvents.swift */; };
 		7118A1E82593134A007E7EAB /* TonalEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A1E32593134A007E7EAB /* TonalEvents.swift */; };
 		7118A1E92593134A007E7EAB /* TonalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A1E52593134A007E7EAB /* TonalState.swift */; };
@@ -599,12 +599,12 @@
 		711484B0259E0C7B00464684 /* WindowEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowEvents.swift; sourceTree = "<group>"; };
 		711484B1259E0C7B00464684 /* WindowComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowComponent.swift; sourceTree = "<group>"; };
 		711484B3259E0C7B00464684 /* WindowState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowState.swift; sourceTree = "<group>"; };
-		711484CE259E0E2E00464684 /* ExperienceComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceComponent.swift; sourceTree = "<group>"; };
-		711484D0259E0E2E00464684 /* ExperienceState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceState.swift; sourceTree = "<group>"; };
-		711484D1259E0E2E00464684 /* ExperienceEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperienceEvents.swift; sourceTree = "<group>"; };
+		711484CE259E0E2E00464684 /* EnvironmentComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentComponent.swift; sourceTree = "<group>"; };
+		711484D0259E0E2E00464684 /* EnvironmentState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentState.swift; sourceTree = "<group>"; };
+		711484D1259E0E2E00464684 /* EnvironmentEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentEvents.swift; sourceTree = "<group>"; };
 		711484EE259E119200464684 /* WindowConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowConfig.swift; sourceTree = "<group>"; };
 		711484FE259E15A700464684 /* BootExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootExpedition.swift; sourceTree = "<group>"; };
-		71148505259E24F900464684 /* ExperienceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceConfig.swift; sourceTree = "<group>"; };
+		71148505259E24F900464684 /* EnvironmentConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentConfig.swift; sourceTree = "<group>"; };
 		7118A1E32593134A007E7EAB /* TonalEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalEvents.swift; sourceTree = "<group>"; };
 		7118A1E52593134A007E7EAB /* TonalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalState.swift; sourceTree = "<group>"; };
 		7118A1E62593134A007E7EAB /* TonalRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalRelay.swift; sourceTree = "<group>"; };
@@ -848,7 +848,6 @@
 		710889032591B05F00795EDF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				710889DD2591BB4000795EDF /* User */,
 				710889042591B06B00795EDF /* Assets */,
 			);
 			path = Models;
@@ -967,13 +966,6 @@
 				710889592591B29800795EDF /* Promise+nil.swift */,
 			);
 			path = Then;
-			sourceTree = "<group>";
-		};
-		710889DD2591BB4000795EDF /* User */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = User;
 			sourceTree = "<group>";
 		};
 		710889E12591BB6E00795EDF /* Top Volume */ = {
@@ -1157,20 +1149,20 @@
 			path = State;
 			sourceTree = "<group>";
 		};
-		711484CD259E0E2E00464684 /* Experience */ = {
+		711484CD259E0E2E00464684 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
 				711484AF259E0C7B00464684 /* Window */,
 				711484E0259E0E5000464684 /* Core */,
 			);
-			path = Experience;
+			path = Environment;
 			sourceTree = "<group>";
 		};
 		711484CF259E0E2E00464684 /* State */ = {
 			isa = PBXGroup;
 			children = (
 				711484FD259E158F00464684 /* Expeditions */,
-				711484D0259E0E2E00464684 /* ExperienceState.swift */,
+				711484D0259E0E2E00464684 /* EnvironmentState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -1180,8 +1172,8 @@
 			children = (
 				711484ED259E117E00464684 /* Models */,
 				711484CF259E0E2E00464684 /* State */,
-				711484CE259E0E2E00464684 /* ExperienceComponent.swift */,
-				711484D1259E0E2E00464684 /* ExperienceEvents.swift */,
+				711484CE259E0E2E00464684 /* EnvironmentComponent.swift */,
+				711484D1259E0E2E00464684 /* EnvironmentEvents.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1190,7 +1182,7 @@
 			isa = PBXGroup;
 			children = (
 				711484EE259E119200464684 /* WindowConfig.swift */,
-				71148505259E24F900464684 /* ExperienceConfig.swift */,
+				71148505259E24F900464684 /* EnvironmentConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1646,7 +1638,6 @@
 		7139F622259810C000D9C84B /* State */ = {
 			isa = PBXGroup;
 			children = (
-				7139F65325981B1F00D9C84B /* Expeditions */,
 				7139F623259810C000D9C84B /* TonalSetState.swift */,
 			);
 			path = State;
@@ -1660,13 +1651,6 @@
 				7139F6952598221700D9C84B /* TonalSentiment.swift */,
 			);
 			path = Tone;
-			sourceTree = "<group>";
-		};
-		7139F65325981B1F00D9C84B /* Expeditions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Expeditions;
 			sourceTree = "<group>";
 		};
 		7139F66B25981BD300D9C84B /* TonalTune */ = {
@@ -2166,7 +2150,7 @@
 				7136B65425A008B40014F693 /* Portfolio */,
 				7118A224259313FD007E7EAB /* TonalCreate */,
 				71D63F672592BFC40085D718 /* AssetSection */,
-				711484CD259E0E2E00464684 /* Experience */,
+				711484CD259E0E2E00464684 /* Environment */,
 				71D63CC7258E92B1003B0BAF /* Main */,
 			);
 			path = Core;
@@ -2437,7 +2421,7 @@
 				71D63EF42592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BE4625A1384A00F22717 /* SentimentSliderEvents.swift in Sources */,
 				710889FE2591BD9F00795EDF /* TopVolume.swift in Sources */,
-				711484D2259E0E2E00464684 /* ExperienceComponent.swift in Sources */,
+				711484D2259E0E2E00464684 /* EnvironmentComponent.swift in Sources */,
 				7108897B2591B29800795EDF /* PromiseError.swift in Sources */,
 				710889792591B29800795EDF /* WhenAll.swift in Sources */,
 				7125BE1025A1328A00F22717 /* ValueTrackConfiguration.swift in Sources */,
@@ -2533,7 +2517,7 @@
 				7125BDDD25A131D200F22717 /* EnvironmentValues+TrackRange.swift in Sources */,
 				710889752591B29800795EDF /* Promise+BridgeError.swift in Sources */,
 				7125BE1425A1328A00F22717 /* VerticalValueTrack.swift in Sources */,
-				71148506259E24F900464684 /* ExperienceConfig.swift in Sources */,
+				71148506259E24F900464684 /* EnvironmentConfig.swift in Sources */,
 				710889A32591B29800795EDF /* Cryptowatcher.swift in Sources */,
 				71F1EC5825A0F47A00D32C52 /* SearchComponent.swift in Sources */,
 				7114029A258DB5E700BA387D /* StockRelay.swift in Sources */,
@@ -2555,7 +2539,7 @@
 				710889732591B29800795EDF /* Promise+Finally.swift in Sources */,
 				71D0AA4C25A1A28100E0DDF2 /* ExperienceTonalCreateForwardExpedition.swift in Sources */,
 				711484B6259E0C7B00464684 /* WindowComponent.swift in Sources */,
-				711484D4259E0E2E00464684 /* ExperienceState.swift in Sources */,
+				711484D4259E0E2E00464684 /* EnvironmentState.swift in Sources */,
 				7125BEAB25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */,
 				71D63CD0258E92B1003B0BAF /* MainEvents.swift in Sources */,
 				7143436D25907725001F26A4 /* MathOperators.swift in Sources */,
@@ -2572,7 +2556,7 @@
 				711484FF259E15A700464684 /* BootExpedition.swift in Sources */,
 				710889772591B29800795EDF /* Await+Operators.swift in Sources */,
 				7143431A259076EB001F26A4 /* String+Convenience.swift in Sources */,
-				711484D6259E0E2E00464684 /* ExperienceEvents.swift in Sources */,
+				711484D6259E0E2E00464684 /* EnvironmentEvents.swift in Sources */,
 				7125BE1225A1328A00F22717 /* EnvironmentValues+TrackValue.swift in Sources */,
 				71DC58EF25988F84004935CF /* Kernel.swift in Sources */,
 				7125BE9A25A14A2B00F22717 /* SearchTheToneExpedition.swift in Sources */,
@@ -2712,7 +2696,7 @@
 				7125BE6625A1388400F22717 /* PointSliderOptions.swift in Sources */,
 				7125BE0325A1328900F22717 /* ValueSliderStyleConfiguration.swift in Sources */,
 				711484F8259E11BB00464684 /* WindowConfig.swift in Sources */,
-				711484D5259E0E2E00464684 /* ExperienceState.swift in Sources */,
+				711484D5259E0E2E00464684 /* EnvironmentState.swift in Sources */,
 				7125BDCC25A1318D00F22717 /* VerticalRangeSliderStyle.swift in Sources */,
 				71AACCEE258EC95300E1C0B3 /* StockDateData.swift in Sources */,
 				710889722591B29800795EDF /* Promise+Race.swift in Sources */,
@@ -2749,7 +2733,7 @@
 				710889A02591B29800795EDF /* Promise+Helpers.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
 				7123B12C2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
-				71148507259E24F900464684 /* ExperienceConfig.swift in Sources */,
+				71148507259E24F900464684 /* EnvironmentConfig.swift in Sources */,
 				71DC58F425988F84004935CF /* DataSet.swift in Sources */,
 				7118A1E82593134A007E7EAB /* TonalEvents.swift in Sources */,
 				715BD44025A19D4600FD407B /* ExperienceRelay.swift in Sources */,
@@ -2812,13 +2796,13 @@
 				7125BE1525A1328A00F22717 /* VerticalValueTrack.swift in Sources */,
 				7125BDDC25A131D200F22717 /* HorizontalRangeTrack.swift in Sources */,
 				711484B5259E0C7B00464684 /* WindowEvents.swift in Sources */,
-				711484D7259E0E2E00464684 /* ExperienceEvents.swift in Sources */,
+				711484D7259E0E2E00464684 /* EnvironmentEvents.swift in Sources */,
 				71434360259076F4001F26A4 /* Color+Convenience.swift in Sources */,
 				7121F6DB2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */,
 				710889AE2591B29800795EDF /* Cryptowatcher+Assets.swift in Sources */,
 				710889B02591B29800795EDF /* Aggregates.swift in Sources */,
 				7125BD8D25A1316500F22717 /* DefaultHorizontalValueView.swift in Sources */,
-				711484D3259E0E2E00464684 /* ExperienceComponent.swift in Sources */,
+				711484D3259E0E2E00464684 /* EnvironmentComponent.swift in Sources */,
 				7108897C2591B29800795EDF /* PromiseError.swift in Sources */,
 				71D63F3F2592BBAB0085D718 /* AssetGridItemContainerComponent.swift in Sources */,
 				71434358259076F4001F26A4 /* LinearGradient+Convenience.swift in Sources */,
