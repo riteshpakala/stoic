@@ -20,7 +20,10 @@ struct SearchTheToneExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         print("{TEST} \(event.result.count)")
+        
+        connection.dependency(\TonalCreateDependency.search.securities, value: event.result)
+        
         state.securityData = event.result
-        state.payload = .init(object: state.securityData)
+//        state.payload = .init(object: state.securityData)
     }
 }

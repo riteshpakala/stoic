@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import Foundation
+import GraniteUI
 
 class Tone: ObservableObject {
     var ticker: String?
@@ -22,56 +23,20 @@ class Tone: ObservableObject {
     }
 }
 
-class SearchPayload: ObservableObject {
-    var query: String = ""
+class SearchQuery: ObservableObject {
+    var state: SearchState = .init()
+    var securities: [Security] = []
 }
 
-struct SearchManager {
-    let identifier: String
-    public init(identifier: String) {
-        self.identifier = identifier
-    }
-    
+class SearchDependency: DependencyManager {
     @ObservedObject
-    var search: SearchPayload = .init()
+    var search: SearchQuery = .init()
 }
 
-struct ToneManager {
-    let identifier: String
-    let urlSession = URLSession.shared
-    
+class TonalCreateDependency: DependencyManager {
     @ObservedObject
     var tone: Tone = .init()
     
-    var searchManager: SearchManager = .init(identifier: "search")
-}
-
-struct ToneManagerKey: EnvironmentKey {
-    typealias Value = ToneManager
-    static var defaultValue = ToneManager(identifier: "Default created by environment")
-}
-
-struct SearchManagerKey: EnvironmentKey {
-    typealias Value = SearchManager
-    static var defaultValue = SearchManager(identifier: "Default created by environment")
-}
-
-extension EnvironmentValues {
-    var toneManager: ToneManager {
-        get {
-            return self[ToneManagerKey.self]
-        }
-        set {
-            self[ToneManagerKey.self] = newValue
-        }
-    }
-    
-    var searchManager: SearchManager {
-        get {
-            return self[SearchManagerKey.self]
-        }
-        set {
-            self[SearchManagerKey.self] = newValue
-        }
-    }
+    @ObservedObject
+    var search: SearchQuery = .init()
 }

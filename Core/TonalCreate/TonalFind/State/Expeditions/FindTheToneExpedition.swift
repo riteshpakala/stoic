@@ -10,8 +10,8 @@ import SwiftUI
 import Combine
 
 struct FindTheToneExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = TonalCreateEvents.Find
-    typealias ExpeditionState = TonalCreateState
+    typealias ExpeditionEvent = TonalFindEvents.Find
+    typealias ExpeditionState = TonalFindState
     
     func reduce(
         event: ExpeditionEvent,
@@ -23,7 +23,8 @@ struct FindTheToneExpedition: GraniteExpedition {
         
         guard let ticker = event.ticker else { return }
         if let quote = getQuote()?.first(where: { $0.ticker == ticker && $0.intervalType == SecurityInterval.day.rawValue }) {
-            connection.request(TonalCreateEvents.Set(quote))
+            state.quote = quote
+            connection.request(TonalFindEvents.Parse(quote, days: state.days))
         } else {
             connection.request(StockEvents.GetStockHistory.init(ticker: ticker), beam: true)
         }
@@ -43,7 +44,7 @@ struct FindTheToneExpedition: GraniteExpedition {
 
 struct StockHistoryExpedition: GraniteExpedition {
     typealias ExpeditionEvent = StockEvents.History
-    typealias ExpeditionState = TonalCreateState
+    typealias ExpeditionState = TonalFindState
     
     func reduce(
         event: ExpeditionEvent,
@@ -57,7 +58,9 @@ struct StockHistoryExpedition: GraniteExpedition {
         
         save(data: stocks) { quote in
             if let object = quote {
-                connection.request(TonalCreateEvents.Set(object))
+                state.quote = object
+                connection.request(TonalFindEvents.Parse(object, days: state.days))
+//                connection.request(TonalCreateEvents.Set(object))
             }
         }
     }

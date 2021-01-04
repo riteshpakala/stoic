@@ -14,13 +14,11 @@ public struct WindowComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<WindowCenter, WindowState> = .init()
     
-    @Environment(\.toneManager) var toneManager: ToneManager
-    
     public init() {}
     
     public var body: some View {
         VStack {
-        
+            Text("\(command.center.dependency.hosted.identifier)")
             switch state.config.kind {
             case .topVolume(let securityType),
                  .winners(let securityType),
@@ -37,7 +35,7 @@ public struct WindowComponent: GraniteComponent {
             case .modelCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
                     .shareRelays(relays)
-                    .environment(\.dependencies, state.dependencies)
+                    .inject(dep(\.hosted))
             default:
                 EmptyView.init()
             }

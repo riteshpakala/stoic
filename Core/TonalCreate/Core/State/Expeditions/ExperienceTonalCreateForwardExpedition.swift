@@ -19,18 +19,25 @@ struct ExperienceTonalCreateForwardExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        switch event.target {
-        case .modelCreate(.find):
-            state.payload = event.payload
-            connection.request(TonalCreateEvents.Find.init(state.tone.ticker))
-        case .modelCreate(.set):
-            break
-        case .modelCreate(.tune):
-            break
-        case .modelCreate(_):
-            break
-        default:
-            break
+        guard let dependency = connection.dependency(TonalCreateDependency.self) else {
+            return
         }
+        
+        state.tone = dependency.tone
+        
+        print("{TEST} forwarding \(state.tone.ticker)")
+        
+//        switch event.target {
+//        case .modelCreate(.find):
+//            connection.request(TonalCreateEvents.Find.init(state.tone.ticker))
+//        case .modelCreate(.set):
+//            break
+//        case .modelCreate(.tune):
+//            break
+//        case .modelCreate(_):
+//            break
+//        default:
+//            break
+//        }
     }
 }

@@ -11,19 +11,19 @@ import SwiftUI
 import Combine
 
 struct TonalCreateEvents {
-    struct Search: GraniteEvent {
-        let query: String
-        public init(_ query: String) {
-            self.query = query
-        }
-    }
+//    struct Search: GraniteEvent {
+//        let query: String
+//        public init(_ query: String) {
+//            self.query = query
+//        }
+//    }
     
-    struct Find: GraniteEvent {
-        let ticker: String?
-        public init(_ ticker: String?) {
-            self.ticker = ticker
-        }
-    }
+//    struct Find: GraniteEvent {
+//        let ticker: String?
+//        public init(_ ticker: String?) {
+//            self.ticker = ticker
+//        }
+//    }
     
     struct Set: GraniteEvent {
         let quote: QuoteObject

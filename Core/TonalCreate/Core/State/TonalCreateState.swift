@@ -26,9 +26,7 @@ public class TonalCreateState: GraniteState {
     
     var sentimentLoadingProgress: Double = 0.0
     
-    var tone: Tone {
-        payload?.object as? Tone ?? .init()
-    }
+    var tone: Tone = .init()
     
     public init(_ stage: TonalCreateStage) {
         self.stage = stage
@@ -42,10 +40,6 @@ public class TonalCreateState: GraniteState {
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
     private var toneExpeditions: [GraniteBaseExpedition] {
         switch state.stage {
-        case .set:
-            return [FindTheToneExpedition.Discovery(),
-                    SetTheToneExpedition.Discovery(),
-                    StockHistoryExpedition.Discovery()]
         case .tune:
             return [TuneTheToneExpedition.Discovery(),
                     TonalSentimentHistoryExpedition.Discovery()]
@@ -56,10 +50,6 @@ public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
     }
     
     public override var expeditions: [GraniteBaseExpedition] {
-        toneExpeditions + [
-        
-            ExperienceTonalCreateForwardExpedition.Discovery()
-        
-        ]
+        toneExpeditions
     }
 }

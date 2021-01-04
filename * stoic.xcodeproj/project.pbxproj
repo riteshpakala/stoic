@@ -103,7 +103,6 @@
 		710889CC2591B3B100795EDF /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889052591B07400795EDF /* Asset.swift */; };
 		710889F32591BC8C00795EDF /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889F22591BC8C00795EDF /* Categories.swift */; };
 		710889F82591BD1B00795EDF /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889F22591BC8C00795EDF /* Categories.swift */; };
-		710889FE2591BD9F00795EDF /* TopVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889FD2591BD9F00795EDF /* TopVolume.swift */; };
 		71088A132591C21600795EDF /* CryptoEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71088A122591C21600795EDF /* CryptoEvents.swift */; };
 		71088A182591C22400795EDF /* CryptoEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71088A122591C21600795EDF /* CryptoEvents.swift */; };
 		7108EFF72591CB57006A14DA /* MoversCryptoExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7108EFF62591CB57006A14DA /* MoversCryptoExpedition.swift */; };
@@ -280,6 +279,8 @@
 		7125BE9B25A14A2B00F22717 /* SearchTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7125BE9925A14A2B00F22717 /* SearchTheToneExpedition.swift */; };
 		7125BEAB25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7125BEAA25A159CD00F22717 /* SearchSecurityExpedition.swift */; };
 		7125BEAC25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7125BEAA25A159CD00F22717 /* SearchSecurityExpedition.swift */; };
+		7133385325A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */; };
+		7133385425A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */; };
 		7136B65925A008B40014F693 /* PortfolioEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136B65525A008B40014F693 /* PortfolioEvents.swift */; };
 		7136B65A25A008B40014F693 /* PortfolioEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136B65525A008B40014F693 /* PortfolioEvents.swift */; };
 		7136B65B25A008B40014F693 /* PortfolioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136B65725A008B40014F693 /* PortfolioState.swift */; };
@@ -589,7 +590,6 @@
 		710889612591B29800795EDF /* Exchanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exchanges.swift; sourceTree = "<group>"; };
 		710889622591B29800795EDF /* Cryptowatcher+Exchanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cryptowatcher+Exchanges.swift"; sourceTree = "<group>"; };
 		710889F22591BC8C00795EDF /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
-		710889FD2591BD9F00795EDF /* TopVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TopVolume.swift; path = ../../../../../../../../../TopVolume.swift; sourceTree = "<group>"; };
 		71088A122591C21600795EDF /* CryptoEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoEvents.swift; sourceTree = "<group>"; };
 		7108EFF62591CB57006A14DA /* MoversCryptoExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoversCryptoExpedition.swift; sourceTree = "<group>"; };
 		71140294258DB5E700BA387D /* StockEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockEvents.swift; sourceTree = "<group>"; };
@@ -678,6 +678,7 @@
 		7125BE8A25A148BA00F22717 /* TonalFindEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalFindEvents.swift; sourceTree = "<group>"; };
 		7125BE9925A14A2B00F22717 /* SearchTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTheToneExpedition.swift; sourceTree = "<group>"; };
 		7125BEAA25A159CD00F22717 /* SearchSecurityExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSecurityExpedition.swift; sourceTree = "<group>"; };
+		7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTonalRangeExpedition.swift; sourceTree = "<group>"; };
 		7136B65525A008B40014F693 /* PortfolioEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortfolioEvents.swift; sourceTree = "<group>"; };
 		7136B65725A008B40014F693 /* PortfolioState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortfolioState.swift; sourceTree = "<group>"; };
 		7136B65825A008B40014F693 /* PortfolioComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortfolioComponent.swift; sourceTree = "<group>"; };
@@ -968,109 +969,12 @@
 			path = Then;
 			sourceTree = "<group>";
 		};
-		710889E12591BB6E00795EDF /* Top Volume */ = {
-			isa = PBXGroup;
-			children = (
-				710889FD2591BD9F00795EDF /* TopVolume.swift */,
-			);
-			path = "Top Volume";
-			sourceTree = "<group>";
-		};
-		710889E22591BB7800795EDF /* Winners */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Winners;
-			sourceTree = "<group>";
-		};
-		710889E32591BB9100795EDF /* Recently Viewed */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Recently Viewed";
-			sourceTree = "<group>";
-		};
-		710889E42591BB9F00795EDF /* Public */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Public;
-			sourceTree = "<group>";
-		};
-		710889E62591BBB400795EDF /* Holdings */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Holdings;
-			sourceTree = "<group>";
-		};
-		710889E72591BBD400795EDF /* Securities */ = {
-			isa = PBXGroup;
-			children = (
-				710889E12591BB6E00795EDF /* Top Volume */,
-				710889E22591BB7800795EDF /* Winners */,
-			);
-			path = Securities;
-			sourceTree = "<group>";
-		};
-		710889E82591BBD800795EDF /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				710889E42591BB9F00795EDF /* Public */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		710889E92591BBDF00795EDF /* Saved */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Saved;
-			sourceTree = "<group>";
-		};
 		710889EB2591BC0E00795EDF /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				710889EE2591BC5E00795EDF /* Local */,
-				710889ED2591BC5B00795EDF /* Global */,
 				710889F22591BC8C00795EDF /* Categories.swift */,
 			);
 			path = Categories;
-			sourceTree = "<group>";
-		};
-		710889ED2591BC5B00795EDF /* Global */ = {
-			isa = PBXGroup;
-			children = (
-				710889E82591BBD800795EDF /* Models */,
-				710889E72591BBD400795EDF /* Securities */,
-			);
-			path = Global;
-			sourceTree = "<group>";
-		};
-		710889EE2591BC5E00795EDF /* Local */ = {
-			isa = PBXGroup;
-			children = (
-				710889F02591BC6600795EDF /* Models */,
-				710889EF2591BC6200795EDF /* Securities */,
-			);
-			path = Local;
-			sourceTree = "<group>";
-		};
-		710889EF2591BC6200795EDF /* Securities */ = {
-			isa = PBXGroup;
-			children = (
-				710889E32591BB9100795EDF /* Recently Viewed */,
-			);
-			path = Securities;
-			sourceTree = "<group>";
-		};
-		710889F02591BC6600795EDF /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				710889E92591BBDF00795EDF /* Saved */,
-				710889E62591BBB400795EDF /* Holdings */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		71088A072591C1DE00795EDF /* Expeditions */ = {
@@ -1206,7 +1110,7 @@
 		7118A1D725931321007E7EAB /* Relays */ = {
 			isa = PBXGroup;
 			children = (
-				715BD43A25A19D4600FD407B /* ExperienceRelay */,
+				715BD43A25A19D4600FD407B /* ExperienceRelay-WIP */,
 				7118A1E22593134A007E7EAB /* TonalRelay */,
 				7108892C2591B21F00795EDF /* CryptoRelay */,
 				713D25AA258E42BF005FB4D4 /* ClockRelay */,
@@ -1593,6 +1497,8 @@
 		7125BEA425A1552C00F22717 /* Expeditions */ = {
 			isa = PBXGroup;
 			children = (
+				71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */,
+				7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */,
 				71BE146B25A175140015D157 /* SecuritySelectedForToneExpedition.swift */,
 				7125BE9925A14A2B00F22717 /* SearchTheToneExpedition.swift */,
 			);
@@ -1878,14 +1784,14 @@
 			path = Shadows;
 			sourceTree = "<group>";
 		};
-		715BD43A25A19D4600FD407B /* ExperienceRelay */ = {
+		715BD43A25A19D4600FD407B /* ExperienceRelay-WIP */ = {
 			isa = PBXGroup;
 			children = (
 				715BD43C25A19D4600FD407B /* State */,
 				715BD43B25A19D4600FD407B /* ExperienceRelay.swift */,
 				715BD43E25A19D4600FD407B /* ExperienceRelayEvents.swift */,
 			);
-			path = ExperienceRelay;
+			path = "ExperienceRelay-WIP";
 			sourceTree = "<group>";
 		};
 		715BD43C25A19D4600FD407B /* State */ = {
@@ -1927,7 +1833,6 @@
 			isa = PBXGroup;
 			children = (
 				71D0AA4B25A1A28100E0DDF2 /* ExperienceTonalCreateForwardExpedition.swift */,
-				71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */,
 				71B062342597169E00D1833D /* SetTheToneExpedition.swift */,
 				7139F67A25981C3200D9C84B /* TuneTheToneExpedition.swift */,
 			);
@@ -2420,7 +2325,6 @@
 				710889152591B09A00795EDF /* Stock.swift in Sources */,
 				71D63EF42592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BE4625A1384A00F22717 /* SentimentSliderEvents.swift in Sources */,
-				710889FE2591BD9F00795EDF /* TopVolume.swift in Sources */,
 				711484D2259E0E2E00464684 /* EnvironmentComponent.swift in Sources */,
 				7108897B2591B29800795EDF /* PromiseError.swift in Sources */,
 				710889792591B29800795EDF /* WhenAll.swift in Sources */,
@@ -2644,6 +2548,7 @@
 				7125BD7525A12F1F00F22717 /* BasicSliderState.swift in Sources */,
 				71DC58D525988F56004935CF /* re.swift in Sources */,
 				71D63F492592BC210085D718 /* MoversSecurityExpedition.swift in Sources */,
+				7133385325A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */,
 				71AACCDD258EC8E000E1C0B3 /* StockData.swift in Sources */,
 				7139F67025981BD300D9C84B /* TonalTuneComponent.swift in Sources */,
 				7136B65D25A008B40014F693 /* PortfolioComponent.swift in Sources */,
@@ -2880,6 +2785,7 @@
 				710889862591B29800795EDF /* Await.swift in Sources */,
 				71434188259067CA001F26A4 /* Brand.swift in Sources */,
 				7125BDFD25A1328900F22717 /* ValueSlider.swift in Sources */,
+				7133385425A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */,
 				710889AA2591B29800795EDF /* Cryptowatcher+Pairs.swift in Sources */,
 				7125BE8E25A148BA00F22717 /* TonalFindState.swift in Sources */,
 				710889312591B24700795EDF /* CryptoRelay.swift in Sources */,

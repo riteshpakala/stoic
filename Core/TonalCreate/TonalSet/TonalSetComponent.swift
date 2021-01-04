@@ -38,12 +38,12 @@ public struct TonalSetComponent: GraniteComponent {
             
             ScrollView {
                 LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
-                    ForEach(0..<state.tonalRangeData.count, id: \.self) { tonalRangeIndex in
+                    ForEach(0..<command.center.tonalRangeData.count, id: \.self) { tonalRangeIndex in
                         
                         VStack {
                             Color.black.overlay(
                             
-                                Text(state.tonalRangeData[tonalRangeIndex].dateInfoShortDisplay)
+                                Text(command.center.tonalRangeData[tonalRangeIndex].dateInfoShortDisplay)
                                     .granite_innerShadow(
                                     Brand.Colors.white,
                                     radius: 3,
@@ -55,12 +55,12 @@ public struct TonalSetComponent: GraniteComponent {
                             .cornerRadius(8)
                             .onTapGesture(perform:
                                             sendEvent(TonalCreateEvents.Tune(
-                                                        state.tonalRangeData[tonalRangeIndex]),
+                                                        command.center.tonalRangeData[tonalRangeIndex]),
                                                       contact: true))
                             
-                            Text(state.tonalRangeData[tonalRangeIndex].avgSimilarityDisplay)
+                            Text(command.center.tonalRangeData[tonalRangeIndex].avgSimilarityDisplay)
                                 .granite_innerShadow(
-                                state.tonalRangeData[tonalRangeIndex].avgSimilarityColor,
+                                    command.center.tonalRangeData[tonalRangeIndex].avgSimilarityColor,
                                 radius: 3,
                                 offset: .init(x: 2, y: 2))
                                 .multilineTextAlignment(.center)

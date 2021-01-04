@@ -19,7 +19,6 @@ struct ExperienceForwardExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        print("{TEST} yooooo")
         connection.request(ExperienceRelayEvents.Forward(payload: event.payload, target: event.target), beam: true)
     }
 }

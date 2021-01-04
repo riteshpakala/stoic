@@ -65,7 +65,9 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     let experienceRelay: ExperienceRelay = .init()
     
     //Dependencies
-    var toneManager: ToneManager = .init(identifier: "root")
+    lazy var tonalCreateDependency: TonalCreateDependency = {
+        .init(identifier: "tonalCreateDependency", adAstra: self)
+    }()
     //
     
     public override var expeditions: [GraniteBaseExpedition] {

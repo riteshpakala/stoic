@@ -18,9 +18,12 @@ struct SecuritySelectedForToneExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
+
+        connection.dependency(\TonalCreateDependency.tone.ticker, value: event.security.ticker)
         
-        state.payload = .init(object: Tone.init(ticker: event.security.ticker))
-        connection.request(ExperienceRelayEvents.Request.init(payload: state.payload, target: .modelCreate(.find)), beam: true)
+        connection.request(TonalFindEvents.Find(ticker: event.security.ticker))
+//        connection.request(ExperienceRelayEvents.Request.init(payload: state.payload, target: .modelCreate(.find)), beam: true)
+        
         print("{TEST} selected")
     }
 }

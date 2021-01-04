@@ -25,4 +25,19 @@ public class TonalSetState: GraniteState {
 }
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
+    var tonalCreateDependency: TonalCreateDependency {
+        return dependency.hosted as? TonalCreateDependency ?? .init(identifier: "none")
+    }
+    
+    var tone: Tone {
+        tonalCreateDependency.tone
+    }
+    
+    var ticker: String? {
+        tone.ticker
+    }
+    
+    var tonalRangeData: [TonalRange] {
+        tone.range ?? []
+    }
 }

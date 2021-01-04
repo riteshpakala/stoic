@@ -14,21 +14,21 @@ public struct TonalFindComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<TonalFindCenter, TonalFindState> = .init()
     
-//    @Environment(\.toneManager) var toneManager: ToneManager
-    
     public init() {}
     
     public var body: some View {
         VStack {
             Spacer().frame(height: Brand.Padding.large)
-//            SearchComponent()
-//                .shareRelays(relays([StockRelay.self, CryptoRelay.self]))
-//                .environment(\.searchManager, toneManager.searchManager)
+            SearchComponent(state: depObject(\.tonalCreateDependency, target: \.search.state))
+                .shareRelays(relays(
+                                [StockRelay.self,
+                                 CryptoRelay.self]))
+                .inject(dep(\.hosted))
             
-            Text("\(state.dependencies.identifier)")
+            Text("\(command.center.dependency.hosted.identifier)")
             AssetGridComponent()
                 .listen(to: command)
-                .payload(state.payload)
+                .payload(depPayload(\.tonalCreateDependency, target: \.search.securities))
         }.background(Brand.Colors.black)
     }
 }

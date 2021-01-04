@@ -14,13 +14,11 @@ public struct TonalCreateComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<TonalCreateCenter, TonalCreateState> = .init()
     
-    @Environment(\.toneManager) var toneManager: ToneManager
-    
     public init() {}
     
     public func link() {
-        command.link(\TonalState.sentimentProgress,
-                     target:\.sentimentLoadingProgress)
+//        command.link(\TonalState.sentimentProgress,
+//                     target:\.sentimentLoadingProgress)
     }
     
     public var body: some View {
@@ -30,18 +28,17 @@ public struct TonalCreateComponent: GraniteComponent {
                 TonalFindComponent()
                     .shareRelays(
                         relays([StockRelay.self,
-                                CryptoRelay.self,
-                                ExperienceRelay.self]))
+                                CryptoRelay.self]))
                     .listen(to: command)
-                    .environment(\.dependencies, state.dependencies)
+                    .inject(dep(\.hosted))
             case .set:
                 TonalSetComponent()
-                    .payload(state.payload)
                     .listen(to: command)
+                    .inject(dep(\.hosted))
             case .tune:
                 TonalTuneComponent()
-                    .payload(state.payload)
                     .listen(to: command)
+                    .inject(dep(\.hosted))
             default:
                 EmptyView.init()
             }

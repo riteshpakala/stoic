@@ -81,7 +81,7 @@ extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
         return WindowComponent(state: .init(config))
             .shareRelays(relays)
-            .environment(\.dependencies, state.dependencyManager)
+            .inject(dep(\.tonalCreateDependency))
             .background(Color.black)
     }
 }
