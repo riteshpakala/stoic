@@ -9,6 +9,31 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+struct TonalRangeChangedExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = BasicSliderEvents.Value
+    typealias ExpeditionState = TonalFindState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        let dayDiff: Double = Double(state.maxDays - state.minDays)
+        let days: Double = event.data*dayDiff
+        state.days = Int(days) + state.minDays
+        
+        
+        if let tonal = connection.depObject(\TonalCreateDependency.tone.quote), let quote = tonal {
+            
+            print("{TEST} got it")
+            connection.request(TonalFindEvents.Parse(quote, days: state.days))
+        } else {
+            
+        }
+    }
+}
+
 struct ParseTonalRangeExpedition: GraniteExpedition {
     typealias ExpeditionEvent = TonalFindEvents.Parse
     typealias ExpeditionState = TonalFindState
@@ -62,7 +87,7 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
                 similarities.append(targetCoeffecient/chunkDayCoeffecient)
             }
             
-            if similarities.filter( { !($0 <= 1.2 && $0 >= 0.75) } ).isEmpty {
+            if similarities.filter( { !($0 <= 1.6 && $0 >= 0.45) } ).isEmpty {
                 let dates: [Date] = chunk.map { $0.date }
                 
                 let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
@@ -78,6 +103,7 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
             }
         }
         
+        print("{TEST-2} \(candidates.count)")
         connection.dependency(\TonalCreateDependency.tone.range, value: candidates)
 //        connection.dependency(TonalCreateDependency.self)?.tone.range = candidates
         

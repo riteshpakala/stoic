@@ -13,6 +13,7 @@ class Tone: ObservableObject {
     var range: [TonalRange]?
     var sentiment: TonalSentiment?
     var selectedRange: TonalRange?
+    var quote: QuoteObject?
     
     public init(ticker: String? = nil, range: [TonalRange]? = nil, sentiment: TonalSentiment? = nil, selectedRange: TonalRange? = nil) {
         
@@ -21,6 +22,8 @@ class Tone: ObservableObject {
         self.sentiment = sentiment
         self.selectedRange = selectedRange
     }
+    
+    var sliderDays: BasicSliderState = .init()
 }
 
 class SearchQuery: ObservableObject {

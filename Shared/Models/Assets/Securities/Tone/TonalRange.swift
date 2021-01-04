@@ -8,7 +8,13 @@
 import Foundation
 import SwiftUI
 
-public struct TonalRange {
+public struct TonalRange: Hashable {
+    public static func == (lhs: TonalRange, rhs: TonalRange) -> Bool {
+        lhs.objects == rhs.objects &&
+        lhs.similarities == rhs.similarities &&
+        lhs.indicators == rhs.indicators
+    }
+    
     let objects: [SecurityObject]
     let similarities: [TonalSimilarity]
     let indicators: [TonalIndicators]
@@ -63,7 +69,7 @@ extension TonalRange {
     }
 }
 
-public struct TonalSimilarity {
+public struct TonalSimilarity: Hashable {
     let date: Date
     let similarity: Double
     
@@ -72,7 +78,7 @@ public struct TonalSimilarity {
     }
 }
 
-public struct TonalIndicators {
+public struct TonalIndicators: Hashable {
     let date: Date
     let volatility: Double
     let volatilityCoeffecient: Double

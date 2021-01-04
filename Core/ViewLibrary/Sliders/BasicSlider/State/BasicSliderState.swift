@@ -11,6 +11,7 @@ import SwiftUI
 import Combine
 
 public class BasicSliderState: GraniteState {
+    var number: Double = 0.5
 }
 
 public class BasicSliderCenter: GraniteCenter<BasicSliderState> {

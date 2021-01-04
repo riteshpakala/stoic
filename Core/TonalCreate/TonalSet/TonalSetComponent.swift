@@ -38,12 +38,12 @@ public struct TonalSetComponent: GraniteComponent {
             
             ScrollView {
                 LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
-                    ForEach(0..<command.center.tonalRangeData.count, id: \.self) { tonalRangeIndex in
+                    ForEach(command.center.tonalRangeData, id: \.self) { tonalRangeIndex in
                         
                         VStack {
                             Color.black.overlay(
                             
-                                Text(command.center.tonalRangeData[tonalRangeIndex].dateInfoShortDisplay)
+                                Text(tonalRangeIndex.dateInfoShortDisplay)
                                     .granite_innerShadow(
                                     Brand.Colors.white,
                                     radius: 3,
@@ -55,12 +55,12 @@ public struct TonalSetComponent: GraniteComponent {
                             .cornerRadius(8)
                             .onTapGesture(perform:
                                             sendEvent(TonalCreateEvents.Tune(
-                                                        command.center.tonalRangeData[tonalRangeIndex]),
+                                                        tonalRangeIndex),
                                                       contact: true))
                             
-                            Text(command.center.tonalRangeData[tonalRangeIndex].avgSimilarityDisplay)
+                            Text(tonalRangeIndex.avgSimilarityDisplay)
                                 .granite_innerShadow(
-                                    command.center.tonalRangeData[tonalRangeIndex].avgSimilarityColor,
+                                    tonalRangeIndex.avgSimilarityColor,
                                 radius: 3,
                                 offset: .init(x: 2, y: 2))
                                 .multilineTextAlignment(.center)

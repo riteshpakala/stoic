@@ -11,4 +11,7 @@ import SwiftUI
 import Combine
 
 struct BasicSliderEvents {
+    struct Value: GraniteEvent {
+        let data: Double
+    }
 }

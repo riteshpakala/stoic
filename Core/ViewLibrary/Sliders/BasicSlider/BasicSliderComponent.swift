@@ -13,12 +13,16 @@ import Combine
 public struct BasicSliderComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<BasicSliderCenter, BasicSliderState> = .init()
-    @State private var number: Double = 0.5
+
     public init() {}
-    @State var range = 0.0
     public var body: some View {
         VStack {
-            ValueSlider(value: $number)
+            ValueSlider(value: _state.number,
+                        onEditingChanged: { changed in
+                            if !changed {
+                                sendEvent(BasicSliderEvents.Value(data: state.number), contact: true)
+                            }
+                        })
                 .frame(height: 64)
                 .valueSliderStyle(
                     HorizontalValueSliderStyle(

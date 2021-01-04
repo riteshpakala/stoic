@@ -19,16 +19,27 @@ public struct TonalFindComponent: GraniteComponent {
     public var body: some View {
         VStack {
             Spacer().frame(height: Brand.Padding.large)
-            SearchComponent(state: depObject(\.tonalCreateDependency, target: \.search.state))
+            SearchComponent(
+                state: depObject(\.tonalCreateDependency,
+                                 target: \.search.state))
                 .shareRelays(relays(
                                 [StockRelay.self,
                                  CryptoRelay.self]))
-                .inject(dep(\.hosted))
             
             Text("\(command.center.dependency.hosted.identifier)")
             AssetGridComponent()
                 .listen(to: command)
                 .payload(depPayload(\.tonalCreateDependency, target: \.search.securities))
-        }.background(Brand.Colors.black)
+            
+            BasicSliderComponent(
+                state: depObject(\.tonalCreateDependency,
+                                 target: \.tone.sliderDays))
+                .listen(to: command)
+            
+            Text("\(command.center.daysSelected) days")
+            Spacer().frame(height: Brand.Padding.large)
+        }.background(Brand.Colors.black).onTapGesture {
+            sendEvent(TonalFindEvents.Find.init(ticker: "MSFT"))
+        }
     }
 }
