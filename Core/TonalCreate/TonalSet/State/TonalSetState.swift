@@ -11,17 +11,7 @@ import SwiftUI
 import Combine
 
 public class TonalSetState: GraniteState {
-    var tone: Tone {
-        payload?.object as? Tone ?? .init()
-    }
-    
-    var ticker: String? {
-        tone.ticker
-    }
-    
-    var tonalRangeData: [TonalRange] {
-        tone.range ?? []
-    }
+
 }
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
@@ -34,10 +24,17 @@ public class TonalSetCenter: GraniteCenter<TonalSetState> {
     }
     
     var ticker: String? {
-        tone.ticker
+        tone.find.ticker
     }
     
     var tonalRangeData: [TonalRange] {
         tone.range ?? []
+    }
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            SetTheToneExpedition.Discovery(),
+            TonalSentimentHistoryExpedition.Discovery()
+        ]
     }
 }

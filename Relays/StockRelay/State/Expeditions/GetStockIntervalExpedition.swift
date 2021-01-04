@@ -24,7 +24,7 @@ struct GetStockIntervalExpedition: GraniteExpedition {
             
         let testDate: Date = Date.today.advanceDate(value: -60)// -1*abs(event.daysAgo))
         
-        print("{TEST} hey")
+        print("{TEST} hey SI")
         publisher = state
             .service
             .getStockChart(matching: event.symbol,

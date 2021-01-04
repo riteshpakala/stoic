@@ -54,9 +54,8 @@ public struct TonalSetComponent: GraniteComponent {
                             .frame(maxWidth: .infinity, minHeight: 75, maxHeight: 120, alignment: .center)
                             .cornerRadius(8)
                             .onTapGesture(perform:
-                                            sendEvent(TonalCreateEvents.Tune(
-                                                        tonalRangeIndex),
-                                                      contact: true))
+                                            sendEvent(TonalSetEvents.Set(
+                                                        tonalRangeIndex)))
                             
                             Text(tonalRangeIndex.avgSimilarityDisplay)
                                 .granite_innerShadow(

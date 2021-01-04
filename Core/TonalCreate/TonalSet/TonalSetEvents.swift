@@ -11,5 +11,10 @@ import SwiftUI
 import Combine
 
 struct TonalSetEvents {
-    
+    struct Set: GraniteEvent {
+        let range: TonalRange
+        public init(_ range: TonalRange) {
+            self.range = range
+        }
+    }
 }

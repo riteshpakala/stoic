@@ -25,12 +25,7 @@ struct TonalCreateEvents {
 //        }
 //    }
     
-    struct Set: GraniteEvent {
-        let quote: QuoteObject
-        public init(_ quote: QuoteObject) {
-            self.quote = quote
-        }
-    }
+    
     
     struct Tune: GraniteEvent {
         let range: TonalRange

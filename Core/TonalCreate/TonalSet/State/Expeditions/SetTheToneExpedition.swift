@@ -7,10 +7,11 @@
 import Foundation
 import GraniteUI
 import Combine
+import SwiftUI
 
 struct SetTheToneExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = TonalCreateEvents.Set
-    typealias ExpeditionState = TonalCreateState
+    typealias ExpeditionEvent = TonalSetEvents.Set
+    typealias ExpeditionState = TonalSetState
     
     func reduce(
         event: ExpeditionEvent,
@@ -18,10 +19,141 @@ struct SetTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
        
+        print("{TEST} selected the range")
+        connection.dependency(\TonalCreateDependency.tone.selectedRange, value: event.range)
+        
+        if let tone = connection.depObject(\TonalCreateDependency.tone.find.quote),
+           let quote = tone {
+            
+            if let sentiment = getSentiment(quote, event.range) {
+                connection.dependency(\TonalCreateDependency.tone.sentiment, value: sentiment)
+            } else {
+                connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
+            }
+        } else {
+            
+            connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
+        }
+    }
+    
+    //DEV:
+    //for now even if a day is missing we will re-route the whole
+    //range, but later it should be smarter and handle the missing days
+    //and then merge at the end, under the tonalrelay return for the final tonal
+    //create submission
+    //
+    func getSentiment(_ quote: QuoteObject,_ range: TonalRange) -> TonalSentiment? {
+        
+        let dates = range.dates.map { $0.simple }
+        let securities = quote.securities.filter { dates.contains($0.date.simple) }
+        
+        var sounds: [TonalSound] = []
+        for security in securities {
+            if let sentiments = security.sentiment as? Set<SentimentObject> {
+                
+                sounds.append(contentsOf: sentiments.map { $0.sound })
+            }
+        }
+        let sentiment: TonalSentiment = .init(sounds)
+        
+        if securities.count == sentiment.dates.count {
+            return sentiment
+        } else {
+            return nil
+        }
         
     }
 }
 
+struct TonalSentimentHistoryExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = TonalEvents.History
+    typealias ExpeditionState = TonalSetState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        //DEV: Get hits multiple times, need
+        //to understand how it's getting hit so many times
+        //in the beam event system part of the Tonal Relay
+        //
+        print(event.sentiment.stats)
+        
+        if let tone = connection.depObject(\TonalCreateDependency.tone.selectedRange),
+           let range = tone {
+            save(event.sentiment, range)
+        }
+        connection.dependency(\TonalCreateDependency.tone.sentiment, value: event.sentiment)
+    }
+    
+    func save(_ sentiment: TonalSentiment, _ range: TonalRange) {
+        
+        let moc: NSManagedObjectContext
+        if Thread.isMainThread {
+            moc = coreData.main
+        } else {
+            moc = coreData.background
+        }
+        
+        moc.perform {
+            
+            do {
+                
+                let securityObjects = range.objects
+                for object in securityObjects {
+                    let date = object.date.simple
+                    print("{TEST} \(date) - sentimentCount - \(object.sentiment?.count)")
+                    if let sound = sentiment.soundsByDay[date] {
+                        let sentimentObjects: [SentimentObject] = sound.map {
+                            let sentimentObject = SentimentObject(context: moc)
+                            $0.applyTo(sentimentObject)
+                            
+                            //DEV: obv there will be more options in the future
+                            //
+                            sentimentObject.sentimentType = SentimentType.social.rawValue
+                            
+                            return sentimentObject
+                        }
+                        
+                        object.addToSentiment(NSSet.init(array: sentimentObjects))
+                    }
+                }
+                
+//                let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
+//
+//                let quote: QuoteObject = quotes.first(where: { $0.exchangeName == referenceStock.exchangeName && $0.ticker == referenceStock.ticker && $0.securityType == referenceStock.securityType.rawValue && $0.intervalType == referenceStock.interval.rawValue }) ?? QuoteObject.init(context: moc)
+//
+//                referenceStock.apply(to: quote)
+//
+//                for stock in data {
+//                    let object = StockDataObject.init(context: moc)
+//                    stock.apply(to: object)
+//                    quote.addToSecurities(object)
+//                }
+                
+                try moc.save()
+                
+                print ("{CoreData} - sentiment saved")
+//                completion(quote)
+            } catch let error {
+                print ("{CoreData} \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func getQuote() -> [QuoteObject]? {
+        let moc: NSManagedObjectContext
+        if Thread.isMainThread {
+            moc = coreData.main
+        } else {
+            moc = coreData.background
+        }
+        
+        return try? moc.fetch(QuoteObject.fetchRequest())
+    }
+}
 
 //MARK: -- BACKUP
 

@@ -30,6 +30,14 @@ public class TonalState: GraniteState {
             threads: modelThreads,
             dateChunks: dataChunks)
     }
+    
+    lazy var operationQueue: OperationQueue = {
+        var queue: OperationQueue = .init()
+        queue.maxConcurrentOperationCount = 4
+        queue.name = "tonal.relay.predict.op"
+        queue.qualityOfService = .utility
+        return queue
+    }()
 }
 
 public class TonalCenter: GraniteCenter<TonalState> {

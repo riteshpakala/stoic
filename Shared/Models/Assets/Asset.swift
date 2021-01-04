@@ -10,6 +10,7 @@ import Foundation
 public enum AssetType {
     case security
     case model
+    case sentiment
 }
 
 public protocol Asset {

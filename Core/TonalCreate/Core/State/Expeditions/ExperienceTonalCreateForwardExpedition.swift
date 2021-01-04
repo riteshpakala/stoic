@@ -25,7 +25,7 @@ struct ExperienceTonalCreateForwardExpedition: GraniteExpedition {
         
         state.tone = dependency.tone
         
-        print("{TEST} forwarding \(state.tone.ticker)")
+        print("{TEST} forwarding \(state.tone.find.ticker)")
         
 //        switch event.target {
 //        case .modelCreate(.find):

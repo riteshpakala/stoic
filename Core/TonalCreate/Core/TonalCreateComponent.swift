@@ -16,11 +16,6 @@ public struct TonalCreateComponent: GraniteComponent {
     
     public init() {}
     
-    public func link() {
-//        command.link(\TonalState.sentimentProgress,
-//                     target:\.sentimentLoadingProgress)
-    }
-    
     public var body: some View {
         VStack {
             switch state.stage {
@@ -33,20 +28,19 @@ public struct TonalCreateComponent: GraniteComponent {
                     .inject(dep(\.hosted))
             case .set:
                 TonalSetComponent()
+                    .shareRelays(
+                        relays([TonalRelay.self]))
                     .listen(to: command)
                     .inject(dep(\.hosted))
             case .tune:
                 TonalTuneComponent()
                     .listen(to: command)
+                    .shareRelays(
+                        relays([TonalRelay.self]))
                     .inject(dep(\.hosted))
             default:
                 EmptyView.init()
             }
-            
-//            if (state.stage == .tune) {
-//                Text("\(state.sentimentLoadingProgress)")
-//                TonalTuneComponent().payload(state.payload).listen(to: command)
-//            }
             
             
         }

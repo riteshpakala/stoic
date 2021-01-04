@@ -20,10 +20,10 @@ struct GetSentimentExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         state.service.soundAggregate.range = event.range
-        
+        state.operationQueue.cancelAllOperations()
         state.stage = .searching
         
-        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: state.dataChunks)
+        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: state.service.soundAggregate.dates.count/2)
         
         for chunk in chunks {
             let sorted = chunk.sorted(by: { $0.compare($1) == .orderedDescending })
@@ -86,29 +86,40 @@ struct TonalHistoryExpedition: GraniteExpedition {
         print("starting \(chunks.count)")
         print("\(tweet.result.map { $0.date.asDouble.date().asString }.uniques)")
         
+        var currentOps: [BlockOperation] = []
         for (index, chunk) in chunks.enumerated() {
             //Threaded inference
-            thread.async {
+            
+            let op: BlockOperation = .init(block: {
                 let query = tweet.query
                 let model: StoicSentimentModel = .init()
                 var sounds: [TonalSound] = []
+            
+            
                 for result in chunk {
-                    if let prediction = model.predict(result.content, matching: query) {
+                        if let prediction = model.predict(result.content, matching: query) {
 
-                        sounds.append(TonalSound.init(
-                                            date: result.date.asDouble.date(),
-                                            content: result.content,
-                                            sentiment: prediction))
-                        
-//                        print("{TEST} updated thread \(index + 1)")
-                    }
+                            sounds.append(TonalSound.init(
+                                                date: result.date.asDouble.date(),
+                                                content: result.content,
+                                                sentiment: prediction))
+                            
+//                            print("{TEST} updated thread \(index + 1)")
+                        }
                 }
 
                 connection.request(TonalEvents
                                     .TonalSounds
-                                    .init(sounds: sounds),queue: .main)
-            }
+                                    .init(sounds: sounds),
+                                   queue: .main)
+                
+            })
+            
+            currentOps.append(op)
         }
+        
+        state.operationQueue.addOperations(currentOps, waitUntilFinished: false)
+        
     }
     
     var thread: DispatchQueue {
@@ -139,7 +150,6 @@ struct TonalSoundsExpedition: GraniteExpedition {
             state.stage = .compiling
             let sentiment: TonalSentiment = .init(compiled)
             state.stage = .none
-            
             connection.request(TonalEvents.History.init(sentiment: sentiment), beam: true)
         }
     }

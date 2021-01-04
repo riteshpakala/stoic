@@ -15,6 +15,9 @@ extension String {
 }
 
 extension Date {
+    var simple: Date {
+        self.asString.asDate() ?? self
+    }
     var asString: String {
         return Calendar.nyDateFormatter.string(from: self)
     }

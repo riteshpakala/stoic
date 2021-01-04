@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B5022a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20B5012d" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CryptoDataObject" representedClassName=".CryptoDataObject" parentEntity="SecurityObject" syncable="YES"/>
     <entity name="QuoteObject" representedClassName=".QuoteObject" syncable="YES">
         <attribute name="exchangeName" attributeType="String"/>
@@ -30,6 +30,7 @@
         <attribute name="ticker" attributeType="String"/>
         <attribute name="volumeValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="quote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="securities" inverseEntity="QuoteObject"/>
+        <relationship name="sentiment" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="SentimentObject" inverseName="security" inverseEntity="SentimentObject"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="date"/>
@@ -39,6 +40,23 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="SentimentObject" representedClassName=".SentimentObject" isAbstract="YES" syncable="YES">
+        <attribute name="compound" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="content" attributeType="String"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="neg" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="neu" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pos" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="sentimentType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="security" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="sentiment" inverseEntity="SecurityObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="date"/>
+                <constraint value="content"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="SocialDataObject" representedClassName=".SocialDataObject" isAbstract="YES" parentEntity="SentimentObject" syncable="YES"/>
     <entity name="StockDataObject" representedClassName=".StockDataObject" parentEntity="SecurityObject" syncable="YES">
         <attribute name="close" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="high" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -49,7 +67,9 @@
     <elements>
         <element name="CryptoDataObject" positionX="-15.463134765625" positionY="-21.51837158203125" width="128" height="29"/>
         <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="104"/>
-        <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="238"/>
+        <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="239"/>
+        <element name="SentimentObject" positionX="-45" positionY="-450" width="128" height="149"/>
         <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>
+        <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
     </elements>
 </model>

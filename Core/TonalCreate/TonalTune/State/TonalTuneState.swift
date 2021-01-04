@@ -11,13 +11,7 @@ import SwiftUI
 import Combine
 
 public class TonalTuneState: GraniteState {
-    var tone: Tone {
-        payload?.object as? Tone ?? .init()
-    }
-    
-    var tonalSentiment: TonalSentiment {
-        tone.sentiment ?? .empty
-    }
+    var sentimentLoadingProgress: Double = 0.0
 }
 
 public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
@@ -31,5 +25,15 @@ public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
     
     var tonalSentiment: TonalSentiment {
         tone.sentiment ?? .empty
+    }
+    
+    var sentimentIsAvailable: Bool {
+        tone.sentiment != nil
+    }
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            TuneTheToneExpedition.Discovery(),
+        ]
     }
 }

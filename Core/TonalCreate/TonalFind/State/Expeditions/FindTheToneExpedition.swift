@@ -21,10 +21,18 @@ struct FindTheToneExpedition: GraniteExpedition {
         
 //        state.stage = .find
         print("{TEST} on appear")
+        //DEV:
+        // Need to also check for last trading day
+        // update the cache from last date saved to the recent day
+        // requested on
+        //
         guard let ticker = event.ticker else { return }
         if let quote = getQuote()?.first(where: { $0.ticker == ticker && $0.intervalType == SecurityInterval.day.rawValue }) {
             
-            connection.dependency(\TonalCreateDependency.tone.quote, value: quote)
+            
+            connection.dependency(\TonalCreateDependency.tone.find.quote, value: quote)
+            
+            
             connection.request(TonalFindEvents.Parse(quote, days: state.days))
         } else {
             connection.request(StockEvents.GetStockHistory.init(ticker: ticker), beam: true)
@@ -61,7 +69,7 @@ struct StockHistoryExpedition: GraniteExpedition {
             if let object = quote {
                 
                 
-                connection.dependency(\TonalCreateDependency.tone.quote, value: object)
+                connection.dependency(\TonalCreateDependency.tone.find.quote, value: object)
                 connection.request(TonalFindEvents.Parse(object, days: state.days))
 //                connection.request(TonalCreateEvents.Set(object))
             }

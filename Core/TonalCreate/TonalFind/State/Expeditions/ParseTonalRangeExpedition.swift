@@ -23,13 +23,9 @@ struct TonalRangeChangedExpedition: GraniteExpedition {
         let days: Double = event.data*dayDiff
         state.days = Int(days) + state.minDays
         
-        
-        if let tonal = connection.depObject(\TonalCreateDependency.tone.quote), let quote = tonal {
-            
-            print("{TEST} got it")
+        if let tonalFind = connection.depObject(\TonalCreateDependency.tone.find.quote),
+           let quote = tonalFind {
             connection.request(TonalFindEvents.Parse(quote, days: state.days))
-        } else {
-            
         }
     }
 }

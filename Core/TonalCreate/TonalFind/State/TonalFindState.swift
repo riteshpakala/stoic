@@ -12,7 +12,7 @@ import Combine
 
 public class TonalFindState: GraniteState {
     var securityData: [Security] = []
-    var days: Int = 7
+    var days: Int = 5
     var maxDays: Int = 30
     var minDays: Int = 4
     var dayRangevalue: Int = 0
@@ -31,6 +31,7 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             FindTheToneExpedition.Discovery(),
+            StockHistoryExpedition.Discovery(),
             TonalRangeChangedExpedition.Discovery(),
             ParseTonalRangeExpedition.Discovery(),
             SearchTheToneExpedition.Discovery(),

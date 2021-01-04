@@ -1,8 +1,8 @@
 //
 //  SecurityObject+CoreDataProperties.swift
-//  * stoic (iOS)
+//  * stoic
 //
-//  Created by Ritesh Pakala on 12/23/20.
+//  Created by Ritesh Pakala on 1/4/21.
 //
 //
 
@@ -16,18 +16,37 @@ extension SecurityObject {
         return NSFetchRequest<SecurityObject>(entityName: "SecurityObject")
     }
 
-    @NSManaged public var ticker: String
-    @NSManaged public var exchangeName: String
-    @NSManaged public var intervalType: String
-    @NSManaged public var securityType: Int64
-    @NSManaged public var indicator: String
-    @NSManaged public var lastValue: Double
-    @NSManaged public var highValue: Double
-    @NSManaged public var lowValue: Double
-    @NSManaged public var changePercentValue: Double
     @NSManaged public var changeAbsoluteValue: Double
-    @NSManaged public var volumeValue: Double
+    @NSManaged public var changePercentValue: Double
     @NSManaged public var date: Date
+    @NSManaged public var exchangeName: String
+    @NSManaged public var highValue: Double
+    @NSManaged public var indicator: String
+    @NSManaged public var intervalType: String
+    @NSManaged public var lastValue: Double
+    @NSManaged public var lowValue: Double
+    @NSManaged public var securityType: Int64
+    @NSManaged public var ticker: String
+    @NSManaged public var volumeValue: Double
+    @NSManaged public var quote: QuoteObject?
+    @NSManaged public var sentiment: NSSet?
+
+}
+
+// MARK: Generated accessors for sentiment
+extension SecurityObject {
+
+    @objc(addSentimentObject:)
+    @NSManaged public func addToSentiment(_ value: SentimentObject)
+
+    @objc(removeSentimentObject:)
+    @NSManaged public func removeFromSentiment(_ value: SentimentObject)
+
+    @objc(addSentiment:)
+    @NSManaged public func addToSentiment(_ values: NSSet)
+
+    @objc(removeSentiment:)
+    @NSManaged public func removeFromSentiment(_ values: NSSet)
 
 }
 

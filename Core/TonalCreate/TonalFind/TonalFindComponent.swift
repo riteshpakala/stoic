@@ -29,11 +29,12 @@ public struct TonalFindComponent: GraniteComponent {
             Text("\(command.center.dependency.hosted.identifier)")
             AssetGridComponent()
                 .listen(to: command)
-                .payload(depPayload(\.tonalCreateDependency, target: \.search.securities))
+                .payload(depPayload(\.tonalCreateDependency,
+                                    target: \.search.securities))
             
             BasicSliderComponent(
                 state: depObject(\.tonalCreateDependency,
-                                 target: \.tone.sliderDays))
+                                 target: \.tone.find.sliderDays))
                 .listen(to: command)
             
             Text("\(command.center.daysSelected) days")
