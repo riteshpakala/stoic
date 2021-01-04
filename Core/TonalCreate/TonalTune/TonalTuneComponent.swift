@@ -27,6 +27,18 @@ public struct TonalTuneComponent: GraniteComponent {
         GridItem(.flexible()),
     ]
     
+    func getSentiment(date: Date) -> SentimentSliderState {
+        let tuners = depObject(\.tonalCreateDependency,
+                                     target: \.tone.tuners)
+        
+        return tuners?[date]?.slider ?? .init()
+    }
+    
+    func getTunerSentiment(date: Date) -> SentimentOutput {
+        return state.tuners[date]?.slider.sentiment ??
+            (command.center.tonalSentiment.sentimentsByDay[date] ?? .zero)
+    }
+    
     public var body: some View {
         VStack {
             
@@ -38,13 +50,21 @@ public struct TonalTuneComponent: GraniteComponent {
                             VStack {
                                 Text(sentimentDate.asString)
                                     .granite_innerShadow(
-                                    Brand.Colors.white,
-                                    radius: 3,
-                                    offset: .init(x: 2, y: 2))
+                                        Brand.Colors.white,
+                                        radius: 3,
+                                        offset: .init(x: 2, y: 2))
                                     .multilineTextAlignment(.center)
                                     .font(Fonts.live(.subheadline, .regular))
-    //                            Text(command.center.tonalSentiment.soundsByDay[sentimentDate]?[0])
-                                SentimentSliderComponent()
+                                
+                                SentimentSliderComponent(state: getSentiment(date: sentimentDate)).listen(to: command)
+                                
+                                Text(getTunerSentiment(date: sentimentDate).asString)
+                                    .granite_innerShadow(
+                                        Brand.Colors.yellow,
+                                        radius: 3,
+                                        offset: .init(x: 2, y: 2))
+                                    .multilineTextAlignment(.center)
+                                    .font(Fonts.live(.subheadline, .regular))
                             }
                         }
                     }
@@ -55,10 +75,11 @@ public struct TonalTuneComponent: GraniteComponent {
                 Brand.Colors.black.overlay(
                     VStack {
                         if command.center.tone.sentiment == nil {
-                            Text("loading... \(state.sentimentLoadingProgress)").granite_innerShadow(
-                                Brand.Colors.white,
-                                radius: 3,
-                                offset: .init(x: 2, y: 2))
+                            Text("loading... \(state.sentimentLoadingProgress)")
+                                .granite_innerShadow(
+                                    Brand.Colors.white,
+                                    radius: 3,
+                                    offset: .init(x: 2, y: 2))
                                 .multilineTextAlignment(.center)
                                 .font(Fonts.live(.subheadline, .regular))
                         }

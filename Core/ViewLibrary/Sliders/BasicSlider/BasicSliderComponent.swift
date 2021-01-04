@@ -19,9 +19,9 @@ public struct BasicSliderComponent: GraniteComponent {
         VStack {
             ValueSlider(value: _state.number,
                         onEditingChanged: { changed in
-                            if !changed {
-                                sendEvent(BasicSliderEvents.Value(data: state.number), contact: true)
-                            }
+                            sendEvent(BasicSliderEvents.Value(
+                                        data: state.number,
+                                        isActive: changed), contact: true)
                         })
                 .frame(height: 64)
                 .valueSliderStyle(

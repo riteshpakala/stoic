@@ -74,5 +74,6 @@ public struct TonalSetComponent: GraniteComponent {
             .padding(.trailing, Brand.Padding.medium)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .background(Brand.Colors.black)
     }
 }

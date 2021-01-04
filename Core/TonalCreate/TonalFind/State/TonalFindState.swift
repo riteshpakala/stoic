@@ -25,7 +25,7 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
     }
     
     var daysSelected: Int {
-        tonalCreateDependency.tone.range?.first?.dates.count ?? state.days
+        /*tonalCreateDependency.tone.range?.first?.dates.count ?? */state.days
     }
     
     public override var expeditions: [GraniteBaseExpedition] {

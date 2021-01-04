@@ -13,13 +13,20 @@ import Combine
 public struct SentimentSliderComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<SentimentSliderCenter, SentimentSliderState> = .init()
-    @State var pointX1 = 0.5
-    @State var pointY1 = 0.5
+    
     public init() {}
     
     public var body: some View {
-        PointSlider(x: $pointX1, y: $pointY1)
-            .frame(height: 256)
+        PointSlider(x: _state.pointX1,
+                    y: _state.pointY1,
+                    onEditingChanged: { changed in
+                        sendEvent(SentimentSliderEvents.Value(
+                                    x: state.pointX1,
+                                    y: state.pointY1,
+                                    isActive: changed,
+                                    date: state.date), contact: true)
+                    })
+            .frame(height: 144)
             .pointSliderStyle(
                 RectangularPointSliderStyle(
                     track:
@@ -29,7 +36,7 @@ public struct SentimentSliderComponent: GraniteComponent {
 //                            LinearGradient(gradient: Gradient(colors: [.white, .clear]), startPoint: .bottom, endPoint: .top).blendMode(.hardLight)
                         }
                         .cornerRadius(24),
-                    thumbSize: CGSize(width: 48, height: 48)
+                    thumbSize: CGSize(width: 36, height: 36)
                 )
             )
     }

@@ -11,4 +11,10 @@ import SwiftUI
 import Combine
 
 struct SentimentSliderEvents {
+    struct Value: GraniteEvent {
+        let x: Double
+        let y: Double
+        let isActive: Bool
+        let date: Date
+    }
 }

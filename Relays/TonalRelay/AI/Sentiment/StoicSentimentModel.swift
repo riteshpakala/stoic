@@ -1,11 +1,19 @@
 import Foundation
 import CoreML
 
-struct SentimentOutput {
-    let pos: Double
-    let neg: Double
-    let neu: Double
-    let compound: Double
+public struct SentimentOutput {
+    public let pos: Double
+    public let neg: Double
+    public let neu: Double
+    public let compound: Double
+    
+    public var asString: String {
+        "[neg: \((neg*100).asInt)% | pos: \((pos*100).asInt)%] // bias: \((neu*100).asInt)%"
+    }
+    
+    public static var zero: SentimentOutput {
+        return .init(pos: 0.0, neg: 0.0, neu: 0.0, compound: 0.0)
+    }
 }
 
 class StoicSentimentModel {

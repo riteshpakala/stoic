@@ -12,6 +12,8 @@ import Combine
 
 public class TonalTuneState: GraniteState {
     var sentimentLoadingProgress: Double = 0.0
+    
+    var tuners: [Date:Tone.Tune] = [:]
 }
 
 public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
@@ -33,6 +35,7 @@ public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
+            TonalTuneChangedExpedition.Discovery(),
             TuneTheToneExpedition.Discovery(),
         ]
     }

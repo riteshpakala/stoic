@@ -14,6 +14,12 @@ struct TonalSentiment {
     let datesByDay: [Date]
     let soundsByDay: [Date: [TonalSound]]
     
+    let sentiments: [Date: SentimentOutput]
+    let sentimentDefaults: [Date: SentimentOutput]
+    
+    let sentimentsByDay: [Date: SentimentOutput]
+    let sentimentDefaultsByDay: [Date: SentimentOutput]
+    
     public init(_ sounds: [TonalSound]) {
         let uniques = Array(Set(sounds))
         
@@ -27,13 +33,49 @@ struct TonalSentiment {
         self.sounds = soundsFound
         
         //By Day for easy grouping
-        datesByDay = uniques.map({ $0.date.asString.asDate() ?? $0.date }).uniques
+        datesByDay = uniques.map({ $0.date.asString.asDate() ?? $0.date }).uniques.sorted(by: { $0.compare($1) == .orderedDescending })
         
         var soundsFoundByDay: [Date: [TonalSound]] = [:]
         datesByDay.forEach { date in
             soundsFoundByDay[date] = uniques.filter { $0.date.asString == date.asString }
         }
         self.soundsByDay = soundsFoundByDay
+        
+        //Setup initial sentiments
+        var sentimentDefaultsFound: [Date: SentimentOutput] = [:]
+        dates.forEach { date in
+            let sentiments = soundsFound[date]?.compactMap { $0.sentiment }
+            let posSum = (sentiments?.compactMap { $0.pos }.reduce(0, +) ?? 0.0)
+            let negSum = (sentiments?.compactMap { $0.neg }.reduce(0, +) ?? 0.0)
+            let neuSum = (sentiments?.compactMap { $0.neu }.reduce(0, +) ?? 0.0)
+            let compSum = (sentiments?.compactMap { $0.compound }.reduce(0, +) ?? 0.0)
+            let total: Double = (sentiments?.count ?? 0).asDouble
+            let avgSentiment = SentimentOutput.init(pos: posSum/total,
+                                                    neg: negSum/total,
+                                                    neu: neuSum/total,
+                                                    compound: compSum/total)
+            sentimentDefaultsFound[date] = avgSentiment
+        }
+        
+        self.sentimentDefaults = sentimentDefaultsFound
+        self.sentiments = sentimentDefaultsFound
+        
+        var sentimentDefaultsByDayFound: [Date: SentimentOutput] = [:]
+        datesByDay.forEach { date in
+            let sentiments = soundsFoundByDay[date]?.compactMap { $0.sentiment }
+            let posSum = (sentiments?.compactMap { $0.pos }.reduce(0, +) ?? 0.0)
+            let negSum = (sentiments?.compactMap { $0.neg }.reduce(0, +) ?? 0.0)
+            let neuSum = (sentiments?.compactMap { $0.neu }.reduce(0, +) ?? 0.0)
+            let compSum = (sentiments?.compactMap { $0.compound }.reduce(0, +) ?? 0.0)
+            let total: Double = (sentiments?.count ?? 0).asDouble
+            let avgSentiment = SentimentOutput.init(pos: posSum/total,
+                                                    neg: negSum/total,
+                                                    neu: neuSum/total,
+                                                    compound: compSum/total)
+            sentimentDefaultsByDayFound[date] = avgSentiment
+        }
+        self.sentimentsByDay = sentimentDefaultsByDayFound
+        self.sentimentDefaultsByDay = sentimentDefaultsByDayFound
     }
     
     public var stats: String {

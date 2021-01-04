@@ -18,7 +18,20 @@ class TonalCreateDependency: DependencyManager {
 
 class Tone: ObservableObject {
     var range: [TonalRange]?
-    var sentiment: TonalSentiment?
+    
+    
+    //Based on day interval the sentiment slider state would change
+    //
+    var sentiment: TonalSentiment? {
+        didSet {
+            if let senti = sentiment {
+                for date in senti.datesByDay {
+                    tuners[date] = .init(senti.sentimentsByDay[date] ?? .zero, date: date)
+                }
+            }
+        }
+    }
+    
     var selectedRange: TonalRange?
     
     public init(ticker: String? = nil, range: [TonalRange]? = nil, sentiment: TonalSentiment? = nil, selectedRange: TonalRange? = nil) {
@@ -31,10 +44,18 @@ class Tone: ObservableObject {
     
     // Stages
     var find: Find = .init()
+    var tuners: [Date: Tune] = [:]
     
     struct Find {
         var ticker: String?
         var quote: QuoteObject?
         var sliderDays: BasicSliderState = .init()
+    }
+    
+    struct Tune {
+        var slider: SentimentSliderState
+        public init(_ sentimentOutput: SentimentOutput, date: Date) {
+            slider = .init(sentimentOutput, date: date)
+        }
     }
 }

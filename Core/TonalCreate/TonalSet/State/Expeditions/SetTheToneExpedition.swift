@@ -86,6 +86,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
            let range = tone {
             save(event.sentiment, range)
         }
+        
         connection.dependency(\TonalCreateDependency.tone.sentiment, value: event.sentiment)
     }
     
@@ -121,18 +122,6 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
                         object.addToSentiment(NSSet.init(array: sentimentObjects))
                     }
                 }
-                
-//                let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
-//
-//                let quote: QuoteObject = quotes.first(where: { $0.exchangeName == referenceStock.exchangeName && $0.ticker == referenceStock.ticker && $0.securityType == referenceStock.securityType.rawValue && $0.intervalType == referenceStock.interval.rawValue }) ?? QuoteObject.init(context: moc)
-//
-//                referenceStock.apply(to: quote)
-//
-//                for stock in data {
-//                    let object = StockDataObject.init(context: moc)
-//                    stock.apply(to: object)
-//                    quote.addToSecurities(object)
-//                }
                 
                 try moc.save()
                 
