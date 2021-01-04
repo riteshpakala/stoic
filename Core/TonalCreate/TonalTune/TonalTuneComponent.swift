@@ -29,20 +29,6 @@ public struct TonalTuneComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            Brand.Colors.black.overlay(
-                VStack {
-                    if command.center.tone.sentiment == nil {
-                        Text("loading... \(state.sentimentLoadingProgress)").granite_innerShadow(
-                            Brand.Colors.white,
-                            radius: 3,
-                            offset: .init(x: 2, y: 2))
-                            .multilineTextAlignment(.center)
-                            .font(Fonts.live(.subheadline, .regular))
-                    }
-                }
-            )
-            .frame(width: 120, height: 75, alignment: .center)
-            .cornerRadius(8)
             
             if command.center.sentimentIsAvailable {
                 ScrollView {
@@ -64,6 +50,22 @@ public struct TonalTuneComponent: GraniteComponent {
                     }
                 }
                 
+            } else {
+                
+                Brand.Colors.black.overlay(
+                    VStack {
+                        if command.center.tone.sentiment == nil {
+                            Text("loading... \(state.sentimentLoadingProgress)").granite_innerShadow(
+                                Brand.Colors.white,
+                                radius: 3,
+                                offset: .init(x: 2, y: 2))
+                                .multilineTextAlignment(.center)
+                                .font(Fonts.live(.subheadline, .regular))
+                        }
+                    }
+                )
+                .frame(width: 120, height: 75, alignment: .center)
+                .cornerRadius(8)
             }
             
         }.padding(.leading, Brand.Padding.large).padding(.trailing, Brand.Padding.large)

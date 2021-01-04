@@ -24,11 +24,12 @@ struct SetTheToneExpedition: GraniteExpedition {
         
         if let tone = connection.depObject(\TonalCreateDependency.tone.find.quote),
            let quote = tone {
-            
-            if let sentiment = getSentiment(quote, event.range) {
-                connection.dependency(\TonalCreateDependency.tone.sentiment, value: sentiment)
-            } else {
-                connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
+            DispatchQueue.global(qos: .utility).async {
+                if let sentiment = getSentiment(quote, event.range) {
+                    connection.dependency(\TonalCreateDependency.tone.sentiment, value: sentiment)
+                } else {
+                    connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
+                }
             }
         } else {
             
@@ -55,8 +56,8 @@ struct SetTheToneExpedition: GraniteExpedition {
             }
         }
         let sentiment: TonalSentiment = .init(sounds)
-        
-        if securities.count == sentiment.dates.count {
+        print("{TEST} \(securities.count) \(sentiment.datesByDay.count)")
+        if securities.count == sentiment.datesByDay.count {
             return sentiment
         } else {
             return nil
