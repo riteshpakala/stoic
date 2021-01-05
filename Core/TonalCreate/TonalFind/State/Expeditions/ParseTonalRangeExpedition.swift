@@ -95,7 +95,6 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
             }
         }
         
-        
         connection.dependency(\TonalCreateDependency.tone.range, value: candidates)
         
     }

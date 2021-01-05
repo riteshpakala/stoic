@@ -104,12 +104,39 @@ extension TonalModels {
     public func predict(_ tone: Tone,
                         _ sentiment: SentimentOutput) -> Double? {
         
-        guard let quote = tone.selectedRange?.objects.first?.quote?.asQuote else {
-            print("⚠️ Test prediction failed.")
+        guard let selectedRange = tone.selectedRange else {
+            print("⚠️ Test prediction failed - selected range")
             return nil
         }
         
-        guard let security = quote.securities.sortDesc.first else { return nil }
+        guard let quote = selectedRange.objects.first?.quote?.asQuote else {
+            print("⚠️ Test prediction failed - quote")
+            return nil
+        }
+        
+        let sortedSecurities = quote.securities.sortDesc
+        let security: Security
+        
+        if selectedRange.base {
+            guard let baseSecurity = sortedSecurities.first else { return nil }
+            security = baseSecurity
+        } else {
+            let sortedRange = selectedRange.objects.compactMap({ $0.asSecurity }).sortDesc
+            
+            // We want to predict based off the "next day" in the sequence
+            // of days used to train the model that would be based on days
+            // of the past. Combines with today's sentiment, let's see
+            // how the future can meet the past.
+            //
+            guard let firstRangeSecurity = sortedRange.first else { return nil }
+            
+            guard let lastSecurity = sortedSecurities.filter({ firstRangeSecurity.date.compare($0.date) == .orderedAscending }).last else {
+                return nil
+            }
+            
+            security = lastSecurity
+        }
+        
         
         let testData = DataSet(
             dataType: .Regression,
@@ -139,8 +166,10 @@ extension TonalModels {
             return nil
         }
         
-        print("🧬🧬🧬🧬🧬🧬\n[Prediction Output] :: \(output)\n🧬")
-        return output
+        let change = (output - security.lastValue) / security.lastValue
+        
+        print("🧬🧬🧬🧬🧬🧬\n[Prediction Output] :: \(change)\n🧬")
+        return change
     }
     
     public func testPredict(tone: Tone) {
