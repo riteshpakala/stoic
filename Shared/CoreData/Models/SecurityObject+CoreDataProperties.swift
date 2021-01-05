@@ -29,7 +29,7 @@ extension SecurityObject {
     @NSManaged public var ticker: String
     @NSManaged public var volumeValue: Double
     @NSManaged public var quote: QuoteObject?
-    @NSManaged public var sentiment: NSSet?
+    @NSManaged public var sentiment: Set<SentimentObject>?
 
 }
 

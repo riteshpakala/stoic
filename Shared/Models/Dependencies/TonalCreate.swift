@@ -16,7 +16,7 @@ class TonalCreateDependency: DependencyManager {
     var search: SearchQuery = .init()
 }
 
-class Tone: ObservableObject {
+public class Tone: ObservableObject {
     var range: [TonalRange]?
     
     
@@ -26,15 +26,18 @@ class Tone: ObservableObject {
         didSet {
             if let senti = sentiment {
                 for date in senti.datesByDay {
-                    tuners[date] = .init(senti.sentimentsByDay[date] ?? .zero, date: date)
+                    tune.tuners[date] = .init(senti.sentimentsByDay[date] ?? .zero, date: date)
                 }
             }
         }
     }
     
-    var selectedRange: TonalRange?
+    public var selectedRange: TonalRange?
     
-    public init(ticker: String? = nil, range: [TonalRange]? = nil, sentiment: TonalSentiment? = nil, selectedRange: TonalRange? = nil) {
+    public init(ticker: String? = nil,
+                range: [TonalRange]? = nil,
+                sentiment: TonalSentiment? = nil,
+                selectedRange: TonalRange? = nil) {
         
         self.find.ticker = ticker
         self.range = range
@@ -43,10 +46,11 @@ class Tone: ObservableObject {
     }
     
     // Stages
-    var find: Find = .init()
-    var tuners: [Date: Tune] = [:]
+    public var find: Find = .init()
+    public var tune: Tune = .init()
+    public var compile: Compile = .init()
     
-    struct Find {
+    public struct Find {
         var ticker: String?
         var quote: QuoteObject?
         
@@ -56,10 +60,33 @@ class Tone: ObservableObject {
         var sliderDays: BasicSliderState = .init()
     }
     
-    struct Tune {
+    public struct Tune {
+        var tuners: [Date: Tuner] = [:]
+        var sentiments: [Date: SentimentOutput] = [:]
+    }
+    
+    public struct Tuner {
         var slider: SentimentSliderState
         public init(_ sentimentOutput: SentimentOutput, date: Date) {
             slider = .init(sentimentOutput, date: date)
         }
+    }
+    
+    public struct Compile {
+        public enum State {
+            case compiled
+            case compiling
+            case readyToCompile
+            case none
+        }
+        
+        var state: Compile.State = .none {
+            didSet {
+                lastState = oldValue
+            }
+        }
+        var lastState: Compile.State = .none
+        
+        var model: SVMModel?
     }
 }

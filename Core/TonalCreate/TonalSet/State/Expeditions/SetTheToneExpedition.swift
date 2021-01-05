@@ -50,10 +50,7 @@ struct SetTheToneExpedition: GraniteExpedition {
         
         var sounds: [TonalSound] = []
         for security in securities {
-            if let sentiments = security.sentiment as? Set<SentimentObject> {
-                
-                sounds.append(contentsOf: sentiments.map { $0.sound })
-            }
+            sounds.append(contentsOf: security.sentiment?.compactMap { $0.sound } ?? [])
         }
         let sentiment: TonalSentiment = .init(sounds)
         print("{TEST} \(securities.count) \(sentiment.datesByDay.count)")

@@ -29,7 +29,7 @@ public struct TonalTuneComponent: GraniteComponent {
     
     func getSentiment(date: Date) -> SentimentSliderState {
         let tuners = depObject(\.tonalCreateDependency,
-                                     target: \.tone.tuners)
+                               target: \.tone.tune.tuners)
         
         return tuners?[date]?.slider ?? .init()
     }
@@ -92,7 +92,9 @@ public struct TonalTuneComponent: GraniteComponent {
             
             
             
-            BasicButton()
+            BasicButton(text: "Generate").onTapGesture {
+                sendEvent(TonalTuneEvents.Tune())
+            }
             
         }.padding(.leading, Brand.Padding.large)
         .padding(.trailing, Brand.Padding.large)

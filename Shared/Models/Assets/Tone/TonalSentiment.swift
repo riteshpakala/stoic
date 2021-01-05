@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct TonalSentiment {
+public struct TonalSentiment {
     let dates: [Date]
     let sounds: [Date: [TonalSound]]
     let datesByDay: [Date]
@@ -90,11 +90,11 @@ struct TonalSentiment {
     }
 }
 
-struct TonalSound: Equatable, Hashable {
-    static func ==(lhs: TonalSound, rhs: TonalSound) -> Bool {
+public struct TonalSound: Equatable, Hashable {
+    public static func ==(lhs: TonalSound, rhs: TonalSound) -> Bool {
         return lhs.content == rhs.content
     }
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(content)
     }
     

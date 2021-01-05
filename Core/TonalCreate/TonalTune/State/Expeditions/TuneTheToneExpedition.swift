@@ -35,7 +35,7 @@ struct TonalTuneChangedExpedition: GraniteExpedition {
         
 //        print("{TEST} \(posValue) \(negValue) \(neuValue) \(event.x)")
         
-        if let tuner = connection.depObject(\TonalCreateDependency.tone.tuners),
+        if let tuner = connection.depObject(\TonalCreateDependency.tone.tune.tuners),
            let tune = tuner[event.date]{
             
             tune.slider.sentiment = .init(
@@ -52,36 +52,29 @@ struct TonalTuneChangedExpedition: GraniteExpedition {
 }
 
 struct TuneTheToneExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = TonalCreateEvents.Tune
-    typealias ExpeditionState = TonalCreateState
+    typealias ExpeditionEvent = TonalTuneEvents.Tune
+    typealias ExpeditionState = TonalTuneState
     
     func reduce(
         event: ExpeditionEvent,
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        
-//        state.stage = .tune
         print("{TEST} tuning")
         
-//        state.payload = .init(object: Tone.init(range: state.tone.range, selectedRange: event.range))
-//        
-//        connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
+        if let tuners = connection.depObject(\TonalCreateDependency.tone.tune.tuners) {
+            var sentiments: [Date: SentimentOutput] = [:]
+            let dates = Array(tuners.keys)
+            for date in dates {
+                if let tuner = tuners[date] {
+                    sentiments[date] = tuner.slider.sentiment
+                }
+            }
+            connection.dependency(\TonalCreateDependency.tone.tune.sentiments,
+                                  value: sentiments)
+            
+            connection.dependency(\TonalCreateDependency.tone.compile.state,
+                                  value: .readyToCompile)
+        }
     }
 }
-
-//struct TonalSentimentHistoryExpedition: GraniteExpedition {
-//    typealias ExpeditionEvent = TonalEvents.History
-//    typealias ExpeditionState = TonalCreateState
-//    
-//    func reduce(
-//        event: ExpeditionEvent,
-//        state: ExpeditionState,
-//        connection: GraniteConnection,
-//        publisher: inout AnyPublisher<GraniteEvent, Never>) {
-//        
-//        print(event.sentiment.stats)
-//        
-//        state.payload = .init(object: Tone.init(range: state.tone.range, sentiment: event.sentiment, selectedRange: state.tone.selectedRange))
-//    }
-//}

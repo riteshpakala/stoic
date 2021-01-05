@@ -13,7 +13,7 @@ import Combine
 public class TonalTuneState: GraniteState {
     var sentimentLoadingProgress: Double = 0.0
     
-    var tuners: [Date:Tone.Tune] = [:]
+    var tuners: [Date:Tone.Tuner] = [:]
 }
 
 public class TonalTuneCenter: GraniteCenter<TonalTuneState> {

@@ -11,4 +11,7 @@ import SwiftUI
 import Combine
 
 struct TonalTuneEvents {
+    public struct Tune: GraniteEvent {
+        
+    }
 }

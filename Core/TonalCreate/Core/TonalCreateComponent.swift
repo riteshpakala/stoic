@@ -39,7 +39,9 @@ public struct TonalCreateComponent: GraniteComponent {
                         relays([TonalRelay.self]))
                     .inject(dep(\.hosted))
             case .compile:
-                EmptyView.init()
+                TonalCompileComponent()
+                    .listen(to: command)
+                    .inject(dep(\.hosted))
             default:
                 EmptyView.init()
             }
