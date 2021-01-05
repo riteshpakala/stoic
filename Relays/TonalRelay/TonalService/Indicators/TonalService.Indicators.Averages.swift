@@ -28,7 +28,11 @@ extension TonalServiceModels.Indicators {
         history.map { $0.volumeValue }.reduce(0, +) / history.count.asDouble
     }
     
-    func sma(_ days: Int = 20) -> Double {
+    var vwa: Double {
+        security.volumeValue / avgVolume
+    }
+    
+    func sma(_ days: Int = 24) -> Double {
         let prefix = history.prefix(days)
         
         if prefix.count == days {
@@ -36,6 +40,10 @@ extension TonalServiceModels.Indicators {
         } else {
             return prefix.map { $0.dayAverage }.reduce(0, +) / prefix.count.asDouble
         }
+    }
+    
+    func smaWA(_ days: Int = 24) -> Double {
+        security.lastValue / sma(days)
     }
 }
 
@@ -52,8 +60,10 @@ extension TonalServiceModels.Indicators {
         avgVolatility: \(avgVolatility)
         avgVolVolatility: \(avgVolVolatility)
         avgVolume: \(avgVolume)
+        vwa: \(vwa)
         sma20: \(sma())
         sma24: \(sma(24))
+        smaWA24: \(smaWA())
         sma200: \(sma(200))
         """
     }

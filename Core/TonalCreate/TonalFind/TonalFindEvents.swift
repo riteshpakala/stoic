@@ -23,5 +23,9 @@ struct TonalFindEvents {
             self.quote = quote
             self.days = days
         }
+        
+        public var async: DispatchQueue? {
+            DispatchQueue.init(label: "tonal.find.parse.serial")
+        }
     }
 }

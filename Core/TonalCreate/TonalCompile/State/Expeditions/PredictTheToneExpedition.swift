@@ -49,6 +49,8 @@ struct PredictTheToneExpedition: GraniteExpedition {
         
         guard event.isActive == false else { return }
 
-        state.currentPrediction = (tone.compile.model?.predict(tone, state.tune) ?? state.currentPrediction) * (tone.target?.lastValue ?? 0.0)
+        let lastValue = tone.target?.lastValue ?? 0.0
+        
+        state.currentPrediction = ((tone.compile.model?.predict(tone, state.tune) ?? state.currentPrediction) * (lastValue)) + lastValue
     }
 }

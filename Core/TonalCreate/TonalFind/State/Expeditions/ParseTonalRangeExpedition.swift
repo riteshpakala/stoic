@@ -43,6 +43,7 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         let securities = event.quote.securities
+        let quote = event.quote.asQuote
         let days: Int = event.days
         state.days = days
         //
@@ -50,44 +51,32 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
         let orderedSecurities = Array(securities.sorted(by: { $0.date.compare($1.date) == .orderedDescending }))
         
         let count = orderedSecurities.count
-        
-//        //DEV: Remove top for now, to predict recent
-//        //should be more dynamic
-//        orderedSecurities = Array(orderedSecurities.suffix(orderedSecurities.count - 1))
-//        //
+
         
         var volatilities: [Date:Double] = [:]
-        var volatilityCoeffecients: [Date:Double] = [:]
-        
-        for (index, security) in orderedSecurities.enumerated() {
-            // Standard deviation calculation for yearly variance
-            //
-            let trailing = orderedSecurities.suffix(count - index).prefix(24)
-            let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
-            let mean = sum/Double(trailing.count)
+        for securityObject in orderedSecurities.prefix(count - TonalServiceModels.Indicators.trailingDays) {
+            guard let security = securityObject.asSecurity else { continue }
+            let indicator = TonalServiceModels.Indicators.init(security, with: quote)
             
-            let deviations = trailing.map({ pow($0.lastValue - mean, 2) }).reduce(0.0, +)
-            let avgDeviation = deviations/Double(trailing.count - 1)
-            //            print(mean)
-            let standardDeviation = sqrt(avgDeviation)
-            volatilities[security.date] = standardDeviation
-            volatilityCoeffecients[security.date] = standardDeviation/mean
+            volatilities[security.date] = indicator.avgVolatility
         }
         
         let targetComparables = Array(orderedSecurities.prefix(days))
-        
         let chunks = orderedSecurities.chunked(into: days)
         let scrapeTop = Array(chunks.suffix(chunks.count - 1))
-
+        
         var candidates : [TonalRange] = []
         for chunk in scrapeTop {
             guard chunk.count == days else { continue }
             
             var similarities: [Double] = []
             for i in 0..<chunk.count {
-                let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
-                let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
-                similarities.append(normalizeSim(targetCoeffecient/chunkDayCoeffecient))
+                if let targetVol = volatilities[targetComparables[i].date],
+                   let chunkDayVol = volatilities[chunk[i].date] {
+                    similarities.append(normalizeSim(targetVol/chunkDayVol))
+                } else {
+                    similarities.append(0.0)
+                }
             }
             
             if similarities.filter( { !threshold($0) } ).isEmpty {
@@ -100,22 +89,14 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
                 let tIndicators: [TonalIndicators] = dates.map {
                     TonalIndicators.init(date: $0,
                                          volatility: volatilities[$0] ?? 0.0,
-                                         volatilityCoeffecient: volatilityCoeffecients[$0] ?? 0.0 ) }
+                                         volatilityCoeffecient: 0.0) }
                 
                 candidates.append(.init(objects: chunk, tSimilarities, tIndicators))
             }
         }
         
-        print("{TEST-2} \(candidates.count)")
-        connection.dependency(\TonalCreateDependency.tone.range, value: candidates)
-//        connection.dependency(TonalCreateDependency.self)?.tone.range = candidates
         
-//        for (index, candidate) in candidates.enumerated() {
-//            print("%%%%%%%%%%%%%%%%%%")
-//            print("\(candidates.count) // \(candidate.similarities.count) // \(candidate.indicators.count)")
-//            print("Dates: \(candidate.dates.first)")
-//            print("Volatilities: \(candidate.similarities.map { $0.similarity })")
-//        }
+        connection.dependency(\TonalCreateDependency.tone.range, value: candidates)
         
     }
     
@@ -133,3 +114,55 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
         return 1.0 - diff
     }
 }
+
+/* Backup
+var volatilities: [Date:Double] = [:]
+var volatilityCoeffecients: [Date:Double] = [:]
+ 
+for (index, security) in orderedSecurities.enumerated() {
+    // Standard deviation calculation for yearly variance
+    //
+    let trailing = orderedSecurities.suffix(count - index).prefix(24)
+    let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
+    let mean = sum/Double(trailing.count)
+    
+    let deviations = trailing.map({ pow($0.lastValue - mean, 2) }).reduce(0.0, +)
+    let avgDeviation = deviations/Double(trailing.count - 1)
+    //            print(mean)
+    let standardDeviation = sqrt(avgDeviation)
+    volatilities[security.date] = standardDeviation
+    volatilityCoeffecients[security.date] = standardDeviation/mean
+}
+
+let targetComparables = Array(orderedSecurities.prefix(days))
+
+let chunks = orderedSecurities.chunked(into: days)
+let scrapeTop = Array(chunks.suffix(chunks.count - 1))
+
+var candidates : [TonalRange] = []
+for chunk in scrapeTop {
+    guard chunk.count == days else { continue }
+    
+    var similarities: [Double] = []
+    for i in 0..<chunk.count {
+        let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
+        let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
+        similarities.append(normalizeSim(targetCoeffecient/chunkDayCoeffecient))
+    }
+    
+    if similarities.filter( { !threshold($0) } ).isEmpty {
+        let dates: [Date] = chunk.map { $0.date }
+        
+        let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
+            TonalSimilarity.init(date: $0.element,
+                                 similarity: similarities[$0.offset]) }
+        
+        let tIndicators: [TonalIndicators] = dates.map {
+            TonalIndicators.init(date: $0,
+                                 volatility: volatilities[$0] ?? 0.0,
+                                 volatilityCoeffecient: volatilityCoeffecients[$0] ?? 0.0 ) }
+        
+        candidates.append(.init(objects: chunk, tSimilarities, tIndicators))
+    }
+}
+*/

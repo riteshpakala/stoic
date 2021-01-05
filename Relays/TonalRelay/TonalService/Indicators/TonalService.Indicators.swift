@@ -9,12 +9,18 @@ import Foundation
 
 extension TonalServiceModels {
     public struct Indicators {
+        public static let trailingDays: Int = 30
+        
         public struct PairedSecurity {
             var base: Security
             var previous: Security
             
             var volatility: Volatility {
                 Volatility.init(paired: self)
+            }
+            
+            var toString: String {
+                "Base: \(base.lastValue) // Prev: \(previous.lastValue)"
             }
         }
         
@@ -25,8 +31,8 @@ extension TonalServiceModels {
         public init(_ security: Security,
                     with quote: Quote) {
             self.security = security
-            let securities: [Security] = quote.securities.sortDesc
-            self.history = securities
+            let securities: [Security] = quote.securities.sortDesc.filter({ security.date.compare($0.date) == .orderedDescending })
+            self.history = Array(securities.prefix(Indicators.trailingDays))
             
             var pairings: [PairedSecurity] = []
             for i in 0..<securities.count-1 {
@@ -42,10 +48,7 @@ extension TonalServiceModels {
 
 extension TonalServiceModels.Indicators {
     var basePair: PairedSecurity {
-        historyPaired.first(
-            where: {
-                $0.base.date == security.date
-            }) ?? .init(base: security, previous: security)
+        .init(base: security, previous: historyPaired.first?.base ?? security)
     }
     
     var change: Double {

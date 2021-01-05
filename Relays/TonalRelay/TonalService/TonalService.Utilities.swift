@@ -35,12 +35,7 @@ struct TonalUtilities {
             let security: Security
             let sentiment: SentimentOutput
             
-            var indicators: TonalServiceModels.Indicators {
-                predicting ? baseIndicators : trainIndicators
-            }
-
-            let baseIndicators: TonalServiceModels.Indicators
-            let trainIndicators: TonalServiceModels.Indicators
+            var indicators: TonalServiceModels.Indicators
             
             let modelType: TonalModels.ModelType
             let predicting: Bool
@@ -54,8 +49,7 @@ struct TonalUtilities {
 
                 self.security = security
                 self.sentiment = sentiment
-                self.baseIndicators = .init(security, with: quote)
-                self.trainIndicators = .init(baseIndicators.basePair.previous, with: quote)
+                self.indicators = .init(security, with: quote)
                 self.modelType = modelType
                 self.predicting = predicting
             }
@@ -64,8 +58,8 @@ struct TonalUtilities {
                 [
                     indicators.avgMomentum,
                     indicators.avgVolatility,
-                    security.volumeValue / indicators.avgVolume,
-                    security.lastValue / indicators.sma(),
+                    indicators.vwa,
+                    indicators.smaWA(),
                     sentiment.pos,
                     sentiment.neg,
                     sentiment.neu
@@ -81,7 +75,7 @@ struct TonalUtilities {
             }
 
             public var output: [Double] {
-                [baseIndicators.change]
+                [indicators.change]
             }
 
             public var description: String {
@@ -90,7 +84,11 @@ struct TonalUtilities {
                     💽💽💽💽💽💽💽💽💽💽💽💽💽
                     '''''''''''''''''''''''''''''
                     [ Security Data Set - \(security.securityType) - \(security.date.asString) ]
+                    Value: \(security.lastValue)
+                    Pair: \(indicators.basePair.toString)
+                    Change: \(indicators.change)
                     \(indicators.averagesToString)
+                    \(sentiment.asString)
                     '''''''''''''''''''''''''''''
                     💽
                     """
