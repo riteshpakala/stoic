@@ -89,6 +89,8 @@ public struct TonalTuneComponent: GraniteComponent {
                 .cornerRadius(8)
             }
             
-        }.padding(.leading, Brand.Padding.large).padding(.trailing, Brand.Padding.large)
+        }.padding(.leading, Brand.Padding.large)
+        .padding(.trailing, Brand.Padding.large)
+        .background(Brand.Colors.black)
     }
 }

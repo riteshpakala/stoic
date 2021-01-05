@@ -35,7 +35,7 @@ public struct EnvironmentConfig {
                         ])
             case .modelCreate:
                 return .init(windows: [
-                             [.modelCreate(.find), .modelCreate(.tune), .securityPredictor],
+                             [.modelCreate(.find), .modelCreate(.tune), .modelCreate(.compile)],
                              [.unassigned, .unassigned, .unassigned],
                              [.modelCreate(.set), .unassigned, .unassigned]
                         ])

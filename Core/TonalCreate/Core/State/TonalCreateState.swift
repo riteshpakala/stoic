@@ -15,6 +15,7 @@ public enum TonalCreateStage {
     case find
     case set
     case tune
+    case compile
 }
 
 public class TonalCreateState: GraniteState {

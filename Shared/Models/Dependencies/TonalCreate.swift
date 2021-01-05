@@ -49,6 +49,10 @@ class Tone: ObservableObject {
     struct Find {
         var ticker: String?
         var quote: QuoteObject?
+        
+        //DEV:
+        //start at the percent of the days selected
+        //
         var sliderDays: BasicSliderState = .init()
     }
     
