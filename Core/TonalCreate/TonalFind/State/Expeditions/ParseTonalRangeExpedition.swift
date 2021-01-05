@@ -51,13 +51,18 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
         
         let count = orderedSecurities.count
         
+//        //DEV: Remove top for now, to predict recent
+//        //should be more dynamic
+//        orderedSecurities = Array(orderedSecurities.suffix(orderedSecurities.count - 1))
+//        //
+        
         var volatilities: [Date:Double] = [:]
         var volatilityCoeffecients: [Date:Double] = [:]
         
         for (index, security) in orderedSecurities.enumerated() {
             // Standard deviation calculation for yearly variance
             //
-            let trailing = orderedSecurities.suffix(orderedSecurities.count - index).prefix(24)
+            let trailing = orderedSecurities.suffix(count - index).prefix(24)
             let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
             let mean = sum/Double(trailing.count)
             

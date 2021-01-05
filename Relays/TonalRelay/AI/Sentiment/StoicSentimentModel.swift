@@ -14,6 +14,10 @@ public struct SentimentOutput {
     public static var zero: SentimentOutput {
         return .init(pos: 0.0, neg: 0.0, neu: 0.0, compound: 0.0)
     }
+    
+    public static var neutral: SentimentOutput {
+        return .init(pos: 0.25, neg: 0.25, neu: 0.5, compound: 0.0)
+    }
 }
 
 class StoicSentimentModel {

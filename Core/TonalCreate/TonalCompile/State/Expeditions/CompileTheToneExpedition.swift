@@ -20,19 +20,17 @@ struct CompileTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        print("{TEST} hey")
-        
         guard let tone = connection.depObject(\TonalCreateDependency.tone) else {
             return
         }
         
         connection.dependency(\TonalCreateDependency.tone.compile.state, value: .compiling)
         
-        guard let model = TonalModels.generate(tone: tone) else {
-            
-            print("{TEST} failed")
+        guard let model = TonalModels.generate(tone: tone, testable: true) else {
             return
         }
+        
+        model.testPredict(tone: tone)
         
         connection.dependency(\TonalCreateDependency.tone.compile.state, value: .compiled)
     }

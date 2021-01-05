@@ -13,5 +13,8 @@ import Combine
 struct TonalCompileEvents {
     struct Compile: GraniteEvent {
         
+        public var async: DispatchQueue? {
+            DispatchQueue.init(label: "tonal.model.compile.serial")
+        }
     }
 }

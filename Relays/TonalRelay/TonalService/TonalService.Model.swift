@@ -8,13 +8,6 @@
 import Foundation
 import GraniteUI
 
-public enum SecurityPrediction {
-    case high
-    case low
-    case open
-    case close
-}
-
 public class TonalModels: Archiveable {
     
     public static let engine: String = "david.v00.02.00"
@@ -22,9 +15,287 @@ public class TonalModels: Archiveable {
     public struct Settings {
         static let inDim: Int = 8
         static let outDim: Int = 1
-        
     }
     
+    public var open: SVMModel?
+    public var close: SVMModel?
+    public var high: SVMModel?
+    public var low: SVMModel?
+    public var volume: SVMModel?
+    
+    public var recentSecurity: Security?
+    
+    public var currentType: ModelType = .close
+    
+    public init(models: [Model]) {
+        for model in models {
+            switch model {
+            case .open(let svmModel):
+                open = svmModel
+            case .close(let svmModel):
+                close = svmModel
+            case .high(let svmModel):
+                high = svmModel
+            case .low(let svmModel):
+                low = svmModel
+            case .volume(let svmModel):
+                volume = svmModel
+            }
+        }
+        super.init()
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case open
+        case close
+        case high
+        case low
+        case volume
+        case currentType
+    }
+    
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let openModel: SVMModel = try container.decode(SVMModel.self, forKey: .open)
+        
+        let closeModel: SVMModel = try container.decode(SVMModel.self, forKey: .close)
+        
+        let highModel: SVMModel = try container.decode(SVMModel.self, forKey: .high)
+        
+        let lowModel: SVMModel = try container.decode(SVMModel.self, forKey: .low)
+        
+        let volumeModel: SVMModel = try container.decode(SVMModel.self, forKey: .volume)
+        
+        let typeValue: Int = try container.decode(Int.self, forKey: .currentType)
+        
+        self.init(
+            models: [])
+        
+        self.open = openModel
+        self.close = closeModel
+        self.high = highModel
+        self.low = lowModel
+        self.volume = volumeModel
+        self.currentType = ModelType.init(rawValue: typeValue) ?? .none
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        if let open = self.open, let close = self.close, let high = self.high, let low = self.low, let volume = self.volume {
+            try container.encode(open, forKey: .open)
+            
+            try container.encode(close, forKey: .close)
+            
+            try container.encode(high, forKey: .high)
+            
+            try container.encode(low, forKey: .low)
+            
+            try container.encode(volume, forKey: .volume)
+            
+            try container.encode(currentType.rawValue, forKey: .currentType)
+        }
+    }
+}
+
+//MARK: -- Predict
+extension TonalModels {
+    public func predict(_ security: Security,
+                        _ sentiment: SentimentOutput) -> Double? {
+        
+        return nil
+    }
+    
+    public func testPredict(tone: Tone) {
+        guard let security = self.recentSecurity else { return }
+        
+        guard let quote = tone.selectedRange?.objects.first?.quote?.asQuote else {
+            print("⚠️ Test prediction failed.")
+            return
+        }
+        
+        let testData = DataSet(
+            dataType: .Regression,
+            inputDimension: self.currentType.inDim,
+            outputDimension: StockKitUtils.outDim)
+        
+        do {
+            let dataSet = TonalUtilities.Models.DataSet(
+                    security,
+                    .neutral,
+                    quote: quote,
+                    modelType: self.currentType)
+            
+            print("💡💡💡💡💡💡\n[PREDICTING]\n\(dataSet.description)\n💡")
+            
+            try testData.addTestDataPoint(
+               input: dataSet.asArray)
+        }
+        catch {
+           print("Invalid data set created")
+        }
+        
+        self.current?.predictValues(data: testData)
+   
+        guard let output = testData.singleOutput(index: 0) else {
+            return
+        }
+
+        print("🧬🧬🧬🧬🧬🧬\n[Prediction Output] :: \(output)\n🧬")
+    }
+}
+
+//MARK: -- Generate
+extension TonalModels {
+    public static func generate(tone: Tone, testable: Bool = false) -> TonalModels? {
+        guard let securityObjects = tone.selectedRange?.objects else {
+            print("⚠️ Generation failed. - securityObjects")
+            return nil
+        }
+        
+        guard let quote = securityObjects.first?.quote?.asQuote else {
+            print("⚠️ Generation failed. - quote")
+            return nil
+        }
+        
+        var securities = securityObjects.compactMap { $0.asSecurity }
+        var sentiments = tone.tune.sentiments
+        
+        if testable {
+            if let security = securities.sortDesc.first {
+                securities = securities.suffix(securities.count - 1)
+                if let key = sentiments.keys.first(where: { $0.simple == security.date.simple }) {
+                    sentiments.removeValue(forKey: key)
+                }
+            }
+        }
+        
+        let dates = Array(sentiments.keys).sorted(by: { $0.compare($1) == .orderedAscending } )
+        
+        // Time-series execution's foundation is that
+        // the time comparable is equivalent to the data
+        // size
+        guard dates.count == securities.count else {
+            print("⚠️ Generation failed. - dates: \(dates.count), securities: \(securities.count)")
+            return nil
+        }
+        
+        // DEV: by day enforced for now
+        // and `close` prediction
+        //
+        let type: ModelType = .close
+        let dataForDavid: DataSet = DataSet(
+                                    dataType: .Regression,
+                                    inputDimension: type.inDim,
+                                    outputDimension: TonalModels.Settings.outDim)
+
+        print("🛠 [MODEL GENERATION] Creating model for \(type)")
+        for date in dates {
+            guard let sentiment = sentiments[date.simple],
+                  let security = securities.first(where: { $0.date.simple == date.simple }) else {
+                continue
+            }
+
+            do {
+                let dataSet = TonalUtilities.Models.DataSet(
+                    security,
+                    sentiment,
+                    quote: quote,
+                    modelType: type)
+
+                print(dataSet.description)
+                
+                try dataForDavid.addDataPoint(
+                    input: dataSet.asArray,
+                    output: dataSet.output,
+                    label: security.date.asString)
+            }
+            catch {
+                print("Invalid data set created")
+            }
+        }
+        
+        print("🛠 ✅ [MODEL GENERATION] Creating model complete")
+        print("data points added: \(dataForDavid.labels.count)")
+        print("data points expected: \(securities.count)")
+        print("data points asserted: \(securities.count == dataForDavid.labels.count)")
+
+        let david = SVMModel(
+            problemType: .ϵSVMRegression,
+            kernelSettings:
+            KernelParameters(type: .Polynomial,
+                             degree: 3,
+                             gamma: 0.3,
+                             coef0: 0.0))
+
+        david.Cost = 1e3
+        david.train(data: dataForDavid)
+        
+        //DEV:
+        let models: TonalModels = .init(models: [.close(david)])
+        // Store the head for a most recent
+        // prediction in testing, etc.
+        //
+        if testable {
+            models.recentSecurity = securityObjects.compactMap { $0.asSecurity }.sorted(by: { $0.date.compare($1.date) == .orderedDescending }).first
+        }
+        return models
+    }
+}
+
+//MARK: -- Helpers
+extension TonalModels {
+    public var current: SVMModel? {
+        switch currentType {
+        case .open:
+            return open
+        case .close, .none:
+            return close
+        case .high:
+            return high
+        case .low:
+            return low
+        case .volume:
+            return volume
+        }
+    }
+    public func modelType(forModel model: SVMModel) -> ModelType {
+        switch model {
+        case open:
+            return .open
+        case close:
+            return .close
+        case high:
+            return .high
+        case low:
+            return .low
+        case volume:
+            return .volume
+        default:
+            return .none
+        }
+    }
+    public func model(forType type: ModelType) -> SVMModel? {
+        switch type {
+        case .open:
+            return open
+        case .close:
+            return close
+        case .high:
+            return high
+        case .low:
+            return low
+        case .volume:
+            return volume
+        default:
+            return close
+        }
+    }
+}
+
+//MARK: -- Storage Models
+extension TonalModels {
     public enum Model {
         case open(SVMModel)
         case close(SVMModel)
@@ -112,213 +383,6 @@ public class TonalModels: Archiveable {
             }
             
             return .none
-        }
-    }
-    
-    public static func generate(tone: Tone) -> TonalModels? {
-        guard let securityObjects = tone.selectedRange?.objects else {
-            return nil
-        }
-        
-        guard let quote = securityObjects.first?.quote?.asQuote else {
-            return nil
-        }
-        
-        let securities = securityObjects.compactMap { $0.asSecurity }
-        let sentiments = tone.tune.sentiments
-        let dates = Array(sentiments.keys).sorted(by: { $0.compare($1) == .orderedAscending } )
-        
-        // Time-series execution's foundation is that
-        // the time comparable is equivalent to the data
-        // size
-        guard dates.count == securities.count else {
-            return nil
-        }
-        
-        // DEV: by day enforced for now
-        // and `close` prediction
-        //
-        let type: ModelType = .close
-        let dataForDavid: DataSet = DataSet(
-                                    dataType: .Regression,
-                                    inputDimension: type.inDim,
-                                    outputDimension: TonalModels.Settings.outDim)
-
-        print("🛠 [MODEL GENERATION] Creating model for \(type)")
-        for date in dates {
-            guard let sentiment = sentiments[date.simple],
-                  let security = securities.first(where: { $0.date.simple == date.simple }) else {
-                continue
-            }
-
-            do {
-                let dataSet = TonalUtilities.Models.DataSet(
-                    security,
-                    sentiment,
-                    quote: quote,
-                    modelType: type)
-
-                print(dataSet.description)
-                
-                try dataForDavid.addDataPoint(
-                    input: dataSet.asArray,
-                    output: dataSet.output,
-                    label: security.date.asString)
-            }
-            catch {
-                print("Invalid data set created")
-            }
-        }
-        
-        print("🛠 ✅ [MODEL GENERATION] Creating model complete")
-        print("data points added: \(dataForDavid.labels.count)")
-        print("data points expected: \(securities.count)")
-        print("data points asserted: \(securities.count == dataForDavid.labels.count)")
-
-        let david = SVMModel(
-            problemType: .ϵSVMRegression,
-            kernelSettings:
-            KernelParameters(type: .Polynomial,
-                             degree: 3,
-                             gamma: 0.3,
-                             coef0: 0.0))
-
-        david.Cost = 1e3
-        david.train(data: dataForDavid)
-        
-        
-        return .init(models: [.close(david)])
-    }
-    
-    struct LastPrediction {
-        let positive: Double = 0.5
-        let negative: Double = 0.5
-        let neutral: Double = 0.0
-        let compound: Double = 0.0
-    }
-    
-    public var open: SVMModel?
-    public var close: SVMModel?
-    public var high: SVMModel?
-    public var low: SVMModel?
-    public var volume: SVMModel?
-    
-    public var currentType: ModelType = .close
-    public var current: SVMModel? {
-        switch currentType {
-        case .open:
-            return open
-        case .close, .none:
-            return close
-        case .high:
-            return high
-        case .low:
-            return low
-        case .volume:
-            return volume
-        }
-    }
-    public func modelType(forModel model: SVMModel) -> ModelType {
-        switch model {
-        case open:
-            return .open
-        case close:
-            return .close
-        case high:
-            return .high
-        case low:
-            return .low
-        case volume:
-            return .volume
-        default:
-            return .none
-        }
-    }
-    public func model(forType type: ModelType) -> SVMModel? {
-        switch type {
-        case .open:
-            return open
-        case .close:
-            return close
-        case .high:
-            return high
-        case .low:
-            return low
-        case .volume:
-            return volume
-        default:
-            return close
-        }
-    }
-    
-    public init(models: [Model]) {
-        for model in models {
-            switch model {
-            case .open(let svmModel):
-                open = svmModel
-            case .close(let svmModel):
-                close = svmModel
-            case .high(let svmModel):
-                high = svmModel
-            case .low(let svmModel):
-                low = svmModel
-            case .volume(let svmModel):
-                volume = svmModel
-            }
-        }
-        super.init()
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case open
-        case close
-        case high
-        case low
-        case volume
-        case currentType
-    }
-    
-    required public convenience init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        let openModel: SVMModel = try container.decode(SVMModel.self, forKey: .open)
-        
-        let closeModel: SVMModel = try container.decode(SVMModel.self, forKey: .close)
-        
-        let highModel: SVMModel = try container.decode(SVMModel.self, forKey: .high)
-        
-        let lowModel: SVMModel = try container.decode(SVMModel.self, forKey: .low)
-        
-        let volumeModel: SVMModel = try container.decode(SVMModel.self, forKey: .volume)
-        
-        let typeValue: Int = try container.decode(Int.self, forKey: .currentType)
-        
-        self.init(
-            models: [])
-        
-        self.open = openModel
-        self.close = closeModel
-        self.high = highModel
-        self.low = lowModel
-        self.volume = volumeModel
-        self.currentType = ModelType.init(rawValue: typeValue) ?? .none
-    }
-    
-    public override func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        if let open = self.open, let close = self.close, let high = self.high, let low = self.low, let volume = self.volume {
-            try container.encode(open, forKey: .open)
-            
-            try container.encode(close, forKey: .close)
-            
-            try container.encode(high, forKey: .high)
-            
-            try container.encode(low, forKey: .low)
-            
-            try container.encode(volume, forKey: .volume)
-            
-            try container.encode(currentType.rawValue, forKey: .currentType)
         }
     }
 }
