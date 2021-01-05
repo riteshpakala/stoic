@@ -101,5 +101,17 @@ public struct TonalSound: Equatable, Hashable {
     let date: Date
     let content: String
     let sentiment: SentimentOutput
+    
+    
+    
+    public var asString: String {
+        """
+        🚀🚀🚀🚀🚀🚀
+        text: \(content)
+        ---------------------
+        \(sentiment.asString)
+        🚀
+        """
+    }
 }
 

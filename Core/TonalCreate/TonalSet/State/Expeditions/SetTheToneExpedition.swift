@@ -106,13 +106,12 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         }
         
         moc.perform {
-            
             do {
                 
                 let securityObjects = range.objects
                 for object in securityObjects {
                     let date = object.date.simple
-                    print("{TEST} \(date) - sentimentCount - \(object.sentiment?.count)")
+                    
                     if let sound = sentiment.soundsByDay[date] {
                         let sentimentObjects: [SentimentObject] = sound.map {
                             let sentimentObject = SentimentObject(context: moc)

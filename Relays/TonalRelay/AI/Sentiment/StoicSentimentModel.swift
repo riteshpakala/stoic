@@ -145,7 +145,7 @@ class StoicSentimentModel {
         let linkThreshold: Bool = TonalUtilities.Social.getLinks(text).isEmpty || text.count > 24
         let queryExists: Bool = text.lowercased().contains(matching.lowercased())
         
-        return true
+        return tickerThreshold && linkThreshold && queryExists
     }
 }
 

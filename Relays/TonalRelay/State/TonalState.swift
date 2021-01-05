@@ -33,7 +33,7 @@ public class TonalState: GraniteState {
     
     lazy var operationQueue: OperationQueue = {
         var queue: OperationQueue = .init()
-        queue.maxConcurrentOperationCount = 4
+        queue.maxConcurrentOperationCount = modelThreads
         queue.name = "tonal.relay.predict.op"
         queue.qualityOfService = .utility
         return queue

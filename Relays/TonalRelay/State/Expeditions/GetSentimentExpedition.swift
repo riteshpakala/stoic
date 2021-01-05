@@ -99,7 +99,7 @@ struct TonalHistoryExpedition: GraniteExpedition {
         let chunks = tweet.result.chunked(into: ceil(tweet.result.count.asDouble/state.modelThreads.asDouble).asInt)
         
         var currentOps: [BlockOperation] = []
-        for (index, chunk) in chunks.enumerated() {
+        for (_, chunk) in chunks.enumerated() {
             //Threaded inference
             
             let op: BlockOperation = .init(block: {
@@ -109,15 +109,16 @@ struct TonalHistoryExpedition: GraniteExpedition {
             
             
                 for result in chunk {
-                        if let prediction = model.predict(result.content, matching: query) {
-
-                            sounds.append(TonalSound.init(
-                                                date: result.date.asDouble.date(),
-                                                content: result.content,
-                                                sentiment: prediction))
-                            
-//                            print("{TEST} updated thread \(index + 1)")
-                        }
+                    if let prediction = model.predict(result.content, matching: query) {
+                        let sound = TonalSound.init(
+                                        date: result.date.asDouble.date(),
+                                        content: result.content,
+                                        sentiment: prediction)
+                        sounds.append(sound)
+                        
+                        print(sound.asString)
+//                        print("{TEST} updated thread \(index)")
+                    }
                 }
 
                 connection.request(TonalEvents
