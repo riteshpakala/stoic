@@ -41,12 +41,14 @@ struct PredictTheToneExpedition: GraniteExpedition {
                         neu: neuValue,
                         compound: state.tune.compound)
         
-        guard event.isActive == false else { return }
-
         guard let tone = connection.depObject(\TonalCreateDependency.tone) else {
             return
         }
         
-        state.currentPrediction = tone.compile.model?.predict(tone, state.tune) ?? state.currentPrediction
+        tone.compile.slider.sentiment = state.tune
+        
+        guard event.isActive == false else { return }
+
+        state.currentPrediction = (tone.compile.model?.predict(tone, state.tune) ?? state.currentPrediction) * (tone.target?.lastValue ?? 0.0)
     }
 }

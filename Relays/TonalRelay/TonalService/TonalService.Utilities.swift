@@ -81,7 +81,7 @@ struct TonalUtilities {
             }
 
             public var output: [Double] {
-                [security.lastValue]
+                [baseIndicators.change]
             }
 
             public var description: String {

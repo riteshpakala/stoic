@@ -23,15 +23,17 @@ struct GetSentimentExpedition: GraniteExpedition {
         state.operationQueue.cancelAllOperations()
         state.stage = .searching
         
-        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: state.service.soundAggregate.dates.count/2)
+//        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: state.service.soundAggregate.dates.count/2)
         
-        for chunk in chunks {
-            let sorted = chunk.sorted(by: { $0.compare($1) == .orderedDescending })
-
-            guard let sinceDateChunk = sorted.last,
-                  let untilDateChunk = sorted.first?.advanceDate(value: 1) else { return }
+        let dates: [Date] = state.service.soundAggregate.dates
+        
+        for date in dates {
+//            let sorted = chunk.sorted(by: { $0.compare($1) == .orderedDescending })
+            let sinceDateChunk = date
+            let untilDateChunk = date.advanceDate(value: 1)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2.randomBetween(1.6)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2.randomBetween(4.2)) {
+                print("{TEST} processing \(sinceDateChunk) \(untilDateChunk)")
                 connection.request(TonalEvents
                                     .ProcessSentiment
                                     .init(sinceDate: sinceDateChunk,
@@ -54,8 +56,7 @@ struct ProcessSentimentExpedition: GraniteExpedition {
         
         let days = abs(event.untilDate.timeIntervalSince(event.sinceDate).date().dateComponents().day)
         
-            print(event.sinceDate)
-            print(event.untilDate)
+        print("{TEST} fetching \(event.sinceDate) \(event.untilDate)")
         publisher = state
             .service
             .getTweets(matching: event.ticker, since: event.sinceDate, until: event.untilDate, count: days*state.dataScale)

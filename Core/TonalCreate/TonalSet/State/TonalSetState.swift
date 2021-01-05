@@ -28,7 +28,7 @@ public class TonalSetCenter: GraniteCenter<TonalSetState> {
     }
     
     var tonalRangeData: [TonalRange] {
-        tone.range ?? []
+        tone.range?.sorted(by: { $0.avgSimilarity > $1.avgSimilarity }) ?? []
     }
     
     public override var expeditions: [GraniteBaseExpedition] {

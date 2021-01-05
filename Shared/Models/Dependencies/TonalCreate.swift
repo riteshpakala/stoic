@@ -19,6 +19,14 @@ class TonalCreateDependency: DependencyManager {
 public class Tone: ObservableObject {
     var range: [TonalRange]?
     
+    public var target: Security? {
+        guard let quote = selectedRange?.objects.first?.quote?.asQuote else {
+            print("⚠️ Test prediction failed.")
+            return nil
+        }
+        
+        return quote.securities.sortDesc.first
+    }
     
     //Based on day interval the sentiment slider state would change
     //

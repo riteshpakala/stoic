@@ -47,6 +47,10 @@ extension TonalServiceModels.Indicators {
                 $0.base.date == security.date
             }) ?? .init(base: security, previous: security)
     }
+    
+    var change: Double {
+        (basePair.base.lastValue - basePair.previous.lastValue) / basePair.previous.lastValue
+    }
 }
 
 extension Array where Element == Security {

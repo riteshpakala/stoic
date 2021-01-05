@@ -50,5 +50,7 @@ public struct TonalCompileComponent: GraniteComponent {
                 sendEvent(TonalCompileEvents.Compile())
             }
         })
+        .padding(.leading, Brand.Padding.medium)
+        .padding(.trailing, Brand.Padding.medium)
     }
 }

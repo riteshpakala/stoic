@@ -53,7 +53,7 @@ extension TonalServiceModels.TonalSounds {
     }
     
     func progress(threads: Int, dateChunks: Int) -> Double {
-        sounds.count.asDouble / (dates.chunked(into: dateChunks).count * threads).asDouble
+        sounds.count.asDouble / (dates.count * threads).asDouble
     }
     
     var compiled: [TonalSound] {

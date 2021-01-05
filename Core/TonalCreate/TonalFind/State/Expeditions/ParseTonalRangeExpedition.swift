@@ -87,10 +87,10 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
             for i in 0..<chunk.count {
                 let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
                 let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
-                similarities.append(targetCoeffecient/chunkDayCoeffecient)
+                similarities.append(normalizeSim(targetCoeffecient/chunkDayCoeffecient))
             }
             
-            if similarities.filter( { !($0 <= 1.6 && $0 >= 0.45) } ).isEmpty {
+            if similarities.filter( { !threshold($0) } ).isEmpty {
                 let dates: [Date] = chunk.map { $0.date }
                 
                 let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
@@ -117,5 +117,19 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
 //            print("Volatilities: \(candidate.similarities.map { $0.similarity })")
 //        }
         
+    }
+    
+    func threshold(_ item: Double) -> Bool {
+        return item <= 1.0 && item >= 0.45
+    }
+    
+    func normalizeSim(_ item: Double) -> Double {
+        guard item > 1.0 else {
+            return item
+        }
+        
+        let diff = item - 1.0
+        
+        return 1.0 - diff
     }
 }
