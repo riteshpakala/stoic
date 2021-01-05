@@ -12,7 +12,7 @@ extension TonalServiceModels {
     struct TonalSounds {
         var range: TonalRange? = nil
         var sounds: [[TonalSound]]
-        
+        var completed: [Date] = []
         public init() {
             sounds = []
         }

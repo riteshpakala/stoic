@@ -18,7 +18,6 @@ public struct WindowComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            Text("\(command.center.dependency.hosted.identifier)")
             switch state.config.kind {
             case .topVolume(let securityType),
                  .winners(let securityType),

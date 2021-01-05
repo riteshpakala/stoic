@@ -27,20 +27,33 @@ struct GetSentimentExpedition: GraniteExpedition {
         
         let dates: [Date] = state.service.soundAggregate.dates
         
-        for date in dates {
-//            let sorted = chunk.sorted(by: { $0.compare($1) == .orderedDescending })
+        if let date = dates.first(where: {
+                                    !state.service.soundAggregate.completed.contains($0.simple) }) {
+            
+            
             let sinceDateChunk = date
             let untilDateChunk = date.advanceDate(value: 1)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2.randomBetween(4.2)) {
-                print("{TEST} processing \(sinceDateChunk) \(untilDateChunk)")
-                connection.request(TonalEvents
-                                    .ProcessSentiment
-                                    .init(sinceDate: sinceDateChunk,
-                                          untilDate: untilDateChunk,
-                                          ticker: event.range.ticker))
-            }
+            connection.request(TonalEvents
+                                .ProcessSentiment
+                                .init(sinceDate: sinceDateChunk,
+                                      untilDate: untilDateChunk,
+                                      ticker: event.range.symbol))
         }
+//        for date in dates {
+////            let sorted = chunk.sorted(by: { $0.compare($1) == .orderedDescending })
+//            let sinceDateChunk = date
+//            let untilDateChunk = date.advanceDate(value: 1)
+//
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2.randomBetween(4.2)) {
+//                print("{TEST} processing \(sinceDateChunk) \(untilDateChunk)")
+//                connection.request(TonalEvents
+//                                    .ProcessSentiment
+//                                    .init(sinceDate: sinceDateChunk,
+//                                          untilDate: untilDateChunk,
+//                                          ticker: event.range.symbol))
+//            }
+//        }
     }
 }
 
@@ -56,7 +69,8 @@ struct ProcessSentimentExpedition: GraniteExpedition {
         
         let days = abs(event.untilDate.timeIntervalSince(event.sinceDate).date().dateComponents().day)
         
-        print("{TEST} fetching \(event.sinceDate) \(event.untilDate)")
+        print("🧘🧘🧘🧘🧘🧘\n[Sentiment] Processing \(event.sinceDate) - \(event.untilDate) \n🧘")
+        
         publisher = state
             .service
             .getTweets(matching: event.ticker, since: event.sinceDate, until: event.untilDate, count: days*state.dataScale)
@@ -84,9 +98,6 @@ struct TonalHistoryExpedition: GraniteExpedition {
         //to make way for the other Tonal categories
         let chunks = tweet.result.chunked(into: ceil(tweet.result.count.asDouble/state.modelThreads.asDouble).asInt)
         
-        print("starting \(chunks.count)")
-        print("\(tweet.result.map { $0.date.asDouble.date().asString }.uniques)")
-        
         var currentOps: [BlockOperation] = []
         for (index, chunk) in chunks.enumerated() {
             //Threaded inference
@@ -111,7 +122,7 @@ struct TonalHistoryExpedition: GraniteExpedition {
 
                 connection.request(TonalEvents
                                     .TonalSounds
-                                    .init(sounds: sounds),
+                                    .init(sounds: sounds, isLast: index == chunks.count - 1),
                                    queue: .main)
                 
             })
@@ -119,8 +130,15 @@ struct TonalHistoryExpedition: GraniteExpedition {
             currentOps.append(op)
         }
         
-        state.operationQueue.addOperations(currentOps, waitUntilFinished: false)
+        state.operationQueue.addOperations(currentOps, waitUntilFinished: true)
         
+        state.operationQueue.addBarrierBlock {
+            print("🪔🪔🪔🪔🪔🪔\n[Sentiment] completed \(tweet.result.map { $0.date.asDouble.date().asString }.uniques)\n🪔")
+            if let range = state.service.soundAggregate.range {
+                
+                connection.request(TonalEvents.GetSentiment.init(range: range))
+            }
+        }
     }
     
     var thread: DispatchQueue {
@@ -141,6 +159,9 @@ struct TonalSoundsExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        print("🧪🧪🧪🧪🧪🧪\n[Sentiment] TonalSounds.Test.Completion \(event.isLast)\n🧪")
+        
+        state.service.soundAggregate.completed.append(event.sounds.first?.date.simple ?? Date.today)
         state.service.soundAggregate.sounds.append(event.sounds)
         
         print("Sentiment prediction progress: \(state.sentimentProgress)")

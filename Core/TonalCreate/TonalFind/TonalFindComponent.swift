@@ -26,7 +26,6 @@ public struct TonalFindComponent: GraniteComponent {
                                 [StockRelay.self,
                                  CryptoRelay.self]))
             
-            Text("\(command.center.dependency.hosted.identifier)")
             AssetGridComponent()
                 .listen(to: command)
                 .payload(depPayload(\.tonalCreateDependency,

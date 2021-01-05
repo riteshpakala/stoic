@@ -22,7 +22,7 @@ public class TonalState: GraniteState {
     let dataChunks: Int = 3
     let dataScale: Int = 360
     let service: TonalService = .init()
-    var stage: TonalStage = .none
+    var stage: TonalStage = .none 
     var sentimentProgress: Double {
         service
         .soundAggregate

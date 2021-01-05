@@ -70,6 +70,9 @@ extension TonalRange {
     var ticker: String {
         objects.first?.ticker ?? "error-ticker"
     }
+    var symbol: String {
+        "$" + (objects.first?.ticker ?? "error-ticker")
+    }
 }
 
 public struct TonalSimilarity: Hashable {
