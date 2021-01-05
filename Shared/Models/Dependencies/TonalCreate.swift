@@ -87,6 +87,11 @@ public class Tone: ObservableObject {
         }
         var lastState: Compile.State = .none
         
-        var model: SVMModel?
+        var model: TonalModels?
+        
+        var slider: SentimentSliderState
+        public init(_ sentimentOutput: SentimentOutput = .neutral) {
+            slider = .init(sentimentOutput, date: Date.today)
+        }
     }
 }

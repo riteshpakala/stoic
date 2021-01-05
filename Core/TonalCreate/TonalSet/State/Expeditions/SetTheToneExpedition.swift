@@ -25,10 +25,16 @@ struct SetTheToneExpedition: GraniteExpedition {
         if let tone = connection.depObject(\TonalCreateDependency.tone.find.quote),
            let quote = tone {
             DispatchQueue.global(qos: .utility).async {
-                if let sentiment = getSentiment(quote, event.range) {
+                let time: Double = CFAbsoluteTimeGetCurrent()
+                
+                let sentimentResult = getSentiment(quote, event.range)
+                
+                print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
+                
+                if let sentiment = sentimentResult.sentiment {
                     connection.dependency(\TonalCreateDependency.tone.sentiment, value: sentiment)
                 } else {
-                    connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
+                    connection.request(TonalEvents.GetSentiment.init(range: sentimentResult.missing ?? event.range), beam: true)
                 }
             }
         } else {
@@ -43,7 +49,7 @@ struct SetTheToneExpedition: GraniteExpedition {
     //and then merge at the end, under the tonalrelay return for the final tonal
     //create submission
     //
-    func getSentiment(_ quote: QuoteObject,_ range: TonalRange) -> TonalSentiment? {
+    func getSentiment(_ quote: QuoteObject,_ range: TonalRange) -> (sentiment: TonalSentiment?, missing: TonalRange?) {
         
         let dates = range.dates.map { $0.simple }
         let securities = quote.securities.filter { dates.contains($0.date.simple) }
@@ -55,9 +61,12 @@ struct SetTheToneExpedition: GraniteExpedition {
         let sentiment: TonalSentiment = .init(sounds)
         print("{TEST} \(securities.count) \(sentiment.datesByDay.count)")
         if securities.count == sentiment.datesByDay.count {
-            return sentiment
+            return (sentiment, nil)
         } else {
-            return nil
+            let missingSentiment = securities.filter { !sentiment.datesByDay.contains($0.date.simple) }
+            
+            print(missingSentiment.map { $0.date })
+            return (nil, .init(objects: Array(missingSentiment), range.similarities, range.indicators))
         }
         
     }

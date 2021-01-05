@@ -39,6 +39,12 @@ extension TonalServiceModels.Indicators {
     }
 }
 
+extension Security {
+    var dayAverage: Double {
+        return (self.highValue + self.lowValue) / 2
+    }
+}
+
 extension TonalServiceModels.Indicators {
     var averagesToString: String {
         """
@@ -50,11 +56,5 @@ extension TonalServiceModels.Indicators {
         sma24: \(sma(24))
         sma200: \(sma(200))
         """
-    }
-}
-
-extension Security {
-    var dayAverage: Double {
-        (self.highValue + self.lowValue) / 2
     }
 }

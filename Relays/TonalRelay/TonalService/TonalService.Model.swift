@@ -101,19 +101,15 @@ public class TonalModels: Archiveable {
 
 //MARK: -- Predict
 extension TonalModels {
-    public func predict(_ security: Security,
+    public func predict(_ tone: Tone,
                         _ sentiment: SentimentOutput) -> Double? {
-        
-        return nil
-    }
-    
-    public func testPredict(tone: Tone) {
-        guard let security = self.recentSecurity else { return }
         
         guard let quote = tone.selectedRange?.objects.first?.quote?.asQuote else {
             print("⚠️ Test prediction failed.")
-            return
+            return nil
         }
+        
+        guard let security = quote.securities.sortDesc.first else { return nil }
         
         let testData = DataSet(
             dataType: .Regression,
@@ -123,9 +119,10 @@ extension TonalModels {
         do {
             let dataSet = TonalUtilities.Models.DataSet(
                     security,
-                    .neutral,
+                    sentiment,
                     quote: quote,
-                    modelType: self.currentType)
+                    modelType: self.currentType,
+                    predicting: true)
             
             print("💡💡💡💡💡💡\n[PREDICTING]\n\(dataSet.description)\n💡")
             
@@ -139,16 +136,21 @@ extension TonalModels {
         self.current?.predictValues(data: testData)
    
         guard let output = testData.singleOutput(index: 0) else {
-            return
+            return nil
         }
-
+        
         print("🧬🧬🧬🧬🧬🧬\n[Prediction Output] :: \(output)\n🧬")
+        return output
+    }
+    
+    public func testPredict(tone: Tone) {
+        _ = predict(tone, .neutral)
     }
 }
 
 //MARK: -- Generate
 extension TonalModels {
-    public static func generate(tone: Tone, testable: Bool = false) -> TonalModels? {
+    public static func generate(tone: Tone) -> TonalModels? {
         guard let securityObjects = tone.selectedRange?.objects else {
             print("⚠️ Generation failed. - securityObjects")
             return nil
@@ -159,18 +161,8 @@ extension TonalModels {
             return nil
         }
         
-        var securities = securityObjects.compactMap { $0.asSecurity }
-        var sentiments = tone.tune.sentiments
-        
-        if testable {
-            if let security = securities.sortDesc.first {
-                securities = securities.suffix(securities.count - 1)
-                if let key = sentiments.keys.first(where: { $0.simple == security.date.simple }) {
-                    sentiments.removeValue(forKey: key)
-                }
-            }
-        }
-        
+        let securities = securityObjects.compactMap { $0.asSecurity }
+        let sentiments = tone.tune.sentiments
         let dates = Array(sentiments.keys).sorted(by: { $0.compare($1) == .orderedAscending } )
         
         // Time-series execution's foundation is that
@@ -232,15 +224,7 @@ extension TonalModels {
         david.Cost = 1e3
         david.train(data: dataForDavid)
         
-        //DEV:
-        let models: TonalModels = .init(models: [.close(david)])
-        // Store the head for a most recent
-        // prediction in testing, etc.
-        //
-        if testable {
-            models.recentSecurity = securityObjects.compactMap { $0.asSecurity }.sorted(by: { $0.date.compare($1.date) == .orderedDescending }).first
-        }
-        return models
+        return .init(models: [.close(david)])
     }
 }
 

@@ -11,6 +11,8 @@ import SwiftUI
 import Combine
 
 public class TonalCompileState: GraniteState {
+    var tune: SentimentOutput = .neutral
+    var currentPrediction: Double = 0.0
 }
 
 public class TonalCompileCenter: GraniteCenter<TonalCompileState> {

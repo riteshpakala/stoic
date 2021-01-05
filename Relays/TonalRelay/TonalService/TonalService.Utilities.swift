@@ -34,21 +34,30 @@ struct TonalUtilities {
         struct DataSet {
             let security: Security
             let sentiment: SentimentOutput
-            let indicators: TonalServiceModels.Indicators
+            
+            var indicators: TonalServiceModels.Indicators {
+                predicting ? baseIndicators : trainIndicators
+            }
 
+            let baseIndicators: TonalServiceModels.Indicators
+            let trainIndicators: TonalServiceModels.Indicators
+            
             let modelType: TonalModels.ModelType
+            let predicting: Bool
 
             init(
                 _ security: Security,
                 _ sentiment: SentimentOutput,
                 quote: Quote,
                 modelType: TonalModels.ModelType = .none,
-                updated: Bool = false) {
+                predicting: Bool = false) {
 
                 self.security = security
                 self.sentiment = sentiment
-                self.indicators = .init(security, with: quote)
+                self.baseIndicators = .init(security, with: quote)
+                self.trainIndicators = .init(baseIndicators.basePair.previous, with: quote)
                 self.modelType = modelType
+                self.predicting = predicting
             }
 
             public var asArray: [Double] {

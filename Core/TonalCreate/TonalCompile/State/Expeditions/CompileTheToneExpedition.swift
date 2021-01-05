@@ -26,12 +26,13 @@ struct CompileTheToneExpedition: GraniteExpedition {
         
         connection.dependency(\TonalCreateDependency.tone.compile.state, value: .compiling)
         
-        guard let model = TonalModels.generate(tone: tone, testable: true) else {
+        guard let model = TonalModels.generate(tone: tone) else {
             return
         }
         
         model.testPredict(tone: tone)
         
         connection.dependency(\TonalCreateDependency.tone.compile.state, value: .compiled)
+        connection.dependency(\TonalCreateDependency.tone.compile.model, value: model)
     }
 }

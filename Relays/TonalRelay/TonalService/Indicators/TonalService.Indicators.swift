@@ -26,18 +26,26 @@ extension TonalServiceModels {
                     with quote: Quote) {
             self.security = security
             let securities: [Security] = quote.securities.sortDesc
-            let sortedSecurities: [Security] = securities.filter({ $0.date.compare(security.date) == .orderedDescending })
-            self.history = sortedSecurities
+            self.history = securities
             
             var pairings: [PairedSecurity] = []
-            for i in 0..<sortedSecurities.count-1 {
-                let base = sortedSecurities[i]
-                let previous = sortedSecurities[i+1]
+            for i in 0..<securities.count-1 {
+                let base = securities[i]
+                let previous = securities[i+1]
                 
                 pairings.append(.init(base: base, previous: previous))
             }
             self.historyPaired = pairings
         }
+    }
+}
+
+extension TonalServiceModels.Indicators {
+    var basePair: PairedSecurity {
+        historyPaired.first(
+            where: {
+                $0.base.date == security.date
+            }) ?? .init(base: security, previous: security)
     }
 }
 

@@ -155,6 +155,8 @@
 		7118A22E259313FD007E7EAB /* TonalCreateEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A228259313FD007E7EAB /* TonalCreateEvents.swift */; };
 		7118A24425931468007E7EAB /* GetMoversStockExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A24325931468007E7EAB /* GetMoversStockExpedition.swift */; };
 		7118A24525931468007E7EAB /* GetMoversStockExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A24325931468007E7EAB /* GetMoversStockExpedition.swift */; };
+		711BAD2425A4F222003BAFA6 /* PredictTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711BAD2325A4F222003BAFA6 /* PredictTheToneExpedition.swift */; };
+		711BAD2525A4F222003BAFA6 /* PredictTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711BAD2325A4F222003BAFA6 /* PredictTheToneExpedition.swift */; };
 		7121F6D82596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */; };
 		7121F6D92596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */; };
 		7121F6DA2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D72596F9B000BBD459 /* QuoteObject+CoreDataClass.swift */; };
@@ -692,6 +694,7 @@
 		7118A227259313FD007E7EAB /* TonalCreateState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCreateState.swift; sourceTree = "<group>"; };
 		7118A228259313FD007E7EAB /* TonalCreateEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCreateEvents.swift; sourceTree = "<group>"; };
 		7118A24325931468007E7EAB /* GetMoversStockExpedition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMoversStockExpedition.swift; sourceTree = "<group>"; };
+		711BAD2325A4F222003BAFA6 /* PredictTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictTheToneExpedition.swift; sourceTree = "<group>"; };
 		7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuoteObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7121F6D72596F9B000BBD459 /* QuoteObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuoteObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7123B1022593C29F00E5BD69 /* version0001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = version0001.xcdatamodel; sourceTree = "<group>"; };
@@ -2100,6 +2103,7 @@
 			isa = PBXGroup;
 			children = (
 				71CA211025A4AD0300C448D7 /* CompileTheToneExpedition.swift */,
+				711BAD2325A4F222003BAFA6 /* PredictTheToneExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -2862,6 +2866,7 @@
 				7124162025A36C3400169B9C /* Social.swift in Sources */,
 				710889872591B29800795EDF /* Promise+Timeout.swift in Sources */,
 				7125BDD925A131D200F22717 /* RangeTrackConfiguration.swift in Sources */,
+				711BAD2425A4F222003BAFA6 /* PredictTheToneExpedition.swift in Sources */,
 				71DC58D125988F56004935CF /* Lemmatizer.swift in Sources */,
 				710889812591B29800795EDF /* PromiseBlocks.swift in Sources */,
 				7183D56F25A428AE00FB91A9 /* RobinhoodPageBusinessLogic.swift in Sources */,
@@ -2937,6 +2942,7 @@
 				71DC58FB259899A7004935CF /* Dictionary.swift in Sources */,
 				7123B1262593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift in Sources */,
 				7139F6392598145100D9C84B /* TonalRange.swift in Sources */,
+				711BAD2525A4F222003BAFA6 /* PredictTheToneExpedition.swift in Sources */,
 				7108896A2591B29800795EDF /* Cryptowatcher+Aggregates.swift in Sources */,
 				7139F67125981BD300D9C84B /* TonalTuneComponent.swift in Sources */,
 				7125BE1325A1328A00F22717 /* EnvironmentValues+TrackValue.swift in Sources */,

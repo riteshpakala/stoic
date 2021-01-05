@@ -16,11 +16,34 @@ public struct TonalCompileComponent: GraniteComponent {
     
     public init() {}
     
+    var tunerState: SentimentSliderState {
+        let tuner = depObject(\.tonalCreateDependency,
+                               target: \.tone.compile.slider)
+        return tuner ?? .init()
+    }
+    
     public var body: some View {
         VStack {
             
-            
-           
+            if command.center.compileState == .compiled {
+                Text("Prediction: \(state.currentPrediction)")
+                    .granite_innerShadow(
+                        Brand.Colors.purple,
+                        radius: 3,
+                        offset: .init(x: 2, y: 2))
+                    .multilineTextAlignment(.center)
+                    .font(Fonts.live(.title, .bold))
+                
+                SentimentSliderComponent(state: tunerState).listen(to: command)
+               
+                Text(tunerState.sentiment.asString)
+                    .granite_innerShadow(
+                        Brand.Colors.yellow,
+                        radius: 3,
+                        offset: .init(x: 2, y: 2))
+                    .multilineTextAlignment(.center)
+                    .font(Fonts.live(.subheadline, .regular))
+            }
             
         }.onAppear(perform: {
             if command.center.compileState == .readyToCompile {
