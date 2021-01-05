@@ -15,6 +15,7 @@ public struct TonalRange: Hashable {
         lhs.indicators == rhs.indicators
     }
     
+    let base: Bool
     let objects: [SecurityObject]
     let similarities: [TonalSimilarity]
     let indicators: [TonalIndicators]
@@ -22,11 +23,13 @@ public struct TonalRange: Hashable {
     public init(
         objects: [SecurityObject],
         _ similarities: [TonalSimilarity],
-        _ indicators: [TonalIndicators]) {
+        _ indicators: [TonalIndicators],
+        base: Bool = false) {
         
         self.objects = objects
         self.similarities = similarities
         self.indicators = indicators
+        self.base = base
     }
     
     var dates: [Date] {
@@ -55,11 +58,11 @@ public struct TonalRange: Hashable {
     }
     
     var avgSimilarityDisplay: String {
-        return "\((avgSimilarity*100).asInt)% Similar"
+        return base ? "Base" : "\((avgSimilarity*100).asInt)% Similar"
     }
     
     var avgSimilarityColor: Color {
-        avgSimilarity > 0.6 ? Brand.Colors.green : (avgSimilarity > 0.4 ? Brand.Colors.yellow : Brand.Colors.red)
+        base ? Brand.Colors.yellow : (avgSimilarity > 0.6 ? Brand.Colors.green : (avgSimilarity > 0.4 ? Brand.Colors.yellow : Brand.Colors.red))
     }
 }
 

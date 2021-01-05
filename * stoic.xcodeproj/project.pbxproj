@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7105341625A50E97006A75DD /* TonalRange.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7105341525A50E97006A75DD /* TonalRange.CoreData.swift */; };
+		7105341725A50E97006A75DD /* TonalRange.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7105341525A50E97006A75DD /* TonalRange.CoreData.swift */; };
 		710889062591B07400795EDF /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889052591B07400795EDF /* Asset.swift */; };
 		7108890D2591B08300795EDF /* Security.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7108890C2591B08300795EDF /* Security.swift */; };
 		710889152591B09A00795EDF /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889142591B09A00795EDF /* Stock.swift */; };
@@ -620,6 +622,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7105341525A50E97006A75DD /* TonalRange.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalRange.CoreData.swift; sourceTree = "<group>"; };
 		710889052591B07400795EDF /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		7108890C2591B08300795EDF /* Security.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.swift; sourceTree = "<group>"; };
 		710889142591B09A00795EDF /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
@@ -1734,6 +1737,7 @@
 			isa = PBXGroup;
 			children = (
 				7139F6372598145100D9C84B /* TonalRange.swift */,
+				7105341525A50E97006A75DD /* TonalRange.CoreData.swift */,
 				7139F6952598221700D9C84B /* TonalSentiment.swift */,
 				7134428025A38A1D002C0315 /* TonalSound.CoreData.swift */,
 			);
@@ -2830,6 +2834,7 @@
 				7121F6D82596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */,
 				71DC58F325988F84004935CF /* DataSet.swift in Sources */,
 				7139F6B12598827F00D9C84B /* GetSentimentExpedition.swift in Sources */,
+				7105341625A50E97006A75DD /* TonalRange.CoreData.swift in Sources */,
 				7183D54B25A428AE00FB91A9 /* RobinhoodPageViewModel.swift in Sources */,
 				7134427325A37A2C002C0315 /* SocialDataObject+CoreDataProperties.swift in Sources */,
 				71434344259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */,
@@ -3149,6 +3154,7 @@
 				7125BE4525A1384A00F22717 /* SentimentSliderComponent.swift in Sources */,
 				710889902591B29800795EDF /* Promise.swift in Sources */,
 				7125BE8C25A148BA00F22717 /* TonalFindComponent.swift in Sources */,
+				7105341725A50E97006A75DD /* TonalRange.CoreData.swift in Sources */,
 				711402B1258DB9ED00BA387D /* StockEvents.swift in Sources */,
 				7125BDC025A1318D00F22717 /* RangeSliderStyle.swift in Sources */,
 				7143439F2590787E001F26A4 /* RenderIf.swift in Sources */,

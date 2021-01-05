@@ -75,7 +75,7 @@ struct TonalUtilities {
             }
 
             public var output: [Double] {
-                [indicators.change]
+                [security.lastValue]
             }
 
             public var description: String {
@@ -86,7 +86,7 @@ struct TonalUtilities {
                     [ Security Data Set - \(security.securityType) - \(security.date.asString) ]
                     Value: \(security.lastValue)
                     Pair: \(indicators.basePair.toString)
-                    Change: \(indicators.change)
+                    Change: \(security.changePercentValue)
                     \(indicators.averagesToString)
                     \(sentiment.asString)
                     '''''''''''''''''''''''''''''

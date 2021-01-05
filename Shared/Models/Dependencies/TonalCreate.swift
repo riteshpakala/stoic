@@ -40,6 +40,9 @@ public class Tone: ObservableObject {
         }
     }
     
+    public var baseRange: TonalRange? {
+        range?.first(where: { $0.base })
+    }
     public var selectedRange: TonalRange?
     
     public init(ticker: String? = nil,

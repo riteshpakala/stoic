@@ -65,7 +65,7 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
         let chunks = orderedSecurities.chunked(into: days)
         let scrapeTop = Array(chunks.suffix(chunks.count - 1))
         
-        var candidates : [TonalRange] = []
+        var candidates : [TonalRange] = [targetComparables.baseRange]
         for chunk in scrapeTop {
             guard chunk.count == days else { continue }
             
