@@ -37,7 +37,6 @@ struct TonalEvents {
     
     public struct TonalSounds: GraniteEvent {
         let sounds: [TonalSound]
-        let isLast: Bool
     }
     
     public struct History: GraniteEvent {

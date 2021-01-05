@@ -122,7 +122,7 @@ struct TonalHistoryExpedition: GraniteExpedition {
 
                 connection.request(TonalEvents
                                     .TonalSounds
-                                    .init(sounds: sounds, isLast: index == chunks.count - 1),
+                                    .init(sounds: sounds),
                                    queue: .main)
                 
             })
@@ -130,7 +130,7 @@ struct TonalHistoryExpedition: GraniteExpedition {
             currentOps.append(op)
         }
         
-        state.operationQueue.addOperations(currentOps, waitUntilFinished: true)
+        state.operationQueue.addOperations(currentOps, waitUntilFinished: false)
         
         state.operationQueue.addBarrierBlock {
             print("🪔🪔🪔🪔🪔🪔\n[Sentiment] completed \(tweet.result.map { $0.date.asDouble.date().asString }.uniques)\n🪔")
@@ -158,8 +158,6 @@ struct TonalSoundsExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        
-        print("🧪🧪🧪🧪🧪🧪\n[Sentiment] TonalSounds.Test.Completion \(event.isLast)\n🧪")
         
         state.service.soundAggregate.completed.append(event.sounds.first?.date.simple ?? Date.today)
         state.service.soundAggregate.sounds.append(event.sounds)

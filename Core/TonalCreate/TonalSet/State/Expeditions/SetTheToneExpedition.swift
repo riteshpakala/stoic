@@ -92,7 +92,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
            let range = tone {
             save(event.sentiment, range)
         }
-        
+
         connection.dependency(\TonalCreateDependency.tone.sentiment, value: event.sentiment)
     }
     
