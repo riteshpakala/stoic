@@ -95,31 +95,6 @@ public struct TonalSentiment {
     }
 }
 
-public struct TonalSound: Equatable, Hashable {
-    public static func ==(lhs: TonalSound, rhs: TonalSound) -> Bool {
-        return lhs.content == rhs.content
-    }
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(content)
-    }
-    
-    let date: Date
-    let content: String
-    let sentiment: SentimentOutput
-    
-    
-    
-    public var asString: String {
-        """
-        🚀🚀🚀🚀🚀🚀
-        text: \(content)
-        ---------------------
-        \(sentiment.asString)
-        🚀
-        """
-    }
-}
-
 extension Array where Element == SentimentOutput {
     func average(_ date: Date) -> SentimentOutput {
         let posSum = self.compactMap { $0.pos }.reduce(0, +)

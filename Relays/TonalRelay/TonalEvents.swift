@@ -13,10 +13,12 @@ import Combine
 struct TonalEvents {
     public struct GetSentiment: GraniteEvent {
         let range: TonalRange
+        let inComplete: Bool
         
-        public init(range: TonalRange)//730 = 2 years - 1825 = 5 years
+        public init(range: TonalRange, inComplete: Bool = false)//730 = 2 years - 1825 = 5 years
         {
             self.range = range
+            self.inComplete = inComplete
         }
     }
     

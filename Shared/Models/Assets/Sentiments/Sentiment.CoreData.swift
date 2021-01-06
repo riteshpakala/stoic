@@ -41,7 +41,10 @@ extension NSManagedObjectContext {
             
             print(missingSentiment.map { $0.date })
             print("missing---\n🪝")
-            return (nil, .init(objects: Array(missingSentiment), Array(securities).expanded(from: Array(missingSentiment)), range.similarities, range.indicators))
+            return (nil, .init(objects: Array(missingSentiment),
+                               Array(securities).expanded(from: Array(missingSentiment)),
+                               range.similarities,
+                               range.indicators))
         }
     }
     
