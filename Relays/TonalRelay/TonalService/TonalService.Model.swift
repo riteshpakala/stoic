@@ -200,11 +200,6 @@ extension TonalModels {
         
         let bucket: TonalUtilities.Models.Bucket = .init(sentiments: sentiments, range: range)
         
-//        let dates = Array(range.map { $0.date }).sorted(by: { $0.compare($1) == .orderedAscending } )
-        
-        print("{TEST} \(bucket.asString)")
-//        print("{TEST} \(sentiments.map { $0.key }.sorted(by: { $0.compare($1) == .orderedAscending }))")
-        
         
         // Time-series execution's foundation is that
         // the time comparable is equivalent to the data

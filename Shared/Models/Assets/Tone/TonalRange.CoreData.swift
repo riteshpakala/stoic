@@ -4,8 +4,30 @@
 //
 //  Created by Ritesh Pakala on 1/5/21.
 //
-
+import CoreData
 import Foundation
+
+extension TonalRange {
+    public func checkSentimentCache(
+        _ quote: QuoteObject,
+        moc: NSManagedObjectContext,
+        completion: @escaping (((sentiment: TonalSentiment?, missing: TonalRange?)?) -> Void)) {
+        
+        let time: Double = CFAbsoluteTimeGetCurrent()
+        DispatchQueue.global(qos: .utility).async {
+            let time: Double = CFAbsoluteTimeGetCurrent()
+            
+            guard let sentimentResult = moc.getSentiment(quote, self) else {
+                print("{TEST} failedddd")
+                completion(nil); return
+            }
+            
+            print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
+            
+            completion(sentimentResult)
+        }
+    }
+}
 
 extension Array where Element == SecurityObject {
     var baseRange: TonalRange {

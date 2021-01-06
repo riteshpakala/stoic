@@ -24,86 +24,16 @@ struct SetTheToneExpedition: GraniteExpedition {
         
         if let tone = connection.depObject(\TonalCreateDependency.tone.find.quote),
            let quote = tone {
-            SetTheToneExpedition.checkSentimentCache(quote, event.range, connection: connection, moc: coreDataInstance)
+            event.range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
+                if let sentiment = sentimentResult?.sentiment {
+                    connection.dependency(\TonalCreateDependency.tone.tune.sentiment, value: sentiment)
+                } else {
+                    connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range), beam: true)
+                }
+            }
         } else {
-            
             connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
         }
-    }
-    
-    public static func checkSentimentCache(
-        _ quote: QuoteObject,
-        _ range: TonalRange,
-        connection: GraniteConnection,
-        moc: NSManagedObjectContext) {
-        
-        DispatchQueue.global(qos: .utility).async {
-            let time: Double = CFAbsoluteTimeGetCurrent()
-            
-            guard let sentimentResult = SetTheToneExpedition.getSentiment(
-                    quote,
-                    range,
-                    moc) else {
-                print("{TEST} failedddd")
-                return
-            }
-            
-            print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
-            
-            if let sentiment = sentimentResult.sentiment {
-                connection.dependency(\TonalCreateDependency.tone.tune.sentiment, value: sentiment)
-            } else {
-                connection.request(TonalEvents.GetSentiment.init(range: sentimentResult.missing ?? range), beam: true)
-            }
-        }
-    }
-    
-    //DEV:
-    //for now even if a day is missing we will re-route the whole
-    //range, but later it should be smarter and handle the missing days
-    //and then merge at the end, under the tonalrelay return for the final tonal
-    //create submission
-    //
-    public static func getSentiment(_ quote: QuoteObject, _ range: TonalRange, _ moc: NSManagedObjectContext) -> (sentiment: TonalSentiment?, missing: TonalRange?)? {
-        
-        let dates = range.datesExpanded.map { $0.simple }
-        let securities = quote.securities
-        let securitiesFiltered = securities.filter { dates.contains($0.date.simple) }
-        
-        guard let sentimentObjects = SetTheToneExpedition.getSentimentObject(
-                moc,
-                startDate: range.datesExpanded.min() ?? .today,
-                endDate: range.sentimentShifted.map{ $0.date }.max() ?? .today) else {
-            return nil
-        }
-        
-        let sounds: [TonalSound] = sentimentObjects.map({ $0.sound })
-      
-        let sentiment: TonalSentiment = .init(sounds)
-        
-        print("🪝🪝🪝🪝🪝🪝\n[Get Sentiment] \(sentiment.datesByDay) \(range.datesExpanded) \(range.sentimentShifted.map{ $0.date })")
-        if sentiment.isValid(against: range) {
-            print("valid\n🪝")
-            return (sentiment, nil)
-        } else {
-            let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.sentimentDate.simple) }
-            
-            print(missingSentiment.map { $0.date })
-            print("missing---\n🪝")
-            return (nil, .init(objects: Array(missingSentiment), Array(securities).expanded(from: Array(missingSentiment)), range.similarities, range.indicators))
-        }
-        
-    }
-    
-    public static func getSentimentObject(_ moc: NSManagedObjectContext,
-                                          startDate: Date,
-                                          endDate: Date) -> [SentimentObject]? {
-        print("{TEST} \(startDate as NSDate) \(endDate as NSDate)")
-        let request: NSFetchRequest = SentimentObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(date >= %@) AND (date <= %@)",
-                                        startDate.advanced(by: -1) as NSDate,
-                                        endDate as NSDate)
-        return try? moc.fetch(request)
     }
 }
 
@@ -130,187 +60,14 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
             return
         }
         
-        save(event.sentiment, range)
+        event.sentiment.save(range, moc: coreDataInstance)
         
-        SetTheToneExpedition.checkSentimentCache(quote, range, connection: connection, moc: coreDataInstance)
-    }
-    
-    func save(_ sentiment: TonalSentiment, _ range: TonalRange) {
-        
-        let moc: NSManagedObjectContext
-        if Thread.isMainThread {
-            moc = coreData.main
-        } else {
-            moc = coreData.background
-        }
-        
-        moc.perform {
-            do {
-                
-                let securityObjects = range.expanded
-                for object in securityObjects {
-                    let date = object.date.simple
-                    
-                    if let sound = sentiment.soundsByDay[date] {
-                        let sentimentObjects: [SentimentObject] = sound.map {
-                            let sentimentObject = SentimentObject(context: moc)
-                            $0.applyTo(sentimentObject)
-                            
-                            //DEV: obv there will be more options in the future
-                            //
-                            sentimentObject.sentimentType = SentimentType.social.rawValue
-                            
-                            return sentimentObject
-                        }
-                        
-                        object.addToSentiment(NSSet.init(array: sentimentObjects))
-                    }
-                }
-                
-                try moc.save()
-                
-                print ("{CoreData} - sentiment saved")
-//                completion(quote)
-            } catch let error {
-                print ("{CoreData} \(error.localizedDescription)")
+        range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
+            if let sentiment = sentimentResult?.sentiment {
+                connection.dependency(\TonalCreateDependency.tone.tune.sentiment, value: sentiment)
+            } else {
+                connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range), beam: true)
             }
         }
-    }
-    
-    func getQuote() -> [QuoteObject]? {
-        let moc: NSManagedObjectContext
-        if Thread.isMainThread {
-            moc = coreData.main
-        } else {
-            moc = coreData.background
-        }
-        
-        return try? moc.fetch(QuoteObject.fetchRequest())
     }
 }
-
-//MARK: -- BACKUP
-
-/*
-//
-//  FindTheToneExpedition.swift
-//  * stoic
-//
-//  Created by Ritesh Pakala on 12/25/20.
-//
-import Foundation
-import GraniteUI
-import Combine
-
-struct FindTheToneExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = TonalCreateEvents.Find
-    typealias ExpeditionState = TonalCreateState
-    
-    func reduce(
-        event: ExpeditionEvent,
-        state: ExpeditionState,
-        connection: GraniteConnection,
-        publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        
-        let securities = event.quote.securities
-        let days: Int = 7
-        //
-        
-        let orderedSecurities = Array(securities.sorted(by: { $0.date.compare($1.date) == .orderedDescending })).filter( { $0.date.compare("2016-01-29".asDate() ?? Date.today) == .orderedDescending } )
-        
-        let count = orderedSecurities.count
-        
-        print("{TEST} found \(count)")
-        
-        var volatilities: [Date:Double] = [:]
-        var volatilityCoeffecients: [Date:Double] = [:]
-        
-        for (index, security) in orderedSecurities.enumerated() {
-//            let nextStockIndex = min(index + 1, orderedSecurities.count - 1)
-//            let nextStock = orderedSecurities[nextStockIndex]
-//            let volatility = security.lastValue - nextStock.lastValue
-//            let coeffecient = volatility/nextStock.lastValue
-//
-//            volatilities[security.date] = volatility
-//            volatilityCoeffecients[security.date] = coeffecient
-//            let components = security.date.dateComponents()
-//            if components.year == 2016, components.month == 1 {
-//                print(sum)
-//                print(deviations)
-//                print(trailing)
-//            }
-            
-            // Standard deviation calculation for yearly variance
-            //
-            let trailing = orderedSecurities.suffix(orderedSecurities.count - index).prefix(24)
-            let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
-            let mean = sum/Double(trailing.count)
-            
-            let deviations = trailing.map({ pow($0.lastValue - mean, 2) }).reduce(0.0, +)
-            let avgDeviation = deviations/Double(trailing.count - 1)
-            //            print(mean)
-            let standardDeviation = sqrt(avgDeviation)
-            volatilities[security.date] = standardDeviation
-            volatilityCoeffecients[security.date] = standardDeviation/mean
-        }
-        
-//        for security in orderedSecurities {
-//            print("date: \(security.date) // volatilities: \(volatilityCoeffecients[security.date])")
-//        }
-
-//
-//
-//        print("\(orderedSecurities.last?.date)")
-        let targetComparables = Array(orderedSecurities.prefix(days))
-        
-        let chunks = orderedSecurities.chunked(into: days)
-        let scrapeTop = Array(chunks.suffix(chunks.count - 1))
-
-        var candidates : [TonalRange] = []
-        var coeffecients: [[Double]] = []
-        var coeffecientAverages: [Double] = []
-        for chunk in scrapeTop {
-            guard chunk.count == days else { continue }
-            
-            
-            var similarities: [Double] = []
-            for i in 0..<chunk.count {
-                let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
-                let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
-                similarities.append(targetCoeffecient/chunkDayCoeffecient)
-            }
-            
-//            let sumOfSimilarities = similarities.map({ abs($0) }).reduce(0.0, +)
-//            let avgOfSimilarities = sumOfSimilarities/Double(similarities.count)
-            
-            if similarities.filter( { !($0 <= 1.2 && $0 >= 0.75) } ).isEmpty {
-                let dates: [Date] = chunk.map { $0.date }
-                
-                let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
-                    TonalSimilarity.init(date: $0.element,
-                                         similarity: similarities[$0.offset]) }
-                
-                let tIndicators: [TonalIndicators] = dates.map {
-                    TonalIndicators.init(date: $0,
-                                         volatility: volatilities[$0],
-                                         volatilityCoeffecient: volatilityCoeffecients[$0] ) }
-//                candidates.append(chunk)
-//                coeffecients.append(similarities)
-//                coeffecientAverages.append(avgOfSimilarities)
-            }
-        }
-        
-//        state.payload = .init(object: state.securityData)
-        
-        for (index, candidate) in candidates.enumerated() {
-            print("%%%%%%%%%%%%%%%%%%")
-            print("\(candidates.count) // \(coeffecients.count) // \(coeffecientAverages.count)")
-            print("Dates: \(candidate.first?.date)")
-            print("Volatilities: \(coeffecients[index])")
-            print("Average: \(coeffecientAverages[index])")
-        }
-        
-    }
-}
-
-*/

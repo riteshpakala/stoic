@@ -22,5 +22,7 @@ extension TonalServiceModels.Indicators {
         var volumeVolatiliy: Double {
             (paired.base.volumeValue - paired.previous.volumeValue) / 2
         }
+        
+        
     }
 }

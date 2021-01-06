@@ -24,6 +24,5 @@ struct SearchTheToneExpedition: GraniteExpedition {
         connection.dependency(\TonalCreateDependency.search.securities, value: event.result)
         
         state.securityData = event.result
-//        state.payload = .init(object: state.securityData)
     }
 }

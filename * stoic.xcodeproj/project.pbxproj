@@ -303,6 +303,8 @@
 		7125BE9B25A14A2B00F22717 /* SearchTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7125BE9925A14A2B00F22717 /* SearchTheToneExpedition.swift */; };
 		7125BEAB25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7125BEAA25A159CD00F22717 /* SearchSecurityExpedition.swift */; };
 		7125BEAC25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7125BEAA25A159CD00F22717 /* SearchSecurityExpedition.swift */; };
+		71267A3325A588C6006132D8 /* Quote.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A3225A588C6006132D8 /* Quote.CoreData.swift */; };
+		71267A3425A588C6006132D8 /* Quote.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A3225A588C6006132D8 /* Quote.CoreData.swift */; };
 		7133385325A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */; };
 		7133385425A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */; };
 		7134427125A37A2C002C0315 /* SocialDataObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134426F25A37A2B002C0315 /* SocialDataObject+CoreDataClass.swift */; };
@@ -772,6 +774,7 @@
 		7125BE8A25A148BA00F22717 /* TonalFindEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalFindEvents.swift; sourceTree = "<group>"; };
 		7125BE9925A14A2B00F22717 /* SearchTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTheToneExpedition.swift; sourceTree = "<group>"; };
 		7125BEAA25A159CD00F22717 /* SearchSecurityExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSecurityExpedition.swift; sourceTree = "<group>"; };
+		71267A3225A588C6006132D8 /* Quote.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.CoreData.swift; sourceTree = "<group>"; };
 		7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTonalRangeExpedition.swift; sourceTree = "<group>"; };
 		7134426F25A37A2B002C0315 /* SocialDataObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SocialDataObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7134427025A37A2C002C0315 /* SocialDataObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SocialDataObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -987,6 +990,7 @@
 				7108890B2591B07900795EDF /* Securities */,
 				710889052591B07400795EDF /* Asset.swift */,
 				71143DE725A4C14F00379E4B /* Quote.swift */,
+				71267A3225A588C6006132D8 /* Quote.CoreData.swift */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -2693,6 +2697,7 @@
 				711484B4259E0C7B00464684 /* WindowEvents.swift in Sources */,
 				7125BDC325A1318D00F22717 /* AnyRangeSliderStyle.swift in Sources */,
 				7139F625259810C000D9C84B /* TonalSetComponent.swift in Sources */,
+				71267A3325A588C6006132D8 /* Quote.CoreData.swift in Sources */,
 				7108890D2591B08300795EDF /* Security.swift in Sources */,
 				7124163A25A3771800169B9C /* SentimentObject+CoreDataClass.swift in Sources */,
 				710889B12591B29800795EDF /* Exchanges.swift in Sources */,
@@ -3173,6 +3178,7 @@
 				7108896E2591B29800795EDF /* PromiseState.swift in Sources */,
 				7183D56425A428AE00FB91A9 /* PressAndHorizontalDragGesture.swift in Sources */,
 				7143433D259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
+				71267A3425A588C6006132D8 /* Quote.CoreData.swift in Sources */,
 				71D63CCD258E92B1003B0BAF /* MainComponent.swift in Sources */,
 				7123B13D2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */,
 				7125BE6A25A1388400F22717 /* PointTrackConfiguration.swift in Sources */,

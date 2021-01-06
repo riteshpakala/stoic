@@ -21,13 +21,14 @@ struct FindTheToneExpedition: GraniteExpedition {
         
 //        state.stage = .find
         print("{TEST} on appear")
+        
         //DEV:
         // Need to also check for last trading day
         // update the cache from last date saved to the recent day
         // requested on
         //
         guard let ticker = event.ticker else { return }
-        if let quote = getQuote()?.first(where: { $0.ticker == ticker && $0.intervalType == SecurityInterval.day.rawValue }) {
+        if let quote = coreDataInstance.getQuotes()?.first(where: { $0.ticker == ticker && $0.intervalType == SecurityInterval.day.rawValue }) {
             
             connection.dependency(\TonalCreateDependency.tone.find.quote, value: quote)
             
@@ -35,17 +36,6 @@ struct FindTheToneExpedition: GraniteExpedition {
         } else {
             connection.request(StockEvents.GetStockHistory.init(ticker: ticker), beam: true)
         }
-    }
-    
-    func getQuote() -> [QuoteObject]? {
-        let moc: NSManagedObjectContext
-        if Thread.isMainThread {
-            moc = coreData.main
-        } else {
-            moc = coreData.background
-        }
-        
-        return try? moc.fetch(QuoteObject.fetchRequest())
     }
 }
 
@@ -63,51 +53,17 @@ struct StockHistoryExpedition: GraniteExpedition {
             return
         }
         
-        save(data: stocks) { quote in
+        stocks.save(moc: coreDataInstance) { quote in
             if let object = quote {
-                
-                
                 connection.dependency(\TonalCreateDependency.tone.find.quote, value: object)
                 connection.request(TonalFindEvents.Parse(object, days: state.days))
-//                connection.request(TonalCreateEvents.Set(object))
             }
         }
     }
-    
-    func save(data: [Stock], completion: @escaping ((QuoteObject?) -> Void)) {
-        guard let referenceStock = data.first else { completion(nil); return }
-        let moc: NSManagedObjectContext
-        if Thread.isMainThread {
-            moc = coreData.main
-        } else {
-            moc = coreData.background
-        }
-        
-        moc.perform {
-            
-            do {
-                let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
-                
-                let quote: QuoteObject = quotes.first(where: { $0.exchangeName == referenceStock.exchangeName && $0.ticker == referenceStock.ticker && $0.securityType == referenceStock.securityType.rawValue && $0.intervalType == referenceStock.interval.rawValue }) ?? QuoteObject.init(context: moc)
-                
-                referenceStock.apply(to: quote)
-                
-                for stock in data {
-                    let object = StockDataObject.init(context: moc)
-                    stock.apply(to: object)
-                    quote.addToSecurities(object)
-                }
-                
-                try moc.save()
-                
-                print ("{CoreData} saved")
-                completion(quote)
-            } catch let error {
-                print ("{CoreData} \(error.localizedDescription)")
-                completion(nil)
-            }
-        }
-    }
+}
+
+
+//
     
 //    func save(data: [StockData]) {
 //        let moc: NSManagedObjectContext
@@ -140,7 +96,6 @@ struct StockHistoryExpedition: GraniteExpedition {
 //            }
 //        }
 //    }
-}
 
 //    func saveStockPredictions(
 //        _ prediction: StockModelObjectPayload,

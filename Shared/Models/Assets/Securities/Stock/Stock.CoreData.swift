@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 import GraniteUI
 
 extension Stock {
@@ -26,5 +27,35 @@ extension Stock {
         security.close = close
         security.high = high
         security.volume = volume
+    }
+}
+
+extension Array where Element == Stock {
+    func save(moc: NSManagedObjectContext, completion: @escaping ((QuoteObject?) -> Void)) {
+        guard let referenceStock = self.first else { completion(nil); return }
+        moc.perform {
+            
+            do {
+                let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
+                
+                let quote: QuoteObject = quotes.first(where: { $0.exchangeName == referenceStock.exchangeName && $0.ticker == referenceStock.ticker && $0.securityType == referenceStock.securityType.rawValue && $0.intervalType == referenceStock.interval.rawValue }) ?? QuoteObject.init(context: moc)
+                
+                referenceStock.apply(to: quote)
+                
+                for stock in self {
+                    let object = StockDataObject.init(context: moc)
+                    stock.apply(to: object)
+                    quote.addToSecurities(object)
+                }
+                
+                try moc.save()
+                
+                print ("{CoreData} saved")
+                completion(quote)
+            } catch let error {
+                print ("{CoreData} \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
     }
 }

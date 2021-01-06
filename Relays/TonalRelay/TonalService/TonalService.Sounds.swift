@@ -13,6 +13,7 @@ extension TonalServiceModels {
         var range: TonalRange? = nil
         var sounds: [[TonalSound]]
         var completed: [Date] = []
+        
         public init() {
             sounds = []
         }
