@@ -168,7 +168,7 @@ extension TonalModels {
         
         let change = (output - security.lastValue) / security.lastValue
         
-        print("🧬🧬🧬🧬🧬🧬\n[Prediction Output] :: \(change)\n🧬")
+        print("🧬🧬🧬🧬🧬🧬\n[Prediction Output] :: \(change)\n\(output) - \(security.lastValue)\n🧬")
         return change
     }
     
@@ -225,7 +225,7 @@ extension TonalModels {
                     quote: quote,
                     modelType: type)
 
-                print(dataSet.description)
+                print(dataSet.inputDescription)
                 
                 try dataForDavid.addDataPoint(
                     input: dataSet.asArray,

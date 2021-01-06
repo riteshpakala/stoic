@@ -33,8 +33,9 @@ public class Tone: ObservableObject {
     var sentiment: TonalSentiment? {
         didSet {
             if let senti = sentiment {
-                for date in senti.datesByDay {
-                    tune.tuners[date] = .init(senti.sentimentsByDay[date] ?? .zero, date: date)
+                tune.tuners = [:]
+                for date in senti.filteredForRangeByDay.keys {
+                    tune.tuners[date] = .init(senti.filteredForRangeByDay[date] ?? .zero, date: date)
                 }
             }
         }

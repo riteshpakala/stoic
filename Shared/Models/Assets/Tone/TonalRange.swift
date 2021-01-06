@@ -64,6 +64,10 @@ public struct TonalRange: Hashable {
     var avgSimilarityColor: Color {
         base ? Brand.Colors.yellow : (avgSimilarity > 0.6 ? Brand.Colors.green : (avgSimilarity > 0.4 ? Brand.Colors.yellow : Brand.Colors.red))
     }
+    
+    public static var empty: TonalRange {
+        return .init(objects: [], [], [])
+    }
 }
 
 extension TonalRange {

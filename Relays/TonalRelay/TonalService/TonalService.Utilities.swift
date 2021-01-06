@@ -94,6 +94,26 @@ struct TonalUtilities {
                     """
                 return desc
             }
+            
+            public var inputDescription: String {
+                let desc: String =
+                    """
+                    💽💽💽💽💽💽💽💽💽💽💽💽💽
+                    '''''''''''''''''''''''''''''
+                    [ Security Data Set - \(security.securityType)  ]
+                    
+                    \(indicators.basePair.base.date.asString) ----
+                    \(indicators.averagesToString)
+
+                    ---- \(indicators.basePair.previous.date.asString) ----
+                    ~~~
+                    ---- Sentiment ----
+                    \(sentiment.description)
+                    '''''''''''''''''''''''''''''
+                    💽
+                    """
+                return desc
+            }
         }
     }
 }

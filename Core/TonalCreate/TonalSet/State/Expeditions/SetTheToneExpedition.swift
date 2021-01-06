@@ -49,21 +49,21 @@ struct SetTheToneExpedition: GraniteExpedition {
     //and then merge at the end, under the tonalrelay return for the final tonal
     //create submission
     //
-    func getSentiment(_ quote: QuoteObject,_ range: TonalRange) -> (sentiment: TonalSentiment?, missing: TonalRange?) {
+    func getSentiment(_ quote: QuoteObject, _ range: TonalRange) -> (sentiment: TonalSentiment?, missing: TonalRange?) {
         
         let dates = range.dates.map { $0.simple }
-        let securities = quote.securities.filter { dates.contains($0.date.simple) }
+        let securities = quote.securities.filter { dates.contains($0.sentimentDate.simple) }
         
         var sounds: [TonalSound] = []
         for security in securities {
             sounds.append(contentsOf: security.sentiment?.compactMap { $0.sound } ?? [])
         }
-        let sentiment: TonalSentiment = .init(sounds)
+        let sentiment: TonalSentiment = .init(sounds, range: range)
         print("{TEST} \(securities.count) \(sentiment.datesByDay.count)")
         if securities.count == sentiment.datesByDay.count {
             return (sentiment, nil)
         } else {
-            let missingSentiment = securities.filter { !sentiment.datesByDay.contains($0.date.simple) }
+            let missingSentiment = securities.filter { !sentiment.datesByDay.contains($0.sentimentDate.simple) }
             
             print(missingSentiment.map { $0.date })
             return (nil, .init(objects: Array(missingSentiment), range.similarities, range.indicators))

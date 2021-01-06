@@ -20,8 +20,13 @@ public struct TonalSentiment {
     let sentimentsByDay: [Date: SentimentOutput]
     let sentimentDefaultsByDay: [Date: SentimentOutput]
     
-    public init(_ sounds: [TonalSound]) {
+    let filteredForRangeByDay: [Date: SentimentOutput]
+    
+    let range: TonalRange
+    
+    public init(_ sounds: [TonalSound], range: TonalRange, disparity: Double = 0.04) {
         let uniques = Array(Set(sounds))
+        self.range = range
         
         dates = uniques.map({ $0.date }).uniques
         
@@ -45,15 +50,8 @@ public struct TonalSentiment {
         var sentimentDefaultsFound: [Date: SentimentOutput] = [:]
         dates.forEach { date in
             let sentiments = soundsFound[date]?.compactMap { $0.sentiment }
-            let posSum = (sentiments?.compactMap { $0.pos }.reduce(0, +) ?? 0.0)
-            let negSum = (sentiments?.compactMap { $0.neg }.reduce(0, +) ?? 0.0)
-            let neuSum = (sentiments?.compactMap { $0.neu }.reduce(0, +) ?? 0.0)
-            let compSum = (sentiments?.compactMap { $0.compound }.reduce(0, +) ?? 0.0)
-            let total: Double = (sentiments?.count ?? 0).asDouble
-            let avgSentiment = SentimentOutput.init(pos: posSum/total,
-                                                    neg: negSum/total,
-                                                    neu: neuSum/total,
-                                                    compound: compSum/total)
+            let filtered = sentiments?.filter{ abs($0.pos - $0.neg) >= disparity }
+            let avgSentiment = filtered?.average(date) ?? .neutral
             sentimentDefaultsFound[date] = avgSentiment
         }
         
@@ -63,19 +61,24 @@ public struct TonalSentiment {
         var sentimentDefaultsByDayFound: [Date: SentimentOutput] = [:]
         datesByDay.forEach { date in
             let sentiments = soundsFoundByDay[date]?.compactMap { $0.sentiment }
-            let posSum = (sentiments?.compactMap { $0.pos }.reduce(0, +) ?? 0.0)
-            let negSum = (sentiments?.compactMap { $0.neg }.reduce(0, +) ?? 0.0)
-            let neuSum = (sentiments?.compactMap { $0.neu }.reduce(0, +) ?? 0.0)
-            let compSum = (sentiments?.compactMap { $0.compound }.reduce(0, +) ?? 0.0)
-            let total: Double = (sentiments?.count ?? 0).asDouble
-            let avgSentiment = SentimentOutput.init(pos: posSum/total,
-                                                    neg: negSum/total,
-                                                    neu: neuSum/total,
-                                                    compound: compSum/total)
+            let filtered = sentiments?.filter{ abs($0.pos - $0.neg) >= disparity }
+            let avgSentiment = filtered?.average(date) ?? .neutral
             sentimentDefaultsByDayFound[date] = avgSentiment
         }
         self.sentimentsByDay = sentimentDefaultsByDayFound
         self.sentimentDefaultsByDay = sentimentDefaultsByDayFound
+        
+        let rangeDatesByDay = range.dates.map { $0.simple }
+        var rangeDatesByDayFound: [Date: SentimentOutput] = [:]
+        rangeDatesByDay.forEach { date in
+            let sentimentDate: Date = date.advanced(by: -1)
+            if let sentiment = sentimentDefaultsByDayFound[sentimentDate.simple] {
+                //LAST LEFT OFF: LLO
+                //SENTIMENT NEEDS TO REWIND A DAY
+                rangeDatesByDayFound[date] = sentiment
+            }
+        }
+        self.filteredForRangeByDay = rangeDatesByDayFound
     }
     
     public var stats: String {
@@ -86,7 +89,7 @@ public struct TonalSentiment {
     }
     
     public static var empty: TonalSentiment {
-        .init([])
+        .init([], range: .empty)
     }
 }
 
@@ -115,3 +118,18 @@ public struct TonalSound: Equatable, Hashable {
     }
 }
 
+extension Array where Element == SentimentOutput {
+    func average(_ date: Date) -> SentimentOutput {
+        let posSum = self.compactMap { $0.pos }.reduce(0, +)
+        let negSum = self.compactMap { $0.neg }.reduce(0, +)
+        let neuSum = self.compactMap { $0.neu }.reduce(0, +)
+        let compSum = self.compactMap { $0.compound }.reduce(0, +)
+        let total: Double = (self.count).asDouble
+        
+        return SentimentOutput.init(pos: posSum/total,
+                                    neg: negSum/total,
+                                    neu: neuSum/total,
+                                    compound: compSum/total,
+                                    date: date)
+    }
+}

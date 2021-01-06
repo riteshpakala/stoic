@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7105341625A50E97006A75DD /* TonalRange.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7105341525A50E97006A75DD /* TonalRange.CoreData.swift */; };
 		7105341725A50E97006A75DD /* TonalRange.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7105341525A50E97006A75DD /* TonalRange.CoreData.swift */; };
+		7105342525A53826006A75DD /* TonalSentiment.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7105342425A53826006A75DD /* TonalSentiment.CoreData.swift */; };
+		7105342625A53826006A75DD /* TonalSentiment.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7105342425A53826006A75DD /* TonalSentiment.CoreData.swift */; };
 		710889062591B07400795EDF /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889052591B07400795EDF /* Asset.swift */; };
 		7108890D2591B08300795EDF /* Security.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7108890C2591B08300795EDF /* Security.swift */; };
 		710889152591B09A00795EDF /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710889142591B09A00795EDF /* Stock.swift */; };
@@ -623,6 +625,7 @@
 
 /* Begin PBXFileReference section */
 		7105341525A50E97006A75DD /* TonalRange.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalRange.CoreData.swift; sourceTree = "<group>"; };
+		7105342425A53826006A75DD /* TonalSentiment.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalSentiment.CoreData.swift; sourceTree = "<group>"; };
 		710889052591B07400795EDF /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		7108890C2591B08300795EDF /* Security.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.swift; sourceTree = "<group>"; };
 		710889142591B09A00795EDF /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
@@ -1739,6 +1742,7 @@
 				7139F6372598145100D9C84B /* TonalRange.swift */,
 				7105341525A50E97006A75DD /* TonalRange.CoreData.swift */,
 				7139F6952598221700D9C84B /* TonalSentiment.swift */,
+				7105342425A53826006A75DD /* TonalSentiment.CoreData.swift */,
 				7134428025A38A1D002C0315 /* TonalSound.CoreData.swift */,
 			);
 			path = Tone;
@@ -2839,6 +2843,7 @@
 				7134427325A37A2C002C0315 /* SocialDataObject+CoreDataProperties.swift in Sources */,
 				71434344259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */,
 				7139F6A325983C2000D9C84B /* TonalService.swift in Sources */,
+				7105342525A53826006A75DD /* TonalSentiment.CoreData.swift in Sources */,
 				7123B16B2593DAD700E5BD69 /* StockService.Stock.swift in Sources */,
 				713D25AF258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
 				710889832591B29800795EDF /* Promise+Chain.swift in Sources */,
@@ -2937,6 +2942,7 @@
 				7121F6D92596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */,
 				7136B65C25A008B40014F693 /* PortfolioState.swift in Sources */,
 				710889CC2591B3B100795EDF /* Asset.swift in Sources */,
+				7105342625A53826006A75DD /* TonalSentiment.CoreData.swift in Sources */,
 				71148500259E15A700464684 /* BootExpedition.swift in Sources */,
 				71434343259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
 				710889332591B24700795EDF /* CryptoState.swift in Sources */,

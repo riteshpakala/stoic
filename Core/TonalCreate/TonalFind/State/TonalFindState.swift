@@ -17,14 +17,6 @@ public class TonalFindState: GraniteState {
     var minDays: Int = 4
     var dayRangevalue: Int = 0
     var quote: QuoteObject? = nil
-    
-    lazy var operationQueue: OperationQueue = {
-        var queue: OperationQueue = .init()
-        queue.maxConcurrentOperationCount = 6
-        queue.name = "tonal.create.parse.op"
-        queue.qualityOfService = .utility
-        return queue
-    }()
 }
 
 public class TonalFindCenter: GraniteCenter<TonalFindState> {

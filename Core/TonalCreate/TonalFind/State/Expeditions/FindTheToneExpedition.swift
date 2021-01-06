@@ -29,9 +29,7 @@ struct FindTheToneExpedition: GraniteExpedition {
         guard let ticker = event.ticker else { return }
         if let quote = getQuote()?.first(where: { $0.ticker == ticker && $0.intervalType == SecurityInterval.day.rawValue }) {
             
-            
             connection.dependency(\TonalCreateDependency.tone.find.quote, value: quote)
-            
             
             connection.request(TonalFindEvents.Parse(quote, days: state.days))
         } else {

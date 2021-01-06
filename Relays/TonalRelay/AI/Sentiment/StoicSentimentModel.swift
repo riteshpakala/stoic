@@ -6,9 +6,14 @@ public struct SentimentOutput {
     public let neg: Double
     public let neu: Double
     public let compound: Double
+    public var date: Date = .today
     
     public var asString: String {
         "[neg: \((neg*100).asInt)% | pos: \((pos*100).asInt)%] // bias: \((neu*100).asInt)%"
+    }
+    
+    public var description: String {
+        "Sentiment-----\n\(date.asString)------\n[neg: \((neg*100).asInt)% | pos: \((pos*100).asInt)%] // bias: \((neu*100).asInt)%"
     }
     
     public static var zero: SentimentOutput {
@@ -116,7 +121,6 @@ class StoicSentimentModel {
         let positives: [Float] = allValues.enumerated().filter({ ($0.offset + 1) % 3 == 0 }).map { $0.element }
         
         let averages: [Float] = [negatives.reduce(0, +)/Float(negatives.count), neutrals.reduce(0, +)/Float(neutrals.count), positives.reduce(0, +)/Float(positives.count)]
-        
         
         return SentimentOutput.init(pos: Double(averages[2]), neg: Double(averages[0]), neu: Double(averages[1]), compound: 0.0)
     }
