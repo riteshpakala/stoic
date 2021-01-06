@@ -19,24 +19,25 @@ extension TonalSentiment {
         moc.perform {
             do {
                 
+                let sentimentObjects: [SentimentObject] = self.sounds.values.flatMap { $0 }.map {
+                    let sentimentObject = SentimentObject(context: moc)
+                    $0.applyTo(sentimentObject)
+                    
+                    //DEV: obv there will be more options in the future
+                    //
+                    sentimentObject.sentimentType = SentimentType.social.rawValue
+                    
+                    return sentimentObject
+                }
+                
                 let securityObjects = range.expanded
                 for object in securityObjects {
                     let date = object.date.simple
                     
-                    if let sound = self.soundsByDay[date] {
-                        let sentimentObjects: [SentimentObject] = sound.map {
-                            let sentimentObject = SentimentObject(context: moc)
-                            $0.applyTo(sentimentObject)
-                            
-                            //DEV: obv there will be more options in the future
-                            //
-                            sentimentObject.sentimentType = SentimentType.social.rawValue
-                            
-                            return sentimentObject
-                        }
-                        
-                        object.addToSentiment(NSSet.init(array: sentimentObjects))
-                    }
+                    object.addToSentiment(
+                        NSSet.init(
+                            array: sentimentObjects
+                                .filter( { $0.date.simple == date })))
                 }
                 
                 try moc.save()

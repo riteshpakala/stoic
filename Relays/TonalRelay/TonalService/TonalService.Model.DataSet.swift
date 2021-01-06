@@ -28,21 +28,23 @@ extension TonalService {
                 var rangeDates: [Date] = []
                 public init(sentiments: [Date: SentimentOutput], range: TonalRange) {
                     rangeDates = range.dates.sortAsc
-                    let objects = range.objects.sortDesc
-                    let dates = range.datesExpanded
+                    let objects = range.objects.sortAsc
+                    var sentimentDates = Array(sentiments.keys).sortDesc
+            
                     for item in objects {
                         var pocket: Pocket = .init(date: item.date, sentiment: [])
                         
                         let shiftedSentimentDate = item.sentimentDate
-                        let possibles = Array(sentiments.keys).filterBelow(shiftedSentimentDate)
+                        let possibles = sentimentDates.filterBelow(shiftedSentimentDate)
+                        
                         
                         for possible in possibles {
-                            guard !dates.contains(possible.advanced(by: 1)) else {
-                                break
-                            }
-                            
                             if let sentiment = sentiments[possible] {
                                 pocket.sentiment.append(sentiment)
+                                
+                                if let index = sentimentDates.firstIndex(of: possible) {
+                                    sentimentDates.remove(at: index)
+                                }
                             }
                         }
                         
@@ -59,7 +61,7 @@ extension TonalService {
                 
                 var asString: String {
                     """
-                    \(pockets.map { $0.date.asString })
+                    \(pockets.map { "\($0.date.asString) ~ \($0.sentiment.count)" })
                     """
                 }
             }

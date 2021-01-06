@@ -204,6 +204,8 @@ extension TonalModels {
             return nil
         }
         
+        print(bucket.asString)
+        
         // DEV: by day enforced for now
         // and `close` prediction
         //

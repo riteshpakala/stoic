@@ -24,7 +24,7 @@ extension NSManagedObjectContext {
         
         guard let sentimentObjects = self.getSentimentObject(
                                         startDate: range.datesExpanded.min() ?? .today,
-                                        endDate: range.sentimentShifted.map{ $0.date }.max() ?? .today) else {
+                                        endDate: range.datesExpanded.max() ?? .today) else {
             return nil
         }
         
@@ -32,15 +32,18 @@ extension NSManagedObjectContext {
       
         let sentiment: TonalSentiment = .init(sounds)
         
-        print("🪝🪝🪝🪝🪝🪝\n[Get Sentiment] \(sentimentObjects.count)")
+        print("🪝🪝🪝🪝🪝🪝\n[Get Sentiment] ")
+        
+        print("SentimentDates: \(sentimentObjects.map { $0.date.simple }.uniques.sortDesc)")
+        print("SecurityDates: \(securitiesFiltered.map { $0.date.simple }.uniques.sortDesc)")
+        
         if sentiment.isValid(against: range) {
             print("valid\n🪝")
             return (sentiment, nil)
         } else {
             let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.sentimentDate.simple) }
             
-            print(missingSentiment.map { $0.date })
-            print("missing---\n🪝")
+            print("\n🪝 ")
             return (nil, .init(objects: Array(missingSentiment),
                                Array(securities).expanded(from: Array(missingSentiment)),
                                range.similarities,
@@ -50,7 +53,6 @@ extension NSManagedObjectContext {
     
     public func getSentimentObject(startDate: Date,
                                    endDate: Date) -> [SentimentObject]? {
-        print("{TEST} \(startDate as NSDate) \(endDate as NSDate)")
         let request: NSFetchRequest = SentimentObject.fetchRequest()
         request.predicate = NSPredicate(format: "(date >= %@) AND (date <= %@)",
                                         startDate.advanced(by: -1) as NSDate,
