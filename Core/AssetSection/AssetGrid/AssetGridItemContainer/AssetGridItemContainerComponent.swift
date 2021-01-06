@@ -29,33 +29,24 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                     HStack {
                         Spacer().frame(width: 12)
                         
-                        Text("crypto")
-                            .granite_innerShadow(
-                            Brand.Colors.white,
-                            radius: 3,
-                            offset: .init(x: 2, y: 2))
-                        .multilineTextAlignment(.leading)
+                        GraniteText("security",
+                                    .subheadline,
+                                    .regular).multilineTextAlignment(.leading)
+                        
                         .font(Fonts.live(.subheadline, .regular))
                         
                         Spacer()
                         
-                        Text("price")
-                            .granite_innerShadow(
-                            Brand.Colors.white,
-                            radius: 3,
-                            offset: .init(x: 2, y: 2))
-                        .multilineTextAlignment(.trailing)
-                        .font(Fonts.live(.subheadline, .regular))
+                        GraniteText("security",
+                                    .subheadline,
+                                    .regular).multilineTextAlignment(.trailing)
                         
                         Spacer().frame(width: 12)
                         
-                        Text("change")
-                            .granite_innerShadow(
-                            Brand.Colors.white,
-                            radius: 3,
-                            offset: .init(x: 2, y: 2))
-                        .multilineTextAlignment(.trailing)
-                        .font(Fonts.live(.subheadline, .regular))
+                        GraniteText("security",
+                                    .subheadline,
+                                    .regular)
+                            .multilineTextAlignment(.trailing)
                             .padding(.trailing, 12)
                         
                     }

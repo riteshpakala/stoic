@@ -75,13 +75,7 @@ public struct TonalTuneComponent: GraniteComponent {
                 Brand.Colors.black.overlay(
                     VStack {
                         if command.center.tone.tune.sentiment == nil {
-                            Text("loading... \(state.sentimentLoadingProgress)")
-                                .granite_innerShadow(
-                                    Brand.Colors.white,
-                                    radius: 3,
-                                    offset: .init(x: 2, y: 2))
-                                .multilineTextAlignment(.center)
-                                .font(Fonts.live(.subheadline, .regular))
+                            GraniteText("loading... \(state.sentimentLoadingProgress)")
                         }
                     }
                 )

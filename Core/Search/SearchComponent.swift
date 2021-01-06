@@ -50,8 +50,7 @@ public struct SearchComponent: GraniteComponent {
                             state.query = ""
 
                         }) {
-                            Text("cancel")
-                                .font(Fonts.live(.subheadline, .regular))
+                            GraniteText("cancel", .subheadline, .regular)
 
 
                         }

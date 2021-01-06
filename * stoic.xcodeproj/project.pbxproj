@@ -115,6 +115,12 @@
 		7109642A25A59FBD0021B42B /* TonalService.Model.DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7109642825A59FBD0021B42B /* TonalService.Model.DataSet.swift */; };
 		7109643025A5A1F40021B42B /* TonalSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7109642F25A5A1F40021B42B /* TonalSound.swift */; };
 		7109643125A5A1F40021B42B /* TonalSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7109642F25A5A1F40021B42B /* TonalSound.swift */; };
+		710C915C25A64FBF00ECB355 /* Passthrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710C915B25A64FBF00ECB355 /* Passthrough.swift */; };
+		710C916325A64FDA00ECB355 /* ControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710C916225A64FDA00ECB355 /* ControlBar.swift */; };
+		710C916825A6501900ECB355 /* ControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710C916225A64FDA00ECB355 /* ControlBar.swift */; };
+		710C916D25A6501F00ECB355 /* Passthrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710C915B25A64FBF00ECB355 /* Passthrough.swift */; };
+		710C917425A6505700ECB355 /* GraniteText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710C917325A6505700ECB355 /* GraniteText.swift */; };
+		710C917925A6505A00ECB355 /* GraniteText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710C917325A6505700ECB355 /* GraniteText.swift */; };
 		71140298258DB5E700BA387D /* StockEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140294258DB5E700BA387D /* StockEvents.swift */; };
 		71140299258DB5E700BA387D /* StockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140296258DB5E700BA387D /* StockState.swift */; };
 		7114029A258DB5E700BA387D /* StockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140297258DB5E700BA387D /* StockRelay.swift */; };
@@ -670,6 +676,9 @@
 		7108EFF62591CB57006A14DA /* MoversCryptoExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoversCryptoExpedition.swift; sourceTree = "<group>"; };
 		7109642825A59FBD0021B42B /* TonalService.Model.DataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Model.DataSet.swift; sourceTree = "<group>"; };
 		7109642F25A5A1F40021B42B /* TonalSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalSound.swift; sourceTree = "<group>"; };
+		710C915B25A64FBF00ECB355 /* Passthrough.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Passthrough.swift; sourceTree = "<group>"; };
+		710C916225A64FDA00ECB355 /* ControlBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBar.swift; sourceTree = "<group>"; };
+		710C917325A6505700ECB355 /* GraniteText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteText.swift; sourceTree = "<group>"; };
 		71140294258DB5E700BA387D /* StockEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockEvents.swift; sourceTree = "<group>"; };
 		71140296258DB5E700BA387D /* StockState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockState.swift; sourceTree = "<group>"; };
 		71140297258DB5E700BA387D /* StockRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockRelay.swift; sourceTree = "<group>"; };
@@ -1118,6 +1127,30 @@
 			path = CryptoCurrencies;
 			sourceTree = "<group>";
 		};
+		710C915A25A64FB400ECB355 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				710C915B25A64FBF00ECB355 /* Passthrough.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		710C916125A64FD400ECB355 /* ControlBar */ = {
+			isa = PBXGroup;
+			children = (
+				710C916225A64FDA00ECB355 /* ControlBar.swift */,
+			);
+			path = ControlBar;
+			sourceTree = "<group>";
+		};
+		710C917225A6503C00ECB355 /* GraniteText */ = {
+			isa = PBXGroup;
+			children = (
+				710C917325A6505700ECB355 /* GraniteText.swift */,
+			);
+			path = GraniteText;
+			sourceTree = "<group>";
+		};
 		71140293258DB5E700BA387D /* StockRelay */ = {
 			isa = PBXGroup;
 			children = (
@@ -1370,6 +1403,8 @@
 		7125BD6325A12EED00F22717 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				710C917225A6503C00ECB355 /* GraniteText */,
+				710C916125A64FD400ECB355 /* ControlBar */,
 				7183D53425A4288600FB91A9 /* Graph */,
 				7183D52C25A4267000FB91A9 /* Buttons */,
 				7125BD7025A12F1F00F22717 /* Sliders */,
@@ -2220,6 +2255,7 @@
 		71EE6FDD258D347C005B2B8E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				710C915A25A64FB400ECB355 /* Helpers */,
 				7143418125906437001F26A4 /* Extensions */,
 				7123B1002593C25300E5BD69 /* CoreData */,
 				710889032591B05F00795EDF /* Models */,
@@ -2578,6 +2614,7 @@
 				71434342259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
 				71434353259076F4001F26A4 /* Angle+Convenience.swift in Sources */,
 				71D63CCE258E92B1003B0BAF /* MainState.swift in Sources */,
+				710C915C25A64FBF00ECB355 /* Passthrough.swift in Sources */,
 				7118A1EB2593134A007E7EAB /* TonalRelay.swift in Sources */,
 				71267A4525A59D89006132D8 /* Security.Helpers.swift in Sources */,
 				71D63F252592B9090085D718 /* MoversStockExpedition.swift in Sources */,
@@ -2669,6 +2706,7 @@
 				71148506259E24F900464684 /* EnvironmentConfig.swift in Sources */,
 				710889A32591B29800795EDF /* Cryptowatcher.swift in Sources */,
 				7183D55525A428AE00FB91A9 /* StockAPIResponse.swift in Sources */,
+				710C916325A64FDA00ECB355 /* ControlBar.swift in Sources */,
 				71F1EC5825A0F47A00D32C52 /* SearchComponent.swift in Sources */,
 				7114029A258DB5E700BA387D /* StockRelay.swift in Sources */,
 				7123B12D2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
@@ -2717,6 +2755,7 @@
 				71D63F3E2592BBAB0085D718 /* AssetGridItemContainerComponent.swift in Sources */,
 				7183D54F25A428AE00FB91A9 /* TimeDisplayModeSelector.swift in Sources */,
 				7125BDCB25A1318D00F22717 /* VerticalRangeSliderStyle.swift in Sources */,
+				710C917425A6505700ECB355 /* GraniteText.swift in Sources */,
 				7139F67B25981C3200D9C84B /* TuneTheToneExpedition.swift in Sources */,
 				7125BE4425A1384A00F22717 /* SentimentSliderComponent.swift in Sources */,
 				710889AB2591B29800795EDF /* Fetchable.swift in Sources */,
@@ -2876,6 +2915,7 @@
 				7183D54E25A428AE00FB91A9 /* Misc.Plot.swift in Sources */,
 				7125BDCC25A1318D00F22717 /* VerticalRangeSliderStyle.swift in Sources */,
 				710889722591B29800795EDF /* Promise+Race.swift in Sources */,
+				710C916D25A6501F00ECB355 /* Passthrough.swift in Sources */,
 				71CA210225A4AAE800C448D7 /* TonalCompileEvents.swift in Sources */,
 				7139F67525981BD300D9C84B /* TonalTuneEvents.swift in Sources */,
 				7143435E259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */,
@@ -2965,6 +3005,7 @@
 				7123B12A2593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */,
 				71CA210625A4AAE800C448D7 /* TonalCompileComponent.swift in Sources */,
 				7108896C2591B29800795EDF /* Promise+Retry.swift in Sources */,
+				710C916825A6501900ECB355 /* ControlBar.swift in Sources */,
 				7139F67C25981C3200D9C84B /* TuneTheToneExpedition.swift in Sources */,
 				7125BDDA25A131D200F22717 /* RangeTrackConfiguration.swift in Sources */,
 				7139F6B22598827F00D9C84B /* GetSentimentExpedition.swift in Sources */,
@@ -3081,6 +3122,7 @@
 				710889862591B29800795EDF /* Await.swift in Sources */,
 				7183D52F25A4268E00FB91A9 /* BasicButton.swift in Sources */,
 				71434188259067CA001F26A4 /* Brand.swift in Sources */,
+				710C917925A6505A00ECB355 /* GraniteText.swift in Sources */,
 				7125BDFD25A1328900F22717 /* ValueSlider.swift in Sources */,
 				7133385425A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */,
 				710889AA2591B29800795EDF /* Cryptowatcher+Pairs.swift in Sources */,

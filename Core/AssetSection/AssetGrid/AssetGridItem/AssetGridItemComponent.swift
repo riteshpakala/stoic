@@ -44,40 +44,35 @@ public struct AssetGridItemComponent: GraniteComponent {
                             offset: .init(x: 1, y: 2))
                         .multilineTextAlignment(.leading)
                         .font(Fonts.live(.subheadline, .regular))
-                    Text("volume: \(state.security.volumeValue.asInt)")
-                        .multilineTextAlignment(.leading)
-                        .foregroundColor(Brand.Colors.marble)
-                        .font(Fonts.live(.footnote, .regular))
+                    
+                    GraniteText("volume: \(state.security.volumeValue.asInt)",
+                                Brand.Colors.marble,
+                                .footnote,
+                                .regular).multilineTextAlignment(.leading)
                 }
                 
                 Spacer()
                 
                 VStack {
-                    Text("$\(state.security.lastValue, specifier: "%.2f")")
-                        .granite_innerShadow(
-                            state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
-                            radius: 4,
-                            offset: .init(x: 1, y: 2))
-                        .font(Fonts.live(.subheadline, .regular))
-                        .multilineTextAlignment(.trailing)
-                    Text("\(state.security.isGainer ? "+" : "-")$\(state.security.prettyChangePercent, specifier: "%.2f")")
-                        .granite_innerShadow(
-                            state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
-                            radius: 4,
-                            offset: .init(x: 1, y: 2))
-                        .font(Fonts.live(.footnote, .regular))
-                        .multilineTextAlignment(.trailing)
+                    GraniteText("$\(state.security.lastValue.display)",
+                                Brand.Colors.marble,
+                                .subheadline,
+                                .regular).multilineTextAlignment(.trailing)
+                    
+                    GraniteText("\(state.security.isGainer ? "+" : "-")$\(state.security.prettyChangePercent)",
+                                state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
+                                .footnote,
+                                .regular).multilineTextAlignment(.trailing)
                 }
                 
                 Spacer().frame(width: 12)
                 
                 VStack(alignment: .center, spacing: 2) {
                     Spacer()
-                    Text("\(state.security.changePercentValue, specifier: "%.2f")%")
-                        .granite_innerShadow(
-                            Brand.Colors.marble,
-                            radius: 4,
-                            offset: .init(x: 1, y: 2))
+                    GraniteText("\(state.security.changePercentValue.display)%",
+                                Brand.Colors.marble,
+                                .footnote,
+                                .regular)
                         .frame(height: 12, alignment: .bottom)
                     
                     Color.green.clipShape(Circle())

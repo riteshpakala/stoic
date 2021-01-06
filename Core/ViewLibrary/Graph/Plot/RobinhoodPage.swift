@@ -164,7 +164,7 @@ struct RobinhoodPage: View {
     var body: some View {
         VStack {
             if currentPlotData.isEmpty {
-                Text("Loading...")
+                GraniteText("loading...", .subheadline, .regular)
             } else {
                 readyPageContent(plotData: currentPlotData, predictionPlotData: currentPredictionPlotData)
             }

@@ -36,7 +36,8 @@ public struct TonalFindComponent: GraniteComponent {
                                  target: \.tone.find.sliderDays))
                 .listen(to: command)
             
-            Text("\(command.center.daysSelected) days")
+            GraniteText("\(command.center.daysSelected) days", .subheadline, .regular)
+        
             Spacer().frame(height: Brand.Padding.large)
         }.background(Brand.Colors.black).onTapGesture {
             sendEvent(TonalFindEvents.Find.init(ticker: "MSFT"))

@@ -24,13 +24,7 @@ public struct TonalSetComponent: GraniteComponent {
         VStack {
             VStack {
                 HStack {
-                    Text("Select a range")
-                        .granite_innerShadow(
-                        Brand.Colors.white,
-                        radius: 3,
-                        offset: .init(x: 2, y: 2))
-                        .multilineTextAlignment(.leading)
-                        .font(Fonts.live(.subheadline, .regular))
+                    GraniteText("select a range", .subheadline, .regular)
                     
                     Spacer()
                 }.padding(.top, Brand.Padding.large).padding(.bottom, Brand.Padding.medium)
