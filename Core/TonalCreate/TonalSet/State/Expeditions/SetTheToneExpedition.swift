@@ -19,7 +19,7 @@ struct SetTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
        
-        print("{TEST} selected the range")
+        print("{TEST} selected the range \(event.range.dates)")
         connection.dependency(\TonalCreateDependency.tone.selectedRange, value: event.range)
         
         if let tone = connection.depObject(\TonalCreateDependency.tone.find.quote),
@@ -73,7 +73,7 @@ struct SetTheToneExpedition: GraniteExpedition {
         guard let sentimentObjects = SetTheToneExpedition.getSentimentObject(
                 moc,
                 startDate: range.datesExpanded.min() ?? .today,
-                endDate: range.datesExpanded.max() ?? .today) else {
+                endDate: range.sentimentShifted.map{ $0.date }.max() ?? .today) else {
             return nil
         }
         
@@ -81,7 +81,7 @@ struct SetTheToneExpedition: GraniteExpedition {
       
         let sentiment: TonalSentiment = .init(sounds)
         
-        print("🪝🪝🪝🪝🪝🪝\n[Get Sentiment] \(sentiment.datesByDay)")
+        print("🪝🪝🪝🪝🪝🪝\n[Get Sentiment] \(sentiment.datesByDay) \(range.datesExpanded) \(range.sentimentShifted.map{ $0.date })")
         if sentiment.isValid(against: range) {
             print("valid\n🪝")
             return (sentiment, nil)

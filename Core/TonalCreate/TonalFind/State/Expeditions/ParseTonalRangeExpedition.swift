@@ -54,54 +54,59 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
         let count = orderedSecurities.count
 
         var volatilities: [Date:Double] = [:]
-        for securityObject in orderedSecurities.prefix(count - TonalServiceModels.Indicators.trailingDays) {
-            guard let security = securityObject.asSecurity else { continue }
-            let indicator = TonalServiceModels.Indicators.init(security, with: quote)
-
-            volatilities[security.date] = indicator.avgVolatility
+        var volatilityCoeffecients: [Date:Double] = [:]
+         
+        for (index, security) in orderedSecurities.enumerated() {
+            // Standard deviation calculation for yearly variance
+            //
+            let trailing = orderedSecurities.suffix(count - index).prefix(24)
+            let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
+            let mean = sum/Double(trailing.count)
+            
+            let deviations = trailing.map({ pow($0.lastValue - mean, 2) }).reduce(0.0, +)
+            let avgDeviation = deviations/Double(trailing.count - 1)
+            //            print(mean)
+            let standardDeviation = sqrt(avgDeviation)
+            volatilities[security.date] = standardDeviation
+            volatilityCoeffecients[security.date] = standardDeviation/mean
         }
 
         let targetComparables = Array(orderedSecurities.prefix(days))
+
         let chunks = orderedSecurities.chunked(into: days)
         let scrapeTop = Array(chunks.suffix(chunks.count - 1))
 
         var candidates : [TonalRange] = [targetComparables.baseRange]
         for chunk in scrapeTop {
             guard chunk.count == days else { continue }
-
+            
             var similarities: [Double] = []
             for i in 0..<chunk.count {
-                if let targetVol = volatilities[targetComparables[i].date],
-                   let chunkDayVol = volatilities[chunk[i].date] {
-                    similarities.append(normalizeSim(targetVol/chunkDayVol))
-                } else {
-                    similarities.append(0.0)
-                }
+//                let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
+//                let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
+                
+                let targetVol = volatilities[targetComparables[i].date] ?? 0.0
+                let chunkVol = volatilities[chunk[i].date] ?? 0.0
+                similarities.append(normalizeSim(targetVol/chunkVol))
             }
-
+            
             if similarities.filter( { !threshold($0) } ).isEmpty {
                 let dates: [Date] = chunk.map { $0.date }
-
+                
                 let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
                     TonalSimilarity.init(date: $0.element,
                                          similarity: similarities[$0.offset]) }
-
+                
                 let tIndicators: [TonalIndicators] = dates.map {
                     TonalIndicators.init(date: $0,
                                          volatility: volatilities[$0] ?? 0.0,
-                                         volatilityCoeffecient: 0.0) }
-
-                //Create an expanded chunk for a day padding
-                //of an added sentiment as it is a day behind
-                //during processing, and it is easier to utilize
-                //the already pulled history, rather than finding
-                //valid market days..
-                //
+                                         volatilityCoeffecient: volatilityCoeffecients[$0] ?? 0.0 ) }
+                
                 candidates.append(.init(objects: chunk,
-                                        orderedSecurities
-                                            .expanded(from: chunk),
-                                        tSimilarities,
-                                        tIndicators))
+                                   orderedSecurities
+                                       .expanded(from: chunk),
+                                   tSimilarities,
+                                   tIndicators))
             }
         }
         
@@ -124,55 +129,77 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
 }
 
 /* Backup
-var volatilities: [Date:Double] = [:]
-var volatilityCoeffecients: [Date:Double] = [:]
- 
-for (index, security) in orderedSecurities.enumerated() {
-    // Standard deviation calculation for yearly variance
-    //
-    let trailing = orderedSecurities.suffix(count - index).prefix(24)
-    let sum = trailing.map({ $0.lastValue }).reduce(0.0, +)
-    let mean = sum/Double(trailing.count)
-    
-    let deviations = trailing.map({ pow($0.lastValue - mean, 2) }).reduce(0.0, +)
-    let avgDeviation = deviations/Double(trailing.count - 1)
-    //            print(mean)
-    let standardDeviation = sqrt(avgDeviation)
-    volatilities[security.date] = standardDeviation
-    volatilityCoeffecients[security.date] = standardDeviation/mean
-}
 
-let targetComparables = Array(orderedSecurities.prefix(days))
-
-let chunks = orderedSecurities.chunked(into: days)
-let scrapeTop = Array(chunks.suffix(chunks.count - 1))
-
-var candidates : [TonalRange] = []
-for chunk in scrapeTop {
-    guard chunk.count == days else { continue }
-    
-    var similarities: [Double] = []
-    for i in 0..<chunk.count {
-        let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
-        let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
-        similarities.append(normalizeSim(targetCoeffecient/chunkDayCoeffecient))
-    }
-    
-    if similarities.filter( { !threshold($0) } ).isEmpty {
-        let dates: [Date] = chunk.map { $0.date }
-        
-        let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
-            TonalSimilarity.init(date: $0.element,
-                                 similarity: similarities[$0.offset]) }
-        
-        let tIndicators: [TonalIndicators] = dates.map {
-            TonalIndicators.init(date: $0,
-                                 volatility: volatilities[$0] ?? 0.0,
-                                 volatilityCoeffecient: volatilityCoeffecients[$0] ?? 0.0 ) }
-        
-        candidates.append(.init(objects: chunk, tSimilarities, tIndicators))
-    }
-}
 */
 
 
+
+//        var volatilities: [Date:Double] = [:]
+//        for securityObject in orderedSecurities.prefix(count - TonalServiceModels.Indicators.trailingDays) {
+//            guard let security = securityObject.asSecurity else { continue }
+//            let indicator = TonalServiceModels.Indicators.init(security, with: quote)
+//
+//            volatilities[security.date] = indicator.avgVolatility
+//        }
+//
+//        let targetComparables = Array(orderedSecurities.prefix(days))
+//        let chunks = Array(orderedSecurities.prefix(count - TonalServiceModels.Indicators.trailingDays)).chunked(into: days)
+//        let scrapeTop = Array(chunks.suffix(chunks.count - 1))
+//
+//        var candidates : [TonalRange] = [targetComparables.baseRange]
+//        for chunk in scrapeTop {
+//            guard chunk.count == days else { continue }
+//
+//            var volatilities: [Date:Double] = [:]
+//            var similarities: [Double] = []
+//            for i in 0..<chunk.count {
+//                if let targetSec = targetComparables[i].asSecurity,
+//                   let chunkSec = chunk[i].asSecurity {
+//
+//                    let targetIndic = TonalServiceModels.Indicators.init(targetSec, with: quote)
+//
+//                    let chunkIndic = TonalServiceModels.Indicators.init(chunkSec, with: quote)
+//
+//                    let vol = chunkIndic.avgVolatility
+//                    volatilities[chunkSec.date] = vol
+//                    similarities.append(normalizeSim(targetIndic.avgVolatility/vol))
+//                } else {
+//                    similarities.append(0.0)
+//                }
+//
+//
+////                if let targetVol = volatilities[targetComparables[i].date],
+////                   let chunkDayVol = volatilities[chunk[i].date] {
+////                    guard let security = chunkDayVol.asSecurity else { continue }
+////                    let indicator = TonalServiceModels.Indicators.init(security, with: quote)
+////                    similarities.append(normalizeSim(targetVol/chunkDayVol))
+////                } else {
+////                    similarities.append(0.0)
+////                }
+//            }
+//
+//            if similarities.filter( { !threshold($0) } ).isEmpty {
+//                let dates: [Date] = chunk.map { $0.date }
+//
+//                let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
+//                    TonalSimilarity.init(date: $0.element,
+//                                         similarity: similarities[$0.offset]) }
+//
+//                let tIndicators: [TonalIndicators] = dates.map {
+//                    TonalIndicators.init(date: $0,
+//                                         volatility: volatilities[$0] ?? 0.0,
+//                                         volatilityCoeffecient: 0.0) }
+//
+//                //Create an expanded chunk for a day padding
+//                //of an added sentiment as it is a day behind
+//                //during processing, and it is easier to utilize
+//                //the already pulled history, rather than finding
+//                //valid market days..
+//                //
+//                candidates.append(.init(objects: chunk,
+//                                        orderedSecurities
+//                                            .expanded(from: chunk),
+//                                        tSimilarities,
+//                                        tIndicators))
+//            }
+//        }

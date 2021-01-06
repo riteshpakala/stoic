@@ -64,9 +64,11 @@ public struct TonalSentiment {
         self.sentimentDefaultsByDay = sentimentDefaultsByDayFound
     }
     
+    //DEV: fix
     public func isValid(against range: TonalRange) -> Bool {
-        return self.datesByDay.max()?.simple.isGreaterOrEqual(to: range.datesExpanded.max()?.simple ?? .today) == true &&
-            self.datesByDay.min()?.simple.isLessOrEqual(to: range.datesExpanded.min()?.simple ?? .today) == true
+        
+        return range.datesExpanded.max()?.simple.isGreaterOrEqual(to: self.datesByDay.max()?.simple ?? .today) == true &&
+            range.datesExpanded.min()?.simple.isLessOrEqual(to: self.datesByDay.min()?.simple ?? .today) == true
     }
     
     public var stats: String {
