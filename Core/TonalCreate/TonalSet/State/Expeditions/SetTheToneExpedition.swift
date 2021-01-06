@@ -24,22 +24,37 @@ struct SetTheToneExpedition: GraniteExpedition {
         
         if let tone = connection.depObject(\TonalCreateDependency.tone.find.quote),
            let quote = tone {
-            DispatchQueue.global(qos: .utility).async {
-                let time: Double = CFAbsoluteTimeGetCurrent()
-                
-                let sentimentResult = getSentiment(quote, event.range)
-                
-                print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
-                
-                if let sentiment = sentimentResult.sentiment {
-                    connection.dependency(\TonalCreateDependency.tone.sentiment, value: sentiment)
-                } else {
-                    connection.request(TonalEvents.GetSentiment.init(range: sentimentResult.missing ?? event.range), beam: true)
-                }
-            }
+            SetTheToneExpedition.checkSentimentCache(quote, event.range, connection: connection, moc: coreDataInstance)
         } else {
             
             connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
+        }
+    }
+    
+    public static func checkSentimentCache(
+        _ quote: QuoteObject,
+        _ range: TonalRange,
+        connection: GraniteConnection,
+        moc: NSManagedObjectContext) {
+        
+        DispatchQueue.global(qos: .utility).async {
+            let time: Double = CFAbsoluteTimeGetCurrent()
+            
+            guard let sentimentResult = SetTheToneExpedition.getSentiment(
+                    quote,
+                    range,
+                    moc) else {
+                print("{TEST} failedddd")
+                return
+            }
+            
+            print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
+            
+            if let sentiment = sentimentResult.sentiment {
+                connection.dependency(\TonalCreateDependency.tone.tune.sentiment, value: sentiment)
+            } else {
+                connection.request(TonalEvents.GetSentiment.init(range: sentimentResult.missing ?? range), beam: true)
+            }
         }
     }
     
@@ -49,26 +64,46 @@ struct SetTheToneExpedition: GraniteExpedition {
     //and then merge at the end, under the tonalrelay return for the final tonal
     //create submission
     //
-    func getSentiment(_ quote: QuoteObject, _ range: TonalRange) -> (sentiment: TonalSentiment?, missing: TonalRange?) {
+    public static func getSentiment(_ quote: QuoteObject, _ range: TonalRange, _ moc: NSManagedObjectContext) -> (sentiment: TonalSentiment?, missing: TonalRange?)? {
         
-        let dates = range.dates.map { $0.simple }
-        let securities = quote.securities.filter { dates.contains($0.sentimentDate.simple) }
+        let dates = range.datesExpanded.map { $0.simple }
+        let securities = quote.securities
+        let securitiesFiltered = securities.filter { dates.contains($0.date.simple) }
         
-        var sounds: [TonalSound] = []
-        for security in securities {
-            sounds.append(contentsOf: security.sentiment?.compactMap { $0.sound } ?? [])
+        guard let sentimentObjects = SetTheToneExpedition.getSentimentObject(
+                moc,
+                startDate: range.datesExpanded.min() ?? .today,
+                endDate: range.datesExpanded.max() ?? .today) else {
+            return nil
         }
-        let sentiment: TonalSentiment = .init(sounds, range: range)
-        print("{TEST} \(securities.count) \(sentiment.datesByDay.count)")
-        if securities.count == sentiment.datesByDay.count {
+        
+        let sounds: [TonalSound] = sentimentObjects.map({ $0.sound })
+      
+        let sentiment: TonalSentiment = .init(sounds)
+        
+        print("🪝🪝🪝🪝🪝🪝\n[Get Sentiment] \(sentiment.datesByDay)")
+        if sentiment.isValid(against: range) {
+            print("valid\n🪝")
             return (sentiment, nil)
         } else {
-            let missingSentiment = securities.filter { !sentiment.datesByDay.contains($0.sentimentDate.simple) }
+            let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.sentimentDate.simple) }
             
             print(missingSentiment.map { $0.date })
-            return (nil, .init(objects: Array(missingSentiment), range.similarities, range.indicators))
+            print("missing---\n🪝")
+            return (nil, .init(objects: Array(missingSentiment), Array(securities).expanded(from: Array(missingSentiment)), range.similarities, range.indicators))
         }
         
+    }
+    
+    public static func getSentimentObject(_ moc: NSManagedObjectContext,
+                                          startDate: Date,
+                                          endDate: Date) -> [SentimentObject]? {
+        print("{TEST} \(startDate as NSDate) \(endDate as NSDate)")
+        let request: NSFetchRequest = SentimentObject.fetchRequest()
+        request.predicate = NSPredicate(format: "(date >= %@) AND (date <= %@)",
+                                        startDate.advanced(by: -1) as NSDate,
+                                        endDate as NSDate)
+        return try? moc.fetch(request)
     }
 }
 
@@ -88,12 +123,16 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         //
         print(event.sentiment.stats)
         
-        if let tone = connection.depObject(\TonalCreateDependency.tone.selectedRange),
-           let range = tone {
-            save(event.sentiment, range)
+        guard let tone = connection.depObject(\TonalCreateDependency.tone),
+              let range = tone.selectedRange,
+              let quote = tone.find.quote else {
+            
+            return
         }
-
-        connection.dependency(\TonalCreateDependency.tone.sentiment, value: event.sentiment)
+        
+        save(event.sentiment, range)
+        
+        SetTheToneExpedition.checkSentimentCache(quote, range, connection: connection, moc: coreDataInstance)
     }
     
     func save(_ sentiment: TonalSentiment, _ range: TonalRange) {
@@ -108,7 +147,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         moc.perform {
             do {
                 
-                let securityObjects = range.objects
+                let securityObjects = range.expanded
                 for object in securityObjects {
                     let date = object.date.simple
                     

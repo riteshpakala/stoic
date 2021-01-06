@@ -56,6 +56,7 @@ extension Security {
 extension TonalServiceModels.Indicators {
     var averagesToString: String {
         """
+        Reference: \(history.first?.date.asString ?? "error")
         avgMomentum: \(avgMomentum)
         avgVolatility: \(avgVolatility)
         avgVolVolatility: \(avgVolVolatility)

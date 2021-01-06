@@ -74,7 +74,7 @@ public struct TonalTuneComponent: GraniteComponent {
                 
                 Brand.Colors.black.overlay(
                     VStack {
-                        if command.center.tone.sentiment == nil {
+                        if command.center.tone.tune.sentiment == nil {
                             Text("loading... \(state.sentimentLoadingProgress)")
                                 .granite_innerShadow(
                                     Brand.Colors.white,

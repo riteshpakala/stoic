@@ -26,11 +26,11 @@ public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
     }
     
     var tonalSentiment: TonalSentiment {
-        tone.sentiment ?? .empty
+        tone.tune.sentiment ?? .empty
     }
     
     var sentimentIsAvailable: Bool {
-        tone.sentiment != nil
+        tone.tune.sentiment != nil
     }
     
     public override var expeditions: [GraniteBaseExpedition] {

@@ -9,6 +9,6 @@ import Foundation
 
 extension SecurityObject {
     public var sentimentDate: Date {
-        self.date.advanced(by: -1)
+        self.date.simple.advanced(by: -1)
     }
 }

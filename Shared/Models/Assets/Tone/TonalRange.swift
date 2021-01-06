@@ -19,14 +19,21 @@ public struct TonalRange: Hashable {
     let objects: [SecurityObject]
     let similarities: [TonalSimilarity]
     let indicators: [TonalIndicators]
+    let expanded: [SecurityObject]
+    
+    var sentimentShifted: [SecurityObject] {
+        expanded.enumerated().filter( { $0.offset != 0 }).map { $0.element }
+    }
     
     public init(
         objects: [SecurityObject],
+        _ expanded: [SecurityObject],
         _ similarities: [TonalSimilarity],
         _ indicators: [TonalIndicators],
         base: Bool = false) {
         
         self.objects = objects
+        self.expanded = expanded
         self.similarities = similarities
         self.indicators = indicators
         self.base = base
@@ -34,6 +41,11 @@ public struct TonalRange: Hashable {
     
     var dates: [Date] {
         let objectDates: [Date] = objects.map { $0.date }
+        return objectDates.sorted(by: { $0.compare($1) == .orderedDescending })
+    }
+    
+    var datesExpanded: [Date] {
+        let objectDates: [Date] = expanded.map { $0.date }
         return objectDates.sorted(by: { $0.compare($1) == .orderedDescending })
     }
     
@@ -66,7 +78,7 @@ public struct TonalRange: Hashable {
     }
     
     public static var empty: TonalRange {
-        return .init(objects: [], [], [])
+        return .init(objects: [], [], [], [])
     }
 }
 

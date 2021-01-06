@@ -190,15 +190,27 @@ extension TonalModels {
             return nil
         }
         
+        guard let range = tone.selectedRange else {
+            print("⚠️ Generation failed. - range")
+            return nil
+        }
+        
         let securities = securityObjects.compactMap { $0.asSecurity }
         let sentiments = tone.tune.sentiments
-        let dates = Array(sentiments.keys).sorted(by: { $0.compare($1) == .orderedAscending } )
+        
+        let bucket: TonalUtilities.Models.Bucket = .init(sentiments: sentiments, range: range)
+        
+//        let dates = Array(range.map { $0.date }).sorted(by: { $0.compare($1) == .orderedAscending } )
+        
+        print("{TEST} \(bucket.asString)")
+//        print("{TEST} \(sentiments.map { $0.key }.sorted(by: { $0.compare($1) == .orderedAscending }))")
+        
         
         // Time-series execution's foundation is that
         // the time comparable is equivalent to the data
         // size
-        guard dates.count == securities.count else {
-            print("⚠️ Generation failed. - dates: \(dates.count), securities: \(securities.count)")
+        guard bucket.isValid else {
+            print("⚠️ Generation failed. \(bucket.pockets.count) \(bucket.rangeDates)")
             return nil
         }
         
@@ -212,8 +224,8 @@ extension TonalModels {
                                     outputDimension: TonalModels.Settings.outDim)
 
         print("🛠 [MODEL GENERATION] Creating model for \(type)")
-        for date in dates {
-            guard let sentiment = sentiments[date.simple],
+        for date in bucket.rangeDates {
+            guard let pocket = bucket.pockets.first(where: { $0.date == date }),
                   let security = securities.first(where: { $0.date.simple == date.simple }) else {
                 continue
             }
@@ -221,7 +233,7 @@ extension TonalModels {
             do {
                 let dataSet = TonalUtilities.Models.DataSet(
                     security,
-                    sentiment,
+                    pocket.avg,
                     quote: quote,
                     modelType: type)
 

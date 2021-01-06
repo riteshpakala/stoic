@@ -164,13 +164,12 @@ struct TonalSoundsExpedition: GraniteExpedition {
         state.service.soundAggregate.sounds.append(event.sounds)
         
         print("Sentiment prediction progress: \(state.sentimentProgress)")
-        if state.sentimentProgress >= 1.0 && state.stage != .compiling,
-           let range = state.service.soundAggregate.range {
+        if state.sentimentProgress >= 1.0 && state.stage != .compiling {
             print("compiling")
             let compiled = state.service.soundAggregate.compiled
             state.service.reset()
             state.stage = .compiling
-            let sentiment: TonalSentiment = .init(compiled, range: range)
+            let sentiment: TonalSentiment = .init(compiled)
             state.stage = .none
             connection.request(TonalEvents.History.init(sentiment: sentiment), beam: true)
         }

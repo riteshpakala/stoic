@@ -31,6 +31,55 @@ struct TonalUtilities {
     }
     
     struct Models {
+        struct Bucket {
+            struct Pocket {
+                let date: Date
+                var sentiment: [SentimentOutput]
+                
+                var avg: SentimentOutput {
+                    sentiment.average(sentiment.map { $0.date }.max() ?? date)
+                }
+            }
+            var pockets: [Pocket] = []
+            var rangeDates: [Date] = []
+            public init(sentiments: [Date: SentimentOutput], range: TonalRange) {
+                rangeDates = range.dates.sorted(by: { $0.compare($1) == .orderedAscending })
+                let objects = range.objects.sortDesc
+                let dates = range.datesExpanded
+                for item in objects {
+                    var pocket: Pocket = .init(date: item.date, sentiment: [])
+                    
+                    let shiftedSentimentDate = item.sentimentDate
+                    let possibles = Array(sentiments.keys).filter({ shiftedSentimentDate.compare($0) == .orderedDescending })
+                    
+                    for possible in possibles {
+                        guard !dates.contains(possible.advanced(by: 1)) else {
+                            break
+                        }
+                        
+                        if let sentiment = sentiments[possible] {
+                            pocket.sentiment.append(sentiment)
+                        }
+                    }
+                    
+                    if pocket.sentiment.isNotEmpty {
+                        pockets.append(pocket)
+                    }
+                }
+                
+            }
+            
+            var isValid: Bool {
+                pockets.count == rangeDates.count
+            }
+            
+            var asString: String {
+                """
+                \(pockets.map { $0.date.asString })
+                """
+            }
+        }
+        
         struct DataSet {
             let security: Security
             let sentiment: SentimentOutput
@@ -104,10 +153,6 @@ struct TonalUtilities {
                     
                     \(indicators.basePair.base.date.asString) ----
                     \(indicators.averagesToString)
-
-                    ---- \(indicators.basePair.previous.date.asString) ----
-                    ~~~
-                    ---- Sentiment ----
                     \(sentiment.description)
                     '''''''''''''''''''''''''''''
                     💽

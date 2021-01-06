@@ -28,19 +28,6 @@ public class Tone: ObservableObject {
         return quote.securities.sortDesc.first
     }
     
-    //Based on day interval the sentiment slider state would change
-    //
-    var sentiment: TonalSentiment? {
-        didSet {
-            if let senti = sentiment {
-                tune.tuners = [:]
-                for date in senti.filteredForRangeByDay.keys {
-                    tune.tuners[date] = .init(senti.filteredForRangeByDay[date] ?? .zero, date: date)
-                }
-            }
-        }
-    }
-    
     public var baseRange: TonalRange? {
         range?.first(where: { $0.base })
     }
@@ -53,7 +40,7 @@ public class Tone: ObservableObject {
         
         self.find.ticker = ticker
         self.range = range
-        self.sentiment = sentiment
+        self.tune.sentiment = sentiment
         self.selectedRange = selectedRange
     }
     
@@ -75,6 +62,19 @@ public class Tone: ObservableObject {
     public struct Tune {
         var tuners: [Date: Tuner] = [:]
         var sentiments: [Date: SentimentOutput] = [:]
+        
+        //Based on day interval the sentiment slider state would change
+        //
+        var sentiment: TonalSentiment? {
+            didSet {
+                if let senti = sentiment {
+                    tuners = [:]
+                    for date in senti.sentimentDefaultsByDay.keys {
+                        tuners[date] = .init(senti.sentimentDefaultsByDay[date] ?? .zero, date: date)
+                    }
+                }
+            }
+        }
     }
     
     public struct Tuner {

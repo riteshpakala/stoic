@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+extension SentimentObject {
+    var asSentiment: SentimentOutput {
+        return .init(pos: self.pos,
+                     neg: self.neg,
+                     neu: self.neu,
+                     compound: self.compound,
+                     date: self.date)
+    }
+}

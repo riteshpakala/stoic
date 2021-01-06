@@ -20,13 +20,8 @@ public struct TonalSentiment {
     let sentimentsByDay: [Date: SentimentOutput]
     let sentimentDefaultsByDay: [Date: SentimentOutput]
     
-    let filteredForRangeByDay: [Date: SentimentOutput]
-    
-    let range: TonalRange
-    
-    public init(_ sounds: [TonalSound], range: TonalRange, disparity: Double = 0.04) {
+    public init(_ sounds: [TonalSound], disparity: Double = 0.04) {
         let uniques = Array(Set(sounds))
-        self.range = range
         
         dates = uniques.map({ $0.date }).uniques
         
@@ -67,18 +62,11 @@ public struct TonalSentiment {
         }
         self.sentimentsByDay = sentimentDefaultsByDayFound
         self.sentimentDefaultsByDay = sentimentDefaultsByDayFound
-        
-        let rangeDatesByDay = range.dates.map { $0.simple }
-        var rangeDatesByDayFound: [Date: SentimentOutput] = [:]
-        rangeDatesByDay.forEach { date in
-            let sentimentDate: Date = date.advanced(by: -1)
-            if let sentiment = sentimentDefaultsByDayFound[sentimentDate.simple] {
-                //LAST LEFT OFF: LLO
-                //SENTIMENT NEEDS TO REWIND A DAY
-                rangeDatesByDayFound[date] = sentiment
-            }
-        }
-        self.filteredForRangeByDay = rangeDatesByDayFound
+    }
+    
+    public func isValid(against range: TonalRange) -> Bool {
+        return self.datesByDay.max()?.simple.isGreaterOrEqual(to: range.datesExpanded.max()?.simple ?? .today) == true &&
+            self.datesByDay.min()?.simple.isLessOrEqual(to: range.datesExpanded.min()?.simple ?? .today) == true
     }
     
     public var stats: String {
@@ -89,7 +77,7 @@ public struct TonalSentiment {
     }
     
     public static var empty: TonalSentiment {
-        .init([], range: .empty)
+        .init([])
     }
 }
 
