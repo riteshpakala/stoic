@@ -12,11 +12,6 @@ public class TonalModels: Archiveable {
     
     public static let engine: String = "david.v00.02.00"
     
-    public struct Settings {
-        static let inDim: Int = 8
-        static let outDim: Int = 1
-    }
-    
     public var open: SVMModel?
     public var close: SVMModel?
     public var high: SVMModel?
@@ -130,7 +125,7 @@ extension TonalModels {
             //
             guard let firstRangeSecurity = sortedRange.first else { return nil }
             
-            guard let lastSecurity = sortedSecurities.filter({ firstRangeSecurity.date.compare($0.date) == .orderedAscending }).last else {
+            guard let lastSecurity = sortedSecurities.filterAbove(firstRangeSecurity.date).last else {
                 return nil
             }
             
@@ -141,10 +136,10 @@ extension TonalModels {
         let testData = DataSet(
             dataType: .Regression,
             inputDimension: self.currentType.inDim,
-            outputDimension: StockKitUtils.outDim)
+            outputDimension: TonalService.AI.Models.Settings.outDim)
         
         do {
-            let dataSet = TonalUtilities.Models.DataSet(
+            let dataSet = TonalService.AI.Models.DataSet(
                     security,
                     sentiment,
                     quote: quote,
@@ -198,7 +193,7 @@ extension TonalModels {
         let securities = securityObjects.compactMap { $0.asSecurity }
         let sentiments = tone.tune.sentiments
         
-        let bucket: TonalUtilities.Models.Bucket = .init(sentiments: sentiments, range: range)
+        let bucket: TonalService.AI.Models.Bucket = .init(sentiments: sentiments, range: range)
         
         
         // Time-series execution's foundation is that
@@ -214,9 +209,9 @@ extension TonalModels {
         //
         let type: ModelType = .close
         let dataForDavid: DataSet = DataSet(
-                                    dataType: .Regression,
-                                    inputDimension: type.inDim,
-                                    outputDimension: TonalModels.Settings.outDim)
+            dataType: .Regression,
+            inputDimension: type.inDim,
+            outputDimension: TonalService.AI.Models.Settings.outDim)
 
         print("🛠 [MODEL GENERATION] Creating model for \(type)")
         for date in bucket.rangeDates {
@@ -226,7 +221,7 @@ extension TonalModels {
             }
 
             do {
-                let dataSet = TonalUtilities.Models.DataSet(
+                let dataSet = TonalService.AI.Models.DataSet(
                     security,
                     pocket.avg,
                     quote: quote,
@@ -406,63 +401,3 @@ extension TonalModels {
         }
     }
 }
-
-//BACKUP
-
-//        let sortedStockData = stockData.sorted(
-//            by: {
-//                ($0.dateData.asDate ?? Date()).compare(($1.dateData.asDate ?? Date())) == .orderedAscending })
-//
-//
-//        let sortedSentimentStockData = sentimentData.sorted(
-//            by: {
-//                ($0.date).compare($1.date) == .orderedAscending })
-//
-//
-//        var models: [Model] = []
-//        var type: ModelType = .close
-//        //Only the close for now
-////        for type in ModelType.allCases {
-//            let dataForDavid: DataSet = DataSet(
-//                dataType: .Regression,
-//                inputDimension: type.inDim,
-//                outputDimension: TonalModels.Settings.outDim)
-//
-//            print("[MODEL GENERATION] Creating model for \(type) \(sortedStockData.isEmpty)")
-//            for (i, stock) in sortedStockData.enumerated() {
-//                do {
-//                    guard sortedSentimentStockData.count > i else { continue }
-//                    let sentiment = sortedSentimentStockData[i]
-//                    let dataSet = StockKitUtils.Models.DataSet(
-//                        stock,
-//                        sentiment,
-//                        modelType: type)
-//
-//                    print(stock.toString)
-//                    try dataForDavid.addDataPoint(
-//                        input: dataSet.asArray,
-//                        output: dataSet.output,
-//                        label: stock.dateData.asString)
-//                }
-//                catch {
-//                    print("Invalid data set created")
-//                }
-//            }
-//
-//            let david = SVMModel(
-//                problemType: .ϵSVMRegression,
-//                kernelSettings:
-//                KernelParameters(type: .Polynomial,
-//                                 degree: 3,
-//                                 gamma: 0.3,
-//                                 coef0: 0.0))
-//
-//            david.Cost = 1e3
-//            david.train(data: dataForDavid)
-//
-//            print("[MODEL GENERATION] Completed training model for \(type)")
-//
-//            models.append(type.model(for: david))
-////        }
-//
-//        return TonalModels.init(models: models)

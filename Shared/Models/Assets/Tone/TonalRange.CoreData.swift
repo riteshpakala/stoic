@@ -58,24 +58,3 @@ extension Array where Element == SecurityObject {
         }
     }
 }
-
-extension Date {
-    func isIn(range: TonalRange) -> Bool {
-        let dates = range.datesExpanded
-        guard let max = dates.max(),
-              let min = dates.min() else {
-            return false
-        }
-        print("{TEST} \(max) \(min) \(self) \(min >= self && self <= max)")
-        
-        return min.isLessOrEqual(to: self) && max.isGreaterOrEqual(to: self)
-    }
-    
-    func isLessOrEqual(to: Date) -> Bool {
-        return to.compare(self) == .orderedDescending || self.compare(to) == .orderedSame
-    }
-    
-    func isGreaterOrEqual(to: Date) -> Bool {
-        return to.compare(self) == .orderedDescending || self.compare(to) == .orderedSame
-    }
-}

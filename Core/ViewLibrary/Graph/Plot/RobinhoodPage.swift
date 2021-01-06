@@ -15,7 +15,7 @@ class SomePlotData: ObservableObject {
     @Published var predictionPlotData: PlotData = []
     @Published var predictionDateData: PlotData = []
     @Published var trueDays: Int?
-    @Published var modelType: StockKitModels.ModelType = .none
+    @Published var modelType: TonalModels.ModelType = .none
 }
 struct RobinhoodPage: View {
     typealias PlotData = RobinhoodPageViewModel.PlotData

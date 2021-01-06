@@ -31,7 +31,7 @@ extension TonalServiceModels {
         public init(_ security: Security,
                     with quote: Quote) {
             self.security = security
-            let securities: [Security] = quote.securities.sortDesc.filter({ security.date.compare($0.date) == .orderedDescending })
+            let securities: [Security] = quote.securities.sortDesc.filterBelow(security.date)
             self.history = Array(securities.prefix(Indicators.trailingDays))
             
             var pairings: [PairedSecurity] = []
@@ -53,25 +53,5 @@ extension TonalServiceModels.Indicators {
     
     var change: Double {
         (basePair.base.lastValue - basePair.previous.lastValue) / basePair.previous.lastValue
-    }
-}
-
-extension Array where Element == Security {
-    var sortAsc: [Security] {
-        self.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
-    }
-    
-    var sortDesc: [Security] {
-        self.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
-    }
-}
-
-extension Array where Element == SecurityObject {
-    var sortAsc: [SecurityObject] {
-        self.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
-    }
-    
-    var sortDesc: [SecurityObject] {
-        self.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
     }
 }

@@ -62,8 +62,6 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
     
-    let experienceRelay: ExperienceRelay = .init()
-    
     //Dependencies
     lazy var tonalCreateDependency: TonalCreateDependency = {
         .init(identifier: "tonalCreateDependency", adAstra: self)

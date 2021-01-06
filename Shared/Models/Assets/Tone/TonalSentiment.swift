@@ -11,6 +11,7 @@ import Foundation
 public struct TonalSentiment {
     let dates: [Date]
     let sounds: [Date: [TonalSound]]
+    
     let datesByDay: [Date]
     let soundsByDay: [Date: [TonalSound]]
     
@@ -66,9 +67,20 @@ public struct TonalSentiment {
     
     //DEV: fix
     public func isValid(against range: TonalRange) -> Bool {
+        guard let expandedMax = range.datesExpanded.max(),
+              let expandedMin = range.datesExpanded.min() else {
+            return false
+        }
         
-        return range.datesExpanded.max()?.simple.isGreaterOrEqual(to: self.datesByDay.max()?.simple ?? .today) == true &&
-            range.datesExpanded.min()?.simple.isLessOrEqual(to: self.datesByDay.min()?.simple ?? .today) == true
+        guard let sentimentMax = self.datesByDay.max(),
+              let sentimentMin = self.datesByDay.min() else {
+            return false
+        }
+        
+        return expandedMax.simple.isGreaterOrEqual(
+            to: sentimentMax.simple) &&
+            expandedMin.simple.isLessOrEqual(
+                to: sentimentMin.simple)
     }
     
     public var stats: String {

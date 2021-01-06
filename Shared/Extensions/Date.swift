@@ -1,12 +1,12 @@
 //
-//  StockModels.swift
-//  * stoic (iOS)
+//  Date.swift
+//  * stoic
 //
-//  Created by Ritesh Pakala on 12/19/20.
+//  Created by Ritesh Pakala on 1/5/21.
 //
 
 import Foundation
-
+import CoreData
 
 extension String {
     func asDate() -> Date? {
@@ -68,6 +68,58 @@ extension Date {
     }
 }
 
+extension Array where Element == Date {
+    public var sortAsc: [Date] {
+        self.sorted(by: { $0.compare($1) == .orderedAscending })
+    }
+    
+    public var sortDesc: [Date] {
+        self.sorted(by: { $0.compare($1) == .orderedDescending })
+    }
+    
+    public func filterAbove(_ date: Date) -> [Date] {
+        return self.filter( { date.compare($0) == .orderedAscending })
+    }
+    
+    public func filterBelow(_ date: Date) -> [Date] {
+        return self.filter( { date.compare($0) == .orderedDescending })
+    }
+}
+
+//MARK: -- Traversal WIP
+extension Date {
+    func isIn(range: TonalRange) -> Bool {
+        let dates = range.datesExpanded
+        guard let max = dates.max(),
+              let min = dates.min() else {
+            return false
+        }
+        
+        return min.isLessOrEqual(to: self) && max.isGreaterOrEqual(to: self)
+    }
+    
+    func isLessOrEqual(to: Date) -> Bool {
+        return to.compare(self) == .orderedDescending || self.compare(to) == .orderedSame
+    }
+    
+    func isGreaterOrEqual(to: Date) -> Bool {
+        return to.compare(self) == .orderedDescending || self.compare(to) == .orderedSame
+    }
+}
+
+
+extension Array where Element == Security {
+    var dates: [Date] {
+        self.map { $0.date }
+    }
+}
+
+extension Array where Element == SecurityObject {
+    var dates: [Date] {
+        self.map { $0.date }
+    }
+}
+
 extension Calendar {
     static var nyTimezone: TimeZone {
         return TimeZone(identifier: "America/New_York") ?? .current
@@ -105,86 +157,3 @@ extension Double {
     }
 }
 
-//
-//  StockKitUtilities.swift
-//  Stoic
-//
-//  Created by Ritesh Pakala on 7/27/20.
-//  Copyright © 2020 Ritesh Pakala. All rights reserved.
-//
-
-public struct StockKitUtils {
-    static let inDim: Int = 6
-    static let outDim: Int = 1
-    
-    static let Tolerance: Double = 10e-20
-    public static func calculateRsi(_ closePrices: [Double]) -> Double
-    {
-        var sumGain: Double = 0;
-        var sumLoss: Double = 0;
-        for i in 1..<closePrices.count {
-            let difference = closePrices[i] - closePrices[i - 1];
-            if (difference >= 0)
-            {
-                sumGain += difference;
-            }
-            else
-            {
-                sumLoss -= difference;
-            }
-        }
-
-        if (sumGain == 0) { return 0 }
-        if (abs(sumLoss) < StockKitUtils.Tolerance) { return 100 }
-
-        let relativeStrength = sumGain / sumLoss;
-
-        return 100.0 - (100.0 / (1 + relativeStrength));
-    }
-}
-
-public class StockKitModels: Archiveable {
-    
-    public static let engine: String = "david.v00.01.10"
-    public enum ModelType: Int, CaseIterable {
-        case open
-        case close
-        case high
-        case low
-        case volume
-        case none
-        
-        var inDim: Int {
-            switch self {
-            case .volume:
-                return 5
-            default:
-                return 7
-            }
-        }
-        
-        var symbol: String {
-            switch self {
-            case .volume:
-                return ""
-            default:
-                return "$"
-            }
-        }
-        
-        public static func forValue(_ string: String) -> ModelType {
-            for type in ModelType.allCases {
-                if "\(type)" == string {
-                    return type
-                }
-            }
-            
-            return .none
-        }
-    }
-    
-    
-    
-    public var currentType: ModelType = .open
-   
-}
