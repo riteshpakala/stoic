@@ -16,3 +16,17 @@ public struct Quote {
     var securities: [Security]
 }
 
+extension Quote {
+    public func isEqual(to quote: Quote) -> Bool {
+        return self.ticker == quote.ticker &&
+            self.exchangeName == quote.exchangeName &&
+            self.securityType == quote.securityType
+    }
+    
+    public func contains(security: Security) -> Bool {
+        return self.ticker == security.ticker &&
+            self.exchangeName == security.exchangeName &&
+            self.securityType == security.securityType &&
+            self.intervalType == security.interval
+    }
+}

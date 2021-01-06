@@ -16,10 +16,10 @@ struct TonalFindEvents {
     }
     
     struct Parse: GraniteEvent {
-        let quote: QuoteObject
+        let quote: Quote
         let days: Int
         
-        public init(_ quote: QuoteObject, days: Int){
+        public init(_ quote: Quote, days: Int){
             self.quote = quote
             self.days = days
         }

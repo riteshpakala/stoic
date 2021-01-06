@@ -20,12 +20,12 @@ public class Tone: ObservableObject {
     var range: [TonalRange]?
     
     public var target: Security? {
-        guard let quote = selectedRange?.objects.first?.quote?.asQuote else {
+        guard let security = selectedRange?.objects.first else {
             print("⚠️ Test prediction failed.")
             return nil
         }
         
-        return quote.securities.sortDesc.first
+        return security
     }
     
     public var baseRange: TonalRange? {
@@ -51,7 +51,7 @@ public class Tone: ObservableObject {
     
     public struct Find {
         var ticker: String?
-        var quote: QuoteObject?
+        var quote: Quote?
         
         //DEV:
         //start at the percent of the days selected

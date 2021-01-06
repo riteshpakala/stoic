@@ -51,7 +51,7 @@ struct PredictTheToneExpedition: GraniteExpedition {
 
         let lastValue = tone.target?.lastValue ?? 0.0
         
-        let prediction = tone.compile.model?.predict(tone, state.tune) ?? state.currentPrediction
+        let prediction = tone.compile.model?.predict(tone, state.tune, moc: coreDataInstance) ?? state.currentPrediction
         state.currentPrediction = (lastValue*prediction) + lastValue//((prediction - 1.0) * (lastValue)) + lastValue
     }
 }

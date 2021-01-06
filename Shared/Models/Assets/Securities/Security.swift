@@ -65,6 +65,16 @@ extension Security {
     public var prettyChangePercent: Double {
         abs(changePercentValue)
     }
+    
+    public var sentimentDate: Date {
+        self.date.advanced(by: -1)
+    }
+    
+    public func isEqual(to security: Security) -> Bool {
+        return self.date == security.date &&
+            self.ticker == security.ticker &&
+            self.exchangeName == security.exchangeName
+    }
 }
 
 public struct SecurityCharacteristics {

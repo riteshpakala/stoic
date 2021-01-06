@@ -8,26 +8,34 @@
 import Foundation
 import SwiftUI
 
-public struct TonalRange: Hashable {
+public struct TonalRange: Equatable, Identifiable, Hashable {
     public static func == (lhs: TonalRange, rhs: TonalRange) -> Bool {
-        lhs.objects == rhs.objects &&
+        lhs.id == rhs.id &&
         lhs.similarities == rhs.similarities &&
         lhs.indicators == rhs.indicators
     }
     
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    public var id: ObjectIdentifier = {
+        ObjectIdentifier.init(Self.self)
+    }()
+    
     let base: Bool
-    let objects: [SecurityObject]
+    let objects: [Security]
     let similarities: [TonalSimilarity]
     let indicators: [TonalIndicators]
-    let expanded: [SecurityObject]
+    let expanded: [Security]
     
-    var sentimentShifted: [SecurityObject] {
+    var sentimentShifted: [Security] {
         expanded.enumerated().filter( { $0.offset != 0 }).map { $0.element }
     }
     
     public init(
-        objects: [SecurityObject],
-        _ expanded: [SecurityObject],
+        objects: [Security],
+        _ expanded: [Security],
         _ similarities: [TonalSimilarity],
         _ indicators: [TonalIndicators],
         base: Bool = false) {

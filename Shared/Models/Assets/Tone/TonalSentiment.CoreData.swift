@@ -30,7 +30,9 @@ extension TonalSentiment {
                     return sentimentObject
                 }
                 
-                let securityObjects = range.expanded
+                let securities = range.expanded
+                let securityObjects = securities.compactMap({ $0.getObject(moc: moc) })
+                
                 for object in securityObjects {
                     let date = object.date.simple
                     

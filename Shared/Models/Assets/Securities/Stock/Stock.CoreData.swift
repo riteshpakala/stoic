@@ -38,7 +38,7 @@ extension Array where Element == Stock {
             do {
                 let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
                 
-                let quote: QuoteObject = quotes.first(where: { $0.exchangeName == referenceStock.exchangeName && $0.ticker == referenceStock.ticker && $0.securityType == referenceStock.securityType.rawValue && $0.intervalType == referenceStock.interval.rawValue }) ?? QuoteObject.init(context: moc)
+                let quote: QuoteObject = quotes.first(where: { $0.contains(security: referenceStock) }) ?? QuoteObject.init(context: moc)
                 
                 referenceStock.apply(to: quote)
                 

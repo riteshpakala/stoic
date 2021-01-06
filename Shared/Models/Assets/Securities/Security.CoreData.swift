@@ -7,6 +7,7 @@
 
 import Foundation
 import GraniteUI
+import CoreData
 
 extension Security {
     public func apply(to quote: QuoteObject) {
@@ -14,6 +15,33 @@ extension Security {
         quote.ticker = ticker
         quote.intervalType = interval.rawValue
         quote.securityType = securityType.rawValue
+    }
+    
+    public func getObject(moc: NSManagedObjectContext) -> SecurityObject? {
+        let request: NSFetchRequest = SecurityObject.fetchRequest()
+        request.predicate = NSPredicate(format: "(date == %@) AND (ticker == %@) AND (exchangeName == %@)",
+                                        self.date as NSDate,
+                                        self.ticker,
+                                        self.exchangeName)
+        return try? moc.fetch(request).first
+    }
+    
+    public func getQuoteObject(moc: NSManagedObjectContext) -> QuoteObject? {
+        let request: NSFetchRequest = QuoteObject.fetchRequest()
+        request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@)",
+                                        self.ticker,
+                                        self.exchangeName)
+        return try? moc.fetch(request).first
+    }
+    
+    public func getQuote(moc: NSManagedObjectContext) -> Quote? {
+        return getQuoteObject(moc: moc)?.asQuote
+    }
+}
+
+extension Array where Element == SecurityObject {
+    var asSecurities: [Security] {
+        self.compactMap { $0.asSecurity }
     }
 }
 

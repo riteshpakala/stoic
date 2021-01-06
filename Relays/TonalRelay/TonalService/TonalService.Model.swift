@@ -7,6 +7,7 @@
 
 import Foundation
 import GraniteUI
+import CoreData
 
 public class TonalModels: Archiveable {
     
@@ -97,14 +98,15 @@ public class TonalModels: Archiveable {
 //MARK: -- Predict
 extension TonalModels {
     public func predict(_ tone: Tone,
-                        _ sentiment: SentimentOutput) -> Double? {
+                        _ sentiment: SentimentOutput,
+                        moc: NSManagedObjectContext) -> Double? {
         
         guard let selectedRange = tone.selectedRange else {
             print("⚠️ Test prediction failed - selected range")
             return nil
         }
         
-        guard let quote = selectedRange.objects.first?.quote?.asQuote else {
+        guard let quote = selectedRange.objects.first?.getQuote(moc: moc) else {
             print("⚠️ Test prediction failed - quote")
             return nil
         }
@@ -116,7 +118,7 @@ extension TonalModels {
             guard let baseSecurity = sortedSecurities.first else { return nil }
             security = baseSecurity
         } else {
-            let sortedRange = selectedRange.objects.compactMap({ $0.asSecurity }).sortDesc
+            let sortedRange = selectedRange.objects.sortDesc
             
             // We want to predict based off the "next day" in the sequence
             // of days used to train the model that would be based on days
@@ -167,20 +169,20 @@ extension TonalModels {
         return change
     }
     
-    public func testPredict(tone: Tone) {
-        _ = predict(tone, .neutral)
+    public func testPredict(tone: Tone, moc: NSManagedObjectContext) {
+        _ = predict(tone, .neutral, moc: moc)
     }
 }
 
 //MARK: -- Generate
 extension TonalModels {
-    public static func generate(tone: Tone) -> TonalModels? {
+    public static func generate(tone: Tone, moc: NSManagedObjectContext) -> TonalModels? {
         guard let securityObjects = tone.selectedRange?.objects else {
             print("⚠️ Generation failed. - securityObjects")
             return nil
         }
         
-        guard let quote = securityObjects.first?.quote?.asQuote else {
+        guard let quote = securityObjects.first?.getQuote(moc: moc) else {
             print("⚠️ Generation failed. - quote")
             return nil
         }
@@ -190,7 +192,7 @@ extension TonalModels {
             return nil
         }
         
-        let securities = securityObjects.compactMap { $0.asSecurity }
+        let securities = securityObjects
         let sentiments = tone.tune.sentiments
         
         let bucket: TonalService.AI.Models.Bucket = .init(sentiments: sentiments, range: range)

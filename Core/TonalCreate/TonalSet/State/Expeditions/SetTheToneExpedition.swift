@@ -23,7 +23,7 @@ struct SetTheToneExpedition: GraniteExpedition {
         connection.dependency(\TonalCreateDependency.tone.selectedRange, value: event.range)
         
         if let tone = connection.depObject(\TonalCreateDependency.tone.find.quote),
-           let quote = tone {
+           let quote = tone?.getObject(moc: coreDataInstance) {
             event.range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
                 if let sentiment = sentimentResult?.sentiment {
                     connection.dependency(\TonalCreateDependency.tone.tune.sentiment, value: sentiment)
@@ -55,7 +55,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         
         guard let tone = connection.depObject(\TonalCreateDependency.tone),
               let range = tone.selectedRange,
-              let quote = tone.find.quote else {
+              let quote = tone.find.quote?.getObject(moc: coreDataInstance) else {
             
             return
         }

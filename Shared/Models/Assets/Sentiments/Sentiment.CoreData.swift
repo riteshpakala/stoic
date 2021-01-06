@@ -44,8 +44,10 @@ extension NSManagedObjectContext {
             let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.sentimentDate.simple) }
             
             print("\n🪝 ")
-            return (nil, .init(objects: Array(missingSentiment),
-                               Array(securities).expanded(from: Array(missingSentiment)),
+            return (nil, .init(objects: Array(missingSentiment).asSecurities,
+                               Array(securities)
+                                .expanded(from: Array(missingSentiment))
+                                .asSecurities,
                                range.similarities,
                                range.indicators))
         }
