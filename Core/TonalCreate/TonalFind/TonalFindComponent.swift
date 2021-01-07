@@ -18,28 +18,47 @@ public struct TonalFindComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            Spacer().frame(height: Brand.Padding.large)
-            SearchComponent(
-                state: depObject(\.tonalCreateDependency,
-                                 target: \.search.state))
-                .shareRelays(relays(
-                                [StockRelay.self,
-                                 CryptoRelay.self]))
+            HeaderComponent(state: .init("set the tone"))
             
-            AssetGridComponent()
-                .listen(to: command)
-                .payload(depPayload(\.tonalCreateDependency,
-                                    target: \.search.securities))
+            VStack {
+                SearchComponent(
+                    state: depObject(\.tonalCreateDependency,
+                                     target: \.search.state))
+                    .shareRelays(relays(
+                                    [StockRelay.self,
+                                     CryptoRelay.self]))
+                
+                AssetGridComponent()
+                    .listen(to: command)
+                    .payload(depPayload(\.tonalCreateDependency,
+                                        target: \.search.securities))
+            }
+            .padding(.top, Brand.Padding.large)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
             
-            BasicSliderComponent(
-                state: depObject(\.tonalCreateDependency,
-                                 target: \.tone.find.sliderDays))
-                .listen(to: command)
+            PaddingVertical()
             
-            GraniteText("\(command.center.daysSelected) days", .subheadline, .regular)
-        
-            Spacer().frame(height: Brand.Padding.large)
-        }.background(Brand.Colors.black).onTapGesture {
+            VStack {
+                GraniteText("days to train",
+                            .subheadline,
+                            .regular,
+                            .leading)
+                
+                BasicSliderComponent(
+                    state: depObject(\.tonalCreateDependency,
+                                     target: \.tone.find.sliderDays))
+                    .listen(to: command)
+                    .padding(.top, Brand.Padding.medium)
+                
+                GraniteText("\(command.center.daysSelected) days", .subheadline, .regular)
+            }
+            .padding(.top, Brand.Padding.large)
+            .padding(.bottom, Brand.Padding.medium)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
+            
+        }.onTapGesture {
             sendEvent(TonalFindEvents.Find.init(ticker: "MSFT"))
         }
     }

@@ -18,7 +18,6 @@ public struct WindowComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            
             switch state.config.kind {
             case .topVolume(let securityType),
                  .winners(let securityType),
@@ -39,11 +38,8 @@ public struct WindowComponent: GraniteComponent {
             default:
                 EmptyView.init()
             }
-            
-        }.frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity,
-            alignment: .center)
-        .background(Brand.Colors.black)
+        }.frame(maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .center)
     }
 }

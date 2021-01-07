@@ -17,7 +17,6 @@ public struct SearchComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        
         VStack {
             HStack {
                 HStack {
@@ -29,7 +28,6 @@ public struct SearchComponent: GraniteComponent {
                     TextField("search markets", text: _state.query)
                         .onChange(of: state.query,
                                   perform: { q in
-                                print("{TEST} typeing \(q)")
                             return sendEvent(SearchEvents.Query(q))
                         })
                         .background(Color.clear)
@@ -40,8 +38,6 @@ public struct SearchComponent: GraniteComponent {
                         }.frame(height: 36)
                 }.background(Brand.Colors.greyV2.opacity(0.13))
                 .cornerRadius(6.0)
-                .padding(.leading, Brand.Padding.large)
-                .padding(.trailing, Brand.Padding.large)
      
                 if state.isEditing {
                     Group {
@@ -51,11 +47,8 @@ public struct SearchComponent: GraniteComponent {
 
                         }) {
                             GraniteText("cancel", .subheadline, .regular)
-
-
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .padding(.trailing, Brand.Padding.large)
                         .transition(.move(edge: .trailing))
                         .animation(.default)
                     }

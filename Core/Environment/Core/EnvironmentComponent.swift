@@ -15,7 +15,6 @@ public struct EnvironmentComponent: GraniteComponent {
     public var command: GraniteCommand<EnvironmentCenter, EnvironmentState> = .init()
     
     public init() {
-        print("{TEST} init")
     }
     
     var layout: [GridItem] {
@@ -30,41 +29,40 @@ public struct EnvironmentComponent: GraniteComponent {
         state.activeWindows.count
     }
     
-    var basicLayout: [GridItem] {
-        [GridItem(.flexible())]
-    }
     
     public var body: some View {
-        
-        VStack {
+       
+        HStack(spacing: Brand.Padding.small) {
             //Max Windows Height
             
-            // Re-arranged to have 3 lazy v grids under 1, to allow
-            // for more customizable formations involving a single view
-            // in a 3 col arrangement etc.
-            //
-            LazyVGrid(columns: layout, spacing: Brand.Padding.small) {
-                ForEach(0..<maxHeight, id: \.self) { col in
-                    VStack(spacing: Brand.Padding.small) {
-                        ForEach(0..<maxWidth, id: \.self) { row in
-                            if row < state.activeWindows.count,
-                               col < state.activeWindows[row].count,
-                               state.activeWindows[row][col].kind != .unassigned {
-                                window(state.activeWindows[row][col]).id(UUID()).onTapGesture(perform: {
-                                    
-                                    print(state.activeWindows[row][col].detail)
-                                })
-                            }
+//            // Re-arranged to have 3 lazy v grids under 1, to allow
+//            // for more customizable formations involving a single view
+//            // in a 3 col arrangement etc.
+//            //
+//            LazyVGrid(column: layout, spacing: Brand.Padding.small) {
+//
+//            }
+            
+            ForEach(0..<maxHeight, id: \.self) { col in
+                VStack(spacing: Brand.Padding.small) {
+                    ForEach(0..<maxWidth, id: \.self) { row in
+                        if row < state.activeWindows.count,
+                           col < state.activeWindows[row].count,
+                           state.activeWindows[row][col].kind != .unassigned {
+                            window(state.activeWindows[row][col]).id(UUID()).onTapGesture(perform: {
+                                
+                                print(state.activeWindows[row][col].detail)
+                            })
                         }
                     }
                 }
             }
             
-            
-        }.frame(maxWidth: .infinity,
+        }.frame(minWidth: 0,
+                maxWidth: .infinity,
+                minHeight: 0,
                 maxHeight: .infinity,
                 alignment: .center)
-        .background(Brand.Colors.black)
     }
 }
 
@@ -73,7 +71,7 @@ extension EnvironmentComponent {
        let window = getWindow(config)
                         .shareRelays(relays)
                         .inject(dep(\.tonalCreateDependency))
-                        .background(Color.black)
+                        .background(Brand.Colors.black)
                         .border(state.route.isDebug ? Brand.Colors.red : .clear,
                                 width: state.route.isDebug ? 4.0 : 0.0)
         return window

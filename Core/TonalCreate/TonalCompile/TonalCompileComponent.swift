@@ -24,7 +24,6 @@ public struct TonalCompileComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            
             if command.center.compileState == .compiled {
                 GraniteText("\(state.currentPrediction)",
                             Brand.Colors.purple,
@@ -33,13 +32,10 @@ public struct TonalCompileComponent: GraniteComponent {
                 
                 SentimentSliderComponent(state: tunerState).listen(to: command)
                
-                Text(tunerState.sentiment.asString)
-                    .granite_innerShadow(
-                        Brand.Colors.yellow,
-                        radius: 3,
-                        offset: .init(x: 2, y: 2))
-                    .multilineTextAlignment(.center)
-                    .font(Fonts.live(.subheadline, .regular))
+                GraniteText(tunerState.sentiment.asString,
+                            Brand.Colors.yellow,
+                            .subheadline,
+                            .regular)
             }
             
         }.onAppear(perform: {
@@ -47,6 +43,8 @@ public struct TonalCompileComponent: GraniteComponent {
                 sendEvent(TonalCompileEvents.Compile())
             }
         })
+        .padding(.top, Brand.Padding.large)
+        .padding(.bottom, Brand.Padding.medium)
         .padding(.leading, Brand.Padding.medium)
         .padding(.trailing, Brand.Padding.medium)
     }

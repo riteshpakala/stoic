@@ -99,11 +99,11 @@ public enum WindowType: Hashable {
     var label: String {
         switch self {
         case .topVolume(let securityType) :
-            return "Top Volume // \("\(securityType)".capitalized)"
+            return "top volume"
         case .winners(let securityType) :
-            return "Winners // \("\(securityType)".capitalized)"
+            return "winners"
         case .losers(let securityType) :
-            return "Losers // \("\(securityType)".capitalized)"
+            return "losers"
         default:
             return ""
         }
@@ -125,4 +125,10 @@ public struct WindowStyle: Hashable, Equatable {
     static var minHeight: CGFloat = 360
     static var maxWidth: CGFloat = 500
     static var maxHeight: CGFloat = 400
+    
+    static var windowSizeProxy: some View {
+        GeometryReader { reader in
+            Rectangle().frame(width: reader.size.width, height: reader.size.height, alignment: .center)
+        }
+    }
 }

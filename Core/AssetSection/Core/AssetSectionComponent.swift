@@ -17,22 +17,17 @@ public struct AssetSectionComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: Brand.Padding.xSmall) {
-            Spacer().frame(height: Brand.Padding.large)
-            Text(state.windowType.label)
-                .granite_innerShadow(
-                Brand.Colors.white,
-                radius: 4,
-                offset: .init(x: 2, y: 2))
-                .multilineTextAlignment(.leading)
-                .font(Fonts.live(.title, .bold))
-                .padding(.leading, 12)
+        VStack(alignment: .leading) {
+            HeaderComponent(state: .init(state.windowType.label))
+            Spacer()
             
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
                 AssetGridComponent()
                     .listen(to: command)
                     .payload(state.payload)
             }
-        }.background(Color.black)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
+        }
     }
 }

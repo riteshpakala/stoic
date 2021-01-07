@@ -177,6 +177,8 @@
 		711D545425A684E80074D334 /* RouterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D544F25A684E80074D334 /* RouterState.swift */; };
 		711D545525A684E80074D334 /* RouterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D545025A684E80074D334 /* RouterComponent.swift */; };
 		711D545625A684E80074D334 /* RouterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D545025A684E80074D334 /* RouterComponent.swift */; };
+		711D546025A6913B0074D334 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D545F25A6913B0074D334 /* Geometry.swift */; };
+		711D546125A6913B0074D334 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D545F25A6913B0074D334 /* Geometry.swift */; };
 		7121F6D82596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */; };
 		7121F6D92596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */; };
 		7121F6DA2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D72596F9B000BBD459 /* QuoteObject+CoreDataClass.swift */; };
@@ -329,6 +331,8 @@
 		71267A3F25A59A3F006132D8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A3D25A59A3F006132D8 /* Date.swift */; };
 		71267A4525A59D89006132D8 /* Security.Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A4425A59D89006132D8 /* Security.Helpers.swift */; };
 		71267A4625A59D89006132D8 /* Security.Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A4425A59D89006132D8 /* Security.Helpers.swift */; };
+		712D3D0225A6B9BD005EE3F9 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712D3D0125A6B9BD005EE3F9 /* Padding.swift */; };
+		712D3D0325A6B9BD005EE3F9 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712D3D0125A6B9BD005EE3F9 /* Padding.swift */; };
 		7133385325A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */; };
 		7133385425A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */; };
 		7134427125A37A2C002C0315 /* SocialDataObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134426F25A37A2B002C0315 /* SocialDataObject+CoreDataClass.swift */; };
@@ -717,6 +721,7 @@
 		711D544D25A684E80074D334 /* RouterEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterEvents.swift; sourceTree = "<group>"; };
 		711D544F25A684E80074D334 /* RouterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterState.swift; sourceTree = "<group>"; };
 		711D545025A684E80074D334 /* RouterComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterComponent.swift; sourceTree = "<group>"; };
+		711D545F25A6913B0074D334 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuoteObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7121F6D72596F9B000BBD459 /* QuoteObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuoteObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7122297225A6739A0032FC11 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
@@ -793,6 +798,7 @@
 		71267A3225A588C6006132D8 /* Quote.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.CoreData.swift; sourceTree = "<group>"; };
 		71267A3D25A59A3F006132D8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		71267A4425A59D89006132D8 /* Security.Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.Helpers.swift; sourceTree = "<group>"; };
+		712D3D0125A6B9BD005EE3F9 /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
 		7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTonalRangeExpedition.swift; sourceTree = "<group>"; };
 		7134426F25A37A2B002C0315 /* SocialDataObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SocialDataObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7134427025A37A2C002C0315 /* SocialDataObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SocialDataObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1146,6 +1152,7 @@
 			isa = PBXGroup;
 			children = (
 				710C915B25A64FBF00ECB355 /* Passthrough.swift */,
+				711D545F25A6913B0074D334 /* Geometry.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1462,6 +1469,7 @@
 		7125BD6325A12EED00F22717 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				712D3D0025A6B9AA005EE3F9 /* Helpers */,
 				710C917225A6503C00ECB355 /* GraniteText */,
 				710C916125A64FD400ECB355 /* ControlBar */,
 				7183D53425A4288600FB91A9 /* Graph */,
@@ -1779,6 +1787,14 @@
 				7125BEAA25A159CD00F22717 /* SearchSecurityExpedition.swift */,
 			);
 			path = Expeditions;
+			sourceTree = "<group>";
+		};
+		712D3D0025A6B9AA005EE3F9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				712D3D0125A6B9BD005EE3F9 /* Padding.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		7136B65425A008B40014F693 /* Portfolio */ = {
@@ -2119,13 +2135,6 @@
 			path = Visual;
 			sourceTree = "<group>";
 		};
-		71AACD08258ED45100E1C0B3 /* Expeditions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Expeditions;
-			sourceTree = "<group>";
-		};
 		71AE031E25931A83007A4AE0 /* Expeditions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2434,7 +2443,6 @@
 		71EE708D258D9072005B2B8E /* State */ = {
 			isa = PBXGroup;
 			children = (
-				71AACD08258ED45100E1C0B3 /* Expeditions */,
 				71EE708E258D9072005B2B8E /* AssetGridItemState.swift */,
 			);
 			path = State;
@@ -2691,6 +2699,7 @@
 				7125BE0A25A1328A00F22717 /* VerticalValueSliderStyle.swift in Sources */,
 				710889A12591B29800795EDF /* Promise+nil.swift in Sources */,
 				71D63F6E2592BFC40085D718 /* AssetSectionState.swift in Sources */,
+				711D546025A6913B0074D334 /* Geometry.swift in Sources */,
 				7125BD8625A1316500F22717 /* LinearValueMath.swift in Sources */,
 				7118A229259313FD007E7EAB /* TonalCreateComponent.swift in Sources */,
 				7108897F2591B29800795EDF /* Promise+Aliases.swift in Sources */,
@@ -2937,6 +2946,7 @@
 				71AE032025931AD1007A4AE0 /* FindTheToneExpedition.swift in Sources */,
 				71EE7094258D9072005B2B8E /* AssetGridItemEvents.swift in Sources */,
 				714343D625907DB5001F26A4 /* Double.swift in Sources */,
+				712D3D0225A6B9BD005EE3F9 /* Padding.swift in Sources */,
 				7123B13C2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */,
 				71D63CCC258E92B1003B0BAF /* MainComponent.swift in Sources */,
 				7139F67225981BD300D9C84B /* TonalTuneState.swift in Sources */,
@@ -3134,6 +3144,7 @@
 				71434356259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
 				710889A22591B29800795EDF /* Promise+nil.swift in Sources */,
 				710889942591B29800795EDF /* Promise+Error.swift in Sources */,
+				711D546125A6913B0074D334 /* Geometry.swift in Sources */,
 				713D25B2258E42BF005FB4D4 /* ClockState.swift in Sources */,
 				7143EEE8259955D800B1DCB5 /* TonalCreate.swift in Sources */,
 				71434354259076F4001F26A4 /* Angle+Convenience.swift in Sources */,
@@ -3198,6 +3209,7 @@
 				7125BE8E25A148BA00F22717 /* TonalFindState.swift in Sources */,
 				710889312591B24700795EDF /* CryptoRelay.swift in Sources */,
 				7125BE0125A1328900F22717 /* EnvironmentValues+ValueSliderStyle.swift in Sources */,
+				712D3D0325A6B9BD005EE3F9 /* Padding.swift in Sources */,
 				710889F82591BD1B00795EDF /* Categories.swift in Sources */,
 				710889962591B29800795EDF /* Promise+Progress.swift in Sources */,
 				7134427225A37A2C002C0315 /* SocialDataObject+CoreDataClass.swift in Sources */,

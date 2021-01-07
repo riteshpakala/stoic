@@ -43,10 +43,11 @@ public struct MainComponent: GraniteComponent {
 //                ControlBar(isIPhone: true, selectedFolder: _state.folder)
 //            }
 //        } else {
-            HStack {
+            HStack(spacing: Brand.Padding.small) {
                 controls
                 environment.inject(dep(\.hosted))
             }
+            
 //        }
         }
         .background(Color.black)

@@ -31,16 +31,16 @@ public struct BasicSliderComponent: GraniteComponent {
                                 gradient: Gradient(colors: [Color.blue, Brand.Colors.purple]),
                             startPoint: .leading,
                             endPoint: .trailing),
-                            mask: RoundedRectangle(cornerRadius: 8)
+                            mask: RoundedRectangle(cornerRadius: 3)
                         )
                         .frame(height: 64)
-                        .cornerRadius(3),
-                        thumb: RoundedRectangle(cornerRadius: 10).foregroundColor(Brand.Colors.white),
-                        thumbSize: CGSize(width: 16, height: 42)
+                        .cornerRadius(6),
+                        thumb: RoundedRectangle(cornerRadius: 4).foregroundColor(Brand.Colors.white),
+                        thumbSize: CGSize(width: 12, height: 42)
                     )
                 )
             
-        }.padding(.leading, Brand.Padding.large).padding(.trailing, Brand.Padding.large)
+        }
     }
 }
 

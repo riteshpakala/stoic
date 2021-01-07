@@ -28,7 +28,7 @@ public struct AssetGridComponent: GraniteComponent {
 //                       minHeight: 48 * 5,
 //                       idealHeight: 50 * 5,
                     maxHeight: .infinity,//75 * 5,
-                       alignment: .leading)
+                    alignment: .leading)
         }
     }
 }

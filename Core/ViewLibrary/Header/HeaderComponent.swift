@@ -17,8 +17,16 @@ public struct HeaderComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Spacer()
             
-        }
+            GraniteText(self.state.title,
+                        .title,
+                        .bold,
+                        .leading)
+        }.frame(maxWidth: .infinity,
+                minHeight: 50,
+                idealHeight: 50,
+                maxHeight: 50).background(Color.black)
     }
 }

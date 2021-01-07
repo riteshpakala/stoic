@@ -17,6 +17,13 @@ public class TonalTuneState: GraniteState {
 }
 
 public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
+    public override var links: [GraniteLink] {
+        [
+            .relay(\TonalState.sentimentProgress,
+                   \TonalTuneState.sentimentLoadingProgress)
+        ]
+    }
+    
     var tonalCreateDependency: TonalCreateDependency {
         return dependency.hosted as? TonalCreateDependency ?? .init(identifier: "none")
     }

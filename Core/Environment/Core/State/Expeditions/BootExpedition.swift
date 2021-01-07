@@ -23,11 +23,11 @@ struct BootExpedition: GraniteExpedition {
         var windows: [[WindowConfig]] = []
         
         //
-        var cols: [Int] = .init(repeating: 0, count: page.windows.first?.count ?? state.maxWindows.width.asInt)
+        var cols: [Int] = .init(repeating: 0, count: page.windows.first?.count ?? EnvironmentConfig.maxWindows.width.asInt)
         cols = cols.enumerated().map { $0.offset }
         //
         
-        for row in 0..<state.maxWindows.height.asInt {
+        for row in 0..<EnvironmentConfig.maxWindows.height.asInt {
             var windowRow: [WindowConfig] = []
             for col in cols {
                 let config: WindowConfig = .init(kind: page.windows[row][col],

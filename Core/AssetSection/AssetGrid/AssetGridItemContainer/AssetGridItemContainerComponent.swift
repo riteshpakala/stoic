@@ -21,52 +21,48 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
     ]
     
     public var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 0) {
-                VStack(alignment: .leading, spacing: 0.0) {
+        VStack {
+            VStack(alignment: .leading, spacing: 0.0) {
+                Spacer()
+                HStack(spacing: 0.0) {
+                    GraniteText(state.label,
+                                .subheadline,
+                                .regular,
+                                .leading)
+                    
                     Spacer()
                     
-                    HStack {
-                        Spacer().frame(width: 12)
-                        
-                        GraniteText("security",
-                                    .subheadline,
-                                    .regular).multilineTextAlignment(.leading)
-                        
-                        .font(Fonts.live(.subheadline, .regular))
-                        
-                        Spacer()
-                        
-                        GraniteText("security",
-                                    .subheadline,
-                                    .regular).multilineTextAlignment(.trailing)
-                        
-                        Spacer().frame(width: 12)
-                        
-                        GraniteText("security",
-                                    .subheadline,
-                                    .regular)
-                            .multilineTextAlignment(.trailing)
-                            .padding(.trailing, 12)
-                        
-                    }
-                    .padding(.leading, Brand.Padding.large)
-                    .padding(.bottom, Brand.Padding.xSmall)
+                    GraniteText("price",
+                                .subheadline,
+                                .regular)
+                                .padding(.trailing,
+                                         Brand.Padding.large)
                     
-                    Rectangle().frame(height: 1.0, alignment: .leading).foregroundColor(.black)
-                }.frame(minHeight: 48, idealHeight: 50, maxHeight: 75)
+                    GraniteText("change",
+                                .subheadline,
+                                .regular)
+                    
+                }
+                .padding(.bottom, Brand.Padding.xSmall)
                 
-                VStack(alignment: .leading, spacing: 0.0) {
-                    ForEach(0..<state.securityData.count, id: \.self) { index in
-                        AssetGridItemComponent().payload(.init(object: state.securityData[index])).onTapGesture(
-                            perform: sendEvent(
-                                AssetGridItemContainerEvents
-                                    .SecurityTapped(
-                                        state.securityData[index]), contact: true))
-                    }
-                }.padding(.leading, Brand.Padding.large)
+                Rectangle().frame(height: 2.0, alignment: .leading).foregroundColor(.black)
+            }.frame(minHeight: 42, idealHeight: 42, maxHeight: 42)
+            
+            ScrollView {
+                
+                LazyVGrid(columns: columns, spacing: 0) {
+                    
+                    VStack(alignment: .leading, spacing: 0.0) {
+                        ForEach(0..<state.securityData.count, id: \.self) { index in
+                            AssetGridItemComponent().payload(.init(object: state.securityData[index])).onTapGesture(
+                                perform: sendEvent(
+                                    AssetGridItemContainerEvents
+                                        .SecurityTapped(
+                                            state.securityData[index]), contact: true))
+                        }
+                    }.padding(.leading, Brand.Padding.medium)
+                }
             }
         }
-        .background(Brand.Colors.black)
     }
 }

@@ -45,11 +45,6 @@ public struct TonalCreateComponent: GraniteComponent {
             default:
                 EmptyView.init()
             }
-            
-            
         }
-        .frame(maxWidth: .infinity,
-               maxHeight: .infinity,
-               alignment: .center)
     }
 }

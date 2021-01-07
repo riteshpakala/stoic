@@ -19,8 +19,6 @@ public struct AssetGridItemComponent: GraniteComponent {
     public var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Spacer().frame(width: 12)
-                
                 Text(state.security.indicator)
                     .frame(
                         width: 28,
@@ -34,44 +32,38 @@ public struct AssetGridItemComponent: GraniteComponent {
                                     .cornerRadius(6.0))
                     .shadow(radius: 3, x: 2, y: 2)
                 
-                Spacer().frame(width: 12)
-                
                 VStack(alignment: .leading) {
-                    Text(state.security.ticker)
-                        .granite_innerShadow(
-                            Brand.Colors.white,
-                            radius: 4,
-                            offset: .init(x: 1, y: 2))
-                        .multilineTextAlignment(.leading)
-                        .font(Fonts.live(.subheadline, .regular))
+                    GraniteText(state.security.ticker,
+                                .subheadline,
+                                .regular,
+                                .leading)
                     
-                    GraniteText("volume: \(state.security.volumeValue.asInt)",
+                    GraniteText("volume: \(state.security.volumeValue.abbreviate)",
                                 Brand.Colors.marble,
                                 .footnote,
-                                .regular).multilineTextAlignment(.leading)
-                }
-                
-                Spacer()
+                                .regular,
+                                .leading)
+                }.padding(.trailing, 12)
                 
                 VStack {
                     GraniteText("$\(state.security.lastValue.display)",
                                 Brand.Colors.marble,
                                 .subheadline,
-                                .regular).multilineTextAlignment(.trailing)
+                                .regular,
+                                .trailing)
                     
-                    GraniteText("\(state.security.isGainer ? "+" : "-")$\(state.security.prettyChangePercent)",
+                    GraniteText("\(state.security.isGainer ? "+" : "-")$\(state.security.prettyChangePercent.percent)",
                                 state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
                                 .footnote,
-                                .regular).multilineTextAlignment(.trailing)
-                }
-                
-                Spacer().frame(width: 12)
+                                .regular,
+                                .trailing)
+                }.padding(.trailing, 12)
                 
                 VStack(alignment: .center, spacing: 2) {
                     Spacer()
                     GraniteText("\(state.security.changePercentValue.display)%",
                                 Brand.Colors.marble,
-                                .footnote,
+                                .subheadline,
                                 .regular)
                         .frame(height: 12, alignment: .bottom)
                     
@@ -79,13 +71,12 @@ public struct AssetGridItemComponent: GraniteComponent {
                         .frame(width: 6, height: 6, alignment: .top)
                     Spacer()
                 }
-                .padding(.trailing, 12)
                 .foregroundColor(Brand.Colors.marble)
                 .fixedSize()
                 
             }
             
-            Rectangle().frame(height: 1.0, alignment: .leading).foregroundColor(.black)
+            Rectangle().frame(height: 2.0, alignment: .leading).foregroundColor(.black)
         }
         
     }

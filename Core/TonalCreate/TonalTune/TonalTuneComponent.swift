@@ -18,11 +18,6 @@ public struct TonalTuneComponent: GraniteComponent {
         
     }
     
-    public func link() {
-        command.link(\TonalState.sentimentProgress,
-                     target:\.sentimentLoadingProgress)
-    }
-    
     let columns = [
         GridItem(.flexible()),
     ]
@@ -41,34 +36,36 @@ public struct TonalTuneComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            
+            HeaderComponent(state: .init("tune the tone"))
+            Spacer()
             if command.center.sentimentIsAvailable {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
                         ForEach(command.center.tonalSentiment.datesByDay, id: \.self) { sentimentDate in
                             
                             VStack {
-                                Text(sentimentDate.asString)
-                                    .granite_innerShadow(
-                                        Brand.Colors.white,
-                                        radius: 3,
-                                        offset: .init(x: 2, y: 2))
-                                    .multilineTextAlignment(.center)
-                                    .font(Fonts.live(.subheadline, .regular))
+                                GraniteText(sentimentDate.asString,
+                                            .subheadline,
+                                            .regular)
                                 
                                 SentimentSliderComponent(state: getSentiment(date: sentimentDate)).listen(to: command)
                                 
-                                Text(getTunerSentiment(date: sentimentDate).asString)
-                                    .granite_innerShadow(
-                                        Brand.Colors.yellow,
-                                        radius: 3,
-                                        offset: .init(x: 2, y: 2))
-                                    .multilineTextAlignment(.center)
-                                    .font(Fonts.live(.subheadline, .regular))
+                                GraniteText(getTunerSentiment(date: sentimentDate).asString,
+                                            Brand.Colors.yellow,
+                                            .subheadline,
+                                            .regular)
                             }
                         }
                     }
                 }
+                .padding(.top, Brand.Padding.large)
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium)
+                
+                BasicButton(text: "Generate").onTapGesture {
+                    sendEvent(TonalTuneEvents.Tune())
+                }
+                .padding(.bottom, Brand.Padding.medium)
                 
             } else {
                 
@@ -82,16 +79,6 @@ public struct TonalTuneComponent: GraniteComponent {
                 .frame(width: 120, height: 75, alignment: .center)
                 .cornerRadius(8)
             }
-            
-            
-            
-            
-            BasicButton(text: "Generate").onTapGesture {
-                sendEvent(TonalTuneEvents.Tune())
-            }
-            
-        }.padding(.leading, Brand.Padding.large)
-        .padding(.trailing, Brand.Padding.large)
-        .background(Brand.Colors.black)
+        }
     }
 }

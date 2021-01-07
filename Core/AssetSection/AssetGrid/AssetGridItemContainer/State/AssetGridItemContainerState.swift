@@ -14,6 +14,14 @@ public class AssetGridItemContainerState: GraniteState {
     var securityData: [Security] {
         payload?.object as? [Security] ?? []
     }
+    
+    var label: String {
+        if let type = securityData.first?.securityType {
+            return "\(type)"
+        } else {
+            return "security"
+        }
+    }
 }
 
 public class AssetGridItemContainerCenter: GraniteCenter<AssetGridItemContainerState> {

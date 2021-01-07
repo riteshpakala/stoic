@@ -21,12 +21,12 @@ extension Double {
         let customFormatter = NumberFormatter()
         customFormatter.roundingMode = .down
         customFormatter.maximumFractionDigits = digits
-
-        return String.init(format: customFormatter.format, digits)
+        
+        return String.init(format: customFormatter.format, self)
     }
     
     var display: String {
-        display()
+        String(format: "%.2f", self)
     }
     
     func percent(_ digits: Int = 2) -> String  {
@@ -34,12 +34,28 @@ extension Double {
         customFormatter.roundingMode = .down
         customFormatter.numberStyle = .percent
         customFormatter.maximumFractionDigits = digits
-
-        return String.init(format: customFormatter.format, digits)
+        
+        return String.init(format: customFormatter.format, self)
     }
     
     var percent: String {
-        percent()
+        String(format: "%.2f%", self*100)
+    }
+    
+    var abbreviate: String {
+        let number = self
+        let thousand = number / 1000
+        let million = number / 1000000
+        
+        if million >= 1.0 {
+            return "\(Int(million)*10/10)m"
+        }
+        else if thousand >= 1.0 {
+            return "\(Int(thousand)*10/10)k"
+        }
+        else {
+            return "\(self)"
+        }
     }
 }
 
