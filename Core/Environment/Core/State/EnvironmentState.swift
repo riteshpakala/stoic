@@ -41,8 +41,8 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     let tonalRelay: TonalRelay = .init()
     
     //Dependencies
-    lazy var tonalCreateDependency: TonalCreateDependency = {
-        .init(identifier: "tonalCreateDependency", adAstra: self)
+    lazy var envDependency: EnvironmentDependency = {
+        .init(identifier: "envDependency", adAstra: self)
     }()
     //
     

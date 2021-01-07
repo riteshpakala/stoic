@@ -11,7 +11,6 @@ import SwiftUI
 import Combine
 
 public class TonalFindState: GraniteState {
-    var securityData: [Security] = []
     var days: Int = 5
     var maxDays: Int = 30
     var minDays: Int = 4
@@ -20,8 +19,16 @@ public class TonalFindState: GraniteState {
 }
 
 public class TonalFindCenter: GraniteCenter<TonalFindState> {
-    var tonalCreateDependency: TonalCreateDependency {
-        return dependency.hosted as? TonalCreateDependency ?? .init(identifier: "none")
+    var envDependency: EnvironmentDependency {
+        dependency.hosted.env
+    }
+    
+    var ticker: String {
+        envDependency.tone.find.ticker ?? ""
+    }
+    
+    var findState: Tone.Find.State {
+        envDependency.tone.find.state
     }
     
     var daysSelected: Int {
@@ -34,8 +41,6 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
             StockHistoryExpedition.Discovery(),
             TonalRangeChangedExpedition.Discovery(),
             ParseTonalRangeExpedition.Discovery(),
-            SearchTheToneExpedition.Discovery(),
-            SecuritySelectedForToneExpedition.Discovery()
         ]
     }
 }

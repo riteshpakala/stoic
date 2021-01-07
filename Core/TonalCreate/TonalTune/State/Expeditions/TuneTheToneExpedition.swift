@@ -35,7 +35,7 @@ struct TonalTuneChangedExpedition: GraniteExpedition {
         
 //        print("{TEST} \(posValue) \(negValue) \(neuValue) \(event.x)")
         
-        if let tuner = connection.depObject(\TonalCreateDependency.tone.tune.tuners),
+        if let tuner = connection.depObject(\EnvironmentDependency.tone.tune.tuners),
            let tune = tuner[event.date]{
             
             tune.slider.sentiment = .init(
@@ -62,7 +62,7 @@ struct TuneTheToneExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         print("{TEST} tuning")
         
-        if let tuners = connection.depObject(\TonalCreateDependency.tone.tune.tuners) {
+        if let tuners = connection.depObject(\EnvironmentDependency.tone.tune.tuners) {
             var sentiments: [Date: SentimentOutput] = [:]
             let dates = Array(tuners.keys)
             for date in dates {
@@ -70,10 +70,10 @@ struct TuneTheToneExpedition: GraniteExpedition {
                     sentiments[date] = tuner.slider.sentiment
                 }
             }
-            connection.dependency(\TonalCreateDependency.tone.tune.sentiments,
+            connection.dependency(\EnvironmentDependency.tone.tune.sentiments,
                                   value: sentiments)
             
-            connection.dependency(\TonalCreateDependency.tone.compile.state,
+            connection.dependency(\EnvironmentDependency.tone.compile.state,
                                   value: .readyToCompile)
         }
     }

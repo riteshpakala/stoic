@@ -15,12 +15,12 @@ public class TonalSetState: GraniteState {
 }
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
-    var tonalCreateDependency: TonalCreateDependency {
-        return dependency.hosted as? TonalCreateDependency ?? .init(identifier: "none")
+    var envDependency: EnvironmentDependency {
+        dependency.hosted.env
     }
     
     var tone: Tone {
-        tonalCreateDependency.tone
+        envDependency.tone
     }
     
     var ticker: String? {

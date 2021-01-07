@@ -25,11 +25,15 @@ public struct WindowComponent: GraniteComponent {
                 AssetSectionComponent(
                     state: .init(windowType: state.config.kind,
                                  securityType))
-                    .shareRelays(relays([CryptoRelay.self, StockRelay.self]))
+                    .shareRelays(relays([CryptoRelay.self,
+                                         StockRelay.self]))
             case .portfolio:
                 PortfolioComponent()
             case .search:
-                SearchComponent()
+                AssetSearchComponent()
+                    .shareRelays(relays([CryptoRelay.self,
+                                         StockRelay.self]))
+                    .inject(dep(\.hosted))
             case .securityDetail(let kind):
                 SecurityDetailComponent(state: .init(kind))
             case .modelCreate(let stage):

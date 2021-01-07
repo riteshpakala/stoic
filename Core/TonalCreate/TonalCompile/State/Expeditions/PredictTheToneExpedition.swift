@@ -41,7 +41,7 @@ struct PredictTheToneExpedition: GraniteExpedition {
                         neu: neuValue,
                         compound: state.tune.compound)
         
-        guard let tone = connection.depObject(\TonalCreateDependency.tone) else {
+        guard let tone = connection.depObject(\EnvironmentDependency.tone) else {
             return
         }
         

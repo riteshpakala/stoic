@@ -29,9 +29,9 @@ public struct EnvironmentConfig {
             switch self {
             case .home:
                 return .init(windows: [
-                             [.topVolume(.stock), .topVolume(.crypto), .portfolio],
-                             [.winners(.stock), .winners(.crypto), .favorites],
-                             [.losers(.stock), .losers(.crypto), .holdings]
+                             [.search, .favorites, .portfolio],
+                             [.topVolume(.stock), .topVolume(.crypto), .holdings],
+                             [.winners(.stock), .winners(.crypto), .unassigned]
                         ])
             case .portfolio:
                 return .init(windows: [

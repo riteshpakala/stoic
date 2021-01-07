@@ -8,14 +8,6 @@ import SwiftUI
 import Foundation
 import GraniteUI
 
-class TonalCreateDependency: DependencyManager {
-    @ObservedObject
-    var tone: Tone = .init()
-    
-    @ObservedObject
-    var search: SearchQuery = .init()
-}
-
 public class Tone: ObservableObject {
     var range: [TonalRange]?
     
@@ -50,6 +42,20 @@ public class Tone: ObservableObject {
     public var compile: Compile = .init()
     
     public struct Find {
+        public enum State {
+            case searching
+            case found
+            case selected
+            case none
+        }
+        
+        var state: Find.State = .none {
+            didSet {
+                lastState = oldValue
+            }
+        }
+        var lastState: Find.State = .none
+        
         var ticker: String?
         var quote: Quote?
         

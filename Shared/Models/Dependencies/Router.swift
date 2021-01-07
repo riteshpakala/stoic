@@ -15,5 +15,5 @@ class RouterDependency: DependencyManager {
 }
 
 public class Router: ObservableObject {
-    var route: Route = .models//.debug(.models)
+    var route: Route = .home//.debug(.models)
 }

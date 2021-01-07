@@ -9,18 +9,18 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-struct SecuritySelectedForToneExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = AssetGridItemContainerEvents.SecurityTapped
-    typealias ExpeditionState = TonalFindState
-    
-    func reduce(
-        event: ExpeditionEvent,
-        state: ExpeditionState,
-        connection: GraniteConnection,
-        publisher: inout AnyPublisher<GraniteEvent, Never>) {
-
-        connection.dependency(\TonalCreateDependency.tone.find.ticker, value: event.security.ticker)
-        
-        connection.request(TonalFindEvents.Find(ticker: event.security.ticker))
-    }
-}
+//struct SecuritySelectedForToneExpedition: GraniteExpedition {
+//    typealias ExpeditionEvent = AssetGridItemContainerEvents.SecurityTapped
+//    typealias ExpeditionState = TonalFindState
+//    
+//    func reduce(
+//        event: ExpeditionEvent,
+//        state: ExpeditionState,
+//        connection: GraniteConnection,
+//        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+//
+//        connection.dependency(\TonalCreateDependency.tone.find.ticker, value: event.security.ticker)
+//        
+//        connection.request(TonalFindEvents.Find(ticker: event.security.ticker))
+//    }
+//}

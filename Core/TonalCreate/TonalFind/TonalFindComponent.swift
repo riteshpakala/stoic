@@ -21,21 +21,14 @@ public struct TonalFindComponent: GraniteComponent {
             HeaderComponent(state: .init("set the tone"))
             
             VStack {
-                SearchComponent(
-                    state: depObject(\.tonalCreateDependency,
+                AssetSearchComponent(
+                    state: depObject(\.envDependency,
                                      target: \.search.state))
                     .shareRelays(relays(
                                     [StockRelay.self,
                                      CryptoRelay.self]))
-                
-                AssetGridComponent()
-                    .listen(to: command)
-                    .payload(depPayload(\.tonalCreateDependency,
-                                        target: \.search.securities))
+                    .inject(dep(\.hosted))
             }
-            .padding(.top, Brand.Padding.large)
-            .padding(.leading, Brand.Padding.medium)
-            .padding(.trailing, Brand.Padding.medium)
             
             PaddingVertical()
             
@@ -46,7 +39,7 @@ public struct TonalFindComponent: GraniteComponent {
                             .leading)
                 
                 BasicSliderComponent(
-                    state: depObject(\.tonalCreateDependency,
+                    state: depObject(\.envDependency,
                                      target: \.tone.find.sliderDays))
                     .listen(to: command)
                     .padding(.top, Brand.Padding.medium)
@@ -58,8 +51,12 @@ public struct TonalFindComponent: GraniteComponent {
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
             
-        }.onTapGesture {
+        }.onAppear(perform: {
+            if command.center.findState == .found {
+                sendEvent(TonalFindEvents.Find(ticker: command.center.ticker))
+            }
+        })/*.onTapGesture {
             sendEvent(TonalFindEvents.Find.init(ticker: "MSFT"))
-        }
+        }*/
     }
 }

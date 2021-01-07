@@ -18,16 +18,15 @@ public struct AssetSectionComponent: GraniteComponent {
     
     public var body: some View {
         VStack(alignment: .leading) {
-            HeaderComponent(state: .init(state.windowType.label))
-            Spacer()
-            
+            GraniteText(state.windowType.label, .title2, .bold)
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
                 AssetGridComponent()
                     .listen(to: command)
                     .payload(state.payload)
             }
-            .padding(.leading, Brand.Padding.medium)
-            .padding(.trailing, Brand.Padding.medium)
         }
+        .padding(.top, Brand.Padding.large)
+        .padding(.leading, Brand.Padding.medium)
+        .padding(.trailing, Brand.Padding.medium)
     }
 }

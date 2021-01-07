@@ -43,17 +43,19 @@ public struct EnvironmentComponent: GraniteComponent {
 //
 //            }
             
-            ForEach(0..<maxHeight, id: \.self) { col in
-                VStack(spacing: Brand.Padding.small) {
-                    ForEach(0..<maxWidth, id: \.self) { row in
-                        if row < state.activeWindows.count,
-                           col < state.activeWindows[row].count,
-                           state.activeWindows[row][col].kind != .unassigned {
-                            window(state.activeWindows[row][col]).id(UUID())
+//            LazyHGrid(rows: layout) {
+                ForEach(0..<maxHeight, id: \.self) { col in
+                    VStack(spacing: Brand.Padding.small) {
+                        ForEach(0..<maxWidth, id: \.self) { row in
+                            if row < state.activeWindows.count,
+                               col < state.activeWindows[row].count,
+                               state.activeWindows[row][col].kind != .unassigned {
+                                window(state.activeWindows[row][col]).id(UUID())
+                            }
                         }
                     }
                 }
-            }
+//            }
             
         }.frame(minWidth: 0,
                 maxWidth: .infinity,
@@ -67,7 +69,7 @@ extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
        let window = getWindow(config)
                         .shareRelays(relays)
-                        .inject(dep(\.tonalCreateDependency))
+                        .inject(dep(\.envDependency))
                         .background(Brand.Colors.black)
                         .border(state.route.isDebug ? Brand.Colors.red : .clear,
                                 width: state.route.isDebug ? 4.0 : 0.0)

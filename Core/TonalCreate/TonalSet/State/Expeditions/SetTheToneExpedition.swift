@@ -20,13 +20,13 @@ struct SetTheToneExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
        
         print("{TEST} selected the range \(event.range.dates)")
-        connection.dependency(\TonalCreateDependency.tone.selectedRange, value: event.range)
+        connection.dependency(\EnvironmentDependency.tone.selectedRange, value: event.range)
         
-        if let tone = connection.depObject(\TonalCreateDependency.tone.find.quote),
+        if let tone = connection.depObject(\EnvironmentDependency.tone.find.quote),
            let quote = tone?.getObject(moc: coreDataInstance) {
             event.range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
                 if let sentiment = sentimentResult?.sentiment {
-                    connection.dependency(\TonalCreateDependency.tone.tune.sentiment, value: sentiment)
+                    connection.dependency(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
                 } else {
                     connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range), beam: true)
                 }
@@ -53,7 +53,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         //
         print(event.sentiment.stats)
         
-        guard let tone = connection.depObject(\TonalCreateDependency.tone),
+        guard let tone = connection.depObject(\EnvironmentDependency.tone),
               let range = tone.selectedRange,
               let quote = tone.find.quote?.getObject(moc: coreDataInstance) else {
             
@@ -64,7 +64,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         
         range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
             if let sentiment = sentimentResult?.sentiment {
-                connection.dependency(\TonalCreateDependency.tone.tune.sentiment, value: sentiment)
+                connection.dependency(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
             } else {
                 connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range), beam: true)
             }
