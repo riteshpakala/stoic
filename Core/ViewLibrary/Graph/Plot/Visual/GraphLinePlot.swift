@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct RHLinePlot<Indicator: View>: View {
+public struct GraphLinePlot<Indicator: View>: View {
     
     /// TODO: Can I use generic? Already tried but got problems
     /// (i.e. CGFloat/CGPoint conversion) along the road.
@@ -49,7 +49,7 @@ public struct RHLinePlot<Indicator: View>: View {
     let customLatestValueIndicator: () -> Indicator
     
     /// Plot Config
-    @Environment(\.rhLinePlotConfig) var rhLinePlotConfig
+    @Environment(\.graphLinePlotConfig) var graphLinePlotConfig
     
     public init(nonPredictionCount: Int,
                 values: [Value],
@@ -110,7 +110,7 @@ public struct RHLinePlot<Indicator: View>: View {
     public var body: some View {
         GeometryReader { (proxy: GeometryProxy) in
             // Bug? if I do `let canvasFrame ...` here and return view, compiler isn't happy.
-            bindView(data: getAdjustedStrokeEdgesCanvasFrame(proxy: proxy, rhLinePlotConfig: self.rhLinePlotConfig)) { (canvasFrame) in
+            bindView(data: getAdjustedStrokeEdgesCanvasFrame(proxy: proxy, graphLinePlotConfig: self.graphLinePlotConfig)) { (canvasFrame) in
                 ZStack(alignment: .topLeading) {
                     self.plotBody(canvasFrame: canvasFrame)
                     if self.showGlowingIndicator {
@@ -123,7 +123,7 @@ public struct RHLinePlot<Indicator: View>: View {
 }
 
 // Default glowing indicator
-public extension RHLinePlot where Indicator == GlowingIndicator {
+public extension GraphLinePlot where Indicator == GlowingIndicator {
     init(nonPredictionCount: Int,
          values: [Value],
          dates: [Date],
@@ -156,7 +156,7 @@ private func bindView<D, V: View>(data: D, transform: (D) -> V) -> V {
 }
 
 // MARK:- Misc
-extension RHLinePlot {
+extension GraphLinePlot {
     
     func getGlowingIndicatorLocation(canvasFrame: CGRect) -> CGSize {
         let HEIGHT = canvasFrame.height
@@ -181,7 +181,7 @@ extension RHLinePlot {
             return customOpacity
         }
         
-        return activeSegment == segment ? customOpacity : self.rhLinePlotConfig.opacityOfUnselectedSegment
+        return activeSegment == segment ? customOpacity : self.graphLinePlotConfig.opacityOfUnselectedSegment
     }
 }
 
@@ -189,8 +189,8 @@ extension RHLinePlot {
 /// Get canvas frame after considering edges in `adjustedEdgesToFitLineStrokeInCanvas` config.
 ///
 /// This will inset the proxy frame by half of stroke width (`plotLineWidth`).
-func getAdjustedStrokeEdgesCanvasFrame(proxy: GeometryProxy, rhLinePlotConfig: RHLinePlotConfig) -> CGRect {
-    let adjustedEdges = rhLinePlotConfig.adjustedEdgesToFitLineStrokeInCanvas
+func getAdjustedStrokeEdgesCanvasFrame(proxy: GeometryProxy, graphLinePlotConfig: GraphLinePlotConfig) -> CGRect {
+    let adjustedEdges = graphLinePlotConfig.adjustedEdgesToFitLineStrokeInCanvas
     if adjustedEdges.isEmpty {
         return CGRect(x: 0, y: 0, width: proxy.size.width, height: proxy.size.height)
     }
@@ -200,7 +200,7 @@ func getAdjustedStrokeEdgesCanvasFrame(proxy: GeometryProxy, rhLinePlotConfig: R
     var width: CGFloat = proxy.size.width
     var height: CGFloat = proxy.size.height
     
-    let adjustedValue = rhLinePlotConfig.plotLineWidth/2
+    let adjustedValue = graphLinePlotConfig.plotLineWidth/2
     if adjustedEdges.contains(.top) {
         y += adjustedValue
         height -= adjustedValue
@@ -221,7 +221,7 @@ func getAdjustedStrokeEdgesCanvasFrame(proxy: GeometryProxy, rhLinePlotConfig: R
 struct RHLinePlot_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            RHLinePlot(nonPredictionCount: 0, values: [1,2,3,6,3,4,6], dates: [], nonPredictionDates: [], predictionDates: [])
+            GraphLinePlot(nonPredictionCount: 0, values: [1,2,3,6,3,4,6], dates: [], nonPredictionDates: [], predictionDates: [])
         }.previewLayout(.fixed(width: 300, height: 300))
     }
 }

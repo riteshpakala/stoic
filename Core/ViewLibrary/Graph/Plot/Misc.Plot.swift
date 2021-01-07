@@ -9,8 +9,8 @@
 import SwiftUI
 
 private let rhFontName = "HelveticaNeue"
-let rhThemeColor = Brand.Colors.green
-let rhRedThemeColor = Brand.Colors.red
+let graphThemeColor = Brand.Colors.green
+let graphRedThemeColor = Brand.Colors.red
 
 extension Calendar {
     func endOfDay(for date: Date) -> Date {

@@ -12,28 +12,28 @@ import SwiftUI
 public struct GlowingIndicator: View {
     
     @State var isGlowing: Bool = false
-    @Environment(\.rhLinePlotConfig) var rhLinePlotConfig
+    @Environment(\.graphLinePlotConfig) var graphLinePlotConfig
     
     public init() {}
     
     private var glowingAnimation: Animation {
         Animation
-            .easeInOut(duration: rhLinePlotConfig.glowingIndicatorGlowAnimationDuration)
-            .delay(rhLinePlotConfig.glowingIndicatorDelayBetweenGlow)
+            .easeInOut(duration: graphLinePlotConfig.glowingIndicatorGlowAnimationDuration)
+            .delay(graphLinePlotConfig.glowingIndicatorDelayBetweenGlow)
             .repeatForever(autoreverses: false)
     }
     
     private var glowingBackground: some View {
         Circle()
-            .scaleEffect(isGlowing ? rhLinePlotConfig.glowingIndicatorBackgroundScaleEffect : 1)
+            .scaleEffect(isGlowing ? graphLinePlotConfig.glowingIndicatorBackgroundScaleEffect : 1)
             .opacity(isGlowing ? 0.0 : 1)
             .animation(glowingAnimation, value: self.isGlowing)
-            .frame(width: rhLinePlotConfig.glowingIndicatorWidth, height: rhLinePlotConfig.glowingIndicatorWidth)
+            .frame(width: graphLinePlotConfig.glowingIndicatorWidth, height: graphLinePlotConfig.glowingIndicatorWidth)
     }
     
     public var body: some View {
         Circle()
-            .frame(width: rhLinePlotConfig.glowingIndicatorWidth, height: rhLinePlotConfig.glowingIndicatorWidth)
+            .frame(width: graphLinePlotConfig.glowingIndicatorWidth, height: graphLinePlotConfig.glowingIndicatorWidth)
             .background(glowingBackground)
             .onAppear {
                 withAnimation {

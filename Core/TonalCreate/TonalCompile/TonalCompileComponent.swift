@@ -38,6 +38,7 @@ public struct TonalCompileComponent: GraniteComponent {
                             .regular)
             }
             
+            GraphPage()
         }.onAppear(perform: {
             if command.center.compileState == .readyToCompile {
                 sendEvent(TonalCompileEvents.Compile())

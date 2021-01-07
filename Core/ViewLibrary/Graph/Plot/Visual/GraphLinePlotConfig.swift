@@ -8,22 +8,22 @@
 
 import SwiftUI
 
-public struct RHLinePlotConfigKey: EnvironmentKey {
-    public static let defaultValue = RHLinePlotConfig.default
+public struct GraphLinePlotConfigKey: EnvironmentKey {
+    public static let defaultValue = GraphLinePlotConfig.default
 }
 
 public extension EnvironmentValues {
-    var rhLinePlotConfig: RHLinePlotConfig {
+    var graphLinePlotConfig: GraphLinePlotConfig {
         get {
-            return self[RHLinePlotConfigKey.self]
+            return self[GraphLinePlotConfigKey.self]
         }
         set {
-            self[RHLinePlotConfigKey.self] = newValue
+            self[GraphLinePlotConfigKey.self] = newValue
         }
     }
 }
 
-public struct RHLinePlotConfig {
+public struct GraphLinePlotConfig {
 
     /// Width of the rectangle holding the glowing indicator (i.e. not `radius`, but rather `glowingIndicatorWidth = 2*radius`). Default is `8.0`
     public var glowingIndicatorWidth: CGFloat = 8.0
@@ -85,9 +85,9 @@ public struct RHLinePlotConfig {
     /// the ScrollView. So long press of 0 won't 
     public var minimumPressDurationToActivateInteraction: Double = 0.1
     
-    public static let `default` = RHLinePlotConfig()
+    public static let `default` = GraphLinePlotConfig()
     
-    public func custom(f: (inout RHLinePlotConfig) -> Void) -> RHLinePlotConfig {
+    public func custom(f: (inout GraphLinePlotConfig) -> Void) -> GraphLinePlotConfig {
         var new = self
         f(&new)
         return new

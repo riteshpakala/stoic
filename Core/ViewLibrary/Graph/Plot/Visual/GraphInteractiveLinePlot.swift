@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
+public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
     where StickLabel: View, Indicator: View
 {
     public typealias Value = CGFloat
@@ -50,7 +50,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
     @State private var currentlySelectedIndex: Int? = nil
     @State private var currentlySelectedSegmentIndex: Int? = nil
     
-    @Environment(\.rhLinePlotConfig) var rhPlotConfig
+    @Environment(\.graphLinePlotConfig) var graphLinePlotConfig
     
     public init(
         nonPredictionCount: Int,
@@ -104,7 +104,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
     }
     
     func linePlot() -> some View {
-        return RHLinePlot(
+        return GraphLinePlot(
             nonPredictionCount: nonPredictionCount,
             values: values,
             dates: dates,
@@ -124,7 +124,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
     
     func makeGraphBody(proxy: GeometryProxy) -> some View {
         // Full edge-adjusted canvas, used in placing the stick label
-        let canvasFrame = getAdjustedStrokeEdgesCanvasFrame(proxy: proxy, rhLinePlotConfig: self.rhPlotConfig)
+        let canvasFrame = getAdjustedStrokeEdgesCanvasFrame(proxy: proxy, graphLinePlotConfig: self.graphLinePlotConfig)
         
         // Shrinked canvas taking into account the relative width,
         // used for placing the value stick & dragging
@@ -185,10 +185,10 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
                     trailing: 0))
                 .overlay(
                     // Value Stick
-                    LinePlotValueStick(lineWidth: rhPlotConfig.valueStickWidth)
+                    LinePlotValueStick(lineWidth: graphLinePlotConfig.valueStickWidth)
                         .opacity(isDragging ? 0.75 : 0.0)
-                        .offset(x: valueStickOffset-(rhPlotConfig.valueStickWidth/2), y: -valueStickYOffset)
-                        .foregroundColor(rhPlotConfig.valueStickColor),
+                        .offset(x: valueStickOffset-(graphLinePlotConfig.valueStickWidth/2), y: -valueStickYOffset)
+                        .foregroundColor(graphLinePlotConfig.valueStickColor),
                     alignment: .leading
             )
                 .contentShape(Rectangle())
@@ -199,7 +199,7 @@ public struct RHInteractiveLinePlot<StickLabel, Indicator>: View
 }
 
 // Default indicator
-public extension RHInteractiveLinePlot where Indicator == GlowingIndicator {
+public extension GraphInteractiveLinePlot where Indicator == GlowingIndicator {
     init(
         nonPredictionCount: Int,
         values: [Value],
@@ -234,7 +234,7 @@ public extension RHInteractiveLinePlot where Indicator == GlowingIndicator {
     }
 }
 
-private extension RHInteractiveLinePlot {
+private extension GraphInteractiveLinePlot {
     
     // Get index of nearest data point.
     func getEffectiveIndex(canvas: CGRect) -> Int {

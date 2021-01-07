@@ -68,6 +68,6 @@ struct TimeDisplayModeSelector_Previews: PreviewProvider {
                 currentTimeDisplayOption: $option,
                 eligibleModes: TimeDisplayOption.allCases)
                 .environment(\.colorScheme, .dark)
-        }.accentColor(rhThemeColor)
+        }.accentColor(graphThemeColor)
     }
 }

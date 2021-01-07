@@ -10,15 +10,15 @@ import Combine
 import SwiftUI
 
 class SomePlotData: ObservableObject {
-    typealias PlotData = RobinhoodPageViewModel.PlotData
+    typealias PlotData = GraphPageViewModel.PlotData
     @Published var plotData: PlotData?
     @Published var predictionPlotData: PlotData = []
     @Published var predictionDateData: PlotData = []
     @Published var trueDays: Int?
     @Published var modelType: TonalModels.ModelType = .none
 }
-struct RobinhoodPage: View {
-    typealias PlotData = RobinhoodPageViewModel.PlotData
+struct GraphPage: View {
+    typealias PlotData = GraphPageViewModel.PlotData
     
     @State var timeDisplayMode: TimeDisplayOption = .daily
     @State var isLaserModeOn = false
@@ -58,11 +58,11 @@ struct RobinhoodPage: View {
     var plotDataSegments: [Int]? {
         switch timeDisplayMode {
         case .hourly:
-            return RobinhoodPageViewModel.segmentByHours(values: currentPlotData)
+            return GraphPageViewModel.segmentByHours(values: currentPlotData)
         case .daily:
-            return RobinhoodPageViewModel.segmentByMonths(values: currentPlotData)
+            return GraphPageViewModel.segmentByMonths(values: currentPlotData)
         case .weekly, .monthly:
-            return RobinhoodPageViewModel.segmentByYears(values: currentPlotData)
+            return GraphPageViewModel.segmentByYears(values: currentPlotData)
         }
     }
     
@@ -169,8 +169,8 @@ struct RobinhoodPage: View {
                 readyPageContent(plotData: currentPlotData, predictionPlotData: currentPredictionPlotData)
             }
         }
-        .accentColor(rhThemeColor)
-        .environment(\.rhLinePlotConfig, RHLinePlotConfig.default.custom(f: { (c) in
+        .accentColor(graphThemeColor)
+        .environment(\.graphLinePlotConfig, GraphLinePlotConfig.default.custom(f: { (c) in
             c.useLaserLightLinePlotStyle = isLaserModeOn
         }))/*.onAppear {
             self.viewModel.fetchOnAppear()
@@ -181,7 +181,7 @@ struct RobinhoodPage: View {
 }
 
 // MARK:- Components
-extension RobinhoodPage {
+extension GraphPage {
     func plotBody(plotData: PlotData, predictionPlotData: PlotData) -> some View {
         let combined = (plotData + predictionPlotData)
         let values = combined.map { $0.price }
@@ -194,7 +194,7 @@ extension RobinhoodPage {
         
 //        let themeColor = values.last! >= values.first! ? rhThemeColor : rhRedThemeColor
         
-        return RHInteractiveLinePlot(
+        return GraphInteractiveLinePlot(
             nonPredictionCount: someModel.trueDays ?? currentPlotData.count,
             values: values,
             dates: dates,
@@ -272,7 +272,7 @@ extension View {
 struct RobinhoodPage_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            RobinhoodPage()
+            GraphPage()
                 .environment(\.colorScheme, .dark)
         }.previewLayout(.device)//.fixed(width: 320, height: 480))
     }

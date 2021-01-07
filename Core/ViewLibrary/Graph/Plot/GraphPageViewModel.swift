@@ -9,10 +9,10 @@
 import Combine
 import SwiftUI
 
-class RobinhoodPageViewModel: ObservableObject {
+class GraphPageViewModel: ObservableObject {
     typealias PlotData = [(time: Date, price: CGFloat)]
     
-    private let logic: RobinhoodPageBusinessLogic
+    private let logic: GraphPageBusinessLogic
     
     @Published var isLoading = false
     @Published var intradayPlotData: PlotData?
@@ -29,7 +29,7 @@ class RobinhoodPageViewModel: ObservableObject {
     
     init(symbol: String) {
         self.symbol = symbol
-        self.logic = RobinhoodPageBusinessLogic(symbol: symbol)
+        self.logic = GraphPageBusinessLogic(symbol: symbol)
         
         StocksAPI.networkActivity
             .receive(on: RunLoop.main)
@@ -43,7 +43,7 @@ class RobinhoodPageViewModel: ObservableObject {
             logic.$monthlyResponse
         ]
         
-        let assignees: [ReferenceWritableKeyPath<RobinhoodPageViewModel, PlotData?>] = [
+        let assignees: [ReferenceWritableKeyPath<GraphPageViewModel, PlotData?>] = [
             \.intradayPlotData,
             \.dailyPlotData,
             \.weeklyPlotData,

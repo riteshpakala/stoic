@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-extension RHLinePlot {
+extension GraphLinePlot {
     
     private func plotPathWithOneLine(canvasFrame: CGRect) -> Path {
         let WIDTH = occupyingRelativeWidth * canvasFrame.width
@@ -41,8 +41,8 @@ extension RHLinePlot {
     }
     
     func drawPlotWithOneLine(canvasFrame: CGRect) -> some View {
-        let lineWidth = self.rhLinePlotConfig.plotLineWidth
-        if self.rhLinePlotConfig.useLaserLightLinePlotStyle {
+        let lineWidth = self.graphLinePlotConfig.plotLineWidth
+        if self.graphLinePlotConfig.useLaserLightLinePlotStyle {
             return AnyView(plotPathWithOneLine(canvasFrame: canvasFrame)
                 .laserLightStroke(lineWidth: lineWidth))
         } else {

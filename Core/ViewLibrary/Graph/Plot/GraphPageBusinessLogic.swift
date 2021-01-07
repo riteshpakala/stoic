@@ -8,7 +8,7 @@
 
 import Combine
 
-class RobinhoodPageBusinessLogic {
+class GraphPageBusinessLogic {
     typealias APIResponse = StockAPIResponse
     
     let symbol: String
@@ -17,7 +17,7 @@ class RobinhoodPageBusinessLogic {
     @Published var weeklyResponse: APIResponse?
     @Published var monthlyResponse: APIResponse?
     
-    private static let mapTimeSeriesToResponsePath: [StocksAPI.TimeSeriesType: ReferenceWritableKeyPath<RobinhoodPageBusinessLogic, APIResponse?>] = [
+    private static let mapTimeSeriesToResponsePath: [StocksAPI.TimeSeriesType: ReferenceWritableKeyPath<GraphPageBusinessLogic, APIResponse?>] = [
         .intraday: \.intradayResponse,
         .daily: \.dailyResponse,
         .weekly: \.weeklyResponse,

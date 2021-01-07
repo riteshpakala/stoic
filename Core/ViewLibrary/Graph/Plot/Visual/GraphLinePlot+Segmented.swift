@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-extension RHLinePlot {
+extension GraphLinePlot {
     
     func drawPlotWithSegmentedLines(canvasFrame: CGRect, lineSegmentStartingIndices: [Int]) -> some View {
         // In laser light mode for segmented lines, we use `drawingGroup()` to make it more responsive,
@@ -23,7 +23,7 @@ extension RHLinePlot {
 //            } else {
 //                return 0
 //            }
-            return 5.7 * rhLinePlotConfig.plotLineWidth
+            return 5.7 * graphLinePlotConfig.plotLineWidth
         }()
         let largerCanvas = canvasFrame.insetBy(dx: -adjustedEachBorderDueToBlur, dy: -adjustedEachBorderDueToBlur)
         
@@ -59,7 +59,7 @@ extension RHLinePlot {
                 path.move(to:
                     CGPoint(
                         x: pathBaseX + currentX,
-                        y: pathBaseY + HEIGHT * (1 - self.rhLinePlotConfig.relativeYForStraightLine)))
+                        y: pathBaseY + HEIGHT * (1 - self.graphLinePlotConfig.relativeYForStraightLine)))
                 
                 currentX += lineSectionLength * CGFloat(segmentValues.count)
                 
@@ -112,7 +112,7 @@ extension RHLinePlot {
                 path.move(to:
                     CGPoint(
                         x: pathBaseX + currentX,
-                        y: pathBaseY + HEIGHT * (1 - self.rhLinePlotConfig.relativeYForStraightLine)))
+                        y: pathBaseY + HEIGHT * (1 - self.graphLinePlotConfig.relativeYForStraightLine)))
                 
                 currentX += lineSectionLength * CGFloat(segmentValues.count)
                 
@@ -165,9 +165,9 @@ extension RHLinePlot {
             /**
              color: lineSegmentStartingIndices[i].isPrediction ? Color.init(GlobalStyle.Colors.purple) : Color.init(GlobalStyle.Colors.yellow), i: i
              */
-            let themeColor: Color = (values.last ?? 0.0) >= (values.first ?? 0.0) ? rhThemeColor : rhRedThemeColor
-            let lineWidth = self.rhLinePlotConfig.plotLineWidth
-            if self.rhLinePlotConfig.useLaserLightLinePlotStyle {
+            let themeColor: Color = (values.last ?? 0.0) >= (values.first ?? 0.0) ? graphThemeColor : graphRedThemeColor
+            let lineWidth = self.graphLinePlotConfig.plotLineWidth
+            if self.graphLinePlotConfig.useLaserLightLinePlotStyle {
                 return AnyView(
                     ZStack {
                         path.laserLightStroke(lineWidth: lineWidth)
@@ -224,7 +224,7 @@ extension RHLinePlot {
                                 pathForSegment(i: i, s: s)
                             }
                             .animation(
-                                .linear(duration: self.rhLinePlotConfig.segmentSelectionAnimationDuration)
+                                .linear(duration: self.graphLinePlotConfig.segmentSelectionAnimationDuration)
                             )
                         }
                         .frame(width: largerCanvas.width, height: largerCanvas.height) // Plot in a larger canvas
