@@ -478,8 +478,6 @@
 		7183D55225A428AE00FB91A9 /* GraphPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53925A428AE00FB91A9 /* GraphPage.swift */; };
 		7183D55325A428AE00FB91A9 /* MovingNumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53B25A428AE00FB91A9 /* MovingNumbersView.swift */; };
 		7183D55425A428AE00FB91A9 /* MovingNumbersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53B25A428AE00FB91A9 /* MovingNumbersView.swift */; };
-		7183D55525A428AE00FB91A9 /* StockAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53C25A428AE00FB91A9 /* StockAPIResponse.swift */; };
-		7183D55625A428AE00FB91A9 /* StockAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53C25A428AE00FB91A9 /* StockAPIResponse.swift */; };
 		7183D55725A428AE00FB91A9 /* Misc.Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53E25A428AE00FB91A9 /* Misc.Visual.swift */; };
 		7183D55825A428AE00FB91A9 /* Misc.Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53E25A428AE00FB91A9 /* Misc.Visual.swift */; };
 		7183D55925A428AE00FB91A9 /* GraphLinePlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53F25A428AE00FB91A9 /* GraphLinePlot.swift */; };
@@ -498,8 +496,6 @@
 		7183D56625A428AE00FB91A9 /* GraphLinePlot+NotSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54525A428AE00FB91A9 /* GraphLinePlot+NotSegmented.swift */; };
 		7183D56725A428AE00FB91A9 /* GraphLinePlot+Segmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54625A428AE00FB91A9 /* GraphLinePlot+Segmented.swift */; };
 		7183D56825A428AE00FB91A9 /* GraphLinePlot+Segmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54625A428AE00FB91A9 /* GraphLinePlot+Segmented.swift */; };
-		7183D56925A428AE00FB91A9 /* StocksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54725A428AE00FB91A9 /* StocksAPI.swift */; };
-		7183D56A25A428AE00FB91A9 /* StocksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54725A428AE00FB91A9 /* StocksAPI.swift */; };
 		7183D56B25A428AE00FB91A9 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54825A428AE00FB91A9 /* Haptic.swift */; };
 		7183D56C25A428AE00FB91A9 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54825A428AE00FB91A9 /* Haptic.swift */; };
 		7183D56D25A428AE00FB91A9 /* TimeDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54925A428AE00FB91A9 /* TimeDisplayMode.swift */; };
@@ -881,7 +877,6 @@
 		7183D53825A428AE00FB91A9 /* TimeDisplayModeSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeDisplayModeSelector.swift; sourceTree = "<group>"; };
 		7183D53925A428AE00FB91A9 /* GraphPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphPage.swift; sourceTree = "<group>"; };
 		7183D53B25A428AE00FB91A9 /* MovingNumbersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovingNumbersView.swift; sourceTree = "<group>"; };
-		7183D53C25A428AE00FB91A9 /* StockAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockAPIResponse.swift; sourceTree = "<group>"; };
 		7183D53E25A428AE00FB91A9 /* Misc.Visual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.Visual.swift; sourceTree = "<group>"; };
 		7183D53F25A428AE00FB91A9 /* GraphLinePlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphLinePlot.swift; sourceTree = "<group>"; };
 		7183D54025A428AE00FB91A9 /* GraphInteractiveLinePlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphInteractiveLinePlot.swift; sourceTree = "<group>"; };
@@ -891,7 +886,6 @@
 		7183D54425A428AE00FB91A9 /* PressAndHorizontalDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PressAndHorizontalDragGesture.swift; sourceTree = "<group>"; };
 		7183D54525A428AE00FB91A9 /* GraphLinePlot+NotSegmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphLinePlot+NotSegmented.swift"; sourceTree = "<group>"; };
 		7183D54625A428AE00FB91A9 /* GraphLinePlot+Segmented.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GraphLinePlot+Segmented.swift"; sourceTree = "<group>"; };
-		7183D54725A428AE00FB91A9 /* StocksAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StocksAPI.swift; sourceTree = "<group>"; };
 		7183D54825A428AE00FB91A9 /* Haptic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		7183D54925A428AE00FB91A9 /* TimeDisplayMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeDisplayMode.swift; sourceTree = "<group>"; };
 		7183D54A25A428AE00FB91A9 /* GraphPageBusinessLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphPageBusinessLogic.swift; sourceTree = "<group>"; };
@@ -2105,9 +2099,7 @@
 				7183D53825A428AE00FB91A9 /* TimeDisplayModeSelector.swift */,
 				7183D53925A428AE00FB91A9 /* GraphPage.swift */,
 				7183D53A25A428AE00FB91A9 /* MovingNumber */,
-				7183D53C25A428AE00FB91A9 /* StockAPIResponse.swift */,
 				7183D53D25A428AE00FB91A9 /* Visual */,
-				7183D54725A428AE00FB91A9 /* StocksAPI.swift */,
 				7183D54825A428AE00FB91A9 /* Haptic.swift */,
 				7183D54925A428AE00FB91A9 /* TimeDisplayMode.swift */,
 				7183D54A25A428AE00FB91A9 /* GraphPageBusinessLogic.swift */,
@@ -2783,7 +2775,6 @@
 				7125BE8D25A148BA00F22717 /* TonalFindState.swift in Sources */,
 				711D545125A684E80074D334 /* RouterEvents.swift in Sources */,
 				7139F629259810C000D9C84B /* TonalSetEvents.swift in Sources */,
-				7183D56925A428AE00FB91A9 /* StocksAPI.swift in Sources */,
 				71D63EEC25926B860085D718 /* StockService.swift in Sources */,
 				711484B4259E0C7B00464684 /* WindowEvents.swift in Sources */,
 				7125BDC325A1318D00F22717 /* AnyRangeSliderStyle.swift in Sources */,
@@ -2812,7 +2803,6 @@
 				7125BE1425A1328A00F22717 /* VerticalValueTrack.swift in Sources */,
 				71148506259E24F900464684 /* EnvironmentConfig.swift in Sources */,
 				710889A32591B29800795EDF /* Cryptowatcher.swift in Sources */,
-				7183D55525A428AE00FB91A9 /* StockAPIResponse.swift in Sources */,
 				710C916325A64FDA00ECB355 /* ControlBar.swift in Sources */,
 				71F1EC5825A0F47A00D32C52 /* SearchComponent.swift in Sources */,
 				7114029A258DB5E700BA387D /* StockRelay.swift in Sources */,
@@ -3076,7 +3066,6 @@
 				7118A1EA2593134A007E7EAB /* TonalState.swift in Sources */,
 				7125BD7625A12F1F00F22717 /* BasicSliderState.swift in Sources */,
 				7125BE5E25A1388400F22717 /* EnvironmentValues+PointSliderStyle.swift in Sources */,
-				7183D55625A428AE00FB91A9 /* StockAPIResponse.swift in Sources */,
 				7125BE6825A1388400F22717 /* PointSlider.swift in Sources */,
 				71267A4625A59D89006132D8 /* Security.Helpers.swift in Sources */,
 				7139F628259810C000D9C84B /* TonalSetState.swift in Sources */,
@@ -3260,7 +3249,6 @@
 				7139F67325981BD300D9C84B /* TonalTuneState.swift in Sources */,
 				7143432B259076EB001F26A4 /* Double+Convenience.swift in Sources */,
 				7143430225907622001F26A4 /* RepresentableAsDouble.swift in Sources */,
-				7183D56A25A428AE00FB91A9 /* StocksAPI.swift in Sources */,
 				71DC58D225988F56004935CF /* Lemmatizer.swift in Sources */,
 				7125BE4525A1384A00F22717 /* SentimentSliderComponent.swift in Sources */,
 				710889902591B29800795EDF /* Promise.swift in Sources */,

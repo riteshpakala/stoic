@@ -66,7 +66,7 @@ public struct GraphLinePlotConfig {
     
     // MARK:- RHInteractiveLinePlot
     
-    public var valueStickWidth: CGFloat = 2.2
+    public var valueStickWidth: CGFloat = 3.6
     public var valueStickColor: Color = Brand.Colors.purple
     
     /// Padding from the highest point of line plot to value stick. If `0`, the top of value stick will be at the same level of the highest point in plot.

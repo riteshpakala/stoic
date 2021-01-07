@@ -9,30 +9,12 @@
 import Combine
 
 class GraphPageBusinessLogic {
-    typealias APIResponse = StockAPIResponse
-    
     let symbol: String
-    @Published var intradayResponse: APIResponse?
-    @Published var dailyResponse: APIResponse?
-    @Published var weeklyResponse: APIResponse?
-    @Published var monthlyResponse: APIResponse?
     
-    private static let mapTimeSeriesToResponsePath: [StocksAPI.TimeSeriesType: ReferenceWritableKeyPath<GraphPageBusinessLogic, APIResponse?>] = [
-        .intraday: \.intradayResponse,
-        .daily: \.dailyResponse,
-        .weekly: \.weeklyResponse,
-        .monthly: \.monthlyResponse
-    ]
     
     var storage = Set<AnyCancellable>()
     
     init(symbol: String) {
         self.symbol = symbol
-    }
-    
-    func fetch(timeSeriesType: StocksAPI.TimeSeriesType) {
-        StocksAPI(symbol: symbol, timeSeriesType: timeSeriesType).publisher
-            .assign(to: Self.mapTimeSeriesToResponsePath[timeSeriesType]!, on: self)
-            .store(in: &storage)
     }
 }

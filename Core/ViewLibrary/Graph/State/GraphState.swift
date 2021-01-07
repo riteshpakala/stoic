@@ -17,9 +17,11 @@ public class GraphState: GraniteState {
 public class GraphCenter: GraniteCenter<GraphState> {
     var plotData: SomePlotData {
         if let quote = state.quote {
-            let data: GraphPageViewModel.PlotData = quote.securities.sortAsc.map { ($0.date, $0.lastValue.asCGFloat) }
-            
-            var some: SomePlotData = .init()
+            let data: GraphPageViewModel.PlotData = quote.daily().sortAsc.map { ($0.date, $0.lastValue.asCGFloat) }
+            for security in quote.securities {
+                print("{TES}T \(security.date)")
+            }
+            let some: SomePlotData = .init()
             some.plotData = data
             return some
         } else {

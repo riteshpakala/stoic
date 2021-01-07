@@ -30,3 +30,15 @@ extension Quote {
             self.intervalType == security.interval
     }
 }
+
+extension Quote {
+    func intraday(count: Int = 120) -> [Security] {
+        let securities = self.securities.sortDesc
+        return Array(securities.prefix(count))
+    }
+    
+    func daily(count: Int = 120) -> [Security] {
+        let securities = self.securities.sortDesc
+        return Array(securities.prefix(count))
+    }
+}

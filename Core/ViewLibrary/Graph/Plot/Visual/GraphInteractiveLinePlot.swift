@@ -164,7 +164,7 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
             return CGAffineTransform(translationX: centeringClamped, y: -(Brand.Padding.large + Brand.Padding.small))
         }
         
-        let valueStickYOffset = (canvasHeightWithoutAdjust/2 + (Brand.Padding.large + Brand.Padding.small + Brand.Padding.xSmall))
+        let valueStickYOffset = (canvasHeightWithoutAdjust/2 + (Brand.Padding.large + Brand.Padding.small + Brand.Padding.large))
         return ZStack {//(spacing: rhPlotConfig.spaceBetweenValueStickAndStickLabel) {
             
             // Value Stick Label
@@ -300,35 +300,14 @@ private extension GraphInteractiveLinePlot {
     }
     
     /// A proxy view to handle gestures.
-    func pressAndDragProxyView(canvas: CGRect) -> some View {
-        VStack {
-            
-        }.gesture(DragGesture(coordinateSpace: .global).onChanged { drag in
-            print("{TEST} hey")
-            self.isDragging = true
-            self.onStickLocationChanged(newX: drag.location.x, canvas: canvas)
-        }.onEnded { drag in
-            self.isDragging = false
-
-            self.draggableIndicatorOffset = canvas.maxX
-
-            self.currentlySelectedIndex = nil
-            self.didSelectValueAtIndex?(nil)
-
-            if self.currentlySelectedSegmentIndex != nil {
-                self.currentlySelectedSegmentIndex = nil
-                self.didSelectSegmentAtIndex?(nil)
-            }
-        })
-//        let minimumPressDuration = rhPlotConfig.minimumPressDurationToActivateInteraction
-//        return PressAndHorizontalDragGestureView(
-//            minimumPressDuration: minimumPressDuration,
-//            onBegan: { (value) in
-//                self.isDragging = true
-//                self.onStickLocationChanged(newX: value.location.x, canvas: canvas)
-//        }, onChanged: { (value) in
-//            self.onStickLocationChanged(newX: value.location.x, canvas: canvas)
-//        }, onEnded: { _ in
+//    func pressAndDragProxyView(canvas: CGRect) -> some View {
+//        VStack {
+//
+//        }.gesture(DragGesture(coordinateSpace: .global).onChanged { drag in
+//            print("{TEST} hey")
+//            self.isDragging = true
+//            self.onStickLocationChanged(newX: drag.location.x, canvas: canvas)
+//        }.onEnded { drag in
 //            self.isDragging = false
 //
 //            self.draggableIndicatorOffset = canvas.maxX
@@ -341,7 +320,28 @@ private extension GraphInteractiveLinePlot {
 //                self.didSelectSegmentAtIndex?(nil)
 //            }
 //        })
-    }
+////        let minimumPressDuration = rhPlotConfig.minimumPressDurationToActivateInteraction
+////        return PressAndHorizontalDragGestureView(
+////            minimumPressDuration: minimumPressDuration,
+////            onBegan: { (value) in
+////                self.isDragging = true
+////                self.onStickLocationChanged(newX: value.location.x, canvas: canvas)
+////        }, onChanged: { (value) in
+////            self.onStickLocationChanged(newX: value.location.x, canvas: canvas)
+////        }, onEnded: { _ in
+////            self.isDragging = false
+////
+////            self.draggableIndicatorOffset = canvas.maxX
+////
+////            self.currentlySelectedIndex = nil
+////            self.didSelectValueAtIndex?(nil)
+////
+////            if self.currentlySelectedSegmentIndex != nil {
+////                self.currentlySelectedSegmentIndex = nil
+////                self.didSelectSegmentAtIndex?(nil)
+////            }
+////        })
+//    }
     
     private func onStickLocationChanged(newX: CGFloat, canvas: CGRect) {
         self.draggableIndicatorOffset = newX

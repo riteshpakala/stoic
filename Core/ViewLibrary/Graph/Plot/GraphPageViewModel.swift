@@ -31,18 +31,6 @@ class GraphPageViewModel: ObservableObject {
         self.symbol = symbol
         self.logic = GraphPageBusinessLogic(symbol: symbol)
         
-        StocksAPI.networkActivity
-            .receive(on: RunLoop.main)
-            .assign(to: \.isLoading, on: self)
-            .store(in: &storage)
-        
-        let publishers = [
-            logic.$intradayResponse,
-            logic.$dailyResponse,
-            logic.$weeklyResponse,
-            logic.$monthlyResponse
-        ]
-        
         let assignees: [ReferenceWritableKeyPath<GraphPageViewModel, PlotData?>] = [
             \.intradayPlotData,
             \.dailyPlotData,
@@ -52,32 +40,32 @@ class GraphPageViewModel: ObservableObject {
         
         let timeDisplayOptions: [TimeDisplayOption] = [.hourly, .daily, .weekly, .monthly]
 
-        zip(publishers, assignees).enumerated()
-            .forEach { (i, tup) in
-                let (publisher, assignee) = tup
-                
-                let displayOption = timeDisplayOptions[i]
-                
-                publisher
-                    .compactMap(mapToPlotData)
-                    .receive(on: RunLoop.main)
-                    .sink(receiveValue: { (plotData) in
-                        self[keyPath: assignee] = plotData
-                        
-                        // Cache segments
-                        let segments: [Int]
-                        switch displayOption {
-                        case .hourly:
-                            segments = Self.segmentByHours(values: plotData)
-                        case .daily:
-                            segments = Self.segmentByMonths(values: plotData)
-                        case .weekly, .monthly:
-                            segments = Self.segmentByYears(values: plotData)
-                        }
-                        self.segmentsDataCache[displayOption] = segments
-                    })
-                    .store(in: &storage)
-        }
+//        zip(publishers, assignees).enumerated()
+//            .forEach { (i, tup) in
+//                let (publisher, assignee) = tup
+//                
+//                let displayOption = timeDisplayOptions[i]
+//                
+//                publisher
+//                    .compactMap(mapToPlotData)
+//                    .receive(on: RunLoop.main)
+//                    .sink(receiveValue: { (plotData) in
+//                        self[keyPath: assignee] = plotData
+//                        
+//                        // Cache segments
+//                        let segments: [Int]
+//                        switch displayOption {
+//                        case .hourly:
+//                            segments = Self.segmentByHours(values: plotData)
+//                        case .daily:
+//                            segments = Self.segmentByMonths(values: plotData)
+//                        case .weekly, .monthly:
+//                            segments = Self.segmentByYears(values: plotData)
+//                        }
+//                        self.segmentsDataCache[displayOption] = segments
+//                    })
+//                    .store(in: &storage)
+//        }
     }
     
     static func segmentByHours(values: PlotData) -> [Int] {
@@ -152,16 +140,6 @@ class GraphPageViewModel: ObservableObject {
         return segments
     }
     
-    private func mapToPlotData(_ response: StockAPIResponse?) -> PlotData? {
-        response?.timeSeries.map { tup in (tup.time, CGFloat(tup.info.closePrice)) }
-    }
-    
-    func fetchOnAppear() {
-        logic.fetch(timeSeriesType: .intraday)
-        logic.fetch(timeSeriesType: .daily)
-        logic.fetch(timeSeriesType: .weekly)
-        logic.fetch(timeSeriesType: .monthly)
-    }
     
     func cancelAllFetchesOnDisappear() {
         logic.storage.forEach { (c) in
