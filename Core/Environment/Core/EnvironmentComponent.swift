@@ -14,7 +14,9 @@ public struct EnvironmentComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<EnvironmentCenter, EnvironmentState> = .init()
     
-    public init() {}
+    public init() {
+        print("{TEST} init")
+    }
     
     var layout: [GridItem] {
         .init(repeating: GridItem(.flexible()), count: maxWidth)
@@ -58,32 +60,27 @@ public struct EnvironmentComponent: GraniteComponent {
                 }
             }
             
-//            LazyVGrid(columns: layout, spacing: Brand.Padding.small) {
-//                ForEach(state.activeWindows, id: \.self) { row in
-//                    ForEach(row, id: \.self) { config in
-//                        window(config).id(UUID()).onTapGesture(perform: {
-//                            print(config.detail)
-//                        })
-//                    }
-//                }
-//            }
             
-        }.frame(minWidth: command.center.environmentMinSize.width,
-                maxWidth: .infinity,
-                minHeight: command.center.environmentMinSize.height,
+        }.frame(maxWidth: .infinity,
                 maxHeight: .infinity,
                 alignment: .center)
-        .onAppear(perform: sendEvent(EnvironmentEvents.Boot()))
+        .background(Brand.Colors.black)
     }
 }
 
 extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
+       let window = getWindow(config)
+                        .shareRelays(relays)
+                        .inject(dep(\.tonalCreateDependency))
+                        .background(Color.black)
+                        .border(state.route.isDebug ? Brand.Colors.red : .clear,
+                                width: state.route.isDebug ? 4.0 : 0.0)
+        return window
+    }
+    
+    func getWindow(_ config: WindowConfig) -> WindowComponent {
         return WindowComponent(state: .init(config))
-            .shareRelays(relays)
-            .inject(dep(\.tonalCreateDependency))
-            .background(Color.black)
     }
 }
-
 

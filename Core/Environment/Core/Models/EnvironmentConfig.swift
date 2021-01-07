@@ -6,6 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
+
+#if os(iOS)
+import UIKit
+#endif
 
 public struct EnvironmentConfig {
     public struct Page {
@@ -52,6 +57,47 @@ public struct EnvironmentConfig {
     }
 }
 
+extension EnvironmentConfig {
+    public static func route(_ item : Route) -> EnvironmentConfig {
+        switch item {
+        case .models:
+            return .init(kind: .modelCreate)
+        default:
+            return .init(kind: .home)
+        }
+    }
+}
+
+extension EnvironmentConfig {
+    public static var maxWindows: CGSize {
+        EnvironmentConfig.isDesktop ? .init(3, 3) : .init(3, 4)
+        //iPad can have 3, although mobile should be 1 width, mobile should also be scrollable the rest fixed
+    }
+    
+    public static var isDesktop: Bool {
+        #if os(macOS)
+        return true
+        #else
+        return false
+        #endif
+    }
+    
+    public static var isIPad: Bool {
+        #if os(iOS)
+        return UIDevice.current.userInterfaceIdiom == .pad
+        #else
+        return false
+        #endif
+    }
+    
+    public static var isIPhone: Bool {
+        #if os(iOS)
+        return UIDevice.current.userInterfaceIdiom == .phone
+        #else
+        return false
+        #endif
+    }
+}
 public struct EnvironmentStyle {
     static var idealWidth: CGFloat = 375
     static var idealHeight: CGFloat = 420

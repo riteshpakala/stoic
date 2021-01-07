@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import GraniteUI
+import SwiftUI
 
 public struct WindowConfig: Hashable, Identifiable {
-    public class Instance {}
+    public var id: ObjectIdentifier {
+        return .init(Instance.init(name: ""))
+    }
+    
     public struct Index: Hashable, Equatable {
         public static func == (lhs: Index, rhs: Index) -> Bool {
             lhs.x == rhs.x &&
@@ -38,10 +43,6 @@ public struct WindowConfig: Hashable, Identifiable {
         index: (\(index.x), \(index.y))
         kind: \(kind)
         """
-    }
-    
-    public var id: ObjectIdentifier {
-        ObjectIdentifier.init(Instance.init())
     }
     
     public static func == (lhs: WindowConfig, rhs: WindowConfig) -> Bool {

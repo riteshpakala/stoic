@@ -7,8 +7,9 @@
 
 import Foundation
 import SwiftUI
+import GraniteUI
 
-public struct TonalRange: Equatable, Identifiable, Hashable {
+public struct TonalRange: Equatable, Identifiable, Hashable, ID {
     public static func == (lhs: TonalRange, rhs: TonalRange) -> Bool {
         lhs.id == rhs.id &&
         lhs.similarities == rhs.similarities &&
@@ -18,10 +19,6 @@ public struct TonalRange: Equatable, Identifiable, Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
-    public var id: ObjectIdentifier = {
-        ObjectIdentifier.init(Self.self)
-    }()
     
     let base: Bool
     let objects: [Security]

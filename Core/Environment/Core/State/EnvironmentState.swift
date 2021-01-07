@@ -10,50 +10,28 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-#if os(iOS)
-import UIKit
-#endif
-
 public class EnvironmentState: GraniteState {
-    var isDesktop: Bool {
-        #if os(macOS)
-        return true
-        #else
-        return false
-        #endif
-    }
-    
-    var isIPad: Bool {
-        #if os(iOS)
-        return UIDevice.current.userInterfaceIdiom == .pad
-        #else
-        return false
-        #endif
-    }
-    
-    var isIPhone: Bool {
-        #if os(iOS)
-        return UIDevice.current.userInterfaceIdiom == .phone
-        #else
-        return false
-        #endif
-    }
-    
-    var maxWindows: CGSize {
-        isDesktop ? .init(3, 3) : .init(3, 4)//iPad can have 3, although mobile should be 1 width, mobile should also be scrollable the rest fixed
-    }
-    
     var activeWindows: [[WindowConfig]] = []
     
     let config: EnvironmentConfig
     
+    let route: Route
+    //
     var count:Int = 0
-    public init(_ config: EnvironmentConfig) {
-        self.config = config
+    
+    public init(_ route: Route?) {
+        self.route = route ?? .none
+        switch route {
+        case .debug(let debugRoute):
+            self.config = EnvironmentConfig.route(debugRoute)
+        default:
+            self.config = EnvironmentConfig.route(self.route)
+        }
     }
     
     required init() {
         self.config = .none
+        self.route = .none
     }
 }
 
@@ -67,6 +45,13 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
         .init(identifier: "tonalCreateDependency", adAstra: self)
     }()
     //
+    
+    public override var links: [GraniteEventLink] {
+        [
+            .init(\EnvironmentState.route,
+                  EnvironmentEvents.Boot())
+        ]
+    }
     
     public override var expeditions: [GraniteBaseExpedition] {
         [

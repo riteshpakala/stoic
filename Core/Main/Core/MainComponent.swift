@@ -15,9 +15,21 @@ public struct MainComponent: GraniteComponent {
     public var command: GraniteCommand<MainCenter, MainState> = .init()
     
     public init() {}
-
+    
+    var controls: ControlBar {
+        ControlBar(isIPhone: false, onRoute: { route in
+            command.dependency(\RouterDependency.router.route, value: route)
+        })
+    }
+    
+    var environment: EnvironmentComponent {
+        EnvironmentComponent(state: .init(depObject(\.routerDependency,
+                                                    target: \.router.route)))
+    }
     
     public var body: some View {
+        
+        VStack {
 //        AssetSectionComponent(state: .init(title: "Top Volume"))
 //            .shareRelay(relay(CryptoRelay.self))
         
@@ -32,10 +44,11 @@ public struct MainComponent: GraniteComponent {
 //            }
 //        } else {
             HStack {
-                ControlBar(isIPhone: false, selectedFolder: _state.folder)
-                EnvironmentComponent(state: .init(.init(kind: .modelCreate)))
+                controls
+                environment.inject(dep(\.hosted))
             }
 //        }
-        
+        }
+        .background(Color.black)
     }
 }

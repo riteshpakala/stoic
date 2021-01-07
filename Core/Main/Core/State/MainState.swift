@@ -12,8 +12,10 @@ import Combine
 
 public class MainState: GraniteState {
     var count: Int = 0
-    var folder: String?
 }
 
 public class MainCenter: GraniteCenter<MainState> {
+    var routerDependency: RouterDependency {
+        return dependency.hosted as? RouterDependency ?? .init(identifier: "none")
+    }
 }
