@@ -61,9 +61,8 @@ public enum WindowType: Hashable {
     case winners(SecurityType)
     case losers(SecurityType)
     
-    case securityDetail
+    case securityDetail(SecurityDetailType)
     
-    case header
     case search
     
     case cta
@@ -77,7 +76,6 @@ public enum WindowType: Hashable {
     
     case modelCreate(TonalCreateStage)
     
-    case securityPredictor
     case unassigned
     
     var max: Int {

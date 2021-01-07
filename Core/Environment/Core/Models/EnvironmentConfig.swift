@@ -19,6 +19,7 @@ public struct EnvironmentConfig {
     
     public enum PageType {
         case home
+        case floor
         case modelCreate
         case portfolio
         case modelBrowser
@@ -44,6 +45,12 @@ public struct EnvironmentConfig {
                              [.unassigned, .unassigned, .unassigned],
                              [.modelCreate(.set), .unassigned, .unassigned]
                         ])
+            case .floor:
+                return .init(windows: [
+                             [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)],
+                             [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)],
+                             [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)]
+                        ])
             default:
                 return .init(windows: [])
             }
@@ -60,6 +67,8 @@ public struct EnvironmentConfig {
 extension EnvironmentConfig {
     public static func route(_ item : Route) -> EnvironmentConfig {
         switch item {
+        case .floor:
+            return .init(kind: .floor)
         case .models:
             return .init(kind: .modelCreate)
         default:

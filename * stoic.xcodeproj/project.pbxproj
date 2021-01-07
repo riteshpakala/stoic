@@ -333,6 +333,12 @@
 		71267A4625A59D89006132D8 /* Security.Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A4425A59D89006132D8 /* Security.Helpers.swift */; };
 		712D3D0225A6B9BD005EE3F9 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712D3D0125A6B9BD005EE3F9 /* Padding.swift */; };
 		712D3D0325A6B9BD005EE3F9 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712D3D0125A6B9BD005EE3F9 /* Padding.swift */; };
+		71332A1125A78D09005A72A9 /* SecurityDetailEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */; };
+		71332A1225A78D09005A72A9 /* SecurityDetailEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */; };
+		71332A1325A78D09005A72A9 /* SecurityDetailComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71332A0E25A78D09005A72A9 /* SecurityDetailComponent.swift */; };
+		71332A1425A78D09005A72A9 /* SecurityDetailComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71332A0E25A78D09005A72A9 /* SecurityDetailComponent.swift */; };
+		71332A1525A78D09005A72A9 /* SecurityDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71332A1025A78D09005A72A9 /* SecurityDetailState.swift */; };
+		71332A1625A78D09005A72A9 /* SecurityDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71332A1025A78D09005A72A9 /* SecurityDetailState.swift */; };
 		7133385325A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */; };
 		7133385425A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */; };
 		7134427125A37A2C002C0315 /* SocialDataObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134426F25A37A2B002C0315 /* SocialDataObject+CoreDataClass.swift */; };
@@ -803,6 +809,9 @@
 		71267A3D25A59A3F006132D8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		71267A4425A59D89006132D8 /* Security.Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.Helpers.swift; sourceTree = "<group>"; };
 		712D3D0125A6B9BD005EE3F9 /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
+		71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityDetailEvents.swift; sourceTree = "<group>"; };
+		71332A0E25A78D09005A72A9 /* SecurityDetailComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityDetailComponent.swift; sourceTree = "<group>"; };
+		71332A1025A78D09005A72A9 /* SecurityDetailState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityDetailState.swift; sourceTree = "<group>"; };
 		7133385225A2B05200D739C4 /* ParseTonalRangeExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseTonalRangeExpedition.swift; sourceTree = "<group>"; };
 		7134426F25A37A2B002C0315 /* SocialDataObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SocialDataObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7134427025A37A2C002C0315 /* SocialDataObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SocialDataObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1803,6 +1812,24 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		71332A0C25A78D09005A72A9 /* SecurityDetail */ = {
+			isa = PBXGroup;
+			children = (
+				71332A0F25A78D09005A72A9 /* State */,
+				71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */,
+				71332A0E25A78D09005A72A9 /* SecurityDetailComponent.swift */,
+			);
+			path = SecurityDetail;
+			sourceTree = "<group>";
+		};
+		71332A0F25A78D09005A72A9 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				71332A1025A78D09005A72A9 /* SecurityDetailState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
 		7136B65425A008B40014F693 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
@@ -2410,6 +2437,7 @@
 			children = (
 				7125BD6325A12EED00F22717 /* ViewLibrary */,
 				71F1EC4F25A0F47A00D32C52 /* Search */,
+				71332A0C25A78D09005A72A9 /* SecurityDetail */,
 				7136B65425A008B40014F693 /* Portfolio */,
 				7118A224259313FD007E7EAB /* TonalCreate */,
 				71D63F672592BFC40085D718 /* AssetSection */,
@@ -2872,6 +2900,7 @@
 				7125BE5D25A1388400F22717 /* EnvironmentValues+PointSliderStyle.swift in Sources */,
 				7125BDFC25A1328900F22717 /* ValueSlider.swift in Sources */,
 				7125BE0C25A1328A00F22717 /* HorizontalValueTrack.swift in Sources */,
+				71332A1525A78D09005A72A9 /* SecurityDetailState.swift in Sources */,
 				710889972591B29800795EDF /* Promise+Validate.swift in Sources */,
 				7118A1E92593134A007E7EAB /* TonalState.swift in Sources */,
 				7183D54D25A428AE00FB91A9 /* Misc.Plot.swift in Sources */,
@@ -2935,6 +2964,8 @@
 				7123B16B2593DAD700E5BD69 /* StockService.Stock.swift in Sources */,
 				713D25AF258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
 				710889832591B29800795EDF /* Promise+Chain.swift in Sources */,
+				71332A1325A78D09005A72A9 /* SecurityDetailComponent.swift in Sources */,
+				71332A1125A78D09005A72A9 /* SecurityDetailEvents.swift in Sources */,
 				714343A92590789A001F26A4 /* GeometryFunctions.swift in Sources */,
 				71F1EC3C25A0F04400D32C52 /* HeaderEvents.swift in Sources */,
 				710889712591B29800795EDF /* Promise+Race.swift in Sources */,
@@ -3086,6 +3117,7 @@
 				7125BE0B25A1328A00F22717 /* VerticalValueSliderStyle.swift in Sources */,
 				7183D54C25A428AE00FB91A9 /* GraphPageViewModel.swift in Sources */,
 				71434362259076F4001F26A4 /* Edge+Convenience.swift in Sources */,
+				71332A1425A78D09005A72A9 /* SecurityDetailComponent.swift in Sources */,
 				7125BD8725A1316500F22717 /* LinearValueMath.swift in Sources */,
 				7143436E25907725001F26A4 /* MathOperators.swift in Sources */,
 				71434319259076EB001F26A4 /* Comparible+Convenience.swift in Sources */,
@@ -3204,6 +3236,7 @@
 				7143433B259076EE001F26A4 /* CGFloat+Angle.swift in Sources */,
 				710889A82591B29800795EDF /* Markets.swift in Sources */,
 				7125BDC225A1318D00F22717 /* RangeSliderStyleConfiguration.swift in Sources */,
+				71332A1625A78D09005A72A9 /* SecurityDetailState.swift in Sources */,
 				71434327259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,
 				7125BDE025A131D200F22717 /* EnvironmentValues+RangeTrackConfiguration.swift in Sources */,
 				7125BE6225A1388400F22717 /* PointSliderStyle.swift in Sources */,
@@ -3218,6 +3251,7 @@
 				7125BD7A25A12F1F00F22717 /* BasicSliderComponent.swift in Sources */,
 				710889B22591B29800795EDF /* Exchanges.swift in Sources */,
 				710889B42591B29800795EDF /* Cryptowatcher+Exchanges.swift in Sources */,
+				71332A1225A78D09005A72A9 /* SecurityDetailEvents.swift in Sources */,
 				7183D56C25A428AE00FB91A9 /* Haptic.swift in Sources */,
 				71D63F3D2592BBAB0085D718 /* AssetGridItemContainerEvents.swift in Sources */,
 				710889C22591B3AB00795EDF /* CryptoCurrency.swift in Sources */,

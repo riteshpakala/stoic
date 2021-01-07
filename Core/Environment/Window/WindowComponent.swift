@@ -30,7 +30,8 @@ public struct WindowComponent: GraniteComponent {
                 PortfolioComponent()
             case .search:
                 SearchComponent()
-                
+            case .securityDetail(let kind):
+                SecurityDetailComponent(state: .init(kind))
             case .modelCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
                     .shareRelays(relays)
