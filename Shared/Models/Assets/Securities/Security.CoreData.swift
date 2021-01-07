@@ -19,18 +19,20 @@ extension Security {
     
     public func getObject(moc: NSManagedObjectContext) -> SecurityObject? {
         let request: NSFetchRequest = SecurityObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(date == %@) AND (ticker == %@) AND (exchangeName == %@)",
+        request.predicate = NSPredicate(format: "(date == %@) AND (ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
                                         self.date as NSDate,
                                         self.ticker,
-                                        self.exchangeName)
+                                        self.exchangeName,
+                                        self.interval.rawValue)
         return try? moc.fetch(request).first
     }
     
     public func getQuoteObject(moc: NSManagedObjectContext) -> QuoteObject? {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@)",
+        request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
                                         self.ticker,
-                                        self.exchangeName)
+                                        self.exchangeName,
+                                        self.interval.rawValue)
         return try? moc.fetch(request).first
     }
     

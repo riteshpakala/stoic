@@ -17,9 +17,10 @@ extension NSManagedObjectContext {
 extension Quote {
     public func getObject(moc: NSManagedObjectContext) -> QuoteObject? {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@)",
+        request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
                                         self.ticker,
-                                        self.exchangeName)
+                                        self.exchangeName,
+                                        self.intervalType.rawValue)
         return try? moc.fetch(request).first
     }
 }
