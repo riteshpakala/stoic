@@ -37,8 +37,8 @@ public struct TonalCompileComponent: GraniteComponent {
                             .subheadline,
                             .regular)
             }
-            
-            GraphPage()
+            //DEV:
+            GraphComponent().frame(maxWidth: .infinity, maxHeight: 500)
         }.onAppear(perform: {
             if command.center.compileState == .readyToCompile {
                 sendEvent(TonalCompileEvents.Compile())

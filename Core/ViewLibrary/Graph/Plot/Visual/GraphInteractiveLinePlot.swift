@@ -46,6 +46,7 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
     let segmentSearchStrategy: SegmentSearchStrategy
     
     @State var isDragging: Bool = false
+    @GestureState var isDraggingG: Bool = false
     @State private var draggableIndicatorOffset: CGFloat = 0
     @State private var currentlySelectedIndex: Int? = nil
     @State private var currentlySelectedSegmentIndex: Int? = nil
@@ -192,8 +193,8 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
                     alignment: .leading
             )
                 .contentShape(Rectangle())
-//                .gesture(touchAndDrag(canvas: relativeWidthCanvas))
-            .overlay(pressAndDragProxyView(canvas: relativeWidthCanvas))
+                .gesture(touchAndDrag(canvas: relativeWidthCanvas))
+//            .overlay(pressAndDragProxyView(canvas: relativeWidthCanvas))
         }
     }
 }
@@ -255,52 +256,55 @@ private extension GraphInteractiveLinePlot {
     }
     
 // Just in case we come back to here.
-//    func touchAndDrag(canvas: CGRect) -> some Gesture {
-//        let drag = DragGesture(minimumDistance: 0)
-//            .updating($isDragging) { (value, state, _) in
-//                state = true
-//        }.onChanged { (value) in
-//            self.draggableIndicatorOffset = value.location.x
-//                .clamp(low: canvas.minX, high: canvas.maxX)
-//
-//            self.currentlySelectedIndex = self.getEffectiveIndex(canvas: canvas)
-//            self.didSelectValueAtIndex?(self.currentlySelectedIndex)
-//
-//            let activeSegment: Int?
-//            if let segments = self.lineSegmentStartingIndices,
-//                let currentIndex = self.currentlySelectedIndex
-//            {
-//                switch self.segmentSearchStrategy {
-//                case .binarySearch:
-//                    activeSegment = binarySearchOrIndexToTheLeft(array: segments, value: currentIndex)
-//                }
-//            } else {
-//                activeSegment = nil
-//            }
-//            if self.currentlySelectedSegmentIndex != activeSegment {
-//                self.currentlySelectedSegmentIndex = activeSegment
-//                self.didSelectSegmentAtIndex?(activeSegment)
-//            }
-//        }
-//        .onEnded { (_) in
-//            self.draggableIndicatorOffset = canvas.maxX
-//
-//            self.currentlySelectedIndex = nil
-//            self.didSelectValueAtIndex?(nil)
-//
-//            if self.currentlySelectedSegmentIndex != nil {
-//                self.currentlySelectedSegmentIndex = nil
-//                self.didSelectSegmentAtIndex?(nil)
-//            }
-//        }
-//        return drag
-//    }
+    func touchAndDrag(canvas: CGRect) -> some Gesture {
+        let drag = DragGesture(minimumDistance: 0)
+            .updating($isDraggingG) { (value, state, _) in
+                state = true
+        }.onChanged { (value) in
+            self.isDragging = true
+            self.draggableIndicatorOffset = value.location.x
+                .clamp(low: canvas.minX, high: canvas.maxX)
+
+            self.currentlySelectedIndex = self.getEffectiveIndex(canvas: canvas)
+            self.didSelectValueAtIndex?(self.currentlySelectedIndex)
+
+            let activeSegment: Int?
+            if let segments = self.lineSegmentStartingIndices,
+                let currentIndex = self.currentlySelectedIndex
+            {
+                switch self.segmentSearchStrategy {
+                case .binarySearch:
+                    activeSegment = binarySearchOrIndexToTheLeft(array: segments, value: currentIndex)
+                }
+            } else {
+                activeSegment = nil
+            }
+            if self.currentlySelectedSegmentIndex != activeSegment {
+                self.currentlySelectedSegmentIndex = activeSegment
+                self.didSelectSegmentAtIndex?(activeSegment)
+            }
+        }
+        .onEnded { (_) in
+            self.isDragging = false
+            self.draggableIndicatorOffset = canvas.maxX
+
+            self.currentlySelectedIndex = nil
+            self.didSelectValueAtIndex?(nil)
+
+            if self.currentlySelectedSegmentIndex != nil {
+                self.currentlySelectedSegmentIndex = nil
+                self.didSelectSegmentAtIndex?(nil)
+            }
+        }
+        return drag
+    }
     
     /// A proxy view to handle gestures.
     func pressAndDragProxyView(canvas: CGRect) -> some View {
         VStack {
             
         }.gesture(DragGesture(coordinateSpace: .global).onChanged { drag in
+            print("{TEST} hey")
             self.isDragging = true
             self.onStickLocationChanged(newX: drag.location.x, canvas: canvas)
         }.onEnded { drag in

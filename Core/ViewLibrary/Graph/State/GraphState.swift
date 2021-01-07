@@ -1,0 +1,36 @@
+//
+//  GraphState.swift
+//  * stoic
+//
+//  Created by Ritesh Pakala on 1/6/21.
+//  Copyright (c) 2021 ___ORGANIZATIONNAME___. All rights reserved.
+//
+
+import GraniteUI
+import SwiftUI
+import Combine
+
+public class GraphState: GraniteState {
+    var quote: Quote? = nil
+}
+
+public class GraphCenter: GraniteCenter<GraphState> {
+    var plotData: SomePlotData {
+        if let quote = state.quote {
+            let data: GraphPageViewModel.PlotData = quote.securities.sortAsc.map { ($0.date, $0.lastValue.asCGFloat) }
+            
+            var some: SomePlotData = .init()
+            some.plotData = data
+            return some
+        } else {
+            return .init()
+        }
+    }
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            SetTheGraphExpedition.Discovery()
+        ]
+    }
+}
+

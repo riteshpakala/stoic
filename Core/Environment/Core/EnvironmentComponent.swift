@@ -49,10 +49,7 @@ public struct EnvironmentComponent: GraniteComponent {
                         if row < state.activeWindows.count,
                            col < state.activeWindows[row].count,
                            state.activeWindows[row][col].kind != .unassigned {
-                            window(state.activeWindows[row][col]).id(UUID()).onTapGesture(perform: {
-                                
-                                print(state.activeWindows[row][col].detail)
-                            })
+                            window(state.activeWindows[row][col]).id(UUID())
                         }
                     }
                 }

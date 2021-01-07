@@ -506,6 +506,8 @@
 		7183D56E25A428AE00FB91A9 /* TimeDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54925A428AE00FB91A9 /* TimeDisplayMode.swift */; };
 		7183D56F25A428AE00FB91A9 /* GraphPageBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54A25A428AE00FB91A9 /* GraphPageBusinessLogic.swift */; };
 		7183D57025A428AE00FB91A9 /* GraphPageBusinessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D54A25A428AE00FB91A9 /* GraphPageBusinessLogic.swift */; };
+		719F274125A6E06500520B52 /* SetGraphDataExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719F274025A6E06500520B52 /* SetGraphDataExpedition.swift */; };
+		719F274625A6E06700520B52 /* SetGraphDataExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719F274025A6E06500520B52 /* SetGraphDataExpedition.swift */; };
 		71AE03142593168F007A4AE0 /* GetStockHistoryExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE03132593168F007A4AE0 /* GetStockHistoryExpedition.swift */; };
 		71AE03152593168F007A4AE0 /* GetStockHistoryExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE03132593168F007A4AE0 /* GetStockHistoryExpedition.swift */; };
 		71AE032025931AD1007A4AE0 /* FindTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */; };
@@ -582,6 +584,12 @@
 		71DC58F425988F84004935CF /* DataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DC58EE25988F84004935CF /* DataSet.swift */; };
 		71DC58FA259899A7004935CF /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DC58F9259899A7004935CF /* Dictionary.swift */; };
 		71DC58FB259899A7004935CF /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DC58F9259899A7004935CF /* Dictionary.swift */; };
+		71DE186525A6D94D00911AD1 /* GraphEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186125A6D94D00911AD1 /* GraphEvents.swift */; };
+		71DE186625A6D94D00911AD1 /* GraphEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186125A6D94D00911AD1 /* GraphEvents.swift */; };
+		71DE186725A6D94D00911AD1 /* GraphState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186325A6D94D00911AD1 /* GraphState.swift */; };
+		71DE186825A6D94D00911AD1 /* GraphState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186325A6D94D00911AD1 /* GraphState.swift */; };
+		71DE186925A6D94D00911AD1 /* GraphComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186425A6D94D00911AD1 /* GraphComponent.swift */; };
+		71DE186A25A6D94D00911AD1 /* GraphComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186425A6D94D00911AD1 /* GraphComponent.swift */; };
 		71EE6FFA258D347F005B2B8E /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE6FF9258D347E005B2B8E /* Tests_iOS.swift */; };
 		71EE7005258D347F005B2B8E /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE7004258D347F005B2B8E /* Tests_macOS.swift */; };
 		71EE7007258D347F005B2B8E /* __stoicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE6FDE258D347C005B2B8E /* __stoicApp.swift */; };
@@ -887,6 +895,7 @@
 		7183D54825A428AE00FB91A9 /* Haptic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		7183D54925A428AE00FB91A9 /* TimeDisplayMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeDisplayMode.swift; sourceTree = "<group>"; };
 		7183D54A25A428AE00FB91A9 /* GraphPageBusinessLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphPageBusinessLogic.swift; sourceTree = "<group>"; };
+		719F274025A6E06500520B52 /* SetGraphDataExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGraphDataExpedition.swift; sourceTree = "<group>"; };
 		71AE03132593168F007A4AE0 /* GetStockHistoryExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStockHistoryExpedition.swift; sourceTree = "<group>"; };
 		71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTheToneExpedition.swift; sourceTree = "<group>"; };
 		71B062342597169E00D1833D /* SetTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTheToneExpedition.swift; sourceTree = "<group>"; };
@@ -925,6 +934,9 @@
 		71DC58ED25988F84004935CF /* SVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVM.swift; sourceTree = "<group>"; };
 		71DC58EE25988F84004935CF /* DataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSet.swift; sourceTree = "<group>"; };
 		71DC58F9259899A7004935CF /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		71DE186125A6D94D00911AD1 /* GraphEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphEvents.swift; sourceTree = "<group>"; };
+		71DE186325A6D94D00911AD1 /* GraphState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphState.swift; sourceTree = "<group>"; };
+		71DE186425A6D94D00911AD1 /* GraphComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphComponent.swift; sourceTree = "<group>"; };
 		71EE6FDE258D347C005B2B8E /* __stoicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = __stoicApp.swift; sourceTree = "<group>"; };
 		71EE6FDF258D347C005B2B8E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		71EE6FE0258D347E005B2B8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1469,10 +1481,10 @@
 		7125BD6325A12EED00F22717 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				71DE186025A6D94D00911AD1 /* Graph */,
 				712D3D0025A6B9AA005EE3F9 /* Helpers */,
 				710C917225A6503C00ECB355 /* GraniteText */,
 				710C916125A64FD400ECB355 /* ControlBar */,
-				7183D53425A4288600FB91A9 /* Graph */,
 				7183D52C25A4267000FB91A9 /* Buttons */,
 				7125BD7025A12F1F00F22717 /* Sliders */,
 				71F1EC3525A0F04400D32C52 /* Header */,
@@ -2085,14 +2097,6 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
-		7183D53425A4288600FB91A9 /* Graph */ = {
-			isa = PBXGroup;
-			children = (
-				7183D53525A428AE00FB91A9 /* Plot */,
-			);
-			path = Graph;
-			sourceTree = "<group>";
-		};
 		7183D53525A428AE00FB91A9 /* Plot */ = {
 			isa = PBXGroup;
 			children = (
@@ -2133,6 +2137,14 @@
 				7183D54625A428AE00FB91A9 /* GraphLinePlot+Segmented.swift */,
 			);
 			path = Visual;
+			sourceTree = "<group>";
+		};
+		719F273F25A6E04F00520B52 /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				719F274025A6E06500520B52 /* SetGraphDataExpedition.swift */,
+			);
+			path = Expeditions;
 			sourceTree = "<group>";
 		};
 		71AE031E25931A83007A4AE0 /* Expeditions */ = {
@@ -2302,6 +2314,26 @@
 				71DC58ED25988F84004935CF /* SVM.swift */,
 			);
 			path = SVM;
+			sourceTree = "<group>";
+		};
+		71DE186025A6D94D00911AD1 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				7183D53525A428AE00FB91A9 /* Plot */,
+				71DE186225A6D94D00911AD1 /* State */,
+				71DE186125A6D94D00911AD1 /* GraphEvents.swift */,
+				71DE186425A6D94D00911AD1 /* GraphComponent.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		71DE186225A6D94D00911AD1 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				719F273F25A6E04F00520B52 /* Expeditions */,
+				71DE186325A6D94D00911AD1 /* GraphState.swift */,
+			);
+			path = State;
 			sourceTree = "<group>";
 		};
 		71EE6FD8258D347B005B2B8E = {
@@ -2682,6 +2714,7 @@
 				710889AF2591B29800795EDF /* Aggregates.swift in Sources */,
 				71434342259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
 				71434353259076F4001F26A4 /* Angle+Convenience.swift in Sources */,
+				719F274125A6E06500520B52 /* SetGraphDataExpedition.swift in Sources */,
 				71D63CCE258E92B1003B0BAF /* MainState.swift in Sources */,
 				710C915C25A64FBF00ECB355 /* Passthrough.swift in Sources */,
 				7118A1EB2593134A007E7EAB /* TonalRelay.swift in Sources */,
@@ -2697,10 +2730,12 @@
 				71CA210125A4AAE800C448D7 /* TonalCompileEvents.swift in Sources */,
 				71EE7079258D8F88005B2B8E /* AssetGridState.swift in Sources */,
 				7125BE0A25A1328A00F22717 /* VerticalValueSliderStyle.swift in Sources */,
+				71DE186525A6D94D00911AD1 /* GraphEvents.swift in Sources */,
 				710889A12591B29800795EDF /* Promise+nil.swift in Sources */,
 				71D63F6E2592BFC40085D718 /* AssetSectionState.swift in Sources */,
 				711D546025A6913B0074D334 /* Geometry.swift in Sources */,
 				7125BD8625A1316500F22717 /* LinearValueMath.swift in Sources */,
+				71DE186925A6D94D00911AD1 /* GraphComponent.swift in Sources */,
 				7118A229259313FD007E7EAB /* TonalCreateComponent.swift in Sources */,
 				7108897F2591B29800795EDF /* Promise+Aliases.swift in Sources */,
 				7143415325905E5B001F26A4 /* Fonts.swift in Sources */,
@@ -2756,6 +2791,7 @@
 				71267A3325A588C6006132D8 /* Quote.CoreData.swift in Sources */,
 				7108890D2591B08300795EDF /* Security.swift in Sources */,
 				7124163A25A3771800169B9C /* SentimentObject+CoreDataClass.swift in Sources */,
+				71DE186725A6D94D00911AD1 /* GraphState.swift in Sources */,
 				710889B12591B29800795EDF /* Exchanges.swift in Sources */,
 				71434320259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
 				7143433A259076EE001F26A4 /* CGFloat+Angle.swift in Sources */,
@@ -3012,6 +3048,7 @@
 				7143417125906012001F26A4 /* Fonts.swift in Sources */,
 				7125BE6425A1388400F22717 /* RectangularPointSliderStyle.swift in Sources */,
 				71BDF2972599430A00F66EA2 /* TonalService.Utilities.swift in Sources */,
+				71DE186825A6D94D00911AD1 /* GraphState.swift in Sources */,
 				71B062362597169E00D1833D /* SetTheToneExpedition.swift in Sources */,
 				71DC58FB259899A7004935CF /* Dictionary.swift in Sources */,
 				7123B1262593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift in Sources */,
@@ -3076,6 +3113,7 @@
 				7125BDBE25A1318D00F22717 /* RangeSlider.swift in Sources */,
 				71AE03152593168F007A4AE0 /* GetStockHistoryExpedition.swift in Sources */,
 				7125BE9B25A14A2B00F22717 /* SearchTheToneExpedition.swift in Sources */,
+				71DE186A25A6D94D00911AD1 /* GraphComponent.swift in Sources */,
 				71D63F6F2592BFC40085D718 /* AssetSectionState.swift in Sources */,
 				7108899C2591B29800795EDF /* Promise+Then.swift in Sources */,
 				71434345259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */,
@@ -3083,6 +3121,7 @@
 				7123B12A2593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */,
 				71CA210625A4AAE800C448D7 /* TonalCompileComponent.swift in Sources */,
 				7108896C2591B29800795EDF /* Promise+Retry.swift in Sources */,
+				71DE186625A6D94D00911AD1 /* GraphEvents.swift in Sources */,
 				710C916825A6501900ECB355 /* ControlBar.swift in Sources */,
 				7139F67C25981C3200D9C84B /* TuneTheToneExpedition.swift in Sources */,
 				7125BDDA25A131D200F22717 /* RangeTrackConfiguration.swift in Sources */,
@@ -3251,6 +3290,7 @@
 				7183D55825A428AE00FB91A9 /* Misc.Visual.swift in Sources */,
 				71434339259076EE001F26A4 /* CGRect+Convenience.swift in Sources */,
 				71DC58F025988F84004935CF /* Kernel.swift in Sources */,
+				719F274625A6E06700520B52 /* SetGraphDataExpedition.swift in Sources */,
 				7125BE4725A1384A00F22717 /* SentimentSliderEvents.swift in Sources */,
 				711484B7259E0C7B00464684 /* WindowComponent.swift in Sources */,
 				7125BDDE25A131D200F22717 /* EnvironmentValues+TrackRange.swift in Sources */,
