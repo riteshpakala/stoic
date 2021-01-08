@@ -20,6 +20,10 @@ struct TonalEvents {
             self.range = range
             self.inComplete = inComplete
         }
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
     }
     
     public struct ProcessSentiment: GraniteEvent {
@@ -43,5 +47,9 @@ struct TonalEvents {
     
     public struct History: GraniteEvent {
         let sentiment: TonalSentiment
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
     }
 }

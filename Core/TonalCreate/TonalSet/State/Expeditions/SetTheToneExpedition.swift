@@ -28,11 +28,11 @@ struct SetTheToneExpedition: GraniteExpedition {
                 if let sentiment = sentimentResult?.sentiment {
                     connection.dependency(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
                 } else {
-                    connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range), beam: true)
+                    connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range))
                 }
             }
         } else {
-            connection.request(TonalEvents.GetSentiment.init(range: event.range), beam: true)
+            connection.request(TonalEvents.GetSentiment.init(range: event.range))
         }
     }
 }
@@ -67,7 +67,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
                     if let sentiment = sentimentResult?.sentiment {
                         connection.dependency(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
                     } else {
-                        connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range), beam: true)
+                        connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range))
                     }
                 }
             }

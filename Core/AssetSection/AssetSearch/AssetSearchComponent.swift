@@ -23,11 +23,27 @@ public struct AssetSearchComponent: GraniteComponent {
                 .shareRelays(relays(
                                 [StockRelay.self,
                                  CryptoRelay.self]))
-            
-            AssetGridComponent()
-                .payload(depPayload(\.envDependency,
-                                   target: \.search.securities))
-                .listen(to: command, .stop)
+                .inject(dep(\.hosted), AssetSearchCenter.route)
+            Text("\(CFAbsoluteTimeGetCurrent())")
+            switch state.context {
+            case .holdings:
+                AssetGridComponent()
+                    .payload(depPayload(\.envDependency,
+                                       target: \.searchAdd.securities))
+                    .listen(to: command, .stop)
+            case .tonalCreate:
+                AssetGridComponent()
+                    .payload(depPayload(\.envDependency,
+                                       target: \.searchTone.securities))
+                    .listen(to: command, .stop)
+            case .search:
+                AssetGridComponent()
+                    .payload(depPayload(\.envDependency,
+                                       target: \.search.securities))
+                    .listen(to: command, .stop)
+            default:
+                EmptyView.init()
+            }
         }
         .padding(.top, Brand.Padding.large)
         .padding(.leading, Brand.Padding.medium)

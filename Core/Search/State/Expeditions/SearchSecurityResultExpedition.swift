@@ -1,17 +1,17 @@
 //
-//  SearchSecurityExpedition.swift
+//  SearchSecurityExpeditionExpedition.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 1/7/21.
+//  Created by Ritesh Pakala on 1/2/21.
+//  Copyright (c) 2021 ___ORGANIZATIONNAME___. All rights reserved.
 //
-
 import GraniteUI
 import SwiftUI
 import Combine
 
-struct SearchAssetExpedition: GraniteExpedition {
+struct SearchSecurityResultExpedition: GraniteExpedition {
     typealias ExpeditionEvent = StockEvents.SearchResult
-    typealias ExpeditionState = AssetSearchState
+    typealias ExpeditionState = SearchState
     
     func reduce(
         event: ExpeditionEvent,
@@ -19,7 +19,7 @@ struct SearchAssetExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        print("{TEST} \(event.result.count) \(state.context)")
+        print("{TEST} hey hey hey \(state.context)")
         
         switch state.context {
         case .tonalCreate:
@@ -32,8 +32,5 @@ struct SearchAssetExpedition: GraniteExpedition {
         default:
             break
         }
-        
-        state.securityData = event.result
-        state.payload = .init(object: event.result)
     }
 }

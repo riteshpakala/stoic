@@ -27,13 +27,18 @@ public struct WindowComponent: GraniteComponent {
                                  securityType))
                     .shareRelays(relays([CryptoRelay.self,
                                          StockRelay.self]))
+                    .inject(dep(\.hosted))
             case .portfolio:
                 PortfolioComponent()
-            case .search:
-                AssetSearchComponent()
                     .shareRelays(relays([CryptoRelay.self,
                                          StockRelay.self]))
                     .inject(dep(\.hosted))
+            case .search:
+                AssetSearchComponent(state: depObject(\.envDependency,
+                                                      target: \.search.state))
+                    .shareRelays(relays([CryptoRelay.self,
+                                         StockRelay.self]))
+                    .inject(dep(\.hosted), WindowCenter.route)
             case .securityDetail(let kind):
                 SecurityDetailComponent(state: .init(kind))
             case .tonalCreate(let stage):

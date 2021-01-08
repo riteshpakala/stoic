@@ -11,8 +11,20 @@ import SwiftUI
 import Combine
 
 public class AssetSearchState: GraniteState {
-    let searchState: SearchState = .init()
+    let searchState: SearchState
     var securityData: [Security] = []
+    let context: WindowType
+    
+    public init(_ context: WindowType) {
+        self.context = context
+        self.searchState = .init(context)
+        print("{TEST} \(context)")
+    }
+    
+    public required init() {
+        self.context = .unassigned
+        self.searchState = .init()
+    }
 }
 
 public class AssetSearchCenter: GraniteCenter<AssetSearchState> {

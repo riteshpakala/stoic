@@ -40,7 +40,7 @@ struct FindTheToneExpedition: GraniteExpedition {
             
             connection.request(TonalFindEvents.Parse(quote, days: state.days))
         } else {
-            connection.request(StockEvents.GetStockHistory.init(ticker: ticker), beam: true)
+            connection.request(StockEvents.GetStockHistory.init(ticker: ticker))
         }
     }
 }

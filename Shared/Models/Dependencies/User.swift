@@ -10,8 +10,8 @@ import GraniteUI
 import SwiftUI
 
 class UserDependency: DependencyManager {
-    @ObservedObject
-    var profile: Profile = .init()
+//    @ObservedObject
+//    var profile: Profile = .init()
 }
 
 extension DependencyManager {

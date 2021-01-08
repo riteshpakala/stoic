@@ -42,6 +42,10 @@ public protocol Security: Asset {
 }
 
 extension Security {
+    public var securityID: String {
+        ticker+exchangeName+"\(lastValue)"
+    }
+    
     public var stoicValue: Double {
         0.0
     }

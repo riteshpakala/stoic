@@ -19,9 +19,19 @@ struct AssetSelectedExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
-        connection.dependency(\EnvironmentDependency.tone.find.ticker, value: event.security.ticker)
         
-        connection.dependency(\EnvironmentDependency.tone.find.state, value: .found)
+        switch state.context {
+        case .tonalCreate:
+            connection.dependency(\EnvironmentDependency.tone.find.ticker, value: event.security.ticker)
+            connection.dependency(\EnvironmentDependency.tone.find.state, value: .found)
+        case .holdings:
+            connection.dependency(\EnvironmentDependency.portfolio.holdings.tickerToAdd, value: event.security.ticker)
+        case .search:
+            connection.dependency(\EnvironmentDependency.home.ticker, value: event.security.ticker)
+        default:
+            break
+        }
+        
         
     }
 }

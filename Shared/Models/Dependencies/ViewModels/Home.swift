@@ -10,5 +10,5 @@ import GraniteUI
 import SwiftUI
 
 class Home: ObservableObject {
-    
+    var ticker: String = ""
 }

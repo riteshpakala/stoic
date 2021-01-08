@@ -77,7 +77,7 @@ struct MoversStockQuotesExpedition: GraniteExpedition {
         let losersQuotes = data.result.filter { losersResponse.contains($0.symbol) }.map { $0.asStock() }
         let gainersQuotes = data.result.filter { gainersResponse.contains($0.symbol) }.map { $0.asStock() }
         
-        connection.request(StockEvents.GlobalCategoryResult.init(topVolumeQuotes, gainersQuotes, losersQuotes), beam: true)
+        connection.request(StockEvents.GlobalCategoryResult.init(topVolumeQuotes, gainersQuotes, losersQuotes))
         print("{TEST} got Quotes")
     }
 }

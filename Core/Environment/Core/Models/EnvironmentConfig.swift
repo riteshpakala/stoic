@@ -34,12 +34,6 @@ public struct EnvironmentConfig {
                             [ .unassigned, .winners(.unassigned), .unassigned ],
                             [ .favorites, .losers(.unassigned), .unassigned]
                         ])
-            case .portfolio:
-                return .init(windows: [
-                             [.portfolio, .special, .special],
-                             [.favorites, .special, .special],
-                             [.holdings, .special, .special]
-                        ])
             case .modelCreate:
                 return .init(windows: [
                              [.tonalCreate(.find), .tonalCreate(.tune), .tonalCreate(.compile)],

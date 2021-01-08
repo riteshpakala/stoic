@@ -16,6 +16,10 @@ public struct StockEvents {
         public init(_ query: String) {
             self.query = query
         }
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
     }
     
     public struct SearchDataResult: GraniteEvent {
@@ -28,6 +32,10 @@ public struct StockEvents {
     
     public struct SearchResult: GraniteEvent {
         let result: [Security]
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
     }
     
     //MARK: -- Movers
@@ -66,6 +74,10 @@ public struct StockEvents {
             self.ticker = ticker
             self.daysAgo = daysAgo
         }
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
     }
     
     //MARK: -- Stock Interval
@@ -88,8 +100,8 @@ public struct StockEvents {
         let data: [StockServiceModels.Stock]
         let interval: SecurityInterval
         
-        public var beam: Bool {
-            true
+        public var beam: GraniteBeamType {
+            .rebound
         }
     }
     

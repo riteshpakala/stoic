@@ -16,20 +16,36 @@ public struct HoldingsComponent: GraniteComponent {
     
     public init() {}
     
+    @State var addToPortfolio: Bool = false
+    
     public var body: some View {
-        VStack {
-            GraniteText("portfolio",
-                        .subheadline,
-                        .regular,
-                        .leading)
-            
-            VStack {
-                Spacer()
-                BasicButton(text: "create")
-                Spacer()
+        ZStack {
+            if addToPortfolio {
+                AssetAddComponent()
+                    .shareRelays(relays([CryptoRelay.self,
+                                         StockRelay.self]))
+                    .inject(dep(\.hosted))
+                BasicButton(text: "cancel").onTapGesture {
+                    $addToPortfolio.wrappedValue = !addToPortfolio
+                }
+            } else {
+                VStack {
+                    GraniteText("portfolio",
+                                .subheadline,
+                                .regular,
+                                .leading)
+                    
+                    VStack {
+                        Spacer()
+                        BasicButton(text: "create").onTapGesture {
+                            $addToPortfolio.wrappedValue = !addToPortfolio
+                        }
+                        Spacer()
+                    }
+                }.padding(.top, Brand.Padding.large)
+                .padding(.leading, Brand.Padding.large)
+                .padding(.trailing, Brand.Padding.large)
             }
-        }.padding(.top, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.large)
-        .padding(.trailing, Brand.Padding.large)
+        }
     }
 }

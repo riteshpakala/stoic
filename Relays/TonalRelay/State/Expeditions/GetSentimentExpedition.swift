@@ -171,7 +171,7 @@ struct TonalSoundsExpedition: GraniteExpedition {
             state.stage = .compiling
             let sentiment: TonalSentiment = .init(compiled)
             state.stage = .none
-            connection.request(TonalEvents.History.init(sentiment: sentiment), beam: true)
+            connection.request(TonalEvents.History.init(sentiment: sentiment))
         }
     }
 }

@@ -26,7 +26,7 @@ public struct TonalFindComponent: GraniteComponent {
             VStack {
                 AssetSearchComponent(
                     state: depObject(\.envDependency,
-                                     target: \.search.state))
+                                     target: \.searchTone.state))
                     .shareRelays(relays(
                                     [StockRelay.self,
                                      CryptoRelay.self]))
