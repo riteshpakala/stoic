@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-public indirect enum Route: ID {
+public indirect enum Route: ID, Equatable {
     case home
     case floor
     case models

@@ -10,6 +10,7 @@ import SwiftUI
 
 public struct ControlBar: View {
     var isIPhone: Bool
+    var currentRoute: Route
     var onRoute: ((Route) -> Void)
     
     public var body: some View {
@@ -31,28 +32,37 @@ public struct ControlBar: View {
                     Spacer()
                     
                 }.frame(minWidth: 100,
-                        maxWidth: 200,
+                        maxWidth: 175,
                         maxHeight: .infinity,
                         alignment: .center)
-                        .padding(.top, Brand.Padding.large)
-                        .padding(.leading, Brand.Padding.large)
+                        .padding(.top, Brand.Padding.large*2)
+                        .padding(.leading, Brand.Padding.large+Brand.Padding.medium)
             }
-        }.background(Brand.Colors.black)
+        }
     }
     
     var actions: some View {
         Passthrough {
+                
             HStack {
                 Image("home_icon")
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 24, height: 24, alignment: .leading)
-                    .padding(.trailing, Brand.Padding.small)
+                    .padding(.trailing, Brand.Padding.medium)
                 
-                GraniteText("home", .title3, .bold, .leading)
+                GraniteText("home",
+                            .title3,
+                            .regular,
+                            .leading,
+                            style: .disabled,
+                            selected: currentRoute == .home)
+               
             }.onTapGesture {
                 onRoute(.home)
             }
+                
+               
             
             Spacer().frame(width: Brand.Padding.large, height: Brand.Padding.large)
             HStack {
@@ -60,9 +70,14 @@ public struct ControlBar: View {
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 24, height: 24, alignment: .leading)
-                    .padding(.trailing, Brand.Padding.small)
+                    .padding(.trailing, Brand.Padding.medium)
                 
-                GraniteText("floor", .title3, .bold, .leading)
+                GraniteText("floor",
+                            .title3,
+                            .regular,
+                            .leading,
+                            style: .disabled,
+                            selected: currentRoute == .floor)
             }.onTapGesture {
                 onRoute(.floor)
             }
@@ -73,9 +88,14 @@ public struct ControlBar: View {
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 24, height: 24, alignment: .leading)
-                    .padding(.trailing, Brand.Padding.small)
+                    .padding(.trailing, Brand.Padding.medium)
                 
-                GraniteText("models", .title3, .bold, .leading)
+                GraniteText("models",
+                            .title3,
+                            .regular,
+                            .leading,
+                            style: .disabled,
+                            selected: currentRoute == .models)
             }.onTapGesture {
                 onRoute(.models)
             }
@@ -86,16 +106,26 @@ public struct ControlBar: View {
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 24, height: 24, alignment: .leading)
-                    .padding(.trailing, Brand.Padding.small)
+                    .padding(.trailing, Brand.Padding.medium)
                 
-                GraniteText("settings", .title3, .bold, .leading)
+                GraniteText("settings",
+                            .title3,
+                            .regular,
+                            .leading,
+                            style: .disabled,
+                            selected: currentRoute == .settings)
             }.onTapGesture {
                 onRoute(.settings)
             }
             
             Spacer().frame(width: Brand.Padding.large, height: Brand.Padding.large)
             HStack {
-                GraniteText("debug", Brand.Colors.red, .title3, .bold, .leading)
+                GraniteText("debug",
+                            Brand.Colors.red,
+                            .title3,
+                            .bold,
+                            .leading,
+                            style: .disabled)
             }.onTapGesture {
                 onRoute(.debug(.models))
             }

@@ -17,7 +17,9 @@ public struct MainComponent: GraniteComponent {
     public init() {}
     
     var controls: ControlBar {
-        ControlBar(isIPhone: false, onRoute: { route in
+        ControlBar(isIPhone: false,
+                   currentRoute: command.center.routerDependency.router.route,
+                   onRoute: { route in
             command.dependency(\RouterDependency.router.route, value: route)
         })
     }

@@ -21,40 +21,40 @@ public struct AssetGridItemComponent: GraniteComponent {
             HStack {
                 Text(state.security.indicator)
                     .frame(
-                        width: 28,
-                        height: 28,
+                        width: 36,
+                        height: 36,
                         alignment: .center)
                     .font(Fonts.live(.title3, .bold))
                     .foregroundColor(Brand.Colors.black)
                     .background(Brand.Colors
                                     .marble
-                                    .granite_innerShadow(radius: 3)
+                                    .granite_innerShadow(radius: 2)
                                     .cornerRadius(6.0))
-                    .shadow(radius: 3, x: 2, y: 2)
                 
                 VStack(alignment: .leading) {
                     GraniteText(state.security.ticker,
-                                .subheadline,
+                                .headline,
                                 .regular,
                                 .leading)
                     
                     GraniteText("volume: \(state.security.volumeValue.abbreviate)",
                                 Brand.Colors.marble,
-                                .footnote,
+                                .subheadline,
                                 .regular,
-                                .leading)
+                                .leading,
+                                style: .init(radius: 2, offset: .init(x: 1, y: 1)))
                 }.padding(.trailing, 12)
                 
                 VStack {
                     GraniteText("$\(state.security.lastValue.display)",
                                 Brand.Colors.marble,
-                                .subheadline,
+                                .headline,
                                 .regular,
                                 .trailing)
                     
                     GraniteText("\(state.security.isGainer ? "+" : "-")$\(state.security.prettyChangePercent.percent)",
                                 state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
-                                .footnote,
+                                .subheadline,
                                 .regular,
                                 .trailing)
                 }.padding(.trailing, 12)
@@ -76,8 +76,10 @@ public struct AssetGridItemComponent: GraniteComponent {
                 
             }
             
-            Rectangle().frame(height: 2.0, alignment: .leading).foregroundColor(.black)
+            Rectangle().frame(height: 2.0,
+                              alignment: .leading)
+                .foregroundColor(.black)
+                .padding(.top, Brand.Padding.small)
         }
-        
     }
 }

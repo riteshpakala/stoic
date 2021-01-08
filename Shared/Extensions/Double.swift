@@ -48,13 +48,13 @@ extension Double {
         let million = number / 1000000
         
         if million >= 1.0 {
-            return "\(Int(million)*10/10)m"
+            return String(format: "%.2f%m", million)
         }
         else if thousand >= 1.0 {
-            return "\(Int(thousand)*10/10)k"
+            return String(format: "%.2f%k", thousand)
         }
         else {
-            return "\(self)"
+            return String(format: "%.2f%", self*100)
         }
     }
 }
