@@ -23,7 +23,7 @@ struct CompileTheToneExpedition: GraniteExpedition {
         guard let tone = connection.depObject(\EnvironmentDependency.tone) else {
             return
         }
-        
+        print("{TEST} compiling.")
         connection.dependency(\EnvironmentDependency.tone.compile.state, value: .compiling)
         
         guard let model = TonalModels.generate(tone: tone, moc: coreDataInstance) else {

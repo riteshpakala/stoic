@@ -33,7 +33,7 @@ extension Stock {
 extension Array where Element == Stock {
     func save(moc: NSManagedObjectContext, completion: @escaping ((QuoteObject?) -> Void)) {
         guard let referenceStock = self.first else { completion(nil); return }
-        moc.perform {
+        moc.performAndWait {
             
             do {
                 let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())

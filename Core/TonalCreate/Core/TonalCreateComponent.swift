@@ -37,7 +37,7 @@ public struct TonalCreateComponent: GraniteComponent {
                     .listen(to: command)
                     .shareRelays(
                         relays([TonalRelay.self]))
-                    .inject(dep(\.hosted))
+                    .inject(dep(\.hosted), TonalCompileCenter.route)
             case .compile:
                 TonalCompileComponent()
                     .listen(to: command)

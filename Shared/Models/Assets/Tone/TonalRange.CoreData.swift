@@ -13,18 +13,17 @@ extension TonalRange {
         moc: NSManagedObjectContext,
         completion: @escaping (((sentiment: TonalSentiment?, missing: TonalRange?)?) -> Void)) {
         
-        DispatchQueue.global(qos: .utility).async {
-            let time: Double = CFAbsoluteTimeGetCurrent()
-            
-            guard let sentimentResult = moc.getSentiment(quote, self) else {
-                print("{TEST} failedddd")
-                completion(nil); return
-            }
-            
-            print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
-            
-            completion(sentimentResult)
+        let time: Double = CFAbsoluteTimeGetCurrent()
+        
+        guard let sentimentResult = moc.getSentiment(quote, self) else {
+            print("{TEST} failedddd")
+            completion(nil); return
         }
+        
+        print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
+        
+        completion(sentimentResult)
+        
     }
 }
 

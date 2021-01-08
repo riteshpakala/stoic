@@ -23,15 +23,16 @@ public struct EnvironmentConfig {
         case modelCreate
         case portfolio
         case modelBrowser
+        case securityDetail
         case settings
         
         public var page: Page {
             switch self {
             case .home:
                 return .init(windows: [
-                             [.search, .favorites, .portfolio],
-                             [.topVolume(.stock), .topVolume(.crypto), .holdings],
-                             [.winners(.stock), .winners(.crypto), .unassigned]
+                            [ .search, .topVolume(.unassigned), .portfolio],
+                            [ .unassigned, .winners(.unassigned), .unassigned ],
+                            [ .favorites, .losers(.unassigned), .unassigned]
                         ])
             case .portfolio:
                 return .init(windows: [
@@ -50,6 +51,12 @@ public struct EnvironmentConfig {
                              [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)],
                              [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)],
                              [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)]
+                        ])
+            case .securityDetail:
+                return .init(windows: [
+                             [.search, .unassigned, .securityDetail(.preview)],
+                             [.unassigned, .unassigned, .unassigned],
+                             [.unassigned, .unassigned, .unassigned]
                         ])
             default:
                 return .init(windows: [])
@@ -71,6 +78,8 @@ extension EnvironmentConfig {
             return .init(kind: .floor)
         case .models:
             return .init(kind: .modelCreate)
+        case .securityDetail:
+            return .init(kind: .securityDetail)
         default:
             return .init(kind: .home)
         }

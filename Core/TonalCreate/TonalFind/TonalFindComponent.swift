@@ -18,7 +18,10 @@ public struct TonalFindComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            HeaderComponent(state: .init("set the tone"))
+            GraniteText("set the tone",
+                        .title2,
+                        .bold)
+                .padding(.top, Brand.Padding.large)
             
             VStack {
                 AssetSearchComponent(

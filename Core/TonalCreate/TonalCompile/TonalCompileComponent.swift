@@ -38,12 +38,14 @@ public struct TonalCompileComponent: GraniteComponent {
                             .regular)
             }
             
-            SecurityDetailComponent()
-        }.onAppear(perform: {
             if command.center.compileState == .readyToCompile {
-                sendEvent(TonalCompileEvents.Compile())
+                BasicButton(text: "compile").onTapGesture {
+                    sendEvent(TonalCompileEvents.Compile())
+                }
             }
-        })
+            
+            SecurityDetailComponent()
+        }
         .padding(.top, Brand.Padding.large)
         .padding(.bottom, Brand.Padding.medium)
         .padding(.leading, Brand.Padding.medium)

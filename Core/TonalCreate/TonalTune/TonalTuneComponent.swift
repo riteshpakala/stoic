@@ -36,7 +36,10 @@ public struct TonalTuneComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            HeaderComponent(state: .init("tune the tone"))
+            GraniteText("tune the tone",
+                        .title2,
+                        .bold)
+                .padding(.top, Brand.Padding.large)
             Spacer()
 //            SliderBinding(depObject(\.envDependency,
 //                                    target: \EnvironmentDependency.$view.scrollOffset)!)
@@ -65,7 +68,7 @@ public struct TonalTuneComponent: GraniteComponent {
                 .padding(.leading, Brand.Padding.medium)
                 .padding(.trailing, Brand.Padding.medium)
                 
-                BasicButton(text: "Generate").onTapGesture {
+                BasicButton(text: "tune").onTapGesture {
                     sendEvent(TonalTuneEvents.Tune())
                 }
                 .padding(.bottom, Brand.Padding.medium)

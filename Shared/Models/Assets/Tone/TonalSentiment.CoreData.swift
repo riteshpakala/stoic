@@ -15,8 +15,8 @@ extension SecurityObject {
 }
 
 extension TonalSentiment {
-    func save(_ range: TonalRange, moc: NSManagedObjectContext) {
-        moc.perform {
+    func save(_ range: TonalRange, moc: NSManagedObjectContext, completion: ((Bool) -> Void)? = nil) {
+        moc.performAndWait {
             do {
                 
                 let sentimentObjects: [SentimentObject] = self.sounds.values.flatMap { $0 }.map {
@@ -35,7 +35,7 @@ extension TonalSentiment {
                 
                 for object in securityObjects {
                     let date = object.date.simple
-                    
+                    print("{TEST} saving = \(date)")
                     object.addToSentiment(
                         NSSet.init(
                             array: sentimentObjects
@@ -43,10 +43,11 @@ extension TonalSentiment {
                 }
                 
                 try moc.save()
-                
                 print ("{CoreData} - sentiment saved")
+                completion?(true)
 //                completion(quote)
             } catch let error {
+                completion?(false)
                 print ("{CoreData} \(error.localizedDescription)")
             }
         }

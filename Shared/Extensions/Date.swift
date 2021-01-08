@@ -103,7 +103,7 @@ extension Date {
     }
     
     func isGreaterOrEqual(to: Date) -> Bool {
-        return to.compare(self) == .orderedDescending || self.compare(to) == .orderedSame
+        return to.compare(self) == .orderedAscending || self.compare(to) == .orderedSame
     }
 }
 

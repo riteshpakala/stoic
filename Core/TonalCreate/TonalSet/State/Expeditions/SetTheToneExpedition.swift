@@ -59,14 +59,17 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
             
             return
         }
-        
-        event.sentiment.save(range, moc: coreDataInstance)
-        
-        range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
-            if let sentiment = sentimentResult?.sentiment {
-                connection.dependency(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
-            } else {
-                connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range), beam: true)
+        print("{TEST} got it")
+        event.sentiment.save(range, moc: coreDataInstance) { success in
+            if success {
+                print("{TEST} wait what")
+                range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
+                    if let sentiment = sentimentResult?.sentiment {
+                        connection.dependency(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
+                    } else {
+                        connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range), beam: true)
+                    }
+                }
             }
         }
     }

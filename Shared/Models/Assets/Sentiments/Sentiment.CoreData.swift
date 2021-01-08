@@ -41,7 +41,7 @@ extension NSManagedObjectContext {
             print("valid\n🪝")
             return (sentiment, nil)
         } else {
-            let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.sentimentDate.simple) }
+            let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.date.simple) }
             
             print("\n🪝 ")
             return (nil, .init(objects: Array(missingSentiment).asSecurities,
@@ -55,10 +55,11 @@ extension NSManagedObjectContext {
     
     public func getSentimentObject(startDate: Date,
                                    endDate: Date) -> [SentimentObject]? {
+        print("{TEST} \(startDate.advanced(by: -1) as NSDate) \(endDate.advanceDate(value: 1) as NSDate)")
         let request: NSFetchRequest = SentimentObject.fetchRequest()
         request.predicate = NSPredicate(format: "(date >= %@) AND (date <= %@)",
-                                        startDate.advanced(by: -1) as NSDate,
-                                        endDate as NSDate)
+                                        startDate.advanceDate(value: -1) as NSDate,
+                                        endDate.advanceDate(value: 1) as NSDate)
         return try? self.fetch(request)
     }
 }

@@ -14,6 +14,7 @@ public indirect enum Route: ID, Equatable {
     case floor
     case models
     case settings
+    case securityDetail
     case debug(Route)
     case none
     

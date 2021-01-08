@@ -77,10 +77,10 @@ public struct TonalSentiment {
             return false
         }
         
-        return expandedMax.simple.isGreaterOrEqual(
-            to: sentimentMax.simple) &&
-            expandedMin.simple.isLessOrEqual(
-                to: sentimentMin.simple)
+        return sentimentMax.simple.isGreaterOrEqual(
+            to: expandedMax.simple) &&
+            sentimentMin.simple.isLessOrEqual(
+                to: expandedMin.simple)
     }
     
     public var stats: String {
