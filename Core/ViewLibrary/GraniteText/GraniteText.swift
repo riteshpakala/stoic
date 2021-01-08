@@ -47,6 +47,7 @@ public struct GraniteText: View {
                 radius: 3,
                 offset: .init(x: 2, y: 2))
                 .font(font)
+                .multilineTextAlignment(alignment)
             
             if alignment == .leading {
                 Spacer()

@@ -36,7 +36,7 @@ public struct WindowComponent: GraniteComponent {
                     .inject(dep(\.hosted))
             case .securityDetail(let kind):
                 SecurityDetailComponent(state: .init(kind))
-            case .modelCreate(let stage):
+            case .tonalCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
                     .shareRelays(relays)
                     .inject(dep(\.hosted))

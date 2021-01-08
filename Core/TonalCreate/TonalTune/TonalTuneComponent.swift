@@ -38,10 +38,13 @@ public struct TonalTuneComponent: GraniteComponent {
         VStack {
             HeaderComponent(state: .init("tune the tone"))
             Spacer()
+//            SliderBinding(depObject(\.envDependency,
+//                                    target: \EnvironmentDependency.$view.scrollOffset)!)
             if command.center.sentimentIsAvailable {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
-                        ForEach(command.center.tonalSentiment.datesByDay, id: \.self) { sentimentDate in
+                        ForEach(command.center.tonalSentiment.datesByDay,
+                                id: \.self) { sentimentDate in
                             
                             VStack {
                                 GraniteText(sentimentDate.asString,

@@ -12,10 +12,16 @@ import Combine
 
 public class TonalFindState: GraniteState {
     var days: Int = 5
-    var maxDays: Int = 30
-    var minDays: Int = 4
+    var maxDays: Int = Tone.Constraints.maxDays
+    var minDays: Int = Tone.Constraints.minDays
     var dayRangevalue: Int = 0
     var quote: QuoteObject? = nil
+    
+    public init(_ days: Int) {
+        self.days = days
+    }
+    
+    required init() {}
 }
 
 public class TonalFindCenter: GraniteCenter<TonalFindState> {
@@ -32,7 +38,7 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
     }
     
     var daysSelected: Int {
-        /*tonalCreateDependency.tone.range?.first?.dates.count ?? */state.days
+        envDependency.tone.find.daysSelected
     }
     
     public override var expeditions: [GraniteBaseExpedition] {

@@ -124,7 +124,7 @@ extension GraphLinePlot {
             }
             
             assert(inverseValueHeightDifference != nil)
-            var currentY = (1 - inverseValueHeightDifference! * previousYPosition) * HEIGHT
+//            var currentY = (1 - inverseValueHeightDifference! * previousYPosition) * HEIGHT
             
 //            path.move(to: CGPoint(x: pathBaseX + currentX,
 //                                  y: pathBaseY + currentY))
@@ -144,7 +144,7 @@ extension GraphLinePlot {
                     }
                 }
                 currentX = nextX
-                currentY = nextY
+//                currentY = nextY
             }
         }
         

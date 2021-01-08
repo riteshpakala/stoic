@@ -27,7 +27,7 @@ public struct TonalFindComponent: GraniteComponent {
                     .shareRelays(relays(
                                     [StockRelay.self,
                                      CryptoRelay.self]))
-                    .inject(dep(\.hosted))
+                    .inject(dep(\.hosted), TonalFindCenter.route)
             }
             
             PaddingVertical()
@@ -55,8 +55,8 @@ public struct TonalFindComponent: GraniteComponent {
             if command.center.findState == .found {
                 sendEvent(TonalFindEvents.Find(ticker: command.center.ticker))
             }
-        })/*.onTapGesture {
+        }).onTapGesture {
             sendEvent(TonalFindEvents.Find.init(ticker: "MSFT"))
-        }*/
+        }
     }
 }

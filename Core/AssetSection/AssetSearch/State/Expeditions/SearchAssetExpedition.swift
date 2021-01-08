@@ -26,5 +26,6 @@ struct SearchAssetExpedition: GraniteExpedition {
         connection.dependency(\EnvironmentDependency.tone.find.state, value: .searching)
         
         state.securityData = event.result
+        state.payload = .init(object: event.result)
     }
 }

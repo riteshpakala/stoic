@@ -15,5 +15,13 @@ class RouterDependency: DependencyManager {
 }
 
 public class Router: ObservableObject {
-    var route: Route = .home//.debug(.models)
+    var route: Route = .models//.debug(.models)
+    
+    var env: EnvironmentDependency = .init(identifier: "envDependency")
+}
+
+extension DependencyManager {
+    var fetch: RouterDependency {
+        return self as? RouterDependency ?? .init(identifier: "none")
+    }
 }

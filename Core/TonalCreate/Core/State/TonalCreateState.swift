@@ -25,8 +25,6 @@ public class TonalCreateState: GraniteState {
         }
     }
     
-    var tone: Tone = .init()
-    
     public init(_ stage: TonalCreateStage) {
         self.stage = stage
     }
@@ -37,6 +35,10 @@ public class TonalCreateState: GraniteState {
 }
 
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
+    var envDependency: EnvironmentDependency {
+        self.hosted.env
+    }
+    
     public override var expeditions: [GraniteBaseExpedition] {
         []
     }

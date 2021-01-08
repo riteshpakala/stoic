@@ -21,6 +21,7 @@ struct SetTheGraphExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         if let quotes = coreDataInstance.getQuotes()?.first(where: {$0.ticker == "MSFT"}) {
+            
             state.quote = quotes.asQuote
         }
     }

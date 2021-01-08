@@ -74,7 +74,7 @@ public enum WindowType: Hashable {
     
     case special
     
-    case modelCreate(TonalCreateStage)
+    case tonalCreate(TonalCreateStage)
     
     case unassigned
     
@@ -96,11 +96,11 @@ public enum WindowType: Hashable {
     
     var label: String {
         switch self {
-        case .topVolume(let securityType) :
+        case .topVolume :
             return "top volume"
-        case .winners(let securityType) :
+        case .winners:
             return "winners"
-        case .losers(let securityType) :
+        case .losers:
             return "losers"
         default:
             return ""

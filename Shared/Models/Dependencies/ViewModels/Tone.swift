@@ -9,6 +9,12 @@ import Foundation
 import GraniteUI
 
 public class Tone: ObservableObject {
+    public struct Constraints {
+        public static var maxDays: Int = 30
+        public static var minDays: Int = 4
+    }
+    
+    
     var range: [TonalRange]?
     
     public var target: Security? {
@@ -63,6 +69,12 @@ public class Tone: ObservableObject {
         //start at the percent of the days selected
         //
         var sliderDays: BasicSliderState = .init()
+        
+        var daysSelected: Int {
+            let dayDiff: Double = Double(Tone.Constraints.maxDays - Tone.Constraints.minDays)
+            let days: Double = sliderDays.number*dayDiff
+            return Int(days) + Tone.Constraints.minDays
+        }
     }
     
     public struct Tune {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GraniteUI
 
 public enum AssetType {
     case security
@@ -13,6 +14,6 @@ public enum AssetType {
     case sentiment
 }
 
-public protocol Asset {
+public protocol Asset: ID {
     var assetType: AssetType { get }
 }

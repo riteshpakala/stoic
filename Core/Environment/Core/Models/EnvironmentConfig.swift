@@ -41,9 +41,9 @@ public struct EnvironmentConfig {
                         ])
             case .modelCreate:
                 return .init(windows: [
-                             [.modelCreate(.find), .modelCreate(.tune), .modelCreate(.compile)],
+                             [.tonalCreate(.find), .tonalCreate(.tune), .tonalCreate(.compile)],
                              [.unassigned, .unassigned, .unassigned],
-                             [.modelCreate(.set), .unassigned, .unassigned]
+                             [.tonalCreate(.set), .unassigned, .unassigned]
                         ])
             case .floor:
                 return .init(windows: [

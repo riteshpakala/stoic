@@ -42,7 +42,7 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     
     //Dependencies
     lazy var envDependency: EnvironmentDependency = {
-        .init(identifier: "envDependency", adAstra: self)
+        self.hosted.fetch.router.env.bind(self)
     }()
     //
     

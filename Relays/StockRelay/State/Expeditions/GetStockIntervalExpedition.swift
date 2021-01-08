@@ -20,9 +20,9 @@ struct GetStockIntervalExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        let todaysDate: Date =  Date.today.advanceDate(value: -30)//Calendar.nyCalendar.date(byAdding: .hour, value: -1, to: Date.today) ?? Date.today
-            
-        let testDate: Date = Date.today.advanceDate(value: -60)// -1*abs(event.daysAgo))
+//        let todaysDate: Date =  Date.today.advanceDate(value: -30)//Calendar.nyCalendar.date(byAdding: .hour, value: -1, to: Date.today) ?? Date.today
+//
+//        let testDate: Date = Date.today.advanceDate(value: -60)// -1*abs(event.daysAgo))
         
         print("{TEST} hey SI")
         publisher = state
@@ -37,7 +37,7 @@ struct GetStockIntervalExpedition: GraniteExpedition {
                 for item in $0 {
                     guard let volume = item.chart.result.first?.indicators.quote.first?.volume else { break }
                     
-                    print("{TEST} \(volume.compactMap({ $0 }).min())")
+                    print("{TEST} \(String(describing: volume.compactMap({ $0 }).min()))")
                 }
                 
                 return StockEvents.Interval(data: $0, interval: event.interval) }

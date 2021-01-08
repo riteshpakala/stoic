@@ -31,14 +31,14 @@ class GraphPageViewModel: ObservableObject {
         self.symbol = symbol
         self.logic = GraphPageBusinessLogic(symbol: symbol)
         
-        let assignees: [ReferenceWritableKeyPath<GraphPageViewModel, PlotData?>] = [
-            \.intradayPlotData,
-            \.dailyPlotData,
-            \.weeklyPlotData,
-            \.monthlyPlotData
-        ]
-        
-        let timeDisplayOptions: [TimeDisplayOption] = [.hourly, .daily, .weekly, .monthly]
+//        let assignees: [ReferenceWritableKeyPath<GraphPageViewModel, PlotData?>] = [
+//            \.intradayPlotData,
+//            \.dailyPlotData,
+//            \.weeklyPlotData,
+//            \.monthlyPlotData
+//        ]
+//        
+//        let timeDisplayOptions: [TimeDisplayOption] = [.hourly, .daily, .weekly, .monthly]
 
 //        zip(publishers, assignees).enumerated()
 //            .forEach { (i, tup) in

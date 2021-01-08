@@ -25,13 +25,13 @@ public struct TonalCreateComponent: GraniteComponent {
                         relays([StockRelay.self,
                                 CryptoRelay.self]))
                     .listen(to: command)
-                    .inject(dep(\.hosted))
+                    .inject(dep(\.hosted), TonalSetCenter.route)
             case .set:
                 TonalSetComponent()
                     .shareRelays(
                         relays([TonalRelay.self]))
                     .listen(to: command)
-                    .inject(dep(\.hosted))
+                    .inject(dep(\.hosted), TonalTuneCenter.route)
             case .tune:
                 TonalTuneComponent()
                     .listen(to: command)

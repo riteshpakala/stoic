@@ -23,4 +23,7 @@ public class WindowState: GraniteState {
 }
 
 public class WindowCenter: GraniteCenter<WindowState> {
+    var envDependency: EnvironmentDependency {
+        self.hosted.env
+    }
 }

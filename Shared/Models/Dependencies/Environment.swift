@@ -18,6 +18,9 @@ class EnvironmentDependency: DependencyManager {
     
     @ObservedObject
     var search: SearchQuery = .init()
+    
+    @ObservedObject
+    var view: ViewConstants = .init()
 }
 
 extension DependencyManager {
