@@ -52,7 +52,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                                 .regular,
                                 .trailing)
                     
-                    GraniteText("\(state.security.isGainer ? "+" : "-")$\(state.security.prettyChangePercent.percent)",
+                    GraniteText("\(state.security.isGainer ? "+" : "-")$\(state.security.changeAbsoluteValue.display)",
                                 state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
                                 .subheadline,
                                 .regular,

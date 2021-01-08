@@ -19,18 +19,28 @@ public struct GraniteText: View {
     public struct TextShadowSettings {
         let radius: CGFloat
         let offset: CGPoint
+        let selectionColor: Color
         let disable: Bool
         
-        public init(radius: CGFloat, offset: CGPoint) {
+        public init(radius: CGFloat, offset: CGPoint, selectionColor: Color = Brand.Colors.black) {
             self.radius = radius
             self.offset = offset
             self.disable = false
+            self.selectionColor = selectionColor
         }
         
-        public init(radius: CGFloat, offset: CGPoint, disable: Bool) {
+        public init(radius: CGFloat, offset: CGPoint, selectionColor: Color = Brand.Colors.black, disable: Bool) {
             self.radius = radius
             self.offset = offset
             self.disable = disable
+            self.selectionColor = selectionColor
+        }
+        
+        public init(selectionColor: Color = Brand.Colors.black) {
+            self.radius = TextShadowSettings.basic.radius
+            self.offset = TextShadowSettings.basic.offset
+            self.disable = TextShadowSettings.basic.disable
+            self.selectionColor = selectionColor
         }
         
         public static var basic: TextShadowSettings {
@@ -86,7 +96,7 @@ public struct GraniteText: View {
                     .background(
                         Passthrough {
                             if self.selected {
-                                Brand.Colors.black
+                                style.selectionColor
                                     .cornerRadius(4)
                                     .padding(.top, -6)
                                     .padding(.leading, -6)
@@ -106,7 +116,7 @@ public struct GraniteText: View {
                     .background(
                         Passthrough {
                             if self.selected {
-                                Brand.Colors.black
+                                style.selectionColor
                                     .cornerRadius(4)
                                     .padding(.top, -6)
                                     .padding(.leading, -6)

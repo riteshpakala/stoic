@@ -484,6 +484,8 @@
 		7143EEE025994FC300B1DCB5 /* TonalService.Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143EEDE25994FC300B1DCB5 /* TonalService.Sounds.swift */; };
 		7143EEE7259955D800B1DCB5 /* Tone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143EEE6259955D800B1DCB5 /* Tone.swift */; };
 		7143EEE8259955D800B1DCB5 /* Tone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143EEE6259955D800B1DCB5 /* Tone.swift */; };
+		7156AC0225A8370900648941 /* GraniteToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7156AC0125A8370900648941 /* GraniteToggle.swift */; };
+		7156AC0B25A8371300648941 /* GraniteToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7156AC0125A8370900648941 /* GraniteToggle.swift */; };
 		7169534A25A7AD3400641BCE /* GraniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169534925A7AD3400641BCE /* GraniteScrollView.swift */; };
 		7169534B25A7AD3400641BCE /* GraniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169534925A7AD3400641BCE /* GraniteScrollView.swift */; };
 		7169535125A7ADB400641BCE /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169535025A7ADB400641BCE /* Run.swift */; };
@@ -902,6 +904,7 @@
 		714343D525907DB5001F26A4 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		7143EEDE25994FC300B1DCB5 /* TonalService.Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Sounds.swift; sourceTree = "<group>"; };
 		7143EEE6259955D800B1DCB5 /* Tone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tone.swift; sourceTree = "<group>"; };
+		7156AC0125A8370900648941 /* GraniteToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteToggle.swift; sourceTree = "<group>"; };
 		7169534925A7AD3400641BCE /* GraniteScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteScrollView.swift; sourceTree = "<group>"; };
 		7169535025A7ADB400641BCE /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		7169535725A7B8ED00641BCE /* ViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConstants.swift; sourceTree = "<group>"; };
@@ -1520,6 +1523,7 @@
 		7125BD6325A12EED00F22717 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				7156AC0025A836FB00648941 /* GraniteToggle */,
 				7169534825A7AD2000641BCE /* GraniteScrollView */,
 				71DE186025A6D94D00911AD1 /* Graph */,
 				712D3D0025A6B9AA005EE3F9 /* Helpers */,
@@ -2165,6 +2169,14 @@
 			path = Shadows;
 			sourceTree = "<group>";
 		};
+		7156AC0025A836FB00648941 /* GraniteToggle */ = {
+			isa = PBXGroup;
+			children = (
+				7156AC0125A8370900648941 /* GraniteToggle.swift */,
+			);
+			path = GraniteToggle;
+			sourceTree = "<group>";
+		};
 		7169534825A7AD2000641BCE /* GraniteScrollView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2771,6 +2783,7 @@
 				710889792591B29800795EDF /* WhenAll.swift in Sources */,
 				7134427A25A38245002C0315 /* Sentiment.CoreData.swift in Sources */,
 				7125BE1025A1328A00F22717 /* ValueTrackConfiguration.swift in Sources */,
+				7156AC0225A8370900648941 /* GraniteToggle.swift in Sources */,
 				7125BE5B25A1388400F22717 /* PointSliderStyleConfiguration.swift in Sources */,
 				7183D56D25A428AE00FB91A9 /* TimeDisplayMode.swift in Sources */,
 				7125BDFE25A1328900F22717 /* ValueSliderStyle.swift in Sources */,
@@ -3213,6 +3226,7 @@
 				7139F67C25981C3200D9C84B /* TuneTheToneExpedition.swift in Sources */,
 				7125BDDA25A131D200F22717 /* RangeTrackConfiguration.swift in Sources */,
 				7139F6B22598827F00D9C84B /* GetSentimentExpedition.swift in Sources */,
+				7156AC0B25A8371300648941 /* GraniteToggle.swift in Sources */,
 				7123B1442593CC8C00E5BD69 /* DataHandling.swift in Sources */,
 				71332A3425A79DD0005A72A9 /* AssetSearchEvents.swift in Sources */,
 				7134427B25A38245002C0315 /* Sentiment.CoreData.swift in Sources */,

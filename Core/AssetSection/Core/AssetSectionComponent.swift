@@ -18,7 +18,11 @@ public struct AssetSectionComponent: GraniteComponent {
     
     public var body: some View {
         VStack(alignment: .leading) {
-            GraniteText(state.windowType.label, .title2, .bold)
+            HStack {
+                GraniteText(state.windowType.label, .title2, .bold)
+                Spacer()
+                GraniteToggle(options: .init(["stock", "crypto"]))
+            }
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
                 AssetGridComponent()
                     .listen(to: command)

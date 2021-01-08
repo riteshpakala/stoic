@@ -28,6 +28,9 @@ public class AssetSectionState: GraniteState {
 }
 
 public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
+    var securities: [Security] {
+        state.payload?.object as? [Security] ?? []
+    }
     
     private var moverExpeditions: GraniteBaseExpedition {
         if state.securityType == .stock {
