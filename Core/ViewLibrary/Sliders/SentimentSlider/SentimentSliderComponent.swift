@@ -24,7 +24,7 @@ public struct SentimentSliderComponent: GraniteComponent {
                                     x: state.pointX1,
                                     y: state.pointY1,
                                     isActive: changed,
-                                    date: state.date), contact: true)
+                                    date: state.date), .contact)
                     })
             .frame(height: 144)
             .pointSliderStyle(

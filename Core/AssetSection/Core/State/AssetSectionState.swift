@@ -28,6 +28,7 @@ public class AssetSectionState: GraniteState {
 }
 
 public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
+    
     var securities: [Security] {
         state.payload?.object as? [Security] ?? []
     }

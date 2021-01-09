@@ -21,9 +21,10 @@ public struct AssetAddComponent: GraniteComponent {
             Spacer()
             AssetSearchComponent(state: depObject(\.envDependency,
                                                   target: \.searchAdd.state))
-                .shareRelays(relays([CryptoRelay.self,
-                                     StockRelay.self]))
-                .inject(dep(\.hosted))
+                .share(.init(dep(\.hosted),
+                             relays(
+                                [StockRelay.self,
+                                 CryptoRelay.self])))
             Spacer()
         }
         .padding(.top, Brand.Padding.large)

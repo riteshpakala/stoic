@@ -21,7 +21,7 @@ public struct BasicSliderComponent: GraniteComponent {
                         onEditingChanged: { changed in
                             sendEvent(BasicSliderEvents.Value(
                                         data: state.number,
-                                        isActive: changed), contact: true)
+                                        isActive: changed), .contact)
                         })
                 .frame(height: 64)
                 .valueSliderStyle(

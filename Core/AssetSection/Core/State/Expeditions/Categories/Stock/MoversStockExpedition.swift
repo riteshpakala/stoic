@@ -28,7 +28,7 @@ struct MoversStockExpedition: GraniteExpedition {
         default:
             state.securityData = []
         }
-        
+        print("12312323123")
         state.payload = .init(object: state.securityData)
     }
 }

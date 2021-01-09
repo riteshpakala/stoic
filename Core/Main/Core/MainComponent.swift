@@ -47,7 +47,7 @@ public struct MainComponent: GraniteComponent {
 //        } else {
             HStack(spacing: Brand.Padding.small) {
                 controls
-                environment.inject(dep(\.hosted))
+                environment.share(.init(dep(\.hosted)))
             }
             
 //        }

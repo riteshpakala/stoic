@@ -18,7 +18,6 @@ public class AssetSearchState: GraniteState {
     public init(_ context: WindowType) {
         self.context = context
         self.searchState = .init(context)
-        print("{TEST} \(context)")
     }
     
     public required init() {
@@ -28,6 +27,9 @@ public class AssetSearchState: GraniteState {
 }
 
 public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
     }

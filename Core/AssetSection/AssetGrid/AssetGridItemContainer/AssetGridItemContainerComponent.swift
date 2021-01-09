@@ -49,14 +49,13 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
             }.frame(minHeight: 42, idealHeight: 42, maxHeight: 42)
             
             ScrollView {
-                Text("\(state.securityData.count)")
                 LazyVGrid(columns: columns, spacing: 0) {
                     ForEach(state.securityData, id: \.securityID) { security in
                         AssetGridItemComponent().payload(.init(object: security)).onTapGesture(
                             perform: sendEvent(
                                 AssetGridItemContainerEvents
                                     .SecurityTapped(
-                                        security), contact: true))
+                                        security), .contact))
                     }.padding(.leading, Brand.Padding.medium)
                 }
             }

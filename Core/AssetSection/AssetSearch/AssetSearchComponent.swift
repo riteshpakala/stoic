@@ -20,11 +20,12 @@ public struct AssetSearchComponent: GraniteComponent {
         VStack {
             SearchComponent(
                 state: state.searchState)
-                .shareRelays(relays(
+                .share(.init(dep(\.hosted,
+                                 AssetSearchCenter.route),
+                             relays(
                                 [StockRelay.self,
-                                 CryptoRelay.self]))
-                .inject(dep(\.hosted), AssetSearchCenter.route)
-            Text("\(CFAbsoluteTimeGetCurrent())")
+                                 CryptoRelay.self])))
+            
             switch state.context {
             case .holdings:
                 AssetGridComponent()

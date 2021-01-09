@@ -21,30 +21,36 @@ public struct TonalCreateComponent: GraniteComponent {
             switch state.stage {
             case .find:
                 TonalFindComponent()
-                    .shareRelays(
-                        relays([StockRelay.self,
-                                CryptoRelay.self]))
                     .listen(to: command)
-                    .inject(dep(\.hosted), TonalSetCenter.route)
+                    .share(.init(dep(\.hosted,
+                                     TonalSetCenter.route),
+                                 relays(
+                                    [StockRelay.self,
+                                     CryptoRelay.self])))
             case .set:
                 TonalSetComponent()
-                    .shareRelays(
-                        relays([TonalRelay.self]))
                     .listen(to: command)
-                    .inject(dep(\.hosted), TonalTuneCenter.route)
+                    .share(.init(dep(\.hosted,
+                                     TonalTuneCenter.route),
+                                 relays(
+                                    [StockRelay.self,
+                                     CryptoRelay.self])))
             case .tune:
                 TonalTuneComponent()
                     .listen(to: command)
-                    .shareRelays(
-                        relays([TonalRelay.self]))
-                    .inject(dep(\.hosted), TonalCompileCenter.route)
+                    .share(.init(dep(\.hosted,
+                                     TonalCompileCenter.route),
+                                 relays(
+                                    [TonalRelay.self])))
             case .compile:
                 TonalCompileComponent()
                     .listen(to: command)
-                    .inject(dep(\.hosted))
+                    .share(.init(dep(\.hosted)))
             default:
                 EmptyView.init()
             }
+            
+            EmptyView.init()
         }
     }
 }

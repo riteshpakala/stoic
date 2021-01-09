@@ -23,6 +23,9 @@ public class WindowState: GraniteState {
 }
 
 public class WindowCenter: GraniteCenter<WindowState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    
     var envDependency: EnvironmentDependency {
         self.hosted.env
     }

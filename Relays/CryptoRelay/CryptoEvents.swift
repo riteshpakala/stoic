@@ -24,8 +24,8 @@ struct CryptoEvents {
             self.losers = losers
         }
         
-        var beam: Bool {
-            true
+        public var beam: GraniteBeamType {
+            .broadcast
         }
     }
 }

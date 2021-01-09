@@ -36,10 +36,6 @@ public class EnvironmentState: GraniteState {
 }
 
 public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
-    let stockRelay: StockRelay = .init()
-    let cryptoRelay: CryptoRelay = .init()
-    let tonalRelay: TonalRelay = .init()
-    
     //Dependencies
     lazy var envDependency: EnvironmentDependency = {
         self.hosted.fetch.router.env.bind(self)

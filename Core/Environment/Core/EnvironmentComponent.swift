@@ -50,7 +50,7 @@ public struct EnvironmentComponent: GraniteComponent {
                             if row < state.activeWindows.count,
                                col < state.activeWindows[row].count,
                                state.activeWindows[row][col].kind != .unassigned {
-                                window(state.activeWindows[row][col]).id(UUID())
+                                window(state.activeWindows[row][col])
                             }
                         }
                     }
@@ -68,8 +68,7 @@ public struct EnvironmentComponent: GraniteComponent {
 extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
        let window = getWindow(config)
-                        .shareRelays(relays)
-                        .inject(dep(\.envDependency))
+                        .share(.init(dep(\.envDependency), relays))
                         .background(Brand.Colors.black)
                         .border(state.route.isDebug ? Brand.Colors.red : .clear,
                                 width: state.route.isDebug ? 4.0 : 0.0)

@@ -25,26 +25,23 @@ public struct WindowComponent: GraniteComponent {
                 AssetSectionComponent(
                     state: .init(windowType: state.config.kind,
                                  securityType))
-                    .shareRelays(relays([CryptoRelay.self,
-                                         StockRelay.self]))
-                    .inject(dep(\.hosted))
+                    .share(.init(dep(\.hosted),
+                                 relays(
+                                    [StockRelay.self,
+                                     CryptoRelay.self])))
             case .portfolio:
                 PortfolioComponent()
-                    .shareRelays(relays([CryptoRelay.self,
-                                         StockRelay.self]))
-                    .inject(dep(\.hosted))
+                    .share(.init(dep(\.hosted)))
             case .search:
                 AssetSearchComponent(state: depObject(\.envDependency,
                                                       target: \.search.state))
-                    .shareRelays(relays([CryptoRelay.self,
-                                         StockRelay.self]))
-                    .inject(dep(\.hosted), WindowCenter.route)
+                    .share(.init(dep(\.hosted,
+                                     WindowCenter.route)))
             case .securityDetail(let kind):
                 SecurityDetailComponent(state: .init(kind))
             case .tonalCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
-                    .shareRelays(relays)
-                    .inject(dep(\.hosted))
+                    .share(.init(dep(\.hosted)))
             default:
                 EmptyView.init()
             }

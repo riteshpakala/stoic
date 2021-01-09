@@ -24,15 +24,16 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
             .getAggregateSummariesPublisher()!
             .replaceError(with: .init(data: nil, type: CryptoServiceModels.GetAggregateSummaries.self))
             .map { (response) in
-                guard let decoded = try? decoder.decode(response.type, from: response.data ?? Data()) else {
+                guard let decoded = try? decoder.decode(response.type,
+                                                        from: response.data ?? Data()) else {
                     return CryptoEvents.GlobalCategoryResult.init([], [], [])
                 }
                 
                 let markets = decoded.result.filter {
                     $0.key.contains(state.currency) &&
-                        !$0.key.contains("\(state.currency)t") &&
-                        !$0.key.contains("\(state.currency)c") &&
-                            $0.key.contains(state.exchange)
+                    !$0.key.contains("\(state.currency)t") &&
+                    !$0.key.contains("\(state.currency)c") &&
+                     $0.key.contains(state.exchange)
                 }
                     
                 let summariesSortedByVolume = markets.sorted(by: { $0.value.volume > $1.value.volume })

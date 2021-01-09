@@ -54,9 +54,7 @@ public struct PortfolioComponent: GraniteComponent {
             PaddingVertical()
             
             HoldingsComponent()
-                .shareRelays(relays([CryptoRelay.self,
-                                     StockRelay.self]))
-                .inject(dep(\.hosted))
+                .share(.init(dep(\.hosted)))
         }
     }
 }

@@ -38,6 +38,7 @@ struct SearchResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        print("{TEST} yoooo 2")
         guard let data = event.data.first else { return }
     
         var sanitizedStocks: [StockServiceModels.Search.Stock] = []
@@ -71,6 +72,7 @@ struct SearchResultExpedition: GraniteExpedition {
             }
         }
         
+        print("{TEST} yoooo")
         let symbols: [String] = sanitizedStocks.map { $0.symbolName }
         publisher = state
             .service
@@ -94,7 +96,6 @@ struct SearchQuoteResultExpedition: GraniteExpedition {
         guard let data = event.quotes.first?.quoteResponse else { return }
         
         let searchQuotes = data.result.map { $0.asStock() }
-        
         connection.request(StockEvents.SearchResult.init(result: searchQuotes))
     }
 }

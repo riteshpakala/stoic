@@ -39,7 +39,11 @@ public struct StockEvents {
     }
     
     //MARK: -- Movers
-    public struct GetMovers: GraniteEvent {}
+    public struct GetMovers: GraniteEvent {
+        public var beam: GraniteBeamType {
+            .rebound
+        }
+    }
     
     public struct MoversData: GraniteEvent {
         let data: [StockServiceModels.Movers]
@@ -61,6 +65,10 @@ public struct StockEvents {
             self.topVolume = topVolume
             self.gainers = gainers
             self.losers = losers
+        }
+        
+        public var beam: GraniteBeamType {
+            .rebound
         }
     }
     

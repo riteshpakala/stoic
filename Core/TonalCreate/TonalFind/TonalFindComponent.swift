@@ -27,10 +27,11 @@ public struct TonalFindComponent: GraniteComponent {
                 AssetSearchComponent(
                     state: depObject(\.envDependency,
                                      target: \.searchTone.state))
-                    .shareRelays(relays(
+                    .share(.init(dep(\.hosted,
+                                     TonalFindCenter.route),
+                                 relays(
                                     [StockRelay.self,
-                                     CryptoRelay.self]))
-                    .inject(dep(\.hosted), TonalFindCenter.route)
+                                     CryptoRelay.self])))
             }
             
             PaddingVertical()

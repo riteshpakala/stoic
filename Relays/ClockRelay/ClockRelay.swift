@@ -49,5 +49,6 @@ public struct ClockRelay: GraniteRelay {
         //for testing
         gameClock.cancellable?.cancel()
         state.effectCancellables.forEach { $0.cancel() }
+        state.effectCancellables.removeAll()
     }
 }

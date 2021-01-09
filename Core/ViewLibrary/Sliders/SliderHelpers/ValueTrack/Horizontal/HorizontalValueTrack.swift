@@ -5,8 +5,8 @@ public typealias HorizontalTrack = HorizontalValueTrack
 public struct HorizontalValueTrack<ValueView: View, MaskView: View>: View {
     @Environment(\.trackValue) var value
     @Environment(\.valueTrackConfiguration) var configuration
-    let view: AnyView
-    let mask: AnyView
+    let view: ValueView
+    let mask: MaskView
     
     public var body: some View {
         GeometryReader { geometry in
@@ -31,9 +31,9 @@ public struct HorizontalValueTrack<ValueView: View, MaskView: View>: View {
 }
 
 extension HorizontalValueTrack {
-    public init(view: ValueView, mask: MaskView) {
-        self.view = AnyView(view)
-        self.mask = AnyView(mask)
+    public init(@ViewBuilder view: () -> ValueView, @ViewBuilder mask: () -> MaskView) {
+        self.view = view()
+        self.mask = mask()
     }
 }
 

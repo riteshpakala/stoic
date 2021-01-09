@@ -19,6 +19,10 @@ public enum TonalCreateStage {
 }
 
 public class TonalCreateState: GraniteState {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    let tonalRelay: TonalRelay = .init()
+    
     var stage: TonalCreateStage = .none {
         didSet {
             print("{TEST} \(stage)")

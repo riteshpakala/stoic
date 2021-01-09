@@ -87,45 +87,63 @@ public struct GraniteText: View {
                 Spacer()
             }
             
+            Text(text)
+                .foregroundColor(color)
+                .font(font)
+                .multilineTextAlignment(alignment)
+                .background(
+                    Passthrough {
+                        if self.selected {
+                            style.selectionColor
+                                .cornerRadius(4)
+                                .padding(.top, -6)
+                                .padding(.leading, -6)
+                                .padding(.trailing, -6)
+                                .padding(.bottom, -6)
+                        }
+                    }
+                )
             
-            if style.disable {
-                Text(text)
-                    .foregroundColor(color)
-                    .font(font)
-                    .multilineTextAlignment(alignment)
-                    .background(
-                        Passthrough {
-                            if self.selected {
-                                style.selectionColor
-                                    .cornerRadius(4)
-                                    .padding(.top, -6)
-                                    .padding(.leading, -6)
-                                    .padding(.trailing, -6)
-                                    .padding(.bottom, -6)
-                            }
-                        }
-                    )
-            } else {
-                Text(text)
-                    .granite_innerShadow(
-                    color,
-                    radius: style.radius,
-                    offset: style.offset)
-                    .font(font)
-                    .multilineTextAlignment(alignment)
-                    .background(
-                        Passthrough {
-                            if self.selected {
-                                style.selectionColor
-                                    .cornerRadius(4)
-                                    .padding(.top, -6)
-                                    .padding(.leading, -6)
-                                    .padding(.trailing, -6)
-                                    .padding(.bottom, -6)
-                            }
-                        }
-                    )
-            }
+            //Huge memory leak, with the inner shadow text...
+            //
+//            if style.disable {
+//                Text(text)
+//                    .foregroundColor(color)
+//                    .font(font)
+//                    .multilineTextAlignment(alignment)
+//                    .background(
+//                        Passthrough {
+//                            if self.selected {
+//                                style.selectionColor
+//                                    .cornerRadius(4)
+//                                    .padding(.top, -6)
+//                                    .padding(.leading, -6)
+//                                    .padding(.trailing, -6)
+//                                    .padding(.bottom, -6)
+//                            }
+//                        }
+//                    )
+//            } else {
+//                Text(text)
+//                    .granite_innerShadow(
+//                    color,
+//                    radius: style.radius,
+//                    offset: style.offset)
+//                    .font(font)
+//                    .multilineTextAlignment(alignment)
+//                    .background(
+//                        Passthrough {
+//                            if self.selected {
+//                                style.selectionColor
+//                                    .cornerRadius(4)
+//                                    .padding(.top, -6)
+//                                    .padding(.leading, -6)
+//                                    .padding(.trailing, -6)
+//                                    .padding(.bottom, -6)
+//                            }
+//                        }
+//                    )
+//            }
             
             
             if alignment == .leading {

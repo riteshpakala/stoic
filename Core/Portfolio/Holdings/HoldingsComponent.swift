@@ -22,9 +22,7 @@ public struct HoldingsComponent: GraniteComponent {
         ZStack {
             if addToPortfolio {
                 AssetAddComponent()
-                    .shareRelays(relays([CryptoRelay.self,
-                                         StockRelay.self]))
-                    .inject(dep(\.hosted))
+                    .share(.init(dep(\.hosted)))
                 BasicButton(text: "cancel").onTapGesture {
                     $addToPortfolio.wrappedValue = !addToPortfolio
                 }

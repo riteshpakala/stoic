@@ -17,7 +17,6 @@ public struct RouterComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        MainComponent()
-            .inject(dep(\.routerDependency))
+        MainComponent().share(.init(dep(\.routerDependency)))
     }
 }
