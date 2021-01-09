@@ -40,9 +40,6 @@ public struct StockEvents {
     
     //MARK: -- Movers
     public struct GetMovers: GraniteEvent {
-        public var beam: GraniteBeamType {
-            .rebound
-        }
     }
     
     public struct MoversData: GraniteEvent {

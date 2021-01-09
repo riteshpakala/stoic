@@ -14,9 +14,6 @@ public class AssetAddState: GraniteState {
 }
 
 public class AssetAddCenter: GraniteCenter<AssetAddState> {
-    let stockRelay: StockRelay = .init()
-    let cryptoRelay: CryptoRelay = .init()
-    
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
     }

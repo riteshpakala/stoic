@@ -42,6 +42,7 @@ struct BootExpedition: GraniteExpedition {
         }
         
         state.activeWindows = windows
+        print("🪟🪟🪟🪟🪟🪟\nsetup windows for Environment - \(state.config.kind)\n\(state.activeWindows.flatMap { $0 }.count) windows total\n🪟")
     /*
          
          

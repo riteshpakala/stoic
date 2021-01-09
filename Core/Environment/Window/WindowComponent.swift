@@ -14,7 +14,8 @@ public struct WindowComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<WindowCenter, WindowState> = .init()
     
-    public init() {}
+    public init() {
+    }
     
     public var body: some View {
         VStack {
@@ -25,10 +26,7 @@ public struct WindowComponent: GraniteComponent {
                 AssetSectionComponent(
                     state: .init(windowType: state.config.kind,
                                  securityType))
-                    .share(.init(dep(\.hosted),
-                                 relays(
-                                    [StockRelay.self,
-                                     CryptoRelay.self])))
+                    .share(.init(dep(\.hosted)))
             case .portfolio:
                 PortfolioComponent()
                     .share(.init(dep(\.hosted)))

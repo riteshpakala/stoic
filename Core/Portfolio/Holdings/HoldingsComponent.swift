@@ -14,7 +14,10 @@ public struct HoldingsComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<HoldingsCenter, HoldingsState> = .init()
     
-    public init() {}
+    public init() {
+        
+        print("{TEST} --- hold init \(addToPortfolio)")
+    }
     
     @State var addToPortfolio: Bool = false
     

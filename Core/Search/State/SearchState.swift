@@ -27,6 +27,9 @@ public class SearchState: GraniteState {
 }
 
 public class SearchCenter: GraniteCenter<SearchState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             SearchSecurityExpedition.Discovery(),

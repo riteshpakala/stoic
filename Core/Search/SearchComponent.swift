@@ -14,7 +14,9 @@ public struct SearchComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<SearchCenter, SearchState> = .init()
     
-    public init() {}
+    public init() {
+        print("{TEST} ssss")
+    }
     
     public var body: some View {
         VStack {

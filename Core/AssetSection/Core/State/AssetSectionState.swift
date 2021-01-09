@@ -35,9 +35,9 @@ public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
     
     private var moverExpeditions: GraniteBaseExpedition {
         if state.securityType == .stock {
-            return MoversStockExpedition.Discovery()
-        } else {
             return MoversCryptoExpedition.Discovery()
+        } else {
+            return MoversStockExpedition.Discovery()
         }
     }
     

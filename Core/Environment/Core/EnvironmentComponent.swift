@@ -14,8 +14,7 @@ public struct EnvironmentComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<EnvironmentCenter, EnvironmentState> = .init()
     
-    public init() {
-    }
+    public init() {}
     
     var layout: [GridItem] {
         .init(repeating: GridItem(.flexible()), count: maxWidth)
@@ -26,7 +25,8 @@ public struct EnvironmentComponent: GraniteComponent {
     }
     
     var maxHeight: Int {
-        state.activeWindows.count
+        print("⚠️ called maxHeight \(state.activeWindows.count)")
+        return state.activeWindows.count
     }
     
     
@@ -68,7 +68,6 @@ public struct EnvironmentComponent: GraniteComponent {
 extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
        let window = getWindow(config)
-                        .share(.init(dep(\.envDependency), relays))
                         .background(Brand.Colors.black)
                         .border(state.route.isDebug ? Brand.Colors.red : .clear,
                                 width: state.route.isDebug ? 4.0 : 0.0)

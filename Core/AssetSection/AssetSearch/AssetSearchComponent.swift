@@ -14,17 +14,17 @@ public struct AssetSearchComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<AssetSearchCenter, AssetSearchState> = .init()
     
-    public init() {}
+    public init() {
+        
+        print("{TEST} ---- hey search init")
+    }
     
     public var body: some View {
         VStack {
             SearchComponent(
                 state: state.searchState)
                 .share(.init(dep(\.hosted,
-                                 AssetSearchCenter.route),
-                             relays(
-                                [StockRelay.self,
-                                 CryptoRelay.self])))
+                                 AssetSearchCenter.route)))
             
             switch state.context {
             case .holdings:
