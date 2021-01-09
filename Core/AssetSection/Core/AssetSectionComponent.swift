@@ -32,6 +32,6 @@ public struct AssetSectionComponent: GraniteComponent {
         .padding(.top, Brand.Padding.large)
         .padding(.leading, Brand.Padding.medium)
         .padding(.trailing, Brand.Padding.medium)
-        .onTapGesture(perform: sendEvent(StockEvents.GetMovers(), .broadcast))
+        .onTapGesture(perform: sendEvent(StockEvents.GetMovers(), .rebound))
     }
 }

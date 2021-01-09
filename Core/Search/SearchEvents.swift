@@ -11,10 +11,5 @@ import SwiftUI
 import Combine
 
 struct SearchEvents {
-    public struct Query: GraniteEvent {
-        let query: String
-        public init(_ query: String) {
-            self.query = query
-        }
-    }
+    public struct Query: GraniteEvent {}
 }

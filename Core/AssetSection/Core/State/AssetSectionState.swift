@@ -28,6 +28,8 @@ public class AssetSectionState: GraniteState {
 }
 
 public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
     
     var securities: [Security] {
         state.payload?.object as? [Security] ?? []

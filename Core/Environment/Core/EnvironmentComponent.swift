@@ -68,6 +68,7 @@ public struct EnvironmentComponent: GraniteComponent {
 extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
        let window = getWindow(config)
+                        .share(.init(dep(\.envDependency)))
                         .background(Brand.Colors.black)
                         .border(state.route.isDebug ? Brand.Colors.red : .clear,
                                 width: state.route.isDebug ? 4.0 : 0.0)

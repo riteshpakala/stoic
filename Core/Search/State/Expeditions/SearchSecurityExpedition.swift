@@ -22,14 +22,14 @@ struct SearchSecurityExpedition: GraniteExpedition {
         state.searchTimer?.invalidate()
         state.searchTimer = nil
         
-        guard event.query.isNotEmpty else { return }
+        guard state.query.isNotEmpty else { return }
         
         state.searchTimer = Timer.scheduledTimer(
             withTimeInterval: 0.4.randomBetween(2.4),
             repeats: false) { timer in
             
             timer.invalidate()
-            connection.request(StockEvents.Search(event.query))
+            connection.request(StockEvents.Search(state.query))
             
             //Potential dependency updates
 //            connection.dependency(\TonalCreateDependency.search.state.query, value: event.query)

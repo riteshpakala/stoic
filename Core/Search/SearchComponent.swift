@@ -14,9 +14,7 @@ public struct SearchComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<SearchCenter, SearchState> = .init()
     
-    public init() {
-        print("{TEST} ssss")
-    }
+    public init() {}
     
     public var body: some View {
         VStack {
@@ -27,11 +25,9 @@ public struct SearchComponent: GraniteComponent {
                         .frame(width: 20, height: 20, alignment: .leading)
                         .padding(.leading, Brand.Padding.medium)
                     
-                    TextField("search markets", text: _state.query)
-                        .onChange(of: state.query,
-                                  perform: { q in
-                            return sendEvent(SearchEvents.Query(q))
-                        })
+                    TextField("search markets",
+                              text: link(\.query,
+                                         event: SearchEvents.Query()))
                         .background(Color.clear)
                         .textFieldStyle(PlainTextFieldStyle())
                         .font(Fonts.live(.headline, .regular))
@@ -44,9 +40,8 @@ public struct SearchComponent: GraniteComponent {
                 if state.isEditing {
                     Group {
                         Button(action: {
-                            _state.isEditing.wrappedValue = false
+                            set(\.isEditing, value: false)
                             state.query = ""
-
                         }) {
                             GraniteText("cancel", .subheadline, .regular)
                         }
