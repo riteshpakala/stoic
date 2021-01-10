@@ -29,7 +29,7 @@ class EnvironmentDependency: DependencyManager {
     var searchAdd: SearchQuery = .init(.init(.holdings))
     
     @ObservedObject
-    var view: ViewConstants = .init()
+    var broadcasts: Broadcasts = .init()
 }
 
 extension DependencyManager {

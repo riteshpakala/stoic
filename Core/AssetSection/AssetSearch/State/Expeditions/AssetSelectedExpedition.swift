@@ -22,12 +22,12 @@ struct AssetSelectedExpedition: GraniteExpedition {
         
         switch state.context {
         case .tonalCreate:
-            connection.dependency(\EnvironmentDependency.tone.find.ticker, value: event.security.ticker)
-            connection.dependency(\EnvironmentDependency.tone.find.state, value: .found)
+            connection.update(\EnvironmentDependency.tone.find.ticker, value: event.security.ticker)
+            connection.update(\EnvironmentDependency.tone.find.state, value: .found)
         case .holdings:
-            connection.dependency(\EnvironmentDependency.portfolio.holdings.tickerToAdd, value: event.security.ticker)
+            connection.update(\EnvironmentDependency.portfolio.holdings.tickerToAdd, value: event.security.ticker)
         case .search:
-            connection.dependency(\EnvironmentDependency.home.ticker, value: event.security.ticker)
+            connection.update(\EnvironmentDependency.home.ticker, value: event.security.ticker)
         default:
             break
         }

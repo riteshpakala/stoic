@@ -21,7 +21,7 @@ public struct AssetAddComponent: GraniteComponent {
     public var body: some View {
         VStack {
             Spacer()
-            AssetSearchComponent(state: depObject(\.envDependency,
+            AssetSearchComponent(state: inject(\.envDependency,
                                                   target: \.searchAdd.state))
                 .share(.init(dep(\.hosted)))
             Spacer()

@@ -14,7 +14,9 @@ public struct AssetSectionComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<AssetSectionCenter, AssetSectionState> = .init()
     
-    public init() {}
+    public init() {
+        
+    }
     
     public var body: some View {
         VStack(alignment: .leading) {
@@ -26,12 +28,11 @@ public struct AssetSectionComponent: GraniteComponent {
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
                 AssetGridComponent()
                     .listen(to: command)
-                    .payload(state.payload)
+                    .payload(.init(object: command.center.movers))
             }
         }
         .padding(.top, Brand.Padding.large)
         .padding(.leading, Brand.Padding.medium)
         .padding(.trailing, Brand.Padding.medium)
-        .onTapGesture(perform: sendEvent(StockEvents.GetMovers(), .rebound))
     }
 }

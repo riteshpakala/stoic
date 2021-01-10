@@ -29,14 +29,14 @@ struct FindTheToneExpedition: GraniteExpedition {
         //
         guard let ticker = event.ticker else { return }
         
-        connection.dependency(\EnvironmentDependency.tone.find.state, value: .selected)
+        connection.update(\EnvironmentDependency.tone.find.state, value: .selected)
         
         if let quote = coreDataInstance.getQuotes()?
             .first(where: { $0.ticker == ticker &&
                     $0.intervalType == SecurityInterval.day.rawValue })
             .map({ $0.asQuote }) {
             
-            connection.dependency(\EnvironmentDependency.tone.find.quote, value: quote)
+            connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
             
             connection.request(TonalFindEvents.Parse(quote, days: state.days))
         } else {
@@ -61,7 +61,7 @@ struct StockHistoryExpedition: GraniteExpedition {
         
         stocks.save(moc: coreDataInstance) { quote in
             if let object = quote?.asQuote {
-                connection.dependency(\EnvironmentDependency.tone.find.quote, value: object)
+                connection.update(\EnvironmentDependency.tone.find.quote, value: object)
                 connection.request(TonalFindEvents.Parse(object, days: state.days))
             }
         }

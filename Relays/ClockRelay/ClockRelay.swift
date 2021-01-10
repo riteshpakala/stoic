@@ -38,11 +38,15 @@ public struct ClockRelay: GraniteRelay {
     }
     
     func timeOutput(date: Timer.TimerPublisher.Output) {
+        
 //        sendRelay(ClockEvents.Updated())
 //        print("{TEST} sending")
 //        print(command.events.count)
         for event in command.events {
-            command.subject.send(event)
+            print("{TEST} sending")
+            for relay in command.center.relays {
+                relay.beam?.rebound(.init(command, .broadcast), event)
+            }
         }
         
         //TODO: should be continous, this is just

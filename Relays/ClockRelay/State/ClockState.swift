@@ -14,4 +14,6 @@ public class ClockState: GraniteState {
 }
 
 public class ClockCenter: GraniteCenter<ClockState> {
+    let stockRelay: StockRelay = .init()
+//    let cryptoRelay: CryptoRelay = .init()
 }

@@ -23,12 +23,12 @@ struct SearchSecurityResultExpedition: GraniteExpedition {
         
         switch state.context {
         case .tonalCreate:
-            connection.dependency(\EnvironmentDependency.searchTone.securities, value: event.result)
-            connection.dependency(\EnvironmentDependency.tone.find.state, value: .searching)
+            connection.update(\EnvironmentDependency.searchTone.securities, value: event.result)
+            connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
         case .holdings:
-            connection.dependency(\EnvironmentDependency.searchAdd.securities, value: event.result)
+            connection.update(\EnvironmentDependency.searchAdd.securities, value: event.result)
         case .search:
-            connection.dependency(\EnvironmentDependency.search.securities, value: event.result)
+            connection.update(\EnvironmentDependency.search.securities, value: event.result)
         default:
             break
         }

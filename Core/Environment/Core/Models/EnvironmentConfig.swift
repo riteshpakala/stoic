@@ -30,9 +30,9 @@ public struct EnvironmentConfig {
             switch self {
             case .home:
                 return .init(windows: [
-                            [ .search, .topVolume(.unassigned), .portfolio],
-                            [ .unassigned, .winners(.unassigned), .unassigned ],
-                            [ .favorites, .losers(.unassigned), .unassigned]
+                            [ .search, .topVolume(.stock), .portfolio],
+                            [ .unassigned, .winners(.stock), .unassigned ],
+                            [ .favorites, .losers(.stock), .unassigned]
                         ])
             case .modelCreate:
                 return .init(windows: [

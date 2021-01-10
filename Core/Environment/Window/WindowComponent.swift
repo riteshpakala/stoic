@@ -14,8 +14,7 @@ public struct WindowComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<WindowCenter, WindowState> = .init()
     
-    public init() {
-    }
+    public init() {}
     
     public var body: some View {
         VStack {
@@ -31,7 +30,7 @@ public struct WindowComponent: GraniteComponent {
                 PortfolioComponent()
                     .share(.init(dep(\.hosted)))
             case .search:
-                AssetSearchComponent(state: depObject(\.envDependency,
+                AssetSearchComponent(state: inject(\.envDependency,
                                                       target: \.search.state))
                     .share(.init(dep(\.hosted,
                                      WindowCenter.route)))

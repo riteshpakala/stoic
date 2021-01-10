@@ -14,10 +14,7 @@ public struct PortfolioComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<PortfolioCenter, PortfolioState> = .init()
     
-    public init() {
-        print("{TEST} -- port init")
-        
-    }
+    public init() {}
     
     public var body: some View {
         VStack {

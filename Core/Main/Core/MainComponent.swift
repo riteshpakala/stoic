@@ -23,13 +23,13 @@ public struct MainComponent: GraniteComponent {
         ControlBar(isIPhone: false,
                    currentRoute: command.center.routerDependency.router.route,
                    onRoute: { route in
-            command.dependency(\RouterDependency.router.route, value: route)
+            command.update(\RouterDependency.router.route, value: route)
         })
     }
     
     var environment: EnvironmentComponent {
-        EnvironmentComponent(state: .init(depObject(\.routerDependency,
-                                                    target: \.router.route)))
+        EnvironmentComponent(state: .init(inject(\.routerDependency,
+                                                        target: \.router.route)))
     }
     
     public var body: some View {

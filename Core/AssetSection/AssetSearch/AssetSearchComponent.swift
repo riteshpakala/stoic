@@ -14,10 +14,7 @@ public struct AssetSearchComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<AssetSearchCenter, AssetSearchState> = .init()
     
-    public init() {
-        
-        print("{TEST} ---- hey search init")
-    }
+    public init() {}
     
     public var body: some View {
         VStack {
@@ -29,17 +26,17 @@ public struct AssetSearchComponent: GraniteComponent {
             switch state.context {
             case .holdings:
                 AssetGridComponent()
-                    .payload(depPayload(\.envDependency,
+                    .payload(retrievePayload(\.envDependency,
                                        target: \.searchAdd.securities))
                     .listen(to: command, .stop)
             case .tonalCreate:
                 AssetGridComponent()
-                    .payload(depPayload(\.envDependency,
+                    .payload(retrievePayload(\.envDependency,
                                        target: \.searchTone.securities))
                     .listen(to: command, .stop)
             case .search:
                 AssetGridComponent()
-                    .payload(depPayload(\.envDependency,
+                    .payload(retrievePayload(\.envDependency,
                                        target: \.search.securities))
                     .listen(to: command, .stop)
             default:

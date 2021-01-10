@@ -9,7 +9,11 @@ import Foundation
 import GraniteUI
 
 struct CryptoEvents {
-    public struct GetMovers: GraniteEvent {}
+    public struct GetMovers: GraniteEvent {
+        public var beam: GraniteBeamType {
+            .rebound
+        }
+    }
     
     public struct GlobalCategoryResult: GraniteEvent {
         let losers: [CryptoCurrency]
@@ -25,7 +29,7 @@ struct CryptoEvents {
         }
         
         public var beam: GraniteBeamType {
-            .broadcast
+            .rebound
         }
     }
 }

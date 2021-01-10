@@ -20,15 +20,16 @@ struct BootExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         let page: EnvironmentConfig.Page = state.config.kind.page
         
-        var windows: [[WindowConfig]] = []
-        
+        var windows: [[WindowComponent]] = []
+        var windowsConfig: [[WindowConfig]] = []
         //
         var cols: [Int] = .init(repeating: 0, count: page.windows.first?.count ?? EnvironmentConfig.maxWindows.width.asInt)
         cols = cols.enumerated().map { $0.offset }
         //
         
         for row in 0..<EnvironmentConfig.maxWindows.height.asInt {
-            var windowRow: [WindowConfig] = []
+            var windowRowConfig: [WindowConfig] = []
+            var windowRow: [WindowComponent] = []
             for col in cols {
                 let config: WindowConfig = .init(kind: page.windows[row][col],
                                                  index:
@@ -36,11 +37,14 @@ struct BootExpedition: GraniteExpedition {
                                                           y: row)
                                                  )
                 
-                windowRow.append(config)
+                windowRow.append(.init(state: .init(config)))
+                windowRowConfig.append(config)
             }
             windows.append(windowRow)
+            windowsConfig.append(windowRowConfig)
         }
         
+        state.activeWindowConfigs = windowsConfig
         state.activeWindows = windows
         print("🪟🪟🪟🪟🪟🪟\nsetup windows for Environment - \(state.config.kind)\n\(state.activeWindows.flatMap { $0 }.count) windows total\n🪟")
     /*

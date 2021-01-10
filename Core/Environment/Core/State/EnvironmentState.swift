@@ -11,7 +11,9 @@ import SwiftUI
 import Combine
 
 public class EnvironmentState: GraniteState {
-    var activeWindows: [[WindowConfig]] = []
+    var activeWindowConfigs: [[WindowConfig]] = []
+    
+    var activeWindows: [[WindowComponent]] = []
     
     let config: EnvironmentConfig
     
@@ -36,6 +38,9 @@ public class EnvironmentState: GraniteState {
 }
 
 public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
+    let clockRelay = ClockRelay([StockEvents.GetMovers(),
+                                 CryptoEvents.GetMovers()])
+    
     //Dependencies
     lazy var envDependency: EnvironmentDependency = {
         self.hosted.fetch.router.env.bind(self)
@@ -52,6 +57,8 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             BootExpedition.Discovery(),
+            MoversCryptoExpedition.Discovery(),
+            MoversStockExpedition.Discovery()
         ]
     }
     

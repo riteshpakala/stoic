@@ -25,7 +25,7 @@ struct TonalRangeChangedExpedition: GraniteExpedition {
         
         guard event.isActive == false else { return }
         
-        if let tonalFind = connection.depObject(\EnvironmentDependency.tone.find.quote),
+        if let tonalFind = connection.retrieve(\EnvironmentDependency.tone.find.quote),
            let quote = tonalFind {
             connection.request(TonalFindEvents.Parse(quote, days: state.days))
         }
@@ -109,7 +109,8 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
             }
         }
         
-        connection.dependency(\EnvironmentDependency.tone.range, value: candidates)
+        print("{TEST} updating")
+        connection.update(\EnvironmentDependency.tone.range, value: candidates)
     }
     
     func threshold(_ item: Double) -> Bool {

@@ -11,7 +11,6 @@ import SwiftUI
 import Combine
 
 public class AssetSectionState: GraniteState {
-    var securityData: [Security] = []
     var securityType: SecurityType
     var windowType: WindowType
     
@@ -28,24 +27,26 @@ public class AssetSectionState: GraniteState {
 }
 
 public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
-    let stockRelay: StockRelay = .init()
-    let cryptoRelay: CryptoRelay = .init()
+    //Dependencies
+    lazy var envDependency: EnvironmentDependency = {
+        self.hosted.env
+    }()
+    //
     
-    var securities: [Security] {
-        state.payload?.object as? [Security] ?? []
-    }
-    
-    private var moverExpeditions: GraniteBaseExpedition {
-        if state.securityType == .stock {
-            return MoversCryptoExpedition.Discovery()
-        } else {
-            return MoversStockExpedition.Discovery()
+    var movers: [Security] {
+        guard let categories = envDependency.broadcasts.movers.get(state.securityType) else {
+            return []
         }
-    }
-    
-    public override var expeditions: [GraniteBaseExpedition] {
-        [
-            moverExpeditions
-        ]
+        print("{TEST} --- \(categories.topVolume.count)")
+        switch state.windowType {
+        case .topVolume:
+            return categories.topVolume
+        case .winners:
+            return categories.winners
+        case .losers:
+            return categories.losers
+        default:
+            return []
+        }
     }
 }

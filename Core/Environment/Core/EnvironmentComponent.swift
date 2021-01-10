@@ -25,8 +25,7 @@ public struct EnvironmentComponent: GraniteComponent {
     }
     
     var maxHeight: Int {
-        print("⚠️ called maxHeight \(state.activeWindows.count)")
-        return state.activeWindows.count
+        state.activeWindows.count
     }
     
     
@@ -44,18 +43,18 @@ public struct EnvironmentComponent: GraniteComponent {
 //            }
             
 //            LazyHGrid(rows: layout) {
-                ForEach(0..<maxHeight, id: \.self) { col in
-                    VStack(spacing: Brand.Padding.small) {
-                        ForEach(0..<maxWidth, id: \.self) { row in
-                            if row < state.activeWindows.count,
-                               col < state.activeWindows[row].count,
-                               state.activeWindows[row][col].kind != .unassigned {
-                                window(state.activeWindows[row][col])
-                            }
+            ForEach(0..<maxHeight, id: \.self) { col in
+                VStack(spacing: Brand.Padding.small) {
+                    ForEach(0..<maxWidth, id: \.self) { row in
+                        if row < state.activeWindowConfigs.count,
+                           col < state.activeWindowConfigs[row].count,
+                           state.activeWindowConfigs[row][col].kind != .unassigned {
+                            
+                            getWindow(row, col, state.activeWindowConfigs[row][col])
                         }
                     }
                 }
-//            }
+            }
             
         }.frame(minWidth: 0,
                 maxWidth: .infinity,
@@ -66,8 +65,14 @@ public struct EnvironmentComponent: GraniteComponent {
 }
 
 extension EnvironmentComponent {
+    func getWindow(_ row: Int, _ col: Int, _ config: WindowConfig) -> some View {
+        return window(config)
+    }
+}
+
+extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
-       let window = getWindow(config)
+       let window = createWindow(config)
                         .share(.init(dep(\.envDependency)))
                         .background(Brand.Colors.black)
                         .border(state.route.isDebug ? Brand.Colors.red : .clear,
@@ -75,8 +80,7 @@ extension EnvironmentComponent {
         return window
     }
     
-    func getWindow(_ config: WindowConfig) -> WindowComponent {
+    func createWindow(_ config: WindowConfig) -> WindowComponent {
         return WindowComponent(state: .init(config))
     }
 }
-

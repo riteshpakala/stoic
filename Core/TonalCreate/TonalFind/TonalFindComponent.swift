@@ -25,7 +25,7 @@ public struct TonalFindComponent: GraniteComponent {
             
             VStack {
                 AssetSearchComponent(
-                    state: depObject(\.envDependency,
+                    state: inject(\.envDependency,
                                      target: \.searchTone.state))
                     .share(.init(dep(\.hosted,
                                      TonalFindCenter.route),
@@ -43,7 +43,7 @@ public struct TonalFindComponent: GraniteComponent {
                             .leading)
                 
                 BasicSliderComponent(
-                    state: depObject(\.envDependency,
+                    state: inject(\.envDependency,
                                      target: \.tone.find.sliderDays))
                     .listen(to: command)
                     .padding(.top, Brand.Padding.medium)

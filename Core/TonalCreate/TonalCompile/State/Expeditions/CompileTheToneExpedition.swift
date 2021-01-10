@@ -20,11 +20,11 @@ struct CompileTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let tone = connection.depObject(\EnvironmentDependency.tone) else {
+        guard let tone = connection.retrieve(\EnvironmentDependency.tone) else {
             return
         }
         print("{TEST} compiling.")
-        connection.dependency(\EnvironmentDependency.tone.compile.state, value: .compiling)
+        connection.update(\EnvironmentDependency.tone.compile.state, value: .compiling)
         
         guard let model = TonalModels.generate(tone: tone, moc: coreDataInstance) else {
             return
@@ -32,7 +32,7 @@ struct CompileTheToneExpedition: GraniteExpedition {
         
 //        model.testPredict(tone: tone, moc: coreDataInstance)
         
-        connection.dependency(\EnvironmentDependency.tone.compile.state, value: .compiled)
-        connection.dependency(\EnvironmentDependency.tone.compile.model, value: model)
+        connection.update(\EnvironmentDependency.tone.compile.state, value: .compiled)
+        connection.update(\EnvironmentDependency.tone.compile.model, value: model)
     }
 }
