@@ -10,10 +10,24 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+public enum AssetGridType {
+    case add
+    case standard
+    case standardStoics
+    case model
+}
+
 public class AssetGridState: GraniteState {
-    var count: Int = 0
     var securityData: [Security] {
         payload?.object as? [Security] ?? []
+    }
+    let assetGridType: AssetGridType
+    public init(_ type: AssetGridType) {
+        assetGridType = type
+    }
+    
+    public required init() {
+        self.assetGridType = .standard
     }
 }
 

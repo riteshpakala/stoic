@@ -23,7 +23,9 @@ public struct AssetSectionComponent: GraniteComponent {
             HStack {
                 GraniteText(state.windowType.label, .title2, .bold)
                 Spacer()
-                GraniteToggle(options: .init(["stock", "crypto"]))
+                GraniteToggle(options: .init(["stock", "crypto"]), onToggle: { index in
+                    set(\.securityType, value: index == 0 ? .stock : .crypto)
+                })
             }
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
                 AssetGridComponent()

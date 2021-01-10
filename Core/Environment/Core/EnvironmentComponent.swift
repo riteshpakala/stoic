@@ -21,11 +21,11 @@ public struct EnvironmentComponent: GraniteComponent {
     }
     
     var maxWidth: Int {
-        Array(state.activeWindows.map { $0.count }).max() ?? 0
+        Array(state.activeWindowConfigs.map { $0.count }).max() ?? 0
     }
     
     var maxHeight: Int {
-        state.activeWindows.count
+        state.activeWindowConfigs.count
     }
     
     
@@ -33,16 +33,6 @@ public struct EnvironmentComponent: GraniteComponent {
        
         HStack(spacing: Brand.Padding.small) {
             //Max Windows Height
-            
-//            // Re-arranged to have 3 lazy v grids under 1, to allow
-//            // for more customizable formations involving a single view
-//            // in a 3 col arrangement etc.
-//            //
-//            LazyVGrid(column: layout, spacing: Brand.Padding.small) {
-//
-//            }
-            
-//            LazyHGrid(rows: layout) {
             ForEach(0..<maxHeight, id: \.self) { col in
                 VStack(spacing: Brand.Padding.small) {
                     ForEach(0..<maxWidth, id: \.self) { row in

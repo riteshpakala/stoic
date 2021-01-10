@@ -32,7 +32,13 @@ public struct HoldingsComponent: GraniteComponent {
                                 .subheadline,
                                 .regular,
                                 .leading)
-                    
+                    VStack(alignment: .leading, spacing: Brand.Padding.medium) {
+                        AssetGridComponent()
+                            .listen(to: command)
+                            .payload(retrievePayload(\.envDependency,
+                                                     target: \.portfolio.holdings.securities))
+                            
+                    }
                     VStack {
                         Spacer()
                         BasicButton(text: "create").onTapGesture {

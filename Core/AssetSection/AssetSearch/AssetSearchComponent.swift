@@ -25,7 +25,7 @@ public struct AssetSearchComponent: GraniteComponent {
             
             switch state.context {
             case .holdings:
-                AssetGridComponent()
+                AssetGridComponent(state: .init(.add))
                     .payload(retrievePayload(\.envDependency,
                                        target: \.searchAdd.securities))
                     .listen(to: command, .stop)

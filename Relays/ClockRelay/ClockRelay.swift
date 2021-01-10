@@ -28,22 +28,38 @@ public struct ClockRelay: GraniteRelay {
     }
     
     let gameClock: Clock = .init()
+    var enabled: Bool = false {
+        didSet {
+            cancel()
+            setup()
+        }
+    }
+    
     public init() {
     }
     
     public func setup() {
+        print(enabled)
+        guard enabled else { return }
         gameClock.currentTimePublisher
             .sink(receiveValue: timeOutput)
             .store(in: &state.effectCancellables)
     }
     
-    func timeOutput(date: Timer.TimerPublisher.Output) {
+    public func cancel() {
         
+        gameClock.cancellable?.cancel()
+        state.effectCancellables.forEach { $0.cancel() }
+        state.effectCancellables.removeAll()
+    }
+    
+    func timeOutput(date: Timer.TimerPublisher.Output) {
+        guard enabled else { return }
 //        sendRelay(ClockEvents.Updated())
 //        print("{TEST} sending")
 //        print(command.events.count)
         for event in command.events {
-            print("{TEST} sending")
+            print("⏱ Clock relay is firing")
             for relay in command.center.relays {
                 relay.beam?.rebound(.init(command, .broadcast), event)
             }
@@ -51,8 +67,6 @@ public struct ClockRelay: GraniteRelay {
         
         //TODO: should be continous, this is just
         //for testing
-        gameClock.cancellable?.cancel()
-        state.effectCancellables.forEach { $0.cancel() }
-        state.effectCancellables.removeAll()
+        cancel()
     }
 }

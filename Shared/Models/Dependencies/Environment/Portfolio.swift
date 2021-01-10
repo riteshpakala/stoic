@@ -14,4 +14,5 @@ public class Portfolio: ObservableObject {
 
 public class Holdings {
     var tickerToAdd: String = ""
+    var securities: [Security] = []
 }

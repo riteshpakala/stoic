@@ -22,6 +22,15 @@ public class AssetGridItemContainerState: GraniteState {
             return "security"
         }
     }
+    
+    let assetGridType: AssetGridType
+    public init(_ type: AssetGridType) {
+        assetGridType = type
+    }
+    
+    public required init() {
+        self.assetGridType = .standard
+    }
 }
 
 public class AssetGridItemContainerCenter: GraniteCenter<AssetGridItemContainerState> {

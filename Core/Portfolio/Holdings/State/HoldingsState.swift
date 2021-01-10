@@ -14,4 +14,7 @@ public class HoldingsState: GraniteState {
 }
 
 public class HoldingsCenter: GraniteCenter<HoldingsState> {
+    var envDependency: EnvironmentDependency {
+        dependency.hosted.env
+    }
 }

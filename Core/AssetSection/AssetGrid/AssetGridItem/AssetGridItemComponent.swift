@@ -52,23 +52,43 @@ public struct AssetGridItemComponent: GraniteComponent {
                                 .regular,
                                 .trailing)
                     
-                    GraniteText("\(state.security.isGainer ? "+" : "-")$\(state.security.changeAbsoluteValue.display)",
+                    GraniteText("\(state.security.isGainer ? "+" : "")$\(state.security.changeAbsoluteValue.display)",
                                 state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
                                 .subheadline,
                                 .regular,
                                 .trailing)
                 }.padding(.trailing, 12)
                 
+                
+                
                 VStack(alignment: .center, spacing: 2) {
                     Spacer()
-                    GraniteText("\(state.security.changePercentValue.display)%",
-                                Brand.Colors.marble,
-                                .subheadline,
-                                .regular)
-                        .frame(height: 12, alignment: .bottom)
                     
-                    Color.green.clipShape(Circle())
-                        .frame(width: 6, height: 6, alignment: .top)
+                    switch state.assetGridType {
+                    case .standard:
+                        VStack(alignment: .center, spacing: 2) {
+                            GraniteText("\(state.security.changePercentValue.display)%",
+                                        Brand.Colors.marble,
+                                        .subheadline,
+                                        .regular)
+                                .frame(height: 12, alignment: .bottom)
+                            
+                            Color.green.clipShape(Circle())
+                                .frame(width: 6, height: 6, alignment: .top)
+                        }.padding(.leading, Brand.Padding.small)
+                    case .add:
+                        Circle()
+                            .foregroundColor(Brand.Colors.marble).overlay(
+                            
+                                GraniteText("+", Brand.Colors.black, .headline, .bold)
+                            
+                            
+                            ).frame(width: 24, height: 24)
+                            .padding(.leading, Brand.Padding.small)
+                    default:
+                        EmptyView.init()
+                    }
+                    
                     Spacer()
                 }
                 .foregroundColor(Brand.Colors.marble)

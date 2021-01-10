@@ -5,8 +5,11 @@
         <relationship name="securities" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="SecurityObject" inverseName="floor" inverseEntity="SecurityObject"/>
     </entity>
     <entity name="PortfolioObject" representedClassName=".PortfolioObject" syncable="YES">
-        <attribute name="username" optional="YES" attributeType="String"/>
-        <relationship name="securities" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="portfolio" inverseEntity="SecurityObject"/>
+        <attribute name="username" attributeType="String"/>
+        <relationship name="securities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="portfolio" inverseEntity="SecurityObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint/>
+        </uniquenessConstraints>
     </entity>
     <entity name="QuoteObject" representedClassName=".QuoteObject" syncable="YES">
         <attribute name="exchangeName" attributeType="String"/>
@@ -75,12 +78,12 @@
     </entity>
     <elements>
         <element name="CryptoDataObject" positionX="-15.463134765625" positionY="-21.51837158203125" width="128" height="29"/>
+        <element name="FloorObject" positionX="-36" positionY="-441" width="128" height="44"/>
+        <element name="PortfolioObject" positionX="-45" positionY="-450" width="128" height="59"/>
         <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="104"/>
         <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="269"/>
         <element name="SentimentObject" positionX="-45" positionY="-450" width="128" height="149"/>
         <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
         <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>
-        <element name="PortfolioObject" positionX="-45" positionY="-450" width="128" height="59"/>
-        <element name="FloorObject" positionX="-36" positionY="-441" width="128" height="44"/>
     </elements>
 </model>

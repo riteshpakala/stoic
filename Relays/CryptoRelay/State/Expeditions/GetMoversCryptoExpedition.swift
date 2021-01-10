@@ -57,6 +57,7 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
                 
                 return CryptoEvents.GlobalCategoryResult.init(topVolume, gainers, losers)
             }.eraseToAnyPublisher()
+        
     }
     
     func cryptoCurrency(

@@ -17,6 +17,22 @@ extension Security {
         quote.securityType = securityType.rawValue
     }
     
+    public func apply(to security: SecurityObject) {
+        security.exchangeName = exchangeName
+        security.ticker = ticker
+        security.indicator = self.indicator
+        security.intervalType = interval.rawValue
+        security.securityType = securityType.rawValue
+        security.lowValue = self.lowValue
+        security.highValue = self.highValue
+        security.lastValue = self.lastValue
+        security.changePercentValue = self.changePercentValue
+        security.changeAbsoluteValue = self.changeAbsoluteValue
+        security.volumeValue = self.volumeValue
+        security.date = self.date
+        
+    }
+    
     public func getObject(moc: NSManagedObjectContext) -> SecurityObject? {
         let request: NSFetchRequest = SecurityObject.fetchRequest()
         request.predicate = NSPredicate(format: "(date == %@) AND (ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
@@ -38,6 +54,30 @@ extension Security {
     
     public func getQuote(moc: NSManagedObjectContext) -> Quote? {
         return getQuoteObject(moc: moc)?.asQuote
+    }
+    
+    public func addToPortfolio(moc: NSManagedObjectContext, _ added: ((Bool) -> Void)) {
+        moc.performAndWait {
+            
+            do {
+                
+                if moc.checkExistence(username: "test") {
+                    let object = SecurityObject(context: moc)
+                    self.apply(to: object)
+                    let portfolio = PortfolioObject.init(context: moc)
+                    portfolio.username = "test"
+                    portfolio.addToSecurities(object)
+                    try moc.save()
+                    added(true)
+                } else {
+                    added(false)
+                }
+                
+            } catch let error {
+                added(false)
+                print("{TEST} port add from sec \(error)")
+            }
+        }
     }
 }
 

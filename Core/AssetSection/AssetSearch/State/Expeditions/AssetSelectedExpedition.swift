@@ -19,19 +19,25 @@ struct AssetSelectedExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
-        
         switch state.context {
         case .tonalCreate:
             connection.update(\EnvironmentDependency.tone.find.ticker, value: event.security.ticker)
             connection.update(\EnvironmentDependency.tone.find.state, value: .found)
         case .holdings:
-            connection.update(\EnvironmentDependency.portfolio.holdings.tickerToAdd, value: event.security.ticker)
+            print("{TEST} addddded")
+            event.security.addToPortfolio(moc: coreDataInstance) { success in
+                if success {
+                    print("{TEST} yo")
+                    connection.update(\EnvironmentDependency.portfolio.holdings.tickerToAdd,
+                                      value: event.security.ticker)
+                }else {
+                    print(" oh no way")
+                }
+            }
         case .search:
             connection.update(\EnvironmentDependency.home.ticker, value: event.security.ticker)
         default:
             break
         }
-        
-        
     }
 }

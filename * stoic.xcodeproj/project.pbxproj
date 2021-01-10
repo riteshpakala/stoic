@@ -670,6 +670,11 @@
 		71F1EC5725A0F47A00D32C52 /* SearchEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F1EC5225A0F47A00D32C52 /* SearchEvents.swift */; };
 		71F1EC5825A0F47A00D32C52 /* SearchComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F1EC5325A0F47A00D32C52 /* SearchComponent.swift */; };
 		71F1EC5925A0F47A00D32C52 /* SearchComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F1EC5325A0F47A00D32C52 /* SearchComponent.swift */; };
+		71F902DC25AAD3BC00E6A085 /* AddSecurityExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902DB25AAD3BC00E6A085 /* AddSecurityExpedition.swift */; };
+		71F902F425AB1E8D00E6A085 /* Portfolio.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902F325AB1E8D00E6A085 /* Portfolio.CoreData.swift */; };
+		71F902F525AB1E8D00E6A085 /* Portfolio.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902F325AB1E8D00E6A085 /* Portfolio.CoreData.swift */; };
+		71F902FB25AB225E00E6A085 /* UserExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902FA25AB225E00E6A085 /* UserExpedition.swift */; };
+		71F902FC25AB225E00E6A085 /* UserExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902FA25AB225E00E6A085 /* UserExpedition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1032,6 +1037,9 @@
 		71F1EC5125A0F47A00D32C52 /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchState.swift; sourceTree = "<group>"; };
 		71F1EC5225A0F47A00D32C52 /* SearchEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchEvents.swift; sourceTree = "<group>"; };
 		71F1EC5325A0F47A00D32C52 /* SearchComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchComponent.swift; sourceTree = "<group>"; };
+		71F902DB25AAD3BC00E6A085 /* AddSecurityExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSecurityExpedition.swift; sourceTree = "<group>"; };
+		71F902F325AB1E8D00E6A085 /* Portfolio.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.CoreData.swift; sourceTree = "<group>"; };
+		71F902FA25AB225E00E6A085 /* UserExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserExpedition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1080,6 +1088,7 @@
 		710889042591B06B00795EDF /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				71F902F125AB1E7700E6A085 /* User */,
 				7139F6362598144600D9C84B /* Tone */,
 				7124160E25A36ACD00169B9C /* Sentiments */,
 				710889EB2591BC0E00795EDF /* Categories */,
@@ -1340,6 +1349,7 @@
 			children = (
 				71D3C2C625AA87430033350B /* Broadcasts */,
 				711484FE259E15A700464684 /* BootExpedition.swift */,
+				71F902FA25AB225E00E6A085 /* UserExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -2303,6 +2313,7 @@
 		71B4302525A88A9900A23F4D /* State */ = {
 			isa = PBXGroup;
 			children = (
+				71F902E125AAD3C700E6A085 /* Expeditions */,
 				71B4302625A88A9900A23F4D /* AssetAddState.swift */,
 			);
 			path = State;
@@ -2689,6 +2700,30 @@
 			path = State;
 			sourceTree = "<group>";
 		};
+		71F902E125AAD3C700E6A085 /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				71F902DB25AAD3BC00E6A085 /* AddSecurityExpedition.swift */,
+			);
+			path = Expeditions;
+			sourceTree = "<group>";
+		};
+		71F902F125AB1E7700E6A085 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				71F902F225AB1E7D00E6A085 /* Portfolio */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		71F902F225AB1E7D00E6A085 /* Portfolio */ = {
+			isa = PBXGroup;
+			children = (
+				71F902F325AB1E8D00E6A085 /* Portfolio.CoreData.swift */,
+			);
+			path = Portfolio;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2858,6 +2893,7 @@
 				7125BD8A25A1316500F22717 /* LinearRangeMath.swift in Sources */,
 				71434359259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
 				7143433E259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
+				71F902F425AB1E8D00E6A085 /* Portfolio.CoreData.swift in Sources */,
 				710889152591B09A00795EDF /* Stock.swift in Sources */,
 				71D63EF42592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BE4625A1384A00F22717 /* SentimentSliderEvents.swift in Sources */,
@@ -2996,6 +3032,7 @@
 				7123B12D2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
 				7183D55D25A428AE00FB91A9 /* LinePlotValueStick.swift in Sources */,
 				7183D55125A428AE00FB91A9 /* GraphPage.swift in Sources */,
+				71F902FB25AB225E00E6A085 /* UserExpedition.swift in Sources */,
 				710889F32591BC8C00795EDF /* Categories.swift in Sources */,
 				71CA211825A4AEC900C448D7 /* TonalService.Model.swift in Sources */,
 				7143EEDF25994FC300B1DCB5 /* TonalService.Sounds.swift in Sources */,
@@ -3120,6 +3157,7 @@
 				7118A24425931468007E7EAB /* GetMoversStockExpedition.swift in Sources */,
 				7121F6D82596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */,
 				71DC58F325988F84004935CF /* DataSet.swift in Sources */,
+				71F902DC25AAD3BC00E6A085 /* AddSecurityExpedition.swift in Sources */,
 				7139F6B12598827F00D9C84B /* GetSentimentExpedition.swift in Sources */,
 				7105341625A50E97006A75DD /* TonalRange.CoreData.swift in Sources */,
 				7183D54B25A428AE00FB91A9 /* GraphPageViewModel.swift in Sources */,
@@ -3303,11 +3341,13 @@
 				7143436E25907725001F26A4 /* MathOperators.swift in Sources */,
 				71434319259076EB001F26A4 /* Comparible+Convenience.swift in Sources */,
 				7125BE5C25A1388400F22717 /* PointSliderStyleConfiguration.swift in Sources */,
+				71F902F525AB1E8D00E6A085 /* Portfolio.CoreData.swift in Sources */,
 				7139F6AB2598816E00D9C84B /* TonalService.Tweets.swift in Sources */,
 				71B42FDE25A87B0B00A23F4D /* PortfolioObject+CoreDataClass.swift in Sources */,
 				7108899E2591B29800795EDF /* VoidPromise.swift in Sources */,
 				7125BE6025A1388400F22717 /* AnyPointSliderStyle.swift in Sources */,
 				7125BE0D25A1328A00F22717 /* HorizontalValueTrack.swift in Sources */,
+				71F902FC25AB225E00E6A085 /* UserExpedition.swift in Sources */,
 				7125BDC825A1318D00F22717 /* HorizontalRangeSliderStyle.swift in Sources */,
 				7108898E2591B29800795EDF /* Promise+NoMatterWhat.swift in Sources */,
 				71143DF825A4C37300379E4B /* TonalService.Indicators.swift in Sources */,

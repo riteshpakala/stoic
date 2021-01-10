@@ -37,7 +37,7 @@ public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
         guard let categories = envDependency.broadcasts.movers.get(state.securityType) else {
             return []
         }
-        print("{TEST} --- \(categories.topVolume.count)")
+        
         switch state.windowType {
         case .topVolume:
             return categories.topVolume

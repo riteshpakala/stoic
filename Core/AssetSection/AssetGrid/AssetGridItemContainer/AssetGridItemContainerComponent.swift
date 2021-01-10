@@ -38,9 +38,19 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                                 .padding(.trailing,
                                          Brand.Padding.large)
                     
-                    GraniteText("change",
-                                .subheadline,
-                                .regular)
+                    switch state.assetGridType {
+                    case .standard:
+                        GraniteText("change",
+                                    .subheadline,
+                                    .regular)
+                    case .add:
+                        GraniteText("add",
+                                    .subheadline,
+                                    .regular)
+                    default:
+                        EmptyView.init()
+                    }
+                    
                     
                 }
                 .padding(.bottom, Brand.Padding.xSmall)
@@ -51,7 +61,7 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 0) {
                     ForEach(state.securityData, id: \.securityID) { security in
-                        AssetGridItemComponent().payload(.init(object: security)).onTapGesture(
+                        AssetGridItemComponent(state: .init(state.assetGridType)).payload(.init(object: security)).onTapGesture(
                             perform: sendEvent(
                                 AssetGridItemContainerEvents
                                     .SecurityTapped(

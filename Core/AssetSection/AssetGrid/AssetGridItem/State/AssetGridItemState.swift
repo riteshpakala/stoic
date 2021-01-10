@@ -16,6 +16,14 @@ public class AssetGridItemState: GraniteState {
     }
     
     var input: String = ""
+    let assetGridType: AssetGridType
+    public init(_ type: AssetGridType) {
+        assetGridType = type
+    }
+    
+    public required init() {
+        self.assetGridType = .standard
+    }
 }
 
 public class AssetGridItemCenter: GraniteCenter<AssetGridItemState> {

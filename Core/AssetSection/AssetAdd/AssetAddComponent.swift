@@ -14,9 +14,7 @@ public struct AssetAddComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<AssetAddCenter, AssetAddState> = .init()
     
-    public init() {
-        print("{TEST} ---- hey add init")
-    }
+    public init() {}
     
     public var body: some View {
         VStack {
@@ -26,8 +24,5 @@ public struct AssetAddComponent: GraniteComponent {
                 .share(.init(dep(\.hosted)))
             Spacer()
         }
-        .padding(.top, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.medium)
-        .padding(.trailing, Brand.Padding.medium)
     }
 }

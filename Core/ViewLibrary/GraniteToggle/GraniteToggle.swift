@@ -11,6 +11,8 @@ import SwiftUI
 
 public struct GraniteToggle: View {
     @State var selected: Int = 0
+    var onToggle: ((Int) -> Void)
+    
     public struct Options {
         let labels: [String]
         public init(_ options: [String]) {
@@ -20,8 +22,9 @@ public struct GraniteToggle: View {
     
     let options: GraniteToggle.Options
     
-    public init(options: GraniteToggle.Options) {
+    public init(options: GraniteToggle.Options, onToggle: @escaping ((Int) -> Void)) {
         self.options = options
+        self.onToggle = onToggle
     }
     
     public var body: some View {
@@ -36,6 +39,7 @@ public struct GraniteToggle: View {
                             style: .init(selectionColor: .black),
                             selected: selected == index).onTapGesture {
                                 self.selected = index
+                                self.onToggle(index)
                             }
             }
         }

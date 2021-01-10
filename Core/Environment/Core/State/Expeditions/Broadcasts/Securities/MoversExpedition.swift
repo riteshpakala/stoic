@@ -37,7 +37,7 @@ struct MoversCryptoExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
-        guard let movers = connection.retrieve(\RouterDependency.env.broadcasts.movers) else {
+        guard let movers = connection.retrieve(\RouterDependency.router.env.broadcasts.movers) else {
             return
         }
         

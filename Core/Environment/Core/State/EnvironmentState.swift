@@ -13,8 +13,6 @@ import Combine
 public class EnvironmentState: GraniteState {
     var activeWindowConfigs: [[WindowConfig]] = []
     
-    var activeWindows: [[WindowComponent]] = []
-    
     let config: EnvironmentConfig
     
     let route: Route
@@ -38,8 +36,18 @@ public class EnvironmentState: GraniteState {
 }
 
 public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
-    let clockRelay = ClockRelay([StockEvents.GetMovers(),
-                                 CryptoEvents.GetMovers()])
+    
+    //TODO:
+    //Memory leaks with Subscribers that are not cancelled
+    //during component re-draw phases of an application
+    var clockRelay: ClockRelay {
+        var clock = ClockRelay([StockEvents.GetMovers(),
+                                CryptoEvents.GetMovers()])
+
+        clock.enabled = false//state.config.kind == .home
+
+        return clock
+    }
     
     //Dependencies
     lazy var envDependency: EnvironmentDependency = {
@@ -47,16 +55,25 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     }()
     //
     
+    public override var relays: [GraniteBaseRelay] {
+        [
+            clockRelay
+        ]
+    }
+    
     public override var links: [GraniteLink] {
         [
             .event(\EnvironmentState.route,
-                        EnvironmentEvents.Boot())
+                        EnvironmentEvents.Boot()),
+            .event(\EnvironmentState.route,
+                        EnvironmentEvents.User())
         ]
     }
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
             BootExpedition.Discovery(),
+            UserExpedition.Discovery(),
             MoversCryptoExpedition.Discovery(),
             MoversStockExpedition.Discovery()
         ]
@@ -64,17 +81,17 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     
     public var environmentMinSize: CGSize {
         return .init(
-            CGFloat(state.activeWindows.count == 0 ?
+            CGFloat(state.activeWindowConfigs.count == 0 ?
                         Int(EnvironmentStyle.minWidth) :
-                        state.activeWindows[0].count)*WindowStyle.minWidth,
-            CGFloat(state.activeWindows.count)*WindowStyle.minHeight)
+                        state.activeWindowConfigs[0].count)*WindowStyle.minWidth,
+            CGFloat(state.activeWindowConfigs.count)*WindowStyle.minHeight)
     }
     
     public var environmentMaxSize: CGSize {
         return .init(
-            CGFloat(state.activeWindows.count == 0 ?
+            CGFloat(state.activeWindowConfigs.count == 0 ?
                         Int(EnvironmentStyle.minWidth) :
-                        state.activeWindows[0].count)*WindowStyle.maxWidth,
-            CGFloat(state.activeWindows.count)*WindowStyle.maxHeight)
+                        state.activeWindowConfigs[0].count)*WindowStyle.maxWidth,
+            CGFloat(state.activeWindowConfigs.count)*WindowStyle.maxHeight)
     }
 }

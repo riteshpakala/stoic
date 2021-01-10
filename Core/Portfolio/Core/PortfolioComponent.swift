@@ -29,7 +29,6 @@ public struct PortfolioComponent: GraniteComponent {
                     
                         Brand.Colors.black.opacity(0.36).overlay(
                             
-                            
                             Text("TEST").granite_innerShadow(
                                 Brand.Colors.white,
                                 radius: 1,
