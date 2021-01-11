@@ -18,8 +18,8 @@ public enum AssetGridType {
 }
 
 public class AssetGridState: GraniteState {
-    var securityData: [Security] {
-        payload?.object as? [Security] ?? []
+    var assetData: [Asset] {
+        payload?.object as? [Asset] ?? []
     }
     let assetGridType: AssetGridType
     public init(_ type: AssetGridType) {

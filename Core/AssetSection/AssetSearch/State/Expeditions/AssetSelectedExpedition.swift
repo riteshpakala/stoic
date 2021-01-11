@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct AssetSelectedExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = AssetGridItemContainerEvents.SecurityTapped
+    typealias ExpeditionEvent = AssetGridItemContainerEvents.AssetTapped
     typealias ExpeditionState = AssetSearchState
     
     func reduce(
@@ -21,30 +21,37 @@ struct AssetSelectedExpedition: GraniteExpedition {
 
         switch state.context {
         case .tonalCreate:
-            connection.update(\EnvironmentDependency.tone.find.ticker, value: event.security.ticker)
+            guard let security = event.asset.asSecurity else { return }
+            connection.update(\EnvironmentDependency.tone.find.ticker, value: security.ticker)
         case .portfolio:
-            event.security.addToPortfolio(moc: coreDataInstance) { portfolio in
+            guard let security = event.asset.asSecurity else { return }
+            security.addToPortfolio(moc: coreDataInstance) { portfolio in
                 if let portfolio = portfolio {
                     connection.update(\EnvironmentDependency.user.portfolio,
                                       value: portfolio)
                 }
             }
         case .floor:
+            guard let security = event.asset.asSecurity else { return }
             let location: CGPoint
             if case let .adding(point) = state.floorStage {
                 location = point
             } else {
                 location = .zero
             }
-            event.security.addToFloor(location: location, moc: coreDataInstance) { portfolio in
+            security.addToFloor(location: location, moc: coreDataInstance) { portfolio in
                 if let portfolio = portfolio {
                     connection.update(\EnvironmentDependency.user.portfolio,
                                       value: portfolio)
                 }
             }
         case .search:
-            connection.update(\EnvironmentDependency.home.ticker,
-                              value: event.security.ticker)
+            guard let security = event.asset.asSecurity else { return }
+            guard let router = connection.retrieve(\EnvironmentDependency.router) else {
+                print("{TEST} holdings does not have router")
+                return
+            }
+            router?.request(.securityDetail(.init(object: security)))
         default:
             break
         }

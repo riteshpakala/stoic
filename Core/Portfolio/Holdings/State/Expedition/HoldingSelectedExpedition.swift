@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 struct HoldingSelectedExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = AssetGridItemContainerEvents.SecurityTapped
+    typealias ExpeditionEvent = AssetGridItemContainerEvents.AssetTapped
     typealias ExpeditionState = HoldingsState
     
     func reduce(
@@ -19,7 +19,8 @@ struct HoldingSelectedExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-
+        
+        guard let security = event.asset.asSecurity else { return }
         switch state.context {
         case .portfolio:
             guard let router = connection.retrieve(\EnvironmentDependency.router) else {
@@ -27,7 +28,7 @@ struct HoldingSelectedExpedition: GraniteExpedition {
                 return
             }
             
-            router?.request(.securityDetail(.init(object: event.security)))
+            router?.request(.securityDetail(.init(object: security)))
             print("{TEST} holdings has router")
         case .floor:
             let location: CGPoint
@@ -36,7 +37,7 @@ struct HoldingSelectedExpedition: GraniteExpedition {
             } else {
                 location = .zero
             }
-            event.security.addToFloor(location: location, moc: coreDataInstance) { portfolio in
+            security.addToFloor(location: location, moc: coreDataInstance) { portfolio in
                 if let portfolio = portfolio {
                     connection.update(\EnvironmentDependency.user.portfolio,
                                       value: portfolio)

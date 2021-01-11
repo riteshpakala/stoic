@@ -16,6 +16,8 @@ extension TonalModelObject {
         return NSFetchRequest<TonalModelObject>(entityName: "TonalModelObject")
     }
 
+    @NSManaged public var id: String
+    @NSManaged public var engine: String
     @NSManaged public var date: Date
     @NSManaged public var daysTrained: Int32
     @NSManaged public var sentimentTuners: Data

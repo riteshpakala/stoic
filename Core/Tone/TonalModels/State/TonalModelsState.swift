@@ -16,6 +16,7 @@ public enum TonalModelsStage {
 }
 public class TonalModelsState: GraniteState {
     var stage: TonalModelsStage
+    var tones: [TonalModel] = []
     
     public init(_ stage: TonalModelsStage) {
         self.stage = stage
@@ -27,6 +28,10 @@ public class TonalModelsState: GraniteState {
 }
 
 public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
+    var envDependency: EnvironmentDependency {
+        dependency.hosted.env
+    }
+    
     public override var links: [GraniteLink] {
         [
             .onAppear(TonalModelsEvents.Get(), .dependant),

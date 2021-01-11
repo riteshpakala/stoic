@@ -15,7 +15,10 @@ public class AssetGridItemState: GraniteState {
         payload?.object as? Asset ?? EmptySecurity()
     }
     var security: Security {
-        asset as? Security ?? ((payload?.object as? Security) ?? EmptySecurity())
+        asset.asSecurity ?? ((payload?.object as? Security) ?? EmptySecurity())
+    }
+    var model: TonalModel? {
+        asset.asModel ?? ((payload?.object as? TonalModel))
     }
     
     var input: String = ""

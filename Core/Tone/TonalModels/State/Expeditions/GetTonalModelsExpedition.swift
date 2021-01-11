@@ -27,6 +27,8 @@ struct GetTonalModelsExpedition: GraniteExpedition {
             return
         }
         print("{TEST} fetching -- tonalmodels \(models.count)")
+        
+        state.tones = models
         if let model = models.first {
             print("{TEST} prediction: \(model.predict())")
         }

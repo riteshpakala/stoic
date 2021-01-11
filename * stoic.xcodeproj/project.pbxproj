@@ -518,6 +518,8 @@
 		7179AD0825AC9D6C003FD06F /* SaveTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AD0625AC9D6C003FD06F /* SaveTheToneExpedition.swift */; };
 		7179AD0F25AC9FE5003FD06F /* GetTonalModelsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AD0E25AC9FE5003FD06F /* GetTonalModelsExpedition.swift */; };
 		7179AD1025AC9FE5003FD06F /* GetTonalModelsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AD0E25AC9FE5003FD06F /* GetTonalModelsExpedition.swift */; };
+		7179AD1A25ACC985003FD06F /* GraniteModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AD1925ACC985003FD06F /* GraniteModal.swift */; };
+		7179AD1B25ACC985003FD06F /* GraniteModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AD1925ACC985003FD06F /* GraniteModal.swift */; };
 		7179D3BA25AC911700C82063 /* GraniteButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179D3B725AC911700C82063 /* GraniteButtonState.swift */; };
 		7179D3BB25AC911700C82063 /* GraniteButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179D3B725AC911700C82063 /* GraniteButtonState.swift */; };
 		7179D3BC25AC911700C82063 /* GraniteButtonEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179D3B825AC911700C82063 /* GraniteButtonEvents.swift */; };
@@ -997,6 +999,7 @@
 		7179ACFF25AC9B08003FD06F /* TonalModel.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalModel.CoreData.swift; sourceTree = "<group>"; };
 		7179AD0625AC9D6C003FD06F /* SaveTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveTheToneExpedition.swift; sourceTree = "<group>"; };
 		7179AD0E25AC9FE5003FD06F /* GetTonalModelsExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTonalModelsExpedition.swift; sourceTree = "<group>"; };
+		7179AD1925ACC985003FD06F /* GraniteModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteModal.swift; sourceTree = "<group>"; };
 		7179D3B725AC911700C82063 /* GraniteButtonState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteButtonState.swift; sourceTree = "<group>"; };
 		7179D3B825AC911700C82063 /* GraniteButtonEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteButtonEvents.swift; sourceTree = "<group>"; };
 		7179D3B925AC911700C82063 /* GraniteButtonComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteButtonComponent.swift; sourceTree = "<group>"; };
@@ -1623,6 +1626,7 @@
 		7125BD6325A12EED00F22717 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				7179AD1825ACC96F003FD06F /* GraniteModal */,
 				7179D3B525AC911700C82063 /* GraniteButton */,
 				7156AC0025A836FB00648941 /* GraniteToggle */,
 				7169534825A7AD2000641BCE /* GraniteScrollView */,
@@ -2369,6 +2373,14 @@
 			path = Expeditions;
 			sourceTree = "<group>";
 		};
+		7179AD1825ACC96F003FD06F /* GraniteModal */ = {
+			isa = PBXGroup;
+			children = (
+				7179AD1925ACC985003FD06F /* GraniteModal.swift */,
+			);
+			path = GraniteModal;
+			sourceTree = "<group>";
+		};
 		7179D3B525AC911700C82063 /* GraniteButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -3087,6 +3099,7 @@
 				71434359259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
 				7143433E259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
 				71F902F425AB1E8D00E6A085 /* Portfolio.CoreData.swift in Sources */,
+				7179AD1A25ACC985003FD06F /* GraniteModal.swift in Sources */,
 				710889152591B09A00795EDF /* Stock.swift in Sources */,
 				71D63EF42592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BE4625A1384A00F22717 /* SentimentSliderEvents.swift in Sources */,
@@ -3699,6 +3712,7 @@
 				710889A82591B29800795EDF /* Markets.swift in Sources */,
 				71B42FBB25A875DD00A23F4D /* HoldingsState.swift in Sources */,
 				71149EE025A7A5AA00148D68 /* SearchAssetExpedition.swift in Sources */,
+				7179AD1B25ACC985003FD06F /* GraniteModal.swift in Sources */,
 				7125BDC225A1318D00F22717 /* RangeSliderStyleConfiguration.swift in Sources */,
 				71332A1625A78D09005A72A9 /* SecurityDetailState.swift in Sources */,
 				71434327259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,

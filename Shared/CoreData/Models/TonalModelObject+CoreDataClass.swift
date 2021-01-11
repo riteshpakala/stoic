@@ -27,6 +27,8 @@ public class TonalModelObject: CoreDataManagedObject {
             forEntityName: TonalModelObject.entityName,
             in: context) ?? TonalModelObject.entity()
         self.init(entity: entity, insertInto: context)
+        self.id = UUID().uuidString
+        self.engine = TonalModels.engine
     }
     
     public static func request() -> NSFetchRequest<Model> {

@@ -70,14 +70,17 @@ public struct FloorComponent: GraniteComponent {
             switch state.floorStage {
             case .adding(_):
                 VStack {
-                    HoldingsComponent(state: inject(\.envDependency,
-                                                    target: \.holdingsFloor))
-                        .share(.init(dep(\.hosted,
-                                                         FloorCenter.route)))
-                }.frame(maxWidth: 400, maxHeight: 500)
-                .background(Brand.Colors.black)
-                .cornerRadius(6)
-                .shadow(color: Color.black, radius: 6, x: 4, y: 4)
+                    GraniteModal(content: {
+                        
+                        HoldingsComponent(state: inject(\.envDependency,
+                                                        target: \.holdingsFloor))
+                            .share(.init(dep(\.hosted,
+                                             FloorCenter.route)))
+                    }, onExitTap: {
+                        
+                        set(\.floorStage, value: .none)
+                    })
+                }
             default:
                 EmptyView.init().hidden()
             }

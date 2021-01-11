@@ -11,15 +11,22 @@ import SwiftUI
 import Combine
 
 public class AssetGridItemContainerState: GraniteState {
-    var securityData: [Security] {
-        payload?.object as? [Security] ?? []
+    var assetData: [Asset] {
+        payload?.object as? [Asset] ?? []
     }
     
     var label: String {
-        if let type = securityData.first?.securityType {
-            return "\(type)"
-        } else {
-            return "security"
+        switch assetData.first?.assetType {
+        case .model:
+            return "model"
+        case .security:
+            if let type = (assetData.first as? Security)?.securityType {
+                return "\(type)"
+            } else {
+                return "security"
+            }
+        default:
+            return "asset"
         }
     }
     

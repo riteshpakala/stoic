@@ -18,7 +18,7 @@ class EnvironmentDependency: DependencyManager {
     
     @ObservedObject
     var tone: Tone = .init()
-    
+
     var tonalModels: TonalModelsState = .init()
     
     @ObservedObject

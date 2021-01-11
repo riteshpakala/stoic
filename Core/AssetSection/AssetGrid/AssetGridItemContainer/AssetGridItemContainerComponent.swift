@@ -60,12 +60,12 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
             
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 0) {
-                    ForEach(state.securityData, id: \.securityID) { security in
-                        AssetGridItemComponent(state: .init(state.assetGridType)).payload(.init(object: security)).onTapGesture(
+                    ForEach(state.assetData, id: \.assetID) { asset in
+                        AssetGridItemComponent(state: .init(state.assetGridType)).payload(.init(object: asset)).onTapGesture(
                             perform: sendEvent(
                                 AssetGridItemContainerEvents
-                                    .SecurityTapped(
-                                        security), .contact))
+                                    .AssetTapped(
+                                        asset), .contact))
                     }.padding(.leading, Brand.Padding.medium)
                 }
             }

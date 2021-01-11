@@ -15,7 +15,7 @@ public struct TonalModel: Asset {
     let tuners: [SentimentOutput]
     let range: [Date]
     let quote: Quote
-    let id: String
+    let modelID: String
     
     var latestSecurity: Security {
         quote.securities.sortDesc.first ?? EmptySecurity()
@@ -34,7 +34,7 @@ public struct TonalModel: Asset {
         self.quote = quote
         self.range = range
         self.date = date
-        self.id = id
+        self.modelID = id
     }
     
     public func predict(_ sentiment: SentimentOutput = .neutral) -> Double {
@@ -50,6 +50,14 @@ public struct TonalModel: Asset {
 extension TonalModel {
     public var assetType: AssetType {
         .model
+    }
+    
+    public var assetID: String {
+        self.modelID
+    }
+    
+    public var idDisplay: String {
+        (self.modelID.components(separatedBy: "-").last ?? self.modelID).lowercased()
     }
 }
 

@@ -19,26 +19,25 @@ public struct AssetGridItemComponent: GraniteComponent {
     public var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text(state.security.indicator)
+                Text(state.asset.symbol)
                     .frame(
                         width: 36,
                         height: 36,
                         alignment: .center)
                     .font(Fonts.live(.title3, .bold))
                     .foregroundColor(Brand.Colors.black)
-                    .background(Brand.Colors
-                                    .marble
+                    .background(state.asset.symbolColor
                                     .granite_innerShadow(radius: 2)
                                     .cornerRadius(6.0))
                 
                 VStack(alignment: .leading) {
-                    GraniteText(state.security.ticker,
+                    GraniteText(state.asset.title,
                                 .headline,
                                 .regular,
                                 .leading)
                     
-                    GraniteText("volume: \(state.security.volumeValue.abbreviate)",
-                                Brand.Colors.marble,
+                    GraniteText(state.asset.subtitle,
+                                state.asset.symbolColor,
                                 .subheadline,
                                 .regular,
                                 .leading,
@@ -46,13 +45,13 @@ public struct AssetGridItemComponent: GraniteComponent {
                 }.padding(.trailing, 12)
                 
                 VStack {
-                    GraniteText("$\(state.security.lastValue.display)",
+                    GraniteText(state.asset.description1,
                                 Brand.Colors.marble,
                                 .headline,
                                 .regular,
                                 .trailing)
                     
-                    GraniteText("\(state.security.isGainer ? "+" : "")$\(state.security.changeAbsoluteValue.display)",
+                    GraniteText(state.asset.description1_sub,
                                 state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
                                 .subheadline,
                                 .regular,
@@ -67,7 +66,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                     switch state.assetGridType {
                     case .standard:
                         VStack(alignment: .center, spacing: 2) {
-                            GraniteText("\(state.security.changePercentValue.display)%",
+                            GraniteText(state.asset.description2,
                                         Brand.Colors.marble,
                                         .subheadline,
                                         .regular)
@@ -78,7 +77,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                         }.padding(.leading, Brand.Padding.small)
                     case .add:
                         Circle()
-                            .foregroundColor(Brand.Colors.marble).overlay(
+                            .foregroundColor(state.asset.symbolColor).overlay(
                             
                                 GraniteText("+", Brand.Colors.black, .headline, .bold)
                             

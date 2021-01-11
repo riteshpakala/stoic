@@ -42,7 +42,7 @@ public protocol Security: Asset {
 }
 
 extension Security {
-    public var securityID: String {
+    public var assetID: String {
         ticker+exchangeName+"\(lastValue)"
     }
     

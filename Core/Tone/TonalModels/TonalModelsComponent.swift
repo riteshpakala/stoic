@@ -18,7 +18,11 @@ public struct TonalModelsComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            
-        }
+            AssetGridComponent(state: .init(.add))
+                .payload(.init(object: state.tones))
+                .listen(to: command, .stop)
+        }.padding(.top, Brand.Padding.large)
+        .padding(.leading, Brand.Padding.medium)
+        .padding(.trailing, Brand.Padding.medium)
     }
 }

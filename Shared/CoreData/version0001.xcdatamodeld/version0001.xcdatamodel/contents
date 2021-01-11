@@ -81,6 +81,8 @@
     <entity name="TonalModelObject" representedClassName=".TonalModelObject" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="daysTrained" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="engine" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
         <attribute name="model" attributeType="Binary"/>
         <attribute name="range" attributeType="Binary"/>
         <attribute name="sentimentTuners" attributeType="Binary"/>
@@ -95,6 +97,6 @@
         <element name="SentimentObject" positionX="-45" positionY="-450" width="128" height="149"/>
         <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
         <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>
-        <element name="TonalModelObject" positionX="-45" positionY="-450" width="128" height="133"/>
+        <element name="TonalModelObject" positionX="-45" positionY="-450" width="128" height="163"/>
     </elements>
 </model>

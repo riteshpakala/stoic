@@ -19,10 +19,9 @@ public struct GraniteButtonComponent: GraniteComponent {
     public var body: some View {
         VStack {
             BasicButton(text: state.text)
-        }
-        .padding(.top, Brand.Padding.medium)
-        .padding(.leading, Brand.Padding.large)
-        .padding(.trailing, Brand.Padding.large)
-        .padding(.bottom, Brand.Padding.medium)
+        }.padding(.top, Brand.Padding.large)
+        .padding(.leading, Brand.Padding.medium)
+        .padding(.trailing, Brand.Padding.medium)
+        .padding(.bottom, Brand.Padding.large)
     }
 }

@@ -19,34 +19,42 @@ public struct HoldingsComponent: GraniteComponent {
     public var body: some View {
         ZStack {
             if state.addToPortfolio {
-                AssetAddComponent(state: state.assetAddState)
-                    .share(.init(dep(\.hosted)))
-                BasicButton(text: "cancel").onTapGesture {
-                    set(\.addToPortfolio, value: false)
+                VStack(spacing: 0) {
+                    AssetAddComponent(state: state.assetAddState)
+                        .share(.init(dep(\.hosted)))
+                    Spacer()
+                    PaddingVertical(Brand.Padding.xSmall)
+                    GraniteButtonComponent(state: .init("cancel")).onTapGesture {
+                        set(\.addToPortfolio, value: false)
+                    }
                 }
             } else {
                 VStack {
-                    GraniteText("portfolio",
-                                .subheadline,
-                                .regular,
-                                .leading)
-                    VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                        AssetGridComponent(state: .init(state.context == .floor ? .add : .standard))
-                            .listen(to: command)
-                            .payload(retrievePayload(\.envDependency,
-                                                     target: \.user.portfolio?.holdings.securities))
-                            
-                    }
                     VStack {
+                        GraniteText("portfolio",
+                                    .subheadline,
+                                    .regular,
+                                    .leading)
+                        VStack(alignment: .leading, spacing: Brand.Padding.medium) {
+                            AssetGridComponent(state: .init(state.context == .floor ? .add : .standard))
+                                .listen(to: command)
+                                .payload(retrievePayload(\.envDependency,
+                                                         target: \.user.portfolio?.holdings.securities))
+                                
+                        }
+                    }
+                    .padding(.top, Brand.Padding.large)
+                    .padding(.leading, Brand.Padding.medium)
+                    .padding(.trailing, Brand.Padding.medium)
+                    
+                    VStack(spacing: 0) {
                         Spacer()
-                        BasicButton(text: "create").onTapGesture {
+                        PaddingVertical(Brand.Padding.xSmall)
+                        GraniteButtonComponent(state: .init("create")).onTapGesture {
                             set(\.addToPortfolio, value: true)
                         }
-                        Spacer()
                     }
-                }.padding(.top, Brand.Padding.large)
-                .padding(.leading, Brand.Padding.large)
-                .padding(.trailing, Brand.Padding.large)
+                }
             }
         }
     }

@@ -32,7 +32,8 @@ extension TonalModelObject {
                      tuners: sentiment,
                      quote: quote.asQuote,
                      range: range,
-                     date: self.date)
+                     date: self.date,
+                     id: self.id)
     }
 }
 

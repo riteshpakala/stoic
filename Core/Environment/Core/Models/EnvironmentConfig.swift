@@ -51,7 +51,7 @@ public struct EnvironmentConfig {
                 return .init(windows: [
                             [.securityDetail(.expanded(payload)), .unassigned, .search],
                              [.unassigned, .unassigned, .unassigned],
-                             [.unassigned, .unassigned, .unassigned]
+                             [.unassigned, .unassigned, .tonalBrowser]
                         ])
             default:
                 return .init(windows: [])
