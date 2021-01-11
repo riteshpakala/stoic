@@ -20,7 +20,7 @@ public struct EnvironmentConfig {
     
     public enum PageType {
         case home
-        case floor(GranitePayload)
+        case floor
         case modelCreate
         case portfolio
         case modelBrowser
@@ -41,11 +41,11 @@ public struct EnvironmentConfig {
                              [.unassigned, .unassigned, .unassigned],
                              [.tonalCreate(.set), .unassigned, .unassigned]
                         ])
-            case .floor(let payload):
+            case .floor:
                 return .init(windows: [
-                             [.securityDetail(.preview(payload)), .securityDetail(.preview(payload)), .securityDetail(.preview(payload))],
-                             [.securityDetail(.preview(payload)), .securityDetail(.preview(payload)), .securityDetail(.preview(payload))],
-                             [.securityDetail(.preview(payload)), .securityDetail(.preview(payload)), .securityDetail(.preview(payload))]
+                             [.floor],
+                             [.unassigned],
+                             [.unassigned]
                         ])
             case .securityDetail(let payload):
                 return .init(windows: [
@@ -70,7 +70,7 @@ extension EnvironmentConfig {
     public static func route(_ item : Route) -> EnvironmentConfig {
         switch item {
         case .floor:
-            return .init(kind: .floor(.init(object: nil)))
+            return .init(kind: .floor)
         case .models:
             return .init(kind: .modelCreate)
         case .securityDetail(let payload):

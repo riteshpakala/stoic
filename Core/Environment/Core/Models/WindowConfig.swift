@@ -70,7 +70,7 @@ public enum WindowType: Hashable {
     case modelCarousel
     
     case portfolio
-    case holdings
+    case floor
     
     case special
     

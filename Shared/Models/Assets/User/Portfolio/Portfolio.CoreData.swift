@@ -45,7 +45,8 @@ extension NSManagedObjectContext {
 extension PortfolioObject {
     public var asPortfolio: Portfolio {
         return .init(self.username,
-                     .init(securities: Array(self.securities ?? .init()).asSecurities))
+                     .init(securities: Array(self.securities ?? .init()).asSecurities),
+                     self.floor?.asFloor ?? .init())
     }
     
     public static func hasSecurity(moc: NSManagedObjectContext, username: String) -> Bool {

@@ -105,6 +105,33 @@ extension Security {
             }
         }
     }
+    
+    public func addToFloor(username: String = "test",
+                               moc: NSManagedObjectContext,
+                               _ added: ((Portfolio?) -> Void)) {
+        moc.performAndWait {
+            
+            do {
+                guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
+                
+                if let portfolio = moc.getPortfolioObject(username: username) {
+                    portfolio.addToSecurities(recordedSecurity)
+                    try moc.save()
+                    added(portfolio.asPortfolio)
+                } else {
+                    let portfolio = PortfolioObject.init(context: moc)
+                    portfolio.username = username
+                    portfolio.addToSecurities(recordedSecurity)
+                    try moc.save()
+                    added(portfolio.asPortfolio)
+                }
+                
+            } catch let error {
+                added(nil)
+                print("⚠️ Error adding to portfolio \(error)")
+            }
+        }
+    }
 }
 
 extension Array where Element == SecurityObject {

@@ -23,7 +23,8 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
         
         switch state.kind {
         case .expanded(let payload),
-             .preview(let payload):
+             .preview(let payload),
+             .floor(let payload):
             guard let security = payload.object as? Security else { return }
         
             if let quote = coreDataInstance.getQuotes()?

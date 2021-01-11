@@ -18,6 +18,7 @@ extension PortfolioObject {
 
     @NSManaged public var username: String
     @NSManaged public var securities: Set<SecurityObject>?
+    @NSManaged public var floor: FloorObject?
 
 }
 

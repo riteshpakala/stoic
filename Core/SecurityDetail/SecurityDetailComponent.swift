@@ -18,6 +18,29 @@ public struct SecurityDetailComponent: GraniteComponent {
     
     public var body: some View {
         //DEV:
-        GraphComponent(state: .init(state.quote)).frame(maxWidth: .infinity, maxHeight: 500)
+        
+        ZStack {
+            if !command.center.loaded {
+                switch state.kind {
+                case .floor:
+                    Circle()
+                        .foregroundColor(Brand.Colors.marble).overlay(
+                        
+                            GraniteText("+", Brand.Colors.black, .title3, .bold)
+                        
+                        
+                        ).frame(width: 42, height: 42)
+                case .expanded, .preview:
+                    
+                    GraniteText("loading",
+                                command.center.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
+                                .subheadline,
+                                .regular,
+                                .center)
+                    
+                }
+            }
+            GraphComponent(state: .init(state.quote)).frame(maxWidth: .infinity, maxHeight: 500)
+        }
     }
 }

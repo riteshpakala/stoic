@@ -29,6 +29,9 @@ public struct WindowComponent: GraniteComponent {
             case .portfolio:
                 PortfolioComponent()
                     .share(.init(dep(\.hosted)))
+            case .floor:
+                FloorComponent()
+                    .share(.init(dep(\.hosted)))
             case .search:
                 AssetSearchComponent(state: inject(\.envDependency,
                                                       target: \.search.state))

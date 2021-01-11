@@ -164,7 +164,7 @@ struct GraphPage: View {
     var body: some View {
         VStack {
             if currentPlotData.isEmpty {
-                GraniteText("loading...", .subheadline, .regular)
+                GraniteText(""/*"loading..."*/, .subheadline, .regular)
             } else {
                 readyPageContent(plotData: currentPlotData, predictionPlotData: currentPredictionPlotData)
             }

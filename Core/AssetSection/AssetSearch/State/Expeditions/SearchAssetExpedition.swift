@@ -25,7 +25,7 @@ struct SearchAssetExpedition: GraniteExpedition {
         case .tonalCreate:
             connection.update(\EnvironmentDependency.searchTone.securities, value: event.result)
             connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
-        case .holdings:
+        case .portfolio:
             connection.update(\EnvironmentDependency.searchAdd.securities, value: event.result)
         case .search:
             connection.update(\EnvironmentDependency.search.securities, value: event.result)

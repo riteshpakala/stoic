@@ -2,7 +2,7 @@
 //  FloorObject+CoreDataProperties.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 1/8/21.
+//  Created by Ritesh Pakala on 1/10/21.
 //
 //
 
@@ -17,6 +17,7 @@ extension FloorObject {
     }
 
     @NSManaged public var securities: Set<SecurityObject>?
+    @NSManaged public var portfolio: PortfolioObject?
 
 }
 

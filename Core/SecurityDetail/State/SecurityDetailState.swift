@@ -13,6 +13,7 @@ import Combine
 public enum SecurityDetailType: ID, Hashable, Equatable {
     case expanded(GranitePayload)
     case preview(GranitePayload)
+    case floor(GranitePayload)
 }
 public class SecurityDetailState: GraniteState {
     let kind: SecurityDetailType
@@ -47,5 +48,18 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
             GetSecurityDetailExpedition.Discovery(),
             SecurityDetailResultExpedition.Discovery()
         ]
+    }
+    
+    var security: Security {
+        switch state.kind {
+        case .preview(let payload),
+             .expanded(let payload),
+             .floor(let payload):
+            return (payload.object as? Security) ?? Stock.empty
+        }
+    }
+    
+    var loaded: Bool {
+        self.state.quote != nil
     }
 }
