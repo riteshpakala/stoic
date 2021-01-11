@@ -25,6 +25,9 @@ public class TonalFindState: GraniteState {
 }
 
 public class TonalFindCenter: GraniteCenter<TonalFindState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
     }

@@ -14,10 +14,7 @@ public struct MainComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<MainCenter, MainState> = .init()
     
-    public init() {
-        
-        print("{MAIN INIT}")
-    }
+    public init() {}
     
     var controls: ControlBar {
         ControlBar(isIPhone: false,

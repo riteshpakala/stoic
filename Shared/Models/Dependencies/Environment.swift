@@ -14,10 +14,13 @@ class EnvironmentDependency: DependencyManager {
     var home: Home = .init()
     
     @ObservedObject
+    var detail: Detail = .init()
+    
+    @ObservedObject
     var tone: Tone = .init()
     
     @ObservedObject
-    var portfolio: Portfolio = .init()
+    var user: User = .init()
     
     @ObservedObject
     var searchTone: SearchQuery = .init(.init(.tonalCreate(.none)))
@@ -30,6 +33,8 @@ class EnvironmentDependency: DependencyManager {
     
     @ObservedObject
     var broadcasts: Broadcasts = .init()
+    
+    weak var router: Router? = nil
 }
 
 extension DependencyManager {

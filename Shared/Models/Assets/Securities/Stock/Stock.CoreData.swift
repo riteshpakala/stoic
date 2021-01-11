@@ -18,6 +18,7 @@ extension Stock {
         security.highValue = highValue
         security.lowValue = lowValue
         security.changePercentValue = changePercentValue
+        security.changeAbsoluteValue = changeAbsoluteValue
         security.volumeValue = volumeValue
         security.exchangeName = exchangeName
         security.intervalType = interval.rawValue

@@ -15,6 +15,8 @@ public class TonalSetState: GraniteState {
 }
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
+    let tonalRelay: TonalRelay = .init()
+    
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
     }

@@ -11,4 +11,6 @@ import SwiftUI
 import Combine
 
 struct SecurityDetailEvents {
+    public struct GetDetail: GraniteEvent {
+    }
 }

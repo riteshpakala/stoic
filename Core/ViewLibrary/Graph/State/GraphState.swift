@@ -12,6 +12,14 @@ import Combine
 
 public class GraphState: GraniteState {
     var quote: Quote? = nil
+    
+    public init(_ quote: Quote?) {
+        self.quote = quote
+    }
+    
+    public required init() {
+        self.quote = nil
+    }
 }
 
 public class GraphCenter: GraniteCenter<GraphState> {
@@ -27,12 +35,6 @@ public class GraphCenter: GraniteCenter<GraphState> {
         } else {
             return .init()
         }
-    }
-    
-    public override var expeditions: [GraniteBaseExpedition] {
-        [
-            SetTheGraphExpedition.Discovery()
-        ]
     }
 }
 

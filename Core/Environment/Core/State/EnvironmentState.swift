@@ -64,9 +64,9 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     public override var links: [GraniteLink] {
         [
             .event(\EnvironmentState.route,
-                        EnvironmentEvents.Boot()),
+                    EnvironmentEvents.Boot()),
             .event(\EnvironmentState.route,
-                        EnvironmentEvents.User())
+                    EnvironmentEvents.User(), .dependant)
         ]
     }
     

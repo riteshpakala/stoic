@@ -18,6 +18,6 @@ public struct SecurityDetailComponent: GraniteComponent {
     
     public var body: some View {
         //DEV:
-        GraphComponent().frame(maxWidth: .infinity, maxHeight: 500)
+        GraphComponent(state: .init(state.quote)).frame(maxWidth: .infinity, maxHeight: 500)
     }
 }

@@ -17,4 +17,10 @@ public class HoldingsCenter: GraniteCenter<HoldingsState> {
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
     }
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            HoldingSelectedExpedition.Discovery()
+        ]
+    }
 }

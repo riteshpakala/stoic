@@ -17,10 +17,14 @@ public class TonalTuneState: GraniteState {
 }
 
 public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    let tonalRelay: TonalRelay = .init()
+    
     public override var links: [GraniteLink] {
         [
             .relay(\TonalState.sentimentProgress,
-                   \TonalTuneState.sentimentLoadingProgress)
+                   \TonalTuneState.sentimentLoadingProgress, .always)
         ]
     }
     

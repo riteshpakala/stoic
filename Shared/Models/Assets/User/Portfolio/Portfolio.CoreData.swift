@@ -24,21 +24,37 @@ extension NSManagedObjectContext {
         return (try? self.fetch(request))
     }
     
-    public func checkExistence(username: String) -> Bool {
+    public func getPortfolioObject(username: String) -> PortfolioObject? {
         let request: NSFetchRequest = PortfolioObject.fetchRequest()
         request.predicate = NSPredicate(format: "(username == %@)",
                                         username)
         
-        return (try? self.fetch(request)) != nil
+        let objects = (try? self.fetch(request))
+        if let port = objects?.first {
+            return port
+        } else {
+            return nil
+        }
+    }
+    
+    public func getPortfolio(username: String) -> Portfolio? {
+        return self.getPortfolioObject(username: username)?.asPortfolio
     }
 }
 
 extension PortfolioObject {
-    public static func checkExistence(moc: NSManagedObjectContext, username: String) -> Bool {
+    public var asPortfolio: Portfolio {
+        return .init(self.username,
+                     .init(securities: Array(self.securities ?? .init()).asSecurities))
+    }
+    
+    public static func hasSecurity(moc: NSManagedObjectContext, username: String) -> Bool {
         let request: NSFetchRequest = PortfolioObject.fetchRequest()
         request.predicate = NSPredicate(format: "(username == %@)",
                                         username)
         
-        return (try? moc.fetch(request)) != nil
+        let objects = try? moc.fetch(request)
+        
+        return objects != nil && objects?.isNotEmpty == true
     }
 }

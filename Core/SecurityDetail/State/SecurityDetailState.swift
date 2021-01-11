@@ -10,21 +10,42 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-public enum SecurityDetailType {
-    case expanded
-    case preview
+public enum SecurityDetailType: ID, Hashable, Equatable {
+    case expanded(GranitePayload)
+    case preview(GranitePayload)
 }
 public class SecurityDetailState: GraniteState {
     let kind: SecurityDetailType
+    var quote: Quote? = nil
     
     public init(_ kind: SecurityDetailType) {
         self.kind = kind
     }
     
     public required init() {
-        self.kind = .preview
+        self.kind = .preview(.init(object: nil))
     }
 }
 
 public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    
+    var envDependency: EnvironmentDependency {
+        dependency.hosted.env
+    }
+    
+    public override var links: [GraniteLink] {
+        [
+            .event(\SecurityDetailState.kind,
+                    SecurityDetailEvents.GetDetail(), .dependant),
+        ]
+    }
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            GetSecurityDetailExpedition.Discovery(),
+            SecurityDetailResultExpedition.Discovery()
+        ]
+    }
 }

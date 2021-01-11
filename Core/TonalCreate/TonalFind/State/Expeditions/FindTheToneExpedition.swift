@@ -19,8 +19,6 @@ struct FindTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-//        state.stage = .find
-        print("{TEST} on appear")
         
         //DEV:
         // Need to also check for last trading day
@@ -37,7 +35,6 @@ struct FindTheToneExpedition: GraniteExpedition {
             .map({ $0.asQuote }) {
             
             connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
-            
             connection.request(TonalFindEvents.Parse(quote, days: state.days))
         } else {
             connection.request(StockEvents.GetStockHistory.init(ticker: ticker))

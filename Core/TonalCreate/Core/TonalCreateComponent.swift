@@ -23,25 +23,17 @@ public struct TonalCreateComponent: GraniteComponent {
                 TonalFindComponent()
                     .listen(to: command)
                     .share(.init(dep(\.hosted,
-                                     TonalSetCenter.route),
-                                 relays(
-                                    [StockRelay.self,
-                                     CryptoRelay.self])))
+                                     TonalSetCenter.route)))
             case .set:
                 TonalSetComponent()
                     .listen(to: command)
                     .share(.init(dep(\.hosted,
-                                     TonalTuneCenter.route),
-                                 relays(
-                                    [StockRelay.self,
-                                     CryptoRelay.self])))
+                                     TonalTuneCenter.route)))
             case .tune:
                 TonalTuneComponent()
                     .listen(to: command)
                     .share(.init(dep(\.hosted,
-                                     TonalCompileCenter.route),
-                                 relays(
-                                    [TonalRelay.self])))
+                                     TonalCompileCenter.route)))
             case .compile:
                 TonalCompileComponent()
                     .listen(to: command)

@@ -7,9 +7,6 @@
     <entity name="PortfolioObject" representedClassName=".PortfolioObject" syncable="YES">
         <attribute name="username" attributeType="String"/>
         <relationship name="securities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="portfolio" inverseEntity="SecurityObject"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint/>
-        </uniquenessConstraints>
     </entity>
     <entity name="QuoteObject" representedClassName=".QuoteObject" syncable="YES">
         <attribute name="exchangeName" attributeType="String"/>

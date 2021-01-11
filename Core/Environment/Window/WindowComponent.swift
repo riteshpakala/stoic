@@ -36,6 +36,8 @@ public struct WindowComponent: GraniteComponent {
                                      WindowCenter.route)))
             case .securityDetail(let kind):
                 SecurityDetailComponent(state: .init(kind))
+                    .share(.init(dep(\.hosted,
+                                     WindowCenter.route)))
             case .tonalCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
                     .share(.init(dep(\.hosted)))

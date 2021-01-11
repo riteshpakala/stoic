@@ -39,7 +39,6 @@ public struct ClockRelay: GraniteRelay {
     }
     
     public func setup() {
-        print(enabled)
         guard enabled else { return }
         gameClock.currentTimePublisher
             .sink(receiveValue: timeOutput)

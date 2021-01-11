@@ -19,8 +19,6 @@ struct SearchSecurityResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        print("{TEST} hey hey hey \(state.context)")
-        
         switch state.context {
         case .tonalCreate:
             connection.update(\EnvironmentDependency.searchTone.securities, value: event.result)

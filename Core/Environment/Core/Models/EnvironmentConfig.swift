@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import GraniteUI
 
 #if os(iOS)
 import UIKit
@@ -19,11 +20,11 @@ public struct EnvironmentConfig {
     
     public enum PageType {
         case home
-        case floor
+        case floor(GranitePayload)
         case modelCreate
         case portfolio
         case modelBrowser
-        case securityDetail
+        case securityDetail(GranitePayload)
         case settings
         
         public var page: Page {
@@ -40,15 +41,15 @@ public struct EnvironmentConfig {
                              [.unassigned, .unassigned, .unassigned],
                              [.tonalCreate(.set), .unassigned, .unassigned]
                         ])
-            case .floor:
+            case .floor(let payload):
                 return .init(windows: [
-                             [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)],
-                             [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)],
-                             [.securityDetail(.preview), .securityDetail(.preview), .securityDetail(.preview)]
+                             [.securityDetail(.preview(payload)), .securityDetail(.preview(payload)), .securityDetail(.preview(payload))],
+                             [.securityDetail(.preview(payload)), .securityDetail(.preview(payload)), .securityDetail(.preview(payload))],
+                             [.securityDetail(.preview(payload)), .securityDetail(.preview(payload)), .securityDetail(.preview(payload))]
                         ])
-            case .securityDetail:
+            case .securityDetail(let payload):
                 return .init(windows: [
-                             [.search, .unassigned, .securityDetail(.preview)],
+                             [.search, .unassigned, .securityDetail(.expanded(payload))],
                              [.unassigned, .unassigned, .unassigned],
                              [.unassigned, .unassigned, .unassigned]
                         ])
@@ -69,11 +70,11 @@ extension EnvironmentConfig {
     public static func route(_ item : Route) -> EnvironmentConfig {
         switch item {
         case .floor:
-            return .init(kind: .floor)
+            return .init(kind: .floor(.init(object: nil)))
         case .models:
             return .init(kind: .modelCreate)
-        case .securityDetail:
-            return .init(kind: .securityDetail)
+        case .securityDetail(let payload):
+            return .init(kind: .securityDetail(payload))
         default:
             return .init(kind: .home)
         }

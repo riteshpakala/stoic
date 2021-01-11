@@ -59,10 +59,9 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
             
             return
         }
-        print("{TEST} got it")
+        
         event.sentiment.save(range, moc: coreDataInstance) { success in
             if success {
-                print("{TEST} wait what")
                 range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
                     if let sentiment = sentimentResult?.sentiment {
                         connection.update(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)

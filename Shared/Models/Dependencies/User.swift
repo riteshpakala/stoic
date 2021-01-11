@@ -9,13 +9,8 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class UserDependency: DependencyManager {
-//    @ObservedObject
-//    var profile: Profile = .init()
+class User: ObservableObject {
+    
+    var portfolio: Portfolio? = nil
 }
 
-extension DependencyManager {
-    var user: UserDependency {
-        return self as? UserDependency ?? .init(identifier: "none")
-    }
-}

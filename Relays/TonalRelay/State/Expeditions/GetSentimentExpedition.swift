@@ -137,7 +137,7 @@ struct TonalHistoryExpedition: GraniteExpedition {
             print("🪔🪔🪔🪔🪔🪔\n[Sentiment] completed \(tweet.result.map { $0.date.asDouble.date().asString }.uniques)\n🪔")
             if let range = state.service.soundAggregate.range {
                 
-                connection.request(TonalEvents.GetSentiment.init(range: range))
+                connection.request(TonalEvents.GetSentiment.init(range: range), .contact)
             }
         }
     }

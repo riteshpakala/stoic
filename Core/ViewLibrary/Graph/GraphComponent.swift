@@ -18,6 +18,5 @@ public struct GraphComponent: GraniteComponent {
     
     public var body: some View {
         GraphPage(someModel: command.center.plotData)
-            .onTapGesture(perform: sendEvent(GraphEvents.Set()))
     }
 }

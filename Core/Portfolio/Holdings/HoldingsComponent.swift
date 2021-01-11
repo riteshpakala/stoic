@@ -17,7 +17,7 @@ public struct HoldingsComponent: GraniteComponent {
     public init() {}
     
     @State var addToPortfolio: Bool = false
-    
+   
     public var body: some View {
         ZStack {
             if addToPortfolio {
@@ -36,7 +36,7 @@ public struct HoldingsComponent: GraniteComponent {
                         AssetGridComponent()
                             .listen(to: command)
                             .payload(retrievePayload(\.envDependency,
-                                                     target: \.portfolio.holdings.securities))
+                                                     target: \.user.portfolio?.holdings.securities))
                             
                     }
                     VStack {

@@ -33,6 +33,29 @@ extension Security {
         
     }
     
+    public func record(to moc: NSManagedObjectContext) -> SecurityObject? {
+        switch self.securityType {
+        case .crypto:
+            let object = CryptoDataObject(context: moc)
+            if let crypto = self as? CryptoCurrency {
+                crypto.apply(to: object)
+                return object
+            } else {
+                return nil
+            }
+        case .stock:
+            let object = StockDataObject(context: moc)
+            if let stock = self as? Stock {
+                stock.apply(to: object)
+                return object
+            } else {
+                return nil
+            }
+        default:
+            return nil
+        }
+    }
+    
     public func getObject(moc: NSManagedObjectContext) -> SecurityObject? {
         let request: NSFetchRequest = SecurityObject.fetchRequest()
         request.predicate = NSPredicate(format: "(date == %@) AND (ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
@@ -56,26 +79,29 @@ extension Security {
         return getQuoteObject(moc: moc)?.asQuote
     }
     
-    public func addToPortfolio(moc: NSManagedObjectContext, _ added: ((Bool) -> Void)) {
+    public func addToPortfolio(username: String = "test",
+                               moc: NSManagedObjectContext,
+                               _ added: ((Portfolio?) -> Void)) {
         moc.performAndWait {
             
             do {
+                guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
                 
-                if moc.checkExistence(username: "test") {
-                    let object = SecurityObject(context: moc)
-                    self.apply(to: object)
-                    let portfolio = PortfolioObject.init(context: moc)
-                    portfolio.username = "test"
-                    portfolio.addToSecurities(object)
+                if let portfolio = moc.getPortfolioObject(username: username) {
+                    portfolio.addToSecurities(recordedSecurity)
                     try moc.save()
-                    added(true)
+                    added(portfolio.asPortfolio)
                 } else {
-                    added(false)
+                    let portfolio = PortfolioObject.init(context: moc)
+                    portfolio.username = username
+                    portfolio.addToSecurities(recordedSecurity)
+                    try moc.save()
+                    added(portfolio.asPortfolio)
                 }
                 
             } catch let error {
-                added(false)
-                print("{TEST} port add from sec \(error)")
+                added(nil)
+                print("⚠️ Error adding to portfolio \(error)")
             }
         }
     }

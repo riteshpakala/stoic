@@ -11,7 +11,4 @@ import SwiftUI
 import Combine
 
 public struct GraphEvents {
-    public struct Set: GraniteEvent {
-        
-    }
 }

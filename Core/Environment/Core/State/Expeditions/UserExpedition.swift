@@ -19,14 +19,10 @@ struct UserExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        
-        if let user = coreDataInstance.getUser("test"),
-           let securities = user.securities,
-           let conv = Array(securities) as? [Security] {
-            print("{TES} oh wow. \(conv.count)")
-            connection.update(\RouterDependency.router.env.portfolio.holdings.securities, value: conv, .here)
-        } else {
-            print("shit")
+        if let portfolio = coreDataInstance.getPortfolio(username: "test") {
+            connection.update(\RouterDependency.router.env.user.portfolio,
+                              value: portfolio,
+                              .here)
         }
     }
 }

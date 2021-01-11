@@ -24,18 +24,15 @@ struct AssetSelectedExpedition: GraniteExpedition {
             connection.update(\EnvironmentDependency.tone.find.ticker, value: event.security.ticker)
             connection.update(\EnvironmentDependency.tone.find.state, value: .found)
         case .holdings:
-            print("{TEST} addddded")
-            event.security.addToPortfolio(moc: coreDataInstance) { success in
-                if success {
-                    print("{TEST} yo")
-                    connection.update(\EnvironmentDependency.portfolio.holdings.tickerToAdd,
-                                      value: event.security.ticker)
-                }else {
-                    print(" oh no way")
+            event.security.addToPortfolio(moc: coreDataInstance) { portfolio in
+                if let portfolio = portfolio {
+                    connection.update(\EnvironmentDependency.user.portfolio,
+                                      value: portfolio)
                 }
             }
         case .search:
-            connection.update(\EnvironmentDependency.home.ticker, value: event.security.ticker)
+            connection.update(\EnvironmentDependency.home.ticker,
+                              value: event.security.ticker)
         default:
             break
         }
