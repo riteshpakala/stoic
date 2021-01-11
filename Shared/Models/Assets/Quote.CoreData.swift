@@ -9,8 +9,14 @@ import CoreData
 import Foundation
 
 extension NSManagedObjectContext {
-    public func getQuotes() -> [QuoteObject]? {
-        return try? self.fetch(QuoteObject.fetchRequest())
+    public func getQuotes(_ completion: @escaping(([Quote]) -> Void)) {
+        self.performAndWait {
+            if let quotes = try? self.fetch(QuoteObject.fetchRequest()) as? [QuoteObject] {
+                completion(quotes.map { $0.asQuote })
+            } else {
+                completion([])
+            }
+        }
     }
 }
 

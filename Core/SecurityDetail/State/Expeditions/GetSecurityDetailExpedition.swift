@@ -27,20 +27,20 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
              .floor(let payload):
             guard let security = payload.object as? Security else { return }
         
-            if let quote = coreDataInstance.getQuotes()?
-                .first(where: { $0.ticker == security.ticker &&
-                        $0.intervalType == SecurityInterval.day.rawValue })
-                .map({ $0.asQuote }) {
-
-                state.quote = quote
-            } else {
-                guard let isFetching = connection.retrieve(\EnvironmentDependency.detail.isFetching),
-                      !isFetching else {
-                    return
+            coreDataInstance.getQuotes { result in
+                if let quote = result.first(where: { $0.ticker == security.ticker &&
+                                                $0.intervalType == .day }) {
+                    
+                    state.quote = quote
+                } else {
+                    guard let isFetching = connection.retrieve(\EnvironmentDependency.detail.isFetching),
+                          !isFetching else {
+                        return
+                    }
+                    connection.update(\EnvironmentDependency.detail.isFetching, value: true)
+                    
+                    connection.request(StockEvents.GetStockHistory.init(ticker: security.ticker))
                 }
-                connection.update(\EnvironmentDependency.detail.isFetching, value: true)
-                
-                connection.request(StockEvents.GetStockHistory.init(ticker: security.ticker))
             }
             break
         }

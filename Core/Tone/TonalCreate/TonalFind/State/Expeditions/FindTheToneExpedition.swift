@@ -44,14 +44,14 @@ struct FindTheToneExpedition: GraniteExpedition {
         
         guard let ticker = find.ticker else { return }
         
-        if let quote = coreDataInstance.getQuotes()?
-            .first(where: { $0.ticker == ticker &&
-                    $0.intervalType == SecurityInterval.day.rawValue })
-            .map({ $0.asQuote }) {
-
-            connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
-        } else {
-            connection.request(StockEvents.GetStockHistory.init(ticker: ticker))
+        coreDataInstance.getQuotes { result in
+            if let quote = result.first(where: { $0.ticker == ticker &&
+                                            $0.intervalType == .day }) {
+                
+                connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
+            } else {
+                connection.request(StockEvents.GetStockHistory.init(ticker: ticker))
+            }
         }
     }
 }

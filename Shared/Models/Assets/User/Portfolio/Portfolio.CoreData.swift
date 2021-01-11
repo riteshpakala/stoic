@@ -45,7 +45,7 @@ extension NSManagedObjectContext {
 extension PortfolioObject {
     public var asPortfolio: Portfolio {
         return .init(self.username,
-                     .init(securities: Array(self.securities ?? .init()).asSecurities),
+                     .init(securities: Array(self.securities ?? .init()).asSecurities.sortDesc),
                      self.floor?.compactMap( { $0.asFloor }) ?? [])
     }
     

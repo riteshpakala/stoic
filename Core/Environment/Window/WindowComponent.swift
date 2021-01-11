@@ -55,6 +55,6 @@ public struct WindowComponent: GraniteComponent {
             }
         }.frame(maxWidth: .infinity,
                 maxHeight: .infinity,
-                alignment: .center)//.animation(.default)
+                alignment: .center).animation(.default)
     }
 }
