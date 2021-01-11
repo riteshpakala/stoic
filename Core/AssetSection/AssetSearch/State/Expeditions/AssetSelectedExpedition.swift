@@ -51,6 +51,8 @@ struct AssetSelectedExpedition: GraniteExpedition {
                 print("{TEST} holdings does not have router")
                 return
             }
+            connection.update(\EnvironmentDependency.tonalModels.type,
+                              value: .specified(security))
             router?.request(.securityDetail(.init(object: security)))
         default:
             break

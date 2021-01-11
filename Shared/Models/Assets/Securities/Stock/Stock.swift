@@ -106,7 +106,8 @@ extension StockServiceModels.Stock {
         var stocks: [Stock] = []
         for index in 0..<smallestArray {
             let close = quote.close[index] ?? 0.0
-            let lastClose = index + 1 < quote.close.count ? quote.close[index + 1] ?? close : close
+            
+            let lastClose = index - 1 > 0 ? quote.close[index - 1] ?? close : close
             
             let changePercent = (close - lastClose) / close
             let changeAbsolue = close - lastClose
@@ -130,9 +131,3 @@ extension StockServiceModels.Stock {
         return stocks
     }
 }
-
-//extension SecurityObject {
-//    public func asStocks(interval: SecurityInterval = .day) -> Security {
-//        return Stock.init(ticker: ticker, date: date, open: dat, high: <#T##Double#>, low: <#T##Double#>, close: <#T##Double#>, volume: <#T##Double#>, changePercent: <#T##Double#>, changeAbsolute: <#T##Double#>, interval: <#T##SecurityInterval#>, exchangeName: <#T##String#>)
-//    }
-//}

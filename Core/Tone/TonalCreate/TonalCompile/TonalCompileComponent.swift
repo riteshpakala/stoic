@@ -39,11 +39,11 @@ public struct TonalCompileComponent: GraniteComponent {
             }
             
             if command.center.compileState == .readyToCompile {
-                BasicButton(text: "compile").onTapGesture {
+                GraniteButtonComponent(state: .init("compile")).onTapGesture {
                     sendEvent(TonalCompileEvents.Compile())
                 }
             } else if command.center.compileState == .compiled {
-                BasicButton(text: "save").onTapGesture {
+                GraniteButtonComponent(state: .init("save")).onTapGesture {
                     sendEvent(TonalCompileEvents.Save())
                 }
             }

@@ -96,7 +96,7 @@ struct TonalHistoryExpedition: GraniteExpedition {
         
         //TODO: abstract this out to be focused on social
         //to make way for the other Tonal categories
-        let chunks = tweet.result.chunked(into: ceil(tweet.result.count.asDouble/state.modelThreads.asDouble).asInt)
+        let chunks = tweet.result.chunked(into: ceil(max(tweet.result.count.asDouble/state.modelThreads.asDouble, 1)).asInt)
         
         var currentOps: [BlockOperation] = []
         for (_, chunk) in chunks.enumerated() {

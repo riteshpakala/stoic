@@ -35,11 +35,17 @@ extension TonalSentiment {
                 
                 for object in securityObjects {
                     let date = object.date.simple
-                    print("{TEST} saving = \(date)")
+//                    print("{TEST} saving = \(date)")
                     object.addToSentiment(
                         NSSet.init(
                             array: sentimentObjects
                                 .filter( { $0.date.simple == date })))
+                    
+                    sentimentObjects.forEach { sentiment in
+                        if sentiment.date.simple == object.date {
+                            sentiment.security = object
+                        }
+                    }
                 }
                 
                 try moc.save()

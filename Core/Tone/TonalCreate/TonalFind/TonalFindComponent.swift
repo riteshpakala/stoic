@@ -48,6 +48,7 @@ public struct TonalFindComponent: GraniteComponent {
                                          target: \.tone.find.sliderDays))
                         .listen(to: command)
                         .padding(.top, Brand.Padding.medium)
+                        .padding(.bottom, Brand.Padding.medium)
                     
                     GraniteText("\(command.center.daysSelected) days", .subheadline, .regular)
                 }

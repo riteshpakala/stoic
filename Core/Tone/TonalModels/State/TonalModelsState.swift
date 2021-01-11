@@ -14,20 +14,38 @@ public enum TonalModelsStage {
     case fetching
     case none
 }
+
+public enum TonalModelsType {
+    case specified(Security)
+    case general
+}
+
 public class TonalModelsState: GraniteState {
     var stage: TonalModelsStage
     var tones: [TonalModel] = []
+    var type: TonalModelsType
     
     public init(_ stage: TonalModelsStage) {
         self.stage = stage
+        self.type = .general
     }
     
     public required init() {
         self.stage = .none
+        self.type = .general
     }
 }
 
 public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
+    var createText: String {
+        switch state.type {
+        case .specified(let security):
+            return "generate a \(security.display) model"
+        case .general:
+            return "create a model"
+        }
+    }
+    
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
     }

@@ -27,7 +27,8 @@ struct HoldingSelectedExpedition: GraniteExpedition {
                 print("{TEST} holdings does not have router")
                 return
             }
-            
+            connection.update(\EnvironmentDependency.tonalModels.type,
+                              value: .specified(security))
             router?.request(.securityDetail(.init(object: security)))
             print("{TEST} holdings has router")
         case .floor:

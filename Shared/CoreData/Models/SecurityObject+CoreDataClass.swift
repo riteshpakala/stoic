@@ -12,5 +12,7 @@ import GraniteUI
 
 
 public class SecurityObject: NSManagedObject {
-  
+    public var securityID: String {
+        ticker+exchangeName
+    }
 }

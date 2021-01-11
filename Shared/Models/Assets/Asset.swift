@@ -56,15 +56,15 @@ extension TonalModel {
     }
     
     public var description1: String {
-        "\(self.quote.securities.first?.description1 ?? "")"
+        self.latestSecurity.description1
     }
     
     public var description1_sub: String {
-        "\(self.quote.securities.first?.description1_sub ?? "")"
+        self.latestSecurity.description1_sub
     }
     
     public var description2: String {
-        "\(self.quote.securities.first?.description2 ?? "")"
+        self.latestSecurity.description2
     }
 }
 

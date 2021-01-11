@@ -16,10 +16,7 @@ public struct TonalModel: Asset {
     let range: [Date]
     let quote: Quote
     let modelID: String
-    
-    var latestSecurity: Security {
-        quote.securities.sortDesc.first ?? EmptySecurity()
-    }
+    var latestSecurity: Security
     
     public init(_ david: TonalModels,
                 daysTrained: Int,
@@ -35,6 +32,7 @@ public struct TonalModel: Asset {
         self.range = range
         self.date = date
         self.modelID = id
+        self.latestSecurity = quote.securities.sortDesc.first ?? EmptySecurity()
     }
     
     public func predict(_ sentiment: SentimentOutput = .neutral) -> Double {

@@ -68,10 +68,9 @@ public struct TonalTuneComponent: GraniteComponent {
                 .padding(.leading, Brand.Padding.medium)
                 .padding(.trailing, Brand.Padding.medium)
                 
-                BasicButton(text: "tune").onTapGesture {
+                GraniteButtonComponent(state: .init("tune")).onTapGesture {
                     sendEvent(TonalTuneEvents.Tune())
                 }
-                .padding(.bottom, Brand.Padding.medium)
                 
             } else {
                 

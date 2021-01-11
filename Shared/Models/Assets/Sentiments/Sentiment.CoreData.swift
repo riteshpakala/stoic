@@ -21,10 +21,12 @@ extension NSManagedObjectContext {
         let dates = range.datesExpanded.map { $0.simple }
         let securities = quote.securities
         let securitiesFiltered = securities.filter { dates.contains($0.date.simple) }
-        
+         
         guard let sentimentObjects = self.getSentimentObject(
                                         startDate: range.datesExpanded.min() ?? .today,
-                                        endDate: range.datesExpanded.max() ?? .today) else {
+                                        endDate: range.datesExpanded.max() ?? .today,
+                                        ticker: quote.ticker,
+                                        exchangeName: quote.exchangeName ) else {
             return nil
         }
         
@@ -54,12 +56,16 @@ extension NSManagedObjectContext {
     }
     
     public func getSentimentObject(startDate: Date,
-                                   endDate: Date) -> [SentimentObject]? {
+                                   endDate: Date,
+                                   ticker: String,
+                                   exchangeName: String) -> [SentimentObject]? {
         print("{TEST} \(startDate.advanced(by: -1) as NSDate) \(endDate.advanceDate(value: 1) as NSDate)")
         let request: NSFetchRequest = SentimentObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(date >= %@) AND (date <= %@)",
+        request.predicate = NSPredicate(format: "(date >= %@) AND (date <= %@) AND (security.ticker == %@) AND (security.exchangeName == %@)",
                                         startDate.advanceDate(value: -1) as NSDate,
-                                        endDate.advanceDate(value: 1) as NSDate)
+                                        endDate.advanceDate(value: 1) as NSDate,
+                                        ticker,
+                                        exchangeName)
         return try? self.fetch(request)
     }
 }
