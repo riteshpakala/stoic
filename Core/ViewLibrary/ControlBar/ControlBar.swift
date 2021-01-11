@@ -14,30 +14,28 @@ public struct ControlBar: View {
     var onRoute: ((Route) -> Void)
     
     public var body: some View {
-        VStack {
-            if isIPhone {
-                HStack(alignment: .center) {
-                    
-                    actions
-                    
-                }.frame(minWidth: 100,
-                        maxWidth: 120,
-                        maxHeight: .infinity,
-                        alignment: .center)
-            } else {
-                VStack(alignment: .leading) {
-                    
-                    actions
-                    
-                    Spacer()
-                    
-                }.frame(minWidth: 100,
-                        maxWidth: 175,
-                        maxHeight: .infinity,
-                        alignment: .center)
-                        .padding(.top, Brand.Padding.large*2)
-                        .padding(.leading, Brand.Padding.large+Brand.Padding.medium)
-            }
+        if isIPhone {
+            HStack(alignment: .center) {
+                Spacer()
+                actions
+                Spacer()
+            }.frame(maxWidth: .infinity,
+                    minHeight: 36,
+                    maxHeight: 42,
+                    alignment: .center)
+        } else {
+            VStack(alignment: .leading) {
+                
+                actions
+                
+                Spacer()
+                
+            }.frame(minWidth: 100,
+                    maxWidth: 175,
+                    maxHeight: .infinity,
+                    alignment: .center)
+                    .padding(.top, Brand.Padding.large*2)
+                    .padding(.leading, Brand.Padding.large+Brand.Padding.medium)
         }
     }
     
@@ -51,12 +49,14 @@ public struct ControlBar: View {
                     .frame(width: 24, height: 24, alignment: .leading)
                     .padding(.trailing, Brand.Padding.medium)
                 
-                GraniteText("home",
-                            .title3,
-                            .regular,
-                            .leading,
-                            style: .disabled,
-                            selected: currentRoute == .home)
+                if !isIPhone {
+                    GraniteText("home",
+                                .title3,
+                                .regular,
+                                .leading,
+                                style: .disabled,
+                                selected: currentRoute == .home)
+                }
                
             }.onTapGesture {
                 onRoute(.home)
@@ -72,12 +72,14 @@ public struct ControlBar: View {
                     .frame(width: 24, height: 24, alignment: .leading)
                     .padding(.trailing, Brand.Padding.medium)
                 
-                GraniteText("floor",
-                            .title3,
-                            .regular,
-                            .leading,
-                            style: .disabled,
-                            selected: currentRoute == .floor)
+                if !isIPhone {
+                    GraniteText("floor",
+                                .title3,
+                                .regular,
+                                .leading,
+                                style: .disabled,
+                                selected: currentRoute == .floor)
+                }
             }.onTapGesture {
                 onRoute(.floor)
             }
@@ -90,12 +92,14 @@ public struct ControlBar: View {
                     .frame(width: 24, height: 24, alignment: .leading)
                     .padding(.trailing, Brand.Padding.medium)
                 
-                GraniteText("models",
-                            .title3,
-                            .regular,
-                            .leading,
-                            style: .disabled,
-                            selected: currentRoute == .models)
+                if !isIPhone {
+                    GraniteText("models",
+                                .title3,
+                                .regular,
+                                .leading,
+                                style: .disabled,
+                                selected: currentRoute == .models)
+                }
             }.onTapGesture {
                 onRoute(.models)
             }
@@ -108,24 +112,35 @@ public struct ControlBar: View {
                     .frame(width: 24, height: 24, alignment: .leading)
                     .padding(.trailing, Brand.Padding.medium)
                 
-                GraniteText("settings",
-                            .title3,
-                            .regular,
-                            .leading,
-                            style: .disabled,
-                            selected: currentRoute == .settings)
+                if !isIPhone {
+                    GraniteText("settings",
+                                .title3,
+                                .regular,
+                                .leading,
+                                style: .disabled,
+                                selected: currentRoute == .settings)
+                }
             }.onTapGesture {
                 onRoute(.settings)
             }
             
             Spacer().frame(width: Brand.Padding.large, height: Brand.Padding.large)
             HStack {
-                GraniteText("debug",
-                            Brand.Colors.red,
-                            .title3,
-                            .bold,
-                            .leading,
-                            style: .disabled)
+                if !isIPhone {
+                    GraniteText("debug",
+                                Brand.Colors.red,
+                                .title3,
+                                .bold,
+                                .leading,
+                                style: .disabled)
+                } else {
+                    GraniteText("d",
+                                Brand.Colors.red,
+                                .title3,
+                                .bold,
+                                .leading,
+                                style: .disabled)
+                }
             }.onTapGesture {
                 onRoute(.debug(.models))
             }

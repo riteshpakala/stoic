@@ -40,24 +40,28 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     //TODO:
     //Memory leaks with Subscribers that are not cancelled
     //during component re-draw phases of an application
-    var clockRelay: ClockRelay {
-        var clock = ClockRelay([StockEvents.GetMovers(),
-                                CryptoEvents.GetMovers()])
-
-        clock.enabled = false//state.config.kind == .home
-
-        return clock
-    }
+//    var clockRelay: ClockRelay {
+//        var clock = ClockRelay([StockEvents.GetMovers(),
+//                                CryptoEvents.GetMovers()])
+//
+//        clock.enabled = false//state.config.kind == .home
+//
+//        return clock
+//    }
     
     //Dependencies
+    lazy var routerDependency: RouterDependency = {
+        self.hosted.fetch
+    }()
+    
     lazy var envDependency: EnvironmentDependency = {
-        self.hosted.fetch.router.env.bind(self)
+        routerDependency.router.env.bind(self)
     }()
     //
     
     public override var relays: [GraniteBaseRelay] {
         [
-            clockRelay
+//            clockRelay
         ]
     }
     

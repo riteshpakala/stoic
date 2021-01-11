@@ -8,6 +8,7 @@
 import Foundation
 import GraniteUI
 import CoreData
+import CoreGraphics
 
 extension Security {
     public func apply(to quote: QuoteObject) {

@@ -20,6 +20,7 @@ public struct EnvironmentConfig {
     
     public enum PageType {
         case home
+        case intro
         case floor
         case modelCreate
         case portfolio
@@ -29,6 +30,12 @@ public struct EnvironmentConfig {
         
         public var page: Page {
             switch self {
+            case .intro:
+                return .init(windows: [
+                    [ .special ],
+                    [ .unassigned ],
+                    [ .unassigned ]
+                ])
             case .home:
                 return .init(windows: [
                             [ .search, .topVolume(.stock), .portfolio],
@@ -75,6 +82,8 @@ extension EnvironmentConfig {
             return .init(kind: .modelCreate)
         case .securityDetail(let payload):
             return .init(kind: .securityDetail(payload))
+        case .intro:
+            return .init(kind: .intro)
         default:
             return .init(kind: .home)
         }
@@ -83,7 +92,7 @@ extension EnvironmentConfig {
 
 extension EnvironmentConfig {
     public static var maxWindows: CGSize {
-        EnvironmentConfig.isDesktop ? .init(3, 3) : .init(3, 4)
+        EnvironmentConfig.isDesktop ? .init(3, 3) : .init(3, 3)
         //iPad can have 3, although mobile should be 1 width, mobile should also be scrollable the rest fixed
     }
     

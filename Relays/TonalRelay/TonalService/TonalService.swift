@@ -11,11 +11,9 @@ import SwiftUI
 
 public class TonalService {
     internal let session: URLSession
-    internal let decoder: JSONDecoder
     
-    public init(session: URLSession = .shared, decoder: JSONDecoder = .init()) {
+    public init(session: URLSession = .shared) {
         self.session = session
-        self.decoder = decoder
     }
     
     public func stoicV1(matching query: String, since pastDate: String, until toDate: String, count: Int = 100) -> String {

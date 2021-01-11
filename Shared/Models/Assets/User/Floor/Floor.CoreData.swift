@@ -8,6 +8,7 @@
 import Foundation
 import GraniteUI
 import CoreData
+import CoreGraphics
 
 extension FloorObject {
     var asFloor: Floor {

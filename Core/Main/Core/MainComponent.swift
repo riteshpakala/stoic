@@ -16,14 +16,6 @@ public struct MainComponent: GraniteComponent {
     
     public init() {}
     
-    var controls: ControlBar {
-        ControlBar(isIPhone: false,
-                   currentRoute: command.center.routerDependency.router.route,
-                   onRoute: { route in
-            command.update(\RouterDependency.router.route, value: route)
-        })
-    }
-    
     var environment: EnvironmentComponent {
         EnvironmentComponent(state: .init(inject(\.routerDependency,
                                                         target: \.router.route)))
@@ -46,7 +38,6 @@ public struct MainComponent: GraniteComponent {
 //            }
 //        } else {
             HStack(spacing: Brand.Padding.small) {
-                controls
                 environment.share(.init(dep(\.hosted)))
             }
             

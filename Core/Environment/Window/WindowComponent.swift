@@ -48,11 +48,13 @@ public struct WindowComponent: GraniteComponent {
                 TonalModelsComponent(state: inject(\.envDependency,
                                                    target: \.tonalModels))
                     .share(.init(dep(\.hosted)))
+            case .special:
+                SpecialComponent()
             default:
                 EmptyView.init()
             }
         }.frame(maxWidth: .infinity,
                 maxHeight: .infinity,
-                alignment: .center).animation(.default)
+                alignment: .center)//.animation(.default)
     }
 }

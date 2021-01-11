@@ -10,11 +10,9 @@ import Combine
 
 public class StockService {
     internal let session: URLSession
-    internal let decoder: JSONDecoder
     
-    public init(session: URLSession = .shared, decoder: JSONDecoder = .init()) {
+    public init(session: URLSession = .shared) {
         self.session = session
-        self.decoder = decoder
     }
     
     public enum Exchanges: String {

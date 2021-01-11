@@ -28,29 +28,66 @@ public struct EnvironmentComponent: GraniteComponent {
         state.activeWindowConfigs.count
     }
     
+    var controls: ControlBar {
+        ControlBar(isIPhone: EnvironmentConfig.isIPhone,
+                   currentRoute: command.center.routerDependency.router.route,
+                   onRoute: { route in
+            command.center.routerDependency.router.request(route)
+        })
+    }
     
     public var body: some View {
-       
-        HStack(spacing: Brand.Padding.small) {
-            //Max Windows Height
-            ForEach(0..<maxHeight, id: \.self) { col in
-                VStack(spacing: Brand.Padding.small) {
-                    ForEach(0..<maxWidth, id: \.self) { row in
-                        if row < state.activeWindowConfigs.count,
-                           col < state.activeWindowConfigs[row].count,
-                           state.activeWindowConfigs[row][col].kind != .unassigned {
-                            
-                            getWindow(row, col, state.activeWindowConfigs[row][col])
+        if EnvironmentConfig.isIPhone {
+            VStack(alignment: .center, spacing: Brand.Padding.small) {
+                ScrollView {
+                    //Max Windows Height
+                    ForEach(0..<maxHeight, id: \.self) { col in
+                        VStack(spacing: Brand.Padding.small) {
+                            ForEach(0..<maxWidth, id: \.self) { row in
+                                if row < state.activeWindowConfigs.count,
+                                   col < state.activeWindowConfigs[row].count,
+                                   state.activeWindowConfigs[row][col].kind != .unassigned {
+                                    
+                                    getWindow(row, col, state.activeWindowConfigs[row][col])
+                                }
+                            }
                         }
                     }
                 }
-            }
-            
-        }.frame(minWidth: 0,
-                maxWidth: .infinity,
-                minHeight: 0,
-                maxHeight: .infinity,
-                alignment: .center)
+                
+                controls
+                
+            }.frame(minWidth: 0,
+                    maxWidth: .infinity,
+                    minHeight: 0,
+                    maxHeight: 1800,
+                    alignment: .center)
+        } else {
+        
+        
+            HStack(spacing: Brand.Padding.small) {
+                controls
+                
+                //Max Windows Height
+                ForEach(0..<maxHeight, id: \.self) { col in
+                    VStack(spacing: Brand.Padding.small) {
+                        ForEach(0..<maxWidth, id: \.self) { row in
+                            if row < state.activeWindowConfigs.count,
+                               col < state.activeWindowConfigs[row].count,
+                               state.activeWindowConfigs[row][col].kind != .unassigned {
+                                
+                                getWindow(row, col, state.activeWindowConfigs[row][col])
+                            }
+                        }
+                    }
+                }
+                
+            }.frame(minWidth: 0,
+                    maxWidth: .infinity,
+                    minHeight: 0,
+                    maxHeight: .infinity,
+                    alignment: .center)
+        }
     }
 }
 

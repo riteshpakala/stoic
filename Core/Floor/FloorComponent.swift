@@ -34,38 +34,20 @@ public struct FloorComponent: GraniteComponent {
     
     public var body: some View {
         ZStack {
-            HStack(spacing: Brand.Padding.small) {
-                //Max Windows Height
-                ForEach(0..<maxHeight, id: \.self) { col in
+            
+            if EnvironmentConfig.isIPhone {
+                ScrollView {
                     VStack(spacing: Brand.Padding.small) {
-                        ForEach(0..<maxWidth, id: \.self) { row in
-                            if row < state.activeSecurities.count,
-                               col < state.activeSecurities[row].count{
-                                
-                                if let security = getSecurity(row: row, col: col) {
-                                    SecurityDetailComponent(state: .init(.floor(.init(object: security))))
-                                        .share(.init(dep(\.hosted,
-                                                     FloorCenter.route))).background(Brand.Colors.black)
-                                } else {
-                                    HStack {
-                                        Spacer()
-                                        Circle()
-                                            .foregroundColor(Brand.Colors.marble).overlay(
-                                            
-                                                GraniteText("+", Brand.Colors.black, .title3, .bold)
-                                            
-                                            )
-                                            .frame(width: 42, height: 42)
-                                            .onTapGesture(perform: sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col))))
-                                        Spacer()
-                                    }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Brand.Colors.black)
-                                }
-                            }
-                        }
+                        generate
                     }
+                    .background(Color.black)
                 }
+            } else {
+                HStack(spacing: Brand.Padding.small) {
+                    generate
+                }
+                .background(Color.black)
             }
-            .background(Color.black)
             
             switch state.floorStage {
             case .adding(_):
@@ -83,6 +65,38 @@ public struct FloorComponent: GraniteComponent {
                 }
             default:
                 EmptyView.init().hidden()
+            }
+        }
+    }
+    
+    var generate: some View {
+        //Max Windows Height
+        ForEach(0..<maxHeight, id: \.self) { col in
+            VStack(spacing: Brand.Padding.small) {
+                ForEach(0..<maxWidth, id: \.self) { row in
+                    if row < state.activeSecurities.count,
+                       col < state.activeSecurities[row].count{
+                        
+                        if let security = getSecurity(row: row, col: col) {
+                            SecurityDetailComponent(state: .init(.floor(.init(object: security))))
+                                .share(.init(dep(\.hosted,
+                                             FloorCenter.route))).background(Brand.Colors.black)
+                        } else {
+                            HStack {
+                                Spacer()
+                                Circle()
+                                    .foregroundColor(Brand.Colors.marble).overlay(
+                                    
+                                        GraniteText("+", Brand.Colors.black, .title3, .bold)
+                                    
+                                    )
+                                    .frame(width: 42, height: 42)
+                                    .onTapGesture(perform: sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col))))
+                                Spacer()
+                            }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Brand.Colors.black)
+                        }
+                    }
+                }
             }
         }
     }

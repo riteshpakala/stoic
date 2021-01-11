@@ -29,10 +29,12 @@ public struct PortfolioComponent: GraniteComponent {
                     
                         Brand.Colors.black.opacity(0.36).overlay(
                             
-                            Text("TEST").granite_innerShadow(
-                                Brand.Colors.white,
-                                radius: 1,
-                                offset: .init(x: 0.5, y: 0.5))
+                            
+//                            Text("TEST").granite_innerShadow(
+//                                Brand.Colors.white,
+//                                radius: 1,
+//                                offset: .init(x: 0.5, y: 0.5))
+                            GraniteText("TEST")
                             .multilineTextAlignment(.center)
                             .font(Fonts.live(.subheadline, .bold))
                             

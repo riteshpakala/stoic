@@ -11,6 +11,7 @@ import SwiftUI
 
 public indirect enum Route: ID, Equatable {
     case home
+    case intro
     case floor
     case models
     case settings

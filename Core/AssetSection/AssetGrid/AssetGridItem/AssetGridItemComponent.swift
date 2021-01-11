@@ -27,7 +27,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                     .font(Fonts.live(.title3, .bold))
                     .foregroundColor(Brand.Colors.black)
                     .background(state.asset.symbolColor
-                                    .granite_innerShadow(radius: 2)
+//                                    .granite_innerShadow(radius: 2)
                                     .cornerRadius(6.0))
                 
                 VStack(alignment: .leading) {

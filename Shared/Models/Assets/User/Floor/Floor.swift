@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import CoreGraphics
 
 public struct Floor {
     var security: Security?

@@ -17,25 +17,8 @@ extension Double {
         return Double(arc4random()) / Double(UINT32_MAX) * abs(self - secondNum) + min(self, secondNum)
     }
     
-    func display(_ digits: Int = 2) -> String  {
-        let customFormatter = NumberFormatter()
-        customFormatter.roundingMode = .down
-        customFormatter.maximumFractionDigits = digits
-        
-        return String.init(format: customFormatter.format, self)
-    }
-    
     var display: String {
         String(format: "%.2f", self)
-    }
-    
-    func percent(_ digits: Int = 2) -> String  {
-        let customFormatter = NumberFormatter()
-        customFormatter.roundingMode = .down
-        customFormatter.numberStyle = .percent
-        customFormatter.maximumFractionDigits = digits
-        
-        return String.init(format: customFormatter.format, self)
     }
     
     var percent: String {

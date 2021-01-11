@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 public struct FloorConfig {
     public static var maxWindows: CGSize {

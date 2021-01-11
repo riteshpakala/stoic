@@ -8,6 +8,7 @@
 import GraniteUI
 import SwiftUI
 import Combine
+import CoreData
 
 struct GetStockHistoryExpedition: GraniteExpedition {
     typealias ExpeditionEvent = StockEvents.GetStockHistory
