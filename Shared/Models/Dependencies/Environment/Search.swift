@@ -14,7 +14,7 @@ class SearchDependency: DependencyManager {
     var search: SearchQuery = .init()
 }
 
-class SearchQuery: ObservableObject {
+public class SearchQuery: ObservableObject {
     var state: AssetSearchState
     var securities: [Security] = []
     

@@ -14,15 +14,19 @@ public class AssetSearchState: GraniteState {
     let searchState: SearchState
     var securityData: [Security] = []
     let context: WindowType
+    var floorStage: FloorStage
     
-    public init(_ context: WindowType) {
+    public init(_ context: WindowType,
+                floorStage: FloorStage? = nil) {
         self.context = context
         self.searchState = .init(context)
+        self.floorStage = floorStage ?? .none
     }
     
     public required init() {
         self.context = .unassigned
         self.searchState = .init()
+        self.floorStage = .none
     }
 }
 

@@ -30,6 +30,19 @@ struct AssetSelectedExpedition: GraniteExpedition {
                                       value: portfolio)
                 }
             }
+        case .floor:
+            let location: CGPoint
+            if case let .adding(point) = state.floorStage {
+                location = point
+            } else {
+                location = .zero
+            }
+            event.security.addToFloor(location: location, moc: coreDataInstance) { portfolio in
+                if let portfolio = portfolio {
+                    connection.update(\EnvironmentDependency.user.portfolio,
+                                      value: portfolio)
+                }
+            }
         case .search:
             connection.update(\EnvironmentDependency.home.ticker,
                               value: event.security.ticker)

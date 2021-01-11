@@ -22,14 +22,21 @@ struct GetFloorExpedition: GraniteExpedition {
         
         print("{TEST} heyyy")
         
+        if let stage = connection.retrieve(\EnvironmentDependency.holdingsFloor.floorStage) {
+            print("{TEST} yoo \(stage)")
+            state.floorStage = stage
+        }
+        
         guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
-              let floor = portfolio?.floor else {
+              let floors = portfolio?.floors else {
+            empty(state)
             return
         }
         
-        if floor.securities.isEmpty == true {
+        if floors.isEmpty {
+            empty(state)
+        } else {
             var securities: [[Security?]] = []
-            //
             var cols: [Int] = .init(repeating: 0, count: FloorConfig.maxWindows.width.asInt)
             cols = cols.enumerated().map { $0.offset }
             //
@@ -38,7 +45,14 @@ struct GetFloorExpedition: GraniteExpedition {
                 var securitiesRow: [Security?] = []
 
                 for col in cols {
-                    securitiesRow.append(nil)
+                    let point: CGPoint = .init(row, col)
+                    securitiesRow.append(floors.first(where: {
+                                                        
+                                                        print($0.location)
+                                                        print(point)
+                                                        print($0.location == point)
+                                                        
+                                                        return $0.location == point })?.security)
                 }
                 
                 securities.append(securitiesRow)
@@ -46,5 +60,26 @@ struct GetFloorExpedition: GraniteExpedition {
 
             state.activeSecurities = securities
         }
+        
+    }
+    
+    func empty(_ state: ExpeditionState) {
+        var securities: [[Security?]] = []
+        //
+        var cols: [Int] = .init(repeating: 0, count: FloorConfig.maxWindows.width.asInt)
+        cols = cols.enumerated().map { $0.offset }
+        //
+
+        for row in 0..<FloorConfig.maxWindows.height.asInt {
+            var securitiesRow: [Security?] = []
+
+            for col in cols {
+                securitiesRow.append(nil)
+            }
+            
+            securities.append(securitiesRow)
+        }
+
+        state.activeSecurities = securities
     }
 }

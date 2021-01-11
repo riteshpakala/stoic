@@ -2,7 +2,7 @@
 //  PortfolioObject+CoreDataProperties.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 1/10/21.
+//  Created by Ritesh Pakala on 1/11/21.
 //
 //
 
@@ -17,8 +17,25 @@ extension PortfolioObject {
     }
 
     @NSManaged public var username: String
+    @NSManaged public var floor: Set<FloorObject>?
     @NSManaged public var securities: Set<SecurityObject>?
-    @NSManaged public var floor: FloorObject?
+
+}
+
+// MARK: Generated accessors for floor
+extension PortfolioObject {
+
+    @objc(addFloorObject:)
+    @NSManaged public func addToFloor(_ value: FloorObject)
+
+    @objc(removeFloorObject:)
+    @NSManaged public func removeFromFloor(_ value: FloorObject)
+
+    @objc(addFloor:)
+    @NSManaged public func addToFloor(_ values: NSSet)
+
+    @objc(removeFloor:)
+    @NSManaged public func removeFromFloor(_ values: NSSet)
 
 }
 

@@ -107,21 +107,30 @@ extension Security {
     }
     
     public func addToFloor(username: String = "test",
-                               moc: NSManagedObjectContext,
+                           location: CGPoint,
+                           moc: NSManagedObjectContext,
                                _ added: ((Portfolio?) -> Void)) {
         moc.performAndWait {
             
             do {
                 guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
+                let floor = FloorObject(context: moc)
+                floor.coordX = Int32(location.x)
+                floor.coordY = Int32(location.y)
+                floor.security = recordedSecurity
                 
                 if let portfolio = moc.getPortfolioObject(username: username) {
                     portfolio.addToSecurities(recordedSecurity)
+                    floor.portfolio = portfolio
+                    portfolio.addToFloor(floor)
                     try moc.save()
                     added(portfolio.asPortfolio)
                 } else {
                     let portfolio = PortfolioObject.init(context: moc)
                     portfolio.username = username
                     portfolio.addToSecurities(recordedSecurity)
+                    floor.portfolio = portfolio
+                    portfolio.addToFloor(floor)
                     try moc.save()
                     added(portfolio.asPortfolio)
                 }

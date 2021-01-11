@@ -15,16 +15,14 @@ public struct HoldingsComponent: GraniteComponent {
     public var command: GraniteCommand<HoldingsCenter, HoldingsState> = .init()
     
     public init() {}
-    
-    @State var addToPortfolio: Bool = false
    
     public var body: some View {
         ZStack {
-            if addToPortfolio {
-                AssetAddComponent()
+            if state.addToPortfolio {
+                AssetAddComponent(state: state.assetAddState)
                     .share(.init(dep(\.hosted)))
                 BasicButton(text: "cancel").onTapGesture {
-                    $addToPortfolio.wrappedValue = !addToPortfolio
+                    set(\.addToPortfolio, value: false)
                 }
             } else {
                 VStack {
@@ -33,7 +31,7 @@ public struct HoldingsComponent: GraniteComponent {
                                 .regular,
                                 .leading)
                     VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                        AssetGridComponent()
+                        AssetGridComponent(state: .init(state.context == .floor ? .add : .standard))
                             .listen(to: command)
                             .payload(retrievePayload(\.envDependency,
                                                      target: \.user.portfolio?.holdings.securities))
@@ -42,7 +40,7 @@ public struct HoldingsComponent: GraniteComponent {
                     VStack {
                         Spacer()
                         BasicButton(text: "create").onTapGesture {
-                            $addToPortfolio.wrappedValue = !addToPortfolio
+                            set(\.addToPortfolio, value: true)
                         }
                         Spacer()
                     }

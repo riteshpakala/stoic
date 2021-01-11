@@ -9,9 +9,15 @@ import Foundation
 
 
 public struct Floor {
-    var securities: [Security] = []
+    var security: Security?
+    var location: CGPoint
     
-    public init(_ securities: [Security] = []) {
-        self.securities = securities
+    public init(_ security: Security? = nil, _ location: CGPoint) {
+        self.security = security
+        self.location = location
+    }
+    
+    public static var empty: Floor {
+        .init(nil, .zero)
     }
 }

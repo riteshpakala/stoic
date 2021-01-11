@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import GraniteUI
+import CoreData
 
 extension FloorObject {
     var asFloor: Floor {
-        .init(Array(self.securities ?? .init()).asSecurities)
+        .init(self.security?.asSecurity,
+              .init(x: CGFloat(self.coordX),
+                    y: CGFloat(self.coordY)))
     }
 }

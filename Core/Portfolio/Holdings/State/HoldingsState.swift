@@ -11,6 +11,26 @@ import SwiftUI
 import Combine
 
 public class HoldingsState: GraniteState {
+    var addToPortfolio: Bool = false
+    var assetAddState: AssetAddState
+    var context: WindowType
+    var floorStage: FloorStage {
+        didSet {
+            assetAddState.searchState.state.floorStage = floorStage
+        }
+    }
+    
+    public init(_ searchState: SearchQuery, floorStage: FloorStage? = nil) {
+        self.assetAddState = .init(searchState)
+        self.context = self.assetAddState.searchState.state.context
+        self.floorStage = floorStage ?? .none
+    }
+    
+    public required init() {
+        self.assetAddState = .init(.init(.init(.portfolio)))
+        self.context = .portfolio
+        self.floorStage = .none
+    }
 }
 
 public class HoldingsCenter: GraniteCenter<HoldingsState> {

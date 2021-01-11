@@ -24,7 +24,9 @@ struct SearchSecurityResultExpedition: GraniteExpedition {
             connection.update(\EnvironmentDependency.searchTone.securities, value: event.result)
             connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
         case .portfolio:
-            connection.update(\EnvironmentDependency.searchAdd.securities, value: event.result)
+            connection.update(\EnvironmentDependency.holdingsPortfolio.assetAddState.searchState.securities, value: event.result)
+        case .floor:
+            connection.update(\EnvironmentDependency.holdingsFloor.assetAddState.searchState.securities, value: event.result)
         case .search:
             connection.update(\EnvironmentDependency.search.securities, value: event.result)
         default:

@@ -22,16 +22,14 @@ class EnvironmentDependency: DependencyManager {
     @ObservedObject
     var user: User = .init()
     
-    var floor: Floor = .init()
-    
     @ObservedObject
     var searchTone: SearchQuery = .init(.init(.tonalCreate(.none)))
     
     @ObservedObject
     var search: SearchQuery = .init(.init(.search))
     
-    @ObservedObject
-    var searchAdd: SearchQuery = .init(.init(.portfolio))
+    var holdingsPortfolio: HoldingsState = .init( .init(.init(.portfolio)))
+    var holdingsFloor: HoldingsState = .init( .init(.init(.floor)))
     
     @ObservedObject
     var broadcasts: Broadcasts = .init()

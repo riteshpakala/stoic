@@ -52,7 +52,8 @@ public struct PortfolioComponent: GraniteComponent {
             
             PaddingVertical()
             
-            HoldingsComponent()
+            HoldingsComponent(state: inject(\.envDependency,
+                                            target: \.holdingsPortfolio))
                 .share(.init(dep(\.hosted)))
         }
     }

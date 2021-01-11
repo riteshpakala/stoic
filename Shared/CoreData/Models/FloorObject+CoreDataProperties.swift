@@ -2,7 +2,7 @@
 //  FloorObject+CoreDataProperties.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 1/10/21.
+//  Created by Ritesh Pakala on 1/11/21.
 //
 //
 
@@ -16,25 +16,10 @@ extension FloorObject {
         return NSFetchRequest<FloorObject>(entityName: "FloorObject")
     }
 
-    @NSManaged public var securities: Set<SecurityObject>?
+    @NSManaged public var coordX: Int32
+    @NSManaged public var coordY: Int32
     @NSManaged public var portfolio: PortfolioObject?
-
-}
-
-// MARK: Generated accessors for securities
-extension FloorObject {
-
-    @objc(addSecuritiesObject:)
-    @NSManaged public func addToSecurities(_ value: SecurityObject)
-
-    @objc(removeSecuritiesObject:)
-    @NSManaged public func removeFromSecurities(_ value: SecurityObject)
-
-    @objc(addSecurities:)
-    @NSManaged public func addToSecurities(_ values: NSSet)
-
-    @objc(removeSecurities:)
-    @NSManaged public func removeFromSecurities(_ values: NSSet)
+    @NSManaged public var security: SecurityObject?
 
 }
 

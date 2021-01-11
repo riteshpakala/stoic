@@ -56,9 +56,7 @@ public struct FloorComponent: GraniteComponent {
                                             
                                             )
                                             .frame(width: 42, height: 42)
-                                            .onTapGesture(perform: {
-                                                set(\.floorStage, value: .adding(CGPoint.init(row, col)))
-                                            })
+                                            .onTapGesture(perform: sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col))))
                                         Spacer()
                                     }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Brand.Colors.black)
                                 }
@@ -70,9 +68,11 @@ public struct FloorComponent: GraniteComponent {
             .background(Color.black)
             
             switch state.floorStage {
-            case .adding(let point):
+            case .adding(_):
                 VStack {
-                    PortfolioComponent().share(.init(dep(\.hosted,
+                    HoldingsComponent(state: inject(\.envDependency,
+                                                    target: \.holdingsFloor))
+                        .share(.init(dep(\.hosted,
                                                          FloorCenter.route)))
                 }.frame(maxWidth: 400, maxHeight: 500)
                 .background(Brand.Colors.black)

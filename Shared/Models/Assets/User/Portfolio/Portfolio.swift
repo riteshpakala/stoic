@@ -10,7 +10,7 @@ import Foundation
 public struct Portfolio {
     let username: String
     let holdings: Holdings
-    let floor: Floor
+    let floors: [Floor]
     
     public struct Holdings {
         let securities: [Security]
@@ -19,9 +19,9 @@ public struct Portfolio {
     
     public init(_ username: String,
                 _ holdings: Holdings,
-                _ floor: Floor) {
+                _ floors: [Floor]) {
         self.username = username
         self.holdings = holdings
-        self.floor = floor
+        self.floors = floors
     }
 }

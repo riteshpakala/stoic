@@ -19,6 +19,8 @@ struct AddToFloorExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        
+        print("{TEST} added")
+        connection.update(\EnvironmentDependency.holdingsFloor.floorStage,
+                          value: .adding(event.location))
     }
 }

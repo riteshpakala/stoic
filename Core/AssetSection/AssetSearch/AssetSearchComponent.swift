@@ -27,7 +27,12 @@ public struct AssetSearchComponent: GraniteComponent {
             case .portfolio:
                 AssetGridComponent(state: .init(.add))
                     .payload(retrievePayload(\.envDependency,
-                                       target: \.searchAdd.securities))
+                                       target: \.holdingsPortfolio.assetAddState.searchState.securities))
+                    .listen(to: command, .stop)
+            case .floor:
+                AssetGridComponent(state: .init(.add))
+                    .payload(retrievePayload(\.envDependency,
+                                       target: \.holdingsFloor.assetAddState.searchState.securities))
                     .listen(to: command, .stop)
             case .tonalCreate:
                 AssetGridComponent()
