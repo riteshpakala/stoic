@@ -65,9 +65,7 @@ public enum WindowType: Hashable {
     
     case search
     
-    case cta
-    
-    case modelCarousel
+    case cta(String)
     
     case portfolio
     case floor
@@ -75,6 +73,7 @@ public enum WindowType: Hashable {
     case special
     
     case tonalCreate(TonalCreateStage)
+    case tonalBrowser
     
     case unassigned
     
@@ -84,8 +83,7 @@ public enum WindowType: Hashable {
              .losers,
              .topVolume,
              .recents,
-             .publicModels,
-             .modelCarousel :
+             .publicModels :
             return 3
         case .cta:
             return 10000

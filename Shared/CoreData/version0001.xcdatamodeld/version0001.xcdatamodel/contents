@@ -18,6 +18,7 @@
         <attribute name="securityType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="ticker" attributeType="String"/>
         <relationship name="securities" toMany="YES" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="quote" inverseEntity="SecurityObject"/>
+        <relationship name="tonalModel" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TonalModelObject" inverseName="quote" inverseEntity="TonalModelObject"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="ticker"/>
@@ -77,14 +78,23 @@
         <attribute name="open" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="volume" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="TonalModelObject" representedClassName=".TonalModelObject" syncable="YES">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="daysTrained" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="model" attributeType="Binary"/>
+        <attribute name="range" attributeType="Binary"/>
+        <attribute name="sentimentTuners" attributeType="Binary"/>
+        <relationship name="quote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="tonalModel" inverseEntity="QuoteObject"/>
+    </entity>
     <elements>
         <element name="CryptoDataObject" positionX="-15.463134765625" positionY="-21.51837158203125" width="128" height="29"/>
         <element name="FloorObject" positionX="-36" positionY="-441" width="128" height="89"/>
         <element name="PortfolioObject" positionX="-45" positionY="-450" width="128" height="74"/>
-        <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="104"/>
+        <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="119"/>
         <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="269"/>
         <element name="SentimentObject" positionX="-45" positionY="-450" width="128" height="149"/>
         <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
         <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>
+        <element name="TonalModelObject" positionX="-45" positionY="-450" width="128" height="133"/>
     </elements>
 </model>

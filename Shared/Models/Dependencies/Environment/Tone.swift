@@ -15,7 +15,11 @@ public class Tone: ObservableObject {
     }
     
     
-    var range: [TonalRange]?
+    var range: [TonalRange]? {
+        didSet {
+            find.state = .parsed
+        }
+    }
     
     public var target: Security? {
         guard let security = selectedRange?.objects.first else {
@@ -50,8 +54,9 @@ public class Tone: ObservableObject {
     public struct Find {
         public enum State {
             case searching
-            case found
             case selected
+            case found
+            case parsed
             case none
         }
         
@@ -62,8 +67,20 @@ public class Tone: ObservableObject {
         }
         var lastState: Find.State = .none
         
-        var ticker: String?
-        var quote: Quote?
+        var ticker: String? {
+            didSet {
+                if ticker != nil {
+                    state = .selected
+                }
+            }
+        }
+        var quote: Quote? {
+            didSet {
+                if quote != nil && quote?.ticker == ticker {
+                    state = .found
+                }
+            }
+        }
         
         //DEV:
         //start at the percent of the days selected
@@ -107,6 +124,7 @@ public class Tone: ObservableObject {
             case compiled
             case compiling
             case readyToCompile
+            case saved
             case none
         }
         
@@ -118,6 +136,7 @@ public class Tone: ObservableObject {
         var lastState: Compile.State = .none
         
         var model: TonalModels?
+        var tonalModel: TonalModel?
         
         var slider: SentimentSliderState
         public init(_ sentimentOutput: SentimentOutput = .neutral) {

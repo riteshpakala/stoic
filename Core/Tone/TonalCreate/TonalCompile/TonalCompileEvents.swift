@@ -17,4 +17,11 @@ struct TonalCompileEvents {
             DispatchQueue.init(label: "tonal.model.compile.serial")
         }
     }
+    
+    struct Save: GraniteEvent {
+        
+        public var async: DispatchQueue? {
+            DispatchQueue.init(label: "tonal.model.save.serial")
+        }
+    }
 }

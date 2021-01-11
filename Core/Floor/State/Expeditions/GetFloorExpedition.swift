@@ -46,13 +46,7 @@ struct GetFloorExpedition: GraniteExpedition {
 
                 for col in cols {
                     let point: CGPoint = .init(row, col)
-                    securitiesRow.append(floors.first(where: {
-                                                        
-                                                        print($0.location)
-                                                        print(point)
-                                                        print($0.location == point)
-                                                        
-                                                        return $0.location == point })?.security)
+                    securitiesRow.append(floors.first(where: { $0.location == point })?.security)
                 }
                 
                 securities.append(securitiesRow)

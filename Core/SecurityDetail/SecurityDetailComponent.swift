@@ -30,7 +30,8 @@ public struct SecurityDetailComponent: GraniteComponent {
                         
                         
                         ).frame(width: 42, height: 42)
-                case .expanded, .preview:
+                case .expanded,
+                     .preview:
                     
                     GraniteText("loading",
                                 command.center.security.isGainer ? Brand.Colors.green : Brand.Colors.red,

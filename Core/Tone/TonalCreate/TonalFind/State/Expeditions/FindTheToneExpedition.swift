@@ -25,17 +25,31 @@ struct FindTheToneExpedition: GraniteExpedition {
         // update the cache from last date saved to the recent day
         // requested on
         //
-        guard let ticker = event.ticker else { return }
+        guard let find = connection.retrieve(\EnvironmentDependency.tone.find),
+              let stage = connection.retrieve(\EnvironmentDependency.tone.find.state) else {
+            
+            return
+        }
         
-        connection.update(\EnvironmentDependency.tone.find.state, value: .selected)
+        guard stage == .selected else {
+            
+            if stage == .found,
+               let quote = find.quote {
+                
+                connection.request(TonalFindEvents.Parse(quote, days: state.days))
+            }
+            
+            return
+        }
+        
+        guard let ticker = find.ticker else { return }
         
         if let quote = coreDataInstance.getQuotes()?
             .first(where: { $0.ticker == ticker &&
                     $0.intervalType == SecurityInterval.day.rawValue })
             .map({ $0.asQuote }) {
-            
+
             connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
-            connection.request(TonalFindEvents.Parse(quote, days: state.days))
         } else {
             connection.request(StockEvents.GetStockHistory.init(ticker: ticker))
         }
@@ -59,7 +73,6 @@ struct StockHistoryExpedition: GraniteExpedition {
         stocks.save(moc: coreDataInstance) { quote in
             if let object = quote?.asQuote {
                 connection.update(\EnvironmentDependency.tone.find.quote, value: object)
-                connection.request(TonalFindEvents.Parse(object, days: state.days))
             }
         }
     }

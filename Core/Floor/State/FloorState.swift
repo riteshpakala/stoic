@@ -31,8 +31,7 @@ public class FloorCenter: GraniteCenter<FloorState> {
     
     public override var links: [GraniteLink] {
         [
-            .event(\FloorState.activeSecurities,
-                    FloorEvents.Get(), .dependant),
+            .onAppear(FloorEvents.Get(), .dependant),
         ]
     }
     

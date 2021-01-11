@@ -35,6 +35,7 @@ public class TonalCompileCenter: GraniteCenter<TonalCompileState> {
     override public var expeditions: [GraniteBaseExpedition] {
         [
             CompileTheToneExpedition.Discovery(),
+            SaveTheToneExpedition.Discovery(),
             PredictTheToneExpedition.Discovery()
         ]
     }

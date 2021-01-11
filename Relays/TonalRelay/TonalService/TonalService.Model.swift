@@ -53,15 +53,15 @@ public class TonalModels: Archiveable {
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        let openModel: SVMModel = try container.decode(SVMModel.self, forKey: .open)
+        let openModel: SVMModel? = try? container.decode(SVMModel.self, forKey: .open)
         
-        let closeModel: SVMModel = try container.decode(SVMModel.self, forKey: .close)
+        let closeModel: SVMModel? = try? container.decode(SVMModel.self, forKey: .close)
         
-        let highModel: SVMModel = try container.decode(SVMModel.self, forKey: .high)
+        let highModel: SVMModel? = try? container.decode(SVMModel.self, forKey: .high)
         
-        let lowModel: SVMModel = try container.decode(SVMModel.self, forKey: .low)
+        let lowModel: SVMModel? = try? container.decode(SVMModel.self, forKey: .low)
         
-        let volumeModel: SVMModel = try container.decode(SVMModel.self, forKey: .volume)
+        let volumeModel: SVMModel? = try? container.decode(SVMModel.self, forKey: .volume)
         
         let typeValue: Int = try container.decode(Int.self, forKey: .currentType)
         
@@ -79,24 +79,57 @@ public class TonalModels: Archiveable {
     public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        if let open = self.open, let close = self.close, let high = self.high, let low = self.low, let volume = self.volume {
-            try container.encode(open, forKey: .open)
-            
-            try container.encode(close, forKey: .close)
-            
-            try container.encode(high, forKey: .high)
-            
-            try container.encode(low, forKey: .low)
-            
-            try container.encode(volume, forKey: .volume)
-            
-            try container.encode(currentType.rawValue, forKey: .currentType)
-        }
+        try container.encode(open, forKey: .open)
+        
+        try container.encode(close, forKey: .close)
+        
+        try container.encode(high, forKey: .high)
+        
+        try container.encode(low, forKey: .low)
+        
+        try container.encode(volume, forKey: .volume)
+        
+        try container.encode(currentType.rawValue, forKey: .currentType)
     }
 }
 
 //MARK: -- Predict
 extension TonalModels {
+    public func scale(prediction: Double,
+                      _ value: Double) -> Double {
+        
+        return (value*prediction) + value
+    }
+    public func predict(_ quote: Quote,
+                        range: [Date],
+                        sentiment: SentimentOutput) -> Double? {
+        
+        let sortedSecurities = quote.securities.sortDesc
+        
+        let sortedRange = range.sortDesc
+        
+        // We want to predict based off the "next day" in the sequence
+        // of days used to train the model that would be based on days
+        // of the past. Combines with today's sentiment, let's see
+        // how the future can meet the past.
+        //
+        guard let firstRangeDate = sortedRange.first,
+              let firstSecurity = sortedSecurities.first else { return nil }
+        
+        
+        guard firstRangeDate.simple != firstSecurity.date.simple else {
+            //Is the base range.
+            return run(firstSecurity, sentiment, quote)
+        }
+        
+        //Same get's the "next" stock ahead of the date range specified.
+        guard let lastSecurity = sortedSecurities.filterAbove(firstRangeDate).last else {
+            return nil
+        }
+        
+        return run(lastSecurity, sentiment, quote)
+    }
+    
     public func predict(_ tone: Tone,
                         _ sentiment: SentimentOutput,
                         moc: NSManagedObjectContext) -> Double? {
@@ -134,7 +167,12 @@ extension TonalModels {
             security = lastSecurity
         }
         
-        
+        return run(security, sentiment, quote)
+    }
+    
+    public func run(_ security: Security,
+                    _ sentiment: SentimentOutput,
+                    _ quote: Quote) -> Double? {
         let testData = DataSet(
             dataType: .Regression,
             inputDimension: self.currentType.inDim,

@@ -42,6 +42,10 @@ public struct TonalCompileComponent: GraniteComponent {
                 BasicButton(text: "compile").onTapGesture {
                     sendEvent(TonalCompileEvents.Compile())
                 }
+            } else if command.center.compileState == .compiled {
+                BasicButton(text: "save").onTapGesture {
+                    sendEvent(TonalCompileEvents.Save())
+                }
             }
             
             SecurityDetailComponent()

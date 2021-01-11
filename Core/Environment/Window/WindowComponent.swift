@@ -44,6 +44,10 @@ public struct WindowComponent: GraniteComponent {
             case .tonalCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
                     .share(.init(dep(\.hosted)))
+            case .tonalBrowser:
+                TonalModelsComponent(state: inject(\.envDependency,
+                                                   target: \.tonalModels))
+                    .share(.init(dep(\.hosted)))
             default:
                 EmptyView.init()
             }

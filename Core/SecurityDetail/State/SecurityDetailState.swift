@@ -38,8 +38,7 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     
     public override var links: [GraniteLink] {
         [
-            .event(\SecurityDetailState.kind,
-                    SecurityDetailEvents.GetDetail(), .dependant),
+            .onAppear(SecurityDetailEvents.GetDetail(), .dependant),
         ]
     }
     
@@ -55,7 +54,7 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
         case .preview(let payload),
              .expanded(let payload),
              .floor(let payload):
-            return (payload.object as? Security) ?? Stock.empty
+            return (payload.object as? Security) ?? EmptySecurity()
         }
     }
     

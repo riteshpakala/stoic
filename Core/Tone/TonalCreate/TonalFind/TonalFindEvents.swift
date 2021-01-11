@@ -11,9 +11,7 @@ import SwiftUI
 import Combine
 
 struct TonalFindEvents {
-    struct Find: GraniteEvent {
-        let ticker: String?
-    }
+    struct Find: GraniteEvent {}
     
     struct Parse: GraniteEvent {
         let quote: Quote

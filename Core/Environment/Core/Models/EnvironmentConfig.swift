@@ -33,7 +33,7 @@ public struct EnvironmentConfig {
                 return .init(windows: [
                             [ .search, .topVolume(.stock), .portfolio],
                             [ .unassigned, .winners(.stock), .unassigned ],
-                            [ .favorites, .losers(.stock), .unassigned]
+                            [ .tonalBrowser, .losers(.stock), .unassigned]
                         ])
             case .modelCreate:
                 return .init(windows: [
@@ -49,7 +49,7 @@ public struct EnvironmentConfig {
                         ])
             case .securityDetail(let payload):
                 return .init(windows: [
-                             [.search, .unassigned, .securityDetail(.expanded(payload))],
+                            [.securityDetail(.expanded(payload)), .unassigned, .search],
                              [.unassigned, .unassigned, .unassigned],
                              [.unassigned, .unassigned, .unassigned]
                         ])

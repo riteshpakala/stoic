@@ -1,20 +1,19 @@
 //
-//  SecurityDataObject+CoreDataClass.swift
+//  TonalModelObject+CoreDataClass.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 12/25/20.
+//  Created by Ritesh Pakala on 1/11/21.
 //
 //
 
-import GraniteUI
 import Foundation
 import CoreData
+import GraniteUI
 
-
-public class QuoteObject: CoreDataManagedObject {
-    public typealias Model = QuoteObject
+public class TonalModelObject: CoreDataManagedObject {
+    public typealias Model = TonalModelObject
     public static var entityName: String {
-        "QuoteObject"
+        "TonalModelObject"
     }
     
     public override init(
@@ -25,12 +24,12 @@ public class QuoteObject: CoreDataManagedObject {
     
     convenience init(context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entity(
-            forEntityName: QuoteObject.entityName,
-            in: context) ?? QuoteObject.entity()
+            forEntityName: TonalModelObject.entityName,
+            in: context) ?? TonalModelObject.entity()
         self.init(entity: entity, insertInto: context)
     }
     
     public static func request() -> NSFetchRequest<Model> {
-        return NSFetchRequest<Model>(entityName: QuoteObject.entityName)
+        return NSFetchRequest<Model>(entityName: TonalModelObject.entityName)
     }
 }

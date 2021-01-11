@@ -15,7 +15,6 @@ public class TonalFindState: GraniteState {
     var maxDays: Int = Tone.Constraints.maxDays
     var minDays: Int = Tone.Constraints.minDays
     var dayRangevalue: Int = 0
-    var quote: QuoteObject? = nil
     
     public init(_ days: Int) {
         self.days = days
@@ -27,6 +26,12 @@ public class TonalFindState: GraniteState {
 public class TonalFindCenter: GraniteCenter<TonalFindState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
+    
+    public override var links: [GraniteLink] {
+        [
+            .onAppear(TonalFindEvents.Find(), .dependant),
+        ]
+    }
     
     var envDependency: EnvironmentDependency {
         dependency.hosted.env

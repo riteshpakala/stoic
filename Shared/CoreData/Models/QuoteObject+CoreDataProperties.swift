@@ -1,14 +1,14 @@
 //
-//  SecurityDataObject+CoreDataProperties.swift
+//  QuoteObject+CoreDataProperties.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 12/25/20.
+//  Created by Ritesh Pakala on 1/11/21.
 //
 //
 
 import Foundation
 import CoreData
-import GraniteUI
+
 
 extension QuoteObject {
 
@@ -21,6 +21,7 @@ extension QuoteObject {
     @NSManaged public var securityType: Int64
     @NSManaged public var exchangeName: String
     @NSManaged public var securities: Set<SecurityObject>
+    @NSManaged public var tonalModel: Set<TonalModelObject>?
 
 }
 
@@ -38,6 +39,23 @@ extension QuoteObject {
 
     @objc(removeSecurities:)
     @NSManaged public func removeFromSecurities(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for tonalModel
+extension QuoteObject {
+
+    @objc(addTonalModelObject:)
+    @NSManaged public func addToTonalModel(_ value: TonalModelObject)
+
+    @objc(removeTonalModelObject:)
+    @NSManaged public func removeFromTonalModel(_ value: TonalModelObject)
+
+    @objc(addTonalModel:)
+    @NSManaged public func addToTonalModel(_ values: NSSet)
+
+    @objc(removeTonalModel:)
+    @NSManaged public func removeFromTonalModel(_ values: NSSet)
 
 }
 

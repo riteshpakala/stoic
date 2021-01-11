@@ -22,7 +22,6 @@ struct AssetSelectedExpedition: GraniteExpedition {
         switch state.context {
         case .tonalCreate:
             connection.update(\EnvironmentDependency.tone.find.ticker, value: event.security.ticker)
-            connection.update(\EnvironmentDependency.tone.find.state, value: .found)
         case .portfolio:
             event.security.addToPortfolio(moc: coreDataInstance) { portfolio in
                 if let portfolio = portfolio {

@@ -1,12 +1,59 @@
 import Foundation
 import CoreML
 
-public struct SentimentOutput {
+public class SentimentOutput: Archiveable {
     public let pos: Double
     public let neg: Double
     public let neu: Double
     public let compound: Double
     public var date: Date = .today
+    
+    enum CodingKeys: String, CodingKey {
+        case pos
+        case neg
+        case neu
+        case compound
+        case date
+    }
+    
+    public init(pos: Double,
+                neg: Double,
+                neu: Double,
+                compound: Double,
+                date: Date = .today) {
+        self.pos = pos
+        self.neg = neg
+        self.neu = neu
+        self.compound = compound
+        self.date = date
+        super.init()
+    }
+    
+    required public convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let pos: Double = try container.decode(Double.self, forKey: .pos)
+        let neg: Double = try container.decode(Double.self, forKey: .neg)
+        let neu: Double = try container.decode(Double.self, forKey: .neu)
+        let compound: Double = try container.decode(Double.self, forKey: .compound)
+        let date: Date = try container.decode(Date.self, forKey: .date)
+        
+        self.init(pos: pos,
+                  neg: neg,
+                  neu: neu,
+                  compound: compound,
+                  date: date)
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(pos, forKey: .pos)
+        try container.encode(neg, forKey: .neg)
+        try container.encode(neu, forKey: .neu)
+        try container.encode(compound, forKey: .compound)
+        try container.encode(date, forKey: .date)
+    }
     
     public var asString: String {
         "[neg: \((neg*100).asInt)% | pos: \((pos*100).asInt)%] // bias: \((neu*100).asInt)%"

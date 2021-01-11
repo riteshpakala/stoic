@@ -34,33 +34,32 @@ public struct TonalFindComponent: GraniteComponent {
                                      CryptoRelay.self])))
             }
             
-            PaddingVertical()
-            
-            VStack {
-                GraniteText("days to train",
-                            .subheadline,
-                            .regular,
-                            .leading)
+            if command.center.findState == .parsed {
+                PaddingVertical()
                 
-                BasicSliderComponent(
-                    state: inject(\.envDependency,
-                                     target: \.tone.find.sliderDays))
-                    .listen(to: command)
-                    .padding(.top, Brand.Padding.medium)
-                
-                GraniteText("\(command.center.daysSelected) days", .subheadline, .regular)
+                VStack {
+                    GraniteText("days to train",
+                                .subheadline,
+                                .regular,
+                                .leading)
+                    
+                    BasicSliderComponent(
+                        state: inject(\.envDependency,
+                                         target: \.tone.find.sliderDays))
+                        .listen(to: command)
+                        .padding(.top, Brand.Padding.medium)
+                    
+                    GraniteText("\(command.center.daysSelected) days", .subheadline, .regular)
+                }
+                .padding(.top, Brand.Padding.large)
+                .padding(.bottom, Brand.Padding.medium)
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium)
+                .transition(.move(edge: .bottom))
             }
-            .padding(.top, Brand.Padding.large)
-            .padding(.bottom, Brand.Padding.medium)
-            .padding(.leading, Brand.Padding.medium)
-            .padding(.trailing, Brand.Padding.medium)
             
-        }.onAppear(perform: {
-            if command.center.findState == .found {
-                sendEvent(TonalFindEvents.Find(ticker: command.center.ticker))
-            }
-        }).onTapGesture {
+        }/*.onTapGesture {
             sendEvent(TonalFindEvents.Find.init(ticker: "MSFT"))
-        }
+        }*/
     }
 }
