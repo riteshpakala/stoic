@@ -18,7 +18,7 @@ public struct MainComponent: GraniteComponent {
     
     var environment: EnvironmentComponent {
         EnvironmentComponent(state: .init(inject(\.routerDependency,
-                                                        target: \.router.route)))
+                                                    target: \.router.route)))
     }
     
     public var body: some View {
@@ -38,7 +38,7 @@ public struct MainComponent: GraniteComponent {
 //            }
 //        } else {
             HStack(spacing: Brand.Padding.small) {
-                environment.share(.init(dep(\.hosted)))
+                environment.share(.init(dep(\.routerDependency)))
             }
             
 //        }

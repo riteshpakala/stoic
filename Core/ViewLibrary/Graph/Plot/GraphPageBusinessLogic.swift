@@ -11,8 +11,7 @@ import Combine
 class GraphPageBusinessLogic {
     let symbol: String
     
-    
-    var storage = Set<AnyCancellable>()
+//    var storage = Set<AnyCancellable>()
     
     init(symbol: String) {
         self.symbol = symbol

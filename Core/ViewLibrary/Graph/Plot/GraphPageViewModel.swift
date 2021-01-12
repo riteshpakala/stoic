@@ -25,7 +25,7 @@ class GraphPageViewModel: ObservableObject {
     
     let symbol: String
     
-    private var storage = Set<AnyCancellable>()
+//    private var storage = Set<AnyCancellable>()
     
     init(symbol: String) {
         self.symbol = symbol
@@ -142,8 +142,8 @@ class GraphPageViewModel: ObservableObject {
     
     
     func cancelAllFetchesOnDisappear() {
-        logic.storage.forEach { (c) in
-            c.cancel()
-        }
+//        logic.storage.forEach { (c) in
+//            c.cancel()
+//        }
     }
 }

@@ -28,12 +28,14 @@ public struct GlowingIndicator: View {
             .scaleEffect(isGlowing ? graphLinePlotConfig.glowingIndicatorBackgroundScaleEffect : 1)
             .opacity(isGlowing ? 0.0 : 1)
             .animation(glowingAnimation, value: self.isGlowing)
-            .frame(width: graphLinePlotConfig.glowingIndicatorWidth, height: graphLinePlotConfig.glowingIndicatorWidth)
+            .frame(width: graphLinePlotConfig.glowingIndicatorWidth,
+                   height: graphLinePlotConfig.glowingIndicatorWidth)
     }
     
     public var body: some View {
         Circle()
-            .frame(width: graphLinePlotConfig.glowingIndicatorWidth, height: graphLinePlotConfig.glowingIndicatorWidth)
+            .frame(width: graphLinePlotConfig.glowingIndicatorWidth,
+                   height: graphLinePlotConfig.glowingIndicatorWidth)
             .background(glowingBackground)
             .onAppear {
                 withAnimation {

@@ -2493,12 +2493,12 @@
 		7183D53525A428AE00FB91A9 /* Plot */ = {
 			isa = PBXGroup;
 			children = (
+				7183D53D25A428AE00FB91A9 /* Visual */,
+				7183D53A25A428AE00FB91A9 /* MovingNumber */,
 				7183D53625A428AE00FB91A9 /* GraphPageViewModel.swift */,
 				7183D53725A428AE00FB91A9 /* Misc.Plot.swift */,
 				7183D53825A428AE00FB91A9 /* TimeDisplayModeSelector.swift */,
 				7183D53925A428AE00FB91A9 /* GraphPage.swift */,
-				7183D53A25A428AE00FB91A9 /* MovingNumber */,
-				7183D53D25A428AE00FB91A9 /* Visual */,
 				7183D54825A428AE00FB91A9 /* Haptic.swift */,
 				7183D54925A428AE00FB91A9 /* TimeDisplayMode.swift */,
 				7183D54A25A428AE00FB91A9 /* GraphPageBusinessLogic.swift */,

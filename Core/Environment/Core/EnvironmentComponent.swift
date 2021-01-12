@@ -55,7 +55,7 @@ public struct EnvironmentComponent: GraniteComponent {
                     }
                 }
                 
-                controls
+                controls.opacity(state.activeWindowConfigs.isEmpty ? 0.0 : 1.0)
                 
             }.frame(minWidth: 0,
                     maxWidth: .infinity,
@@ -66,7 +66,7 @@ public struct EnvironmentComponent: GraniteComponent {
         
         
             HStack(spacing: Brand.Padding.small) {
-                controls
+                controls.opacity(state.activeWindowConfigs.isEmpty ? 0.0 : 1.0)
                 
                 //Max Windows Height
                 ForEach(0..<maxHeight, id: \.self) { col in
