@@ -23,6 +23,14 @@ public struct AssetSearchComponent: GraniteComponent {
                 .share(.init(dep(\.hosted,
                                  AssetSearchCenter.route)))
             
+            HStack {
+                Spacer()
+                GraniteToggle(options: .init(["stock", "crypto"]), onToggle: { index in
+                    set(\.securityType, value: index == 0 ? .stock : .crypto)
+                })
+                Spacer()
+            }.padding(.top, Brand.Padding.medium)
+            
             switch state.context {
             case .portfolio:
                 AssetGridComponent(state: .init(.add))

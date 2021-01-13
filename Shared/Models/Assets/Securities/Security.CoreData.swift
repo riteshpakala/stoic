@@ -57,52 +57,62 @@ extension Security {
         }
     }
     
-    public func getObject(moc: NSManagedObjectContext) -> SecurityObject? {
+    public func getObject(moc: NSManagedObjectContext,
+                          _ completion: @escaping ((SecurityObject?) -> Void)) {
         let request: NSFetchRequest = SecurityObject.fetchRequest()
         request.predicate = NSPredicate(format: "(date == %@) AND (ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
                                         self.date as NSDate,
                                         self.ticker,
                                         self.exchangeName,
                                         self.interval.rawValue)
-        return try? moc.fetch(request).first
+        
+        moc.performAndWait {
+            completion(try? moc.fetch(request).first)
+        }
     }
     
-    public func getQuoteObject(moc: NSManagedObjectContext) -> QuoteObject? {
+    public func getQuoteObject(moc: NSManagedObjectContext,
+                               _ completion: @escaping ((QuoteObject?) -> Void)) {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
         request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
                                         self.ticker,
                                         self.exchangeName,
                                         self.interval.rawValue)
-        return try? moc.fetch(request).first
+        moc.performAndWait {
+            completion(try? moc.fetch(request).first)
+        }
     }
     
-    public func getQuote(moc: NSManagedObjectContext) -> Quote? {
-        return getQuoteObject(moc: moc)?.asQuote
+    public func getQuote(moc: NSManagedObjectContext,
+                         _ completion: @escaping ((Quote?) -> Void)){
+        getQuoteObject(moc: moc) { quoteObject in
+            completion(quoteObject?.asQuote)
+        }
     }
     
     public func addToPortfolio(username: String = "test",
                                moc: NSManagedObjectContext,
-                               _ added: ((Portfolio?) -> Void)) {
+                               _ added: @escaping ((Portfolio?) -> Void)) {
         moc.performAndWait {
-            
-            do {
-                guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
+            guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
                 
-                if let portfolio = moc.getPortfolioObject(username: username) {
-                    portfolio.addToSecurities(recordedSecurity)
-                    try moc.save()
-                    added(portfolio.asPortfolio)
-                } else {
-                    let portfolio = PortfolioObject.init(context: moc)
-                    portfolio.username = username
-                    portfolio.addToSecurities(recordedSecurity)
-                    try moc.save()
-                    added(portfolio.asPortfolio)
+            moc.getPortfolioObject(username) { portfolioObject in
+                do {
+                    if let portfolio = portfolioObject {
+                        portfolio.addToSecurities(recordedSecurity)
+                        try moc.save()
+                        added(portfolio.asPortfolio)
+                    } else {
+                        let newPortfolio = PortfolioObject.init(context: moc)
+                        newPortfolio.username = username
+                        newPortfolio.addToSecurities(recordedSecurity)
+                        try moc.save()
+                        added(newPortfolio.asPortfolio)
+                    }
+                } catch let error {
+                    added(nil)
+                    print("⚠️ Error adding to portfolio \(error)")
                 }
-                
-            } catch let error {
-                added(nil)
-                print("⚠️ Error adding to portfolio \(error)")
             }
         }
     }
@@ -110,35 +120,36 @@ extension Security {
     public func addToFloor(username: String = "test",
                            location: CGPoint,
                            moc: NSManagedObjectContext,
-                               _ added: ((Portfolio?) -> Void)) {
+                           _ added: @escaping ((Portfolio?) -> Void)) {
         moc.performAndWait {
             
-            do {
-                guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
-                let floor = FloorObject(context: moc)
-                floor.coordX = Int32(location.x)
-                floor.coordY = Int32(location.y)
-                floor.security = recordedSecurity
-                
-                if let portfolio = moc.getPortfolioObject(username: username) {
-                    portfolio.addToSecurities(recordedSecurity)
-                    floor.portfolio = portfolio
-                    portfolio.addToFloor(floor)
-                    try moc.save()
-                    added(portfolio.asPortfolio)
-                } else {
-                    let portfolio = PortfolioObject.init(context: moc)
-                    portfolio.username = username
-                    portfolio.addToSecurities(recordedSecurity)
-                    floor.portfolio = portfolio
-                    portfolio.addToFloor(floor)
-                    try moc.save()
-                    added(portfolio.asPortfolio)
+            guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
+            let floor = FloorObject(context: moc)
+            floor.coordX = Int32(location.x)
+            floor.coordY = Int32(location.y)
+            floor.security = recordedSecurity
+            
+            moc.getPortfolioObject(username) { portfolioObject in
+                do {
+                    if let portfolio = portfolioObject {
+                        portfolio.addToSecurities(recordedSecurity)
+                        floor.portfolio = portfolio
+                        portfolio.addToFloor(floor)
+                        try moc.save()
+                        added(portfolio.asPortfolio)
+                    } else {
+                        let portfolio = PortfolioObject.init(context: moc)
+                        portfolio.username = username
+                        portfolio.addToSecurities(recordedSecurity)
+                        floor.portfolio = portfolio
+                        portfolio.addToFloor(floor)
+                        try moc.save()
+                        added(portfolio.asPortfolio)
+                    }
+                } catch let error {
+                    added(nil)
+                    print("⚠️ Error adding to portfolio \(error)")
                 }
-                
-            } catch let error {
-                added(nil)
-                print("⚠️ Error adding to portfolio \(error)")
             }
         }
     }

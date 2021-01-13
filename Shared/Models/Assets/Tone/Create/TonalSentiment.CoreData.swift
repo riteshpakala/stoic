@@ -15,43 +15,44 @@ extension SecurityObject {
 }
 
 extension TonalSentiment {
-    func save(_ range: TonalRange, moc: NSManagedObjectContext, completion: ((Bool) -> Void)? = nil) {
+    func save(_ range: TonalRange,
+              moc: NSManagedObjectContext,
+              completion: ((Bool) -> Void)? = nil) {
         moc.performAndWait {
-            do {
+            let sentimentObjects: [SentimentObject] = self.sounds.values.flatMap { $0 }.map {
+                let sentimentObject = SentimentObject(context: moc)
+                $0.applyTo(sentimentObject)
                 
-                let sentimentObjects: [SentimentObject] = self.sounds.values.flatMap { $0 }.map {
-                    let sentimentObject = SentimentObject(context: moc)
-                    $0.applyTo(sentimentObject)
-                    
-                    //DEV: obv there will be more options in the future
-                    //
-                    sentimentObject.sentimentType = SentimentType.social.rawValue
-                    
-                    return sentimentObject
-                }
+                //DEV: obv there will be more options in the future
+                //
+                sentimentObject.sentimentType = SentimentType.social.rawValue
                 
-                let securities = range.expanded
-                let securityObjects = securities.compactMap({ $0.getObject(moc: moc) })
-                
-                for object in securityObjects {
-                    let date = object.date.simple
-//                    print("{TEST} saving = \(date)")
-                    object.addToSentiment(
-                        NSSet.init(
-                            array: sentimentObjects
-                                .filter( { $0.date.simple == date })))
-                    
-                    sentimentObjects.forEach { sentiment in
-                        if sentiment.date.simple == object.date {
-                            sentiment.security = object
+                return sentimentObject
+            }
+            
+            let securities = range.expanded
+            for security in securities {
+                security.getObject(moc: moc) { object in
+                    if let object = object {
+                        let date = object.date.simple
+                        object.addToSentiment(
+                            NSSet.init(
+                                array: sentimentObjects
+                                    .filter( { $0.date.simple == date })))
+                        
+                        sentimentObjects.forEach { sentiment in
+                            if sentiment.date.simple == object.date {
+                                sentiment.security = object
+                            }
                         }
                     }
                 }
-                
+            }
+            
+            do {
                 try moc.save()
                 print ("{CoreData} - sentiment saved")
                 completion?(true)
-//                completion(quote)
             } catch let error {
                 completion?(false)
                 print ("{CoreData} \(error.localizedDescription)")

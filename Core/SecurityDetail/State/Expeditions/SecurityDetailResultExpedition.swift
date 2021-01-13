@@ -21,15 +21,19 @@ struct SecurityDetailResultExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         guard let stocks = event.data.first?.asStocks(interval: event.interval) else {
+            connection.update(\EnvironmentDependency.detail.isFetching, value: false)
             return
         }
         
+        //TODO: Infinite loop
+        //
         stocks.save(moc: coreDataInstance) { quote in
-            if let object = quote?.asQuote {
+            if let object = quote {
                 state.quote = object
-                
                 connection.update(\EnvironmentDependency.detail.isFetching, value: false)
             }
+            
+            connection.update(\EnvironmentDependency.detail.isFetching, value: false)
         }
     }
 }

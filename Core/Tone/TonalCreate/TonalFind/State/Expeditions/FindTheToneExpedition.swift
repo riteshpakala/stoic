@@ -71,7 +71,7 @@ struct StockHistoryExpedition: GraniteExpedition {
         }
         
         stocks.save(moc: coreDataInstance) { quote in
-            if let object = quote?.asQuote {
+            if let object = quote {
                 connection.update(\EnvironmentDependency.tone.find.quote, value: object)
             }
         }

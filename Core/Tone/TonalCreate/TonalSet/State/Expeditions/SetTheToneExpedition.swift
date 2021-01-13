@@ -22,13 +22,18 @@ struct SetTheToneExpedition: GraniteExpedition {
         print("{TEST} selected the range \(event.range.dates)")
         connection.update(\EnvironmentDependency.tone.selectedRange, value: event.range)
         
-        if let tone = connection.retrieve(\EnvironmentDependency.tone.find.quote),
-           let quote = tone?.getObject(moc: coreDataInstance) {
-            event.range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
-                if let sentiment = sentimentResult?.sentiment {
-                    connection.update(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
+        if let tone = connection.retrieve(\EnvironmentDependency.tone.find.quote) {
+            tone?.getObject(moc: coreDataInstance) { quote in
+                if let quote = quote {
+                    event.range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
+                        if let sentiment = sentimentResult?.sentiment {
+                            connection.update(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
+                        } else {
+                            connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range))
+                        }
+                    }
                 } else {
-                    connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range))
+                    connection.request(TonalEvents.GetSentiment.init(range: event.range))
                 }
             }
         } else {
@@ -54,19 +59,22 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         print(event.sentiment.stats)
         
         guard let tone = connection.retrieve(\EnvironmentDependency.tone),
-              let range = tone.selectedRange,
-              let quote = tone.find.quote?.getObject(moc: coreDataInstance) else {
+              let range = tone.selectedRange else {
             
             return
         }
         
-        event.sentiment.save(range, moc: coreDataInstance) { success in
-            if success {
-                range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
-                    if let sentiment = sentimentResult?.sentiment {
-                        connection.update(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
-                    } else {
-                        connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range))
+        let moc = coreDataInstance
+        tone.find.quote?.getObject(moc: moc) { quote in
+            guard let quote = quote else { return }
+            event.sentiment.save(range, moc: moc) { success in
+                if success {
+                    range.checkSentimentCache(quote, moc: moc) { sentimentResult in
+                        if let sentiment = sentimentResult?.sentiment {
+                            connection.update(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
+                        } else {
+                            connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range))
+                        }
                     }
                 }
             }

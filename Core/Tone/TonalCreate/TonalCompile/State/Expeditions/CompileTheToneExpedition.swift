@@ -26,13 +26,9 @@ struct CompileTheToneExpedition: GraniteExpedition {
         print("{TEST} compiling.")
         connection.update(\EnvironmentDependency.tone.compile.state, value: .compiling)
         
-        guard let model = TonalModels.generate(tone: tone, moc: coreDataInstance) else {
-            return
+        TonalModels.generate(tone: tone, moc: coreDataInstance) { model in
+            connection.update(\EnvironmentDependency.tone.compile.state, value: .compiled)
+            connection.update(\EnvironmentDependency.tone.compile.model, value: model)
         }
-        
-//        model.testPredict(tone: tone, moc: coreDataInstance)
-        
-        connection.update(\EnvironmentDependency.tone.compile.state, value: .compiled)
-        connection.update(\EnvironmentDependency.tone.compile.model, value: model)
     }
 }

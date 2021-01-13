@@ -16,6 +16,12 @@ public class AssetSearchState: GraniteState {
     let context: WindowType
     var floorStage: FloorStage
     
+    var securityType: SecurityType = .stock {
+        didSet {
+            searchState.securityType = securityType
+        }
+    }
+    
     public init(_ context: WindowType,
                 floorStage: FloorStage? = nil) {
         self.context = context

@@ -44,9 +44,10 @@ public struct WindowComponent: GraniteComponent {
             case .tonalCreate(let stage):
                 TonalCreateComponent(state: .init(stage))
                     .share(.init(dep(\.hosted)))
-            case .tonalBrowser:
+            case .tonalBrowser(let payload):
                 TonalModelsComponent(state: inject(\.envDependency,
                                                    target: \.tonalModels))
+                    .payload(payload)
                     .share(.init(dep(\.hosted)))
             case .special:
                 SpecialComponent()
@@ -55,6 +56,6 @@ public struct WindowComponent: GraniteComponent {
             }
         }.frame(maxWidth: .infinity,
                 maxHeight: .infinity,
-                alignment: .center).animation(.default)
+                alignment: .center)//.animation(.default)
     }
 }

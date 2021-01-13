@@ -76,8 +76,8 @@ extension StockServiceModels.Quotes.QuoteResponse.QuoteResult {
     public func asStock(interval: SecurityInterval = .day) -> Stock {
             let open: Double = regularMarketPrice ?? 0.0
             let high: Double = regularMarketDayHigh ?? 0.0
-            let low: Double = regularMarketDayHigh ?? 0.0
-            let close: Double = regularMarketDayLow ?? 0.0
+            let low: Double = regularMarketDayLow ?? 0.0
+            let close: Double = regularMarketPrice ?? 0.0
             let volume: Double = Double(regularMarketVolume ?? 0)
         
         return Stock.init(
@@ -88,10 +88,10 @@ extension StockServiceModels.Quotes.QuoteResponse.QuoteResult {
             low: low,
             close: close,
             volume: volume,
-            changePercent: regularMarketChangePercent ?? 0.0,
-            changeAbsolute: regularMarketChange ?? 0.0,
+            changePercent: (regularMarketChangePercent ?? 0.0)/100,
+            changeAbsolute: (regularMarketChange ?? 0.0),
             interval: interval,
-            exchangeName: "")//TODO:
+            exchangeName: exchange)//TODO:??
     }
 }
 

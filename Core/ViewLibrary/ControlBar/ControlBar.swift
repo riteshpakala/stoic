@@ -10,6 +10,8 @@ import SwiftUI
 
 public struct ControlBar: View {
     var isIPhone: Bool
+    var iconSize: CGFloat = 18
+    var fontSize: Fonts.FontSize = .headline
     var currentRoute: Route
     var onRoute: ((Route) -> Void)
     
@@ -31,10 +33,10 @@ public struct ControlBar: View {
                 Spacer()
                 
             }.frame(minWidth: 100,
-                    maxWidth: 175,
+                    maxWidth: 150,
                     maxHeight: .infinity,
                     alignment: .center)
-                    .padding(.top, Brand.Padding.large*2)
+                    .padding(.top, Brand.Padding.large+Brand.Padding.medium)
                     .padding(.leading, Brand.Padding.large+Brand.Padding.medium)
         }
     }
@@ -46,12 +48,12 @@ public struct ControlBar: View {
                 Image("home_icon")
                     .resizable()
                     .renderingMode(.template)
-                    .frame(width: 24, height: 24, alignment: .leading)
+                    .frame(width: iconSize, height: iconSize, alignment: .leading)
                     .padding(.trailing, Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("home",
-                                .title3,
+                                fontSize,
                                 .regular,
                                 .leading,
                                 style: .disabled,
@@ -69,12 +71,12 @@ public struct ControlBar: View {
                 Image("floor_icon")
                     .resizable()
                     .renderingMode(.template)
-                    .frame(width: 24, height: 24, alignment: .leading)
+                    .frame(width: iconSize, height: iconSize, alignment: .leading)
                     .padding(.trailing, Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("floor",
-                                .title3,
+                                fontSize,
                                 .regular,
                                 .leading,
                                 style: .disabled,
@@ -89,12 +91,12 @@ public struct ControlBar: View {
                 Image("model_icon")
                     .resizable()
                     .renderingMode(.template)
-                    .frame(width: 24, height: 24, alignment: .leading)
+                    .frame(width: iconSize, height: iconSize, alignment: .leading)
                     .padding(.trailing, Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("models",
-                                .title3,
+                                fontSize,
                                 .regular,
                                 .leading,
                                 style: .disabled,
@@ -109,12 +111,12 @@ public struct ControlBar: View {
                 Image("settings_icon")
                     .resizable()
                     .renderingMode(.template)
-                    .frame(width: 24, height: 24, alignment: .leading)
+                    .frame(width: iconSize, height: iconSize, alignment: .leading)
                     .padding(.trailing, Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("settings",
-                                .title3,
+                                fontSize,
                                 .regular,
                                 .leading,
                                 style: .disabled,
@@ -129,14 +131,14 @@ public struct ControlBar: View {
                 if !isIPhone {
                     GraniteText("debug",
                                 Brand.Colors.red,
-                                .title3,
+                                fontSize,
                                 .bold,
                                 .leading,
                                 style: .disabled)
                 } else {
                     GraniteText("d",
                                 Brand.Colors.red,
-                                .title3,
+                                fontSize,
                                 .bold,
                                 .leading,
                                 style: .disabled)

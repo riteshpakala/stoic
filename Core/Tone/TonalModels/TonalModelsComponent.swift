@@ -18,9 +18,20 @@ public struct TonalModelsComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            AssetGridComponent(state: .init(.add))
-                .payload(.init(object: state.tones))
-                .listen(to: command, .stop)
+            VStack(alignment: .leading) {
+                GraniteText("your models",
+                            .headline,
+                            .bold,
+                            .leading)
+                
+                
+                AssetGridComponent()
+                    .payload(.init(object: state.tones))
+                        .listen(to: command, .stop)
+                    
+            }.padding(.top, Brand.Padding.large)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
             
             VStack(spacing: 0) {
                 Spacer()
@@ -29,8 +40,6 @@ public struct TonalModelsComponent: GraniteComponent {
 //                    set(\.addToPortfolio, value: true)
                 }
             }
-        }.padding(.top, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.medium)
-        .padding(.trailing, Brand.Padding.medium)
+        }
     }
 }

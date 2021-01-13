@@ -132,42 +132,49 @@ extension TonalModels {
     
     public func predict(_ tone: Tone,
                         _ sentiment: SentimentOutput,
-                        moc: NSManagedObjectContext) -> Double? {
+                        moc: NSManagedObjectContext,
+                        _ completion: @escaping ((Double) -> Void)) {
         
         guard let selectedRange = tone.selectedRange else {
             print("⚠️ Test prediction failed - selected range")
-            return nil
+            completion(0.0)
+            return
         }
         
-        guard let quote = selectedRange.objects.first?.getQuote(moc: moc) else {
-            print("⚠️ Test prediction failed - quote")
-            return nil
-        }
-        
-        let sortedSecurities = quote.securities.sortDesc
-        let security: Security
-        
-        if selectedRange.base {
-            guard let baseSecurity = sortedSecurities.first else { return nil }
-            security = baseSecurity
-        } else {
-            let sortedRange = selectedRange.objects.sortDesc
-            
-            // We want to predict based off the "next day" in the sequence
-            // of days used to train the model that would be based on days
-            // of the past. Combines with today's sentiment, let's see
-            // how the future can meet the past.
-            //
-            guard let firstRangeSecurity = sortedRange.first else { return nil }
-            
-            guard let lastSecurity = sortedSecurities.filterAbove(firstRangeSecurity.date).last else {
-                return nil
+        selectedRange.objects.first?.getQuote(moc: moc) { [weak self] quote in
+            guard let quote = quote else {
+                print("⚠️ Test prediction failed - quote")
+                completion(0.0)
+                return
             }
             
-            security = lastSecurity
+            let sortedSecurities = quote.securities.sortDesc
+            let security: Security
+            
+            if selectedRange.base {
+                guard let baseSecurity = sortedSecurities.first else {
+                    completion(0.0); return }
+                security = baseSecurity
+            } else {
+                let sortedRange = selectedRange.objects.sortDesc
+                
+                // We want to predict based off the "next day" in the sequence
+                // of days used to train the model that would be based on days
+                // of the past. Combines with today's sentiment, let's see
+                // how the future can meet the past.
+                //
+                guard let firstRangeSecurity = sortedRange.first else {
+                    completion(0.0); return }
+                
+                guard let lastSecurity = sortedSecurities.filterAbove(firstRangeSecurity.date).last else {
+                    completion(0.0); return
+                }
+                
+                security = lastSecurity
+            }
+            
+            completion(self?.run(security, sentiment, quote) ?? 0.0)
         }
-        
-        return run(security, sentiment, quote)
     }
     
     public func run(_ security: Security,
@@ -208,96 +215,104 @@ extension TonalModels {
     }
     
     public func testPredict(tone: Tone, moc: NSManagedObjectContext) {
-        _ = predict(tone, .neutral, moc: moc)
+        predict(tone, .neutral, moc: moc) { prediction in
+            print("[TEST-PREDICTION] \(prediction)")
+        }
     }
 }
 
 //MARK: -- Generate
 extension TonalModels {
-    public static func generate(tone: Tone, moc: NSManagedObjectContext) -> TonalModels? {
+    public static func generate(tone: Tone,
+                                moc: NSManagedObjectContext,
+                                _ completion: @escaping ((TonalModels?) -> Void)) {
         guard let securityObjects = tone.selectedRange?.objects else {
             print("⚠️ Generation failed. - securityObjects")
-            return nil
+            completion(nil)
+            return
         }
         
-        guard let quote = securityObjects.first?.getQuote(moc: moc) else {
-            print("⚠️ Generation failed. - quote")
-            return nil
-        }
-        
-        guard let range = tone.selectedRange else {
-            print("⚠️ Generation failed. - range")
-            return nil
-        }
-        
-        let securities = securityObjects
-        let sentiments = tone.tune.sentiments
-        
-        let bucket: TonalService.AI.Models.Bucket = .init(sentiments: sentiments, range: range)
-        
-        
-        // Time-series execution's foundation is that
-        // the time comparable is equivalent to the data
-        // size
-        guard bucket.isValid else {
-            print("⚠️ Generation failed. \(bucket.pockets.count) \(bucket.rangeDates)")
-            return nil
-        }
-        
-        print(bucket.asString)
-        
-        // DEV: by day enforced for now
-        // and `close` prediction
-        //
-        let type: ModelType = .close
-        let dataForDavid: DataSet = DataSet(
-            dataType: .Regression,
-            inputDimension: type.inDim,
-            outputDimension: TonalService.AI.Models.Settings.outDim)
-
-        print("🛠 [MODEL GENERATION] Creating model for \(type)")
-        for date in bucket.rangeDates {
-            guard let pocket = bucket.pockets.first(where: { $0.date == date }),
-                  let security = securities.first(where: { $0.date.simple == date.simple }) else {
-                continue
+        securityObjects.first?.getQuote(moc: moc) { quote in
+            guard let quote = quote else {
+                print("⚠️ Generation failed. - quote")
+                completion(nil)
+                return
             }
+            guard let range = tone.selectedRange else {
+                print("⚠️ Generation failed. - range")
+                completion(nil)
+                return
+            }
+            
+            let securities = securityObjects
+            let sentiments = tone.tune.sentiments
+            
+            let bucket: TonalService.AI.Models.Bucket = .init(sentiments: sentiments, range: range)
+            
+            
+            // Time-series execution's foundation is that
+            // the time comparable is equivalent to the data
+            // size
+            guard bucket.isValid else {
+                print("⚠️ Generation failed. \(bucket.pockets.count) \(bucket.rangeDates)")
+                return
+            }
+            
+            print(bucket.asString)
+            
+            // DEV: by day enforced for now
+            // and `close` prediction
+            //
+            let type: ModelType = .close
+            let dataForDavid: DataSet = DataSet(
+                dataType: .Regression,
+                inputDimension: type.inDim,
+                outputDimension: TonalService.AI.Models.Settings.outDim)
 
-            do {
-                let dataSet = TonalService.AI.Models.DataSet(
-                    security,
-                    pocket.avg,
-                    quote: quote,
-                    modelType: type)
+            print("🛠 [MODEL GENERATION] Creating model for \(type)")
+            for date in bucket.rangeDates {
+                guard let pocket = bucket.pockets.first(where: { $0.date == date }),
+                      let security = securities.first(where: { $0.date.simple == date.simple }) else {
+                    continue
+                }
 
-                print(dataSet.inputDescription)
+                do {
+                    let dataSet = TonalService.AI.Models.DataSet(
+                        security,
+                        pocket.avg,
+                        quote: quote,
+                        modelType: type)
+
+                    print(dataSet.inputDescription)
+                    
+                    try dataForDavid.addDataPoint(
+                        input: dataSet.asArray,
+                        output: dataSet.output,
+                        label: security.date.asString)
+                }
+                catch {
+                    print("Invalid data set created")
+                }
                 
-                try dataForDavid.addDataPoint(
-                    input: dataSet.asArray,
-                    output: dataSet.output,
-                    label: security.date.asString)
-            }
-            catch {
-                print("Invalid data set created")
+                print("🛠 ✅ [MODEL GENERATION] Creating model complete")
+                print("data points added: \(dataForDavid.labels.count)")
+                print("data points expected: \(securities.count)")
+                print("data points asserted: \(securities.count == dataForDavid.labels.count)")
+
+                let david = SVMModel(
+                    problemType: .ϵSVMRegression,
+                    kernelSettings:
+                    KernelParameters(type: .Polynomial,
+                                     degree: 3,
+                                     gamma: 0.3,
+                                     coef0: 0.0))
+
+                david.Cost = 1e3
+                david.train(data: dataForDavid)
+                
+                completion(.init(models: [.close(david)]))
             }
         }
-        
-        print("🛠 ✅ [MODEL GENERATION] Creating model complete")
-        print("data points added: \(dataForDavid.labels.count)")
-        print("data points expected: \(securities.count)")
-        print("data points asserted: \(securities.count == dataForDavid.labels.count)")
-
-        let david = SVMModel(
-            problemType: .ϵSVMRegression,
-            kernelSettings:
-            KernelParameters(type: .Polynomial,
-                             degree: 3,
-                             gamma: 0.3,
-                             coef0: 0.0))
-
-        david.Cost = 1e3
-        david.train(data: dataForDavid)
-        
-        return .init(models: [.close(david)])
     }
 }
 

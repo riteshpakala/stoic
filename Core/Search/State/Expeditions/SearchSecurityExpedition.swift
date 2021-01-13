@@ -29,7 +29,17 @@ struct SearchSecurityExpedition: GraniteExpedition {
             repeats: false) { timer in
             
             timer.invalidate()
-            connection.request(StockEvents.Search(state.query))
+            
+            switch state.securityType {
+            case .stock:
+                connection.request(StockEvents.Search(state.query))
+            case .crypto:
+                print("YOOOO")
+            default:
+                break
+            }
+            
+            
             
             //Potential dependency updates
 //            connection.dependency(\TonalCreateDependency.search.state.query, value: event.query)

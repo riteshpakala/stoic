@@ -9,7 +9,7 @@ import Foundation
 
 extension TonalServiceModels {
     public struct Indicators {
-        public static let trailingDays: Int = 30
+        public static let trailingDays: Int = 120
         
         public struct PairedSecurity {
             var base: Security
@@ -42,6 +42,11 @@ extension TonalServiceModels {
                 pairings.append(.init(base: base, previous: previous))
             }
             self.historyPaired = pairings
+        }
+        
+        // Indicators
+        var stochastic: Stochastics {
+            .init(history)
         }
     }
 }

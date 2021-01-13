@@ -10,8 +10,9 @@ import Foundation
 
 extension NSManagedObjectContext {
     public func getQuotes(_ completion: @escaping(([Quote]) -> Void)) {
+        let request: NSFetchRequest = QuoteObject.fetchRequest()
         self.performAndWait {
-            if let quotes = try? self.fetch(QuoteObject.fetchRequest()) as? [QuoteObject] {
+            if let quotes = try? self.fetch(request) {
                 completion(quotes.map { $0.asQuote })
             } else {
                 completion([])
@@ -21,13 +22,18 @@ extension NSManagedObjectContext {
 }
 
 extension Quote {
-    public func getObject(moc: NSManagedObjectContext) -> QuoteObject? {
+    public func getObject(moc: NSManagedObjectContext,
+                          _ completion: @escaping((QuoteObject?) -> Void)){
+        
         let request: NSFetchRequest = QuoteObject.fetchRequest()
         request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
                                         self.ticker,
                                         self.exchangeName,
                                         self.intervalType.rawValue)
-        return try? moc.fetch(request).first
+        
+        moc.performAndWait {
+            completion(try? moc.fetch(request).first)
+        }
     }
 }
 

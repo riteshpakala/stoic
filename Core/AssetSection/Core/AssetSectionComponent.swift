@@ -21,7 +21,7 @@ public struct AssetSectionComponent: GraniteComponent {
     public var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                GraniteText(state.windowType.label, .title2, .bold)
+                GraniteText(state.windowType.label, .headline, .bold)
                 Spacer()
                 GraniteToggle(options: .init(["stock", "crypto"]), onToggle: { index in
                     set(\.securityType, value: index == 0 ? .stock : .crypto)

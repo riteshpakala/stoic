@@ -73,7 +73,7 @@ public enum WindowType: Hashable {
     case special
     
     case tonalCreate(TonalCreateStage)
-    case tonalBrowser
+    case tonalBrowser(GranitePayload)
     
     case unassigned
     

@@ -20,15 +20,21 @@ public protocol Asset: ID {
     var assetID: String { get }
     
     var symbol: String { get }
+    var symbolImage: Image? { get }
     var symbolColor: Color { get }
     var title: String { get }
     var subtitle: String { get }
     var description1: String { get }
     var description1_sub: String { get }
     var description2: String { get }
+    
 }
 
 extension Asset {
+    public var symbolImage: Image? {
+        nil
+    }
+    
     var asSecurity: Security? {
         return (self as? Security)
     }
@@ -49,6 +55,11 @@ extension TonalModel {
     
     public var symbol: String {
         "M"
+    }
+    
+    public var symbolImage: Image? {
+        Image("model_icon")
+            .resizable()
     }
     
     public var symbolColor: Color {
@@ -94,7 +105,7 @@ extension Security {
     }
     
     public var description2: String {
-        "\(self.changePercentValue.display)%"
+        "\(self.changePercentValue.percent)%"
     }
 }
 

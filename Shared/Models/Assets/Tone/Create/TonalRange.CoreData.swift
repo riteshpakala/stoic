@@ -15,15 +15,11 @@ extension TonalRange {
         
         let time: Double = CFAbsoluteTimeGetCurrent()
         
-        guard let sentimentResult = moc.getSentiment(quote, self) else {
-            print("{TEST} failedddd")
-            completion(nil); return
+        moc.getSentiment(quote, self) { data in
+            print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
+            
+            completion(data)
         }
-        
-        print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
-        
-        completion(sentimentResult)
-        
     }
 }
 
@@ -66,24 +62,27 @@ extension Array where Element == SecurityObject {
 }
 
 extension Array where Element == Security {
-    func baseRange(moc: NSManagedObjectContext) -> TonalRange {
+    func baseRange(moc: NSManagedObjectContext,
+                   completion: @escaping ((TonalRange) -> Void)) {
         
         let similarities: [TonalSimilarity] = self.map { TonalSimilarity.init(date: $0.date, similarity: 1.0) }
         
         let indicators: [TonalIndicators] = self.map { TonalIndicators.init(date: $0.date, volatility: 1.0, volatilityCoeffecient: 1.0) }
         
-        if let securities = self.first?.getQuote(moc: moc)?.securities {
-            return .init(objects: self,
-                         Array(securities).expanded(from: self),
-                         similarities,
-                         indicators,
-                         base: true)
-        } else {
-            return .init(objects: self,
-                         self,
-                         similarities,
-                         indicators,
-                         base: true)
+        self.first?.getQuote(moc: moc) { quote in
+            if let securities = quote?.securities {
+                completion(.init(objects: self,
+                             Array(securities).expanded(from: self),
+                             similarities,
+                             indicators,
+                             base: true))
+            } else {
+                completion(.init(objects: self,
+                             self,
+                             similarities,
+                             indicators,
+                             base: true))
+            }
         }
     }
     

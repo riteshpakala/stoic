@@ -25,6 +25,10 @@ public class TonalModelsState: GraniteState {
     var tones: [TonalModel] = []
     var type: TonalModelsType
     
+    var security: Security? {
+        self.payload?.object as? Security
+    }
+    
     public init(_ stage: TonalModelsStage) {
         self.stage = stage
         self.type = .general
@@ -40,9 +44,9 @@ public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
     var createText: String {
         switch state.type {
         case .specified(let security):
-            return "generate a \(security.display) model"
+            return "\(security.display) model"
         case .general:
-            return "create a model"
+            return "create"
         }
     }
     
@@ -58,7 +62,8 @@ public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            GetTonalModelsExpedition.Discovery()
+            GetTonalModelsExpedition.Discovery(),
+            TonalModelTappedExpedition.Discovery()
         ]
     }
 }

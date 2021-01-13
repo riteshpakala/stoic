@@ -9,10 +9,26 @@ import Foundation
 import CoreData
 
 extension NSManagedObjectContext {
-    public func getTones(moc: NSManagedObjectContext) -> [TonalModelObject]? {
+    public func getTones(_ completion: @escaping (([TonalModelObject]) -> Void)) {
         let request: NSFetchRequest = TonalModelObject.fetchRequest()
+        self.performAndWait {
+            if let tones = try? self.fetch(request) {
+                completion(tones)
+            } else {
+                completion([])
+            }
+        }
+    }
+    public func getTones(forSecurity security: Security,
+                         _ completion: @escaping (([TonalModelObject]) -> Void)) {
         
-        return try? moc.fetch(request)
+        security.getQuoteObject(moc: self) { quote in
+            if let model = quote?.tonalModel {
+                completion(Array(model))
+            } else {
+                completion([])
+            }
+        }
     }
 }
 
@@ -48,22 +64,24 @@ extension TonalModel {
         }
         
         moc.performAndWait {
-            do {
-                let quote = self.quote.getObject(moc: moc)
-                let object = TonalModelObject(context: moc)
-                object.date = Date.today
-                object.daysTrained = Int32(self.daysTrained)
-                object.model = modelData
-                object.sentimentTuners = sentiment
-                object.quote = quote
-                object.range = range
-                quote?.addToTonalModel(object)
-                
-                try moc.save()
-                
-                completion(true)
-            } catch let error {
-                print("⚠️ Saving Tonal Model failed. \(error)")
+            self.quote.getObject(moc: moc) { quote in
+                do {
+                    let object = TonalModelObject(context: moc)
+                    object.date = Date.today
+                    object.daysTrained = Int32(self.daysTrained)
+                    object.model = modelData
+                    object.sentimentTuners = sentiment
+                    object.quote = quote
+                    object.range = range
+                    quote?.addToTonalModel(object)
+                    
+                    try moc.save()
+                    
+                    completion(true)
+                } catch let error {
+                    print("⚠️ Saving Tonal Model failed. \(error)")
+                    completion(false)
+                }
             }
         }
     }

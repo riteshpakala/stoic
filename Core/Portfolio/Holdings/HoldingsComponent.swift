@@ -30,18 +30,16 @@ public struct HoldingsComponent: GraniteComponent {
                 }
             } else {
                 VStack {
-                    VStack {
+                    VStack(alignment: .leading) {
                         GraniteText("portfolio",
-                                    .subheadline,
-                                    .regular,
+                                    .headline,
+                                    .bold,
                                     .leading)
-                        VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                            AssetGridComponent(state: .init(state.context == .floor ? .add : .standard))
-                                .listen(to: command)
-                                .payload(retrievePayload(\.envDependency,
-                                                         target: \.user.portfolio?.holdings.securities))
-                                
-                        }
+                        
+                        AssetGridComponent(state: .init(state.context == .floor ? .add : .standard))
+                            .listen(to: command, .stop)
+                            .payload(retrievePayload(\.envDependency,
+                                                     target: \.user.portfolio?.holdings.securities))
                     }
                     .padding(.top, Brand.Padding.large)
                     .padding(.leading, Brand.Padding.medium)

@@ -92,8 +92,9 @@ struct SearchQuoteResultExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
         guard let data = event.quotes.first?.quoteResponse else { return }
-        
+    
         let searchQuotes = data.result.map { $0.asStock() }
+        
         connection.request(StockEvents.SearchResult.init(result: searchQuotes))
     }
 }

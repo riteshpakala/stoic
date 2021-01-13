@@ -37,9 +37,9 @@ public struct TonalTuneComponent: GraniteComponent {
     public var body: some View {
         VStack {
             GraniteText("tune the tone",
-                        .title2,
+                        .headline,
                         .bold)
-                .padding(.top, Brand.Padding.large)
+                .padding(.top, Brand.Padding.medium)
             Spacer()
 //            SliderBinding(depObject(\.envDependency,
 //                                    target: \EnvironmentDependency.$view.scrollOffset)!)

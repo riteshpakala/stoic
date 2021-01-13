@@ -21,7 +21,9 @@ public class CryptoCenter: GraniteCenter<CryptoState> {
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            GetMoversCryptoExpedition.Discovery()
+            GetMoversCryptoExpedition.Discovery(),
+            GetCryptoHistoryExpedition.Discovery(),
+            GetCryptoSearchExpedition.Discovery()
         ]
     }
 }

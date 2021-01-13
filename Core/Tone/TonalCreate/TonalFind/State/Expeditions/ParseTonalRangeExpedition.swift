@@ -80,42 +80,44 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
         let chunks = orderedSecurities.chunked(into: days)
         let scrapeTop = Array(chunks.suffix(chunks.count - 1))
 
-        var candidates : [TonalRange] = [targetComparables.baseRange(moc: coreDataInstance)]
-        for chunk in scrapeTop {
-            guard chunk.count == days else { continue }
-            
-            var similarities: [Double] = []
-            for i in 0..<chunk.count {
-//                let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
-//                let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
+        targetComparables.baseRange(moc: coreDataInstance) { baseRange in
+            var candidates : [TonalRange] = [baseRange]
+            for chunk in scrapeTop {
+                guard chunk.count == days else { continue }
                 
-                let targetVol = volatilities[targetComparables[i].date] ?? 0.0
-                let chunkVol = volatilities[chunk[i].date] ?? 0.0
-                similarities.append(normalizeSim(targetVol/chunkVol))
+                var similarities: [Double] = []
+                for i in 0..<chunk.count {
+    //                let targetCoeffecient = volatilityCoeffecients[targetComparables[i].date] ?? 0.0
+    //                let chunkDayCoeffecient = volatilityCoeffecients[chunk[i].date] ?? 0.0
+                    
+                    let targetVol = volatilities[targetComparables[i].date] ?? 0.0
+                    let chunkVol = volatilities[chunk[i].date] ?? 0.0
+                    similarities.append(normalizeSim(targetVol/chunkVol))
+                }
+                
+                if similarities.filter( { !threshold($0) } ).isEmpty {
+                    let dates: [Date] = chunk.map { $0.date }
+                    
+                    let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
+                        TonalSimilarity.init(date: $0.element,
+                                             similarity: similarities[$0.offset]) }
+                    
+                    let tIndicators: [TonalIndicators] = dates.map {
+                        TonalIndicators.init(date: $0,
+                                             volatility: volatilities[$0] ?? 0.0,
+                                             volatilityCoeffecient: volatilityCoeffecients[$0] ?? 0.0 ) }
+                    
+                    candidates.append(.init(objects: chunk,
+                                       orderedSecurities
+                                           .expanded(from: chunk),
+                                       tSimilarities,
+                                       tIndicators))
+                }
             }
             
-            if similarities.filter( { !threshold($0) } ).isEmpty {
-                let dates: [Date] = chunk.map { $0.date }
-                
-                let tSimilarities: [TonalSimilarity] = dates.enumerated().map {
-                    TonalSimilarity.init(date: $0.element,
-                                         similarity: similarities[$0.offset]) }
-                
-                let tIndicators: [TonalIndicators] = dates.map {
-                    TonalIndicators.init(date: $0,
-                                         volatility: volatilities[$0] ?? 0.0,
-                                         volatilityCoeffecient: volatilityCoeffecients[$0] ?? 0.0 ) }
-                
-                candidates.append(.init(objects: chunk,
-                                   orderedSecurities
-                                       .expanded(from: chunk),
-                                   tSimilarities,
-                                   tIndicators))
-            }
+            print("{TEST} updating")
+            connection.update(\EnvironmentDependency.tone.range, value: candidates)
         }
-        
-        print("{TEST} updating")
-        connection.update(\EnvironmentDependency.tone.range, value: candidates)
     }
     
     func threshold(_ item: Double) -> Bool {

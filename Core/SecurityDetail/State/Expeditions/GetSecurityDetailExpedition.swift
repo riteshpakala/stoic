@@ -25,14 +25,20 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
         case .expanded(let payload),
              .preview(let payload),
              .floor(let payload):
-            guard let security = payload.object as? Security else { return }
-        
-            coreDataInstance.getQuotes { result in
-                if let quote = result.first(where: { $0.ticker == security.ticker &&
-                                                $0.intervalType == .day }) {
-                    
+            guard let security = payload.object as? Security else { print("{TES} huh"); return }
+            
+            security.getQuote(moc: coreDataInstance) { quote in
+                if let quote = quote {
+                    print("{TEST} quote received")
                     state.quote = quote
+                    
+//                    //DEV:
+//                    let indicator = TonalServiceModels.Indicators.init(security,
+//                                                                       with: quote)
+//
+//                    indicator.stochastic
                 } else {
+                    print("{TEST} quote was not found")
                     guard let isFetching = connection.retrieve(\EnvironmentDependency.detail.isFetching),
                           !isFetching else {
                         return
@@ -41,6 +47,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     
                     connection.request(StockEvents.GetStockHistory.init(ticker: security.ticker))
                 }
+                
             }
             break
         }

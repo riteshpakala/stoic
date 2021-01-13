@@ -22,15 +22,14 @@ struct GetTonalModelsExpedition: GraniteExpedition {
         guard state.stage == .none else { return }
         state.stage = .fetching
         
-        guard let models = TonalModel.get(moc: coreDataInstance) else {
-            print("{TEST} model failed 5")
-            return
+        TonalModel.get(forSecurity: state.security,
+                       moc: coreDataInstance) { models in
+            state.tones = models
+            state.stage = .none
         }
-        print("{TEST} fetching -- tonalmodels \(models.count)")
-        
-        state.tones = models
-        if let model = models.first {
-            print("{TEST} prediction: \(model.predict())")
-        }
+       
+//        if let model = models.first {
+//            print("{TEST} prediction: \(model.predict())")
+//        }
     }
 }

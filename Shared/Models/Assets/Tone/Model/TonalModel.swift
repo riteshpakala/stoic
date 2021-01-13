@@ -60,13 +60,25 @@ extension TonalModel {
 }
 
 extension TonalModel {
-    public static func get(moc: NSManagedObjectContext) -> [TonalModel]? {
-        guard let toneObjects = moc.getTones(moc: moc) else {
-            print("{TEST} model failed 4")
-            return nil
+    public static func get(moc: NSManagedObjectContext,
+                           _ completion: @escaping (([TonalModel]) -> Void)){
+       
+        moc.getTones { tonalObjects in
+            completion(tonalObjects.compactMap { $0.asTone })
+        }
+    }
+    
+    public static func get(forSecurity security: Security?,
+                           moc: NSManagedObjectContext,
+                           _ completion: @escaping (([TonalModel]) -> Void)) {
+        guard let security = security else {
+            TonalModel.get(moc: moc, completion)
+            return
         }
         
-        return toneObjects.compactMap { $0.asTone }
+        moc.getTones(forSecurity: security) { tonalObjects in
+            completion(tonalObjects.compactMap { $0.asTone })
+        }
     }
 }
 

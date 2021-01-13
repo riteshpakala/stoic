@@ -32,7 +32,7 @@ extension Stock {
 }
 
 extension Array where Element == Stock {
-    func save(moc: NSManagedObjectContext, completion: @escaping ((QuoteObject?) -> Void)) {
+    func save(moc: NSManagedObjectContext, completion: @escaping ((Quote?) -> Void)) {
         guard let referenceStock = self.first else { completion(nil); return }
         moc.performAndWait {
             
@@ -46,13 +46,14 @@ extension Array where Element == Stock {
                 for stock in self {
                     let object = StockDataObject.init(context: moc)
                     stock.apply(to: object)
+                    object.quote = quote
                     quote.addToSecurities(object)
                 }
                 
                 try moc.save()
                 
-                print ("{CoreData} saved")
-                completion(quote)
+                print ("{CoreData} saved stocks")
+                completion(quote.asQuote)
             } catch let error {
                 print ("{CoreData} \(error.localizedDescription)")
                 completion(nil)

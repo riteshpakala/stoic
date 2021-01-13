@@ -19,6 +19,8 @@ public class SearchState: GraniteState {
     }
     var isEditing: Bool = false
     
+    var securityType: SecurityType = .stock
+    
     let context: WindowType
     
     public init(_ context: WindowType) {
