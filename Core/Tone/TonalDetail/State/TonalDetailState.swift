@@ -49,7 +49,6 @@ public class TonalDetailCenter: GraniteCenter<TonalDetailState> {
     
     var plotData: (percentK: SomePlotData, percentD: SomePlotData) {
         if let stochastics = self.stochastics {
-            print(stochastics.values.toStringDetailed)
             var dataK: GraphPageViewModel.PlotData = .init()
             var dataD: GraphPageViewModel.PlotData = .init()
             for (index) in 0..<stochastics.values.count {

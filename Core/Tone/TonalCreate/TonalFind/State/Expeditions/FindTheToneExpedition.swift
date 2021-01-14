@@ -44,11 +44,9 @@ struct FindTheToneExpedition: GraniteExpedition {
         
         guard let security = find.security else { return }
         
-        coreDataInstance.getQuotes { result in
+        security.getQuote(moc: coreDataInstance) { quote in
             //DEV: cleaner and the ability to modify the hourly interval
-            if let quote = result.first(where: { $0.ticker == security.ticker &&
-                                                 $0.intervalType == .day }) {
-                
+            if let quote = quote {
                 connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
             } else {
                 connection.request(StockEvents.GetStockHistory.init(security: security))
