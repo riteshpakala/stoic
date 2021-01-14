@@ -322,7 +322,7 @@ extension TonalModels {
         switch currentType {
         case .open:
             return open
-        case .close, .none:
+        case .close:
             return close
         case .high:
             return high
@@ -330,6 +330,8 @@ extension TonalModels {
             return low
         case .volume:
             return volume
+        default:
+            return close
         }
     }
     public func modelType(forModel model: SVMModel) -> ModelType {
@@ -412,6 +414,7 @@ extension TonalModels {
         case high
         case low
         case volume
+        case indicator
         case none
         
         var inDim: Int {
@@ -427,7 +430,7 @@ extension TonalModels {
             switch self {
             case .open:
                 return .open(model)
-            case .close, .none:
+            case .close:
                 return .close(model)
             case .high:
                 return .high(model)
@@ -435,11 +438,15 @@ extension TonalModels {
                 return .low(model)
             case .volume:
                 return .volume(model)
+            default:
+                return .close(model)
             }
         }
         
         var symbol: String {
             switch self {
+            case .indicator:
+                return ""
             case .volume:
                 return ""
             default:

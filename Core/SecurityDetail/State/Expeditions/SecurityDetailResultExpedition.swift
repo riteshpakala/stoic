@@ -23,9 +23,8 @@ struct StockDetailResultExpedition: GraniteExpedition {
         let stocks = event.data
         
         stocks.save(moc: coreDataInstance) { quote in
-            if let object = quote {
-                state.quote = object
-                connection.update(\EnvironmentDependency.detail.stage, value: .fetched)
+            if quote != nil {
+                connection.update(\EnvironmentDependency.detail.quote, value: quote)
             } else {
                 connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
             }
@@ -46,9 +45,8 @@ struct CryptoDetailResultExpedition: GraniteExpedition {
         let crypto = event.data
         
         crypto.save(moc: coreDataInstance) { quote in
-            if let object = quote {
-                state.quote = object
-                connection.update(\EnvironmentDependency.detail.stage, value: .fetched)
+            if quote != nil {
+                connection.update(\EnvironmentDependency.detail.quote, value: quote)
             } else {
                 connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
             }

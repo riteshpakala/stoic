@@ -19,8 +19,8 @@ public class AssetAddState: GraniteState {
     }
     
     public required init() {
-        self.searchState = .init(.init(.portfolio))
-        self.context = .portfolio
+        self.searchState = .init(.init(.portfolio(.unassigned)))
+        self.context = .portfolio(.unassigned)
     }
 }
 

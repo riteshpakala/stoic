@@ -29,9 +29,8 @@ public class GraphCenter: GraniteCenter<GraphState> {
 //            for security in quote.securities {
 //                print("{TES}T \(security.date)")
 //            }
-            let some: SomePlotData = .init()
-            some.plotData = data
-            return some
+            
+            return .init(data, interval: timeDisplay)
         } else {
             return .init()
         }

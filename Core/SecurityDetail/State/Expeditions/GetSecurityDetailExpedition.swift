@@ -20,33 +20,53 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        state.security.getQuote(moc: coreDataInstance) { quote in
-            if let quote = quote {
-                print("{TEST} quote received")
-                state.quote = quote
-                
-//                    //DEV:indicator test
-//                let indicator = TonalServiceModels.Indicators.init(state.security,
-//                                                                       with: quote)
-//
-//                    indicator.stochastic
+        
+        guard let stage = connection.retrieve(\EnvironmentDependency.detail.stage) else {
+            return
+        }
+        
+        switch stage {
+        case .loaded:
+            guard let quote = connection.retrieve(\EnvironmentDependency.detail.quote) else {
+                return
+            }
+            if quote?.contains(security: state.security) == false {
+                print("{TEST} shoule be generating new 1")
+                connection.update(\EnvironmentDependency.detail.stage, value: .none)
             } else {
-                print("{TEST} quote was not found")
-                guard let stage = connection.retrieve(\EnvironmentDependency.detail.stage),
-                      stage == .none else {
-                    return
-                }
-                connection.update(\EnvironmentDependency.detail.stage, value: .fetching)
-                
-                switch state.securityType {
-                case .crypto:
-                    connection.request(CryptoEvents.GetCryptoHistory.init(security: state.security))
-                case .stock:
-                    connection.request(StockEvents.GetStockHistory.init(security: state.security))
-                default:
-                    break
+                print("{TEST} generating ----")
+                state.quote = quote
+            }
+            
+            break
+        default:
+            state.security.getQuote(moc: coreDataInstance) { quote in
+                if let quote = quote {
+                    print("{TEST} quote received \(quote.intervalType)")
+                    if state.isExpanded {
+                        connection.update(\EnvironmentDependency.detail.quote, value: quote)
+                    } else {
+                        state.quote = quote
+                    }
+                } else if state.isExpanded {
+                    print("{TEST} quote was not found")
+                    guard stage == .none else {
+                        return
+                    }
+                    connection.update(\EnvironmentDependency.detail.stage, value: .fetching)
+                    
+                    switch state.securityType {
+                    case .crypto:
+                        connection.request(CryptoEvents.GetCryptoHistory.init(security: state.security))
+                    case .stock:
+                        connection.request(StockEvents.GetStockHistory.init(security: state.security))
+                    default:
+                        break
+                    }
                 }
             }
         }
+        
+        
     }
 }

@@ -15,6 +15,10 @@ public struct Quote {
     var exchangeName: String
     var name: String
     var securities: [Security]
+    
+    var latestSecurity: Security {
+        securities.sortDesc.first ?? EmptySecurity()
+    }
 }
 
 extension Quote {
@@ -26,7 +30,7 @@ extension Quote {
     
     public func contains(security: Security) -> Bool {
         return self.ticker == security.ticker &&
-            self.exchangeName == security.exchangeName &&
+            self.name == security.name &&
             self.securityType == security.securityType &&
             self.intervalType == security.interval
     }

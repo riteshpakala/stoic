@@ -44,9 +44,13 @@ extension TonalServiceModels {
             self.historyPaired = pairings
         }
         
+        public init(with quote: Quote) {
+            self.init(quote.latestSecurity, with: quote)
+        }
+        
         // Indicators
         var stochastic: Stochastics {
-            .init(history)
+            .init([security] + history)
         }
     }
 }

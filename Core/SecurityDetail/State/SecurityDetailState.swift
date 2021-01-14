@@ -17,6 +17,7 @@ public enum SecurityDetailType: ID, Hashable, Equatable {
 }
 public enum SecurityDetailStage {
     case failedFetching
+    case loaded
     case fetched
     case fetching
     case none
@@ -36,6 +37,15 @@ public class SecurityDetailState: GraniteState {
     
     var securityType: SecurityType {
         security.securityType
+    }
+    
+    var isExpanded: Bool {
+        switch kind {
+        case .expanded:
+            return true
+        default:
+            return false
+        }
     }
     
     public init(_ kind: SecurityDetailType) {
@@ -79,6 +89,10 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     }
     
     var loaded: Bool {
-        self.state.quote != nil
+        envDependency.detail.stage == .loaded
+    }
+    
+    var loadedQuote: Bool {
+        state.quote != nil
     }
 }

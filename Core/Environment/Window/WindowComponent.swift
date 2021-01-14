@@ -26,8 +26,8 @@ public struct WindowComponent: GraniteComponent {
                     state: .init(windowType: state.config.kind,
                                  securityType))
                     .share(.init(dep(\.hosted)))
-            case .portfolio:
-                PortfolioComponent()
+            case .portfolio(let type):
+                PortfolioComponent(state: .init(type))
                     .share(.init(dep(\.hosted)))
             case .floor:
                 FloorComponent()
@@ -48,6 +48,9 @@ public struct WindowComponent: GraniteComponent {
                 TonalModelsComponent(state: inject(\.envDependency,
                                                    target: \.tonalModels))
                     .payload(payload)
+                    .share(.init(dep(\.hosted)))
+            case .tonalDetail:
+                TonalDetailComponent()
                     .share(.init(dep(\.hosted)))
             case .special:
                 SpecialComponent()

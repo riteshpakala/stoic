@@ -25,6 +25,8 @@ struct MovingNumbersView<Element: View>: View {
     /// Give a fixed width to the view. This would give better transition effect as digits are not clipped off.
     var fixedWidth: CGFloat? = nil
     
+    var alignment: Alignment
+    
     /// Function to build digit, comma, and dot components
     let elementBuilder: (String) -> Element
     
@@ -100,11 +102,17 @@ struct MovingNumbersView<Element: View>: View {
         
         // All elements are centered (digit stack, comma, dot)
         let finalResultView = HStack(alignment: .center, spacing: 1) {
+            if alignment == .center {
+                Spacer()
+            }
             ForEach(allElements) { (element) in
                 self.viewFromElement(element)
                     .transition(self.elementTransition)
                     .animation(self.digitStackAnimation)
                     .background(Brand.Colors.black.opacity(0.75))
+            }
+            if alignment == .center {
+                Spacer()
             }
         }
         .frame(width: fixedWidth, alignment: .leading)
@@ -142,7 +150,7 @@ struct MovingNumbersView<Element: View>: View {
         .frame(width: fixedWidth)
         
         return estimatedView
-            .opacity(0)
+            .opacity(0.0)
             .overlay(
                 finalResultView,
                 alignment: .leading)

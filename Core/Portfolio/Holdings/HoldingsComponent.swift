@@ -40,16 +40,29 @@ public struct HoldingsComponent: GraniteComponent {
                             .listen(to: command, .stop)
                             .payload(retrievePayload(\.envDependency,
                                                      target: \.user.portfolio?.holdings.securities))
+                            
                     }
                     .padding(.top, Brand.Padding.large)
                     .padding(.leading, Brand.Padding.medium)
                     .padding(.trailing, Brand.Padding.medium)
                     
-                    VStack(spacing: 0) {
+                    if state.type == .add {
                         Spacer()
-                        PaddingVertical(Brand.Padding.xSmall)
-                        GraniteButtonComponent(state: .init("create")).onTapGesture {
-                            set(\.addToPortfolio, value: true)
+                        VStack(spacing: 0) {
+                            PaddingVertical(Brand.Padding.xSmall)
+                            Circle()
+                                .foregroundColor(Brand.Colors.marble).overlay(
+                                
+                                    GraniteText("+", Brand.Colors.black, .title, .bold)
+                                
+                                
+                                ).frame(width: 48, height: 48)
+                                .padding(.top, Brand.Padding.large)
+                                .padding(.leading, Brand.Padding.small)
+                                .padding(.bottom, Brand.Padding.large)
+                                .onTapGesture {
+                                    set(\.addToPortfolio, value: true)
+                            }
                         }
                     }
                 }

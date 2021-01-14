@@ -67,13 +67,15 @@ public enum WindowType: Hashable {
     
     case cta(String)
     
-    case portfolio
+    case portfolio(PortfolioType)
+    case holdings
     case floor
     
     case special
     
     case tonalCreate(TonalCreateStage)
     case tonalBrowser(GranitePayload)
+    case tonalDetail
     
     case unassigned
     

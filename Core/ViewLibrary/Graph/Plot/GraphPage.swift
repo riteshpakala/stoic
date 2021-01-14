@@ -9,18 +9,66 @@
 import Combine
 import SwiftUI
 
+public enum GraphType {
+    case indicator(Color)
+    case price
+    case unassigned
+    
+    var symbol: String {
+        switch self {
+        case .indicator:
+            return ""
+        default:
+            return "$"
+        }
+    }
+    
+    var titleTextSpacing: CGFloat {
+        switch self {
+        case .indicator:
+            return 0.0
+        default:
+            return 20.0
+        }
+    }
+    
+    var showStockHeader: Bool {
+        switch self {
+        case .indicator:
+            return false
+        default:
+            return true
+        }
+    }
+}
+
 class SomePlotData: ObservableObject {
     typealias PlotData = GraphPageViewModel.PlotData
     @Published var plotData: PlotData?
     @Published var predictionPlotData: PlotData = []
     @Published var predictionDateData: PlotData = []
     @Published var trueDays: Int?
-    @Published var modelType: TonalModels.ModelType = .none
+    @Published var graphType: GraphType = .unassigned
+    @Published var timeDisplayMode: TimeDisplayOption = .daily
+    
+    public init(_ data: PlotData,
+                interval: TimeDisplayOption,
+                graphType: GraphType = .unassigned) {
+        self.plotData = data
+        self.timeDisplayMode = interval
+        self.graphType = graphType
+    }
+    
+    public init() {
+        
+    }
 }
 struct GraphPage: View {
     typealias PlotData = GraphPageViewModel.PlotData
     
-    @State var timeDisplayMode: TimeDisplayOption = .daily
+    var timeDisplayMode: TimeDisplayOption {
+        someModel.timeDisplayMode
+    }
     @State var isLaserModeOn = false
     @State var currentIndex: Int? = nil
 //    @ObservedObject var viewModel = RobinhoodPageViewModel(symbol: symbol)
@@ -71,7 +119,7 @@ struct GraphPage: View {
     var plotRelativeWidth: CGFloat {
         switch timeDisplayMode {
         case .hourly:
-            return 1.0//0.7 // simulate today's data
+            return 0.98//0.7 // simulate today's data
         default:
             return 1.0
         }
@@ -88,80 +136,20 @@ struct GraphPage: View {
     
     // MARK: Body
     func readyPageContent(plotData: PlotData, predictionPlotData: PlotData) -> some View {
-//        let firstPrice = plotData.first?.price ?? 0
-//        let lastPrice = plotData.last?.price ?? 0
-//        let themeColor = firstPrice <= lastPrice ? rhThemeColor : rhRedThemeColor
         return VStack {
             
-            VStack(alignment: .leading, spacing: 0) {
-                stockHeaderAndPrice(plotData: plotData+predictionPlotData)
-            }.padding(.top, Brand.Padding.small).padding(.leading, Brand.Padding.small)
+            if someModel.graphType.showStockHeader {
+                VStack(alignment: .leading, spacing: 0) {
+                    stockHeaderAndPrice(plotData: plotData+predictionPlotData)
+                }.padding(.top, Brand.Padding.small).padding(.leading, Brand.Padding.small)
+            }
+            
             VStack {
                 plotBody(plotData: plotData, predictionPlotData: predictionPlotData)
             }
-//            TimeDisplayModeSelector(
-//                currentTimeDisplayOption: $timeDisplayMode,
-//                eligibleModes: TimeDisplayOption.allCases
-//            ).accentColor(themeColor)
             
-//            Divider()
-//            HStack {
-//                Text("All Segments")
-//                    .bold()
-//                    .rhFont(style: .title2)
-//                Spacer()
-//            }.padding([.leading, .top], 22)
-//            rowsOfSegment(plotData)
-//            Spacer()
         }.frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity, alignment: .topLeading)
     }
-    
-//    func rowsOfSegment(_ plotData: PlotData) -> some View {
-//        guard let segments = viewModel.segmentsDataCache[timeDisplayMode] else {
-//            return AnyView(EmptyView())
-//        }
-//        let allSplitPoints = segments + [plotData.count]
-//        let fromAndTos = Array(zip(allSplitPoints, allSplitPoints[1...]))
-//        let allTimes = plotData.map { $0.time }
-//        let allValues = plotData.map { $0.price }
-//        let dateFormatter = timeDisplayMode == .hourly ?
-//            SharedDateFormatter.onlyTime : SharedDateFormatter.dayAndYear
-//        return AnyView(ForEach((0..<fromAndTos.count).reversed(), id: \.self) { (i) -> AnyView in
-//            let (from, to) = fromAndTos[i]
-//            let endingPrice = allValues[to-1]
-//            let firstPrice = allValues[from]
-//            let endingTime = allTimes[to-1]
-//            let color = endingPrice >= firstPrice ? rhThemeColor : rhRedThemeColor
-//            return AnyView(self.segmentRow(
-//                titleText: "\(dateFormatter.string(from: endingTime))",
-//                values: Array(allValues[from..<to]),
-//                priceText: "$\(endingPrice.round2Str())").accentColor(color)
-//            )
-//            }.drawingGroup())
-//    }
-//    func segmentRow(titleText: String, values: [CGFloat], priceText: String) -> some View {
-//        HStack {
-//            Text(titleText)
-//                .rhFont(style: .headline)
-//                .frame(maxWidth: .infinity, alignment: .leading)
-//                .padding(.leading, 22)
-//            RHLinePlot(values: values)
-//                .frame(maxWidth: .infinity)
-//                .padding()
-//                .foregroundColor(Color.accentColor)
-//
-//            Text(priceText)
-//                .rhFont(style: .headline)
-//                .foregroundColor(.white)
-//                .padding(.vertical, 4)
-//                .padding(.horizontal, 8)
-//                .background(
-//                    RoundedRectangle(cornerRadius: 6)
-//                        .fill(Color.accentColor))
-//                .frame(maxWidth: .infinity, alignment: .trailing)
-//                .padding(.trailing, 22)
-//        }.frame(height: 60)
-//    }
     
     var body: some View {
         VStack {
@@ -174,11 +162,7 @@ struct GraphPage: View {
         .accentColor(graphThemeColor)
         .environment(\.graphLinePlotConfig, GraphLinePlotConfig.default.custom(f: { (c) in
             c.useLaserLightLinePlotStyle = isLaserModeOn
-        }))/*.onAppear {
-            self.viewModel.fetchOnAppear()
-        }.onDisappear {
-            self.viewModel.cancelAllFetchesOnDisappear()
-        }*/
+        }))
     }
 }
 
@@ -201,12 +185,11 @@ extension GraphPage {
             dateString = combined[currentIndex].time.asString
         }
         
-        
-        
 //        let themeColor = values.last! >= values.first! ? rhThemeColor : rhRedThemeColor
         
         return GraphInteractiveLinePlot(
             nonPredictionCount: someModel.trueDays ?? currentPlotData.count,
+            graphType: someModel.graphType,
             values: values,
             dates: dates,
             nonPredictionDates: nonPredictionDates,
@@ -226,9 +209,17 @@ extension GraphPage {
                 }
         },
             valueStickLabel: { value in
-                Text("\(dateString)")
-                    .foregroundColor(Brand.Colors.purple)
-                    .font(Fonts.live(.title3, .bold))
+                VStack(spacing: Brand.Padding.xSmall) {
+                    if !someModel.graphType.showStockHeader {
+                        buildMovingPriceView(input: value,
+                                             fixedWidth: 183,
+                                             alignment: .center)
+                            .font(Fonts.live(.title3, .bold))
+                    }
+                    Text("\(dateString)")
+                        .foregroundColor(Brand.Colors.marble)
+                        .font(Fonts.live(.headline, .bold))
+                }
         })
             //.frame(height: 280)
 //            .foregroundColor(themeColor)
@@ -251,24 +242,33 @@ extension GraphPage {
         let currentIndex = self.currentIndex ?? (plotData.count - 1)
         return HStack(spacing: 2) {
             
-            Text(someModel.modelType.symbol).background(with: Brand.Colors.black.opacity(0.75)).frame(width: someModel.modelType == .volume ? 0 : 20)
-            MovingNumbersView(
-                number: Double(plotData[currentIndex].price),
-                numberOfDecimalPlaces: 2,
-                verticalDigitSpacing: 0,
-                animationDuration: 0.3,
-                fixedWidth: 240) { (digit) in
-                    Text(digit)
-            }
-            .mask(LinearGradient(
-                gradient: Gradient(stops: [
-                    Gradient.Stop(color: .clear, location: 0),
-                    Gradient.Stop(color: .black, location: 0.2),
-                    Gradient.Stop(color: .black, location: 0.8),
-                    Gradient.Stop(color: .clear, location: 1.0)]),
-                startPoint: .top,
-                    endPoint: .bottom))
+            Text(someModel.graphType.symbol)
+                .background(with: Brand.Colors.black.opacity(0.75))
+                    .frame(width: someModel.graphType.titleTextSpacing)
+            buildMovingPriceView(input: plotData[currentIndex].price)
         }.font(Fonts.live(.title2, .bold))
+    }
+    
+    func buildMovingPriceView(input: CGFloat,
+                              fixedWidth: CGFloat = 240,
+                              alignment: Alignment = .leading) -> some View {
+        return MovingNumbersView(
+            number: Double(input),
+            numberOfDecimalPlaces: 2,
+            verticalDigitSpacing: 0,
+            animationDuration: 0.3,
+            fixedWidth: fixedWidth,
+            alignment: alignment) { (digit) in
+                Text(digit)
+        }
+        .mask(LinearGradient(
+            gradient: Gradient(stops: [
+                Gradient.Stop(color: .clear, location: 0),
+                Gradient.Stop(color: .black, location: 0.2),
+                Gradient.Stop(color: .black, location: 0.8),
+                Gradient.Stop(color: .clear, location: 1.0)]),
+            startPoint: .top,
+                endPoint: .bottom))
     }
 }
 

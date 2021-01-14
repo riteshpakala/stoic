@@ -38,7 +38,7 @@ public struct EnvironmentConfig {
                 ])
             case .home:
                 return .init(windows: [
-                            [ .search, .topVolume(.stock), .portfolio],
+                    [ .search, .topVolume(.stock), .portfolio(.expanded)],
                             [ .unassigned, .winners(.stock), .unassigned ],
                             [ .tonalBrowser(.empty), .losers(.stock), .unassigned]
                         ])
@@ -51,14 +51,11 @@ public struct EnvironmentConfig {
             case .floor:
                 return .init(windows: [
                              [.floor],
-                             [.unassigned],
-                             [.unassigned]
                         ])
             case .securityDetail(let payload):
                 return .init(windows: [
-                            [.securityDetail(.expanded(payload)), .search],
-                             [.unassigned, .unassigned],
-                             [.unassigned, .tonalBrowser(payload)]
+                    [.securityDetail(.expanded(payload)), .portfolio(.preview)],
+                            [.unassigned, .tonalBrowser(payload)]
                         ])
             default:
                 return .init(windows: [])

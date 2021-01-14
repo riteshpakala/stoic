@@ -30,7 +30,7 @@ class EnvironmentDependency: DependencyManager {
     @ObservedObject
     var search: SearchQuery = .init(.init(.search))
     
-    var holdingsPortfolio: HoldingsState = .init( .init(.init(.portfolio)))
+    var holdingsPortfolio: HoldingsState = .init( .init(.init(.portfolio(.expanded))))
     var holdingsFloor: HoldingsState = .init( .init(.init(.floor)))
     
     @ObservedObject

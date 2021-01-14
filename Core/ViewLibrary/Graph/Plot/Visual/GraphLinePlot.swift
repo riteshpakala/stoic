@@ -16,6 +16,8 @@ public struct GraphLinePlot<Indicator: View>: View {
     
     let nonPredictionCount: Int
     
+    let graphType: GraphType
+    
     /// Values to plot
     let values: [Value]
     
@@ -52,6 +54,7 @@ public struct GraphLinePlot<Indicator: View>: View {
     @Environment(\.graphLinePlotConfig) var graphLinePlotConfig
     
     public init(nonPredictionCount: Int,
+                graphType: GraphType,
                 values: [Value],
                 dates: [Date],
                 nonPredictionDates: [Date],
@@ -74,6 +77,7 @@ public struct GraphLinePlot<Indicator: View>: View {
         #endif
         self.nonPredictionCount = nonPredictionCount
         self.values = values
+        self.graphType = graphType
         self.dates = dates
         self.nonPredictionDates = nonPredictionDates
         self.predictionDates = predictionDates
@@ -125,6 +129,7 @@ public struct GraphLinePlot<Indicator: View>: View {
 // Default glowing indicator
 public extension GraphLinePlot where Indicator == GlowingIndicator {
     init(nonPredictionCount: Int,
+         graphType: GraphType,
          values: [Value],
          dates: [Date],
          nonPredictionDates: [Date],
@@ -136,6 +141,7 @@ public extension GraphLinePlot where Indicator == GlowingIndicator {
     ) {
         self.init(
             nonPredictionCount: nonPredictionCount,
+            graphType: graphType,
             values: values,
             dates: dates,
             nonPredictionDates: nonPredictionDates,
@@ -216,12 +222,4 @@ func getAdjustedStrokeEdgesCanvasFrame(proxy: GeometryProxy, graphLinePlotConfig
         width -= adjustedValue
     }
     return CGRect(x: x, y: y, width: width, height: height)
-}
-
-struct RHLinePlot_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            GraphLinePlot(nonPredictionCount: 0, values: [1,2,3,6,3,4,6], dates: [], nonPredictionDates: [], predictionDates: [])
-        }.previewLayout(.fixed(width: 300, height: 300))
-    }
 }

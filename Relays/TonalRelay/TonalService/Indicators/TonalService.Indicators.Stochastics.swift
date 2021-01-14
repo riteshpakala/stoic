@@ -36,10 +36,14 @@ extension TonalServiceModels.Indicators {
                 📈
                 """
             }
+            
+            var count: Int {
+                min(dates.count, min(percentKs.count, percentDs.count))
+            }
         }
         
         public static func calculate(_ history: [Security],
-                                     periods: Int = 13) -> Stochastics.Value {
+                                     periods: Int = 14) -> Stochastics.Value {
             var securities = history
             
             var dates: [Date] = []
@@ -47,12 +51,12 @@ extension TonalServiceModels.Indicators {
             for _ in 0..<securities.count {
                 let security = securities.removeFirst()
                 
-                let lastPeriod = [security] + securities.prefix(periods)
+                let lastPeriod = [security] + securities.prefix(periods - 1)
+                
+                guard lastPeriod.count == periods else { continue }
                 
                 let highestOfHighs = lastPeriod.map { $0.highValue }.max() ?? 0.0
                 let lowestOfLows = lastPeriod.map { $0.lowValue }.min() ?? 0.0
-                
-                print("{TEST} \(highestOfHighs)")
                 
                 /*
                  
@@ -66,8 +70,7 @@ extension TonalServiceModels.Indicators {
                 let param1 = (security.lastValue - lowestOfLows)
                 let param2 = (highestOfHighs - lowestOfLows)
                 
-                
-                let percentK = (param1/param2) * 100
+                let percentK: Double = abs(param1/param2) * 100
                 percentKs.append(percentK)
                 dates.append(security.date)
             }
@@ -91,12 +94,14 @@ extension TonalServiceModels.Indicators {
                 percentDs.append(percentD)
             }
             
-            return .init(dates: dates, percentKs: percentKs, percentDs: percentDs)
+            return .init(dates: dates,
+                         percentKs: percentKs,
+                         percentDs: percentDs)
         }
         
+        let values: Value
         public init(_ history: [Security]) {
-            let values = Stochastics.calculate(history)
-            print(values.toStringDetailed)
+            self.values = Stochastics.calculate(history)
         }
     }
 }

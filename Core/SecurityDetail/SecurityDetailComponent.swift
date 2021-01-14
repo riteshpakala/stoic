@@ -19,29 +19,41 @@ public struct SecurityDetailComponent: GraniteComponent {
     public var body: some View {
         //DEV:
         
-        ZStack {
-            if !command.center.loaded {
-                switch state.kind {
-                case .floor:
-                    Circle()
-                        .foregroundColor(Brand.Colors.marble).overlay(
+        VStack {
+            ZStack {
+                if !command.center.loadedQuote {
+                    switch state.kind {
+                    case .floor:
+                        Circle()
+                            .foregroundColor(Brand.Colors.marble).overlay(
+                            
+                                GraniteText("+", Brand.Colors.black, .title3, .bold)
+                            
+                            
+                            ).frame(width: 42, height: 42)
+                    case .expanded,
+                         .preview:
                         
-                            GraniteText("+", Brand.Colors.black, .title3, .bold)
+                        GraniteText("loading",
+                                    command.center.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
+                                    .subheadline,
+                                    .regular,
+                                    .center)
                         
-                        
-                        ).frame(width: 42, height: 42)
-                case .expanded,
-                     .preview:
-                    
-                    GraniteText("loading",
-                                command.center.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
-                                .subheadline,
-                                .regular,
-                                .center)
-                    
+                    }
                 }
+                GraphComponent(state: .init(state.quote))
+                    .frame(maxWidth: .infinity,
+                           maxHeight: .infinity)
+                
             }
-            GraphComponent(state: .init(state.quote)).frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            if case .expanded = state.kind,
+               command.center.loaded {
+                PaddingVertical()
+                TonalDetailComponent(state: .init(state.quote))
+                    .share(.init(dep(\.hosted)))
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
     }
     
     let nonPredictionCount: Int
+    let graphType: GraphType
     let values: [Value]
     let dates: [Date]
     let nonPredictionDates: [Date]
@@ -55,6 +56,7 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
     
     public init(
         nonPredictionCount: Int,
+        graphType: GraphType,
         values: [Value],
         dates: [Date],
         nonPredictionDates: [Date],
@@ -71,6 +73,7 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
         valueStickLabel: @escaping (Value) -> StickLabel
     ) {
         self.nonPredictionCount = nonPredictionCount
+        self.graphType = graphType
         self.values = values
         self.dates = dates
         self.nonPredictionDates = nonPredictionDates
@@ -107,6 +110,7 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
     func linePlot() -> some View {
         return GraphLinePlot(
             nonPredictionCount: nonPredictionCount,
+            graphType: graphType,
             values: values,
             dates: dates,
             nonPredictionDates: nonPredictionDates,
@@ -122,6 +126,8 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
     var stickAndLabelOpacity: Double {
         isDragging ? 1 : 0
     }
+    
+    var disableStick: Bool = true
     
     func makeGraphBody(proxy: GeometryProxy) -> some View {
         // Full edge-adjusted canvas, used in placing the stick label
@@ -164,7 +170,10 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
             return CGAffineTransform(translationX: centeringClamped, y: -((Brand.Padding.large * 3) + Brand.Padding.small))
         }
         
-        let valueStickYOffset = (canvasHeightWithoutAdjust/2 + ((Brand.Padding.large * 4) + Brand.Padding.small))
+        let canvasHalfHeight = canvasHeightWithoutAdjust/2
+        let stickAndValuePadding = ((Brand.Padding.large * 4) + Brand.Padding.small)
+        let canvasHeightForStick = (canvasHalfHeight - stickAndValuePadding)
+        let valueStickYOffset = (canvasHalfHeight + stickAndValuePadding)
         return ZStack {//(spacing: rhPlotConfig.spaceBetweenValueStickAndStickLabel) {
             
             // Value Stick Label
@@ -177,23 +186,34 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
                             .transformEffect(labelTranslation(labelProxy: labelProxy))
                     }.opacity(stickAndLabelOpacity))
             
-            // Line Plot
-            linePlot()
-                .padding(EdgeInsets(
-                    top: 0,
-                    leading: 0,
-                    bottom: 0,
-                    trailing: 0))
-                .overlay(
-                    // Value Stick
-                    LinePlotValueStick(lineWidth: graphLinePlotConfig.valueStickWidth)
-                        .opacity(isDragging ? 0.75 : 0.0)
-                        .offset(x: valueStickOffset-(graphLinePlotConfig.valueStickWidth/2), y: -valueStickYOffset)
-                        .foregroundColor(graphLinePlotConfig.valueStickColor),
-                    alignment: .leading
-            )
-                .contentShape(Rectangle())
-                .gesture(touchAndDrag(canvas: relativeWidthCanvas))
+            if disableStick {
+                // Line Plot
+                linePlot()
+                    .padding(EdgeInsets(
+                        top: 0,
+                        leading: 0,
+                        bottom: 0,
+                        trailing: 0))
+                    .contentShape(Rectangle())
+                    .gesture(touchAndDrag(canvas: relativeWidthCanvas))
+            } else {
+                
+                // Line Plot
+                linePlot()
+                    .padding(EdgeInsets(
+                        top: 0,
+                        leading: 0,
+                        bottom: 0,
+                        trailing: 0))
+                    .overlay(
+                        // Value Stick
+                        LinePlotValueStick(lineWidth: graphLinePlotConfig.valueStickWidth, height: .infinity)
+                            .opacity(isDragging ? 0.75 : 0.0)
+                            .offset(x: valueStickOffset-(graphLinePlotConfig.valueStickWidth/2), y: -valueStickYOffset)
+                            .foregroundColor(graphLinePlotConfig.valueStickColor),
+                        alignment: .leading
+                )
+            }
 //            .overlay(pressAndDragProxyView(canvas: relativeWidthCanvas))
         }
     }
@@ -203,6 +223,7 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
 public extension GraphInteractiveLinePlot where Indicator == GlowingIndicator {
     init(
         nonPredictionCount: Int,
+        graphType: GraphType,
         values: [Value],
         dates: [Date],
         nonPredictionDates: [Date],
@@ -218,6 +239,7 @@ public extension GraphInteractiveLinePlot where Indicator == GlowingIndicator {
     ) {
         self.init(
             nonPredictionCount: nonPredictionCount,
+            graphType: graphType,
             values: values,
             dates: dates,
             nonPredictionDates: nonPredictionDates,

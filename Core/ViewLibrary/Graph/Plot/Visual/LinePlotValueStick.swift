@@ -12,9 +12,10 @@ import SwiftUI
 struct LinePlotValueStick: View {
     
     var lineWidth: CGFloat = 1
+    var height: CGFloat
     
     var body: some View {
         Rectangle()
-            .frame(maxWidth: self.lineWidth, maxHeight: .infinity)
+            .frame(maxWidth: self.lineWidth, maxHeight: self.height)
     }
 }

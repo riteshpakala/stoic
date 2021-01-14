@@ -17,7 +17,6 @@ public struct GraphComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        GraphPage(timeDisplayMode: command.center.timeDisplay,
-                  someModel: command.center.plotData)
+        GraphPage(someModel: command.center.plotData)
     }
 }

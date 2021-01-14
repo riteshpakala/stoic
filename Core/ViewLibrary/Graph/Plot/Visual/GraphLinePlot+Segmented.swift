@@ -165,7 +165,17 @@ extension GraphLinePlot {
             /**
              color: lineSegmentStartingIndices[i].isPrediction ? Color.init(GlobalStyle.Colors.purple) : Color.init(GlobalStyle.Colors.yellow), i: i
              */
-            let themeColor: Color = (values.last ?? 0.0) >= (values.first ?? 0.0) ? graphThemeColor : graphRedThemeColor
+            
+            let themeColor: Color
+            switch graphType {
+            case .indicator(let color):
+                themeColor = color
+            default:
+                let mostRecentValue = values.last ?? 0.0
+                let nextValue = 1 < values.count ? values[1] : 0.0
+                themeColor = mostRecentValue >= nextValue ? graphThemeColor : graphRedThemeColor
+            }
+            
             let lineWidth = self.graphLinePlotConfig.plotLineWidth
             if self.graphLinePlotConfig.useLaserLightLinePlotStyle {
                 return AnyView(

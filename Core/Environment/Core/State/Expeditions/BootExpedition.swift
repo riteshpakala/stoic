@@ -30,6 +30,8 @@ struct BootExpedition: GraniteExpedition {
             var windowRowConfig: [WindowConfig] = []
             
             for col in cols {
+                guard row < page.windows.count,
+                      col < page.windows[row].count else { continue }
                 let config: WindowConfig = .init(kind: page.windows[row][col],
                                                  index:
                                                     .init(x: col,
@@ -39,6 +41,7 @@ struct BootExpedition: GraniteExpedition {
                 windowRowConfig.append(config)
             }
             
+            guard windowRowConfig.isNotEmpty else { continue }
             windowsConfig.append(windowRowConfig)
         }
         
