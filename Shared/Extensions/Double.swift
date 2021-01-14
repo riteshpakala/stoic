@@ -29,15 +29,18 @@ extension Double {
         let number = self
         let thousand = number / 1000
         let million = number / 1000000
+        let billion = number / 1000000000
         
-        if million >= 1.0 {
+        if billion >= 1.0 {
+            return String(format: "%.2f%b", billion)
+        } else if million >= 1.0 {
             return String(format: "%.2f%m", million)
         }
         else if thousand >= 1.0 {
             return String(format: "%.2f%k", thousand)
         }
         else {
-            return String(format: "%.2f%", self*100)
+            return String(format: "%.2f%", self)
         }
     }
 }

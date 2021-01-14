@@ -16,6 +16,7 @@ extension Security {
         quote.ticker = ticker
         quote.intervalType = interval.rawValue
         quote.securityType = securityType.rawValue
+        quote.name = name
     }
     
     public func apply(to security: SecurityObject) {
@@ -74,10 +75,11 @@ extension Security {
     public func getQuoteObject(moc: NSManagedObjectContext,
                                _ completion: @escaping ((QuoteObject?) -> Void)) {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
+        request.predicate = NSPredicate(format: "(ticker == %@) AND (name == %@) AND (intervalType == %@)",
                                         self.ticker,
-                                        self.exchangeName,
+                                        self.name,
                                         self.interval.rawValue)
+        
         moc.performAndWait {
             completion(try? moc.fetch(request).first)
         }
@@ -199,7 +201,8 @@ extension StockDataObject {
               changePercent: self.changePercentValue,
               changeAbsolute: self.changeAbsoluteValue,
               interval: SecurityInterval(rawValue: self.intervalType) ?? .day,
-              exchangeName: self.exchangeName)
+              exchangeName: self.exchangeName,
+              name: self.name)
     }
 }
 
@@ -207,13 +210,16 @@ extension CryptoDataObject {
     public var asCrypto: CryptoCurrency {
         .init(ticker: self.ticker,
               date: self.date,
-              last: self.lastValue,
-              high: self.highValue,
-              low: self.lowValue,
-              volume: self.volumeValue,
+              open: self.open,
+              close: self.close,
+              high: self.high,
+              low: self.low,
+              volumeBTC: self.volumeBTC,
+              volume: self.volume,
               changePercent: self.changePercentValue,
               changeAbsolute: self.changeAbsoluteValue,
-              interval: SecurityInterval(rawValue: self.intervalType) ?? .day,
-              exchangeName: self.exchangeName)
+              interval: SecurityInterval(rawValue: self.intervalType) ?? .hour,
+              exchangeName: self.exchangeName,
+              name: self.name)
     }
 }

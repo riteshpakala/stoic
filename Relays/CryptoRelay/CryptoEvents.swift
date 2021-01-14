@@ -20,13 +20,38 @@ struct CryptoEvents {
         }
     }
     
-//    public struct SearchDataResult: GraniteEvent {
-//        let data: [StockServiceModels.Search]
-//    }
-//    
-//    public struct SearchQuoteResults: GraniteEvent {
-//        let quotes: [StockServiceModels.Quotes]
-//    }
+    public struct SearchBackend: GraniteEvent {
+        let query: String
+        public init(_ query: String) {
+            self.query = query
+        }
+    }
+    
+    public struct SearchDataResult: GraniteEvent {
+        let query: String
+        let data: [SearchResponse]
+        
+        public init(_ query: String, data: [SearchResponse]) {
+            self.query = query
+            self.data = data
+        }
+    }
+    
+    public struct GetSearchQuote: GraniteEvent {
+        let data: [SearchResponse]
+        
+        public init(data: [SearchResponse]) {
+            self.data = data
+        }
+    }
+    
+    public struct SearchResult: GraniteEvent {
+        let result: [Security]
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
+    }
     
     public struct GetMovers: GraniteEvent {
         public var beam: GraniteBeamType {
@@ -52,16 +77,29 @@ struct CryptoEvents {
         }
     }
     
-    //MARK: -- Stock History
+    //MARK: -- Crypto History
     public struct GetCryptoHistory: GraniteEvent {
-        let ticker: String
+        let security: Security
+        let interval: SecurityInterval
         let daysAgo: Int
         
-        public init(ticker: String, daysAgo: Int = 2400)//730 = 2 years - 1825 = 5 years
+        public init(security: Security,
+                    daysAgo: Int = 2400,
+                    interval: SecurityInterval = .hour)//730 = 2 years - 1825 = 5 years
         {
-            self.ticker = ticker
+            self.security = security
+            self.interval = interval
             self.daysAgo = daysAgo
         }
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
+    }
+    
+    public struct History: GraniteEvent {
+        let data: [CryptoCurrency]
+        let interval: SecurityInterval
         
         public var beam: GraniteBeamType {
             .rebound

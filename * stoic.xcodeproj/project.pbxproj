@@ -626,6 +626,34 @@
 		71BE145F25A15B170015D157 /* GetStockSearchExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE145D25A15B170015D157 /* GetStockSearchExpedition.swift */; };
 		71BE146525A15DB60015D157 /* StockService.Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE146425A15DB60015D157 /* StockService.Search.swift */; };
 		71BE146625A15DB60015D157 /* StockService.Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE146425A15DB60015D157 /* StockService.Search.swift */; };
+		71C08E8425AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8025AF53AE00765894 /* SearchResponseObject+CoreDataClass.swift */; };
+		71C08E8525AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8025AF53AE00765894 /* SearchResponseObject+CoreDataClass.swift */; };
+		71C08E8625AF53AF00765894 /* NetworkResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8125AF53AE00765894 /* NetworkResponseObject+CoreDataProperties.swift */; };
+		71C08E8725AF53AF00765894 /* NetworkResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8125AF53AE00765894 /* NetworkResponseObject+CoreDataProperties.swift */; };
+		71C08E8825AF53AF00765894 /* NetworkResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8225AF53AE00765894 /* NetworkResponseObject+CoreDataClass.swift */; };
+		71C08E8925AF53AF00765894 /* NetworkResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8225AF53AE00765894 /* NetworkResponseObject+CoreDataClass.swift */; };
+		71C08E8A25AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8325AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift */; };
+		71C08E8B25AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8325AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift */; };
+		71C08E9225AF770100765894 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E9125AF770100765894 /* NetworkResponse.swift */; };
+		71C08E9325AF770100765894 /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E9125AF770100765894 /* NetworkResponse.swift */; };
+		71C08E9A25AF772F00765894 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E9925AF772F00765894 /* SearchResponse.swift */; };
+		71C08E9B25AF772F00765894 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E9925AF772F00765894 /* SearchResponse.swift */; };
+		71C08EBF25AFA59300765894 /* CryptoService.Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBA25AFA59200765894 /* CryptoService.Quotes.swift */; };
+		71C08EC025AFA59300765894 /* CryptoService.Quotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBA25AFA59200765894 /* CryptoService.Quotes.swift */; };
+		71C08EC125AFA59300765894 /* CryptoService.Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBB25AFA59200765894 /* CryptoService.Utilities.swift */; };
+		71C08EC225AFA59300765894 /* CryptoService.Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBB25AFA59200765894 /* CryptoService.Utilities.swift */; };
+		71C08EC325AFA59300765894 /* CryptoService.Market.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBC25AFA59200765894 /* CryptoService.Market.swift */; };
+		71C08EC425AFA59300765894 /* CryptoService.Market.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBC25AFA59200765894 /* CryptoService.Market.swift */; };
+		71C08EC525AFA59300765894 /* CryptoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBD25AFA59300765894 /* CryptoService.swift */; };
+		71C08EC625AFA59300765894 /* CryptoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBD25AFA59300765894 /* CryptoService.swift */; };
+		71C08EC725AFA59300765894 /* CryptoService.List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBE25AFA59300765894 /* CryptoService.List.swift */; };
+		71C08EC825AFA59300765894 /* CryptoService.List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EBE25AFA59300765894 /* CryptoService.List.swift */; };
+		71C08EE325AFC11200765894 /* SecurityEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EE225AFC11200765894 /* SecurityEvents.swift */; };
+		71C08EE425AFC11200765894 /* SecurityEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EE225AFC11200765894 /* SecurityEvents.swift */; };
+		71C08EEA25AFC21F00765894 /* Security.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EE925AFC21F00765894 /* Security.Group.swift */; };
+		71C08EEB25AFC21F00765894 /* Security.Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EE925AFC21F00765894 /* Security.Group.swift */; };
+		71C08EF125AFDAEF00765894 /* CryptoCurrency.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EF025AFDAEF00765894 /* CryptoCurrency.CoreData.swift */; };
+		71C08EF225AFDAEF00765894 /* CryptoCurrency.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08EF025AFDAEF00765894 /* CryptoCurrency.CoreData.swift */; };
 		71C2BF5225AB94B0006445EB /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C2BF5125AB94B0006445EB /* Portfolio.swift */; };
 		71C2BF5325AB94B0006445EB /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C2BF5125AB94B0006445EB /* Portfolio.swift */; };
 		71C2BF6A25ABA5B8006445EB /* HoldingSelectedExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C2BF6925ABA5B8006445EB /* HoldingSelectedExpedition.swift */; };
@@ -1077,6 +1105,20 @@
 		71BDF2952599430A00F66EA2 /* TonalService.Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Utilities.swift; sourceTree = "<group>"; };
 		71BE145D25A15B170015D157 /* GetStockSearchExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStockSearchExpedition.swift; sourceTree = "<group>"; };
 		71BE146425A15DB60015D157 /* StockService.Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockService.Search.swift; sourceTree = "<group>"; };
+		71C08E8025AF53AE00765894 /* SearchResponseObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SearchResponseObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		71C08E8125AF53AE00765894 /* NetworkResponseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkResponseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		71C08E8225AF53AE00765894 /* NetworkResponseObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkResponseObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		71C08E8325AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SearchResponseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		71C08E9125AF770100765894 /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
+		71C08E9925AF772F00765894 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
+		71C08EBA25AFA59200765894 /* CryptoService.Quotes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoService.Quotes.swift; sourceTree = "<group>"; };
+		71C08EBB25AFA59200765894 /* CryptoService.Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoService.Utilities.swift; sourceTree = "<group>"; };
+		71C08EBC25AFA59200765894 /* CryptoService.Market.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoService.Market.swift; sourceTree = "<group>"; };
+		71C08EBD25AFA59300765894 /* CryptoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoService.swift; sourceTree = "<group>"; };
+		71C08EBE25AFA59300765894 /* CryptoService.List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoService.List.swift; sourceTree = "<group>"; };
+		71C08EE225AFC11200765894 /* SecurityEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityEvents.swift; sourceTree = "<group>"; };
+		71C08EE925AFC21F00765894 /* Security.Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.Group.swift; sourceTree = "<group>"; };
+		71C08EF025AFDAEF00765894 /* CryptoCurrency.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCurrency.CoreData.swift; sourceTree = "<group>"; };
 		71C2BF5125AB94B0006445EB /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		71C2BF6925ABA5B8006445EB /* HoldingSelectedExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingSelectedExpedition.swift; sourceTree = "<group>"; };
 		71C2BF7125ABA9AD006445EB /* GetSecurityDetailExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSecurityDetailExpedition.swift; sourceTree = "<group>"; };
@@ -1185,6 +1227,7 @@
 		710889032591B05F00795EDF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				71C08E9025AF76F700765894 /* Network */,
 				712415EC25A35EFE00169B9C /* Dependencies */,
 				710889042591B06B00795EDF /* Assets */,
 			);
@@ -1209,9 +1252,11 @@
 		7108890B2591B07900795EDF /* Securities */ = {
 			isa = PBXGroup;
 			children = (
+				71C08EE125AFC10300765894 /* Events */,
 				710889122591B08B00795EDF /* CryptoCurrency */,
 				710889132591B09100795EDF /* Stock */,
 				7108890C2591B08300795EDF /* Security.swift */,
+				71C08EE925AFC21F00765894 /* Security.Group.swift */,
 				7123B13B2593CB4D00E5BD69 /* Security.CoreData.swift */,
 				71267A4425A59D89006132D8 /* Security.Helpers.swift */,
 			);
@@ -1222,6 +1267,7 @@
 			isa = PBXGroup;
 			children = (
 				7108891A2591B0A400795EDF /* CryptoCurrency.swift */,
+				71C08EF025AFDAEF00765894 /* CryptoCurrency.CoreData.swift */,
 			);
 			path = CryptoCurrency;
 			sourceTree = "<group>";
@@ -1258,20 +1304,12 @@
 		710889382591B29800795EDF /* CryptoService */ = {
 			isa = PBXGroup;
 			children = (
-				7108893D2591B29800795EDF /* Then */,
-				710889392591B29800795EDF /* Assets.swift */,
-				7108893A2591B29800795EDF /* Dictionary+QueryString.swift */,
-				7108893B2591B29800795EDF /* Cryptowatcher+Markets.swift */,
-				7108893C2591B29800795EDF /* Cryptowatcher+Aggregates.swift */,
-				7108895A2591B29800795EDF /* Cryptowatcher.swift */,
-				7108895B2591B29800795EDF /* Pairs.swift */,
-				7108895C2591B29800795EDF /* Markets.swift */,
-				7108895D2591B29800795EDF /* Cryptowatcher+Pairs.swift */,
-				7108895E2591B29800795EDF /* Fetchable.swift */,
-				7108895F2591B29800795EDF /* Cryptowatcher+Assets.swift */,
-				710889602591B29800795EDF /* Aggregates.swift */,
-				710889612591B29800795EDF /* Exchanges.swift */,
-				710889622591B29800795EDF /* Cryptowatcher+Exchanges.swift */,
+				71C08EBD25AFA59300765894 /* CryptoService.swift */,
+				71C08EBA25AFA59200765894 /* CryptoService.Quotes.swift */,
+				71C08EBE25AFA59300765894 /* CryptoService.List.swift */,
+				71C08EBC25AFA59200765894 /* CryptoService.Market.swift */,
+				71C08EBB25AFA59200765894 /* CryptoService.Utilities.swift */,
+				71C08EB525AFA52F00765894 /* Cryptowatcher */,
 			);
 			path = CryptoService;
 			sourceTree = "<group>";
@@ -1614,6 +1652,10 @@
 				7123B11F2593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift */,
 				7123B1202593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift */,
 				7123B1212593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift */,
+				71C08E8225AF53AE00765894 /* NetworkResponseObject+CoreDataClass.swift */,
+				71C08E8125AF53AE00765894 /* NetworkResponseObject+CoreDataProperties.swift */,
+				71C08E8025AF53AE00765894 /* SearchResponseObject+CoreDataClass.swift */,
+				71C08E8325AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2583,6 +2625,52 @@
 			path = State;
 			sourceTree = "<group>";
 		};
+		71C08E9025AF76F700765894 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				71C08E9125AF770100765894 /* NetworkResponse.swift */,
+				71C08E9825AF772300765894 /* Search */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		71C08E9825AF772300765894 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				71C08E9925AF772F00765894 /* SearchResponse.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		71C08EB525AFA52F00765894 /* Cryptowatcher */ = {
+			isa = PBXGroup;
+			children = (
+				7108893D2591B29800795EDF /* Then */,
+				710889392591B29800795EDF /* Assets.swift */,
+				7108893A2591B29800795EDF /* Dictionary+QueryString.swift */,
+				7108893B2591B29800795EDF /* Cryptowatcher+Markets.swift */,
+				7108893C2591B29800795EDF /* Cryptowatcher+Aggregates.swift */,
+				7108895A2591B29800795EDF /* Cryptowatcher.swift */,
+				7108895B2591B29800795EDF /* Pairs.swift */,
+				7108895C2591B29800795EDF /* Markets.swift */,
+				7108895D2591B29800795EDF /* Cryptowatcher+Pairs.swift */,
+				7108895E2591B29800795EDF /* Fetchable.swift */,
+				7108895F2591B29800795EDF /* Cryptowatcher+Assets.swift */,
+				710889602591B29800795EDF /* Aggregates.swift */,
+				710889612591B29800795EDF /* Exchanges.swift */,
+				710889622591B29800795EDF /* Cryptowatcher+Exchanges.swift */,
+			);
+			path = Cryptowatcher;
+			sourceTree = "<group>";
+		};
+		71C08EE125AFC10300765894 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				71C08EE225AFC11200765894 /* SecurityEvents.swift */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
 		71C2BF6825ABA59D006445EB /* Expedition */ = {
 			isa = PBXGroup;
 			children = (
@@ -3170,6 +3258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71C08E8825AF53AF00765894 /* NetworkResponseObject+CoreDataClass.swift in Sources */,
 				71D63EFB2592A90D0085D718 /* StockService.Movers.swift in Sources */,
 				7125BD8A25A1316500F22717 /* LinearRangeMath.swift in Sources */,
 				7179ACDF25AC9987003FD06F /* TonalModelObject+CoreDataClass.swift in Sources */,
@@ -3229,14 +3318,17 @@
 				7125BD8E25A1316500F22717 /* DefaultThumb.swift in Sources */,
 				71EE7079258D8F88005B2B8E /* AssetGridState.swift in Sources */,
 				7125BE0A25A1328A00F22717 /* VerticalValueSliderStyle.swift in Sources */,
+				71C08E8425AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */,
 				71DE186525A6D94D00911AD1 /* GraphEvents.swift in Sources */,
 				710889A12591B29800795EDF /* Promise+nil.swift in Sources */,
 				71D63F6E2592BFC40085D718 /* AssetSectionState.swift in Sources */,
+				71C08E8A25AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift in Sources */,
 				711D546025A6913B0074D334 /* Geometry.swift in Sources */,
 				7125BD8625A1316500F22717 /* LinearValueMath.swift in Sources */,
 				71C2BFB225ABE26A006445EB /* GetFloorExpedition.swift in Sources */,
 				71DE186925A6D94D00911AD1 /* GraphComponent.swift in Sources */,
 				7118A229259313FD007E7EAB /* TonalCreateComponent.swift in Sources */,
+				71C08EBF25AFA59300765894 /* CryptoService.Quotes.swift in Sources */,
 				7108897F2591B29800795EDF /* Promise+Aliases.swift in Sources */,
 				7143415325905E5B001F26A4 /* Fonts.swift in Sources */,
 				7179D3D525AC936500C82063 /* TonalModelsState.swift in Sources */,
@@ -3273,6 +3365,7 @@
 				7125BE6725A1388400F22717 /* PointSlider.swift in Sources */,
 				710889A72591B29800795EDF /* Markets.swift in Sources */,
 				7123B1232593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift in Sources */,
+				71C08EC125AFA59300765894 /* CryptoService.Utilities.swift in Sources */,
 				7183D55925A428AE00FB91A9 /* GraphLinePlot.swift in Sources */,
 				712415F225A35F2200169B9C /* Search.swift in Sources */,
 				71DC58C725988F11004935CF /* StoicRNN_10.mlmodel in Sources */,
@@ -3309,6 +3402,7 @@
 				71149EDF25A7A5AA00148D68 /* SearchAssetExpedition.swift in Sources */,
 				7108898B2591B29800795EDF /* Promise+First.swift in Sources */,
 				711484EF259E119200464684 /* WindowConfig.swift in Sources */,
+				71C08EC325AFA59300765894 /* CryptoService.Market.swift in Sources */,
 				710889A92591B29800795EDF /* Cryptowatcher+Pairs.swift in Sources */,
 				7143439E2590787E001F26A4 /* RenderIf.swift in Sources */,
 				71434326259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,
@@ -3337,6 +3431,7 @@
 				710889932591B29800795EDF /* Promise+Error.swift in Sources */,
 				7125BDC525A1318D00F22717 /* EnvironmentValues+RangeSliderStyle.swift in Sources */,
 				7123B1432593CC8C00E5BD69 /* DataHandling.swift in Sources */,
+				71C08E9A25AF772F00765894 /* SearchResponse.swift in Sources */,
 				7179AD0F25AC9FE5003FD06F /* GetTonalModelsExpedition.swift in Sources */,
 				7179ACA625AC9472003FD06F /* TonalCompileEvents.swift in Sources */,
 				71B42FBA25A875DD00A23F4D /* HoldingsState.swift in Sources */,
@@ -3360,6 +3455,7 @@
 				7143418325906441001F26A4 /* Color.swift in Sources */,
 				7108896B2591B29800795EDF /* Promise+Retry.swift in Sources */,
 				7179AD0725AC9D6C003FD06F /* SaveTheToneExpedition.swift in Sources */,
+				71C08EC725AFA59300765894 /* CryptoService.List.swift in Sources */,
 				71F1EC5425A0F47A00D32C52 /* SearchState.swift in Sources */,
 				71C2BF7225ABA9AD006445EB /* GetSecurityDetailExpedition.swift in Sources */,
 				7108896D2591B29800795EDF /* PromiseState.swift in Sources */,
@@ -3369,6 +3465,7 @@
 				710889772591B29800795EDF /* Await+Operators.swift in Sources */,
 				7143431A259076EB001F26A4 /* String+Convenience.swift in Sources */,
 				711484D6259E0E2E00464684 /* EnvironmentEvents.swift in Sources */,
+				71C08EC525AFA59300765894 /* CryptoService.swift in Sources */,
 				7125BE1225A1328A00F22717 /* EnvironmentValues+TrackValue.swift in Sources */,
 				71DC58EF25988F84004935CF /* Kernel.swift in Sources */,
 				7125BE5F25A1388400F22717 /* AnyPointSliderStyle.swift in Sources */,
@@ -3384,6 +3481,7 @@
 				710889AB2591B29800795EDF /* Fetchable.swift in Sources */,
 				710889852591B29800795EDF /* Await.swift in Sources */,
 				714342FF25907622001F26A4 /* UINumericType.swift in Sources */,
+				71C08E9225AF770100765894 /* NetworkResponse.swift in Sources */,
 				7136B65B25A008B40014F693 /* PortfolioState.swift in Sources */,
 				71EE7092258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
 				7143431C259076EB001F26A4 /* Double+Angle.swift in Sources */,
@@ -3394,6 +3492,7 @@
 				7123B1272593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift in Sources */,
 				71434355259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
 				7125BE5D25A1388400F22717 /* EnvironmentValues+PointSliderStyle.swift in Sources */,
+				71C08EEA25AFC21F00765894 /* Security.Group.swift in Sources */,
 				7125BDFC25A1328900F22717 /* ValueSlider.swift in Sources */,
 				7125BE0C25A1328A00F22717 /* HorizontalValueTrack.swift in Sources */,
 				71332A1525A78D09005A72A9 /* SecurityDetailState.swift in Sources */,
@@ -3461,6 +3560,7 @@
 				7121F6D82596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */,
 				71DC58F325988F84004935CF /* DataSet.swift in Sources */,
 				7139F6B12598827F00D9C84B /* GetSentimentExpedition.swift in Sources */,
+				71C08EE325AFC11200765894 /* SecurityEvents.swift in Sources */,
 				7105341625A50E97006A75DD /* TonalRange.CoreData.swift in Sources */,
 				7183D54B25A428AE00FB91A9 /* GraphPageViewModel.swift in Sources */,
 				7134427325A37A2C002C0315 /* SocialDataObject+CoreDataProperties.swift in Sources */,
@@ -3502,6 +3602,7 @@
 				7136B65D25A008B40014F693 /* PortfolioComponent.swift in Sources */,
 				71434361259076F4001F26A4 /* Edge+Convenience.swift in Sources */,
 				7169535125A7ADB400641BCE /* Run.swift in Sources */,
+				71C08EF125AFDAEF00765894 /* CryptoCurrency.CoreData.swift in Sources */,
 				71B4304725A8A26400A23F4D /* SearchSecurityResultExpedition.swift in Sources */,
 				710889062591B07400795EDF /* Asset.swift in Sources */,
 				71494D6725ABE9BD0086E598 /* FloorConfig.swift in Sources */,
@@ -3513,6 +3614,7 @@
 				7125BD8C25A1316500F22717 /* DefaultHorizontalValueView.swift in Sources */,
 				7124162025A36C3400169B9C /* Social.swift in Sources */,
 				71332A3125A79DD0005A72A9 /* AssetSearchComponent.swift in Sources */,
+				71C08E8625AF53AF00765894 /* NetworkResponseObject+CoreDataProperties.swift in Sources */,
 				7109642925A59FBD0021B42B /* TonalService.Model.DataSet.swift in Sources */,
 				710889872591B29800795EDF /* Promise+Timeout.swift in Sources */,
 				7125BDD925A131D200F22717 /* RangeTrackConfiguration.swift in Sources */,
@@ -3584,6 +3686,7 @@
 				7108898A2591B29800795EDF /* Async.swift in Sources */,
 				71434325259076EB001F26A4 /* Int+Convenience.swift in Sources */,
 				7108899A2591B29800795EDF /* Promise+Delay.swift in Sources */,
+				71C08EC025AFA59300765894 /* CryptoService.Quotes.swift in Sources */,
 				7108897E2591B29800795EDF /* Promise+Unwrap.swift in Sources */,
 				7143EEE025994FC300B1DCB5 /* TonalService.Sounds.swift in Sources */,
 				7121F6D92596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */,
@@ -3639,6 +3742,7 @@
 				71C2BF8225ABB1CE006445EB /* SecurityDetailResultExpedition.swift in Sources */,
 				7143430425907622001F26A4 /* RepresentableAsCGFloat.swift in Sources */,
 				7183D55E25A428AE00FB91A9 /* LinePlotValueStick.swift in Sources */,
+				71C08E8B25AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift in Sources */,
 				710889702591B29800795EDF /* Promise+Recover.swift in Sources */,
 				7134427425A37A2C002C0315 /* SocialDataObject+CoreDataProperties.swift in Sources */,
 				7179ACAF25AC9472003FD06F /* TonalCompileComponent.swift in Sources */,
@@ -3696,8 +3800,11 @@
 				71332A3425A79DD0005A72A9 /* AssetSearchEvents.swift in Sources */,
 				7179ACA725AC9472003FD06F /* TonalCompileEvents.swift in Sources */,
 				71D3C2E025AA88F50033350B /* Broadcasts.swift in Sources */,
+				71C08EE425AFC11200765894 /* SecurityEvents.swift in Sources */,
 				7134427B25A38245002C0315 /* Sentiment.CoreData.swift in Sources */,
+				71C08EEB25AFC21F00765894 /* Security.Group.swift in Sources */,
 				71494D6825ABE9BD0086E598 /* FloorConfig.swift in Sources */,
+				71C08E9325AF770100765894 /* NetworkResponse.swift in Sources */,
 				710889782591B29800795EDF /* Await+Operators.swift in Sources */,
 				71F1EC3F25A0F04400D32C52 /* HeaderComponent.swift in Sources */,
 				7125BD8925A1316500F22717 /* DefaultVerticalValueView.swift in Sources */,
@@ -3708,6 +3815,7 @@
 				7125BE0925A1328900F22717 /* ValueSliderOptions.swift in Sources */,
 				710889822591B29800795EDF /* PromiseBlocks.swift in Sources */,
 				71D63EC62592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */,
+				71C08EF225AFDAEF00765894 /* CryptoCurrency.CoreData.swift in Sources */,
 				7169535225A7ADB400641BCE /* Run.swift in Sources */,
 				7123B12E2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
 				71EE7076258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
@@ -3730,6 +3838,7 @@
 				7179ACAD25AC9472003FD06F /* CompileTheToneExpedition.swift in Sources */,
 				7189C9C925AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift in Sources */,
 				71B4302C25A88A9900A23F4D /* AssetAddComponent.swift in Sources */,
+				71C08E8525AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */,
 				71143DE925A4C14F00379E4B /* Quote.swift in Sources */,
 				71B42FDC25A87B0B00A23F4D /* PortfolioObject+CoreDataProperties.swift in Sources */,
 				7179AD3725ACE5E5003FD06F /* SpecialState.swift in Sources */,
@@ -3765,6 +3874,7 @@
 				713D25B0258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
 				71434356259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
 				710889A22591B29800795EDF /* Promise+nil.swift in Sources */,
+				71C08E9B25AF772F00765894 /* SearchResponse.swift in Sources */,
 				710889942591B29800795EDF /* Promise+Error.swift in Sources */,
 				7189C9B425AE5E2F00D98A85 /* TonalModelTappedExpedition.swift in Sources */,
 				711D546125A6913B0074D334 /* Geometry.swift in Sources */,
@@ -3797,6 +3907,7 @@
 				71DC58F225988F84004935CF /* SVM.swift in Sources */,
 				7183D55225A428AE00FB91A9 /* GraphPage.swift in Sources */,
 				71D63F412592BBAB0085D718 /* AssetGridItemContainerState.swift in Sources */,
+				71C08EC225AFA59300765894 /* CryptoService.Utilities.swift in Sources */,
 				7179AD3525ACE5E5003FD06F /* SpecialEvents.swift in Sources */,
 				710889A42591B29800795EDF /* Cryptowatcher.swift in Sources */,
 				71EE7095258D9072005B2B8E /* AssetGridItemEvents.swift in Sources */,
@@ -3820,6 +3931,7 @@
 				7125BDC425A1318D00F22717 /* AnyRangeSliderStyle.swift in Sources */,
 				7125BDE225A131D200F22717 /* VerticalRangeTrack.swift in Sources */,
 				7118A22C259313FD007E7EAB /* TonalCreateState.swift in Sources */,
+				71C08EC425AFA59300765894 /* CryptoService.Market.swift in Sources */,
 				7124162125A36C3400169B9C /* Social.swift in Sources */,
 				7125BD7A25A12F1F00F22717 /* BasicSliderComponent.swift in Sources */,
 				71494D7325ABEE2A0086E598 /* AddToFloorExpedition.swift in Sources */,
@@ -3832,6 +3944,7 @@
 				710889C22591B3AB00795EDF /* CryptoCurrency.swift in Sources */,
 				7139F6A425983C2000D9C84B /* TonalService.swift in Sources */,
 				71EE7008258D347F005B2B8E /* __stoicApp.swift in Sources */,
+				71C08E8925AF53AF00765894 /* NetworkResponseObject+CoreDataClass.swift in Sources */,
 				71C2BF6B25ABA5B8006445EB /* HoldingSelectedExpedition.swift in Sources */,
 				71088A182591C22400795EDF /* CryptoEvents.swift in Sources */,
 				7179D3DA25AC936500C82063 /* TonalModelsEvents.swift in Sources */,
@@ -3860,6 +3973,7 @@
 				7125BEAC25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */,
 				7118A22E259313FD007E7EAB /* TonalCreateEvents.swift in Sources */,
 				71B4304825A8A26400A23F4D /* SearchSecurityResultExpedition.swift in Sources */,
+				71C08EC625AFA59300765894 /* CryptoService.swift in Sources */,
 				710889842591B29800795EDF /* Promise+Chain.swift in Sources */,
 				7139F67325981BD300D9C84B /* TonalTuneState.swift in Sources */,
 				7143432B259076EB001F26A4 /* Double+Convenience.swift in Sources */,
@@ -3889,8 +4003,10 @@
 				7123B13D2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */,
 				7125BE6A25A1388400F22717 /* PointTrackConfiguration.swift in Sources */,
 				714342E425907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */,
+				71C08EC825AFA59300765894 /* CryptoService.List.swift in Sources */,
 				7143430825907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
 				71F1EC3B25A0F04400D32C52 /* HeaderState.swift in Sources */,
+				71C08E8725AF53AF00765894 /* NetworkResponseObject+CoreDataProperties.swift in Sources */,
 				7179AD3925ACE5E5003FD06F /* SpecialComponent.swift in Sources */,
 				71D63F4A2592BC210085D718 /* MoversSecurityExpedition.swift in Sources */,
 				7183D55825A428AE00FB91A9 /* Misc.Visual.swift in Sources */,

@@ -42,15 +42,16 @@ struct FindTheToneExpedition: GraniteExpedition {
             return
         }
         
-        guard let ticker = find.ticker else { return }
+        guard let security = find.security else { return }
         
         coreDataInstance.getQuotes { result in
-            if let quote = result.first(where: { $0.ticker == ticker &&
-                                            $0.intervalType == .day }) {
+            //DEV: cleaner and the ability to modify the hourly interval
+            if let quote = result.first(where: { $0.ticker == security.ticker &&
+                                                 $0.intervalType == .day }) {
                 
                 connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
             } else {
-                connection.request(StockEvents.GetStockHistory.init(ticker: ticker))
+                connection.request(StockEvents.GetStockHistory.init(security: security))
             }
         }
     }
@@ -66,9 +67,7 @@ struct StockHistoryExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let stocks = event.data.first?.asStocks(interval: event.interval) else {
-            return
-        }
+        let stocks = event.data
         
         stocks.save(moc: coreDataInstance) { quote in
             if let object = quote {

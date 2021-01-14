@@ -81,7 +81,7 @@ extension TonalModel {
 
 extension Security {
     public var title: String {
-        self.ticker
+        self.ticker.uppercased()
     }
     
     public var subtitle: String {
@@ -93,7 +93,12 @@ extension Security {
     }
     
     public var symbolColor: Color {
-        Brand.Colors.marble
+        switch securityType {
+        case .crypto:
+            return Brand.Colors.orange
+        default:
+            return Brand.Colors.marble
+        }
     }
     
     public var description1: String {

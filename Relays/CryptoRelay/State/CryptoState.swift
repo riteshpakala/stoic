@@ -14,6 +14,9 @@ public class CryptoState: GraniteState {
     var currency: String = "usd"
     var exchange: String = "coinbase-pro"
     var max: Int = 12
+    
+    var cryptoWatch: Cryptowatcher = .init()
+    var service: CryptoService = .init()
 }
 
 public class CryptoCenter: GraniteCenter<CryptoState> {
@@ -23,7 +26,10 @@ public class CryptoCenter: GraniteCenter<CryptoState> {
         [
             GetMoversCryptoExpedition.Discovery(),
             GetCryptoHistoryExpedition.Discovery(),
-            GetCryptoSearchExpedition.Discovery()
+            GetCryptoSearchExpedition.Discovery(),
+            GetCryptoSearchBackendExpedition.Discovery(),
+            GetCryptoSearchResultExpedition.Discovery(),
+            GetCryptoSearchQuotesExpedition.Discovery(),
         ]
     }
 }

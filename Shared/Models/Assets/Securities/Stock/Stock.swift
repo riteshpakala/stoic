@@ -19,6 +19,7 @@ public struct Stock: Security {
     public var changeAbsolute: Double
     public var interval: SecurityInterval
     public var exchangeName: String
+    public var name: String
 }
 
 extension Stock {
@@ -91,7 +92,8 @@ extension StockServiceModels.Quotes.QuoteResponse.QuoteResult {
             changePercent: (regularMarketChangePercent ?? 0.0)/100,
             changeAbsolute: (regularMarketChange ?? 0.0),
             interval: interval,
-            exchangeName: exchange)//TODO:??
+            exchangeName: exchange,//TODO:??
+            name: shortName)
     }
 }
 
@@ -123,7 +125,8 @@ extension StockServiceModels.Stock {
                 changePercent: changePercent,
                 changeAbsolute: changeAbsolue,
                 interval: interval,
-                exchangeName: result.meta.exchangeName)
+                exchangeName: result.meta.exchangeName,
+                name: result.meta.symbol)
             
             stocks.append(stock)
         }

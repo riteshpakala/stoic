@@ -13,6 +13,7 @@ public struct Quote {
     var ticker: String
     var securityType: SecurityType
     var exchangeName: String
+    var name: String
     var securities: [Security]
 }
 

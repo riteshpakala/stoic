@@ -16,5 +16,10 @@ extension CryptoDataObject {
         return NSFetchRequest<CryptoDataObject>(entityName: "CryptoDataObject")
     }
 
-
+    @NSManaged public var open: Double
+    @NSManaged public var high: Double
+    @NSManaged public var low: Double
+    @NSManaged public var close: Double
+    @NSManaged public var volume: Double
+    @NSManaged public var volumeBTC: Double
 }

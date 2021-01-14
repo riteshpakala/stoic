@@ -39,7 +39,8 @@ public class SearchCenter: GraniteCenter<SearchState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             SearchSecurityExpedition.Discovery(),
-            SearchSecurityResultExpedition.Discovery()
+            SearchStockResultExpedition.Discovery(),
+            SearchCryptoResultExpedition.Discovery()
         ]
     }
 }

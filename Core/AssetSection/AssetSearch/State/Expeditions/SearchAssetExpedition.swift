@@ -21,19 +21,38 @@ struct SearchAssetExpedition: GraniteExpedition {
         
         print("{TEST} \(event.result.count) \(state.context)")
         
-        switch state.context {
-        case .tonalCreate:
-            connection.update(\EnvironmentDependency.searchTone.securities, value: event.result)
-            connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
-        case .portfolio:
-            connection.update(\EnvironmentDependency.holdingsPortfolio.assetAddState.searchState.securities, value: event.result)
-        case .floor:
-            connection.update(\EnvironmentDependency.holdingsFloor.assetAddState.searchState.securities, value: event.result)
-        case .search:
-            connection.update(\EnvironmentDependency.search.securities, value: event.result)
-        default:
-            break
-        }
+//        switch state.securityType {
+//        case .stock:
+//            switch state.context {
+//            case .tonalCreate:
+//                connection.update(\EnvironmentDependency.searchTone.securityGroup.stocks, value: event.result)
+//                connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
+//            case .portfolio:
+//                connection.update(\EnvironmentDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.stocks, value: event.result)
+//            case .floor:
+//                connection.update(\EnvironmentDependency.holdingsFloor.assetAddState.searchState.securityGroup.stocks, value: event.result)
+//            case .search:
+//                connection.update(\EnvironmentDependency.search.securityGroup.stocks, value: event.result)
+//            default:
+//                break
+//            }
+//        case .crypto:
+//            switch state.context {
+//            case .tonalCreate:
+//                connection.update(\EnvironmentDependency.searchTone.securityGroup.crypto, value: event.result)
+//                connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
+//            case .portfolio:
+//                connection.update(\EnvironmentDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.crypto, value: event.result)
+//            case .floor:
+//                connection.update(\EnvironmentDependency.holdingsFloor.assetAddState.searchState.securityGroup.crypto, value: event.result)
+//            case .search:
+//                connection.update(\EnvironmentDependency.search.securityGroup.crypto, value: event.result)
+//            default:
+//                break
+//            }
+//        default:
+//            break
+//        }
         
         state.securityData = event.result
         state.payload = .init(object: event.result)

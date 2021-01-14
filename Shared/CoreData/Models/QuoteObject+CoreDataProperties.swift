@@ -18,8 +18,9 @@ extension QuoteObject {
 
     @NSManaged public var intervalType: String
     @NSManaged public var ticker: String
-    @NSManaged public var securityType: Int64
+    @NSManaged public var securityType: String
     @NSManaged public var exchangeName: String
+    @NSManaged public var name: String
     @NSManaged public var securities: Set<SecurityObject>
     @NSManaged public var tonalModel: Set<TonalModelObject>?
 

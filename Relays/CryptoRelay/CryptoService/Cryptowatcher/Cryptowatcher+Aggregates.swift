@@ -34,4 +34,8 @@ extension Cryptowatcher {
         let url = "\(baseURL)/markets/summaries"
         return fetchPublisher(url, type: CryptoServiceModels.GetAggregateSummaries.self)
     }
+    
+    var getAggregateSummariesRoute: String {
+        "\(baseURL)/markets/summaries"
+    }
 }

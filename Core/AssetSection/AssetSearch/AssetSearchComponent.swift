@@ -34,23 +34,23 @@ public struct AssetSearchComponent: GraniteComponent {
             switch state.context {
             case .portfolio:
                 AssetGridComponent(state: .init(.add))
-                    .payload(retrievePayload(\.envDependency,
-                                       target: \.holdingsPortfolio.assetAddState.searchState.securities))
+                    .payload(.init(object: inject(\.envDependency,
+                                                  target:\.holdingsFloor.assetAddState.searchState.securityGroup)?.get(state.securityType)))
                     .listen(to: command, .stop)
             case .floor:
                 AssetGridComponent(state: .init(.add))
-                    .payload(retrievePayload(\.envDependency,
-                                       target: \.holdingsFloor.assetAddState.searchState.securities))
+                    .payload(.init(object: inject(\.envDependency,
+                                                  target:\.holdingsFloor.assetAddState.searchState.securityGroup)?.get(state.securityType)))
                     .listen(to: command, .stop)
             case .tonalCreate:
                 AssetGridComponent()
-                    .payload(retrievePayload(\.envDependency,
-                                       target: \.searchTone.securities))
+                    .payload(.init(object: inject(\.envDependency,
+                                                  target:\.searchTone.securityGroup)?.get(state.securityType)))
                     .listen(to: command, .stop)
             case .search:
                 AssetGridComponent()
-                    .payload(retrievePayload(\.envDependency,
-                                       target: \.search.securities))
+                    .payload(.init(object: inject(\.envDependency,
+                                                  target:\.search.securityGroup)?.get(state.securityType)))
                     .listen(to: command, .stop)
             default:
                 EmptyView.init()

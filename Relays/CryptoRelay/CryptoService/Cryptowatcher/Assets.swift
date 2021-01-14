@@ -1,6 +1,6 @@
 import Foundation
 
-struct CryptoServiceModels {
+extension CryptoServiceModels {
     /// An asset can be a crypto or fiat currency.
     struct Asset: Codable {
         let symbol: String
@@ -13,6 +13,16 @@ struct CryptoServiceModels {
         struct Markets: Codable {
             let base: [Market]
             let quote: [Market]
+        }
+        
+        var toString: String {
+            """
+            [\(symbol) : \(name)]
+            Base //
+            \(markets?.base.first?.toString)
+            Quote //
+            \(markets?.quote.first?.toString)
+            """
         }
     }
 

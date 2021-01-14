@@ -43,6 +43,7 @@ extension QuoteObject {
               ticker: self.ticker,
               securityType: SecurityType(rawValue: self.securityType) ?? .unassigned,
               exchangeName: self.exchangeName,
+              name: self.name,
               securities: self.securities.compactMap { $0.asSecurity })
     }
     

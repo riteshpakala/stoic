@@ -15,9 +15,28 @@ public enum SecurityDetailType: ID, Hashable, Equatable {
     case preview(GranitePayload)
     case floor(GranitePayload)
 }
+public enum SecurityDetailStage {
+    case failedFetching
+    case fetched
+    case fetching
+    case none
+}
 public class SecurityDetailState: GraniteState {
     let kind: SecurityDetailType
     var quote: Quote? = nil
+    
+    var security: Security {
+        switch kind {
+        case .expanded(let payload),
+             .preview(let payload),
+             .floor(let payload):
+            return payload.object as? Security ?? EmptySecurity()
+        }
+    }
+    
+    var securityType: SecurityType {
+        security.securityType
+    }
     
     public init(_ kind: SecurityDetailType) {
         self.kind = kind
@@ -45,7 +64,8 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetSecurityDetailExpedition.Discovery(),
-            SecurityDetailResultExpedition.Discovery()
+            StockDetailResultExpedition.Discovery(),
+            CryptoDetailResultExpedition.Discovery()
         ]
     }
     

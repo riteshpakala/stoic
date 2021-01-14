@@ -1,16 +1,16 @@
 //
-//  Stock.CoreData.swift
+//  CryptoCurrency.CoreData.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 12/26/20.
+//  Created by Ritesh Pakala on 1/13/21.
 //
 
 import Foundation
 import CoreData
 import GraniteUI
 
-extension Stock {
-    public func apply(to security: StockDataObject) {
+extension CryptoCurrency {
+    public func apply(to security: CryptoDataObject) {
         security.indicator = indicator
         security.ticker = ticker
         security.securityType = securityType.rawValue
@@ -19,6 +19,7 @@ extension Stock {
         security.lowValue = lowValue
         security.changePercentValue = changePercentValue
         security.changeAbsoluteValue = changeAbsoluteValue
+        security.volumeBTC = volumeBTC
         security.volumeValue = volumeValue
         security.exchangeName = exchangeName
         security.intervalType = interval.rawValue
@@ -32,28 +33,28 @@ extension Stock {
     }
 }
 
-extension Array where Element == Stock {
+extension Array where Element == CryptoCurrency {
     func save(moc: NSManagedObjectContext, completion: @escaping ((Quote?) -> Void)) {
-        guard let referenceStock = self.first else { completion(nil); return }
+        guard let referenceCoin = self.first else { completion(nil); return }
         moc.performAndWait {
             
             do {
                 let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
                 
-                let quote: QuoteObject = quotes.first(where: { $0.contains(security: referenceStock) }) ?? QuoteObject.init(context: moc)
+                let quote: QuoteObject = quotes.first(where: { $0.contains(security: referenceCoin) }) ?? QuoteObject.init(context: moc)
                 
-                referenceStock.apply(to: quote)
+                referenceCoin.apply(to: quote)
                 
-                for stock in self {
-                    let object = StockDataObject.init(context: moc)
-                    stock.apply(to: object)
+                for coin in self {
+                    let object = CryptoDataObject.init(context: moc)
+                    coin.apply(to: object)
                     object.quote = quote
                     quote.addToSecurities(object)
                 }
                 
                 try moc.save()
                 
-                print ("{CoreData} saved stocks")
+                print ("{CoreData} saved crypto")
                 completion(quote.asQuote)
             } catch let error {
                 print ("{CoreData} \(error.localizedDescription)")

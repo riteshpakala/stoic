@@ -19,9 +19,13 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        guard let pub = state.cryptoWatch.getAggregateSummariesPublisher() else {
+            return
+        }
+        
+        
         let decoder = JSONDecoder()
-        publisher = Cryptowatcher()
-            .getAggregateSummariesPublisher()!
+        publisher = pub
             .replaceError(with: .init(data: nil, type: CryptoServiceModels.GetAggregateSummaries.self))
             .map { (response) in
                 guard let decoded = try? decoder.decode(response.type,
@@ -66,19 +70,23 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
         _ key: String,
         _ value: CryptoServiceModels.MarketSummary) -> CryptoCurrency {
         
-        CryptoCurrency.init(
-            ticker: (key.components(
-                separatedBy: exchange+":").last?
-                .components(
-                    separatedBy: currency).first ?? "error").uppercased(),
-            date: Date(),
-            last: value.price.last,
-            high: value.price.high,
-            low: value.price.low,
-            volume: value.volume,
-            changePercent: value.price.change.percentage,
-            changeAbsolute: value.price.change.absolute,
-            interval: .day,
-            exchangeName: exchange)
+        let symbol: String = (key.components(
+                                separatedBy: exchange+":").last?
+                                .components(
+                                    separatedBy: currency).first ?? "error").uppercased()
+        return CryptoCurrency.init(
+                ticker: symbol,
+                date: Date(),
+                open: 0.0,
+                close: value.price.last,
+                high: value.price.high,
+                low: value.price.low,
+                volumeBTC: 0.0,
+                volume: value.volume,
+                changePercent: value.price.change.percentage,
+                changeAbsolute: value.price.change.absolute,
+                interval: .day,
+                exchangeName: exchange,
+                name: symbol)
     }
 }

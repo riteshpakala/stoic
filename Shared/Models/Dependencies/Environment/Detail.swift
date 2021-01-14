@@ -10,5 +10,5 @@ import GraniteUI
 import SwiftUI
 
 class Detail: ObservableObject {
-    var isFetching: Bool = false
+    var stage: SecurityDetailStage = .none
 }

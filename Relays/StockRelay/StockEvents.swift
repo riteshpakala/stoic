@@ -74,12 +74,16 @@ public struct StockEvents {
     
     //MARK: -- Stock History
     public struct GetStockHistory: GraniteEvent {
-        let ticker: String
+        let security: Security
+        let interval: SecurityInterval
         let daysAgo: Int
         
-        public init(ticker: String, daysAgo: Int = 2400)//730 = 2 years - 1825 = 5 years
+        public init(security: Security,
+                    daysAgo: Int = 2400,
+                    interval: SecurityInterval = .day)//730 = 2 years - 1825 = 5 years
         {
-            self.ticker = ticker
+            self.security = security
+            self.interval = interval
             self.daysAgo = daysAgo
         }
         
@@ -105,7 +109,7 @@ public struct StockEvents {
     }
     
     public struct History: GraniteEvent {
-        let data: [StockServiceModels.Stock]
+        let data: [Stock]
         let interval: SecurityInterval
         
         public var beam: GraniteBeamType {

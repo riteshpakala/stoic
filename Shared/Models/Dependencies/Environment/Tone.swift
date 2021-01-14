@@ -35,12 +35,12 @@ public class Tone: ObservableObject {
     }
     public var selectedRange: TonalRange?
     
-    public init(ticker: String? = nil,
+    public init(security: Security? = nil,
                 range: [TonalRange]? = nil,
                 sentiment: TonalSentiment? = nil,
                 selectedRange: TonalRange? = nil) {
         
-        self.find.ticker = ticker
+        self.find.security = security
         self.range = range
         self.tune.sentiment = sentiment
         self.selectedRange = selectedRange
@@ -67,12 +67,17 @@ public class Tone: ObservableObject {
         }
         var lastState: Find.State = .none
         
-        var ticker: String? {
+        
+        var security: Security? {
             didSet {
-                if ticker != nil {
+                if security != nil {
                     state = .selected
                 }
             }
+        }
+        
+        var ticker: String? {
+            security?.ticker
         }
         var quote: Quote? {
             didSet {

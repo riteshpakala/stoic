@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 
 extension Cryptowatcher {
     /**
@@ -156,5 +157,32 @@ extension Cryptowatcher {
         }
         
         return fetch(url, type: CryptoServiceModels.GetMarketOHLC.self).then(decodeResult)
+    }
+    
+    func getMarketOHLCPublisher(exchange: String, pair: String, before: Int?, after: Int?, periods: [Int]?) -> AnyPublisher<CryptoFetchResult<CryptoServiceModels.GetMarketOHLC>, URLError>? {
+        var url = "\(baseURL)/markets/\(exchange)/\(pair)/ohlc"
+        var params: Dictionary<String, String> = [:]
+        
+        if let before = before {
+            params["before"] = String(before)
+        }
+        
+        if let after = after {
+            params["after"] = String(after)
+        }
+        
+        if let periods = periods {
+            params["periods"] = periods.map({ period in
+                return String(period)
+            }).joined(separator: ",")
+        }
+        
+        if let qs = params.queryStringCrypto {
+            url.append("?\(qs)")
+        }
+        
+        print("{TEST} \(url)")
+        
+        return fetchPublisher(url, type: CryptoServiceModels.GetMarketOHLC.self)
     }
 }

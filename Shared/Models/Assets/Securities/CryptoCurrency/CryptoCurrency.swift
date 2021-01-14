@@ -10,14 +10,17 @@ import Foundation
 public struct CryptoCurrency: Security {
     public var ticker: String
     public var date: Date
-    public var last: Double
+    public var open: Double
+    public var close: Double
     public var high: Double
     public var low: Double
+    public var volumeBTC: Double
     public var volume: Double
     public var changePercent: Double
     public var changeAbsolute: Double
     public var interval: SecurityInterval
     public var exchangeName: String
+    public var name: String
 }
 
 extension CryptoCurrency {
@@ -30,7 +33,7 @@ extension CryptoCurrency {
     }
     
     public var lastValue: Double {
-        last
+        close
     }
     
     public var highValue: Double {

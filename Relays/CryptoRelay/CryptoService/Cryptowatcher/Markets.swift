@@ -16,6 +16,20 @@ extension CryptoServiceModels {
             let orderbook: URL
             let trades: URL
             let ohlc: URL
+            
+            var toString: String {
+                """
+                
+                """
+            }
+        }
+        
+        var toString: String {
+            """
+            exchange: \(exchange)
+            pair: \(pair)
+            active: \(active)
+            """
         }
     }
 

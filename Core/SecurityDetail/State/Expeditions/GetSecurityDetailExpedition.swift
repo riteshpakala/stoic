@@ -20,36 +20,33 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        
-        switch state.kind {
-        case .expanded(let payload),
-             .preview(let payload),
-             .floor(let payload):
-            guard let security = payload.object as? Security else { print("{TES} huh"); return }
-            
-            security.getQuote(moc: coreDataInstance) { quote in
-                if let quote = quote {
-                    print("{TEST} quote received")
-                    state.quote = quote
-                    
+        state.security.getQuote(moc: coreDataInstance) { quote in
+            if let quote = quote {
+                print("{TEST} quote received")
+                state.quote = quote
+                
 //                    //DEV:
 //                    let indicator = TonalServiceModels.Indicators.init(security,
 //                                                                       with: quote)
 //
 //                    indicator.stochastic
-                } else {
-                    print("{TEST} quote was not found")
-                    guard let isFetching = connection.retrieve(\EnvironmentDependency.detail.isFetching),
-                          !isFetching else {
-                        return
-                    }
-                    connection.update(\EnvironmentDependency.detail.isFetching, value: true)
-                    
-                    connection.request(StockEvents.GetStockHistory.init(ticker: security.ticker))
+            } else {
+                print("{TEST} quote was not found")
+                guard let stage = connection.retrieve(\EnvironmentDependency.detail.stage),
+                      stage == .none else {
+                    return
                 }
+                connection.update(\EnvironmentDependency.detail.stage, value: .fetching)
                 
+                switch state.securityType {
+                case .crypto:
+                    connection.request(CryptoEvents.GetCryptoHistory.init(security: state.security))
+                case .stock:
+                    connection.request(StockEvents.GetStockHistory.init(security: state.security))
+                default:
+                    break
+                }
             }
-            break
         }
     }
 }

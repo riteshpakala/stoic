@@ -10,7 +10,7 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-struct SecurityDetailResultExpedition: GraniteExpedition {
+struct StockDetailResultExpedition: GraniteExpedition {
     typealias ExpeditionEvent = StockEvents.History
     typealias ExpeditionState = SecurityDetailState
     
@@ -20,20 +20,39 @@ struct SecurityDetailResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let stocks = event.data.first?.asStocks(interval: event.interval) else {
-            connection.update(\EnvironmentDependency.detail.isFetching, value: false)
-            return
-        }
+        let stocks = event.data
         
-        //TODO: Infinite loop
-        //
         stocks.save(moc: coreDataInstance) { quote in
             if let object = quote {
                 state.quote = object
-                connection.update(\EnvironmentDependency.detail.isFetching, value: false)
+                print("{TEST} save result \(quote?.name) \(quote?.securities.count)")
+                connection.update(\EnvironmentDependency.detail.stage, value: .fetched)
+            } else {
+                connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
             }
-            
-            connection.update(\EnvironmentDependency.detail.isFetching, value: false)
+        }
+    }
+}
+
+struct CryptoDetailResultExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = CryptoEvents.History
+    typealias ExpeditionState = SecurityDetailState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        let crypto = event.data
+        
+        crypto.save(moc: coreDataInstance) { quote in
+            if let object = quote {
+                state.quote = object
+                connection.update(\EnvironmentDependency.detail.stage, value: .fetched)
+            } else {
+                connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
+            }
         }
     }
 }

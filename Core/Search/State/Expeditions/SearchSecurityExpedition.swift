@@ -34,7 +34,7 @@ struct SearchSecurityExpedition: GraniteExpedition {
             case .stock:
                 connection.request(StockEvents.Search(state.query))
             case .crypto:
-                print("YOOOO")
+                connection.request(CryptoEvents.Search(state.query))
             default:
                 break
             }

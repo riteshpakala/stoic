@@ -25,8 +25,9 @@ extension SecurityObject {
     @NSManaged public var intervalType: String
     @NSManaged public var lastValue: Double
     @NSManaged public var lowValue: Double
-    @NSManaged public var securityType: Int64
+    @NSManaged public var securityType: String
     @NSManaged public var ticker: String
+    @NSManaged public var name: String
     @NSManaged public var volumeValue: Double
     @NSManaged public var quote: QuoteObject?
     @NSManaged public var sentiment: NSSet?

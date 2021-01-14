@@ -22,27 +22,53 @@ struct GetStockHistoryExpedition: GraniteExpedition {
         
         let todaysDate: Date = Date.today//.advanceDate(value: -30)//Calendar.nyCalendar.date(byAdding: .hour, value: -1, to: Date.today) ?? Date.today
             
-        let testDate: Date = Date.today.advanceDate(value: -1*abs(event.daysAgo))
+        let pastDate: Date = Date.today.advanceDate(value: -1*abs(event.daysAgo))
         
         publisher = state
             .service
-            .getStockChart(matching: event.ticker,
-                           from: "\(Int(testDate.timeIntervalSince1970))",//"1591833600",
+            .getStockChart(matching: event.security.ticker,
+                           from: "\(Int(pastDate.timeIntervalSince1970))",//"1591833600",
                              to: "\(Int(todaysDate.timeIntervalSince1970))",
-                            interval: .day)
+                             interval: event.interval)
             .replaceError(with: [])
-            .map { StockEvents.History(data: $0, interval: .day) }
+            .map { chart in
+                
+                if let result = chart.first?.chart.result.first,
+                   let quote = result.indicators.quote.first {
+                    
+                    let smallestArray = min(quote.close.count, min(quote.high.count, min(quote.low.count, min(quote.open.count, quote.volume.count))))
+                    
+                    var stocks: [Stock] = []
+                    for index in 0..<smallestArray {
+                        let close = quote.close[index] ?? 0.0
+                        
+                        let lastClose = index - 1 > 0 ? quote.close[index - 1] ?? close : close
+                        
+                        let changePercent = (close - lastClose) / close
+                        let changeAbsolue = close - lastClose
+                        
+                        let stock: Stock = .init(
+                            ticker: result.meta.symbol,
+                            date: Double(result.timestamp[index]).date(),
+                            open: quote.open[index] ?? 0.0,
+                            high: quote.high[index] ?? 0.0,
+                            low: quote.low[index] ?? 0.0,
+                            close: close,
+                            volume: quote.volume[index] ?? 0.0,
+                            changePercent: changePercent,
+                            changeAbsolute: changeAbsolue,
+                            interval: event.interval,
+                            exchangeName: result.meta.exchangeName,
+                            name: event.security.name)
+                        
+                        stocks.append(stock)
+                    }
+                    
+                    return StockEvents.History(data: stocks, interval: event.interval)
+                }
+                
+                return StockEvents.History(data: [], interval: event.interval)
+            }
             .eraseToAnyPublisher()
-    }
-    
-    func getSecurity() -> [SecurityObject]? {
-        let moc: NSManagedObjectContext
-        if Thread.isMainThread {
-            moc = coreData.main
-        } else {
-            moc = coreData.background
-        }
-        
-        return try? moc.fetch(SecurityObject.fetchRequest())
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SecurityType: Int64 {
+public enum SecurityType: String {
     case crypto
     case stock
     case unassigned
@@ -16,6 +16,15 @@ public enum SecurityType: Int64 {
 public enum SecurityInterval: String {
     case day = "1d"
     case hour = "1h"
+    
+    var seconds: Int {
+        switch self {
+        case .day:
+            return 86400
+        case .hour:
+            return 3600
+        }
+    }
 }
 
 public protocol Security: Asset {
@@ -31,6 +40,8 @@ public protocol Security: Asset {
     var lowValue: Double { get }
     var changePercentValue: Double { get }
     var changeAbsoluteValue: Double { get }
+    
+    var name: String { get set }
     
     var exchangeName: String { get set }
     
@@ -94,6 +105,7 @@ public struct EmptySecurity: Security {
     
     public var indicator: String = "?"
     public var ticker: String = "?"
+    public var name: String = "?"
     
     public var securityType: SecurityType {
         .stock
