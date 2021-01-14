@@ -18,9 +18,7 @@ public struct ControlBar: View {
     public var body: some View {
         if isIPhone {
             HStack(alignment: .center) {
-                Spacer()
                 actions
-                Spacer()
             }.frame(maxWidth: .infinity,
                     minHeight: 36,
                     maxHeight: 42,
@@ -44,12 +42,15 @@ public struct ControlBar: View {
     var actions: some View {
         Passthrough {
                 
-            HStack {
+            HStack(alignment: .center) {
+                if isIPhone {
+                    Spacer()
+                }
                 Image("home_icon")
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: iconSize, height: iconSize, alignment: .leading)
-                    .padding(.trailing, Brand.Padding.medium)
+                    .padding(.trailing, isIPhone ? 0.0 : Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("home",
@@ -58,21 +59,29 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .disabled,
                                 selected: currentRoute == .home)
+                } else {
+                    Spacer()
                 }
                
             }.onTapGesture {
                 onRoute(.home)
             }
                 
-               
+            if isIPhone {
+                PaddingHorizontal(Brand.Padding.large)
+            } else {
+                PaddingVertical(Brand.Padding.medium9)
+            }
             
-            Spacer().frame(width: Brand.Padding.large, height: Brand.Padding.large)
-            HStack {
+            HStack(alignment: .center) {
+                if isIPhone {
+                    Spacer()
+                }
                 Image("floor_icon")
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: iconSize, height: iconSize, alignment: .leading)
-                    .padding(.trailing, Brand.Padding.medium)
+                    .padding(.trailing, isIPhone ? 0.0 : Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("floor",
@@ -81,18 +90,28 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .disabled,
                                 selected: currentRoute == .floor)
+                } else {
+                    Spacer()
                 }
             }.onTapGesture {
                 onRoute(.floor)
             }
             
-            Spacer().frame(width: Brand.Padding.large, height: Brand.Padding.large)
-            HStack {
+            if isIPhone {
+                PaddingHorizontal(Brand.Padding.large)
+            } else {
+                PaddingVertical(Brand.Padding.medium9)
+            }
+            
+            HStack(alignment: .center) {
+                if isIPhone {
+                    Spacer()
+                }
                 Image("model_icon")
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: iconSize, height: iconSize, alignment: .leading)
-                    .padding(.trailing, Brand.Padding.medium)
+                    .padding(.trailing, isIPhone ? 0.0 : Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("models",
@@ -101,18 +120,28 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .disabled,
                                 selected: currentRoute == .models)
+                } else {
+                    Spacer()
                 }
             }.onTapGesture {
                 onRoute(.models)
             }
             
-            Spacer().frame(width: Brand.Padding.large, height: Brand.Padding.large)
-            HStack {
+            if isIPhone {
+                PaddingHorizontal(Brand.Padding.large)
+            } else {
+                PaddingVertical(Brand.Padding.medium9)
+            }
+            
+            HStack(alignment: .center) {
+                if isIPhone {
+                    Spacer()
+                }
                 Image("settings_icon")
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: iconSize, height: iconSize, alignment: .leading)
-                    .padding(.trailing, Brand.Padding.medium)
+                    .padding(.trailing, isIPhone ? 0.0 : Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("settings",
@@ -121,13 +150,24 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .disabled,
                                 selected: currentRoute == .settings)
+                } else {
+                    Spacer()
                 }
             }.onTapGesture {
                 onRoute(.settings)
             }
             
-            Spacer().frame(width: Brand.Padding.large, height: Brand.Padding.large)
-            HStack {
+            #if DEBUG
+            
+            if isIPhone {
+                PaddingHorizontal(Brand.Padding.large)
+            } else {
+                PaddingVertical(Brand.Padding.medium9)
+            }
+            HStack(alignment: .center) {
+                if isIPhone {
+                    Spacer()
+                }
                 if !isIPhone {
                     GraniteText("debug",
                                 Brand.Colors.red,
@@ -143,9 +183,15 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .disabled)
                 }
+                
+                if isIPhone {
+                    Spacer()
+                }
             }.onTapGesture {
                 onRoute(.debug(.models))
             }
+            
+            #endif
         }
     }
 }

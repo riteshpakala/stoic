@@ -41,7 +41,7 @@ public struct SecurityDetailComponent: GraniteComponent {
                     
                 }
             }
-            GraphComponent(state: .init(state.quote)).frame(maxWidth: .infinity, maxHeight: 500)
+            GraphComponent(state: .init(state.quote)).frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 }

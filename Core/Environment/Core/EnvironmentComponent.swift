@@ -17,15 +17,7 @@ public struct EnvironmentComponent: GraniteComponent {
     public init() {}
     
     var layout: [GridItem] {
-        .init(repeating: GridItem(.flexible()), count: maxWidth)
-    }
-    
-    var maxWidth: Int {
-        Array(state.activeWindowConfigs.map { $0.count }).max() ?? 0
-    }
-    
-    var maxHeight: Int {
-        state.activeWindowConfigs.count
+        .init(repeating: GridItem(.flexible()), count: command.center.maxWidth)
     }
     
     var controls: ControlBar {
@@ -41,9 +33,9 @@ public struct EnvironmentComponent: GraniteComponent {
             VStack(alignment: .center, spacing: Brand.Padding.small) {
                 ScrollView {
                     //Max Windows Height
-                    ForEach(0..<maxHeight, id: \.self) { col in
+                    ForEach(0..<command.center.maxHeight, id: \.self) { col in
                         VStack(spacing: Brand.Padding.small) {
-                            ForEach(0..<maxWidth, id: \.self) { row in
+                            ForEach(0..<command.center.maxWidth, id: \.self) { row in
                                 if row < state.activeWindowConfigs.count,
                                    col < state.activeWindowConfigs[row].count,
                                    state.activeWindowConfigs[row][col].kind != .unassigned {
@@ -63,15 +55,13 @@ public struct EnvironmentComponent: GraniteComponent {
                     maxHeight: 1800,
                     alignment: .center)
         } else {
-        
-        
-            HStack(spacing: Brand.Padding.small) {
+            HStack(spacing:  command.center.nonIPhoneHStackSpacing) {
                 controls.opacity(state.activeWindowConfigs.isEmpty ? 0.0 : 1.0)
-                
+                Spacer()
                 //Max Windows Height
-                ForEach(0..<maxHeight, id: \.self) { col in
+                ForEach(0..<command.center.maxHeight, id: \.self) { col in
                     VStack(spacing: Brand.Padding.small) {
-                        ForEach(0..<maxWidth, id: \.self) { row in
+                        ForEach(0..<command.center.maxWidth, id: \.self) { row in
                             if row < state.activeWindowConfigs.count,
                                col < state.activeWindowConfigs[row].count,
                                state.activeWindowConfigs[row][col].kind != .unassigned {

@@ -93,7 +93,8 @@ public struct FloorComponent: GraniteComponent {
                                     .frame(width: 42, height: 42)
                                     .onTapGesture(perform: sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col))))
                                 Spacer()
-                            }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Brand.Colors.black)
+                            }.frame(maxWidth: .infinity,
+                                    maxHeight: .infinity).background(Brand.Colors.black)
                         }
                     }
                 }

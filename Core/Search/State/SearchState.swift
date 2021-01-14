@@ -17,6 +17,7 @@ public class SearchState: GraniteState {
             print("{TEST} \(query)")
         }
     }
+    
     var isEditing: Bool = false
     
     var securityType: SecurityType = .stock

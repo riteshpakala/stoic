@@ -268,7 +268,7 @@ extension GraphPage {
                     Gradient.Stop(color: .clear, location: 1.0)]),
                 startPoint: .top,
                     endPoint: .bottom))
-        }.font(Fonts.live(.title, .bold))
+        }.font(Fonts.live(.title2, .bold))
     }
 }
 

@@ -22,26 +22,8 @@ public struct MainComponent: GraniteComponent {
     }
     
     public var body: some View {
-        
         VStack {
-//        AssetSectionComponent(state: .init(title: "Top Volume"))
-//            .shareRelay(relay(CryptoRelay.self))
-        
-//        TonalCreateComponent().shareRelays(relays([CryptoRelay.self, StockRelay.self, TonalRelay.self]))
-        
-        
-        
-//        if experience.state.isIPhone {
-//            VStack {
-//                ExperienceComponent(state: .init(.init(kind: .portfolio)))
-//                ControlBar(isIPhone: true, selectedFolder: _state.folder)
-//            }
-//        } else {
-            HStack(spacing: Brand.Padding.small) {
-                environment.share(.init(dep(\.routerDependency)))
-            }
-            
-//        }
+            environment.share(.init(dep(\.routerDependency)))
         }
         .background(Color.black)
     }

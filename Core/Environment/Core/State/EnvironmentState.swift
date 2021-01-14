@@ -49,6 +49,22 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
 //        return clock
 //    }
     
+    var maxWidth: Int {
+        Array(state.activeWindowConfigs.map { $0.count }).max() ?? 0
+    }
+    
+    var maxHeight: Int {
+        state.activeWindowConfigs.count
+    }
+    
+    var nonIPhoneHStackSpacing: CGFloat {
+        if maxWidth < 2 {
+            return 0.0
+        } else {
+            return Brand.Padding.small
+        }
+    }
+    
     //Dependencies
     lazy var routerDependency: RouterDependency = {
         self.hosted.fetch

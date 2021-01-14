@@ -107,8 +107,6 @@ struct GetCryptoSearchResultExpedition: GraniteExpedition {
         return distances.min() ?? 1200000
     }
     func levenshtein(_ aStr: String, _ bStr: String) -> Int {
-        
-        
         // create character arrays
         let a = Array(aStr)
         let b = Array(bStr)
