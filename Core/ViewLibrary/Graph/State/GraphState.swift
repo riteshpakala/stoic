@@ -36,5 +36,18 @@ public class GraphCenter: GraniteCenter<GraphState> {
             return .init()
         }
     }
+    
+    var timeDisplay: TimeDisplayOption {
+        if let quote = state.quote {
+            switch quote.intervalType {
+            case .day:
+                return .daily
+            case .hour:
+                return .hourly
+            }
+        } else {
+            return .daily
+        }
+    }
 }
 

@@ -44,7 +44,6 @@ struct SearchCryptoResultExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        
         switch state.context {
         case .tonalCreate:
             connection.update(\EnvironmentDependency.searchTone.securityGroup.crypto, value: event.result)

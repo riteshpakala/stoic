@@ -60,8 +60,10 @@ struct GraphPage: View {
         case .hourly:
             return GraphPageViewModel.segmentByHours(values: currentPlotData)
         case .daily:
+            return GraphPageViewModel.segmentByDays(values: currentPlotData)
+        case .monthly:
             return GraphPageViewModel.segmentByMonths(values: currentPlotData)
-        case .weekly, .monthly:
+        case .weekly:
             return GraphPageViewModel.segmentByYears(values: currentPlotData)
         }
     }
@@ -69,7 +71,7 @@ struct GraphPage: View {
     var plotRelativeWidth: CGFloat {
         switch timeDisplayMode {
         case .hourly:
-            return 0.7 // simulate today's data
+            return 1.0//0.7 // simulate today's data
         default:
             return 1.0
         }
@@ -190,7 +192,16 @@ extension GraphPage {
         let predictionDates = predictionPlotData.map { $0.time }
         let currentIndex = self.currentIndex ?? (values.count - 1)
         // For value stick
-        let dateString = combined[currentIndex].time.asString
+        let dateString: String
+        
+        switch timeDisplayMode {
+        case .hourly:
+            dateString = combined[currentIndex].time.asStringWithTime
+        default:
+            dateString = combined[currentIndex].time.asString
+        }
+        
+        
         
 //        let themeColor = values.last! >= values.first! ? rhThemeColor : rhRedThemeColor
         
@@ -217,7 +228,7 @@ extension GraphPage {
             valueStickLabel: { value in
                 Text("\(dateString)")
                     .foregroundColor(Brand.Colors.purple)
-                    .font(Fonts.live(.subheadline, .bold))
+                    .font(Fonts.live(.title3, .bold))
         })
             //.frame(height: 280)
 //            .foregroundColor(themeColor)
@@ -257,7 +268,7 @@ extension GraphPage {
                     Gradient.Stop(color: .clear, location: 1.0)]),
                 startPoint: .top,
                     endPoint: .bottom))
-        }.font(Fonts.live(.title3, .bold))
+        }.font(Fonts.live(.title, .bold))
     }
 }
 

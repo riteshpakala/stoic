@@ -13,7 +13,17 @@ public struct Portfolio {
     let floors: [Floor]
     
     public struct Holdings {
-        let securities: [Security]
+        let securityGroup: SecurityGroup
+        
+        var securities: [Security] {
+            securityGroup.crypto + securityGroup.stocks
+        }
+        
+        public init(_ securities: [Security]) {
+            securityGroup = .init()
+            securityGroup.crypto = securities.filter { $0.securityType == .crypto }
+            securityGroup.stocks = securities.filter { $0.securityType == .stock }
+        }
     }
     
     

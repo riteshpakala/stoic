@@ -35,7 +35,7 @@ public struct AssetSearchComponent: GraniteComponent {
             case .portfolio:
                 AssetGridComponent(state: .init(.add))
                     .payload(.init(object: inject(\.envDependency,
-                                                  target:\.holdingsFloor.assetAddState.searchState.securityGroup)?.get(state.securityType)))
+                                                  target:\.holdingsPortfolio.assetAddState.searchState.securityGroup)?.get(state.securityType)))
                     .listen(to: command, .stop)
             case .floor:
                 AssetGridComponent(state: .init(.add))

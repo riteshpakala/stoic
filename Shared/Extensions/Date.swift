@@ -21,6 +21,9 @@ extension Date {
     var asString: String {
         return Calendar.nyDateFormatter.string(from: self)
     }
+    var asStringWithTime: String {
+        return Calendar.nyTimeDayFormatter.string(from: self)
+    }
     
     func advanceDate(value: Int = 1) -> Date {
         return Calendar.nyCalendar.date(byAdding: .day, value: value, to: self) ?? self
@@ -145,6 +148,14 @@ extension Calendar {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.timeZone = Calendar.nyTimezone
         dateFormatter.dateFormat = "HH:mm:ss"
+        return dateFormatter
+    }
+    
+    static var nyTimeDayFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = Calendar.nyTimezone
+        dateFormatter.dateFormat = "HH:mm:ss // MM/dd"
         return dateFormatter
     }
 }

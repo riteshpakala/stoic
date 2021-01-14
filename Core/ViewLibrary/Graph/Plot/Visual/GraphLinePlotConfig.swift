@@ -29,7 +29,7 @@ public struct GraphLinePlotConfig {
     public var glowingIndicatorWidth: CGFloat = 8.0
     
     /// Line width of the line plot. Default is `1.5`
-    public var plotLineWidth: CGFloat = 2.2
+    public var plotLineWidth: CGFloat = 2.4
     
     /// If all values are equal, we will draw a straight line. Default is 0.5 which draws a line at the middle.
     public var relativeYForStraightLine: CGFloat = 0.5
@@ -50,6 +50,7 @@ public struct GraphLinePlotConfig {
     ///
     /// Note that your plot will be automatically shrinked so that the blurry part fits inside the canvas.
     public var useLaserLightLinePlotStyle: Bool = true
+    public var useLaserLightLinePlotStyleForAll: Bool = true
     
     /// Use drawing group for laser light mode.
     ///
@@ -66,7 +67,7 @@ public struct GraphLinePlotConfig {
     
     // MARK:- RHInteractiveLinePlot
     
-    public var valueStickWidth: CGFloat = 3.6
+    public var valueStickWidth: CGFloat = 3.0
     public var valueStickColor: Color = Brand.Colors.purple
     
     /// Padding from the highest point of line plot to value stick. If `0`, the top of value stick will be at the same level of the highest point in plot.

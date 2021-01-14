@@ -92,6 +92,30 @@ class GraphPageViewModel: ObservableObject {
         return segments
     }
     
+    static func segmentByDays(values: PlotData) -> [Int] {
+        let calendar = Calendar.current
+        var segments = [Int]()
+        
+        let lastStopper = calendar.endOfDay(for: values.last!.time)
+        
+        // Work backward from last day
+        let breakpoints = (0..<values.count).map {
+            calendar.date(byAdding: .day, value: -$0, to: lastStopper)!
+        }.reversed() // Reverse to be ascending
+        
+        segments.append(0)
+        var currentRecords = ArraySlice(values)
+        for upper in breakpoints {
+            // Jump to first index of next segment
+            if let ind = currentRecords.firstIndex(where: { $0.time > upper }), ind != segments.last {
+                segments.append(ind)
+                // Cut off, and continue
+                currentRecords = currentRecords[ind...]
+            }
+        }
+        return segments
+    }
+    
     static func segmentByMonths(values: PlotData) -> [Int] {
         let calendar = Calendar.current
         var segments = [Int]()

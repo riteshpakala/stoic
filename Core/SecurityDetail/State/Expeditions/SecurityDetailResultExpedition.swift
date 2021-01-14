@@ -25,7 +25,6 @@ struct StockDetailResultExpedition: GraniteExpedition {
         stocks.save(moc: coreDataInstance) { quote in
             if let object = quote {
                 state.quote = object
-                print("{TEST} save result \(quote?.name) \(quote?.securities.count)")
                 connection.update(\EnvironmentDependency.detail.stage, value: .fetched)
             } else {
                 connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)

@@ -16,6 +16,7 @@ class SearchDependency: DependencyManager {
 
 public class SearchQuery: ObservableObject {
     var state: AssetSearchState
+    
     var securityGroup: SecurityGroup = .init()
     
     public init(_ state: AssetSearchState = .init()) {

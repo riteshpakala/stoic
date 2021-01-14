@@ -161,10 +161,10 @@ public struct GraphInteractiveLinePlot<StickLabel, Indicator>: View
             let centeringClamped = centering.clamp(
                 low: -canvasWidthWithoutAdjust/2 + labelWidth/2,
                 high: canvasWidthWithoutAdjust/2 - labelWidth/2)
-            return CGAffineTransform(translationX: centeringClamped, y: -(Brand.Padding.large + Brand.Padding.small))
+            return CGAffineTransform(translationX: centeringClamped, y: -((Brand.Padding.large * 3) + Brand.Padding.small))
         }
         
-        let valueStickYOffset = (canvasHeightWithoutAdjust/2 + (Brand.Padding.large + Brand.Padding.small + Brand.Padding.large))
+        let valueStickYOffset = (canvasHeightWithoutAdjust/2 + ((Brand.Padding.large * 4) + Brand.Padding.small))
         return ZStack {//(spacing: rhPlotConfig.spaceBetweenValueStickAndStickLabel) {
             
             // Value Stick Label

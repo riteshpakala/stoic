@@ -26,10 +26,10 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 state.quote = quote
                 
 //                    //DEV:
-//                    let indicator = TonalServiceModels.Indicators.init(security,
-//                                                                       with: quote)
-//
-//                    indicator.stochastic
+                let indicator = TonalServiceModels.Indicators.init(state.security,
+                                                                       with: quote)
+
+                    indicator.stochastic
             } else {
                 print("{TEST} quote was not found")
                 guard let stage = connection.retrieve(\EnvironmentDependency.detail.stage),
