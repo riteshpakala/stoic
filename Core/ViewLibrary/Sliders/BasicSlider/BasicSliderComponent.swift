@@ -28,7 +28,7 @@ public struct BasicSliderComponent: GraniteComponent {
                     HorizontalValueSliderStyle(
                         track: HorizontalValueTrack(
                             view: LinearGradient(
-                                gradient: Gradient(colors: [Color.blue, Brand.Colors.purple]),
+                                gradient: Gradient(colors: [Brand.Colors.marble, Brand.Colors.redBurn]),
                             startPoint: .leading,
                             endPoint: .trailing),
                             mask: RoundedRectangle(cornerRadius: 3)

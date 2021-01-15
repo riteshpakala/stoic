@@ -60,3 +60,19 @@ public struct TonalSetComponent: GraniteComponent {
         .padding(.trailing, Brand.Padding.medium)
     }
 }
+
+//MARK: -- Empty State Settings
+extension TonalSetComponent {
+    
+    public var emptyText: String {
+        "search for a market\nto generate tonal similarities\nfound in the past"
+    }
+    
+    public var isDependancyEmpty: Bool {
+        command.center.tonalRangeData.isEmpty
+    }
+    
+    public var emptyPayload: GranitePayload? {
+        return .init(object: [Brand.Colors.marble, Brand.Colors.redBurn])
+    }
+}

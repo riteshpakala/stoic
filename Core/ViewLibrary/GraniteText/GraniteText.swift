@@ -20,35 +20,37 @@ public struct GraniteText: View {
         let radius: CGFloat
         let offset: CGPoint
         let selectionColor: Color
-        let disable: Bool
+        let selectionStyle: SelectionStyle
         
-        public init(radius: CGFloat, offset: CGPoint, selectionColor: Color = Brand.Colors.black) {
-            self.radius = radius
-            self.offset = offset
-            self.disable = false
-            self.selectionColor = selectionColor
+        public enum SelectionStyle {
+            case v1
+            case v2
         }
         
-        public init(radius: CGFloat, offset: CGPoint, selectionColor: Color = Brand.Colors.black, disable: Bool) {
+        public init(radius: CGFloat,
+                    offset: CGPoint,
+                    selectionColor: Color = Brand.Colors.black,
+                    selectionStyle: SelectionStyle = .v1) {
             self.radius = radius
             self.offset = offset
-            self.disable = disable
             self.selectionColor = selectionColor
+            self.selectionStyle = selectionStyle
         }
         
-        public init(selectionColor: Color = Brand.Colors.black) {
+        public init(selectionColor: Color = Brand.Colors.black,
+                    selectionStyle: SelectionStyle = .v1) {
             self.radius = TextShadowSettings.basic.radius
             self.offset = TextShadowSettings.basic.offset
-            self.disable = TextShadowSettings.basic.disable
             self.selectionColor = selectionColor
+            self.selectionStyle = selectionStyle
         }
         
         public static var basic: TextShadowSettings {
-            .init(radius: 3, offset: .init(x: 2, y: 2), disable: false)
+            .init(radius: 3, offset: .init(x: 2, y: 2))
         }
         
-        public static var disabled: TextShadowSettings {
-            .init(radius: 3, offset: .init(x: 2, y: 2), disable: true)
+        public static var v2Selection: TextShadowSettings {
+            .init(radius: 3, offset: .init(x: 2, y: 2), selectionStyle: .v2)
         }
     }
     
@@ -91,15 +93,40 @@ public struct GraniteText: View {
                 .foregroundColor(color)
                 .font(font)
                 .multilineTextAlignment(alignment)
+                .lineSpacing(Brand.Padding.xSmall)
                 .background(
                     Passthrough {
                         if self.selected {
-                            style.selectionColor
-                                .cornerRadius(4)
-                                .padding(.top, -6)
-                                .padding(.leading, -6)
-                                .padding(.trailing, -6)
-                                .padding(.bottom, -6)
+                            switch style.selectionStyle {
+                            case .v1:
+                                style.selectionColor
+                                    .cornerRadius(4)
+                                    .padding(.top, -6)
+                                    .padding(.leading, -6)
+                                    .padding(.trailing, -6)
+                                    .padding(.bottom, -6)
+                            case .v2:
+                                GradientView(colors: [Brand.Colors.marbleV2,
+                                                      Brand.Colors.marble],
+                                             cornerRadius: 6.0,
+                                             direction: .topLeading).overlay (
+                                                
+                                        Brand.Colors.black
+                                                        .opacity(0.36)
+                                                        .cornerRadius(4.0)
+                                                        .shadow(color: .black, radius: 4, x: 2, y: 2)
+                                                        .padding(.top, 6)
+                                                        .padding(.leading, 6)
+                                                        .padding(.trailing, 6)
+                                                        .padding(.bottom, 6)
+                                        
+                                    
+                                    )
+                                    .padding(.top, -8)
+                                    .padding(.leading, -10)
+                                    .padding(.trailing, -10)
+                                    .padding(.bottom, -8)
+                            }
                         }
                     }
                 )

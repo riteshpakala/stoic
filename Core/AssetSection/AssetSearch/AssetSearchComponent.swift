@@ -16,6 +16,10 @@ public struct AssetSearchComponent: GraniteComponent {
     
     public init() {}
     
+    var empty: some View {
+        print("{TEST} \(command.center.securities?.count)")
+        return EmptyView.init()
+    }
     public var body: some View {
         VStack {
             SearchComponent(
@@ -31,33 +35,16 @@ public struct AssetSearchComponent: GraniteComponent {
                 Spacer()
             }.padding(.top, Brand.Padding.medium)
             
-            switch state.context {
-            case .portfolio:
-                AssetGridComponent(state: .init(.add))
-                    .payload(.init(object: inject(\.envDependency,
-                                                  target:\.holdingsPortfolio.assetAddState.searchState.securityGroup)?.get(state.securityType)))
+            if command.center.securities?.isNotEmpty == true {
+                empty
+                AssetGridComponent(state: command.center.assetGridState)
+                    .payload(.init(object: command.center.securities))
                     .listen(to: command, .stop)
-            case .floor:
-                AssetGridComponent(state: .init(.add))
-                    .payload(.init(object: inject(\.envDependency,
-                                                  target:\.holdingsFloor.assetAddState.searchState.securityGroup)?.get(state.securityType)))
-                    .listen(to: command, .stop)
-            case .tonalCreate:
-                AssetGridComponent()
-                    .payload(.init(object: inject(\.envDependency,
-                                                  target:\.searchTone.securityGroup)?.get(state.securityType)))
-                    .listen(to: command, .stop)
-            case .search:
-                AssetGridComponent()
-                    .payload(.init(object: inject(\.envDependency,
-                                                  target:\.search.securityGroup)?.get(state.securityType)))
-                    .listen(to: command, .stop)
-            default:
-                EmptyView.init()
             }
         }
         .padding(.top, Brand.Padding.large)
         .padding(.leading, Brand.Padding.medium)
         .padding(.trailing, Brand.Padding.medium)
+        .padding(.bottom, state.securityData.isNotEmpty ? 0.0 : Brand.Padding.large)
     }
 }

@@ -28,9 +28,9 @@ public struct AssetSectionComponent: GraniteComponent {
                 })
             }
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                AssetGridComponent()
+                AssetGridComponent(state: .init(.standard, context: state.windowType))
                     .listen(to: command)
-                    .payload(.init(object: command.center.movers))
+                    .payload(.init(object: command.center.movers)).showEmptyState
             }
         }
         .padding(.top, Brand.Padding.large)

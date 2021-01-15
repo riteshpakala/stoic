@@ -18,16 +18,22 @@ public enum AssetGridType {
 }
 
 public class AssetGridState: GraniteState {
+    
+    var context: WindowType
+    
     var assetData: [Asset] {
         payload?.object as? [Asset] ?? []
     }
     let assetGridType: AssetGridType
-    public init(_ type: AssetGridType) {
+    public init(_ type: AssetGridType,
+                context: WindowType) {
         assetGridType = type
+        self.context = context
     }
     
     public required init() {
         self.assetGridType = .standard
+        self.context = .unassigned
     }
 }
 

@@ -43,7 +43,12 @@ public struct EnvironmentComponent: GraniteComponent {
                                     getWindow(row, col, state.activeWindowConfigs[row][col])
                                 }
                             }
-                        }
+                        }.frame(minWidth: 0,
+                                maxWidth: .infinity,
+                                minHeight: 400,
+                                idealHeight: 600,
+                                maxHeight: 800,
+                                alignment: .center)
                     }
                 }
                 
@@ -52,7 +57,7 @@ public struct EnvironmentComponent: GraniteComponent {
             }.frame(minWidth: 0,
                     maxWidth: .infinity,
                     minHeight: 0,
-                    maxHeight: 1800,
+                    maxHeight: .infinity,
                     alignment: .center)
         } else {
             HStack(spacing:  command.center.nonIPhoneHStackSpacing) {

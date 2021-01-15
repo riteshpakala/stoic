@@ -11,11 +11,14 @@ import SwiftUI
 public struct Brand {
     public struct Colors {
         public static var marble: Color = .init(hex: "#A19A8E")
+        public static var marbleV2: Color = .init(hex: "#CFCAC1")
         public static var grey: Color = .init(hex: "#808080")
         public static var greyV2: Color = .init(hex: "#D8D8D8")
         public static var white: Color = .init(hex: "#FFFFFF")
         public static var green: Color = .init(hex: "#39FF14")
         public static var red: Color = .init(hex: "#D90000")
+        public static var redBurn: Color = .init(hex: "#D02F0E")
+        public static var blue: Color = .init(hex: "#1FC2C4")
         public static var purple: Color = .init(hex: "#EC6CFF")
         public static var yellow: Color = .init(hex: "#FFCD00")
         public static var black: Color = .init(hex: "#121212")

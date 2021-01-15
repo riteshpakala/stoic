@@ -17,48 +17,63 @@ public struct WindowComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        VStack {
-            switch state.config.kind {
-            case .topVolume(let securityType),
-                 .winners(let securityType),
-                 .losers(let securityType):
-                AssetSectionComponent(
-                    state: .init(windowType: state.config.kind,
-                                 securityType))
-                    .share(.init(dep(\.hosted)))
-            case .portfolio(let type):
-                PortfolioComponent(state: .init(type))
-                    .share(.init(dep(\.hosted)))
-            case .floor:
-                FloorComponent()
-                    .share(.init(dep(\.hosted)))
-            case .search:
-                AssetSearchComponent(state: inject(\.envDependency,
-                                                      target: \.search.state))
-                    .share(.init(dep(\.hosted,
-                                     WindowCenter.route)))
-            case .securityDetail(let kind):
-                SecurityDetailComponent(state: .init(kind))
-                    .share(.init(dep(\.hosted,
-                                     WindowCenter.route)))
-            case .tonalCreate(let stage):
-                TonalCreateComponent(state: .init(stage))
-                    .share(.init(dep(\.hosted)))
-            case .tonalBrowser(let payload):
-                TonalModelsComponent(state: inject(\.envDependency,
-                                                   target: \.tonalModels))
-                    .payload(payload)
-                    .share(.init(dep(\.hosted)))
-            case .tonalDetail:
-                TonalDetailComponent()
-                    .share(.init(dep(\.hosted)))
-            case .special:
-                SpecialComponent()
-            default:
-                EmptyView.init()
+        switch state.config.kind {
+        case .topVolume(let securityType),
+             .winners(let securityType),
+             .losers(let securityType):
+            AssetSectionComponent(
+                state: .init(windowType: state.config.kind,
+                             securityType))
+                .share(.init(dep(\.hosted)))
+        case .portfolio(let type):
+            PortfolioComponent(state: .init(type))
+                .share(.init(dep(\.hosted)))
+        case .floor:
+            FloorComponent()
+                .share(.init(dep(\.hosted)))
+        case .search:
+            AssetSearchComponent(state: inject(\.envDependency,
+                                                  target: \.search.state))
+                .share(.init(dep(\.hosted,
+                                 WindowCenter.route)))
+        case .securityDetail(let kind):
+            SecurityDetailComponent(state: .init(kind))
+                .share(.init(dep(\.hosted,
+                                 WindowCenter.route)))
+        case .tonalCreate(let stage):
+            TonalCreateComponent(state: .init(stage))
+                .share(.init(dep(\.hosted)))
+        case .tonalBrowser(let payload):
+            TonalModelsComponent(state: inject(\.envDependency,
+                                               target: \.tonalModels))
+                .payload(payload)
+                .share(.init(dep(\.hosted)))
+        case .tonalDetail:
+            TonalDetailComponent()
+                .share(.init(dep(\.hosted)))
+        case .special:
+            SpecialComponent()
+        default:
+            EmptyView.init().hidden()
+        }
+        
+//        VStack {
+//
+//        }.frame(maxWidth: .infinity,
+//                maxHeight: .infinity,
+//                alignment: .center)//.animation(.default)
+    }
+}
+
+extension GraniteComponent {
+    public var showEmptyState: some View {
+        Passthrough {
+            if self.isDependancyEmpty {
+                GraniteEmptyComponent(state: .init(self.emptyText))
+                    .payload(self.emptyPayload)
+            } else {
+                self
             }
-        }.frame(maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .center)//.animation(.default)
+        }
     }
 }

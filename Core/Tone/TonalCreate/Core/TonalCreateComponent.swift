@@ -17,32 +17,28 @@ public struct TonalCreateComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        VStack {
-            switch state.stage {
-            case .find:
-                TonalFindComponent()
-                    .listen(to: command)
-                    .share(.init(dep(\.hosted,
-                                     TonalSetCenter.route)))
-            case .set:
-                TonalSetComponent()
-                    .listen(to: command)
-                    .share(.init(dep(\.hosted,
-                                     TonalTuneCenter.route)))
-            case .tune:
-                TonalTuneComponent()
-                    .listen(to: command)
-                    .share(.init(dep(\.hosted,
-                                     TonalCompileCenter.route)))
-            case .compile:
-                TonalCompileComponent()
-                    .listen(to: command)
-                    .share(.init(dep(\.hosted)))
-            default:
-                EmptyView.init()
-            }
-            
-            EmptyView.init()
+        switch state.stage {
+        case .find:
+            TonalFindComponent()
+                .listen(to: command)
+                .share(.init(dep(\.hosted,
+                                 TonalSetCenter.route)))
+        case .set:
+            TonalSetComponent()
+                .listen(to: command)
+                .share(.init(dep(\.hosted,
+                                 TonalTuneCenter.route))).showEmptyState
+        case .tune:
+            TonalTuneComponent()
+                .listen(to: command)
+                .share(.init(dep(\.hosted,
+                                 TonalCompileCenter.route))).showEmptyState
+        case .compile:
+            TonalCompileComponent()
+                .listen(to: command)
+                .share(.init(dep(\.hosted))).showEmptyState
+        default:
+            EmptyView.init().hidden()
         }
     }
 }

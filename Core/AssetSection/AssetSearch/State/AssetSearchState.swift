@@ -51,4 +51,32 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
             AssetSelectedExpedition.Discovery()
         ]
     }
+    
+    
+    
+    var securities: [Security]? {
+        switch state.context {
+        case .portfolio:
+            return envDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.get(state.securityType)
+        case .floor:
+            return envDependency.holdingsFloor.assetAddState.searchState.securityGroup.get(state.securityType)
+        case .tonalCreate:
+            return envDependency.searchTone.securityGroup.get(state.securityType)
+        case .search:
+            return envDependency.search.securityGroup.get(state.securityType)
+        default:
+            return nil
+        }
+    }
+    
+    var assetGridState: AssetGridState {
+        switch state.context {
+        case .portfolio,
+             .floor:
+            return .init(.add, context: state.context)
+        default:
+            return .init(.standard, context: state.context)
+        
+        }
+    }
 }

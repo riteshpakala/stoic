@@ -57,7 +57,7 @@ public struct ControlBar: View {
                                 fontSize,
                                 .regular,
                                 .leading,
-                                style: .disabled,
+                                style: .v2Selection,
                                 selected: currentRoute == .home)
                 } else {
                     Spacer()
@@ -88,7 +88,7 @@ public struct ControlBar: View {
                                 fontSize,
                                 .regular,
                                 .leading,
-                                style: .disabled,
+                                style: .v2Selection,
                                 selected: currentRoute == .floor)
                 } else {
                     Spacer()
@@ -118,7 +118,7 @@ public struct ControlBar: View {
                                 fontSize,
                                 .regular,
                                 .leading,
-                                style: .disabled,
+                                style: .v2Selection,
                                 selected: currentRoute == .models)
                 } else {
                     Spacer()
@@ -148,7 +148,7 @@ public struct ControlBar: View {
                                 fontSize,
                                 .regular,
                                 .leading,
-                                style: .disabled,
+                                style: .v2Selection,
                                 selected: currentRoute == .settings)
                 } else {
                     Spacer()
@@ -174,14 +174,14 @@ public struct ControlBar: View {
                                 fontSize,
                                 .bold,
                                 .leading,
-                                style: .disabled)
+                                style: .basic)
                 } else {
                     GraniteText("d",
                                 Brand.Colors.red,
                                 fontSize,
                                 .bold,
                                 .leading,
-                                style: .disabled)
+                                style: .basic)
                 }
                 
                 if isIPhone {

@@ -1,0 +1,81 @@
+//
+//  Gradient.swift
+//  * stoic
+//
+//  Created by Ritesh Pakala on 1/14/21.
+//
+
+import Foundation
+import SwiftUI
+
+public struct GradientView: View {
+    
+    let width: CGFloat
+    let height: CGFloat
+    let cornerRadius: CGFloat
+    let colors: [Color]
+    let direction: UnitPoint
+    
+    public init(colors: [Color] = [Brand.Colors.yellow, Brand.Colors.purple],
+                cornerRadius: CGFloat = 12,
+                direction: UnitPoint = .leading) {
+        
+        self.width = .infinity
+        self.height = .infinity
+        self.cornerRadius = cornerRadius
+        self.colors = colors
+        self.direction = direction
+    }
+    
+    public init(width: CGFloat,
+                height: CGFloat,
+                colors: [Color] = [Brand.Colors.yellow, Brand.Colors.purple],
+                cornerRadius: CGFloat = 12,
+                direction: UnitPoint = .leading) {
+        
+        self.width = width
+        self.height = height
+        self.cornerRadius = cornerRadius
+        self.colors = colors
+        self.direction = direction
+    }
+    
+    public var body: some View {
+        Rectangle()
+            .frame(width: width,
+                   height: height,
+                   alignment: .center)
+            .padding()
+            .foregroundColor(.clear)
+            .background(LinearGradient(
+                            gradient: Gradient(colors: colors),
+                            startPoint: direction,
+                            endPoint: endPoint))
+            .cornerRadius(cornerRadius)
+            .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0)
+    }
+    
+    var endPoint: UnitPoint {
+        switch direction {
+        case .leading:
+            return .trailing
+        case .trailing:
+            return .leading
+        case .topLeading:
+            return .bottomTrailing
+        case .bottomLeading:
+            return .topTrailing
+        case .topTrailing:
+            return .bottomLeading
+        case .bottomTrailing:
+            return .topLeading
+        case .top:
+            return .bottom
+        case .bottom:
+            return .top
+        default:
+            return .bottom
+            
+        }
+    }
+}

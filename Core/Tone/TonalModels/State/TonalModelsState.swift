@@ -22,7 +22,7 @@ public enum TonalModelsType {
 
 public class TonalModelsState: GraniteState {
     var stage: TonalModelsStage
-    var tones: [TonalModel] = []
+    var tones: [TonalModel]? = nil
     var type: TonalModelsType
     
     var security: Security? {

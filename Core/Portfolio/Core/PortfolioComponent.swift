@@ -36,24 +36,10 @@ public struct PortfolioComponent: GraniteComponent {
     
     var portfolioHeader: some View {
         ZStack {
-            Rectangle()
-                .frame(height: 100, alignment: .center)
-                .padding()
-                .foregroundColor(.clear)
-                .background(LinearGradient(gradient: Gradient(colors: [Brand.Colors.yellow, Brand.Colors.purple]), startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(12)
-                .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0).overlay (
+            GradientView().overlay (
                 
                     Brand.Colors.black.opacity(0.36).overlay(
-                        
-                        
-//                            Text("TEST").granite_innerShadow(
-//                                Brand.Colors.white,
-//                                radius: 1,
-//                                offset: .init(x: 0.5, y: 0.5))
-                        GraniteText("TEST")
-                        .multilineTextAlignment(.center)
-                        .font(Fonts.live(.subheadline, .bold))
+                        GraniteText("TEST", .subheadline, .bold)
                         
                     )
                     .cornerRadius(8.0)

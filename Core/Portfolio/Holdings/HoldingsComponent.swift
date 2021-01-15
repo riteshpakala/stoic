@@ -36,10 +36,11 @@ public struct HoldingsComponent: GraniteComponent {
                                     .bold,
                                     .leading)
                         
-                        AssetGridComponent(state: .init(state.context == .floor ? .add : .standard))
+                        AssetGridComponent(state: .init(state.context == .floor ? .add : .standard,
+                                                        context: state.context))
                             .listen(to: command, .stop)
                             .payload(retrievePayload(\.envDependency,
-                                                     target: \.user.portfolio?.holdings.securities))
+                                                     target: \.user.portfolio?.holdings.securities)).showEmptyState
                             
                     }
                     .padding(.top, Brand.Padding.large)
@@ -53,10 +54,10 @@ public struct HoldingsComponent: GraniteComponent {
                             Circle()
                                 .foregroundColor(Brand.Colors.marble).overlay(
                                 
-                                    GraniteText("+", Brand.Colors.black, .title, .bold)
+                                    GraniteText("+", Brand.Colors.black, .title2, .bold)
                                 
                                 
-                                ).frame(width: 48, height: 48)
+                                ).frame(width: 36, height: 36)
                                 .padding(.top, Brand.Padding.large)
                                 .padding(.leading, Brand.Padding.small)
                                 .padding(.bottom, Brand.Padding.large)

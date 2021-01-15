@@ -56,3 +56,19 @@ public struct TonalCompileComponent: GraniteComponent {
         .padding(.trailing, Brand.Padding.medium)
     }
 }
+
+//MARK: -- Empty State Settings
+extension TonalCompileComponent {
+    
+    public var emptyText: String {
+        "compile & save\nas you tune to your liking.\nthen use your model\nat any time inside\n* stoic"
+    }
+    
+    public var isDependancyEmpty: Bool {
+        command.center.compileState == .none
+    }
+    
+    public var emptyPayload: GranitePayload? {
+        return .init(object: [Brand.Colors.yellow, Brand.Colors.purple])
+    }
+}

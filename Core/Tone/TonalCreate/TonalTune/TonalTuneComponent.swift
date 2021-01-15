@@ -81,9 +81,25 @@ public struct TonalTuneComponent: GraniteComponent {
                         }
                     }
                 )
-                .frame(width: 120, height: 75, alignment: .center)
+                .frame(width: .infinity, height: 75, alignment: .center)
                 .cornerRadius(8)
             }
         }
+    }
+}
+
+//MARK: -- Empty State Settings
+extension TonalTuneComponent {
+    
+    public var emptyText: String {
+        "select a range of days,\nto set a tonal pattern"
+    }
+    
+    public var isDependancyEmpty: Bool {
+        state.sentimentLoadingProgress == 0.0
+    }
+    
+    public var emptyPayload: GranitePayload? {
+        return .init(object: [Brand.Colors.redBurn, Brand.Colors.yellow])
     }
 }

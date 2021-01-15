@@ -40,6 +40,9 @@ public struct SearchComponent: GraniteComponent {
                 if state.isEditing {
                     Group {
                         Button(action: {
+                            #if canImport(UIKit)
+                            self.hideKeyboard()
+                            #endif
                             set(\.isEditing, value: false)
                             state.query = ""
                         }) {
