@@ -26,7 +26,7 @@ struct GetSentimentExpedition: GraniteExpedition {
 //        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: state.service.soundAggregate.dates.count/2)
         
         let dates: [Date] = state.service.soundAggregate.dates
-        
+
         if let date = dates.first(where: {
                                     !state.service.soundAggregate.completed.contains($0.simple) }) {
             

@@ -96,7 +96,8 @@ extension TonalTuneComponent {
     }
     
     public var isDependancyEmpty: Bool {
-        state.sentimentLoadingProgress == 0.0
+//        state.sentimentLoadingProgress == 0.0
+        command.center.sentimentIsAvailable == false
     }
     
     public var emptyPayload: GranitePayload? {

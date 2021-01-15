@@ -36,8 +36,18 @@ public struct TonalModelsComponent: GraniteComponent {
             Spacer()
             VStack(spacing: 0) {
                 PaddingVertical(Brand.Padding.xSmall)
-                GraniteButtonComponent(state: .init(command.center.createText)).onTapGesture {
-//                    set(\.addToPortfolio, value: true)
+                Circle()
+                    .foregroundColor(Brand.Colors.marble).overlay(
+                    
+                        GraniteText("+", Brand.Colors.black, .title2, .bold)
+                    
+                    
+                    ).frame(width: 36, height: 36)
+                    .padding(.top, Brand.Padding.large)
+                    .padding(.leading, Brand.Padding.small)
+                    .padding(.bottom, Brand.Padding.large)
+                    .onTapGesture {
+//                        set(\.addToPortfolio, value: true)
                 }
             }
         }

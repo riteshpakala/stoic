@@ -20,17 +20,26 @@ public struct PortfolioComponent: GraniteComponent {
         VStack {
             
             switch state.type {
-            case .expanded:
+            case .expanded, .preview:
                 portfolioHeader
             default:
                 EmptyView.init().hidden()
             }
             
-            PaddingVertical()
+            switch state.type {
+            case .expanded, .holdings:
+                if state.type == .expanded {
+                    PaddingVertical()
+                }
+                
+                HoldingsComponent(state: inject(\.envDependency,
+                                                target: \.holdingsPortfolio))
+                    .share(.init(dep(\.hosted)))
+            default:
+                EmptyView.init().hidden()
+                
+            }
             
-            HoldingsComponent(state: inject(\.envDependency,
-                                            target: \.holdingsPortfolio))
-                .share(.init(dep(\.hosted)))
         }
     }
     

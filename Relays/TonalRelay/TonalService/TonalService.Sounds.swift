@@ -46,7 +46,7 @@ extension TonalServiceModels.TonalSounds {
     
     var dates: [Date] {
         var dates: [Date] = []
-        for day in 0..<days {
+        for day in 0..<days - 1 {
             dates.append(dateParams.sinceDate.advanceDate(value: day))
         }
         

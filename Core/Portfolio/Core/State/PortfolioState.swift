@@ -13,6 +13,7 @@ import Combine
 public enum PortfolioType: Equatable, Hashable {
     case expanded
     case preview
+    case holdings
     case unassigned
 }
 public class PortfolioState: GraniteState {

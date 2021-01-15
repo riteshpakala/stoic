@@ -41,15 +41,6 @@ public class TonalModelsState: GraniteState {
 }
 
 public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
-    var createText: String {
-        switch state.type {
-        case .specified(let security):
-            return "\(security.display) model"
-        case .general:
-            return "create"
-        }
-    }
-    
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
     }

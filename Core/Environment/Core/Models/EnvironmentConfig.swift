@@ -38,9 +38,9 @@ public struct EnvironmentConfig {
                 ])
             case .home:
                 return .init(windows: [
-                    [ .search, .topVolume(.stock), .portfolio(.expanded)],
-                            [ .unassigned, .winners(.stock), .unassigned ],
-                            [ .tonalBrowser(.empty), .losers(.stock), .unassigned]
+                            [ .search, .portfolio(.holdings), .topVolume(.stock), ],
+                            [ .unassigned, .unassigned , .winners(.stock) ],
+                            [ .portfolio(.preview), .tonalBrowser(.empty), .losers(.stock)]
                         ])
             case .modelCreate:
                 return .init(windows: [
@@ -54,7 +54,7 @@ public struct EnvironmentConfig {
                         ])
             case .securityDetail(let payload):
                 return .init(windows: [
-                    [.securityDetail(.expanded(payload)), .portfolio(.preview)],
+                            [.securityDetail(.expanded(payload)), .portfolio(.holdings)],
                             [.unassigned, .tonalBrowser(payload)]
                         ])
             default:
