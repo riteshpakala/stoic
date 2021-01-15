@@ -97,10 +97,15 @@ public struct AssetGridItemComponent: GraniteComponent {
                         Circle()
                             .foregroundColor(state.asset.symbolColor).overlay(
                             
-                                GraniteText("+", Brand.Colors.black, .headline, .bold)
+                                GraniteText("+",
+                                            Brand.Colors.black,
+                                            .headline,
+                                            .bold)
+                                            .shadow(color: .black, radius: 3, x: 1, y: 1)
                             
                             
-                            ).frame(width: 24, height: 24)
+                            )
+                            .frame(width: 24, height: 24)
                             .padding(.leading, Brand.Padding.small)
                     default:
                         EmptyView.init()

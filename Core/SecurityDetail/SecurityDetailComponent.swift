@@ -27,10 +27,14 @@ public struct SecurityDetailComponent: GraniteComponent {
                         Circle()
                             .foregroundColor(Brand.Colors.marble).overlay(
                             
-                                GraniteText("+", Brand.Colors.black, .title3, .bold)
+                                GraniteText("+",
+                                            Brand.Colors.black,
+                                            .headline,
+                                            .bold)
+                                            .shadow(color: .black, radius: 3, x: 1, y: 1)
                             
                             
-                            ).frame(width: 42, height: 42)
+                            ).frame(width: 24, height: 24)
                     case .expanded,
                          .preview:
                         

@@ -54,13 +54,16 @@ public struct HoldingsComponent: GraniteComponent {
                             Circle()
                                 .foregroundColor(Brand.Colors.marble).overlay(
                                 
-                                    GraniteText("+", Brand.Colors.black, .title2, .bold)
+                                    GraniteText("+", Brand.Colors.black,
+                                                .headline,
+                                                .bold)
+                                                .shadow(color: .black, radius: 3, x: 1, y: 1)
                                 
                                 
-                                ).frame(width: 36, height: 36)
-                                .padding(.top, Brand.Padding.large)
+                                ).frame(width: 24, height: 24)
+                                .padding(.top, Brand.Padding.medium)
                                 .padding(.leading, Brand.Padding.small)
-                                .padding(.bottom, Brand.Padding.large)
+                                .padding(.bottom, Brand.Padding.medium)
                                 .onTapGesture {
                                     set(\.addToPortfolio, value: true)
                             }

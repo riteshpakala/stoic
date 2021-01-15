@@ -23,7 +23,7 @@ public struct GraniteEmptyComponent: GraniteComponent {
             GradientView(colors: command.center.gradients,
                          direction: .topLeading).overlay (
                             
-                        GraniteText(state.text, .title3, .bold)
+                        GraniteText(state.text, .subheadline, .bold)
                             .padding(.top, Brand.Padding.medium)
                             .padding(.bottom, Brand.Padding.medium)
                             .padding(.leading, Brand.Padding.large)
