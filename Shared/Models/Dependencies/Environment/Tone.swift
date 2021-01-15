@@ -33,7 +33,11 @@ public class Tone: ObservableObject {
     public var baseRange: TonalRange? {
         range?.first(where: { $0.base })
     }
-    public var selectedRange: TonalRange?
+    public var selectedRange: TonalRange? {
+        didSet {
+            self.set.stage = .fetching
+        }
+    }
     
     public init(security: Security? = nil,
                 range: [TonalRange]? = nil,
@@ -48,6 +52,7 @@ public class Tone: ObservableObject {
     
     // Stages
     public var find: Find = .init()
+    public var set: Set = .init()
     public var tune: Tune = .init()
     public var compile: Compile = .init()
     
@@ -97,6 +102,16 @@ public class Tone: ObservableObject {
             let days: Double = sliderDays.number*dayDiff
             return Int(days) + Tone.Constraints.minDays
         }
+    }
+    
+    public struct Set {
+        public enum State {
+            case fetching
+            case none
+        }
+        
+        var stage: State = .none
+        var state: TonalSetState = .init()
     }
     
     public struct Tune {

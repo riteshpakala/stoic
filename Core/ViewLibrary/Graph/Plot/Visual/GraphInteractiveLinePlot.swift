@@ -279,7 +279,7 @@ private extension GraphInteractiveLinePlot {
     
 // Just in case we come back to here.
     func touchAndDrag(canvas: CGRect) -> some Gesture {
-        let drag = DragGesture(minimumDistance: 0)
+        let drag = DragGesture(minimumDistance: 12)
             .updating($isDraggingG) { (value, state, _) in
                 state = true
         }.onChanged { (value) in

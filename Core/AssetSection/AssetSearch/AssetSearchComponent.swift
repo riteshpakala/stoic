@@ -15,11 +15,6 @@ public struct AssetSearchComponent: GraniteComponent {
     public var command: GraniteCommand<AssetSearchCenter, AssetSearchState> = .init()
     
     public init() {}
-    
-    var empty: some View {
-        print("{TEST} \(command.center.securities?.count)")
-        return EmptyView.init()
-    }
     public var body: some View {
         VStack {
             SearchComponent(
@@ -36,7 +31,6 @@ public struct AssetSearchComponent: GraniteComponent {
             }.padding(.top, Brand.Padding.medium)
             
             if command.center.securities?.isNotEmpty == true {
-                empty
                 AssetGridComponent(state: command.center.assetGridState)
                     .payload(.init(object: command.center.securities))
                     .listen(to: command, .stop)

@@ -18,10 +18,47 @@ public struct GraniteButtonComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            BasicButton(text: state.text)
-        }.padding(.top, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.medium)
-        .padding(.trailing, Brand.Padding.medium)
-        .padding(.bottom, Brand.Padding.large)
+            switch state.type {
+            case .text(let text):
+                BasicButton(text: text)
+            case .image(let name):
+                Image(name)
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: state.size.width,
+                           height: state.size.height,
+                           alignment: .leading)
+                    .background(
+                        Passthrough {
+                            if state.selected {
+                                GradientView(colors: [Brand.Colors.marbleV2,
+                                                      Brand.Colors.marble],
+                                             cornerRadius: 6.0,
+                                             direction: .topLeading).overlay (
+                                                
+                                        Brand.Colors.black
+                                                        .opacity(0.36)
+                                                        .cornerRadius(4.0)
+                                                        .shadow(color: .black, radius: 4, x: 2, y: 2)
+                                                        .padding(.top, 4)
+                                                        .padding(.leading, 4)
+                                                        .padding(.trailing, 4)
+                                                        .padding(.bottom, 4)
+                                        
+                                    
+                                    )
+                                    .padding(.top, -8)
+                                    .padding(.leading, -8)
+                                    .padding(.trailing, -8)
+                                    .padding(.bottom, -8)
+                            }
+                        }
+                    )
+            }
+        }
+        .padding(.top, state.padding.top)
+        .padding(.leading, state.padding.leading)
+        .padding(.trailing, state.padding.trailing)
+        .padding(.bottom, state.padding.bottom)
     }
 }

@@ -20,22 +20,23 @@ public struct TonalCreateComponent: GraniteComponent {
         switch state.stage {
         case .find:
             TonalFindComponent()
-                .listen(to: command)
+                .listen(to: command, .stop)
                 .share(.init(dep(\.hosted,
                                  TonalSetCenter.route)))
         case .set:
-            TonalSetComponent()
-                .listen(to: command)
+            TonalSetComponent(state: inject(\.envDependency,
+                                            target: \.tone.set.state))
+                .listen(to: command, .stop)
                 .share(.init(dep(\.hosted,
                                  TonalTuneCenter.route))).showEmptyState
         case .tune:
             TonalTuneComponent()
-                .listen(to: command)
+                .listen(to: command, .stop)
                 .share(.init(dep(\.hosted,
                                  TonalCompileCenter.route))).showEmptyState
         case .compile:
             TonalCompileComponent()
-                .listen(to: command)
+                .listen(to: command, .stop)
                 .share(.init(dep(\.hosted))).showEmptyState
         default:
             EmptyView.init().hidden()

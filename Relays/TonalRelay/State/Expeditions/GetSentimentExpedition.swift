@@ -73,7 +73,10 @@ struct ProcessSentimentExpedition: GraniteExpedition {
         
         publisher = state
             .service
-            .getTweets(matching: event.ticker, since: event.sinceDate, until: event.untilDate, count: days*state.dataScale)
+            .getTweets(matching: event.ticker,
+                       since: event.sinceDate,
+                       until: event.untilDate,
+                       count: days*state.dataScale)
             .replaceError(with: [])
             .map { TonalEvents.TonalHistory(data: $0) }
             .eraseToAnyPublisher()

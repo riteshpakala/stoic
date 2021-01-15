@@ -72,17 +72,6 @@ public struct TonalTuneComponent: GraniteComponent {
                     sendEvent(TonalTuneEvents.Tune())
                 }
                 
-            } else {
-                
-                Brand.Colors.black.overlay(
-                    VStack {
-                        if command.center.tone.tune.sentiment == nil {
-                            GraniteText("loading... \(state.sentimentLoadingProgress)")
-                        }
-                    }
-                )
-                .frame(width: .infinity, height: 75, alignment: .center)
-                .cornerRadius(8)
             }
         }
     }

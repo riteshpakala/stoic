@@ -203,9 +203,7 @@ extension GraphPage {
         },
             didSelectSegmentAtIndex: { segmentIndex in
                 if segmentIndex != nil {
-                    #if os(iOS)
                     Haptic.onChangeLineSegment()
-                    #endif
                 }
         },
             valueStickLabel: { value in

@@ -22,6 +22,7 @@ public struct PortfolioComponent: GraniteComponent {
             switch state.type {
             case .expanded, .preview:
                 portfolioHeader
+                portfolioDescription
             default:
                 EmptyView.init().hidden()
             }
@@ -44,7 +45,7 @@ public struct PortfolioComponent: GraniteComponent {
     }
     
     var portfolioHeader: some View {
-        ZStack {
+        VStack {
             GradientView().overlay (
                 
                     Brand.Colors.black.opacity(0.36).overlay(
@@ -56,12 +57,22 @@ public struct PortfolioComponent: GraniteComponent {
                     .shadow(color: .black, radius: 4, x: 2, y: 2)
                 
                 )
-            
-            Spacer()
         }
         .padding(.top, Brand.Padding.large)
         .padding(.bottom, Brand.Padding.large)
         .padding(.leading, Brand.Padding.large)
         .padding(.trailing, Brand.Padding.large)
+        .frame(height: 200)
+    }
+    
+    var portfolioDescription: some View {
+        VStack {
+            Text("details")
+        }
+        .padding(.top, Brand.Padding.large)
+        .padding(.bottom, Brand.Padding.large)
+        .padding(.leading, Brand.Padding.large)
+        .padding(.trailing, Brand.Padding.large)
+        .frame(maxHeight: .infinity)
     }
 }

@@ -38,7 +38,12 @@ public struct FloorComponent: GraniteComponent {
             if EnvironmentConfig.isIPhone {
                 ScrollView {
                     VStack(spacing: Brand.Padding.small) {
-                        generate
+                        generate.frame(minWidth: 0,
+                                       maxWidth: .infinity,
+                                       minHeight: EnvironmentConfig.iPhoneScreenHeight,
+                                       idealHeight: EnvironmentConfig.iPhoneScreenHeight,
+                                       maxHeight: EnvironmentConfig.iPhoneScreenHeight,
+                                       alignment: .center)
                     }
                     .background(Color.black)
                 }
@@ -95,7 +100,7 @@ public struct FloorComponent: GraniteComponent {
                                     
                                     )
                                     .frame(width: 24, height: 24)
-                                    .onTapGesture(perform: sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col))))
+                                    .onTapGesture(perform: sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col)), haptic: .light))
                                 Spacer()
                             }.frame(maxWidth: .infinity,
                                     maxHeight: .infinity).background(Brand.Colors.black)

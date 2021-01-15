@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 public class TonalSetState: GraniteState {
-
+    var sentimentLoadingProgress: Double = 0.0
 }
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
@@ -23,6 +23,10 @@ public class TonalSetCenter: GraniteCenter<TonalSetState> {
     
     var tone: Tone {
         envDependency.tone
+    }
+    
+    var stage: Tone.Set.State {
+        tone.set.stage
     }
     
     var ticker: String? {
@@ -38,5 +42,15 @@ public class TonalSetCenter: GraniteCenter<TonalSetState> {
             SetTheToneExpedition.Discovery(),
             TonalSentimentHistoryExpedition.Discovery()
         ]
+    }
+    
+    public override var links: [GraniteLink] {
+        [
+            
+            .relay(\TonalState.sentimentProgress,
+                   \TonalSetState.sentimentLoadingProgress, .dependant)
+    
+        ]
+    
     }
 }

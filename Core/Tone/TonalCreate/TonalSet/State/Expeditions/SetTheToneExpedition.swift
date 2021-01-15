@@ -28,6 +28,7 @@ struct SetTheToneExpedition: GraniteExpedition {
                     event.range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
                         if let sentiment = sentimentResult?.sentiment {
                             connection.update(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
+                            connection.update(\EnvironmentDependency.tone.set.stage, value: .none)
                         } else {
                             connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range))
                         }
@@ -72,6 +73,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
                     range.checkSentimentCache(quote, moc: moc) { sentimentResult in
                         if let sentiment = sentimentResult?.sentiment {
                             connection.update(\EnvironmentDependency.tone.tune.sentiment, value: sentiment)
+                            connection.update(\EnvironmentDependency.tone.set.stage, value: .none)
                         } else {
                             connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range))
                         }

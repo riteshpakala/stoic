@@ -44,3 +44,16 @@ public struct PaddingHorizontal: View {
                           maxHeight: .infinity).foregroundColor(color)
     }
 }
+
+public struct PaddingSafeAreaVertical: View {
+    public var body: some View {
+        GeometryReader { geometry in
+            
+            Brand.Colors.black.frame(
+                    width: .infinity,
+                    height: geometry.safeAreaInsets.top,
+                    alignment: .center)
+        }
+        .edgesIgnoringSafeArea(.top)
+    }
+}

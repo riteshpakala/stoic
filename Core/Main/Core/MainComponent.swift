@@ -23,7 +23,9 @@ public struct MainComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            environment.share(.init(dep(\.routerDependency)))
+            environment
+                .share(.init(dep(\.routerDependency)))
+                .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .background(Color.black)
     }

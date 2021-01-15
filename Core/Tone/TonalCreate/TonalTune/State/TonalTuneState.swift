@@ -11,8 +11,6 @@ import SwiftUI
 import Combine
 
 public class TonalTuneState: GraniteState {
-    var sentimentLoadingProgress: Double = 0.0
-    
     var tuners: [Date:Tone.Tuner] = [:]
 }
 
@@ -20,13 +18,6 @@ public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
-    
-    public override var links: [GraniteLink] {
-        [
-            .relay(\TonalState.sentimentProgress,
-                   \TonalTuneState.sentimentLoadingProgress, .always)
-        ]
-    }
     
     var envDependency: EnvironmentDependency {
         dependency.hosted.env

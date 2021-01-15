@@ -7,10 +7,17 @@
 
 import Foundation
 import SwiftUI
+import GraniteUI
 
 public struct ControlBar: View {
     var isIPhone: Bool
-    var iconSize: CGFloat = 18
+    var iconSize: CGFloat {
+        if isIPhone {
+            return 20
+        } else {
+            return 18
+        }
+    }
     var fontSize: Fonts.FontSize = .headline
     var currentRoute: Route
     var onRoute: ((Route) -> Void)
@@ -20,9 +27,12 @@ public struct ControlBar: View {
             HStack(alignment: .center) {
                 actions
             }.frame(maxWidth: .infinity,
-                    minHeight: 36,
-                    maxHeight: 42,
+                    minHeight: EnvironmentStyle.ControlBar.iPhone.minHeight,
+                    maxHeight: EnvironmentStyle.ControlBar.iPhone.maxHeight,
                     alignment: .center)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
+            .padding(.bottom, Brand.Padding.small)
         } else {
             VStack(alignment: .leading) {
                 
@@ -30,8 +40,8 @@ public struct ControlBar: View {
                 
                 Spacer()
                 
-            }.frame(minWidth: 100,
-                    maxWidth: 150,
+            }.frame(minWidth: EnvironmentStyle.ControlBar.Default.minWidth,
+                    maxWidth: EnvironmentStyle.ControlBar.Default.maxWidth,
                     maxHeight: .infinity,
                     alignment: .center)
                     .padding(.top, Brand.Padding.large+Brand.Padding.medium)
@@ -46,11 +56,12 @@ public struct ControlBar: View {
                 if isIPhone {
                     Spacer()
                 }
-                Image("home_icon")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: iconSize, height: iconSize, alignment: .leading)
-                    .padding(.trailing, isIPhone ? 0.0 : Brand.Padding.medium)
+                
+                GraniteButtonComponent(state: .init(.image("home_icon"),
+                                                    selected: currentRoute == .home && isIPhone,
+                                                    size: .init(iconSize)))
+                                        .padding(.trailing,
+                                                 isIPhone ? 0.0 : Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("home",
@@ -64,6 +75,7 @@ public struct ControlBar: View {
                 }
                
             }.onTapGesture {
+                GraniteHaptic.light.invoke()
                 onRoute(.home)
             }
                 
@@ -77,11 +89,12 @@ public struct ControlBar: View {
                 if isIPhone {
                     Spacer()
                 }
-                Image("floor_icon")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: iconSize, height: iconSize, alignment: .leading)
-                    .padding(.trailing, isIPhone ? 0.0 : Brand.Padding.medium)
+                
+                GraniteButtonComponent(state: .init(.image("floor_icon"),
+                                                    selected: currentRoute == .floor && isIPhone,
+                                                    size: .init(iconSize)))
+                                        .padding(.trailing,
+                                                 isIPhone ? 0.0 : Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("floor",
@@ -94,6 +107,7 @@ public struct ControlBar: View {
                     Spacer()
                 }
             }.onTapGesture {
+                GraniteHaptic.light.invoke()
                 onRoute(.floor)
             }
             
@@ -107,11 +121,12 @@ public struct ControlBar: View {
                 if isIPhone {
                     Spacer()
                 }
-                Image("model_icon")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: iconSize, height: iconSize, alignment: .leading)
-                    .padding(.trailing, isIPhone ? 0.0 : Brand.Padding.medium)
+                
+                GraniteButtonComponent(state: .init(.image("model_icon"),
+                                                    selected: currentRoute == .models && isIPhone,
+                                                    size: .init(iconSize)))
+                                        .padding(.trailing,
+                                                 isIPhone ? 0.0 : Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("models",
@@ -124,6 +139,7 @@ public struct ControlBar: View {
                     Spacer()
                 }
             }.onTapGesture {
+                GraniteHaptic.light.invoke()
                 onRoute(.models)
             }
             
@@ -137,11 +153,12 @@ public struct ControlBar: View {
                 if isIPhone {
                     Spacer()
                 }
-                Image("settings_icon")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: iconSize, height: iconSize, alignment: .leading)
-                    .padding(.trailing, isIPhone ? 0.0 : Brand.Padding.medium)
+                
+                GraniteButtonComponent(state: .init(.image("settings_icon"),
+                                                    selected: currentRoute == .settings && isIPhone,
+                                                    size: .init(iconSize)))
+                                        .padding(.trailing,
+                                                 isIPhone ? 0.0 : Brand.Padding.medium)
                 
                 if !isIPhone {
                     GraniteText("settings",
@@ -154,44 +171,45 @@ public struct ControlBar: View {
                     Spacer()
                 }
             }.onTapGesture {
+                GraniteHaptic.light.invoke()
                 onRoute(.settings)
             }
             
-            #if DEBUG
-            
-            if isIPhone {
-                PaddingHorizontal(Brand.Padding.large)
-            } else {
-                PaddingVertical(Brand.Padding.medium9)
-            }
-            HStack(alignment: .center) {
-                if isIPhone {
-                    Spacer()
-                }
-                if !isIPhone {
-                    GraniteText("debug",
-                                Brand.Colors.red,
-                                fontSize,
-                                .bold,
-                                .leading,
-                                style: .basic)
-                } else {
-                    GraniteText("d",
-                                Brand.Colors.red,
-                                fontSize,
-                                .bold,
-                                .leading,
-                                style: .basic)
-                }
-                
-                if isIPhone {
-                    Spacer()
-                }
-            }.onTapGesture {
-                onRoute(.debug(.models))
-            }
-            
-            #endif
+//            #if DEBUG
+//
+//            if isIPhone {
+//                PaddingHorizontal(Brand.Padding.large)
+//            } else {
+//                PaddingVertical(Brand.Padding.medium9)
+//            }
+//            HStack(alignment: .center) {
+//                if isIPhone {
+//                    Spacer()
+//                }
+//                if !isIPhone {
+//                    GraniteText("debug",
+//                                Brand.Colors.red,
+//                                fontSize,
+//                                .bold,
+//                                .leading,
+//                                style: .basic)
+//                } else {
+//                    GraniteText("d",
+//                                Brand.Colors.red,
+//                                fontSize,
+//                                .bold,
+//                                .leading,
+//                                style: .basic)
+//                }
+//
+//                if isIPhone {
+//                    Spacer()
+//                }
+//            }.onTapGesture {
+//                onRoute(.debug(.models))
+//            }
+//
+//            #endif
         }
     }
 }

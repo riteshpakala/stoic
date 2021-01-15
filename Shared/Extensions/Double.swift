@@ -25,6 +25,10 @@ extension Double {
         String(format: "%.2f%", self*100)
     }
     
+    var percentRounded: String {
+        "\(Int(ceil(self*100)))"
+    }
+    
     var abbreviate: String {
         let number = self
         let thousand = number / 1000

@@ -35,7 +35,7 @@ extension TonalServiceModels {
 extension TonalServiceModels.TonalSounds {
     var dateParams: (sinceDate: Date, untilDate: Date) {
         guard let sinceDate = range?.dates.last?.advanceDate(value: -1),
-              let untilDate = range?.dates.first?.advanceDate(value: 1) else { return (Date.today, Date.today) }
+              let untilDate = range?.dates.first?.advanceDate(value: range?.base == true ? 0 : 1) else { return (Date.today, Date.today) }
         
         return (sinceDate, untilDate)
     }
@@ -46,7 +46,7 @@ extension TonalServiceModels.TonalSounds {
     
     var dates: [Date] {
         var dates: [Date] = []
-        for day in 0..<days - 1 {
+        for day in 0..<days {
             dates.append(dateParams.sinceDate.advanceDate(value: day))
         }
         

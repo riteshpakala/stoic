@@ -51,6 +51,7 @@ public struct TonalModelsComponent: GraniteComponent {
                     .padding(.leading, Brand.Padding.small)
                     .padding(.bottom, Brand.Padding.medium)
                     .onTapGesture {
+                        GraniteHaptic.light.invoke()
 //                        set(\.addToPortfolio, value: true)
                 }
             }

@@ -20,44 +20,88 @@ public struct TonalSetComponent: GraniteComponent {
         GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),
     ]
     
+    func rangeIsSelected(_ index: TonalRange) -> Bool {
+        command.center.envDependency.tone.selectedRange == index
+    }
+    
+    func backgroundColorForRange(_ index: TonalRange) -> Color {
+        return rangeIsSelected(index) ? Brand.Colors.yellow : Brand.Colors.black
+    }
+    
     public var body: some View {
-        VStack {
-            VStack {
-                GraniteText("select a range",
-                            .subheadline,
-                            .regular,
-                            .leading)
+        ZStack {
+            GeometryReader { geometry in
+                GradientView(colors: [Brand.Colors.redBurn,
+                                      Brand.Colors.marble],
+                             cornerRadius: 0.0,
+                             direction: .top)
+                            .offset(x: 0,
+                                    y: (geometry.size.height*(1.0 - state.sentimentLoadingProgress.asCGFloat)))
+                            .animation(.default)
             }
             
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
-                    ForEach(command.center.tonalRangeData, id: \.self) { tonalRangeIndex in
+            VStack {
+                VStack {
+                    HStack {
+                        GraniteText("select a range",
+                                    .subheadline,
+                                    .regular,
+                                    .leading)
+                                    .shadow(color: .black, radius: 2, x: 1, y: 1)
+                       
+                        Spacer()
                         
-                        VStack {
-                            Color.black.overlay(
-                                GraniteText(tonalRangeIndex.dateInfoShortDisplay,
+                        if state.sentimentLoadingProgress > 0.0 {
+                            GraniteText("\(state.sentimentLoadingProgress.percentRounded)%",
+                                        .subheadline,
+                                        .bold,
+                                        .trailing)
+                                        .shadow(color: .black, radius: 2, x: 1, y: 1)
+                        }
+                    }
+                }
+                
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
+                        ForEach(command.center.tonalRangeData, id: \.self) { tonalRangeIndex in
+                            
+                            VStack {
+                                backgroundColorForRange(tonalRangeIndex).overlay(
+                                    GraniteText(tonalRangeIndex.dateInfoShortDisplay,
+                                                rangeIsSelected(tonalRangeIndex) ? Brand.Colors.black : Brand.Colors.white,
+                                                .subheadline,
+                                                .regular)
+                                )
+                                .frame(maxWidth: .infinity,
+                                       minHeight: 75,
+                                       maxHeight: 120,
+                                       alignment: .center)
+                                .cornerRadius(8)
+                                .shadow(color: .black, radius: 4, x: 2, y: 2)
+                                .onTapGesture(perform:
+                                                sendEvent(TonalSetEvents.Set(
+                                                            tonalRangeIndex), haptic: .light))
+                                
+                                GraniteText(tonalRangeIndex.avgSimilarityDisplay,
+                                            tonalRangeIndex.avgSimilarityColor,
                                             .subheadline,
                                             .regular)
-                            )
-                            .frame(maxWidth: .infinity, minHeight: 75, maxHeight: 120, alignment: .center)
-                            .cornerRadius(8)
-                            .onTapGesture(perform:
-                                            sendEvent(TonalSetEvents.Set(
-                                                        tonalRangeIndex)))
-                            
-                            GraniteText(tonalRangeIndex.avgSimilarityDisplay,
-                                        tonalRangeIndex.avgSimilarityColor,
-                                        .subheadline,
-                                        .regular)
+                            }
                         }
                     }
                 }
             }
-        }
-        .padding(.top, Brand.Padding.large)
-        .padding(.bottom, Brand.Padding.medium)
-        .padding(.leading, Brand.Padding.medium)
-        .padding(.trailing, Brand.Padding.medium)
+            .padding(.top, Brand.Padding.large)
+            .padding(.bottom, Brand.Padding.medium)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
+            
+            if command.center.stage == .fetching {
+                GraniteDisclaimerComponent(state:
+                                            .init("please wait, * stoic is\nfetching large\namounts of data\nto begin training", opacity: 0.57))
+            }
+            
+        }.clipped()
     }
 }
 

@@ -15,6 +15,15 @@ public struct BasicSliderComponent: GraniteComponent {
     public var command: GraniteCommand<BasicSliderCenter, BasicSliderState> = .init()
 
     public init() {}
+    
+    var sliderHeightScale: CGFloat {
+        if EnvironmentConfig.isIPhone {
+            return 0.5
+        } else {
+            return 1.0
+        }
+    }
+    
     public var body: some View {
         VStack {
             ValueSlider(value: _state.number,
@@ -23,7 +32,7 @@ public struct BasicSliderComponent: GraniteComponent {
                                         data: state.number,
                                         isActive: changed), .contact)
                         })
-                .frame(height: 64)
+                .frame(height: 64*sliderHeightScale)
                 .valueSliderStyle(
                     HorizontalValueSliderStyle(
                         track: HorizontalValueTrack(
@@ -33,12 +42,13 @@ public struct BasicSliderComponent: GraniteComponent {
                             endPoint: .trailing),
                             mask: RoundedRectangle(cornerRadius: 3)
                         )
-                        .frame(height: 64)
+                        .frame(height: 64*sliderHeightScale)
                         .cornerRadius(6),
                         thumb: RoundedRectangle(cornerRadius: 4).foregroundColor(Brand.Colors.white),
-                        thumbSize: CGSize(width: 12, height: 42)
+                        thumbSize: CGSize(width: 12*sliderHeightScale, height: 42*sliderHeightScale)
                     )
                 )
+                .shadow(color: Color.black, radius: 4.0, x: 2.0, y: 2.0)
             
         }
     }

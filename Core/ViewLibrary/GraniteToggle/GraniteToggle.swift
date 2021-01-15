@@ -38,6 +38,8 @@ public struct GraniteToggle: View {
                             .bold,
                             style: .init(selectionColor: .black),
                             selected: selected == index).onTapGesture {
+                                
+                                GraniteHaptic.light.invoke()
                                 self.selected = index
                                 self.onToggle(index)
                             }

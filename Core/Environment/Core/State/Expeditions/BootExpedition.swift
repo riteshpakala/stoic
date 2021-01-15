@@ -26,7 +26,7 @@ struct BootExpedition: GraniteExpedition {
         cols = cols.enumerated().map { $0.offset }
         //
         
-        for row in 0..<EnvironmentConfig.maxWindows.height.asInt {
+        for row in 0..<min(page.windows.count, EnvironmentConfig.maxWindows.height.asInt) {
             var windowRowConfig: [WindowConfig] = []
             
             for col in cols {

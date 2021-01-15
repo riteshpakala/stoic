@@ -65,10 +65,14 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                             perform: sendEvent(
                                 AssetGridItemContainerEvents
                                     .AssetTapped(
-                                        asset), .contact))
+                                        asset),
+                                .contact,
+                                haptic: .light))
                     }.padding(.leading, Brand.Padding.medium)
                 }
-            }
+            }.frame(maxWidth: .infinity,
+                    minHeight: state.assetData.count > 0 ? 48 : 0.0,
+                    alignment: .center)
         }
     }
 }
