@@ -32,7 +32,6 @@ public struct ControlBar: View {
                     alignment: .center)
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
-            .padding(.bottom, Brand.Padding.small)
         } else {
             VStack(alignment: .leading) {
                 
