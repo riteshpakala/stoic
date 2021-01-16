@@ -20,6 +20,7 @@ public struct Stock: Security {
     public var interval: SecurityInterval
     public var exchangeName: String
     public var name: String
+    public var isStrategy: Bool
 }
 
 extension Stock {
@@ -93,7 +94,8 @@ extension StockServiceModels.Quotes.QuoteResponse.QuoteResult {
             changeAbsolute: (regularMarketChange ?? 0.0),
             interval: interval,
             exchangeName: exchange,//TODO:??
-            name: shortName)
+            name: shortName,
+            isStrategy: false)
     }
 }
 
@@ -126,7 +128,8 @@ extension StockServiceModels.Stock {
                 changeAbsolute: changeAbsolue,
                 interval: interval,
                 exchangeName: result.meta.exchangeName,
-                name: result.meta.symbol)
+                name: result.meta.symbol,
+                isStrategy: false)
             
             stocks.append(stock)
         }

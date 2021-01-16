@@ -21,6 +21,7 @@ public struct CryptoCurrency: Security {
     public var interval: SecurityInterval
     public var exchangeName: String
     public var name: String
+    public var isStrategy: Bool
 }
 
 extension CryptoCurrency {

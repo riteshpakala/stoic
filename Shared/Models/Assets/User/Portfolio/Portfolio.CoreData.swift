@@ -39,7 +39,9 @@ extension PortfolioObject {
     public var asPortfolio: Portfolio {
         return .init(self.username,
                      .init(Array(self.securities ?? .init()).asSecurities),
-                     self.floor?.compactMap( { $0.asFloor }) ?? [])
+                     self.floors?.compactMap( { $0.asFloor } ) ?? [],
+                     self.strategies?.compactMap( { $0.asStrategy }) ?? []
+                     )
     }
     
     public static func hasSecurity(moc: NSManagedObjectContext,

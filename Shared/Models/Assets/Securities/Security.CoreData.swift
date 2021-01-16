@@ -202,7 +202,8 @@ extension StockDataObject {
               changeAbsolute: self.changeAbsoluteValue,
               interval: SecurityInterval(rawValue: self.intervalType) ?? .day,
               exchangeName: self.exchangeName,
-              name: self.name)
+              name: self.name,
+              isStrategy: self.isStrategy)
     }
 }
 
@@ -220,6 +221,7 @@ extension CryptoDataObject {
               changeAbsolute: self.changeAbsoluteValue,
               interval: SecurityInterval(rawValue: self.intervalType) ?? .hour,
               exchangeName: self.exchangeName,
-              name: self.name)
+              name: self.name,
+              isStrategy: self.isStrategy)
     }
 }

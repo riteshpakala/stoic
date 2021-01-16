@@ -11,4 +11,5 @@ import SwiftUI
 import Combine
 
 struct StrategyEvents {
+    public struct Get: GraniteEvent {}
 }

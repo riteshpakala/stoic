@@ -74,7 +74,8 @@ struct GetCryptoHistoryExpedition: GraniteExpedition {
                                                    changeAbsolute: changeAbsolue,
                                                    interval: event.interval,
                                                    exchangeName: state.exchange,
-                                                   name: event.security.name))
+                                                   name: event.security.name,
+                                                   isStrategy: event.security.isStrategy))
                             }
                         }
                     }

@@ -50,6 +50,8 @@ public protocol Security: Asset {
     var isGainer: Bool { get }
     
     var interval: SecurityInterval { get set }
+    
+    var isStrategy: Bool { get set }
 }
 
 extension Security {
@@ -58,7 +60,7 @@ extension Security {
     }
     
     public var assetID: String {
-        ticker+exchangeName
+        ticker+name+interval.rawValue
     }
     
     public var stoicValue: Double {
@@ -123,4 +125,6 @@ public struct EmptySecurity: Security {
     public var interval: SecurityInterval = .day
     
     public var exchangeName: String = "?"
+    
+    public var isStrategy: Bool = false
 }

@@ -2,7 +2,7 @@
 //  SecurityObject+CoreDataProperties.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 1/8/21.
+//  Created by Ritesh Pakala on 1/15/21.
 //
 //
 
@@ -25,14 +25,16 @@ extension SecurityObject {
     @NSManaged public var intervalType: String
     @NSManaged public var lastValue: Double
     @NSManaged public var lowValue: Double
+    @NSManaged public var name: String
     @NSManaged public var securityType: String
     @NSManaged public var ticker: String
-    @NSManaged public var name: String
     @NSManaged public var volumeValue: Double
-    @NSManaged public var quote: QuoteObject?
-    @NSManaged public var sentiment: NSSet?
-    @NSManaged public var portfolio: PortfolioObject?
+    @NSManaged public var isStrategy: Bool
     @NSManaged public var floor: FloorObject?
+    @NSManaged public var portfolio: PortfolioObject?
+    @NSManaged public var quote: QuoteObject?
+    @NSManaged public var sentiment: Set<SentimentObject>?
+    @NSManaged public var strategy: StrategyObject?
 
 }
 

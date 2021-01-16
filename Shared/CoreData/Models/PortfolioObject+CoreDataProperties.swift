@@ -2,7 +2,7 @@
 //  PortfolioObject+CoreDataProperties.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 1/11/21.
+//  Created by Ritesh Pakala on 1/15/21.
 //
 //
 
@@ -17,8 +17,9 @@ extension PortfolioObject {
     }
 
     @NSManaged public var username: String
-    @NSManaged public var floor: Set<FloorObject>?
+    @NSManaged public var floors: Set<FloorObject>?
     @NSManaged public var securities: Set<SecurityObject>?
+    @NSManaged public var strategies: Set<StrategyObject>?
 
 }
 
@@ -53,6 +54,23 @@ extension PortfolioObject {
 
     @objc(removeSecurities:)
     @NSManaged public func removeFromSecurities(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for strategy
+extension PortfolioObject {
+
+    @objc(addStrategyObject:)
+    @NSManaged public func addToStrategy(_ value: StrategyObject)
+
+    @objc(removeStrategyObject:)
+    @NSManaged public func removeFromStrategy(_ value: StrategyObject)
+
+    @objc(addStrategy:)
+    @NSManaged public func addToStrategy(_ values: NSSet)
+
+    @objc(removeStrategy:)
+    @NSManaged public func removeFromStrategy(_ values: NSSet)
 
 }
 

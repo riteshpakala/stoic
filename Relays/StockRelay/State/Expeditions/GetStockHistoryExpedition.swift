@@ -59,7 +59,8 @@ struct GetStockHistoryExpedition: GraniteExpedition {
                             changeAbsolute: changeAbsolue,
                             interval: event.interval,
                             exchangeName: result.meta.exchangeName,
-                            name: event.security.name)
+                            name: event.security.name,
+                            isStrategy: event.security.isStrategy)
                         
                         stocks.append(stock)
                     }

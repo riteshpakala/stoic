@@ -87,6 +87,7 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
                 changeAbsolute: value.price.change.absolute,
                 interval: .day,
                 exchangeName: exchange,
-                name: symbol)
+                name: symbol,
+                isStrategy: false)
     }
 }

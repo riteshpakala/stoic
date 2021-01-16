@@ -14,4 +14,19 @@ public class StrategyState: GraniteState {
 }
 
 public class StrategyCenter: GraniteCenter<StrategyState> {
+    var envDependency: EnvironmentDependency {
+        self.hosted.env
+    }
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            GetStrategyExpedition.Discovery()
+        ]
+    }
+    
+    public override var links: [GraniteLink] {
+        [
+            .onAppear(StrategyEvents.Get(), .dependant)
+        ]
+    }
 }

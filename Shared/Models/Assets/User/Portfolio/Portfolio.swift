@@ -11,6 +11,7 @@ public struct Portfolio {
     let username: String
     let holdings: Holdings
     let floors: [Floor]
+    let strategies: [Strategy]
     
     public struct Holdings {
         let securityGroup: SecurityGroup
@@ -26,12 +27,13 @@ public struct Portfolio {
         }
     }
     
-    
     public init(_ username: String,
                 _ holdings: Holdings,
-                _ floors: [Floor]) {
+                _ floors: [Floor],
+                _ strategies: [Strategy]) {
         self.username = username
         self.holdings = holdings
         self.floors = floors
+        self.strategies = strategies
     }
 }

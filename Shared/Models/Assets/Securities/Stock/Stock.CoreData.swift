@@ -29,6 +29,7 @@ extension Stock {
         security.high = high
         security.volume = volume
         security.name = name
+        security.isStrategy = isStrategy
     }
 }
 

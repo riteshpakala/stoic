@@ -179,7 +179,8 @@ struct GetCryptoSearchQuotesExpedition: GraniteExpedition {
                                             changeAbsolute: item.price * (item.change24h/100),
                                             interval: .hour,
                                             exchangeName: symbol.exchangeName,
-                                            name: item.name))
+                                            name: item.name,
+                                            isStrategy: false))
                         
                     }
                 }

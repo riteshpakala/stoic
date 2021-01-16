@@ -22,7 +22,8 @@ public struct PortfolioComponent: GraniteComponent {
             switch state.type {
             case .expanded, .preview:
                 portfolioHeader
-                portfolioDescription
+                PaddingVertical(Brand.Padding.xSmall)
+                portfolioStrategy
             default:
                 EmptyView.init().hidden()
             }
@@ -65,14 +66,14 @@ public struct PortfolioComponent: GraniteComponent {
         .frame(height: 200)
     }
     
-    var portfolioDescription: some View {
-        VStack {
-            Text("details")
-        }
-        .padding(.top, Brand.Padding.large)
-        .padding(.bottom, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.large)
-        .padding(.trailing, Brand.Padding.large)
-        .frame(maxHeight: .infinity)
+    var portfolioStrategy: some View {
+        StrategyComponent()
+            .listen(to: command, .stop)
+            .share(.init(dep(\.envDependency)))
+            .padding(.top, Brand.Padding.large)
+            .padding(.bottom, Brand.Padding.large)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
+            .frame(maxHeight: .infinity)
     }
 }
