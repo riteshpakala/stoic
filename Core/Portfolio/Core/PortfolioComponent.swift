@@ -24,6 +24,16 @@ public struct PortfolioComponent: GraniteComponent {
                 portfolioHeader
                 PaddingVertical(Brand.Padding.xSmall)
                 portfolioStrategy
+                GraniteButtonComponent(
+                    state: .init(.add,
+                                 padding:
+                                    .init(Brand.Padding.medium,
+                                          0,
+                                          Brand.Padding.xSmall,
+                                          0))).onTapGesture {
+                                            GraniteHaptic.light.invoke()
+//                                            set(\.addToPortfolio, value: true)
+                                        }
             default:
                 EmptyView.init().hidden()
             }
@@ -47,7 +57,7 @@ public struct PortfolioComponent: GraniteComponent {
     
     var portfolioHeader: some View {
         VStack {
-            GradientView().overlay (
+            GradientView(direction: .topLeading).overlay (
                 
                     Brand.Colors.black.opacity(0.36).overlay(
                         GraniteText("TEST", .subheadline, .bold)
@@ -70,10 +80,7 @@ public struct PortfolioComponent: GraniteComponent {
         StrategyComponent()
             .listen(to: command, .stop)
             .share(.init(dep(\.envDependency)))
-            .padding(.top, Brand.Padding.large)
-            .padding(.bottom, Brand.Padding.large)
-            .padding(.leading, Brand.Padding.medium)
-            .padding(.trailing, Brand.Padding.medium)
+            .showEmptyState
             .frame(maxHeight: .infinity)
     }
 }

@@ -74,9 +74,10 @@ extension AssetGridComponent {
         switch state.context {
         case .holdings,
              .portfolio,
-             .floor,
-             .tonalBrowser:
+             .floor:
             return .init(object: [Brand.Colors.yellow, Brand.Colors.redBurn])
+        case .tonalBrowser:
+            return .init(object: [Brand.Colors.redBurn, Brand.Colors.yellow])
         default:
             return nil
         }

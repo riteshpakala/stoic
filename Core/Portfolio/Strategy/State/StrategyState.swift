@@ -29,4 +29,8 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
             .onAppear(StrategyEvents.Get(), .dependant)
         ]
     }
+    
+    var strategies: [Strategy] {
+        envDependency.user.portfolio?.strategies ?? []
+    }
 }

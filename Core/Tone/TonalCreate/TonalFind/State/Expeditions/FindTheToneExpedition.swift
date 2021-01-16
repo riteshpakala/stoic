@@ -49,7 +49,14 @@ struct FindTheToneExpedition: GraniteExpedition {
             if let quote = quote {
                 connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
             } else {
-                connection.request(StockEvents.GetStockHistory.init(security: security))
+                switch security.securityType {
+                case .crypto:
+                    connection.request(CryptoEvents.GetCryptoHistory.init(security: security))
+                case .stock:
+                    connection.request(StockEvents.GetStockHistory.init(security: security))
+                default:
+                    break
+                }
             }
         }
     }
@@ -68,6 +75,26 @@ struct StockHistoryExpedition: GraniteExpedition {
         let stocks = event.data
         
         stocks.save(moc: coreDataInstance) { quote in
+            if let object = quote {
+                connection.update(\EnvironmentDependency.tone.find.quote, value: object)
+            }
+        }
+    }
+}
+
+struct CryptoHistoryExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = CryptoEvents.History
+    typealias ExpeditionState = TonalFindState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        let crypto = event.data
+        
+        crypto.save(moc: coreDataInstance) { quote in
             if let object = quote {
                 connection.update(\EnvironmentDependency.tone.find.quote, value: object)
             }

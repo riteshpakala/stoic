@@ -54,6 +54,23 @@ public struct GraniteButtonComponent: GraniteComponent {
                             }
                         }
                     )
+            case .add:
+                VStack(spacing: 0) {
+                    PaddingVertical(Brand.Padding.xSmall)
+                    Circle()
+                        .foregroundColor(Brand.Colors.marble).overlay(
+                        
+                            GraniteText("+", Brand.Colors.black,
+                                        .headline,
+                                        .bold)
+                                        .shadow(color: .black, radius: 2, x: 1, y: 1)
+                        
+                        
+                        ).frame(width: 24, height: 24)
+                        .padding(.top, Brand.Padding.medium)
+                        .padding(.leading, Brand.Padding.small)
+                        .padding(.bottom, Brand.Padding.medium)
+                }
             }
         }
         .padding(.top, state.padding.top)

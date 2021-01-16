@@ -53,6 +53,7 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
         [
             FindTheToneExpedition.Discovery(),
             StockHistoryExpedition.Discovery(),
+            CryptoHistoryExpedition.Discovery(),
             TonalRangeChangedExpedition.Discovery(),
             ParseTonalRangeExpedition.Discovery(),
         ]

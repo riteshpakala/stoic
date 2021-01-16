@@ -34,27 +34,16 @@ public struct TonalModelsComponent: GraniteComponent {
             .padding(.trailing, Brand.Padding.medium)
             
             Spacer()
-            VStack(spacing: 0) {
-                PaddingVertical(Brand.Padding.xSmall)
-                Circle()
-                    .foregroundColor(Brand.Colors.marble).overlay(
-                    
-                        GraniteText("+",
-                                    Brand.Colors.black,
-                                    .headline,
-                                    .bold)
-                                    .shadow(color: .black, radius: 3, x: 1, y: 1)
-                    
-                    
-                    ).frame(width: 24, height: 24)
-                    .padding(.top, Brand.Padding.medium)
-                    .padding(.leading, Brand.Padding.small)
-                    .padding(.bottom, Brand.Padding.medium)
-                    .onTapGesture {
-                        GraniteHaptic.light.invoke()
-//                        set(\.addToPortfolio, value: true)
-                }
-            }
+            GraniteButtonComponent(
+                state: .init(.add,
+                             padding:
+                                .init(Brand.Padding.medium,
+                                      0,
+                                      Brand.Padding.xSmall,
+                                      0))).onTapGesture {
+                                        GraniteHaptic.light.invoke()
+//                                        set(\.addToPortfolio, value: true)
+                                    }
         }
     }
 }

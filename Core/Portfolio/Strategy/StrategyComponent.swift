@@ -63,5 +63,25 @@ public struct StrategyComponent: GraniteComponent {
                 }
             }
         }
+        .padding(.top, Brand.Padding.large)
+        .padding(.bottom, Brand.Padding.large)
+        .padding(.leading, Brand.Padding.medium)
+        .padding(.trailing, Brand.Padding.medium)
+    }
+}
+
+//MARK: -- Empty State Settings
+extension StrategyComponent {
+    
+    public var emptyText: String {
+        "create strategies from your \ncurrently held stocks or crypto\n\n* stoic models will then\nguide your investments"
+    }
+    
+    public var isDependancyEmpty: Bool {
+        command.center.strategies.isEmpty
+    }
+    
+    public var emptyPayload: GranitePayload? {
+        return .init(object: [Brand.Colors.purple, Brand.Colors.yellow])
     }
 }

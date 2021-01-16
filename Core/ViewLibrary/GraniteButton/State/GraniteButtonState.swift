@@ -13,6 +13,7 @@ import Combine
 public enum GraniteButtonType {
     case text(String)
     case image(String)
+    case add
 }
 
 public class GraniteButtonState: GraniteState {
