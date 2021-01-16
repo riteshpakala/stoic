@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import GraniteUI
 
 extension StockService {
     public func getQuotes(symbols: String) -> AnyPublisher<[StockServiceModels.Quotes], URLError> {
@@ -23,7 +24,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        print("{TEST} \(url)")
+        GraniteLogger.info("fetching stock quotes:\n\(url.absoluteString)\nself: \(self)", .relay)
         
         var request = URLRequest(
             url: url,
@@ -49,7 +50,7 @@ extension StockService {
                         movers = try decoder.decode(StockServiceModels.Quotes.self, from: data)
                     } catch let error {
                         movers = nil
-                        print("{TEST} \(error)")
+                        GraniteLogger.error("failed fetching stock quotes:\n\(error.localizedDescription)\nself: \(self)", .relay)
                     }
                     
                     return movers != nil ? [movers!] : nil

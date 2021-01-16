@@ -19,6 +19,5 @@ struct TradingDayExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        print("{TEST} \(CFAbsoluteTimeGetCurrent())")
     }
 }

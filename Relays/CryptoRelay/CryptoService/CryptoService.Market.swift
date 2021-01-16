@@ -20,8 +20,7 @@
 //        guard
 //            let url = urlComponents.url
 //            else { preconditionFailure("Can't create url from url components...") }
-//        
-//        print("{TEST} \(url)")
+//
 //        
 //        let decoder = JSONDecoder()
 //        
@@ -34,7 +33,6 @@
 //                        chart = try decoder.decode(StockServiceModels.Stock.self, from: data)
 //                    } catch let error {
 //                        chart = nil
-//                        print("{TEST} \(error)")
 //                    }
 //                    
 //                    return chart != nil ? [chart!] : nil
@@ -50,7 +48,6 @@
 ////
 ////                        return stockData.filter( { $0.dateData.asString != $0.lastStockData.dateData.asString } )
 ////                    } else {
-////                        print(response)
 ////                        return nil
 ////                    }
 //                

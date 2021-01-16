@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import GraniteUI
 
 extension StockService {
     public func getMovers(count: Int = 12) -> AnyPublisher<[StockServiceModels.Movers], URLError> {
@@ -25,7 +26,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        print("{TEST} \(url)")
+        GraniteLogger.info("fetching stock movers:\n\(url.absoluteString)\nself: \(self)", .relay)
         
         var request = URLRequest(
             url: url,
@@ -51,7 +52,7 @@ extension StockService {
                         movers = try decoder.decode(StockServiceModels.Movers.self, from: data)
                     } catch let error {
                         movers = nil
-                        print("{TEST} \(error)")
+                        GraniteLogger.error("failed fetching stock movers:\n\(error.localizedDescription)\nself: \(self)", .relay)
                     }
                     
                     return movers != nil ? [movers!] : nil

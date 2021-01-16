@@ -27,9 +27,5 @@ struct GetTonalModelsExpedition: GraniteExpedition {
             state.tones = models
             state.stage = .none
         }
-       
-//        if let model = models.first {
-//            print("{TEST} prediction: \(model.predict())")
-//        }
     }
 }

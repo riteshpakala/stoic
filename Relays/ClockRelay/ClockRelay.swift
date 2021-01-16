@@ -55,10 +55,8 @@ public struct ClockRelay: GraniteRelay {
     func timeOutput(date: Timer.TimerPublisher.Output) {
         guard enabled else { return }
 //        sendRelay(ClockEvents.Updated())
-//        print("{TEST} sending")
-//        print(command.events.count)
         for event in command.events {
-            print("⏱ Clock relay is firing")
+            GraniteLogger.info("⏱ clock relay is firing\nself: \(self)", .relay)
             for relay in command.center.relays {
                 relay.beam?.rebound(.init(command, .broadcast), event)
             }

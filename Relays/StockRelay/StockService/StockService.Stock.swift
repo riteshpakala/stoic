@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import GraniteUI
 
 extension StockService {
     public func getStockChart(matching ticker: String, from pastEpoch: String, to futureEpoch: String, interval: SecurityInterval) -> AnyPublisher<[StockServiceModels.Stock], URLError> {
@@ -18,7 +19,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        print("{TEST} \(url)")
+        GraniteLogger.info("fetching stock chart:\n\(url.absoluteString)\nself: \(self)", .relay)
         
         let decoder = JSONDecoder()
         
@@ -31,7 +32,7 @@ extension StockService {
                         chart = try decoder.decode(StockServiceModels.Stock.self, from: data)
                     } catch let error {
                         chart = nil
-                        print("{TEST} \(error)")
+                        GraniteLogger.error("failed fetching stock chart:\n\(error.localizedDescription)\nself: \(self)", .relay)
                     }
                     
                     return chart != nil ? [chart!] : nil
@@ -47,7 +48,6 @@ extension StockService {
 //
 //                        return stockData.filter( { $0.dateData.asString != $0.lastStockData.dateData.asString } )
 //                    } else {
-//                        print(response)
 //                        return nil
 //                    }
                 

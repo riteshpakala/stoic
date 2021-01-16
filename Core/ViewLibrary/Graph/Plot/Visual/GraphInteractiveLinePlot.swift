@@ -326,7 +326,6 @@ private extension GraphInteractiveLinePlot {
 //        VStack {
 //
 //        }.gesture(DragGesture(coordinateSpace: .global).onChanged { drag in
-//            print("{TEST} hey")
 //            self.isDragging = true
 //            self.onStickLocationChanged(newX: drag.location.x, canvas: canvas)
 //        }.onEnded { drag in

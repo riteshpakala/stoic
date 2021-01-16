@@ -11,6 +11,7 @@
 //
 
 import Foundation
+import GraniteUI
 
 public enum SVMType: Int     //  SVM problem type
 {
@@ -297,7 +298,7 @@ public class SVMModel: Codable, Equatable {
                 try groupClasses(data: data)
                 let classificationData = data.optionalData as! SVMClassificationData
                 if (classificationData.numClasses <= 1) {
-                    print("Invalid number of classes in data")
+                    GraniteLogger.error("svm - invalid number of classes in data", .ml)
                     return
                 }
                 
@@ -308,7 +309,7 @@ public class SVMModel: Codable, Equatable {
                     for mod in weightMods {
                         let index = classificationData.foundLabels.firstIndex(of: mod.classLabel)
                         if (index == nil) {
-                            print("weight modifier label \(mod.classLabel) not found in data set")
+                            GraniteLogger.error("svm - weight modifier label \(mod.classLabel) not found in data set", .ml)
                             continue
                         }
                         else {
@@ -379,7 +380,7 @@ public class SVMModel: Codable, Equatable {
                         }
                     }
                 }
-                print("Total nSV = \(totalSupportVectors)")
+                GraniteLogger.info("svm - total nSV = \(totalSupportVectors)", .ml)
                 supportVector = []
                 for index in 0..<data.size {    //  Get the support vector points and save them
                     if (nonZero[index]) {
@@ -480,7 +481,9 @@ public class SVMModel: Codable, Equatable {
         
         //  If display flag is set, show the results
         if (display) {
-            print("obj = \(solver!.obj), rho = \(solver!.ρ)")
+            if let s = solver {
+                GraniteLogger.info("svm - solver - obj = \(s.obj), rho = \(s.ρ)", .ml)
+            }
             
             //  Count the number of support vectors
             var numSupportVectors = 0
@@ -500,7 +503,7 @@ public class SVMModel: Codable, Equatable {
                     }
                 }
             }
-            print("nSV = \(numSupportVectors), nBSV = \(numBaseSupportVectors)");
+            GraniteLogger.info("svm - nSV = \(numSupportVectors), nBSV = \(numBaseSupportVectors)", .ml);
         }
         
         let f = DecisionFunction(ρ: solver!.ρ, α: solver!.α)
@@ -516,7 +519,7 @@ public class SVMModel: Codable, Equatable {
         if (nFolds > data.size)
         {
             nFolds = data.size
-            print("WARNING: # folds > # data. Will use # folds = # data instead (i.e., leave-one-out cross validation)")
+            GraniteLogger.error("svm - WARNING: # folds > # data. Will use # folds = # data instead (i.e., leave-one-out cross validation)", .ml)
         }
 
         //  Get the fold data set indices
@@ -780,9 +783,9 @@ public class SVMModel: Codable, Equatable {
                     stepsize = stepsize * 0.5
                 }
             }
-            if (stepsize < min_step) { print("Line search fails in two-class probability estimates") }
+            if (stepsize < min_step) { GraniteLogger.error("svm - Line search fails in two-class probability estimates", .ml) }
             
-            if iter >= max_iter { print("Reaching maximal iterations in two-class probability estimates") }
+            if iter >= max_iter { GraniteLogger.error("svm - Reaching maximal iterations in two-class probability estimates", .ml) }
         }
         
         return (A: A, B: B)
@@ -815,7 +818,7 @@ public class SVMModel: Codable, Equatable {
             }
         }
         mae /= Double(data.size-count)
-        print("Prob. model for test data: target value = predicted value + z, z: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma= \(mae)")
+        GraniteLogger.info("svm - Prob. model for test data: target value = predicted value + z, z: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma= \(mae)", .ml)
         return mae
     }
     
@@ -977,7 +980,7 @@ public class SVMModel: Codable, Equatable {
                 try data.addDataPoint(input: inputs, output: [0.0])
             }
             catch {
-                print("dimension error on inputs")
+                GraniteLogger.error("svm - dimension error on inputs", .ml)
             }
             predictValues(data: data)
             let minProbability = 1e-7
@@ -1073,7 +1076,7 @@ public class SVMModel: Codable, Equatable {
         }
         
         if (iter >= max_iter) {
-            print("Exceeds max_iter in multiclass_prob")
+            GraniteLogger.error("svm - Exceeds max_iter in multiclass_prob", .ml)
         }
         
         return p
@@ -1214,7 +1217,7 @@ internal class Solver {
             var sum_alpha = 0.0
             for entry in α { sum_alpha += entry }
             let ν = sum_alpha * costPositive / Double(data.size)
-            print ("ν = \(ν)")
+            GraniteLogger.info("svm - ν = \(ν)", .ml)
         }
         
         //  Multiply each α by the expected output (+/-)
@@ -1278,7 +1281,7 @@ internal class Solver {
                 let i = indexes.i
                 let j = indexes.j
                 iter+=1
-//                print("at iteration \(iter), select indices \(i) and \(j)")
+                
                 // update α[i] and α[j], handle bounds carefully
                 let Q_i = kernel!.getQ(i: i)
                 let Q_j = kernel!.getQ(i: j)
@@ -1614,7 +1617,7 @@ internal class Solver {
             sum_alpha += fabs(diff);
         }
         α = new_alpha
-        if (display) { print("nu = \(sum_alpha/(costPositive * Double(data.size)))") }
+        if (display) { GraniteLogger.info("svm - nu = \(sum_alpha/(costPositive * Double(data.size)))", .ml) }
    }
 }
 
@@ -1671,7 +1674,7 @@ internal class Solver_ν : Solver
         //  Solve the quadratic program
         solve()
         
-        if (display) { print("C = \(1.0/last_ρ)") }
+        if (display) { GraniteLogger.info("svm - C = \(1.0/last_ρ)", .ml) }
         
         for i in 0..<α.count {
             α[i] *= outputs[i]/last_ρ
@@ -1879,7 +1882,7 @@ internal class Solver_ν : Solver
         //  Solve the quadratic program
         solve()
         
-        if (display) { print("epsilon = \(last_ρ)") }
+        if (display) { GraniteLogger.error("svm - epsilon = \(last_ρ)", .ml) }
         
         var new_alpha : [Double] = []
         for i in 0..<data.size {

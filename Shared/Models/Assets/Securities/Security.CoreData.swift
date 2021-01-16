@@ -112,8 +112,8 @@ extension Security {
                         added(newPortfolio.asPortfolio)
                     }
                 } catch let error {
+                    GraniteLogger.error("failed adding to portfolio\(error.localizedDescription)", .expedition)
                     added(nil)
-                    print("⚠️ Error adding to portfolio \(error)")
                 }
             }
         }
@@ -149,8 +149,8 @@ extension Security {
                         added(portfolio.asPortfolio)
                     }
                 } catch let error {
+                    GraniteLogger.error("failed adding to portfolio\(error.localizedDescription)", .expedition)
                     added(nil)
-                    print("⚠️ Error adding to portfolio \(error)")
                 }
             }
         }

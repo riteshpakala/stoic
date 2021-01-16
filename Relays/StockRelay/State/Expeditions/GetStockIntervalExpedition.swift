@@ -24,7 +24,6 @@ struct GetStockIntervalExpedition: GraniteExpedition {
 //
 //        let testDate: Date = Date.today.advanceDate(value: -60)// -1*abs(event.daysAgo))
         
-        print("{TEST} hey SI")
         publisher = state
             .service
             .getStockChart(matching: event.symbol,
@@ -36,8 +35,6 @@ struct GetStockIntervalExpedition: GraniteExpedition {
                 
                 for item in $0 {
                     guard let volume = item.chart.result.first?.indicators.quote.first?.volume else { break }
-                    
-                    print("{TEST} \(String(describing: volume.compactMap({ $0 }).min()))")
                 }
                 
                 return StockEvents.Interval(data: $0, interval: event.interval) }

@@ -46,7 +46,6 @@ struct GetSentimentExpedition: GraniteExpedition {
 //            let untilDateChunk = date.advanceDate(value: 1)
 //
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2.randomBetween(4.2)) {
-//                print("{TEST} processing \(sinceDateChunk) \(untilDateChunk)")
 //                connection.request(TonalEvents
 //                                    .ProcessSentiment
 //                                    .init(sinceDate: sinceDateChunk,
@@ -69,7 +68,8 @@ struct ProcessSentimentExpedition: GraniteExpedition {
         
         let days = abs(event.untilDate.timeIntervalSince(event.sinceDate).date().dateComponents().day)
         
-        print("🧘🧘🧘🧘🧘🧘\n[Sentiment] Processing \(event.sinceDate) - \(event.untilDate) \n🧘")
+        
+        GraniteLogger.info("🧘 processing: \(event.sinceDate) - \(event.untilDate)\n self: \(self)", .expedition)
         
         publisher = state
             .service
@@ -118,9 +118,6 @@ struct TonalHistoryExpedition: GraniteExpedition {
                                         content: result.content,
                                         sentiment: prediction)
                         sounds.append(sound)
-                        
-//                        print(sound.asString)
-//                        print("{TEST} updated thread \(index)")
                     }
                 }
 
@@ -137,9 +134,8 @@ struct TonalHistoryExpedition: GraniteExpedition {
         state.operationQueue.addOperations(currentOps, waitUntilFinished: false)
         
         state.operationQueue.addBarrierBlock {
-            print("🪔🪔🪔🪔🪔🪔\n[Sentiment] completed \(tweet.result.map { $0.date.asDouble.date().asString }.uniques)\n🪔")
+            GraniteLogger.info("🪔 completed processing: \(tweet.result.map { $0.date.asDouble.date().asString }.uniques)\n self: \(self)", .expedition)
             if let range = state.service.soundAggregate.range {
-                
                 connection.request(TonalEvents.GetSentiment.init(range: range), .contact)
             }
         }
@@ -166,9 +162,10 @@ struct TonalSoundsExpedition: GraniteExpedition {
         state.service.soundAggregate.completed.append(event.sounds.first?.date.simple ?? Date.today)
         state.service.soundAggregate.sounds.append(event.sounds)
         
-        print("Sentiment prediction progress: \(state.sentimentProgress)")
         if state.sentimentProgress >= 1.0 && state.stage != .compiling {
-            print("compiling")
+            
+            GraniteLogger.info("compiling sentiment\n self: \(self)", .expedition)
+            
             let compiled = state.service.soundAggregate.compiled
             state.service.reset()
             state.stage = .compiling

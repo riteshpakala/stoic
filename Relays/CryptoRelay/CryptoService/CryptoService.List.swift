@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import GraniteUI
 
 extension CryptoService {
     public func getList() -> AnyPublisher<[SearchResponse], URLError> {
@@ -29,7 +30,7 @@ extension CryptoService {
                         listPayload = try decoder.decode([CryptoServiceModels.List.Coin].self, from: data)
                     } catch let error {
                         listPayload = nil
-                        print("{TEST} \(error)")
+                        GraniteLogger.error("failed decoding crypto coin\nself: \(self)", .relay)
                     }
                     
                     let response = listPayload?.compactMap {

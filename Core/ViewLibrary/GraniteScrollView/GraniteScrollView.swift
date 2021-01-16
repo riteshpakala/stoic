@@ -80,7 +80,6 @@ public struct TrackableScrollView<Content>: View where Content: View {
                 }
             }
             .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-                print("{TEST} \(self.contentOffset)")
                 self.contentOffset = value[0]
             }
         }
@@ -155,7 +154,6 @@ struct ScrollOffsetPreferenceKey: PreferenceKey {
 //                            guard offset.x >= 0 && offset.y > 0 else { return }
 //                            self.$preserveOffset.wrappedValue = CGPoint(x: globalOrigin.x - initialOffset.x, y: globalOrigin.y - initialOffset.y)
 //    //                        Color.clear.preference(key: ScrollOffsetPreferenceKey.self, value: offset)
-//                            print(self.preserveOffset)
 //                        }
 //                    }.frame(width: 0, height: 0)
 //

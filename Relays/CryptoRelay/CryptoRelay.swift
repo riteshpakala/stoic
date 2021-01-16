@@ -23,11 +23,9 @@ public struct CryptoRelay: GraniteRelay {
 //            let price = response.result.price
 //            let remainingAllowance = response.allowance.remaining
 //
-//            print("{TEST 2} \(price)")
 //         // Use the values to do something fun
 //        }.onError { error in
 //         // Handle the error
-//            print("{TEST 2} \(error.localizedDescription)")
 //        }
         
     }

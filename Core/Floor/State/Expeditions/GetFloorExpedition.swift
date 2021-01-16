@@ -19,11 +19,7 @@ struct GetFloorExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        
-        print("{TEST} heyyy")
-        
         if let stage = connection.retrieve(\EnvironmentDependency.holdingsFloor.floorStage) {
-            print("{TEST} yoo \(stage)")
             state.floorStage = stage
         }
         

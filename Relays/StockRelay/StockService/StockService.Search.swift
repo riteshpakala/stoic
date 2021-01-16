@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import GraniteUI
 
 extension StockService {
     public func search(matching ticker: String) -> AnyPublisher<[StockServiceModels.Search], URLError> {
@@ -18,7 +19,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        print("{TEST} \(url)")
+        GraniteLogger.info("searching stock:\n\(url.absoluteString)\nself: \(self)", .relay)
         
         let decoder = JSONDecoder()
         
@@ -31,7 +32,7 @@ extension StockService {
                         chart = try decoder.decode([[String:String]].self, from: data)
                     } catch let error {
                         chart = nil
-                        print("{TEST} \(error)")
+                        GraniteLogger.error("failed searching stock:\n\(error.localizedDescription)\nself: \(self)", .relay)
                     }
                     
                     return chart != nil ? [StockServiceModels.Search.init(data: chart!)] : nil

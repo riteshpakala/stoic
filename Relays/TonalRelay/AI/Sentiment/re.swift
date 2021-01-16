@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GraniteUI
 
 /**
 *  Counterpart of Python's re module, but as a class.
@@ -184,7 +185,7 @@ public class re {
         self.regex = try NSRegularExpression(pattern: pattern, options: flags)
       } catch let error as NSError {
         self.regex = nil
-        debugPrint(error)
+        GraniteLogger.error("re - \(error)", .utility)
       }
     }
 

@@ -136,14 +136,14 @@ extension TonalModels {
                         _ completion: @escaping ((Double) -> Void)) {
         
         guard let selectedRange = tone.selectedRange else {
-            print("⚠️ Test prediction failed - selected range")
+            GraniteLogger.error("failed to retrieve selected tonal range - self: \(self)", .relay)
             completion(0.0)
             return
         }
         
         selectedRange.objects.first?.getQuote(moc: moc) { [weak self] quote in
             guard let quote = quote else {
-                print("⚠️ Test prediction failed - quote")
+                GraniteLogger.error("failed to retrieve quote - self: \(self)", .relay)
                 completion(0.0)
                 return
             }
@@ -193,13 +193,13 @@ extension TonalModels {
                     modelType: self.currentType,
                     predicting: true)
             
-            print("💡💡💡💡💡💡\n[PREDICTING]\n\(dataSet.description)\n💡")
+            GraniteLogger.info("predicting:\n\(dataSet.description)\nself: \(self)", .relay)
             
             try testData.addTestDataPoint(
                input: dataSet.asArray)
         }
         catch {
-           print("Invalid data set created")
+            GraniteLogger.error("invalid dataSet", .ml)
         }
         
         self.current?.predictValues(data: testData)
@@ -210,13 +210,13 @@ extension TonalModels {
         
         let change = (output - security.lastValue) / security.lastValue
         
-        print("🧬🧬🧬🧬🧬🧬\n[Prediction Output] :: \(change)\n\(output) - \(security.lastValue)\n🧬")
+        GraniteLogger.info("prediction output:\nchange: \(change)\nresult: \(output) - lastValue: \(security.lastValue)\nself: \(self)", .ml)
         return change
     }
     
     public func testPredict(tone: Tone, moc: NSManagedObjectContext) {
         predict(tone, .neutral, moc: moc) { prediction in
-            print("[TEST-PREDICTION] \(prediction)")
+            GraniteLogger.info("test prediction output: \(prediction)\nself: \(self)", .ml)
         }
     }
 }
@@ -227,19 +227,19 @@ extension TonalModels {
                                 moc: NSManagedObjectContext,
                                 _ completion: @escaping ((TonalModels?) -> Void)) {
         guard let securityObjects = tone.selectedRange?.objects else {
-            print("⚠️ Generation failed. - securityObjects")
+            GraniteLogger.error("failed to retrieve securityObjects\nself: \(self)", .relay)
             completion(nil)
             return
         }
         
         securityObjects.first?.getQuote(moc: moc) { quote in
             guard let quote = quote else {
-                print("⚠️ Generation failed. - quote")
+                GraniteLogger.error("failed to retrieve quote\nself: \(self)", .relay)
                 completion(nil)
                 return
             }
             guard let range = tone.selectedRange else {
-                print("⚠️ Generation failed. - range")
+                GraniteLogger.error("failed to retrieve range\nself: \(self)", .relay)
                 completion(nil)
                 return
             }
@@ -254,11 +254,9 @@ extension TonalModels {
             // the time comparable is equivalent to the data
             // size
             guard bucket.isValid else {
-                print("⚠️ Generation failed. \(bucket.pockets.count) \(bucket.rangeDates)")
+                GraniteLogger.error("failed to bucket\n\(bucket.pockets.count)\n\(bucket.rangeDates)\nself: \(self)", .relay)
                 return
             }
-            
-            print(bucket.asString)
             
             // DEV: by day enforced for now
             // and `close` prediction
@@ -269,7 +267,8 @@ extension TonalModels {
                 inputDimension: type.inDim,
                 outputDimension: TonalService.AI.Models.Settings.outDim)
 
-            print("🛠 [MODEL GENERATION] Creating model for \(type)")
+            
+            GraniteLogger.info("🛠 generating tonal model", .ml)
             for date in bucket.rangeDates {
                 guard let pocket = bucket.pockets.first(where: { $0.date == date }),
                       let security = securities.first(where: { $0.date.simple == date.simple }) else {
@@ -282,8 +281,8 @@ extension TonalModels {
                         pocket.avg,
                         quote: quote,
                         modelType: type)
-
-                    print(dataSet.inputDescription)
+                    
+                    GraniteLogger.info("inserting dataSet:\n\(dataSet.inputDescription)", .ml)
                     
                     try dataForDavid.addDataPoint(
                         input: dataSet.asArray,
@@ -291,13 +290,10 @@ extension TonalModels {
                         label: security.date.asString)
                 }
                 catch {
-                    print("Invalid data set created")
+                    GraniteLogger.error("invalid dataSet", .ml)
                 }
                 
-                print("🛠 ✅ [MODEL GENERATION] Creating model complete")
-                print("data points added: \(dataForDavid.labels.count)")
-                print("data points expected: \(securities.count)")
-                print("data points asserted: \(securities.count == dataForDavid.labels.count)")
+                GraniteLogger.info("tonal model generation - complete - ✅", .ml)
 
                 let david = SVMModel(
                     problemType: .ϵSVMRegression,

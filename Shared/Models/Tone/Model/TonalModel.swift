@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import GraniteUI
 
 public struct TonalModel: Asset {
     let date: Date
@@ -88,7 +89,7 @@ extension Data {
         do {
             return try jsonDecoder.decode(TonalModels.self, from: self)
         } catch let error {
-            print("{CoreData} \(error)")
+            GraniteLogger.error("core data failed to decode tonal model\n\(error.localizedDescription)", .utility)
         }
         
         return nil
@@ -99,7 +100,7 @@ extension Data {
         do {
             return try jsonDecoder.decode([SentimentOutput].self, from: self)
         } catch let error {
-            print("{CoreData} \(error)")
+            GraniteLogger.error("core data failed to decode sentimentTuners\n\(error.localizedDescription)", .utility)
         }
         
         return nil
@@ -110,7 +111,7 @@ extension Data {
         do {
             return try jsonDecoder.decode([Date].self, from: self)
         } catch let error {
-            print("{CoreData} \(error)")
+            GraniteLogger.error("core data failed to decode tonalRange\n\(error.localizedDescription)", .utility)
         }
         
         return nil
@@ -123,7 +124,7 @@ extension Array where Element == Date {
         do {
             return try encoder.encode(self)
         } catch let error {
-            print("{CoreData} \(error.localizedDescription)")
+            GraniteLogger.error("core data failed to decode archived date array\n\(error.localizedDescription)", .utility)
             return nil
         }
     }
@@ -135,7 +136,7 @@ extension Array where Element == SentimentOutput {
         do {
             return try encoder.encode(self)
         } catch let error {
-            print("{CoreData} \(error.localizedDescription)")
+            GraniteLogger.error("core data failed to decode archived sentiment output array\n\(error.localizedDescription)", .utility)
             return nil
         }
     }

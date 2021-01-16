@@ -30,11 +30,10 @@ public class Router: ObservableObject {
     
     public init() {
         self.env.router = self
-        print("{TEST} -- \(route)")
     }
     
     public func request(_ route: Route) {
-        print("{TEST} \(route) \(env.adAstra)")
+        GraniteLogger.info("requesting route \(route)\nself:\(self)", .dependency)
         self.route = route
         self.root?.toTheStars(target: nil, .here)
     }

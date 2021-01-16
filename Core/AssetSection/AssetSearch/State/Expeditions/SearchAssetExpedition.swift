@@ -48,7 +48,6 @@
 //        connection: GraniteConnection,
 //        publisher: inout AnyPublisher<GraniteEvent, Never>) {
 //        
-//        print("{TEST} bruhhhh")
 //        switch state.context {
 //        case .tonalCreate:
 //            connection.update(\EnvironmentDependency.searchTone.securityGroup.crypto, value: event.result)

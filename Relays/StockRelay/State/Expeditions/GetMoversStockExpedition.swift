@@ -19,7 +19,6 @@ struct GetMoversStockExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        print("{TEST} getting movers")
         publisher = state
             .service
             .getMovers()
@@ -49,8 +48,6 @@ struct MoversDataExpedition: GraniteExpedition {
             .replaceError(with: [])
             .map { StockEvents.MoverStockQuotes(movers: data, quotes: $0) }
             .eraseToAnyPublisher()
-
-        print("{TEST} got movers")
         
     }
 }
@@ -78,6 +75,5 @@ struct MoversStockQuotesExpedition: GraniteExpedition {
         let gainersQuotes = data.result.filter { gainersResponse.contains($0.symbol) }.map { $0.asStock() }
         
         connection.request(StockEvents.GlobalCategoryResult.init(topVolumeQuotes, gainersQuotes, losersQuotes))
-        print("{TEST} got Quotes \(connection)")
     }
 }

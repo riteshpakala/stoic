@@ -69,7 +69,7 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
             
             let deviations = trailing.map({ pow($0.lastValue - mean, 2) }).reduce(0.0, +)
             let avgDeviation = deviations/Double(trailing.count - 1)
-            //            print(mean)
+            
             let standardDeviation = sqrt(avgDeviation)
             volatilities[security.date] = standardDeviation
             volatilityCoeffecients[security.date] = standardDeviation/mean
@@ -115,7 +115,6 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
                 }
             }
             
-            print("{TEST} updating")
             connection.update(\EnvironmentDependency.tone.range, value: candidates)
         }
     }

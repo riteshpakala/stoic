@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import GraniteUI
 
 extension NSManagedObjectContext {
     public func getTones(_ completion: @escaping (([TonalModelObject]) -> Void)) {
@@ -39,7 +40,7 @@ extension TonalModelObject {
               let quote = self.quote,
               let range = self.range.tonalRange else {
             
-            print("{TEST} model failed 3 \(self.model.model == nil) \(self.sentimentTuners.sentimentTuners == nil)")
+            GraniteLogger.error("TonalModelObject failed to convert to a TonalModel\nsentimentTuners is nil: \(self.sentimentTuners.sentimentTuners == nil)\ntonal model is nil: \(self.model.model == nil)\nquote is nil: \(self.quote == nil)\ntonalRange is nil: \(self.range.tonalRange == nil)", .utility)
             return nil
         }
         
@@ -79,7 +80,7 @@ extension TonalModel {
                     
                     completion(true)
                 } catch let error {
-                    print("⚠️ Saving Tonal Model failed. \(error)")
+                    GraniteLogger.error("failed to save tonal model", .utility)
                     completion(false)
                 }
             }

@@ -6,6 +6,7 @@
 //
 import CoreData
 import Foundation
+import GraniteUI
 
 extension TonalRange {
     public func checkSentimentCache(
@@ -13,11 +14,7 @@ extension TonalRange {
         moc: NSManagedObjectContext,
         completion: @escaping (((sentiment: TonalSentiment?, missing: TonalRange?)?) -> Void)) {
         
-        let time: Double = CFAbsoluteTimeGetCurrent()
-        
         moc.getSentiment(quote, self) { data in
-            print("⏱⏱⏱⏱⏱⏱\n[Benchmark] Sentiment Fetch - \(CFAbsoluteTimeGetCurrent() - time) \n⏱")
-            
             completion(data)
         }
     }

@@ -23,7 +23,9 @@ struct CompileTheToneExpedition: GraniteExpedition {
         guard let tone = connection.retrieve(\EnvironmentDependency.tone) else {
             return
         }
-        print("{TEST} compiling.")
+        
+        GraniteLogger.info("compiling tonal model\nself:\(self)", .expedition)
+        
         connection.update(\EnvironmentDependency.tone.compile.state, value: .compiling)
         
         TonalModels.generate(tone: tone, moc: coreDataInstance) { model in

@@ -48,7 +48,6 @@ struct AssetSelectedExpedition: GraniteExpedition {
         case .search:
             guard let security = event.asset.asSecurity else { return }
             guard let router = connection.retrieve(\EnvironmentDependency.router) else {
-                print("{TEST} holdings does not have router")
                 return
             }
             connection.update(\EnvironmentDependency.tonalModels.type,

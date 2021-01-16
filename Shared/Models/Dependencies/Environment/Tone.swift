@@ -23,7 +23,7 @@ public class Tone: ObservableObject {
     
     public var target: Security? {
         guard let security = selectedRange?.objects.first else {
-            print("⚠️ Test prediction failed.")
+            GraniteLogger.error("no target security found in the tone dependency\nself:\(self)", .dependency)
             return nil
         }
         

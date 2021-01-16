@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import GraniteUI
 
 extension TonalService {
     public func getTweets(matching query: String, since pastDate: Date, until toDate: Date, count: Int = 100) -> AnyPublisher<[TonalServiceModels.Tweets], URLError> {
@@ -18,7 +19,7 @@ extension TonalService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        print("{TEST} \(url)")
+        GraniteLogger.info("fetching -> \(url.absoluteString) - self: \(self)", .relay)
         
         let decoder = JSONDecoder()
         
@@ -31,7 +32,7 @@ extension TonalService {
                         prepare = try decoder.decode(TonalServiceModels.Tweets.Prepare.self, from: data)
                     } catch let error {
                         prepare = nil
-                        print("{TEST} \(error)")
+                        GraniteLogger.error("\(error.localizedDescription) - self: \(self)", .relay)
                     }
                     
                     guard let preparedTweet = prepare else { return nil }
@@ -47,7 +48,7 @@ extension TonalService {
                         }
                     } catch let error {
                         meta = nil
-                        print("{TEST} \(error)")
+                        GraniteLogger.error("\(error.localizedDescription) - self: \(self)", .relay)
                     }
                     
                     guard let metaObject = meta else { return nil }

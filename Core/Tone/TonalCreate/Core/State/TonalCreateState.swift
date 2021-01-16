@@ -20,11 +20,7 @@ public enum TonalCreateStage {
 
 public class TonalCreateState: GraniteState {
     
-    var stage: TonalCreateStage = .none {
-        didSet {
-            print("{TEST} \(stage)")
-        }
-    }
+    var stage: TonalCreateStage = .none
     
     public init(_ stage: TonalCreateStage) {
         self.stage = stage

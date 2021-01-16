@@ -19,7 +19,8 @@ struct SetTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
        
-        print("{TEST} selected the range \(event.range.dates)")
+        GraniteLogger.info("tonal range selected:\n\(event.range)\nself:\(self)", .expedition)
+        
         connection.update(\EnvironmentDependency.tone.selectedRange, value: event.range)
         
         if let tone = connection.retrieve(\EnvironmentDependency.tone.find.quote) {
@@ -57,7 +58,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         //to understand how it's getting hit so many times
         //in the beam event system part of the Tonal Relay
         //
-        print(event.sentiment.stats)
+        GraniteLogger.info("sentiment history received & saving\nself:\(self)", .expedition)
         
         guard let tone = connection.retrieve(\EnvironmentDependency.tone),
               let range = tone.selectedRange else {

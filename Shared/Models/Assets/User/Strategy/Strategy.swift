@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreGraphics
+import GraniteUI
 
 public struct Strategy {
     var securities: [Security]
@@ -80,7 +81,7 @@ extension Data {
         do {
             return try jsonDecoder.decode(Strategy.Investments.self, from: self)
         } catch let error {
-            print("{CoreData} \(error)")
+            GraniteLogger.error("core data failed to decode investments\n\(error.localizedDescription)", .utility)
         }
         
         return nil

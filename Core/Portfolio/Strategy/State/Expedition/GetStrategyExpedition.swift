@@ -19,13 +19,8 @@ struct GetStrategyExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        
-        print("{TEST} yoooo strats")
-        
         guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
             return
         }
-        
-        print("{TEST} port strats \(portfolio?.strategies)")
     }
 }

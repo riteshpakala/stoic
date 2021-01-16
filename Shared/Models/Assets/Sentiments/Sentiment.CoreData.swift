@@ -7,6 +7,7 @@
 
 import CoreData
 import Foundation
+import GraniteUI
 
 extension NSManagedObjectContext {
     //DEV:
@@ -32,18 +33,16 @@ extension NSManagedObjectContext {
           
             let sentiment: TonalSentiment = .init(sounds)
             
-            print("🪝🪝🪝🪝🪝🪝\n[Get Sentiment] ")
-            
-            print("SentimentDates: \(sentimentObjects.map { $0.date.simple }.uniques.sortDesc)")
-            print("SecurityDates: \(securitiesFiltered.map { $0.date.simple }.uniques.sortDesc)")
+            GraniteLogger.info("🪝fetching sentiment\nsenti dates: \(sentimentObjects.map { $0.date.simple }.uniques.sortDesc)\nsecurity dates: \(securitiesFiltered.map { $0.date.simple }.uniques.sortDesc)", .expedition)
             
             if sentiment.isValid(against: range) {
-                print("valid\n🪝")
+                GraniteLogger.info("sentiments valid ✅", .expedition)
                 completion((sentiment, nil))
             } else {
                 let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.date.simple) }
                 
-                print("\n🪝 ")
+                GraniteLogger.info("sentiments not valid, fetching missing\ndates:\(missingSentiment.map { $0.date.simple })", .expedition)
+                
                 completion((nil, .init(objects: Array(missingSentiment).asSecurities,
                                       Array(securities)
                                         .expanded(from: Array(missingSentiment))
@@ -59,7 +58,9 @@ extension NSManagedObjectContext {
                                    ticker: String,
                                    exchangeName: String,
                                    _ completion: @escaping (([SentimentObject]) -> Void)) {
-        print("{TEST} \(startDate.advanced(by: -1) as NSDate) \(endDate.advanceDate(value: 1) as NSDate)")
+
+        GraniteLogger.info("getting sentiment object with predicate\nstart: \(startDate.advanced(by: -1).simple)\nend: \(endDate.advanceDate(value: 1).simple)", .expedition)
+        
         let request: NSFetchRequest = SentimentObject.fetchRequest()
         request.predicate = NSPredicate(format: "(date >= %@) AND (date <= %@) AND (security.ticker == %@) AND (security.exchangeName == %@)",
                                         startDate.advanceDate(value: -1) as NSDate,

@@ -12,11 +12,7 @@ import Combine
 
 public class SearchState: GraniteState {
     var searchTimer: Timer? = nil
-    var query: String = "" {
-        didSet {
-            print("{TEST} \(query)")
-        }
-    }
+    var query: String = "" 
     
     var isEditing: Bool = false
     

@@ -117,10 +117,6 @@ struct MovingNumbersView<Element: View>: View {
         }
         .frame(width: fixedWidth, alignment: .leading)
         
-        // Debugging
-        //        print("All:", allElements)
-        //        print("Ids:", allElements.map { $0.id })
-        
         // PROBLEM: Final result view takes a big size
         // (i.e. 10-digit stack height, no. of digits width)
         // We want the final layout of the view to be just like

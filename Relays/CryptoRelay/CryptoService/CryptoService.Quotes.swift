@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import GraniteUI
 
 extension CryptoService {
     public func getQuotes(symbols: String) -> AnyPublisher<[CryptoServiceModels.Quotes.Coin], URLError> {
@@ -32,7 +33,7 @@ extension CryptoService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        print("{TEST} \(url)")
+        GraniteLogger.info("fetching crypto quotes:\n\(url.absoluteString)\nself: \(self)", .relay)
         
         var request = URLRequest(
             url: url,
@@ -52,7 +53,7 @@ extension CryptoService {
                         response = try decoder.decode([String:[String:Double?]].self, from: data)
                     } catch let error {
                         response = nil
-                        print("{TEST} \(error)")
+                        GraniteLogger.error("failed fetching crypto quotes:\n\(error.localizedDescription)\nself: \(self)", .relay)
                     }
                     
                     

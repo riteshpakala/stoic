@@ -80,8 +80,6 @@ struct GetCryptoHistoryExpedition: GraniteExpedition {
                         }
                     }
                 }
-                print(decoded.allowance)
-                print(coins.count)
                 
                 return CryptoEvents.History.init(data: coins, interval: event.interval)
             }.eraseToAnyPublisher()

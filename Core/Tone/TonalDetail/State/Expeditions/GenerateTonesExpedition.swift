@@ -18,9 +18,10 @@ struct GenerateTonesExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        print("{TEST} generating")
         
-        guard let quote = state.quote else { return }
+        GraniteLogger.info("generating tonal details\nself:\(self)", .expedition, focus: true)
+        guard let _ = state.quote else { return }
+        GraniteLogger.info("generating tonal details - quote received\nself:\(self)", .expedition, focus: true)
     
     }
 }

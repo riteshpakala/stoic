@@ -31,7 +31,6 @@ struct PredictTheToneExpedition: GraniteExpedition {
         
         //Neu = Y
         //Float(0.5 + (0.5*(sentiment.posAverage-sentiment.negAverage))),
-//        print("{TEST} \(posValue) \(negValue) \(neuValue) \(event.x)")
         
         state.tune = .init(
                         pos: posValue,

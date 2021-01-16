@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import GraniteUI
 
 public struct SearchResponse: NetworkResponse {
     public var route: String
@@ -31,7 +32,7 @@ extension SearchResponse {
             do {
                 try moc.save()
             } catch let error {
-                print("Saving search response object failed \(error)")
+                GraniteLogger.error("failed to save search response\n\(error.localizedDescription)", .utility)
             }
         }
     }

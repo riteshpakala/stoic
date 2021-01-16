@@ -31,10 +31,11 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 return
             }
             if quote?.contains(security: state.security) == false {
-                print("{TEST} shoule be generating new 1")
                 connection.update(\EnvironmentDependency.detail.stage, value: .none)
+                
+                GraniteLogger.info("quote not compatible\nrequesting a new quote\nself:\(self)", .expedition, focus: true)
             } else {
-                print("{TEST} generating ----")
+                GraniteLogger.info("quote found\nrequesting a detail generation\nself:\(self)", .expedition, focus: true)
                 state.quote = quote
             }
             
@@ -42,15 +43,16 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
         default:
             state.security.getQuote(moc: coreDataInstance) { quote in
                 if let quote = quote {
-                    print("{TEST} quote received \(quote.intervalType)")
+                    GraniteLogger.info("quote received\nupdating dependency\nself:\(self)", .expedition, focus: true)
                     if state.isExpanded {
                         connection.update(\EnvironmentDependency.detail.quote, value: quote)
                     } else {
                         state.quote = quote
                     }
                 } else if state.isExpanded {
-                    print("{TEST} quote was not found")
+                    GraniteLogger.info("quote was not found\nfetching quote/\(state.securityType) history\nself:\(self)", .expedition, focus: true)
                     guard stage == .none else {
+                        GraniteLogger.error("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(self)", .expedition, focus: true)
                         return
                     }
                     connection.update(\EnvironmentDependency.detail.stage, value: .fetching)

@@ -181,8 +181,6 @@ extension Cryptowatcher {
             url.append("?\(qs)")
         }
         
-        print("{TEST} \(url)")
-        
         return fetchPublisher(url, type: CryptoServiceModels.GetMarketOHLC.self)
     }
 }
