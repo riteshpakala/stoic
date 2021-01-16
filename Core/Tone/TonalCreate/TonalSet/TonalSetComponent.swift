@@ -109,7 +109,7 @@ public struct TonalSetComponent: GraniteComponent {
 extension TonalSetComponent {
     
     public var emptyText: String {
-        "search for a market\nto generate tonal similarities\nfound in the past"
+        "search for a market to\ngenerate tonal similarities\nfound in the past"
     }
     
     public var isDependancyEmpty: Bool {

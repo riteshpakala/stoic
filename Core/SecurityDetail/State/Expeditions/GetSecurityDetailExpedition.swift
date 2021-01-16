@@ -66,7 +66,5 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 }
             }
         }
-        
-        
     }
 }

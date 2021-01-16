@@ -39,8 +39,6 @@ struct SearchSecurityExpedition: GraniteExpedition {
                 break
             }
             
-            
-            
             //Potential dependency updates
 //            connection.dependency(\TonalCreateDependency.search.state.query, value: event.query)
             //

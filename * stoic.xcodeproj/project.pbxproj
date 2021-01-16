@@ -835,7 +835,7 @@
 
 /* Begin PBXFileReference section */
 		71017E1225B23EB900E056A5 /* PagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerView.swift; sourceTree = "<group>"; };
-		71017E2925B24A8F00E056A5 /* GraniteDisclaimerComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteDisclaimerComponent.swift; sourceTree = "<group>"; };
+		71017E2925B24A8F00E056A5 /* GraniteDisclaimerComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteDisclaimerComponent.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		71017E2B25B24A8F00E056A5 /* GraniteDisclaimerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteDisclaimerState.swift; sourceTree = "<group>"; };
 		71017E2C25B24A8F00E056A5 /* GraniteDisclaimerEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteDisclaimerEvents.swift; sourceTree = "<group>"; };
 		71017E4725B25D6100E056A5 /* StrategyEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrategyEvents.swift; sourceTree = "<group>"; };

@@ -24,7 +24,7 @@ public struct GraniteDisclaimerComponent: GraniteComponent {
                          direction: .topLeading)
                         .opacity(state.opacity).overlay (
                             
-                        GraniteText(state.text, .subheadline, .bold)
+                        GraniteText("\n\(state.text)\n", .subheadline, .bold)
                             .padding(.top, Brand.Padding.medium)
                             .padding(.bottom, Brand.Padding.medium)
                             .padding(.leading, Brand.Padding.large)
@@ -32,7 +32,11 @@ public struct GraniteDisclaimerComponent: GraniteComponent {
                             .background(Brand.Colors.black
                                             .opacity(0.36)
                                             .cornerRadius(8.0)
-                                            .shadow(color: .black, radius: 4, x: 2, y: 2))
+                                            .shadow(color: .black, radius: 4, x: 2, y: 2)
+                                            .padding(.top, Brand.Padding.medium)
+                                            .padding(.bottom, Brand.Padding.medium)
+                                            .padding(.leading, Brand.Padding.medium)
+                                            .padding(.trailing, Brand.Padding.medium))
                     
                 
                 )
