@@ -101,12 +101,14 @@ extension Security {
             moc.getPortfolioObject(username) { portfolioObject in
                 do {
                     if let portfolio = portfolioObject {
+                        recordedSecurity.portfolio = portfolio
                         portfolio.addToSecurities(recordedSecurity)
                         try moc.save()
                         added(portfolio.asPortfolio)
                     } else {
                         let newPortfolio = PortfolioObject.init(context: moc)
                         newPortfolio.username = username
+                        recordedSecurity.portfolio = newPortfolio
                         newPortfolio.addToSecurities(recordedSecurity)
                         try moc.save()
                         added(newPortfolio.asPortfolio)
@@ -134,6 +136,8 @@ extension Security {
             moc.getPortfolioObject(username) { portfolioObject in
                 do {
                     if let portfolio = portfolioObject {
+                        recordedSecurity.portfolio = portfolio
+                        recordedSecurity.floor = floor
                         portfolio.addToSecurities(recordedSecurity)
                         floor.portfolio = portfolio
                         portfolio.addToFloor(floor)
@@ -142,6 +146,8 @@ extension Security {
                     } else {
                         let portfolio = PortfolioObject.init(context: moc)
                         portfolio.username = username
+                        recordedSecurity.portfolio = portfolio
+                        recordedSecurity.floor = floor
                         portfolio.addToSecurities(recordedSecurity)
                         floor.portfolio = portfolio
                         portfolio.addToFloor(floor)

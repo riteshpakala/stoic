@@ -27,6 +27,7 @@ struct AssetSelectedExpedition: GraniteExpedition {
             guard let security = event.asset.asSecurity else { return }
             security.addToPortfolio(moc: coreDataInstance) { portfolio in
                 if let portfolio = portfolio {
+                    GraniteLogger.info("\(portfolio.holdings.securities.map { $0.name })", .expedition)
                     connection.update(\EnvironmentDependency.user.portfolio,
                                       value: portfolio)
                 }

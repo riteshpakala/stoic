@@ -42,8 +42,12 @@ public struct GradientView: View {
     
     public var body: some View {
         Rectangle()
-            .frame(width: width,
-                   height: height,
+            .frame(minWidth: 0,
+                   idealWidth: width,
+                   maxWidth: width,
+                   minHeight: 0,
+                   idealHeight: height,
+                   maxHeight: height,
                    alignment: .center)
             .padding()
             .foregroundColor(.clear)

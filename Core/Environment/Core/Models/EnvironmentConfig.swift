@@ -32,9 +32,7 @@ public struct EnvironmentConfig {
             switch self {
             case .intro:
                 return .init(windows: [
-                    [ .special ],
-                    [ .unassigned ],
-                    [ .unassigned ]
+                    [ .portfolio(.preview) ],
                 ])
             case .home:
                 return .init(windows: [

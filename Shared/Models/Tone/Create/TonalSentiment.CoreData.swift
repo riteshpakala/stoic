@@ -7,6 +7,7 @@
 
 import CoreData
 import Foundation
+import GraniteUI
 
 extension SecurityObject {
     public var sentimentDate: Date {
@@ -51,11 +52,11 @@ extension TonalSentiment {
             
             do {
                 try moc.save()
-                print ("{CoreData} - sentiment saved")
+                GraniteLogger.info("sentiment saved", .utility)
                 completion?(true)
             } catch let error {
                 completion?(false)
-                print ("{CoreData} \(error.localizedDescription)")
+                GraniteLogger.info("sentiment saving failed - \(error.localizedDescription)", .utility)
             }
         }
     }

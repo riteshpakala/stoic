@@ -19,9 +19,8 @@ struct GenerateTonesExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        GraniteLogger.info("generating tonal details\nself:\(self)", .expedition, focus: true)
         guard let _ = state.quote else { return }
-        GraniteLogger.info("generating tonal details - quote received\nself:\(self)", .expedition, focus: true)
+        GraniteLogger.info("generating tonal details - quote received\nself:\(self)", .expedition)
     
     }
 }

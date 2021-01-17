@@ -79,7 +79,6 @@
                 <constraint value="date"/>
                 <constraint value="ticker"/>
                 <constraint value="name"/>
-                <constraint value="exchangeName"/>
                 <constraint value="intervalType"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
