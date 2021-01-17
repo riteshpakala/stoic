@@ -58,14 +58,20 @@ extension Security {
         }
     }
     
-    public func getObject(moc: NSManagedObjectContext,
-                          _ completion: @escaping ((SecurityObject?) -> Void)) {
+    public func getObjectRequest() -> NSFetchRequest<SecurityObject> {
         let request: NSFetchRequest = SecurityObject.fetchRequest()
         request.predicate = NSPredicate(format: "(date == %@) AND (ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
                                         self.date as NSDate,
                                         self.ticker,
                                         self.exchangeName,
                                         self.interval.rawValue)
+        
+        return request
+    }
+    
+    public func getObject(moc: NSManagedObjectContext,
+                          _ completion: @escaping ((SecurityObject?) -> Void)) {
+        let request: NSFetchRequest = self.getObjectRequest()
         
         moc.performAndWait {
             completion(try? moc.fetch(request).first)

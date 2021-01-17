@@ -11,7 +11,7 @@
     <entity name="FloorObject" representedClassName=".FloorObject" syncable="YES">
         <attribute name="coordX" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="coordY" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PortfolioObject" inverseName="floors" inverseEntity="PortfolioObject"/>
+        <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PortfolioObject" inverseName="floor" inverseEntity="PortfolioObject"/>
         <relationship name="security" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="floor" inverseEntity="SecurityObject"/>
     </entity>
     <entity name="NetworkResponseObject" representedClassName=".NetworkResponseObject" isAbstract="YES" syncable="YES">
@@ -20,7 +20,7 @@
     </entity>
     <entity name="PortfolioObject" representedClassName=".PortfolioObject" syncable="YES">
         <attribute name="username" attributeType="String"/>
-        <relationship name="floors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorObject" inverseName="portfolio" inverseEntity="FloorObject"/>
+        <relationship name="floor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorObject" inverseName="portfolio" inverseEntity="FloorObject"/>
         <relationship name="securities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="portfolio" inverseEntity="SecurityObject"/>
         <relationship name="strategies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StrategyObject" inverseName="portfolio" inverseEntity="StrategyObject"/>
     </entity>
@@ -31,6 +31,7 @@
         <attribute name="securityType" attributeType="String"/>
         <attribute name="ticker" attributeType="String"/>
         <relationship name="securities" toMany="YES" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="quote" inverseEntity="SecurityObject"/>
+        <relationship name="strategy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StrategyObject" inverseName="quotes" inverseEntity="StrategyObject"/>
         <relationship name="tonalModel" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TonalModelObject" inverseName="quote" inverseEntity="TonalModelObject"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -73,7 +74,6 @@
         <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PortfolioObject" inverseName="securities" inverseEntity="PortfolioObject"/>
         <relationship name="quote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="securities" inverseEntity="QuoteObject"/>
         <relationship name="sentiment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SentimentObject" inverseName="security" inverseEntity="SentimentObject"/>
-        <relationship name="strategy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StrategyObject" inverseName="securities" inverseEntity="StrategyObject"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="date"/>
@@ -112,7 +112,7 @@
         <attribute name="investmentData" optional="YES" attributeType="Binary"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PortfolioObject" inverseName="strategies" inverseEntity="PortfolioObject"/>
-        <relationship name="securities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="strategy" inverseEntity="SecurityObject"/>
+        <relationship name="quotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="strategy" inverseEntity="QuoteObject"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="name"/>
@@ -134,9 +134,9 @@
         <element name="FloorObject" positionX="-36" positionY="-441" width="128" height="89"/>
         <element name="NetworkResponseObject" positionX="-45" positionY="-450" width="128" height="59"/>
         <element name="PortfolioObject" positionX="-45" positionY="-450" width="128" height="89"/>
-        <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="134"/>
+        <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="149"/>
         <element name="SearchResponseObject" positionX="-36" positionY="-441" width="128" height="89"/>
-        <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="314"/>
+        <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="299"/>
         <element name="SentimentObject" positionX="-45" positionY="-450" width="128" height="149"/>
         <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
         <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>

@@ -34,7 +34,6 @@ extension SecurityObject {
     @NSManaged public var portfolio: PortfolioObject?
     @NSManaged public var quote: QuoteObject?
     @NSManaged public var sentiment: Set<SentimentObject>?
-    @NSManaged public var strategy: StrategyObject?
 
 }
 

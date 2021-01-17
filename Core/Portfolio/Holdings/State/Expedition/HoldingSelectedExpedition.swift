@@ -43,7 +43,35 @@ struct HoldingSelectedExpedition: GraniteExpedition {
                                       value: portfolio)
                 }
             }
-            
+        default:
+            break
+        }
+    }
+}
+
+struct HoldingSelectionsConfirmedExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = AssetGridItemContainerEvents.AssetsSelected
+    typealias ExpeditionState = HoldingsState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
+              let securities = portfolio?.holdings.securities else {
+            return
+        }
+        
+        switch state.context {
+        case .strategy:
+            let selections = securities.filter({ event.assetIDs.contains($0.assetID) })
+            portfolio?.addToStrategy(selections, moc: coreDataInstance) { portfolio in
+                connection.update(\EnvironmentDependency.user.portfolio,
+                                  value: portfolio)
+            }
+            break
         default:
             break
         }

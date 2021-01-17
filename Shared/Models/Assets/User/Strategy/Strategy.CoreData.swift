@@ -12,7 +12,7 @@ import CoreGraphics
 
 extension StrategyObject {
     var asStrategy: Strategy {
-        .init(self.securities?.compactMap { $0.asSecurity } ?? [],
+        .init(self.quotes?.compactMap { $0.asQuote } ?? [],
               self.name,
               self.date,
               self.investmentData?.investments ?? .empty)

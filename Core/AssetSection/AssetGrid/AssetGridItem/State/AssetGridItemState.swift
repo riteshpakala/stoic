@@ -21,14 +21,18 @@ public class AssetGridItemState: GraniteState {
         asset.asModel ?? ((payload?.object as? TonalModel))
     }
     
+    var radioSelections: [String] = []
+    
     var input: String = ""
     let assetGridType: AssetGridType
-    public init(_ type: AssetGridType) {
+    public init(_ type: AssetGridType, radioSelections: [String] = []) {
         assetGridType = type
+        self.radioSelections = radioSelections
     }
     
     public required init() {
         self.assetGridType = .standard
+        self.radioSelections = []
     }
 }
 

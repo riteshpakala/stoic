@@ -54,10 +54,12 @@ extension Array where Element == Stock {
                 
                 try moc.save()
                 
-                print ("{CoreData} saved stocks")
+                GraniteLogger.info("stocks (array) saved into coreData",
+                                   .utility)
                 completion(quote.asQuote)
             } catch let error {
-                print ("{CoreData} \(error.localizedDescription)")
+                GraniteLogger.error("stocks (array) failed to save into coreData \(error.localizedDescription)",
+                                    .utility)
                 completion(nil)
             }
         }

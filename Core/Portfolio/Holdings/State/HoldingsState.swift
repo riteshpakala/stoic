@@ -12,6 +12,7 @@ import Combine
 
 public enum HoldingsType {
     case add
+    case radio
     case standalone
 }
 
@@ -50,7 +51,8 @@ public class HoldingsCenter: GraniteCenter<HoldingsState> {
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            HoldingSelectedExpedition.Discovery()
+            HoldingSelectedExpedition.Discovery(),
+            HoldingSelectionsConfirmedExpedition.Discovery()
         ]
     }
 }

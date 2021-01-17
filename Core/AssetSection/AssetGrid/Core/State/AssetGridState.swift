@@ -32,16 +32,16 @@ extension WindowType {
 }
 
 public class AssetGridState: GraniteState {
-    
     var context: WindowType
     
     var assetData: [Asset] {
         payload?.object as? [Asset] ?? []
     }
     let assetGridType: AssetGridType
+    
     public init(_ type: AssetGridType,
                 context: WindowType) {
-        assetGridType = type
+        self.assetGridType = type
         self.context = context
     }
     

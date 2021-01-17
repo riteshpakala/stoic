@@ -38,7 +38,6 @@ extension Array where Element == CryptoCurrency {
     func save(moc: NSManagedObjectContext, completion: @escaping ((Quote?) -> Void)) {
         guard let referenceCoin = self.first else { completion(nil); return }
         moc.performAndWait {
-            
             do {
                 let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
                 
@@ -54,11 +53,12 @@ extension Array where Element == CryptoCurrency {
                 }
                 
                 try moc.save()
-                
-                print ("{CoreData} saved crypto")
+                GraniteLogger.info("crypto (array) saved into coreData",
+                                   .utility)
                 completion(quote.asQuote)
             } catch let error {
-                print ("{CoreData} \(error.localizedDescription)")
+                GraniteLogger.error("crypto (array) failed to save into coreData \(error.localizedDescription)",
+                                    .utility)
                 completion(nil)
             }
         }

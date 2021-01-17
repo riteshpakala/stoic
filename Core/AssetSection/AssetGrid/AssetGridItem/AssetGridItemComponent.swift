@@ -120,7 +120,19 @@ public struct AssetGridItemComponent: GraniteComponent {
                                     .padding(.leading, Brand.Padding.xSmall)
                                     .padding(.trailing, Brand.Padding.xSmall)
                                     .padding(.bottom, Brand.Padding.xSmall)
-                                    .shadow(color: .black, radius: 2, x: 1, y: 1)
+                                    .shadow(color: .black, radius: 2, x: 1, y: 1).overlay(
+                                    
+                                    
+                                        Circle()
+                                            .foregroundColor(state.radioSelections.contains(state.asset.assetID) ? state.asset.symbolColor : Brand.Colors.black)
+                                            .padding(.top, Brand.Padding.xSmall)
+                                            .padding(.leading, Brand.Padding.xSmall)
+                                            .padding(.trailing, Brand.Padding.xSmall)
+                                            .padding(.bottom, Brand.Padding.xSmall)
+                                            .shadow(color: .black, radius: 2, x: 1, y: 1)
+                                    
+                                    
+                                    )
                             
                             
                             )

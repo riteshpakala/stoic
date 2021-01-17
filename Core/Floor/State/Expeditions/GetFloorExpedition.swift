@@ -47,7 +47,7 @@ struct GetFloorExpedition: GraniteExpedition {
                 
                 securities.append(securitiesRow)
             }
-
+            
             state.activeSecurities = securities
         }
         

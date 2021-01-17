@@ -9,17 +9,29 @@ import Foundation
 import CoreGraphics
 import GraniteUI
 
-public struct Strategy {
-    var securities: [Security]
+public struct Strategy: Hashable, Identifiable {
+    public var id: ObjectIdentifier {
+        .init(investmentData)
+    }
+    
+    public static func == (lhs: Strategy, rhs: Strategy) -> Bool {
+        lhs.name == rhs.name
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+    
+    var quotes: [Quote]
     var name: String
     var date: Date
     var investmentData: Strategy.Investments
     
-    public init(_ securities: [Security],
+    public init(_ quotes: [Quote],
                 _ name: String,
                 _ date: Date,
                 _ investmentData: Strategy.Investments) {
-        self.securities = securities
+        self.quotes = quotes
         self.name = name
         self.date = date
         self.investmentData = investmentData

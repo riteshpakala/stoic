@@ -15,6 +15,8 @@ public class AssetGridItemContainerState: GraniteState {
         payload?.object as? [Asset] ?? []
     }
     
+    var radioSelections: [String] = []
+    
     var label: String {
         switch assetData.first?.assetType {
         case .model:

@@ -83,6 +83,18 @@ public struct GraniteText: View {
         self.selected = selected
     }
     
+    public init(_ text: String,
+                _ alignment: TextAlignment = .center,
+                style: TextShadowSettings = .basic,
+                selected: Bool = false) {
+        self.text = text
+        self.font = Fonts.live(.subheadline, .regular)
+        self.color = Brand.Colors.white
+        self.alignment = alignment
+        self.style = style
+        self.selected = selected
+    }
+    
     public var body: some View {
         HStack(spacing: 0.0) {
             if alignment == .trailing {

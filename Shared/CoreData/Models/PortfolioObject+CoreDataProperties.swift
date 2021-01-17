@@ -17,7 +17,7 @@ extension PortfolioObject {
     }
 
     @NSManaged public var username: String
-    @NSManaged public var floors: Set<FloorObject>?
+    @NSManaged public var floor: Set<FloorObject>?
     @NSManaged public var securities: Set<SecurityObject>?
     @NSManaged public var strategies: Set<StrategyObject>?
 
@@ -60,17 +60,17 @@ extension PortfolioObject {
 // MARK: Generated accessors for strategy
 extension PortfolioObject {
 
-    @objc(addStrategyObject:)
-    @NSManaged public func addToStrategy(_ value: StrategyObject)
+    @objc(addStrategiesObject:)
+    @NSManaged public func addToStrategies(_ value: StrategyObject)
 
-    @objc(removeStrategyObject:)
-    @NSManaged public func removeFromStrategy(_ value: StrategyObject)
+    @objc(removeStrategiesObject:)
+    @NSManaged public func removeFromStrategies(_ value: StrategyObject)
 
-    @objc(addStrategy:)
-    @NSManaged public func addToStrategy(_ values: NSSet)
+    @objc(addStrategies:)
+    @NSManaged public func addToStrategies(_ values: NSSet)
 
-    @objc(removeStrategy:)
-    @NSManaged public func removeFromStrategy(_ values: NSSet)
+    @objc(removeStrategies:)
+    @NSManaged public func removeFromStrategies(_ values: NSSet)
 
 }
 

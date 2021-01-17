@@ -19,24 +19,25 @@ extension StrategyObject {
     @NSManaged public var date: Date
     @NSManaged public var investmentData: Data?
     @NSManaged public var name: String
-    @NSManaged public var securities: Set<SecurityObject>?
+    @NSManaged public var quotes: Set<QuoteObject>?
+    @NSManaged public var portfolio: PortfolioObject?
 
 }
 
 // MARK: Generated accessors for securities
 extension StrategyObject {
 
-    @objc(addSecuritiesObject:)
-    @NSManaged public func addToSecurities(_ value: SecurityObject)
+    @objc(addQuotesObject:)
+    @NSManaged public func addToQuotes(_ value: QuoteObject)
 
-    @objc(removeSecuritiesObject:)
-    @NSManaged public func removeFromSecurities(_ value: SecurityObject)
+    @objc(removeQuotesObject:)
+    @NSManaged public func removeFromQuotes(_ value: QuoteObject)
 
-    @objc(addSecurities:)
-    @NSManaged public func addToSecurities(_ values: NSSet)
+    @objc(addQuotes:)
+    @NSManaged public func addToQuotes(_ values: NSSet)
 
-    @objc(removeSecurities:)
-    @NSManaged public func removeFromSecurities(_ values: NSSet)
+    @objc(removeQuotes:)
+    @NSManaged public func removeFromQuotes(_ values: NSSet)
 
 }
 

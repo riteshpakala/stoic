@@ -20,6 +20,12 @@ struct AssetGridItemContainerEvents {
             self.asset = asset
         }
     }
+    public struct AssetsSelected: GraniteEvent {
+        public let assetIDs: [String]
+        public init(_ assetIDs: [String]) {
+            self.assetIDs = assetIDs
+        }
+    }
     public struct SecurityTapped: GraniteEvent {
         public let security: Security
         public init(_ security: Security) {

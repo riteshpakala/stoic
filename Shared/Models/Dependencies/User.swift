@@ -12,5 +12,8 @@ import SwiftUI
 class User: ObservableObject {
     
     var portfolio: Portfolio? = nil
+    
+    var portfolioExpandedState: PortfolioState = .init(.expanded)
+    
 }
 

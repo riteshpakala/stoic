@@ -19,6 +19,10 @@ public struct Quote {
     var latestSecurity: Security {
         securities.sortDesc.first ?? EmptySecurity()
     }
+    
+    public var quoteID: String {
+        ticker+name+intervalType.rawValue
+    }
 }
 
 extension Quote {

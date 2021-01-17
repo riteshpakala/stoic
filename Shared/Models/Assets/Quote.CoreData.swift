@@ -22,14 +22,20 @@ extension NSManagedObjectContext {
 }
 
 extension Quote {
+    public func getObjectRequest() -> NSFetchRequest<QuoteObject> {
+        let request: NSFetchRequest = QuoteObject.fetchRequest()
+        request.predicate = NSPredicate(format: "(ticker == %@) AND (name == %@) AND (intervalType == %@)",
+                                        self.ticker,
+                                        self.name,
+                                        self.intervalType.rawValue)
+        
+        return request
+    }
+    
     public func getObject(moc: NSManagedObjectContext,
                           _ completion: @escaping((QuoteObject?) -> Void)){
         
-        let request: NSFetchRequest = QuoteObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(ticker == %@) AND (exchangeName == %@) AND (intervalType == %@)",
-                                        self.ticker,
-                                        self.exchangeName,
-                                        self.intervalType.rawValue)
+        let request: NSFetchRequest = self.getObjectRequest()
         
         moc.performAndWait {
             completion(try? moc.fetch(request).first)
@@ -49,7 +55,7 @@ extension QuoteObject {
     
     public func contains(security: Security) -> Bool {
         return self.ticker == security.ticker &&
-            self.exchangeName == security.exchangeName &&
+            self.name == security.name &&
             self.securityType == security.securityType.rawValue &&
             self.intervalType == security.interval.rawValue
     }

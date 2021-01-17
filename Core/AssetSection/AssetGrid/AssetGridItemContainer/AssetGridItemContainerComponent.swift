@@ -65,18 +65,49 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 0) {
                     ForEach(state.assetData, id: \.assetID) { asset in
-                        AssetGridItemComponent(state: .init(state.assetGridType)).payload(.init(object: asset)).onTapGesture(
-                            perform: sendEvent(
-                                AssetGridItemContainerEvents
-                                    .AssetTapped(
-                                        asset),
-                                .contact,
-                                haptic: .light))
+                        AssetGridItemComponent(state: .init(state.assetGridType,
+                                                            radioSelections: state.radioSelections))
+                            .payload(.init(object: asset))
+                            .onTapGesture(
+                                perform: {
+                                    if state.assetGridType == .radio {
+                                        var selections = state.radioSelections
+                                        if selections.contains(asset.assetID) {
+                                            selections.removeAll(where: { $0 == asset.assetID })
+                                        } else {
+                                            selections.append(asset.assetID)
+                                        }
+                                        Haptic.basic()
+                                        return set(\.radioSelections, value: selections)
+                                    } else {
+                                        
+                                        return sendEvent(AssetGridItemContainerEvents
+                                                            .AssetTapped(
+                                                                asset),
+                                                        .contact,
+                                                        haptic: .light)
+                                    }
+                                })
                     }.padding(.leading, Brand.Padding.medium)
                 }
             }.frame(maxWidth: .infinity,
                     minHeight: state.assetData.count > 0 ? 48 : 0.0,
                     alignment: .center)
+            
+            if state.assetGridType == .radio {
+                Spacer()
+                GraniteButtonComponent(state: .init("confirm"))
+                    .opacity(state.radioSelections.isEmpty ? 0.5 : 1.0)
+                    .onTapGesture {
+                        if self.state.radioSelections.isNotEmpty {
+                            return sendEvent(AssetGridItemContainerEvents
+                                                .AssetsSelected(
+                                                    state.radioSelections),
+                                                .contact,
+                                                haptic: .light)
+                        }
+                }
+            }
         }
     }
 }

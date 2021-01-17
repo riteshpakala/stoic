@@ -27,7 +27,6 @@ public protocol Asset: ID {
     var description1: String { get }
     var description1_sub: String { get }
     var description2: String { get }
-    
 }
 
 extension Asset {

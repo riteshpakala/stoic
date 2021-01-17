@@ -16,6 +16,9 @@ public struct StrategyComponent: GraniteComponent {
     
     public init() {}
     
+    let parentColumns = [
+        GridItem(.flexible()),
+    ]
     let columns = [
         GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),
     ]
@@ -23,7 +26,7 @@ public struct StrategyComponent: GraniteComponent {
     public var body: some View {
         VStack {
             VStack {
-                GraniteText("strategy",
+                GraniteText("strategies",
                             .headline,
                             .bold,
                             .leading)
@@ -31,49 +34,48 @@ public struct StrategyComponent: GraniteComponent {
                                     radius: 2,
                                     x: 1,
                                     y: 1)
-                
-                Spacer()
-                GraniteButtonComponent(
-                    state: .init(.add,
-                                 padding:
-                                    .init(Brand.Padding.medium,
-                                          0,
-                                          Brand.Padding.xSmall,
-                                          0))).onTapGesture {
-                                            GraniteHaptic.light.invoke()
-                                            set(\.stage, value: .adding)
-                                        }
             }
+            .padding(.bottom, Brand.Padding.medium)
             
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
-//                    ForEach(command.center.tonalRangeData, id: \.self) { tonalRangeIndex in
-//
-//                        VStack {
-//                            backgroundColorForRange(tonalRangeIndex).overlay(
-//                                GraniteText(tonalRangeIndex.dateInfoShortDisplay,
-//                                            rangeIsSelected(tonalRangeIndex) ? Brand.Colors.black : Brand.Colors.white,
-//                                            .subheadline,
-//                                            .regular)
-//                            )
-//                            .frame(maxWidth: .infinity,
-//                                   minHeight: 75,
-//                                   maxHeight: 120,
-//                                   alignment: .center)
-//                            .cornerRadius(8)
-//                            .shadow(color: .black, radius: 4, x: 2, y: 2)
-//                            .onTapGesture(perform:
-//                                            sendEvent(TonalSetEvents.Set(
-//                                                        tonalRangeIndex), haptic: .light))
-//
-//                            GraniteText(tonalRangeIndex.avgSimilarityDisplay,
-//                                        tonalRangeIndex.avgSimilarityColor,
-//                                        .subheadline,
-//                                        .regular)
-//                        }
-//                    }
+            VStack {
+                ForEach(command.center.strategies, id: \.self) { strategy in
+                    VStack {
+                        
+                        GraniteText("// "+strategy.name,
+                                    .headline,
+                                    .bold,
+                                    .leading)
+                                    .padding(.bottom,
+                                             Brand.Padding.medium)
+                        
+                        ScrollView {
+                            LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
+                                ForEach(strategy.quotes, id: \.quoteID) { quote in
+                                    
+                                    Color.black.overlay(
+                                                GraniteText(quote.name,
+                                                            Brand.Colors.white,
+                                                            .subheadline,
+                                                            .regular)
+                                        )
+                                        .frame(maxWidth: .infinity,
+                                               minHeight: 75,
+                                               maxHeight: 120,
+                                               alignment: .center)
+                                        .cornerRadius(8)
+                                        .shadow(color: .black, radius: 4, x: 2, y: 2)
+                                        .onTapGesture(perform: {} )
+                                    
+                                }
+                            }
+                        }
+                        
+                    }.frame(maxWidth: .infinity,
+                            maxHeight: .infinity)
                 }
-            }
+            }.frame(maxWidth: .infinity,
+                    maxHeight: .infinity)
+            
         }
         .padding(.top, Brand.Padding.large)
         .padding(.bottom, Brand.Padding.large)

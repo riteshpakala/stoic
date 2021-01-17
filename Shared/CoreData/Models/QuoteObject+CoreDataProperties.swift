@@ -23,6 +23,7 @@ extension QuoteObject {
     @NSManaged public var name: String
     @NSManaged public var securities: Set<SecurityObject>
     @NSManaged public var tonalModel: Set<TonalModelObject>?
+    @NSManaged public var strategy: StrategyObject?
 
 }
 
