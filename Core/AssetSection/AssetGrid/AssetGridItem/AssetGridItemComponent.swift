@@ -34,6 +34,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                         
                         )
                         .cornerRadius(6.0)
+                        .shadow(color: .black, radius: 4, x: 1, y: 1)
                 } else {
                     Text(state.asset.symbol)
                         .frame(
@@ -45,6 +46,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                         .background(state.asset.symbolColor
     //                                    .granite_innerShadow(radius: 2)
                                         .cornerRadius(6.0))
+                        .shadow(color: Color.black.opacity(0.42), radius: 4, x: 1, y: 1)
                 }
                 
                 VStack(alignment: .leading) {
@@ -101,12 +103,30 @@ public struct AssetGridItemComponent: GraniteComponent {
                                             Brand.Colors.black,
                                             .headline,
                                             .bold)
-                                            .shadow(color: .black, radius: 3, x: 1, y: 1)
+                                            .shadow(color: .black, radius: 6, x: 1, y: 1)
                             
                             
                             )
                             .frame(width: 24, height: 24)
                             .padding(.leading, Brand.Padding.small)
+                            .shadow(color: .black, radius: 3, x: 1, y: 1)
+                    case .radio:
+                        Circle()
+                            .foregroundColor(state.asset.symbolColor).overlay(
+                            
+                                Circle()
+                                    .foregroundColor(Brand.Colors.black)
+                                    .padding(.top, Brand.Padding.xSmall)
+                                    .padding(.leading, Brand.Padding.xSmall)
+                                    .padding(.trailing, Brand.Padding.xSmall)
+                                    .padding(.bottom, Brand.Padding.xSmall)
+                                    .shadow(color: .black, radius: 2, x: 1, y: 1)
+                            
+                            
+                            )
+                            .frame(width: 24, height: 24)
+                            .padding(.leading, Brand.Padding.small)
+                        
                     default:
                         EmptyView.init()
                     }

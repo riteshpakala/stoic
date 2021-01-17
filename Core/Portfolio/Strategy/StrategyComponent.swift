@@ -31,6 +31,18 @@ public struct StrategyComponent: GraniteComponent {
                                     radius: 2,
                                     x: 1,
                                     y: 1)
+                
+                Spacer()
+                GraniteButtonComponent(
+                    state: .init(.add,
+                                 padding:
+                                    .init(Brand.Padding.medium,
+                                          0,
+                                          Brand.Padding.xSmall,
+                                          0))).onTapGesture {
+                                            GraniteHaptic.light.invoke()
+                                            set(\.stage, value: .adding)
+                                        }
             }
             
             ScrollView {

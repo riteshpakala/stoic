@@ -12,9 +12,23 @@ import Combine
 
 public enum AssetGridType {
     case add
+    case radio
     case standard
     case standardStoics
     case model
+}
+
+extension WindowType {
+    var assetGridType: AssetGridType {
+        switch self {
+        case .floor:
+            return .add
+        case .strategy:
+            return .radio
+        default:
+            return .standard
+        }
+    }
 }
 
 public class AssetGridState: GraniteState {

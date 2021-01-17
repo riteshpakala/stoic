@@ -16,8 +16,13 @@ public enum PortfolioType: Equatable, Hashable {
     case holdings
     case unassigned
 }
+public enum PortfolioStage: Equatable {
+    case none
+    case adding
+}
 public class PortfolioState: GraniteState {
     var type: PortfolioType
+    var stage: PortfolioStage = .none
     
     public init(_ type: PortfolioType = .expanded) {
         self.type = type

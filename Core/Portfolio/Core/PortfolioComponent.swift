@@ -17,41 +17,58 @@ public struct PortfolioComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        VStack {
-            
-            switch state.type {
-            case .expanded, .preview:
-                portfolioHeader
-                PaddingVertical(Brand.Padding.xSmall)
-                portfolioStrategy
-                GraniteButtonComponent(
-                    state: .init(.add,
-                                 padding:
-                                    .init(Brand.Padding.medium,
-                                          0,
-                                          Brand.Padding.xSmall,
-                                          0))).onTapGesture {
-                                            GraniteHaptic.light.invoke()
-//                                            set(\.addToPortfolio, value: true)
-                                        }
-            default:
-                EmptyView.init().hidden()
-            }
-            
-            switch state.type {
-            case .expanded, .holdings:
-                if state.type == .expanded {
-                    PaddingVertical()
+        ZStack {
+            VStack {
+                
+                switch state.type {
+                case .expanded, .preview:
+                    portfolioHeader
+                    PaddingVertical(Brand.Padding.xSmall)
+                    portfolioStrategy
+                    GraniteButtonComponent(
+                        state: .init(.add,
+                                     padding:
+                                        .init(Brand.Padding.medium,
+                                              0,
+                                              Brand.Padding.xSmall,
+                                              0))).onTapGesture {
+                                                GraniteHaptic.light.invoke()
+                                                set(\.stage, value: .adding)
+                                            }
+                default:
+                    EmptyView.init().hidden()
                 }
                 
-                HoldingsComponent(state: inject(\.envDependency,
-                                                target: \.holdingsPortfolio))
-                    .share(.init(dep(\.hosted)))
-            default:
-                EmptyView.init().hidden()
+                switch state.type {
+                case .expanded, .holdings:
+                    if state.type == .expanded {
+                        PaddingVertical()
+                    }
+                    
+                    HoldingsComponent(state: inject(\.envDependency,
+                                                    target: \.holdingsPortfolio))
+                        .share(.init(dep(\.hosted)))
+                default:
+                    EmptyView.init().hidden()
+                    
+                }
                 
             }
             
+            
+            if state.stage == .adding {
+                VStack {
+                    GraniteModal(content: {
+                        HoldingsComponent(state: inject(\.envDependency,
+                                                        target: \.holdingsStrategy))
+                            .share(.init(dep(\.hosted,
+                                             PortfolioCenter.route)))
+                    }, onExitTap: {
+                        
+                        set(\.stage, value: .none)
+                    })
+                }
+            }
         }
     }
     
@@ -77,7 +94,8 @@ public struct PortfolioComponent: GraniteComponent {
     }
     
     var portfolioStrategy: some View {
-        StrategyComponent()
+        StrategyComponent(state: inject(\.envDependency,
+                                        target: \.strategiesPortfolio))
             .listen(to: command, .stop)
             .share(.init(dep(\.envDependency)))
             .showEmptyState

@@ -10,7 +10,12 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+public enum StrategyStage: Equatable {
+    case none
+    case adding
+}
 public class StrategyState: GraniteState {
+    var stage: StrategyStage = .none
 }
 
 public class StrategyCenter: GraniteCenter<StrategyState> {

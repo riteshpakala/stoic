@@ -36,7 +36,7 @@ public struct HoldingsComponent: GraniteComponent {
                                     .bold,
                                     .leading)
                         
-                        AssetGridComponent(state: .init(state.context == .floor ? .add : .standard,
+                        AssetGridComponent(state: .init(state.context.assetGridType,
                                                         context: state.context))
                             .listen(to: command, .stop)
                             .payload(retrievePayload(\.envDependency,

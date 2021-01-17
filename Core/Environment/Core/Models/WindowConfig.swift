@@ -70,6 +70,7 @@ public enum WindowType: Hashable {
     case portfolio(PortfolioType)
     case holdings
     case floor
+    case strategy
     
     case special
     

@@ -32,6 +32,9 @@ class EnvironmentDependency: DependencyManager {
     
     var holdingsPortfolio: HoldingsState = .init( .init(.init(.portfolio(.holdings))))
     var holdingsFloor: HoldingsState = .init( .init(.init(.floor)))
+    var holdingsStrategy: HoldingsState = .init( .init(.init(.strategy)))
+
+    var strategiesPortfolio: StrategyState = .init()
     
     @ObservedObject
     var broadcasts: Broadcasts = .init()

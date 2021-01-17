@@ -47,6 +47,10 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                         GraniteText("add",
                                     .subheadline,
                                     .regular)
+                    case .radio:
+                        GraniteText("select",
+                                    .subheadline,
+                                    .regular)
                     default:
                         EmptyView.init()
                     }
