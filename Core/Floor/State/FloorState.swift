@@ -18,6 +18,7 @@ public enum FloorStage: Equatable {
 public class FloorState: GraniteState {
     var activeSecurities: [[Security?]] = []
     var floorStage: FloorStage = .none
+    var floors: [Floor] = []
 }
 
 public class FloorCenter: GraniteCenter<FloorState> {

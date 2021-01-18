@@ -48,8 +48,9 @@ public class SecurityDetailState: GraniteState {
         }
     }
     
-    public init(_ kind: SecurityDetailType) {
+    public init(_ kind: SecurityDetailType, quote: Quote? = nil) {
         self.kind = kind
+        self.quote = quote
     }
     
     public required init() {

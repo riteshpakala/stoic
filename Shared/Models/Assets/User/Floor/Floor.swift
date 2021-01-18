@@ -11,6 +11,7 @@ import CoreGraphics
 public struct Floor {
     var security: Security?
     var location: CGPoint
+    var quote: Quote? = nil
     
     public init(_ security: Security? = nil, _ location: CGPoint) {
         self.security = security

@@ -26,23 +26,51 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
         
         switch stage {
         case .loaded:
-            guard let quote = connection.retrieve(\EnvironmentDependency.detail.quote) else {
-                return
-            }
-            if quote?.contains(security: state.security) == false {
-                connection.update(\EnvironmentDependency.detail.stage, value: .none)
-                
-                GraniteLogger.info("quote not compatible\nrequesting a new quote\nself:\(self)", .expedition)
+            if state.isExpanded {
+                guard let quote = connection.retrieve(\EnvironmentDependency.detail.quote) else {
+                    return
+                }
+                if quote?.contains(security: state.security) == false {
+                    connection.update(\EnvironmentDependency.detail.stage, value: .none)
+                    
+                    GraniteLogger.info("quote not compatible\nrequesting a new quote\nself:\(self)", .expedition)
+                } else {
+                    //Should be the final stage of the SecurityDetail in its EXPANDED
+                    //state.
+                    //
+                    //The question that begs to differ, is how should we update the stage
+                    //without another draw call that will cause the command to send an
+                    //object request
+                    //
+                    GraniteLogger.info("quote found\nrequesting a detail generation\nself:\(self)", .expedition)
+                    state.quote = quote
+                }
             } else {
-                GraniteLogger.info("quote found\nrequesting a detail generation\nself:\(self)", .expedition)
-                state.quote = quote
+                state.security.getQuote(moc: coreDataInstance) { quote in
+                    if let quote = quote {
+                        GraniteLogger.info("quote received for preview: \(quote.ticker)\nupdating dependency\nself:\(self)", .expedition)
+                        state.quote = quote
+                        
+                    } else {
+                        //This will cause a repeat call of the stock that triggered it
+                        //The stage if entering an EXPANDED detail before entering the floor
+                        //or any PREVIEW detail type, will be in a "LOADED" stage, which requires
+                        //incase of redraws when in the EXPANDED state. So, we must handle this
+                        //with a reset once this expedition is recalled.
+                        //
+                        //???: There could be a solution running expeditions asynchronously,
+                        //to complete jobs and then recontinue when necessary
+                        GraniteLogger.info("no quote found, need to re-fetch the history of the \(state.securityType)\nself:\(self)", .expedition)
+                        connection.update(\EnvironmentDependency.detail.stage, value: .none)
+                    }
+                }
             }
             
             break
         default:
             state.security.getQuote(moc: coreDataInstance) { quote in
                 if let quote = quote {
-                    GraniteLogger.info("quote received\nupdating dependency\nself:\(self)", .expedition)
+                    GraniteLogger.info("quote received: \(quote.ticker)\nupdating dependency\nself:\(self)", .expedition)
                     if state.isExpanded {
                         connection.update(\EnvironmentDependency.detail.quote, value: quote)
                     } else {
