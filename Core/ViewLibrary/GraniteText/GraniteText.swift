@@ -21,6 +21,11 @@ public struct GraniteText: View {
         let offset: CGPoint
         let selectionColor: Color
         let selectionStyle: SelectionStyle
+        let gradient: [Color]
+        
+        var gradientEnabled: Bool {
+            gradient.isNotEmpty
+        }
         
         public enum SelectionStyle {
             case v1
@@ -30,19 +35,23 @@ public struct GraniteText: View {
         public init(radius: CGFloat,
                     offset: CGPoint,
                     selectionColor: Color = Brand.Colors.black,
-                    selectionStyle: SelectionStyle = .v1) {
+                    selectionStyle: SelectionStyle = .v1,
+                    gradient: [Color] = []) {
             self.radius = radius
             self.offset = offset
             self.selectionColor = selectionColor
             self.selectionStyle = selectionStyle
+            self.gradient = gradient
         }
         
         public init(selectionColor: Color = Brand.Colors.black,
-                    selectionStyle: SelectionStyle = .v1) {
+                    selectionStyle: SelectionStyle = .v1,
+                    gradient: [Color] = []) {
             self.radius = TextShadowSettings.basic.radius
             self.offset = TextShadowSettings.basic.offset
             self.selectionColor = selectionColor
             self.selectionStyle = selectionStyle
+            self.gradient = gradient
         }
         
         public static var basic: TextShadowSettings {
@@ -124,7 +133,7 @@ public struct GraniteText: View {
                                              direction: .topLeading).overlay (
                                                 
                                         Brand.Colors.black
-                                                        .opacity(0.36)
+                                                        .opacity(0.57)
                                                         .cornerRadius(4.0)
                                                         .shadow(color: .black, radius: 4, x: 2, y: 2)
                                                         .padding(.top, 6)
@@ -139,6 +148,12 @@ public struct GraniteText: View {
                                     .padding(.trailing, -10)
                                     .padding(.bottom, -8)
                             }
+                        } else if style.gradientEnabled {
+                            GradientView(colors: style.gradient,
+                                         cornerRadius: 6.0,
+                                         direction: .topLeading)
+                                .padding(.leading, -Brand.Padding.small)
+                                .padding(.trailing, -Brand.Padding.small)
                         }
                     }
                 )

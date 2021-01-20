@@ -139,8 +139,8 @@
 		711402A7258DB9E700BA387D /* StockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140297258DB5E700BA387D /* StockRelay.swift */; };
 		711402AC258DB9EA00BA387D /* StockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140296258DB5E700BA387D /* StockState.swift */; };
 		711402B1258DB9ED00BA387D /* StockEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71140294258DB5E700BA387D /* StockEvents.swift */; };
-		711402C8258DBC2F00BA387D /* TradingDayExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711402C7258DBC2F00BA387D /* TradingDayExpedition.swift */; };
-		711402D1258DBD0900BA387D /* TradingDayExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711402C7258DBC2F00BA387D /* TradingDayExpedition.swift */; };
+		711402C8258DBC2F00BA387D /* GetTradingDayExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711402C7258DBC2F00BA387D /* GetTradingDayExpedition.swift */; };
+		711402D1258DBD0900BA387D /* GetTradingDayExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711402C7258DBC2F00BA387D /* GetTradingDayExpedition.swift */; };
 		71143DE825A4C14F00379E4B /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71143DE725A4C14F00379E4B /* Quote.swift */; };
 		71143DE925A4C14F00379E4B /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71143DE725A4C14F00379E4B /* Quote.swift */; };
 		71143DF725A4C37300379E4B /* TonalService.Indicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71143DF625A4C37300379E4B /* TonalService.Indicators.swift */; };
@@ -353,6 +353,8 @@
 		71267A3F25A59A3F006132D8 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A3D25A59A3F006132D8 /* Date.swift */; };
 		71267A4525A59D89006132D8 /* Security.Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A4425A59D89006132D8 /* Security.Helpers.swift */; };
 		71267A4625A59D89006132D8 /* Security.Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A4425A59D89006132D8 /* Security.Helpers.swift */; };
+		7126ED7C25B77B6800195901 /* VariablesExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126ED7B25B77B6800195901 /* VariablesExpedition.swift */; };
+		7126ED7D25B77B6800195901 /* VariablesExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126ED7B25B77B6800195901 /* VariablesExpedition.swift */; };
 		712D3D0225A6B9BD005EE3F9 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712D3D0125A6B9BD005EE3F9 /* Padding.swift */; };
 		712D3D0325A6B9BD005EE3F9 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712D3D0125A6B9BD005EE3F9 /* Padding.swift */; };
 		71332A1125A78D09005A72A9 /* SecurityDetailEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */; };
@@ -776,6 +778,8 @@
 		71DE186825A6D94D00911AD1 /* GraphState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186325A6D94D00911AD1 /* GraphState.swift */; };
 		71DE186925A6D94D00911AD1 /* GraphComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186425A6D94D00911AD1 /* GraphComponent.swift */; };
 		71DE186A25A6D94D00911AD1 /* GraphComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186425A6D94D00911AD1 /* GraphComponent.swift */; };
+		71E3DD2625B767FE00C7795C /* StockService.TradingDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E3DD2525B767FE00C7795C /* StockService.TradingDay.swift */; };
+		71E3DD2725B767FE00C7795C /* StockService.TradingDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E3DD2525B767FE00C7795C /* StockService.TradingDay.swift */; };
 		71EE6FFA258D347F005B2B8E /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE6FF9258D347E005B2B8E /* Tests_iOS.swift */; };
 		71EE7005258D347F005B2B8E /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE7004258D347F005B2B8E /* Tests_macOS.swift */; };
 		71EE7007258D347F005B2B8E /* __stoicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE6FDE258D347C005B2B8E /* __stoicApp.swift */; };
@@ -900,7 +904,7 @@
 		71140294258DB5E700BA387D /* StockEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockEvents.swift; sourceTree = "<group>"; };
 		71140296258DB5E700BA387D /* StockState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockState.swift; sourceTree = "<group>"; };
 		71140297258DB5E700BA387D /* StockRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockRelay.swift; sourceTree = "<group>"; };
-		711402C7258DBC2F00BA387D /* TradingDayExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingDayExpedition.swift; sourceTree = "<group>"; };
+		711402C7258DBC2F00BA387D /* GetTradingDayExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTradingDayExpedition.swift; sourceTree = "<group>"; };
 		71143DE725A4C14F00379E4B /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		71143DF625A4C37300379E4B /* TonalService.Indicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Indicators.swift; sourceTree = "<group>"; };
 		71143DFD25A4C70800379E4B /* TonalService.Indicators.Averages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Indicators.Averages.swift; sourceTree = "<group>"; };
@@ -1007,6 +1011,7 @@
 		71267A3225A588C6006132D8 /* Quote.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.CoreData.swift; sourceTree = "<group>"; };
 		71267A3D25A59A3F006132D8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		71267A4425A59D89006132D8 /* Security.Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.Helpers.swift; sourceTree = "<group>"; };
+		7126ED7B25B77B6800195901 /* VariablesExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablesExpedition.swift; sourceTree = "<group>"; };
 		712D3D0125A6B9BD005EE3F9 /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
 		71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityDetailEvents.swift; sourceTree = "<group>"; };
 		71332A0E25A78D09005A72A9 /* SecurityDetailComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityDetailComponent.swift; sourceTree = "<group>"; };
@@ -1220,6 +1225,7 @@
 		71DE186125A6D94D00911AD1 /* GraphEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphEvents.swift; sourceTree = "<group>"; };
 		71DE186325A6D94D00911AD1 /* GraphState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphState.swift; sourceTree = "<group>"; };
 		71DE186425A6D94D00911AD1 /* GraphComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphComponent.swift; sourceTree = "<group>"; };
+		71E3DD2525B767FE00C7795C /* StockService.TradingDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockService.TradingDay.swift; sourceTree = "<group>"; };
 		71EE6FDE258D347C005B2B8E /* __stoicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = __stoicApp.swift; sourceTree = "<group>"; };
 		71EE6FDF258D347C005B2B8E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		71EE6FE0258D347E005B2B8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1515,7 +1521,7 @@
 			children = (
 				7118A24325931468007E7EAB /* GetMoversStockExpedition.swift */,
 				71BE145D25A15B170015D157 /* GetStockSearchExpedition.swift */,
-				711402C7258DBC2F00BA387D /* TradingDayExpedition.swift */,
+				711402C7258DBC2F00BA387D /* GetTradingDayExpedition.swift */,
 				71AE03132593168F007A4AE0 /* GetStockHistoryExpedition.swift */,
 				7123B1752594382B00E5BD69 /* GetStockIntervalExpedition.swift */,
 			);
@@ -1595,6 +1601,7 @@
 				71D3C2C625AA87430033350B /* Broadcasts */,
 				711484FE259E15A700464684 /* BootExpedition.swift */,
 				71F902FA25AB225E00E6A085 /* UserExpedition.swift */,
+				7126ED7B25B77B6800195901 /* VariablesExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -2943,6 +2950,7 @@
 				71D63EFA2592A90D0085D718 /* StockService.Movers.swift */,
 				7123B16A2593DAD700E5BD69 /* StockService.Stock.swift */,
 				71BE146425A15DB60015D157 /* StockService.Search.swift */,
+				71E3DD2525B767FE00C7795C /* StockService.TradingDay.swift */,
 			);
 			path = StockService;
 			sourceTree = "<group>";
@@ -3453,6 +3461,7 @@
 				71B4302925A88A9900A23F4D /* AssetAddState.swift in Sources */,
 				7122298225A680030032FC11 /* Router.swift in Sources */,
 				7108897B2591B29800795EDF /* PromiseError.swift in Sources */,
+				7126ED7C25B77B6800195901 /* VariablesExpedition.swift in Sources */,
 				710889792591B29800795EDF /* WhenAll.swift in Sources */,
 				71017E2D25B24A8F00E056A5 /* GraniteDisclaimerComponent.swift in Sources */,
 				7134427A25A38245002C0315 /* Sentiment.CoreData.swift in Sources */,
@@ -3530,7 +3539,7 @@
 				7123B1252593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift in Sources */,
 				7143433C259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
 				7123B12B2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
-				711402C8258DBC2F00BA387D /* TradingDayExpedition.swift in Sources */,
+				711402C8258DBC2F00BA387D /* GetTradingDayExpedition.swift in Sources */,
 				714342E525907253001F26A4 /* InnerShadowModel.swift in Sources */,
 				7123B1292593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */,
 				7183D56725A428AE00FB91A9 /* GraphLinePlot+Segmented.swift in Sources */,
@@ -3805,6 +3814,7 @@
 				7118A22B259313FD007E7EAB /* TonalCreateState.swift in Sources */,
 				7125BE6D25A1388400F22717 /* EnvironmentValues+TrackPoint.swift in Sources */,
 				71B4300F25A889E500A23F4D /* FloorObject+CoreDataProperties.swift in Sources */,
+				71E3DD2625B767FE00C7795C /* StockService.TradingDay.swift in Sources */,
 				719AD87A25B10A03001350FA /* GradientView.swift in Sources */,
 				7125BD8C25A1316500F22717 /* DefaultHorizontalValueView.swift in Sources */,
 				7124162025A36C3400169B9C /* Social.swift in Sources */,
@@ -3885,7 +3895,7 @@
 				7169534B25A7AD3400641BCE /* GraniteScrollView.swift in Sources */,
 				7139F67525981BD300D9C84B /* TonalTuneEvents.swift in Sources */,
 				7143435E259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */,
-				711402D1258DBD0900BA387D /* TradingDayExpedition.swift in Sources */,
+				711402D1258DBD0900BA387D /* GetTradingDayExpedition.swift in Sources */,
 				7108898A2591B29800795EDF /* Async.swift in Sources */,
 				71434325259076EB001F26A4 /* Int+Convenience.swift in Sources */,
 				7108899A2591B29800795EDF /* Promise+Delay.swift in Sources */,
@@ -3939,6 +3949,7 @@
 				7125BE5E25A1388400F22717 /* EnvironmentValues+PointSliderStyle.swift in Sources */,
 				7125BE6825A1388400F22717 /* PointSlider.swift in Sources */,
 				71C2BFA725ABE1ED006445EB /* FloorComponent.swift in Sources */,
+				7126ED7D25B77B6800195901 /* VariablesExpedition.swift in Sources */,
 				71267A4625A59D89006132D8 /* Security.Helpers.swift in Sources */,
 				7139F628259810C000D9C84B /* TonalSetState.swift in Sources */,
 				7123B1282593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift in Sources */,
@@ -4126,6 +4137,7 @@
 				71D63F712592BFC40085D718 /* AssetSectionEvents.swift in Sources */,
 				7143433B259076EE001F26A4 /* CGFloat+Angle.swift in Sources */,
 				710889A82591B29800795EDF /* Markets.swift in Sources */,
+				71E3DD2725B767FE00C7795C /* StockService.TradingDay.swift in Sources */,
 				71B42FBB25A875DD00A23F4D /* HoldingsState.swift in Sources */,
 				71149EE025A7A5AA00148D68 /* SearchAssetExpedition.swift in Sources */,
 				7179AD1B25ACC985003FD06F /* GraniteModal.swift in Sources */,

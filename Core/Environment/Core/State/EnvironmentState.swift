@@ -36,7 +36,6 @@ public class EnvironmentState: GraniteState {
 }
 
 public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
-    
     //TODO:
     //Memory leaks with Subscribers that are not cancelled
     //during component re-draw phases of an application
@@ -75,11 +74,11 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     }()
     //
     
-    public override var relays: [GraniteBaseRelay] {
-        [
+//    public override var relays: [GraniteBaseRelay] {
+//        [
 //            clockRelay
-        ]
-    }
+//        ]
+//    }
     
     public override var links: [GraniteLink] {
         [
@@ -92,6 +91,7 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
         [
             BootExpedition.Discovery(),
             UserExpedition.Discovery(),
+            VariablesExpedition.Discovery(),
             MoversCryptoExpedition.Discovery(),
             MoversStockExpedition.Discovery()
         ]

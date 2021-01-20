@@ -20,6 +20,26 @@ public struct Quote {
         securities.sortDesc.first ?? EmptySecurity()
     }
     
+    var tickerSymbol: String {
+        latestSecurity.symbol
+    }
+    
+    var latestChangePercent: Double {
+        latestSecurity.changePercentValue
+    }
+    
+    var latestChangeAbsolute: Double {
+        latestSecurity.changeAbsoluteValue
+    }
+    
+    var latestIsGainer: Bool {
+        latestSecurity.isGainer
+    }
+    
+    var latestValue: Double {
+        latestSecurity.lastValue
+    }
+    
     public var quoteID: String {
         ticker+name+intervalType.rawValue
     }

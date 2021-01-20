@@ -30,9 +30,9 @@ public struct GraniteDisclaimerComponent: GraniteComponent {
                             .padding(.leading, Brand.Padding.large)
                             .padding(.trailing, Brand.Padding.large)
                             .background(Brand.Colors.black
-                                            .opacity(0.36)
+                                            .opacity(0.57)
                                             .cornerRadius(8.0)
-                                            .shadow(color: .black, radius: 4, x: 2, y: 2)
+                                            .shadow(color: Color.black.opacity(0.57), radius: 4, x: 1, y: 2)
                                             .padding(.top, Brand.Padding.medium)
                                             .padding(.bottom, Brand.Padding.medium)
                                             .padding(.leading, Brand.Padding.medium)
@@ -40,6 +40,7 @@ public struct GraniteDisclaimerComponent: GraniteComponent {
                     
                 
                 )
+                .shadow(color: Color.black, radius: 6.0, x: 4.0, y: 3.0)
             
             Spacer()
         }

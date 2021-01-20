@@ -28,6 +28,7 @@ struct BasicButton: View {
                                 radius: 3, x: 1, y: 1)
                 )
                 .frame(width: 120, height: 36, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0)
                 
             }
         }

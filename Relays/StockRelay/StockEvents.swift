@@ -123,7 +123,20 @@ public struct StockEvents {
     }
     
     //MARK: -- Misc
-    public struct StockTradingDay: GraniteEvent {
+    public struct GetTradingDay: GraniteEvent {
+        public var beam: GraniteBeamType {
+            .rebound
+        }
+    }
+    public struct TradingDayResult: GraniteEvent {
+        let data: [StockServiceModels.TradingDay]
+    }
+    public struct TradingDay: GraniteEvent {
+        let data: StockServiceModels.TradingDay
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
     }
 }
 

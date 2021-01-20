@@ -23,12 +23,11 @@ public struct PortfolioComponent: GraniteComponent {
                 switch state.type {
                 case .expanded, .preview:
                     portfolioHeader
-                    PaddingVertical(Brand.Padding.xSmall)
                     portfolioStrategy
                     GraniteButtonComponent(
                         state: .init(.add,
                                      padding:
-                                        .init(Brand.Padding.medium,
+                                        .init(0,
                                               0,
                                               Brand.Padding.xSmall,
                                               0))).onTapGesture {
@@ -72,23 +71,97 @@ public struct PortfolioComponent: GraniteComponent {
     
     var portfolioHeader: some View {
         VStack {
-            GradientView(direction: .topLeading).overlay (
+            
+            HStack(spacing: 0) {
+                GraniteText("trading day: \(Date.nextTradingDay.asString)",
+                            .headline,
+                            .bold,
+                            .center,
+                            style: .init(gradient: [Brand.Colors.black.opacity(0.75),
+                                                    Brand.Colors.black.opacity(0.36)]))
+                    .padding(.top, Brand.Padding.medium)
+                    .padding(.leading, Brand.Padding.medium)
+                    .padding(.bottom, Brand.Padding.medium)
                 
-                    Brand.Colors.black.opacity(0.36).overlay(
-                        GraniteText("TEST", .subheadline, .bold)
-                        
-                    )
-                    .cornerRadius(8.0)
-                    .frame(width: 80, height: 36, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .shadow(color: .black, radius: 4, x: 2, y: 2)
+            }
+            
+            //User details
+            HStack(spacing: Brand.Padding.medium) {
+                GraniteText("username: \(command.center.username)",
+                            .headline,
+                            .bold,
+                            .leading)
                 
-                )
+                GraniteText("account age: 12 days",
+                            .headline,
+                            .bold,
+                            .trailing)
+            }
+            
+            //Signals
+            GraniteText("strategy signals",
+                        .headline,
+                        .bold,
+                        .leading)
+                .padding(.top, Brand.Padding.medium)
+            
+            VStack(spacing: Brand.Padding.xSmall) {
+                GraniteText("buy: $MSFT",
+                            .subheadline,
+                            .bold,
+                            .leading)
+                
+                GraniteText("sell: $MSFT",
+                            .subheadline,
+                            .bold,
+                            .leading)
+            }
+            .padding(.top, Brand.Padding.small)
+            
+            //Strategy
+            
+            GraniteText("strategy overview",
+                        .headline,
+                        .bold,
+                        .leading)
+                .padding(.top, Brand.Padding.medium)
+            
+            HStack(spacing: Brand.Padding.medium) {
+                GraniteText("winner: $MSFT - 4.12%",
+                            .subheadline,
+                            .bold,
+                            .leading)
+                
+                GraniteText("loser: $MSFT - 4.12%",
+                            .subheadline,
+                            .bold,
+                            .trailing)
+            }
+            .padding(.top, Brand.Padding.small)
+            
+            HStack(spacing: Brand.Padding.medium) {
+                GraniteText("days left: 14 days",
+                            .subheadline,
+                            .bold,
+                            .leading)
+            }
+            .padding(.bottom, Brand.Padding.small)
+            
         }
         .padding(.top, Brand.Padding.large)
-        .padding(.bottom, Brand.Padding.large)
         .padding(.leading, Brand.Padding.large)
         .padding(.trailing, Brand.Padding.large)
-        .frame(height: 200)
+        .padding(.bottom, Brand.Padding.large)
+        .shadow(color: Color.black.opacity(0.57), radius: 4.0, x: 1.0, y: 2.0)
+        .background(GradientView(direction: .topLeading)
+                        .padding(.top, Brand.Padding.medium)
+                        .padding(.leading, Brand.Padding.medium)
+                        .padding(.trailing, Brand.Padding.medium)
+                        .padding(.bottom, Brand.Padding.medium)
+                        .shadow(color: Color.black, radius: 8.0, x: 3.0, y: 3.0))
+                       
+            
+        
     }
     
     var portfolioStrategy: some View {

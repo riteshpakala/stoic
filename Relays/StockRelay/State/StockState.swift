@@ -23,7 +23,8 @@ public class StockCenter: GraniteCenter<StockState> {
             SearchResultExpedition.Discovery(),
             SearchQuoteResultExpedition.Discovery(),
             //
-            TradingDayExpedition.Discovery(),
+            GetTradingDayExpedition.Discovery(),
+            TradingDayResultExpedition.Discovery(),
             //
             GetMoversStockExpedition.Discovery(),
             MoversDataExpedition.Discovery(),

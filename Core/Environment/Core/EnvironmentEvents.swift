@@ -13,4 +13,5 @@ import Combine
 struct EnvironmentEvents {
     struct Boot: GraniteEvent {}
     struct User: GraniteEvent {}
+    struct Variables: GraniteEvent {}
 }

@@ -37,7 +37,7 @@ public struct GraniteButtonComponent: GraniteComponent {
                                              direction: .topLeading).overlay (
                                                 
                                         Brand.Colors.black
-                                                        .opacity(0.36)
+                                                        .opacity(0.57)
                                                         .cornerRadius(4.0)
                                                         .shadow(color: .black, radius: 4, x: 2, y: 2)
                                                         .padding(.top, 4)
@@ -51,6 +51,7 @@ public struct GraniteButtonComponent: GraniteComponent {
                                     .padding(.leading, -8)
                                     .padding(.trailing, -8)
                                     .padding(.bottom, -8)
+                                    .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0)
                             }
                         }
                     )

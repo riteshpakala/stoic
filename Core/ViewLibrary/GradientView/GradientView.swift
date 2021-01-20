@@ -56,7 +56,6 @@ public struct GradientView: View {
                             startPoint: direction,
                             endPoint: endPoint))
             .cornerRadius(cornerRadius)
-            .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0)
     }
     
     var endPoint: UnitPoint {

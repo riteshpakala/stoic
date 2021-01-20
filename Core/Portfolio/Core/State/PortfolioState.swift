@@ -37,4 +37,16 @@ public class PortfolioCenter: GraniteCenter<PortfolioState> {
     var envDependency: EnvironmentDependency {
         self.hosted.env
     }
+    
+    var user: User {
+        envDependency.user
+    }
+    
+    var portfolio: Portfolio? {
+        user.portfolio
+    }
+    
+    var username: String {
+        portfolio?.username ?? "unknown"
+    }
 }
