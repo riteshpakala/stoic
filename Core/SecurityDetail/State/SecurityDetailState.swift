@@ -81,12 +81,7 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     }
     
     var security: Security {
-        switch state.kind {
-        case .preview(let payload),
-             .expanded(let payload),
-             .floor(let payload):
-            return (payload.object as? Security) ?? EmptySecurity()
-        }
+        state.security
     }
     
     var loaded: Bool {

@@ -20,13 +20,29 @@ struct StockDetailResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
+            GraniteLogger.error("no portfolio found\nself:\(self)", .expedition)
+            return
+        }
+        
+        GraniteLogger.info("relaying stock quotes\nself:\(self)", .expedition, focus: true)
+        
         let stocks = event.data
         
         stocks.save(moc: coreDataInstance) { quote in
-            if quote != nil {
-                connection.update(\EnvironmentDependency.detail.quote, value: quote)
+            if state.isExpanded {
+                if quote != nil {
+                    connection.update(\EnvironmentDependency.detail.quote, value: quote)
+                } else {
+                    connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
+                }
             } else {
-                connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
+                if quote != nil {
+                    portfolio?.updateDetailQuote(state.security, quote: quote)
+                } else {
+                    portfolio?.updateDetailStage(state.security, stage: .failedFetching)
+                }
+                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
             }
         }
     }
@@ -42,13 +58,27 @@ struct CryptoDetailResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
+            GraniteLogger.error("no portfolio found\nself:\(self)", .expedition)
+            return
+        }
+        
         let crypto = event.data
         
         crypto.save(moc: coreDataInstance) { quote in
-            if quote != nil {
-                connection.update(\EnvironmentDependency.detail.quote, value: quote)
+            if state.isExpanded {
+                if quote != nil {
+                    connection.update(\EnvironmentDependency.detail.quote, value: quote)
+                } else {
+                    connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
+                }
             } else {
-                connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
+                if quote != nil {
+                    portfolio?.updateDetailQuote(state.security, quote: quote)
+                } else {
+                    portfolio?.updateDetailStage(state.security, stage: .failedFetching)
+                }
+                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
             }
         }
     }

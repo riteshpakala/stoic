@@ -7,6 +7,7 @@
 
 
 import Foundation
+import GraniteUI
 
 public struct Quote {
     var intervalType: SecurityInterval
@@ -42,6 +43,17 @@ public struct Quote {
     
     public var quoteID: String {
         ticker+name+intervalType.rawValue
+    }
+    
+    var needsUpdate: Bool {
+        let todaysDate = Date.today
+        let latestTickerDate = latestSecurity.date
+        let components = Calendar.nyCalendar.dateComponents([.day], from: latestTickerDate, to: todaysDate)
+        guard let days = components.day else {
+            return false
+        }
+        
+        return abs(days) > 0 || securities.count < 4
     }
 }
 

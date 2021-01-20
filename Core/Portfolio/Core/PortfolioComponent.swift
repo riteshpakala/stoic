@@ -92,60 +92,21 @@ public struct PortfolioComponent: GraniteComponent {
                             .bold,
                             .leading)
                 
-                GraniteText("account age: 12 days",
+                GraniteText("age: 12 days",
                             .headline,
                             .bold,
                             .trailing)
             }
-            
-            //Signals
-            GraniteText("strategy signals",
-                        .headline,
-                        .bold,
-                        .leading)
-                .padding(.top, Brand.Padding.medium)
-            
-            VStack(spacing: Brand.Padding.xSmall) {
-                GraniteText("buy: $MSFT",
-                            .subheadline,
-                            .bold,
-                            .leading)
-                
-                GraniteText("sell: $MSFT",
-                            .subheadline,
-                            .bold,
-                            .leading)
-            }
-            .padding(.top, Brand.Padding.small)
-            
+            .padding(.top, Brand.Padding.xSmall)
             //Strategy
             
-            GraniteText("strategy overview",
-                        .headline,
+            GraniteText("sign out",
+                        Brand.Colors.red,
+                        .subheadline,
                         .bold,
-                        .leading)
+                        .center)
                 .padding(.top, Brand.Padding.medium)
-            
-            HStack(spacing: Brand.Padding.medium) {
-                GraniteText("winner: $MSFT - 4.12%",
-                            .subheadline,
-                            .bold,
-                            .leading)
-                
-                GraniteText("loser: $MSFT - 4.12%",
-                            .subheadline,
-                            .bold,
-                            .trailing)
-            }
-            .padding(.top, Brand.Padding.small)
-            
-            HStack(spacing: Brand.Padding.medium) {
-                GraniteText("days left: 14 days",
-                            .subheadline,
-                            .bold,
-                            .leading)
-            }
-            .padding(.bottom, Brand.Padding.small)
+                .padding(.bottom, Brand.Padding.small)
             
         }
         .padding(.top, Brand.Padding.large)

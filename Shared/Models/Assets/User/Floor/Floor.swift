@@ -12,6 +12,7 @@ public struct Floor {
     var security: Security?
     var location: CGPoint
     var quote: Quote? = nil
+    var detail: Detail = .init()
     
     public init(_ security: Security? = nil, _ location: CGPoint) {
         self.security = security
