@@ -103,4 +103,49 @@ extension TonalModels {
             completion(.init(models: models))
         }
     }
+    
+    public func append(security: Security,
+                       quote: Quote,
+                       sentiment: SentimentOutput) -> TonalModels {
+        
+        var modelsToAppend: [Model] = []
+        for type in ModelType.allCases {
+            guard let model = self.model(forType: type), let dataForDavid = model.dataSet else {
+                continue
+            }
+
+            let dataSet: TonalService.AI.Models.DataSet = TonalService.AI.Models.DataSet(
+                security,
+                sentiment,
+                quote: quote,
+                modelType: type)
+
+            do {
+                try dataForDavid.addDataPoint(
+                    input: dataSet.asArray,
+                    output: dataSet.output,
+                    label: security.date.asString)
+            }
+            catch {
+               print("Invalid data set created")
+            }
+
+            let david = SVMModel(
+                problemType: .ϵSVMRegression,
+                kernelSettings:
+                KernelParameters(type: .Polynomial,
+                                 degree: 3,
+                                 gamma: 0.3,
+                                 coef0: 0.0))
+
+            david.Cost = 1e3
+            david.train(data: dataForDavid)
+
+            print("[MODEL GENERATION] Completed adding a day to model for \(type)")
+
+            modelsToAppend.append(type.model(for: david))
+        }
+        
+        return .init(models: modelsToAppend)
+    }
 }

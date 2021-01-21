@@ -46,6 +46,68 @@ public struct TonalModel: Asset {
         }
         return output//david.scale(prediction: output, latestSecurity.lastValue)
     }
+    
+    func predict(days: Int,
+                 sentiment: SentimentOutput = .neutral,
+                 modelType: TonalModels.ModelType = .close) {
+        
+        var quoteToModify = quote
+        var modelToModify = david
+        var rangeToModify = range
+        
+        for i in 0..<days {
+            let nextSecurity = quoteToModify.securities.sortDesc.first ?? latestSecurity
+            
+            var closePercent: Double = 0.0
+            var highPercent: Double = 0.0
+            var lowPercent: Double = 0.0
+            var volume: Double = 0.0
+            var stochasticK: Double = 0.0
+            var stochasticD: Double = 0.0
+            
+            for aModelType in TonalModels.ModelType.allCases {
+                guard aModelType != .none else { continue }
+                guard let output = modelToModify.predict(quoteToModify,
+                                                 aModelType,
+                                                 range: self.range,
+                                                 sentiment: sentiment) else {
+                    continue
+                }
+                
+                switch aModelType {
+                case .close:
+                    closePercent = output
+                case .high:
+                    highPercent = output
+                case .low:
+                    lowPercent = output
+                case .volume:
+                    volume = output
+                case .stochasticK:
+                    stochasticK = output
+                case .stochasticD:
+                    stochasticD = output
+                default:
+                    continue
+                }
+            }
+            
+            var securityToAdd = EmptySecurity.init()
+            securityToAdd.date = securityToAdd.date.advanceDate(value: i)
+            securityToAdd.lastValue = david.scale(prediction: closePercent, nextSecurity.lastValue)
+            securityToAdd.highValue = david.scale(prediction: highPercent, nextSecurity.highValue)
+            securityToAdd.lowValue = david.scale(prediction: lowPercent, nextSecurity.lowValue)
+            securityToAdd.volumeValue = volume
+            
+            quoteToModify.securities.append(EmptySecurity.init())
+            
+            rangeToModify.insert(securityToAdd.date, at: 0)
+            
+            modelToModify = modelToModify.append(security: securityToAdd,
+                                                 quote: quote,
+                                                 sentiment: sentiment)
+        }
+    }
 }
 
 extension TonalModel {

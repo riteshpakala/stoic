@@ -110,7 +110,7 @@ public struct EmptySecurity: Security {
     public var name: String = "?"
     
     public var securityType: SecurityType {
-        .stock
+        .unassigned
     }
     
     public var lastValue: Double = 0.0
