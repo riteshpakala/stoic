@@ -23,3 +23,18 @@ struct AddToFloorExpedition: GraniteExpedition {
                           value: .adding(event.location))
     }
 }
+
+struct ExitAddToFloorExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = FloorEvents.ExitAddToFloor
+    typealias ExpeditionState = FloorState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        connection.update(\EnvironmentDependency.holdingsFloor.floorStage,
+                          value: .none)
+    }
+}

@@ -97,7 +97,7 @@ extension Portfolio {
 extension PortfolioObject {
     public var asPortfolio: Portfolio {
         return .init(self.username,
-                     .init(Array(self.securities ?? .init()).asSecurities),
+                     .init(Array(self.securities?.latests ?? .init()).asSecurities),
                      self.floor?.compactMap( { $0.asFloor } ) ?? [],
                      self.strategies?.compactMap( { $0.asStrategy }) ?? []
                      )

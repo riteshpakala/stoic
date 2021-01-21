@@ -30,6 +30,10 @@ public class Tone: ObservableObject {
         return security
     }
     
+    public var latestSecurity: Security? {
+        return find.quote?.securities.sortDesc.first
+    }
+    
     public var baseRange: TonalRange? {
         range?.first(where: { $0.base })
     }

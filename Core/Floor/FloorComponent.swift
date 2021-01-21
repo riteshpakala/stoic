@@ -64,8 +64,7 @@ public struct FloorComponent: GraniteComponent {
                             .share(.init(dep(\.hosted,
                                              FloorCenter.route)))
                     }, onExitTap: {
-                        
-                        set(\.floorStage, value: .none)
+                        sendEvent(FloorEvents.ExitAddToFloor(), haptic: .light)
                     })
                 }
             default:

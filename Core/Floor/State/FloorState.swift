@@ -39,7 +39,8 @@ public class FloorCenter: GraniteCenter<FloorState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetFloorExpedition.Discovery(),
-            AddToFloorExpedition.Discovery()
+            AddToFloorExpedition.Discovery(),
+            ExitAddToFloorExpedition.Discovery()
         ]
     }
 }

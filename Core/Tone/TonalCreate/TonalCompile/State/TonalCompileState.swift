@@ -24,6 +24,14 @@ public class TonalCompileCenter: GraniteCenter<TonalCompileState> {
         envDependency.tone
     }
     
+    var latestSecurity: Security? {
+        tone.latestSecurity
+    }
+    
+    var quote: Quote? {
+        tone.find.quote
+    }
+    
     var tonalCompile: Tone.Compile {
         tone.compile
     }

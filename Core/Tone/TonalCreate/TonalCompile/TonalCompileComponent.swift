@@ -24,36 +24,44 @@ public struct TonalCompileComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            if command.center.compileState == .compiled {
-                GraniteText("\(state.currentPrediction)",
-                            Brand.Colors.purple,
-                            .title,
-                            .bold)
+            if let security = command.center.latestSecurity {
+                SecurityDetailComponent(state: .init(.expanded(.init(object: security)),
+                                                     quote: command.center.quote))
+                    .share(.init(dep(\.hosted,
+                                     TonalCompileCenter.route)))
+            }
+            
+            VStack {
                 
-                SentimentSliderComponent(state: tunerState).listen(to: command)
-               
-                GraniteText(tunerState.sentiment.asString,
-                            Brand.Colors.yellow,
-                            .subheadline,
-                            .regular)
-            }
-            
-            if command.center.compileState == .readyToCompile {
-                GraniteButtonComponent(state: .init("compile")).onTapGesture {
-                    sendEvent(TonalCompileEvents.Compile())
+                if command.center.compileState == .compiled {
+                    GraniteText("\(state.currentPrediction)",
+                                Brand.Colors.purple,
+                                .title,
+                                .bold)
+                    
+                    SentimentSliderComponent(state: tunerState).listen(to: command)
+                   
+                    GraniteText(tunerState.sentiment.asString,
+                                Brand.Colors.yellow,
+                                .subheadline,
+                                .regular)
                 }
-            } else if command.center.compileState == .compiled {
-                GraniteButtonComponent(state: .init("save")).onTapGesture {
-                    sendEvent(TonalCompileEvents.Save())
+                
+                if command.center.compileState == .readyToCompile {
+                    GraniteButtonComponent(state: .init("compile")).onTapGesture {
+                        sendEvent(TonalCompileEvents.Compile())
+                    }
+                } else if command.center.compileState == .compiled {
+                    GraniteButtonComponent(state: .init("save")).onTapGesture {
+                        sendEvent(TonalCompileEvents.Save())
+                    }
                 }
             }
-            
-            SecurityDetailComponent()
+            .padding(.top, Brand.Padding.large)
+            .padding(.bottom, Brand.Padding.medium)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
         }
-        .padding(.top, Brand.Padding.large)
-        .padding(.bottom, Brand.Padding.medium)
-        .padding(.leading, Brand.Padding.medium)
-        .padding(.trailing, Brand.Padding.medium)
     }
 }
 

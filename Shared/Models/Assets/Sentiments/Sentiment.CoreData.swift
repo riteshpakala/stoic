@@ -33,15 +33,15 @@ extension NSManagedObjectContext {
           
             let sentiment: TonalSentiment = .init(sounds)
             
-            GraniteLogger.info("🪝fetching sentiment\nsenti dates: \(sentimentObjects.map { $0.date.simple }.uniques.sortDesc)\nsecurity dates: \(securitiesFiltered.map { $0.date.simple }.uniques.sortDesc)", .expedition)
+            GraniteLogger.info("🪝fetching sentiment\nsenti dates: \(sentimentObjects.map { $0.date.simple }.uniques.sortDesc)\nsecurity dates: \(securitiesFiltered.map { $0.date.simple }.uniques.sortDesc)", .expedition, focus: true)
             
             if sentiment.isValid(against: range) {
-                GraniteLogger.info("sentiments valid ✅", .expedition)
+                GraniteLogger.info("sentiments valid ✅", .expedition, focus: true)
                 completion((sentiment, nil))
             } else {
                 let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.date.simple) }
                 
-                GraniteLogger.info("sentiments not valid, fetching missing\ndates:\(missingSentiment.map { $0.date.simple })", .expedition)
+                GraniteLogger.info("sentiments not valid, fetching missing\ndates:\(missingSentiment.map { $0.date.simple })", .expedition, focus: true)
                 
                 completion((nil, .init(objects: Array(missingSentiment).asSecurities,
                                       Array(securities)

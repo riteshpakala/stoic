@@ -16,4 +16,6 @@ struct FloorEvents {
     public struct AddToFloor: GraniteEvent {
         let location: CGPoint
     }
+    
+    public struct ExitAddToFloor: GraniteEvent {}
 }

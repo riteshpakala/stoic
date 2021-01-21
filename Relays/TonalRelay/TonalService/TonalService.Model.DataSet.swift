@@ -110,7 +110,20 @@ extension TonalService {
                 }
 
                 public var output: [Double] {
-                    [security.lastValue]
+                    switch modelType {
+                    case .close, .none:
+                        return [security.lastValue]
+                    case .low:
+                        return [security.lowValue]
+                    case .high:
+                        return [security.highValue]
+                    case .volume:
+                        return [security.volumeValue]
+                    case .stochasticK:
+                        return [indicators.stochastic.values.percentKs.first ?? 0.0]
+                    case .stochasticD:
+                        return [indicators.stochastic.values.percentDs.first ?? 0.0]
+                    }
                 }
 
                 public var description: String {

@@ -617,6 +617,10 @@
 		7189C9C225AE8E0B00D98A85 /* GetCryptoHistoryExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7189C9C025AE8E0B00D98A85 /* GetCryptoHistoryExpedition.swift */; };
 		7189C9C825AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7189C9C725AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift */; };
 		7189C9C925AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7189C9C725AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift */; };
+		7195A54225B9069F00F1E829 /* TonalService.Model.Predict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7195A54125B9069F00F1E829 /* TonalService.Model.Predict.swift */; };
+		7195A54325B9069F00F1E829 /* TonalService.Model.Predict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7195A54125B9069F00F1E829 /* TonalService.Model.Predict.swift */; };
+		7195A54925B906AD00F1E829 /* TonalService.Model.Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7195A54825B906AD00F1E829 /* TonalService.Model.Generate.swift */; };
+		7195A54A25B906AD00F1E829 /* TonalService.Model.Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7195A54825B906AD00F1E829 /* TonalService.Model.Generate.swift */; };
 		719AD86A25B10746001350FA /* GraniteEmptyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD86625B10746001350FA /* GraniteEmptyComponent.swift */; };
 		719AD86B25B10746001350FA /* GraniteEmptyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD86625B10746001350FA /* GraniteEmptyComponent.swift */; };
 		719AD86C25B10746001350FA /* GraniteEmptyEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD86725B10746001350FA /* GraniteEmptyEvents.swift */; };
@@ -1144,6 +1148,8 @@
 		7189C9B925AE660800D98A85 /* TonalService.Indicators.Stochastics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Indicators.Stochastics.swift; sourceTree = "<group>"; };
 		7189C9C025AE8E0B00D98A85 /* GetCryptoHistoryExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCryptoHistoryExpedition.swift; sourceTree = "<group>"; };
 		7189C9C725AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCryptoSearchExpedition.swift; sourceTree = "<group>"; };
+		7195A54125B9069F00F1E829 /* TonalService.Model.Predict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Model.Predict.swift; sourceTree = "<group>"; };
+		7195A54825B906AD00F1E829 /* TonalService.Model.Generate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Model.Generate.swift; sourceTree = "<group>"; };
 		719AD86625B10746001350FA /* GraniteEmptyComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteEmptyComponent.swift; sourceTree = "<group>"; };
 		719AD86725B10746001350FA /* GraniteEmptyEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteEmptyEvents.swift; sourceTree = "<group>"; };
 		719AD86925B10746001350FA /* GraniteEmptyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteEmptyState.swift; sourceTree = "<group>"; };
@@ -2115,8 +2121,8 @@
 			isa = PBXGroup;
 			children = (
 				7125BE8825A148BA00F22717 /* State */,
-				7125BE8725A148BA00F22717 /* TonalFindComponent.swift */,
 				7125BE8A25A148BA00F22717 /* TonalFindEvents.swift */,
+				7125BE8725A148BA00F22717 /* TonalFindComponent.swift */,
 			);
 			path = TonalFind;
 			sourceTree = "<group>";
@@ -2277,6 +2283,8 @@
 				7143EEDE25994FC300B1DCB5 /* TonalService.Sounds.swift */,
 				71BDF2952599430A00F66EA2 /* TonalService.Utilities.swift */,
 				71CA211725A4AEC900C448D7 /* TonalService.Model.swift */,
+				7195A54125B9069F00F1E829 /* TonalService.Model.Predict.swift */,
+				7195A54825B906AD00F1E829 /* TonalService.Model.Generate.swift */,
 				7109642825A59FBD0021B42B /* TonalService.Model.DataSet.swift */,
 				71143DEE25A4C34400379E4B /* Indicators */,
 			);
@@ -2738,8 +2746,8 @@
 			isa = PBXGroup;
 			children = (
 				71ACC23925B0AB9100E02AE3 /* State */,
-				71ACC23B25B0AB9100E02AE3 /* TonalDetailComponent.swift */,
 				71ACC23C25B0AB9100E02AE3 /* TonalDetailEvents.swift */,
+				71ACC23B25B0AB9100E02AE3 /* TonalDetailComponent.swift */,
 			);
 			path = TonalDetail;
 			sourceTree = "<group>";
@@ -3611,6 +3619,7 @@
 				7114029A258DB5E700BA387D /* StockRelay.swift in Sources */,
 				7123B12D2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
 				7183D55D25A428AE00FB91A9 /* LinePlotValueStick.swift in Sources */,
+				7195A54925B906AD00F1E829 /* TonalService.Model.Generate.swift in Sources */,
 				7183D55125A428AE00FB91A9 /* GraphPage.swift in Sources */,
 				71F902FB25AB225E00E6A085 /* UserExpedition.swift in Sources */,
 				710889F32591BC8C00795EDF /* Categories.swift in Sources */,
@@ -3687,6 +3696,7 @@
 				7125BE0025A1328900F22717 /* EnvironmentValues+ValueSliderStyle.swift in Sources */,
 				7143435B259076F4001F26A4 /* Path+Convenience.swift in Sources */,
 				710889652591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
+				7195A54225B9069F00F1E829 /* TonalService.Model.Predict.swift in Sources */,
 				71EE7075258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
 				7123B1272593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift in Sources */,
 				71434355259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
@@ -4114,6 +4124,7 @@
 				7139F626259810C000D9C84B /* TonalSetComponent.swift in Sources */,
 				71434321259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
 				7179ACA925AC9472003FD06F /* TonalCompileState.swift in Sources */,
+				7195A54A25B906AD00F1E829 /* TonalService.Model.Generate.swift in Sources */,
 				710889662591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
 				7125BDC625A1318D00F22717 /* EnvironmentValues+RangeSliderStyle.swift in Sources */,
 				7143435A259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
@@ -4221,6 +4232,7 @@
 				710889742591B29800795EDF /* Promise+Finally.swift in Sources */,
 				71F1EC5525A0F47A00D32C52 /* SearchState.swift in Sources */,
 				7108896E2591B29800795EDF /* PromiseState.swift in Sources */,
+				7195A54325B9069F00F1E829 /* TonalService.Model.Predict.swift in Sources */,
 				7156AC1225A86E9B00648941 /* User.swift in Sources */,
 				71017E4E25B25D6100E056A5 /* StrategyComponent.swift in Sources */,
 				7183D56425A428AE00FB91A9 /* PressAndHorizontalDragGesture.swift in Sources */,

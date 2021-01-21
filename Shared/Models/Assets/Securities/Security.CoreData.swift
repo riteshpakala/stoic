@@ -103,7 +103,19 @@ extension Security {
                                _ added: @escaping ((Portfolio?) -> Void)) {
         moc.performAndWait {
             guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
+            
+            do {
+                let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
                 
+                let quote: QuoteObject = quotes.first(where: { $0.contains(security: self) }) ?? QuoteObject.init(context: moc)
+                
+                self.apply(to: quote)
+                recordedSecurity.quote = quote
+                quote.addToSecurities(recordedSecurity)
+            } catch let error {
+                GraniteLogger.error("failed createing a quote before adding to portfolio\(error.localizedDescription)", .expedition)
+            }
+            
             moc.getPortfolioObject(username) { portfolioObject in
                 do {
                     if let portfolio = portfolioObject {
@@ -172,6 +184,29 @@ extension Security {
 extension Array where Element == SecurityObject {
     var asSecurities: [Security] {
         self.compactMap { $0.asSecurity }
+    }
+    
+    var latests: [SecurityObject] {
+        self.compactMap { security in
+            if let securities = security.quote?.securities {
+                return Array(securities).sortDesc.first
+            } else {
+                return nil
+            }
+        }
+    }
+}
+
+extension Set where Element == SecurityObject {
+    var latests: [SecurityObject] {
+        self.compactMap { security in
+            if let securities = security.quote?.securities {
+                return Array(securities).sortDesc.first
+            } else {
+                GraniteLogger.info("\(security.quote == nil)", .utility, focus: true)
+                return nil
+            }
+        }
     }
 }
 

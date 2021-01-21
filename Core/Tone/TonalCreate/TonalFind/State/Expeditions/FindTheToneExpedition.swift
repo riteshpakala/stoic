@@ -19,7 +19,6 @@ struct FindTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        
         //DEV:
         // Need to also check for last trading day
         // update the cache from last date saved to the recent day
@@ -30,6 +29,13 @@ struct FindTheToneExpedition: GraniteExpedition {
             
             return
         }
+        
+        //Update the current slider value to the days set
+        //before parsing begins.
+        let dayDiff: Double = Double(state.maxDays - state.minDays)
+        let days: Double = find.sliderDays.number*dayDiff
+        state.days = Int(days) + state.minDays
+        //
         
         guard stage == .selected else {
             

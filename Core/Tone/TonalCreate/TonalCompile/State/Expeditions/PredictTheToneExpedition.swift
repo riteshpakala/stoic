@@ -46,10 +46,10 @@ struct PredictTheToneExpedition: GraniteExpedition {
         
         guard event.isActive == false else { return }
 
-        let lastValue = tone.target?.lastValue ?? 0.0
+        let lastValue = tone.latestSecurity?.lastValue ?? 0.0
         
-        tone.compile.model?.predict(tone, state.tune, moc: coreDataInstance) { prediction in
-            state.currentPrediction = tone.compile.model?.scale(prediction: prediction, lastValue) ?? state.currentPrediction
+        tone.compile.model?.predict(tone, state.tune, .stochasticD, moc: coreDataInstance) { prediction in
+            state.currentPrediction = prediction//tone.compile.model?.scale(prediction: prediction, lastValue) ?? state.currentPrediction
         }
     }
 }

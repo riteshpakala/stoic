@@ -71,7 +71,6 @@ public struct TonalTuneComponent: GraniteComponent {
                 GraniteButtonComponent(state: .init("tune")).onTapGesture {
                     sendEvent(TonalTuneEvents.Tune())
                 }
-                
             }
         }
     }
