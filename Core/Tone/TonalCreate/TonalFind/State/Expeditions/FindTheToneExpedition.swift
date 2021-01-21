@@ -52,9 +52,11 @@ struct FindTheToneExpedition: GraniteExpedition {
         
         security.getQuote(moc: coreDataInstance) { quote in
             //DEV: cleaner and the ability to modify the hourly interval
-            guard let quote = quote else { return }
-            
-            if quote.needsUpdate {
+            if let quote = quote,
+               !quote.needsUpdate {
+                connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
+                
+            } else {
                 switch security.securityType {
                 case .crypto:
                     connection.request(CryptoEvents.GetCryptoHistory.init(security: security))
@@ -63,8 +65,6 @@ struct FindTheToneExpedition: GraniteExpedition {
                 default:
                     break
                 }
-            } else {
-                 connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
             }
         }
     }
