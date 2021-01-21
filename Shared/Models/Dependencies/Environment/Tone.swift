@@ -14,7 +14,6 @@ public class Tone: ObservableObject {
         public static var minDays: Int = 4
     }
     
-    
     var range: [TonalRange]? {
         didSet {
             find.state = .parsed

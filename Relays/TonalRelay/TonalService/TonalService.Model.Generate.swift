@@ -14,20 +14,18 @@ extension TonalModels {
     public static func generate(tone: Tone,
                                 moc: NSManagedObjectContext,
                                 _ completion: @escaping ((TonalModels?) -> Void)) {
-        guard let securityObjects = tone.selectedRange?.objects else {
-            GraniteLogger.error("failed to retrieve securityObjects\nself: \(self)", .relay)
+        
+        guard let range = tone.selectedRange else {
+            GraniteLogger.error("failed to retrieve range\nself: \(self)", .relay)
             completion(nil)
             return
         }
         
+        let securityObjects = range.objects
+        
         securityObjects.first?.getQuote(moc: moc) { quote in
             guard let quote = quote else {
                 GraniteLogger.error("failed to retrieve quote\nself: \(self)", .relay)
-                completion(nil)
-                return
-            }
-            guard let range = tone.selectedRange else {
-                GraniteLogger.error("failed to retrieve range\nself: \(self)", .relay)
                 completion(nil)
                 return
             }

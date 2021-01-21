@@ -642,6 +642,8 @@
 		71AE03152593168F007A4AE0 /* GetStockHistoryExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE03132593168F007A4AE0 /* GetStockHistoryExpedition.swift */; };
 		71AE032025931AD1007A4AE0 /* FindTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */; };
 		71AE032125931AD1007A4AE0 /* FindTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */; };
+		71B0153E25B9E49600111739 /* GetSecurityPredictionExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0153D25B9E49600111739 /* GetSecurityPredictionExpedition.swift */; };
+		71B0153F25B9E49600111739 /* GetSecurityPredictionExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0153D25B9E49600111739 /* GetSecurityPredictionExpedition.swift */; };
 		71B062352597169E00D1833D /* SetTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B062342597169E00D1833D /* SetTheToneExpedition.swift */; };
 		71B062362597169E00D1833D /* SetTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B062342597169E00D1833D /* SetTheToneExpedition.swift */; };
 		71B42FB625A875DD00A23F4D /* HoldingsEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B42FB225A875DD00A23F4D /* HoldingsEvents.swift */; };
@@ -1161,6 +1163,7 @@
 		71ADF23125B272F100B3B16E /* Strategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategy.swift; sourceTree = "<group>"; };
 		71AE03132593168F007A4AE0 /* GetStockHistoryExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStockHistoryExpedition.swift; sourceTree = "<group>"; };
 		71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTheToneExpedition.swift; sourceTree = "<group>"; };
+		71B0153D25B9E49600111739 /* GetSecurityPredictionExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSecurityPredictionExpedition.swift; sourceTree = "<group>"; };
 		71B062342597169E00D1833D /* SetTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTheToneExpedition.swift; sourceTree = "<group>"; };
 		71B42FB225A875DD00A23F4D /* HoldingsEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoldingsEvents.swift; sourceTree = "<group>"; };
 		71B42FB325A875DD00A23F4D /* HoldingsComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoldingsComponent.swift; sourceTree = "<group>"; };
@@ -2874,6 +2877,7 @@
 			children = (
 				71C2BF7125ABA9AD006445EB /* GetSecurityDetailExpedition.swift */,
 				71C2BF8025ABB1CE006445EB /* SecurityDetailResultExpedition.swift */,
+				71B0153D25B9E49600111739 /* GetSecurityPredictionExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -3497,6 +3501,7 @@
 				7189C9BA25AE660800D98A85 /* TonalService.Indicators.Stochastics.swift in Sources */,
 				71DC58F125988F84004935CF /* SVM.swift in Sources */,
 				710889AF2591B29800795EDF /* Aggregates.swift in Sources */,
+				71B0153E25B9E49600111739 /* GetSecurityPredictionExpedition.swift in Sources */,
 				71434342259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
 				71434353259076F4001F26A4 /* Angle+Convenience.swift in Sources */,
 				71149ED025A7A2D200148D68 /* Home.swift in Sources */,
@@ -4208,6 +4213,7 @@
 				71D63EF52592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BEAC25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */,
 				7118A22E259313FD007E7EAB /* TonalCreateEvents.swift in Sources */,
+				71B0153F25B9E49600111739 /* GetSecurityPredictionExpedition.swift in Sources */,
 				71B4304825A8A26400A23F4D /* SearchSecurityResultExpedition.swift in Sources */,
 				71C08EC625AFA59300765894 /* CryptoService.swift in Sources */,
 				710889842591B29800795EDF /* Promise+Chain.swift in Sources */,

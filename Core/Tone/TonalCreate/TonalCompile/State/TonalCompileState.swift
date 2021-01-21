@@ -40,6 +40,10 @@ public class TonalCompileCenter: GraniteCenter<TonalCompileState> {
         tonalCompile.state
     }
     
+    var model: TonalModel? {
+        tonalCompile.tonalModel
+    }
+    
     override public var expeditions: [GraniteBaseExpedition] {
         [
             CompileTheToneExpedition.Discovery(),

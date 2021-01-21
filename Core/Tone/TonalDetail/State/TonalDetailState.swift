@@ -12,13 +12,17 @@ import Combine
 
 public class TonalDetailState: GraniteState {
     let quote: Quote?
+    let prediction: GraphPageViewModel.PlotData?
     
-    public init(_ quote: Quote?) {
+    public init(_ quote: Quote?,
+                prediction: GraphPageViewModel.PlotData? = nil) {
         self.quote = quote
+        self.prediction = prediction
     }
     
     public required init() {
         quote = nil
+        prediction = nil
     }
 }
 
@@ -67,6 +71,12 @@ public class TonalDetailCenter: GraniteCenter<TonalDetailState> {
             let plotDataD: SomePlotData = .init(dataD.reversed(),
                                                 interval: timeDisplay,
                                                 graphType: .indicator(Brand.Colors.yellow))
+            
+            //DEV:
+            //
+//            plotDataK.predictionPlotData = state.prediction ?? []
+            plotDataD.predictionPlotData = state.prediction ?? []
+            
             return (plotDataK, plotDataD)
         } else {
             return (.init(), .init())

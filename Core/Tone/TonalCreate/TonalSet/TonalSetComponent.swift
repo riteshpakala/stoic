@@ -61,6 +61,10 @@ public struct TonalSetComponent: GraniteComponent {
                         }
                     }
                 }
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium)
+                .padding(.bottom, Brand.Padding.small)
+                .padding(.top, Brand.Padding.small)
                 
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
@@ -90,18 +94,17 @@ public struct TonalSetComponent: GraniteComponent {
                             }
                         }
                     }
+                    .padding(.leading, Brand.Padding.medium)
+                    .padding(.trailing, Brand.Padding.medium)
                 }
             }
             .padding(.top, Brand.Padding.large)
             .padding(.bottom, Brand.Padding.medium)
-            .padding(.leading, Brand.Padding.medium)
-            .padding(.trailing, Brand.Padding.medium)
             
             if command.center.stage == .fetching {
                 GraniteDisclaimerComponent(state:
                                             .init("please wait, * stoic is\nfetching large\namounts of data\nto begin training", opacity: 0.57))
             }
-            
         }.clipped()
     }
 }

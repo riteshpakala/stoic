@@ -36,13 +36,15 @@ public struct TonalModel: Asset {
         self.latestSecurity = quote.securities.sortDesc.first ?? EmptySecurity()
     }
     
-    public func predict(_ sentiment: SentimentOutput = .neutral) -> Double {
+    public func predict(_ sentiment: SentimentOutput = .neutral,
+                        modelType: TonalModels.ModelType = .close) -> Double {
         guard let output = david.predict(quote,
+                                         modelType,
                                          range: self.range,
                                          sentiment: sentiment) else {
             return 0.0
         }
-        return david.scale(prediction: output, latestSecurity.lastValue)
+        return output//david.scale(prediction: output, latestSecurity.lastValue)
     }
 }
 

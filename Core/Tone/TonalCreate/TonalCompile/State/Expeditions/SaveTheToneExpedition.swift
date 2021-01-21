@@ -40,7 +40,6 @@ struct SaveTheToneExpedition: GraniteExpedition {
             return
         }
         
-        
         let tonalModel: TonalModel = .init(model,
                                            daysTrained: daysTrained,
                                            tuners: tuners,

@@ -16,6 +16,12 @@ public struct SecurityDetailComponent: GraniteComponent {
     
     public init() {}
     
+    var tunerState: SentimentSliderState {
+        let tuner = inject(\.envDependency,
+                               target: \.detail.slider)
+        return tuner ?? .init()
+    }
+    
     public var body: some View {
         //DEV:
         
@@ -55,8 +61,28 @@ public struct SecurityDetailComponent: GraniteComponent {
             if case .expanded = state.kind,
                command.center.loaded {
                 PaddingVertical()
-                TonalDetailComponent(state: .init(state.quote))
+                TonalDetailComponent(state: .init(state.quote,
+                                                  prediction: state.currentPredictionPlotData))
                     .share(.init(dep(\.hosted)))
+            }
+            
+            if state.model != nil {
+                
+                 PaddingVertical()
+                GraniteText("\(state.currentPrediction)",
+                            Brand.Colors.purple,
+                            .title,
+                            .bold)
+                
+                SentimentSliderComponent(state: tunerState)
+                    .listen(to: command)
+                    .padding(.leading, Brand.Padding.large)
+                    .padding(.trailing, Brand.Padding.large)
+               
+                GraniteText(tunerState.sentiment.asString,
+                            Brand.Colors.yellow,
+                            .subheadline,
+                            .regular)
             }
         }
     }

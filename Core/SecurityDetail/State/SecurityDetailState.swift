@@ -48,9 +48,17 @@ public class SecurityDetailState: GraniteState {
         }
     }
     
-    public init(_ kind: SecurityDetailType, quote: Quote? = nil) {
+    var model: TonalModel? = nil
+    var tune: SentimentOutput = .neutral
+    var currentPrediction: Double = 0.0
+    var currentPredictionPlotData: GraphPageViewModel.PlotData? = nil
+    
+    public init(_ kind: SecurityDetailType,
+                quote: Quote? = nil,
+                model: TonalModel? = nil) {
         self.kind = kind
         self.quote = quote
+        self.model = model
     }
     
     public required init() {
@@ -75,6 +83,7 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetSecurityDetailExpedition.Discovery(),
+            GetSecurityPredictionExpedition.Discovery(),
             StockDetailResultExpedition.Discovery(),
             CryptoDetailResultExpedition.Discovery()
         ]

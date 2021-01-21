@@ -115,8 +115,7 @@ extension TonalModels {
             
             GraniteLogger.info("predicting:\n\(dataSet.description)\nself: \(self)", .relay)
             
-            try testData.addTestDataPoint(
-               input: dataSet.asArray)
+            try testData.addTestDataPoint(input: dataSet.asArray)
         }
         catch {
             GraniteLogger.error("invalid dataSet", .ml)

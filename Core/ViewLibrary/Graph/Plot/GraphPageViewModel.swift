@@ -9,8 +9,8 @@
 import Combine
 import SwiftUI
 
-class GraphPageViewModel: ObservableObject {
-    typealias PlotData = [(time: Date, price: CGFloat)]
+public class GraphPageViewModel: ObservableObject {
+    public typealias PlotData = [(time: Date, price: CGFloat)]
     
     private let logic: GraphPageBusinessLogic
     
@@ -27,7 +27,7 @@ class GraphPageViewModel: ObservableObject {
     
 //    private var storage = Set<AnyCancellable>()
     
-    init(symbol: String) {
+    public init(symbol: String) {
         self.symbol = symbol
         self.logic = GraphPageBusinessLogic(symbol: symbol)
         

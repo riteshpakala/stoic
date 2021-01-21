@@ -24,29 +24,19 @@ public struct TonalCompileComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            if let security = command.center.latestSecurity {
+            if command.center.compileState == .compiled,
+               let security = command.center.latestSecurity {
+                
                 SecurityDetailComponent(state: .init(.expanded(.init(object: security)),
-                                                     quote: command.center.quote))
+                                                     quote: command.center.quote,
+                                                     model: command.center.model))
                     .share(.init(dep(\.hosted,
                                      TonalCompileCenter.route)))
             }
             
+            Spacer()
+            
             VStack {
-                
-                if command.center.compileState == .compiled {
-                    GraniteText("\(state.currentPrediction)",
-                                Brand.Colors.purple,
-                                .title,
-                                .bold)
-                    
-                    SentimentSliderComponent(state: tunerState).listen(to: command)
-                   
-                    GraniteText(tunerState.sentiment.asString,
-                                Brand.Colors.yellow,
-                                .subheadline,
-                                .regular)
-                }
-                
                 if command.center.compileState == .readyToCompile {
                     GraniteButtonComponent(state: .init("compile")).onTapGesture {
                         sendEvent(TonalCompileEvents.Compile())
@@ -61,6 +51,9 @@ public struct TonalCompileComponent: GraniteComponent {
             .padding(.bottom, Brand.Padding.medium)
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
+            .frame(minWidth: 300)
+            
+            Spacer()
         }
     }
 }

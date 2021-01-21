@@ -79,7 +79,7 @@ public struct PortfolioComponent: GraniteComponent {
                             .center,
                             style: .init(gradient: [Brand.Colors.black.opacity(0.75),
                                                     Brand.Colors.black.opacity(0.36)]))
-                    .padding(.top, Brand.Padding.medium)
+                    .padding(.top, Brand.Padding.large)
                     .padding(.leading, Brand.Padding.medium)
                     .padding(.bottom, Brand.Padding.medium)
                 
@@ -98,6 +98,8 @@ public struct PortfolioComponent: GraniteComponent {
                             .trailing)
             }
             .padding(.top, Brand.Padding.xSmall)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
             //Strategy
             
             GraniteText("sign out",
@@ -106,7 +108,7 @@ public struct PortfolioComponent: GraniteComponent {
                         .bold,
                         .center)
                 .padding(.top, Brand.Padding.medium)
-                .padding(.bottom, Brand.Padding.small)
+                .padding(.bottom, Brand.Padding.large)
             
         }
         .padding(.top, Brand.Padding.large)
@@ -115,10 +117,10 @@ public struct PortfolioComponent: GraniteComponent {
         .padding(.bottom, Brand.Padding.large)
         .shadow(color: Color.black.opacity(0.57), radius: 4.0, x: 1.0, y: 2.0)
         .background(GradientView(direction: .topLeading)
-                        .padding(.top, Brand.Padding.medium)
-                        .padding(.leading, Brand.Padding.medium)
-                        .padding(.trailing, Brand.Padding.medium)
-                        .padding(.bottom, Brand.Padding.medium)
+                        .padding(.top, Brand.Padding.large)
+                        .padding(.leading, Brand.Padding.large)
+                        .padding(.trailing, Brand.Padding.large)
+                        .padding(.bottom, Brand.Padding.large)
                         .shadow(color: Color.black, radius: 8.0, x: 3.0, y: 3.0))
                        
             

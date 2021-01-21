@@ -29,5 +29,8 @@ class Detail: ObservableObject {
         }
     }
     
+    var model: TonalModel?
+    var slider: SentimentSliderState = .init(.neutral, date: .today)
+    
     var indicators: TonalServiceModels.Indicators?
 }

@@ -46,7 +46,6 @@ class SomePlotData: ObservableObject {
     typealias PlotData = GraphPageViewModel.PlotData
     @Published var plotData: PlotData?
     @Published var predictionPlotData: PlotData = []
-    @Published var predictionDateData: PlotData = []
     @Published var trueDays: Int?
     @Published var graphType: GraphType = .unassigned
     @Published var timeDisplayMode: TimeDisplayOption = .daily
