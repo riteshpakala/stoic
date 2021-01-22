@@ -19,11 +19,6 @@ public struct TonalDetailComponent: GraniteComponent {
     public var body: some View {
         VStack {
             
-            ZStack {
-                GraphPage(someModel: command.center.plotData.percentK).opacity(0.75)
-                
-                GraphPage(someModel: command.center.plotData.percentD)
-            }
             
         }.frame(maxWidth: .infinity,
                 maxHeight: 200)

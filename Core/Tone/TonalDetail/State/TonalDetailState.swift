@@ -10,26 +10,24 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+public enum TonalDetailStage {
+    case generating
+    case none
+}
 public class TonalDetailState: GraniteState {
-    let quote: Quote?
-    let prediction: GraphPageViewModel.PlotData?
+    let model: TonalModel?
     
-    public init(_ quote: Quote?,
-                prediction: GraphPageViewModel.PlotData? = nil) {
-        self.quote = quote
-        self.prediction = prediction
+    public init(_ model: TonalModel?) {
+        self.model = model
     }
     
     public required init() {
-        quote = nil
-        prediction = nil
+        model = nil
     }
 }
 
 public class TonalDetailCenter: GraniteCenter<TonalDetailState> {
     let tonalRelay: TonalRelay = .init()
-    let stockRelay: StockRelay = .init()
-    let cryptoRelay: CryptoRelay = .init()
     
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
@@ -45,54 +43,5 @@ public class TonalDetailCenter: GraniteCenter<TonalDetailState> {
         [
             .onAppear(TonalDetailEvents.Generate(), .dependant)
         ]
-    }
-    
-    var stochastics: TonalServiceModels.Indicators.Stochastics? {
-        envDependency.detail.indicators?.stochastic
-    }
-    
-    var plotData: (percentK: SomePlotData, percentD: SomePlotData) {
-        if let stochastics = self.stochastics {
-            var dataK: GraphPageViewModel.PlotData = .init()
-            var dataD: GraphPageViewModel.PlotData = .init()
-            for (index) in 0..<stochastics.values.count {
-                let percentK = stochastics.values.percentKs[index]
-                let percentD = stochastics.values.percentDs[index]
-                let date = stochastics.values.dates[index]
-                
-                dataK.append((date, percentK.asCGFloat))
-                dataD.append((date, percentD.asCGFloat))
-            }
-            
-            let plotDataK: SomePlotData = .init(dataK.reversed(),
-                                                interval: timeDisplay,
-                                                graphType: .indicator(Brand.Colors.grey))
-            
-            let plotDataD: SomePlotData = .init(dataD.reversed(),
-                                                interval: timeDisplay,
-                                                graphType: .indicator(Brand.Colors.yellow))
-            
-            //DEV:
-            //
-//            plotDataK.predictionPlotData = state.prediction ?? []
-            plotDataD.predictionPlotData = state.prediction ?? []
-            
-            return (plotDataK, plotDataD)
-        } else {
-            return (.init(), .init())
-        }
-    }
-    
-    var timeDisplay: TimeDisplayOption {
-        if let quote = state.quote {
-            switch quote.intervalType {
-            case .day:
-                return .daily
-            case .hour:
-                return .hourly
-            }
-        } else {
-            return .daily
-        }
     }
 }

@@ -95,9 +95,9 @@ extension TonalService {
                         indicators.avgVolatility,
                         indicators.vwa,
                         indicators.smaWA(),
-                        sentiment.pos,
-                        sentiment.neg,
-                        sentiment.neu
+//                        sentiment.pos,
+//                        sentiment.neg,
+//                        sentiment.neu
                     ]
                 }
 

@@ -44,13 +44,13 @@ extension TonalModels {
                 return
             }
             
-            GraniteLogger.info("generating tonal model", .ml, focus: true, symbol: "🛠")
+            GraniteLogger.info("generating tonal model", .ml, symbol: "🛠")
             
             var models: [TonalModels.Model] = []
             for modelType in ModelType.allCases {
                 guard modelType != .none else { continue }
                 
-                GraniteLogger.info("-- working on: \(modelType) --", .ml, focus: true, symbol: "🚧")
+                GraniteLogger.info("-- working on: \(modelType) --", .ml, symbol: "🚧")
                 let type: ModelType = modelType
                 let dataForDavid: DataSet = DataSet(
                     dataType: .Regression,
@@ -95,10 +95,10 @@ extension TonalModels {
                 
                 models.append(modelType.model(for: david))
                 
-                GraniteLogger.info("-- completed: \(modelType) ☑️ --", .ml, focus: true, symbol: "🚧")
+                GraniteLogger.info("-- completed: \(modelType) ☑️ --", .ml, symbol: "🚧")
             }
             
-            GraniteLogger.info("tonal model generation - complete - ✅", .ml, focus: true)
+            GraniteLogger.info("tonal model generation - complete - ✅", .ml)
             
             completion(.init(models: models))
         }
@@ -110,7 +110,8 @@ extension TonalModels {
         
         var modelsToAppend: [Model] = []
         for type in ModelType.allCases {
-            guard let model = self.model(forType: type), let dataForDavid = model.dataSet else {
+            guard let model = self.model(forType: type),
+                  let dataForDavid = model.dataSet else {
                 continue
             }
 
@@ -120,6 +121,13 @@ extension TonalModels {
                 quote: quote,
                 modelType: type)
 
+            
+            
+            
+//            GraniteLogger.info("\(dataSet.description)", .expedition, focus: true)
+            
+            
+            
             do {
                 try dataForDavid.addDataPoint(
                     input: dataSet.asArray,

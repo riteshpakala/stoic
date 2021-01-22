@@ -62,14 +62,12 @@ public struct TonalModel: Asset {
             var highPercent: Double = 0.0
             var lowPercent: Double = 0.0
             var volume: Double = 0.0
-            var stochasticK: Double = 0.0
-            var stochasticD: Double = 0.0
             
             for aModelType in TonalModels.ModelType.allCases {
                 guard aModelType != .none else { continue }
                 guard let output = modelToModify.predict(quoteToModify,
                                                  aModelType,
-                                                 range: self.range,
+                                                 range: rangeToModify,
                                                  sentiment: sentiment) else {
                     continue
                 }
@@ -83,29 +81,36 @@ public struct TonalModel: Asset {
                     lowPercent = output
                 case .volume:
                     volume = output
-                case .stochasticK:
-                    stochasticK = output
-                case .stochasticD:
-                    stochasticD = output
                 default:
                     continue
                 }
             }
             
             var securityToAdd = EmptySecurity.init()
+            print("[Security - \(securityToAdd.date.advanceDate(value: i))]")
+            print("close: \(david.scale(prediction: closePercent, nextSecurity.lastValue))")
+            print("high: \(david.scale(prediction: highPercent, nextSecurity.highValue))")
+            print("low: \(david.scale(prediction: lowPercent, nextSecurity.lowValue))")
+            print("volume: \(david.scale(prediction: volume, nextSecurity.volumeValue))\n")
             securityToAdd.date = securityToAdd.date.advanceDate(value: i)
             securityToAdd.lastValue = david.scale(prediction: closePercent, nextSecurity.lastValue)
             securityToAdd.highValue = david.scale(prediction: highPercent, nextSecurity.highValue)
             securityToAdd.lowValue = david.scale(prediction: lowPercent, nextSecurity.lowValue)
-            securityToAdd.volumeValue = volume
-            
+            securityToAdd.volumeValue = david.scale(prediction: volume, nextSecurity.volumeValue)
+
             quoteToModify.securities.append(EmptySecurity.init())
-            
+
             rangeToModify.insert(securityToAdd.date, at: 0)
-            
+
             modelToModify = modelToModify.append(security: securityToAdd,
-                                                 quote: quote,
+                                                 quote: quoteToModify,
                                                  sentiment: sentiment)
+//
+//            print("[Security - \(securityToAdd.date.asString)]")
+//            print("close: \(securityToAdd.lastValue)")
+//            print("high: \(securityToAdd.highValue)")
+//            print("low: \(securityToAdd.lowValue)")
+//            print("volume: \(securityToAdd.volumeValue)\n")
         }
     }
 }

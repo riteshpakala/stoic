@@ -35,7 +35,7 @@ struct GetTradingDayExpedition: GraniteExpedition {
             }
         }
         
-        GraniteLogger.info("nextTradingDay: \(nextTradingDate.asString)", .expedition, focus: true)
+        GraniteLogger.info("nextTradingDay: \(nextTradingDate.asString)", .expedition)
         
         let components = nextTradingDate.dateComponents()
         //If friday & days left < 3, next month
@@ -61,7 +61,7 @@ struct TradingDayResultExpedition: GraniteExpedition {
         
         for item in event.data {
             
-            GraniteLogger.info(item.date.asString+" - isOpen: \(item.isOpen)", .expedition, focus: true)
+            GraniteLogger.info(item.date.asString+" - isOpen: \(item.isOpen)", .expedition)
         }
     }
 }

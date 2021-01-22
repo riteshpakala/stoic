@@ -355,6 +355,14 @@
 		71267A4625A59D89006132D8 /* Security.Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A4425A59D89006132D8 /* Security.Helpers.swift */; };
 		7126ED7C25B77B6800195901 /* VariablesExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126ED7B25B77B6800195901 /* VariablesExpedition.swift */; };
 		7126ED7D25B77B6800195901 /* VariablesExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126ED7B25B77B6800195901 /* VariablesExpedition.swift */; };
+		712BD1D825BA678F004D6E94 /* IndicatorDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D525BA678F004D6E94 /* IndicatorDetailState.swift */; };
+		712BD1D925BA678F004D6E94 /* IndicatorDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D525BA678F004D6E94 /* IndicatorDetailState.swift */; };
+		712BD1DA25BA678F004D6E94 /* IndicatorDetailEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D625BA678F004D6E94 /* IndicatorDetailEvents.swift */; };
+		712BD1DB25BA678F004D6E94 /* IndicatorDetailEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D625BA678F004D6E94 /* IndicatorDetailEvents.swift */; };
+		712BD1DC25BA678F004D6E94 /* IndicatorDetailComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D725BA678F004D6E94 /* IndicatorDetailComponent.swift */; };
+		712BD1DD25BA678F004D6E94 /* IndicatorDetailComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D725BA678F004D6E94 /* IndicatorDetailComponent.swift */; };
+		712BD1E425BA6804004D6E94 /* GenerateIndicatorExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1E325BA6804004D6E94 /* GenerateIndicatorExpedition.swift */; };
+		712BD1E525BA6804004D6E94 /* GenerateIndicatorExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1E325BA6804004D6E94 /* GenerateIndicatorExpedition.swift */; };
 		712D3D0225A6B9BD005EE3F9 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712D3D0125A6B9BD005EE3F9 /* Padding.swift */; };
 		712D3D0325A6B9BD005EE3F9 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712D3D0125A6B9BD005EE3F9 /* Padding.swift */; };
 		71332A1125A78D09005A72A9 /* SecurityDetailEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */; };
@@ -1018,6 +1026,10 @@
 		71267A3D25A59A3F006132D8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		71267A4425A59D89006132D8 /* Security.Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.Helpers.swift; sourceTree = "<group>"; };
 		7126ED7B25B77B6800195901 /* VariablesExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablesExpedition.swift; sourceTree = "<group>"; };
+		712BD1D525BA678F004D6E94 /* IndicatorDetailState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorDetailState.swift; sourceTree = "<group>"; };
+		712BD1D625BA678F004D6E94 /* IndicatorDetailEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorDetailEvents.swift; sourceTree = "<group>"; };
+		712BD1D725BA678F004D6E94 /* IndicatorDetailComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorDetailComponent.swift; sourceTree = "<group>"; };
+		712BD1E325BA6804004D6E94 /* GenerateIndicatorExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateIndicatorExpedition.swift; sourceTree = "<group>"; };
 		712D3D0125A6B9BD005EE3F9 /* Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padding.swift; sourceTree = "<group>"; };
 		71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityDetailEvents.swift; sourceTree = "<group>"; };
 		71332A0E25A78D09005A72A9 /* SecurityDetailComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityDetailComponent.swift; sourceTree = "<group>"; };
@@ -2157,6 +2169,43 @@
 			path = Expeditions;
 			sourceTree = "<group>";
 		};
+		712BD1C325BA6762004D6E94 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				71332A0F25A78D09005A72A9 /* State */,
+				71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */,
+				71332A0E25A78D09005A72A9 /* SecurityDetailComponent.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		712BD1D325BA678F004D6E94 /* IndicatorDetail */ = {
+			isa = PBXGroup;
+			children = (
+				712BD1D425BA678F004D6E94 /* State */,
+				712BD1D625BA678F004D6E94 /* IndicatorDetailEvents.swift */,
+				712BD1D725BA678F004D6E94 /* IndicatorDetailComponent.swift */,
+			);
+			path = IndicatorDetail;
+			sourceTree = "<group>";
+		};
+		712BD1D425BA678F004D6E94 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				712BD1E225BA67EB004D6E94 /* Expeditions */,
+				712BD1D525BA678F004D6E94 /* IndicatorDetailState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		712BD1E225BA67EB004D6E94 /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				712BD1E325BA6804004D6E94 /* GenerateIndicatorExpedition.swift */,
+			);
+			path = Expeditions;
+			sourceTree = "<group>";
+		};
 		712D3D0025A6B9AA005EE3F9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2170,9 +2219,8 @@
 		71332A0C25A78D09005A72A9 /* SecurityDetail */ = {
 			isa = PBXGroup;
 			children = (
-				71332A0F25A78D09005A72A9 /* State */,
-				71332A0D25A78D09005A72A9 /* SecurityDetailEvents.swift */,
-				71332A0E25A78D09005A72A9 /* SecurityDetailComponent.swift */,
+				712BD1D325BA678F004D6E94 /* IndicatorDetail */,
+				712BD1C325BA6762004D6E94 /* Core */,
 			);
 			path = SecurityDetail;
 			sourceTree = "<group>";
@@ -3586,6 +3634,7 @@
 				719AD86C25B10746001350FA /* GraniteEmptyEvents.swift in Sources */,
 				711484B4259E0C7B00464684 /* WindowEvents.swift in Sources */,
 				7125BDC325A1318D00F22717 /* AnyRangeSliderStyle.swift in Sources */,
+				712BD1DA25BA678F004D6E94 /* IndicatorDetailEvents.swift in Sources */,
 				7139F625259810C000D9C84B /* TonalSetComponent.swift in Sources */,
 				71267A3325A588C6006132D8 /* Quote.CoreData.swift in Sources */,
 				7179D3D925AC936500C82063 /* TonalModelsEvents.swift in Sources */,
@@ -3667,6 +3716,7 @@
 				7179AD0725AC9D6C003FD06F /* SaveTheToneExpedition.swift in Sources */,
 				71C08EC725AFA59300765894 /* CryptoService.List.swift in Sources */,
 				71F1EC5425A0F47A00D32C52 /* SearchState.swift in Sources */,
+				712BD1D825BA678F004D6E94 /* IndicatorDetailState.swift in Sources */,
 				71C2BF7225ABA9AD006445EB /* GetSecurityDetailExpedition.swift in Sources */,
 				7108896D2591B29800795EDF /* PromiseState.swift in Sources */,
 				719AD86E25B10746001350FA /* GraniteEmptyState.swift in Sources */,
@@ -3726,6 +3776,7 @@
 				7125BE6525A1388400F22717 /* PointSliderOptions.swift in Sources */,
 				71434318259076EB001F26A4 /* Comparible+Convenience.swift in Sources */,
 				71DC58FA259899A7004935CF /* Dictionary.swift in Sources */,
+				712BD1DC25BA678F004D6E94 /* IndicatorDetailComponent.swift in Sources */,
 				71149EF225A7A67C00148D68 /* AssetSelectedExpedition.swift in Sources */,
 				710889892591B29800795EDF /* Async.swift in Sources */,
 				714342E725907253001F26A4 /* InnerShadowExtensions.swift in Sources */,
@@ -3831,6 +3882,7 @@
 				71B4300F25A889E500A23F4D /* FloorObject+CoreDataProperties.swift in Sources */,
 				71E3DD2625B767FE00C7795C /* StockService.TradingDay.swift in Sources */,
 				719AD87A25B10A03001350FA /* GradientView.swift in Sources */,
+				712BD1E425BA6804004D6E94 /* GenerateIndicatorExpedition.swift in Sources */,
 				7125BD8C25A1316500F22717 /* DefaultHorizontalValueView.swift in Sources */,
 				7124162025A36C3400169B9C /* Social.swift in Sources */,
 				71332A3125A79DD0005A72A9 /* AssetSearchComponent.swift in Sources */,
@@ -3951,6 +4003,7 @@
 				7179ACE025AC9987003FD06F /* TonalModelObject+CoreDataClass.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
 				7123B12C2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
+				712BD1E525BA6804004D6E94 /* GenerateIndicatorExpedition.swift in Sources */,
 				71143DFF25A4C70800379E4B /* TonalService.Indicators.Averages.swift in Sources */,
 				71D3C2D125AA88190033350B /* MoversExpedition.swift in Sources */,
 				7109642A25A59FBD0021B42B /* TonalService.Model.DataSet.swift in Sources */,
@@ -4049,6 +4102,7 @@
 				710889822591B29800795EDF /* PromiseBlocks.swift in Sources */,
 				71D63EC62592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */,
 				71C08EF225AFDAEF00765894 /* CryptoCurrency.CoreData.swift in Sources */,
+				712BD1DB25BA678F004D6E94 /* IndicatorDetailEvents.swift in Sources */,
 				7169535225A7ADB400641BCE /* Run.swift in Sources */,
 				7123B12E2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
 				71EE7076258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
@@ -4183,6 +4237,7 @@
 				710889C22591B3AB00795EDF /* CryptoCurrency.swift in Sources */,
 				71ACC24025B0AB9100E02AE3 /* TonalDetailComponent.swift in Sources */,
 				7139F6A425983C2000D9C84B /* TonalService.swift in Sources */,
+				712BD1DD25BA678F004D6E94 /* IndicatorDetailComponent.swift in Sources */,
 				71EE7008258D347F005B2B8E /* __stoicApp.swift in Sources */,
 				71C08E8925AF53AF00765894 /* NetworkResponseObject+CoreDataClass.swift in Sources */,
 				71C2BF6B25ABA5B8006445EB /* HoldingSelectedExpedition.swift in Sources */,
@@ -4218,6 +4273,7 @@
 				71C08EC625AFA59300765894 /* CryptoService.swift in Sources */,
 				710889842591B29800795EDF /* Promise+Chain.swift in Sources */,
 				7139F67325981BD300D9C84B /* TonalTuneState.swift in Sources */,
+				712BD1D925BA678F004D6E94 /* IndicatorDetailState.swift in Sources */,
 				7143432B259076EB001F26A4 /* Double+Convenience.swift in Sources */,
 				7143430225907622001F26A4 /* RepresentableAsDouble.swift in Sources */,
 				71DC58D225988F56004935CF /* Lemmatizer.swift in Sources */,

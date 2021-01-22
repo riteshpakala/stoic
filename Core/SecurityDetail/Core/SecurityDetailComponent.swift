@@ -61,8 +61,7 @@ public struct SecurityDetailComponent: GraniteComponent {
             if case .expanded = state.kind,
                command.center.loaded {
                 PaddingVertical()
-                TonalDetailComponent(state: .init(state.quote,
-                                                  prediction: state.currentPredictionPlotData))
+                IndicatorDetailComponent(state: .init(state.quote))
                     .share(.init(dep(\.hosted)))
             }
             

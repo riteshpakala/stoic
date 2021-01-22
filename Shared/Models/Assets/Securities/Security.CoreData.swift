@@ -203,7 +203,7 @@ extension Set where Element == SecurityObject {
             if let securities = security.quote?.securities {
                 return Array(securities).sortDesc.first
             } else {
-                GraniteLogger.info("\(security.quote == nil)", .utility, focus: true)
+                GraniteLogger.info("\(security.quote == nil)", .utility)
                 return nil
             }
         }

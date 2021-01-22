@@ -36,12 +36,12 @@ extension NSManagedObjectContext {
             GraniteLogger.info("🪝fetching sentiment\nsenti dates: \(sentimentObjects.map { $0.date.simple }.uniques.sortDesc)\nsecurity dates: \(securitiesFiltered.map { $0.date.simple }.uniques.sortDesc)", .expedition, focus: true)
             
             if sentiment.isValid(against: range) {
-                GraniteLogger.info("sentiments valid ✅", .expedition, focus: true)
+                GraniteLogger.info("sentiments valid ✅", .expedition)
                 completion((sentiment, nil))
             } else {
                 let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.date.simple) }
                 
-                GraniteLogger.info("sentiments not valid, fetching missing\ndates:\(missingSentiment.map { $0.date.simple })", .expedition, focus: true)
+                GraniteLogger.info("sentiments not valid, fetching missing\ndates:\(missingSentiment.map { $0.date.simple })", .expedition)
                 
                 completion((nil, .init(objects: Array(missingSentiment).asSecurities,
                                       Array(securities)

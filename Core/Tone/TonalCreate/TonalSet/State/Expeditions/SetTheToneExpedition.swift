@@ -58,12 +58,12 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         //to understand how it's getting hit so many times
         //in the beam event system part of the Tonal Relay
         //
-        GraniteLogger.info("sentiment history received & saving\nself:\(self)", .expedition, focus: true)
+        GraniteLogger.info("sentiment history received & saving\nself:\(self)", .expedition)
         
         guard let tone = connection.retrieve(\EnvironmentDependency.tone),
               let range = tone.selectedRange else {
             
-            GraniteLogger.info("sentiment history saving failed \nself:\(self)", .expedition, focus: true)
+            GraniteLogger.info("sentiment history saving failed \nself:\(self)", .expedition)
             return
         }
         

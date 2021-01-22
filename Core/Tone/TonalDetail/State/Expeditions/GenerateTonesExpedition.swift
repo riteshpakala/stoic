@@ -18,9 +18,28 @@ struct GenerateTonesExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        guard let detail = connection.retrieve(\EnvironmentDependency.detail) else {
+            return
+        }
         
-        guard let _ = state.quote else { return }
-        GraniteLogger.info("generating tonal details - quote received\nself:\(self)", .expedition)
+        guard detail.tonalStage == .none else {
+            return
+        }
+        
+        guard let quote = detail.quote else {
+            return
+        }
     
+        connection.update(\EnvironmentDependency.detail.tonalStage, value: .generating)
+        
+        quote.getObject(moc: coreDataInstance) { object in
+            if let tonalModel = object?.tonalModel?.first?.asTone {
+                preparePredictoins(tonalModel)
+            }
+        }
+    }
+    
+    func preparePredictoins(_ model: TonalModel) {
+        model.predict(days: 2)
     }
 }

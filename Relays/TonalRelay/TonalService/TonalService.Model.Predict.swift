@@ -13,7 +13,7 @@ import CoreData
 extension TonalModels {
     public func scale(prediction: Double,
                       _ value: Double) -> Double {
-        GraniteLogger.info("scaling: \(prediction) to: \(value)", .ml, focus: true)
+        GraniteLogger.info("scaling: \(prediction) to: \(value)", .ml)
         return (value*prediction) + value
     }
     
@@ -126,7 +126,7 @@ extension TonalModels {
             return nil
         }
         
-        GraniteLogger.info("predicting for: \(modelType)\noutput: \(output)\nself: \(self)", .ml, focus: true)
+        GraniteLogger.info("predicting for: \(modelType)\noutput: \(output)\nself: \(self)", .ml)
         
         switch modelType {
         case .close:

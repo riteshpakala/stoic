@@ -52,8 +52,9 @@ public struct EnvironmentConfig {
                         ])
             case .securityDetail(let payload):
                 return .init(windows: [
-                            [.securityDetail(.expanded(payload)), .portfolio(.holdings)],
-                            [.unassigned, .tonalBrowser(payload)]
+                    [.securityDetail(.expanded(payload)), .unassigned, .portfolio(.holdings)],
+                    [.unassigned, .unassigned, .tonalBrowser(payload)],
+                    [.unassigned, .unassigned, .tonalDetail]
                         ])
             default:
                 return .init(windows: [])
