@@ -26,7 +26,7 @@ struct GetSentimentExpedition: GraniteExpedition {
 //        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: state.service.soundAggregate.dates.count/2)
         
         let dates: [Date] = state.service.soundAggregate.dates
-
+        GraniteLogger.info("sentiment dates to process: \(dates.map { $0.simple })\n self: \(self)", .expedition, focus: true)
         if let date = dates.first(where: {
                                     !state.service.soundAggregate.completed.contains($0.simple) }) {
             
@@ -66,8 +66,7 @@ struct ProcessSentimentExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        let days = abs(event.untilDate.timeIntervalSince(event.sinceDate).date().dateComponents().day)
-        
+        let days = event.untilDate.daysFrom(event.sinceDate)
         
         GraniteLogger.info("🧘 processing: \(event.sinceDate) - \(event.untilDate)\n self: \(self)", .expedition)
         
@@ -134,7 +133,7 @@ struct TonalHistoryExpedition: GraniteExpedition {
         state.operationQueue.addOperations(currentOps, waitUntilFinished: false)
         
         state.operationQueue.addBarrierBlock {
-            GraniteLogger.info("🪔 completed processing: \(tweet.result.map { $0.date.asDouble.date().asString }.uniques)\n self: \(self)", .expedition)
+            GraniteLogger.info("🪔 completed processing: \(tweet.result.map { $0.date.asDouble.date().asString }.uniques)\n self: \(self)", .expedition, focus: true)
             if let range = state.service.soundAggregate.range {
                 connection.request(TonalEvents.GetSentiment.init(range: range), .contact)
             }
@@ -164,7 +163,7 @@ struct TonalSoundsExpedition: GraniteExpedition {
         
         if state.sentimentProgress >= 1.0 && state.stage != .compiling {
             
-            GraniteLogger.info("compiling sentiment\n self: \(self)", .expedition)
+            GraniteLogger.info("compiling sentiment\n self: \(self)", .expedition, focus: true)
             
             let compiled = state.service.soundAggregate.compiled
             state.service.reset()

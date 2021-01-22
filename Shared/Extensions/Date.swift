@@ -91,6 +91,14 @@ extension Date {
             return self == .sunday || self == .saturday
         }
     }
+    
+    func daysFrom(_ date: Date) -> Int {
+        let todaysDate = self
+        let latestTickerDate = date
+        let components = Calendar.nyCalendar.dateComponents([.day], from: latestTickerDate, to: todaysDate)
+        
+        return abs(components.day ?? 0)
+    }
 }
 
 //MARK: -- Sorting

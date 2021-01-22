@@ -21,12 +21,14 @@ struct CompileTheToneExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         guard let tone = connection.retrieve(\EnvironmentDependency.tone) else {
+            GraniteLogger.error("compiling tonal model failed - no tone\nself:\(self)",
+                                    .expedition, focus: true)
             return
         }
         
         guard let quote = tone.find.quote else {
-            GraniteLogger.error("saving tonal model failed - no quote\nself:\(self)",
-                                .expedition)
+            GraniteLogger.error("compiling tonal model failed - no quote\nself:\(self)",
+                                .expedition, focus: true)
             return
         }
         
@@ -34,7 +36,7 @@ struct CompileTheToneExpedition: GraniteExpedition {
         let tuners = Array(tone.tune.tuners.map { $0.value.slider.sentiment })
         let range = tone.selectedRange?.dates ?? []
         
-        GraniteLogger.info("compiling tonal model\nself:\(self)", .expedition)
+        GraniteLogger.info("compiling tonal model\nself:\(self)", .expedition, focus: true)
         
         connection.update(\EnvironmentDependency.tone.compile.state, value: .compiling)
         

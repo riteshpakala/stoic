@@ -34,12 +34,12 @@ struct GenerateTonesExpedition: GraniteExpedition {
         
         quote.getObject(moc: coreDataInstance) { object in
             if let tonalModel = object?.tonalModel?.first?.asTone {
-                preparePredictoins(tonalModel)
+                preparePredictions(tonalModel)
             }
         }
     }
     
-    func preparePredictoins(_ model: TonalModel) {
-        model.predict(days: 2)
+    func preparePredictions(_ model: TonalModel) {
+        model.predict(days: 12)
     }
 }

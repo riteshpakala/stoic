@@ -137,10 +137,6 @@ extension TonalModels {
             return (output - security.lowValue) / security.lowValue
         case .volume:
             return (output - security.volumeValue) / security.volumeValue
-        case .stochasticK:
-            return output
-        case .stochasticD:
-            return output
         default:
             return nil
         }

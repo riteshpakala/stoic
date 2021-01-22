@@ -95,10 +95,10 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         }
                         
                         if state.isExpanded {
-                            GraniteLogger.error("quote needs update (expanded)", .expedition, symbol: "🎡")
+                            GraniteLogger.error("quote needs update (expanded)", .expedition, focus: true, symbol: "🎡")
                             connection.update(\EnvironmentDependency.detail.stage, value: .fetching)
                         } else {
-                            GraniteLogger.error("quote needs update (preview) ", .expedition, symbol: "🎡")
+                            GraniteLogger.error("quote needs update (preview) ", .expedition, focus: true, symbol: "🎡")
                             portfolio?.updateDetailStage(state.security, stage: .fetching)
                             connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
                         }

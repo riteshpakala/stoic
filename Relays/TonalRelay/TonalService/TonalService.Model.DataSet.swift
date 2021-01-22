@@ -30,7 +30,7 @@ extension TonalService {
                     rangeDates = range.dates.sortAsc
                     let objects = range.objects.sortAsc
                     var sentimentDates = Array(sentiments.keys).sortDesc
-            
+                    
                     for item in objects {
                         var pocket: Pocket = .init(date: item.date, sentiment: [])
                         
@@ -50,6 +50,9 @@ extension TonalService {
                         
                         if pocket.sentiment.isNotEmpty {
                             pockets.append(pocket)
+                        } else {
+                            //DEV:
+                            rangeDates.removeAll(where: { $0 == item.date })
                         }
                     }
                     
@@ -90,15 +93,63 @@ extension TonalService {
                 }
 
                 public var asArray: [Double] {
-                    [
-                        indicators.avgMomentum,
-                        indicators.avgVolatility,
-                        indicators.vwa,
-                        indicators.smaWA(),
-//                        sentiment.pos,
-//                        sentiment.neg,
-//                        sentiment.neu
-                    ]
+                    switch modelType {
+                    case .close:
+                        return [
+                            indicators.avgMomentum,
+                            indicators.avgVolatility,
+                            indicators.vwa,
+                            indicators.smaWA(),
+                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            sentiment.pos,
+                            sentiment.neg,
+                            sentiment.neu
+                        ]
+                    case .low:
+                        return [
+                            indicators.avgMomentum,
+                            indicators.avgVolatility,
+                            indicators.vwa,
+                            indicators.basePair.previous.lowValue/indicators.sma(),
+                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            sentiment.pos,
+                            sentiment.neg,
+                            sentiment.neu
+                        ]
+                    case .high:
+                        return [
+                            indicators.avgMomentum,
+                            indicators.avgVolatility,
+                            indicators.vwa,
+                            indicators.basePair.previous.highValue/indicators.sma(),
+                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            sentiment.pos,
+                            sentiment.neg,
+                            sentiment.neu
+                        ]
+                    case .volume:
+                        return [
+                            indicators.avgMomentum,
+                            indicators.avgVolatility,
+                            indicators.vwa,
+                            indicators.smaWA(),
+                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            sentiment.pos,
+                            sentiment.neg,
+                            sentiment.neu
+                        ]
+                    default:
+                        return [
+                            indicators.avgMomentum,
+                            indicators.avgVolatility,
+                            indicators.vwa,
+                            indicators.smaWA(),
+                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            sentiment.pos,
+                            sentiment.neg,
+                            sentiment.neu
+                        ]
+                    }
                 }
 
                 public var inDim: Int {
@@ -119,10 +170,6 @@ extension TonalService {
                         return [security.highValue]
                     case .volume:
                         return [security.volumeValue]
-                    case .stochasticK:
-                        return [indicators.stochastic.values.percentKs.first ?? 0.0]
-                    case .stochasticD:
-                        return [indicators.stochastic.values.percentDs.first ?? 0.0]
                     }
                 }
 
@@ -137,6 +184,7 @@ extension TonalService {
                         Change: \(security.changePercentValue)
                         \(indicators.averagesToString)
                         \(sentiment.asString)
+                        \(indicators.stochastic.values.toString)
                         '''''''''''''''''''''''''''''
                         💽
                         """

@@ -46,12 +46,7 @@ public struct Quote {
     }
     
     var needsUpdate: Bool {
-        let todaysDate = Date.today
-        let latestTickerDate = latestSecurity.date
-        let components = Calendar.nyCalendar.dateComponents([.day], from: latestTickerDate, to: todaysDate)
-        guard let days = components.day else {
-            return false
-        }
+        let days: Int = Date.today.daysFrom(latestSecurity.date)
         
         return abs(days) > 0 || securities.count < 4
     }

@@ -41,7 +41,7 @@ extension TonalServiceModels.TonalSounds {
     }
     
     var days: Int {
-        abs(dateParams.untilDate.timeIntervalSince(dateParams.sinceDate).date().dateComponents().day)
+        dateParams.untilDate.daysFrom(dateParams.sinceDate)
     }
     
     var dates: [Date] {

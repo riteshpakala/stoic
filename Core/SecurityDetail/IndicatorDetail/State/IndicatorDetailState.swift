@@ -51,13 +51,15 @@ public class IndicatorDetailCenter: GraniteCenter<IndicatorDetailState> {
         if let stochastics = self.stochastics {
             var dataK: GraphPageViewModel.PlotData = .init()
             var dataD: GraphPageViewModel.PlotData = .init()
+            let Ks = stochastics.values.absoluteKs
+            let Ds = stochastics.values.absoluteDs
             for (index) in 0..<stochastics.values.count {
-                let percentK = stochastics.values.percentKs[index]
-                let percentD = stochastics.values.percentDs[index]
+                let K = Ks[index]
+                let D = Ds[index]
                 let date = stochastics.values.dates[index]
                 
-                dataK.append((date, percentK.asCGFloat))
-                dataD.append((date, percentD.asCGFloat))
+                dataK.append((date, K.asCGFloat))
+                dataD.append((date, D.asCGFloat))
             }
             
             let plotDataK: SomePlotData = .init(dataK.reversed(),

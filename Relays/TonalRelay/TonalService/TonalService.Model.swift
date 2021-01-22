@@ -17,8 +17,6 @@ public class TonalModels: Archiveable {
     public var high: SVMModel?
     public var low: SVMModel?
     public var volume: SVMModel?
-    public var stochasticK: SVMModel?
-    public var stochasticD: SVMModel?
     
     public var recentSecurity: Security?
     
@@ -35,10 +33,6 @@ public class TonalModels: Archiveable {
                 low = svmModel
             case .volume(let svmModel):
                 volume = svmModel
-            case .stochasticK(let svmModel):
-                stochasticK = svmModel
-            case .stochasticD(let svmModel):
-                stochasticD = svmModel
             }
         }
         super.init()
@@ -65,10 +59,6 @@ public class TonalModels: Archiveable {
         
         let volumeModel: SVMModel? = try? container.decode(SVMModel.self, forKey: .volume)
         
-        let stochasticK: SVMModel? = try? container.decode(SVMModel.self, forKey: .stochasticK)
-        
-        let stochasticD: SVMModel? = try? container.decode(SVMModel.self, forKey: .stochasticD)
-        
         let typeValue: Int = try container.decode(Int.self, forKey: .currentType)
         
         self.init(
@@ -78,8 +68,6 @@ public class TonalModels: Archiveable {
         self.high = highModel
         self.low = lowModel
         self.volume = volumeModel
-        self.stochasticK = stochasticK
-        self.stochasticD = stochasticD
         self.currentType = ModelType.init(rawValue: typeValue) ?? .none
     }
     
@@ -93,10 +81,6 @@ public class TonalModels: Archiveable {
         try container.encode(low, forKey: .low)
         
         try container.encode(volume, forKey: .volume)
-        
-        try container.encode(stochasticK, forKey: .stochasticK)
-        
-        try container.encode(stochasticD, forKey: .stochasticD)
         
         try container.encode(currentType.rawValue, forKey: .currentType)
     }
@@ -114,10 +98,6 @@ extension TonalModels {
             return low
         case .volume:
             return volume
-        case .stochasticK:
-            return stochasticK
-        case .stochasticD:
-            return stochasticD
         default:
             return close
         }
@@ -132,10 +112,6 @@ extension TonalModels {
             return .low
         case volume:
             return .volume
-        case stochasticK:
-            return .stochasticK
-        case stochasticD:
-            return .stochasticD
         default:
             return .none
         }
@@ -150,10 +126,6 @@ extension TonalModels {
             return low
         case .volume:
             return volume
-        case .stochasticK:
-            return stochasticK
-        case .stochasticD:
-            return stochasticD
         default:
             return close
         }
@@ -167,8 +139,6 @@ extension TonalModels {
         case high(SVMModel)
         case low(SVMModel)
         case volume(SVMModel)
-        case stochasticK(SVMModel)
-        case stochasticD(SVMModel)
         
         var type: ModelType {
             switch self {
@@ -180,10 +150,6 @@ extension TonalModels {
                 return .low
             case .volume(_):
                 return .volume
-            case .stochasticK(_):
-                return .stochasticK
-            case .stochasticD(_):
-                return .stochasticD
             }
         }
         
@@ -197,10 +163,6 @@ extension TonalModels {
                 return model
             case .volume(let model):
                 return model
-            case .stochasticK(let model):
-                return model
-            case .stochasticD(let model):
-                return model
             }
         }
     }
@@ -210,8 +172,6 @@ extension TonalModels {
         case high
         case low
         case volume
-        case stochasticK
-        case stochasticD
         case none
         
         var inDim: Int {
@@ -222,7 +182,7 @@ extension TonalModels {
 //                return 7
 //            }
             
-            return 7
+            return 8
         }
         
         func model(for model: SVMModel) -> Model {
@@ -235,10 +195,6 @@ extension TonalModels {
                 return .low(model)
             case .volume:
                 return .volume(model)
-            case .stochasticK:
-                return .stochasticK(model)
-            case .stochasticD:
-                return .stochasticD(model)
             default:
                 return .close(model)
             }
@@ -246,8 +202,7 @@ extension TonalModels {
         
         var symbol: String {
             switch self {
-            case .stochasticK,
-                 .stochasticD:
+            case .none:
                 return ""
             case .volume:
                 return ""

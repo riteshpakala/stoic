@@ -63,12 +63,15 @@ public struct TonalModel: Asset {
             var lowPercent: Double = 0.0
             var volume: Double = 0.0
             
+            let sentimentRand: SentimentOutput = .init(pos: 0.1.randomBetween(0.2),
+                                                   neg: 0.0.randomBetween(0.1),
+                                                   neu: 0.2.randomBetween(0.8), compound: 0.0)
             for aModelType in TonalModels.ModelType.allCases {
                 guard aModelType != .none else { continue }
                 guard let output = modelToModify.predict(quoteToModify,
                                                  aModelType,
                                                  range: rangeToModify,
-                                                 sentiment: sentiment) else {
+                                                 sentiment: sentimentRand) else {
                     continue
                 }
                 
@@ -98,19 +101,13 @@ public struct TonalModel: Asset {
             securityToAdd.lowValue = david.scale(prediction: lowPercent, nextSecurity.lowValue)
             securityToAdd.volumeValue = david.scale(prediction: volume, nextSecurity.volumeValue)
 
-            quoteToModify.securities.append(EmptySecurity.init())
+            quoteToModify.securities.append(securityToAdd)
 
             rangeToModify.insert(securityToAdd.date, at: 0)
 
             modelToModify = modelToModify.append(security: securityToAdd,
                                                  quote: quoteToModify,
                                                  sentiment: sentiment)
-//
-//            print("[Security - \(securityToAdd.date.asString)]")
-//            print("close: \(securityToAdd.lastValue)")
-//            print("high: \(securityToAdd.highValue)")
-//            print("low: \(securityToAdd.lowValue)")
-//            print("volume: \(securityToAdd.volumeValue)\n")
         }
     }
 }

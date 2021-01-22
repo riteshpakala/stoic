@@ -25,7 +25,7 @@ struct StockDetailResultExpedition: GraniteExpedition {
             return
         }
         
-        GraniteLogger.info("relaying stock quotes\nself:\(self)", .expedition)
+        GraniteLogger.info("relaying stock quotes\nself:\(self)", .expedition, focus: true)
         
         let stocks = event.data
         

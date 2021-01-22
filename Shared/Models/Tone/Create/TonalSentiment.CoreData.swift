@@ -52,7 +52,7 @@ extension TonalSentiment {
             
             do {
                 try moc.save()
-                GraniteLogger.info("sentiment saved", .utility)
+                GraniteLogger.info("sentiment saved", .utility, focus: true)
                 completion?(true)
             } catch let error {
                 completion?(false)

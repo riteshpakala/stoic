@@ -16,7 +16,7 @@ extension TonalModels {
                                 _ completion: @escaping ((TonalModels?) -> Void)) {
         
         guard let range = tone.selectedRange else {
-            GraniteLogger.error("failed to retrieve range\nself: \(self)", .relay)
+            GraniteLogger.error("failed to retrieve range\nself: \(self)", .relay, focus: true)
             completion(nil)
             return
         }
@@ -25,7 +25,7 @@ extension TonalModels {
         
         securityObjects.first?.getQuote(moc: moc) { quote in
             guard let quote = quote else {
-                GraniteLogger.error("failed to retrieve quote\nself: \(self)", .relay)
+                GraniteLogger.info("failed to retrieve quote\nself: \(self)", .relay, focus: true)
                 completion(nil)
                 return
             }
@@ -35,22 +35,21 @@ extension TonalModels {
             
             let bucket: TonalService.AI.Models.Bucket = .init(sentiments: sentiments, range: range)
             
-            
             // Time-series execution's foundation is that
             // the time comparable is equivalent to the data
             // size
             guard bucket.isValid else {
-                GraniteLogger.error("failed to bucket\n\(bucket.pockets.count)\n\(bucket.rangeDates)\nself: \(self)", .relay)
+                GraniteLogger.info("failed to bucket\n\(bucket.pockets.count)\n\(bucket.rangeDates)\nself: \(self)", .relay, focus: true)
                 return
             }
             
-            GraniteLogger.info("generating tonal model", .ml, symbol: "🛠")
+            GraniteLogger.info("generating tonal model", .ml, focus: true, symbol: "🛠")
             
             var models: [TonalModels.Model] = []
             for modelType in ModelType.allCases {
                 guard modelType != .none else { continue }
                 
-                GraniteLogger.info("-- working on: \(modelType) --", .ml, symbol: "🚧")
+                GraniteLogger.info("-- working on: \(modelType) --", .ml, focus: true, symbol: "🚧")
                 let type: ModelType = modelType
                 let dataForDavid: DataSet = DataSet(
                     dataType: .Regression,
@@ -60,6 +59,8 @@ extension TonalModels {
                 for date in bucket.rangeDates {
                     guard let pocket = bucket.pockets.first(where: { $0.date == date }),
                           let security = securities.first(where: { $0.date.simple == date.simple }) else {
+                        
+                        GraniteLogger.info("-- invalid bucket for security --", .ml, focus: true)
                         continue
                     }
 
@@ -70,7 +71,7 @@ extension TonalModels {
                             quote: quote,
                             modelType: type)
                         
-                        GraniteLogger.info("inserting dataSet:\n\(dataSet.inputDescription)", .ml)
+                        GraniteLogger.info("inserting dataSet:\n\(dataSet.description)", .ml, focus: true)
                         
                         try dataForDavid.addDataPoint(
                             input: dataSet.asArray,
@@ -78,7 +79,7 @@ extension TonalModels {
                             label: security.date.asString)
                     }
                     catch {
-                        GraniteLogger.error("invalid dataSet", .ml)
+                        GraniteLogger.error("invalid dataSet", .ml, focus: true)
                     }
                 }
         
@@ -95,10 +96,10 @@ extension TonalModels {
                 
                 models.append(modelType.model(for: david))
                 
-                GraniteLogger.info("-- completed: \(modelType) ☑️ --", .ml, symbol: "🚧")
+                GraniteLogger.info("-- completed: \(modelType) ☑️ --", .ml, focus: true, symbol: "🚧")
             }
             
-            GraniteLogger.info("tonal model generation - complete - ✅", .ml)
+            GraniteLogger.info("tonal model generation - complete - ✅", .ml, focus: true)
             
             completion(.init(models: models))
         }
@@ -109,6 +110,7 @@ extension TonalModels {
                        sentiment: SentimentOutput) -> TonalModels {
         
         var modelsToAppend: [Model] = []
+        
         for type in ModelType.allCases {
             guard let model = self.model(forType: type),
                   let dataForDavid = model.dataSet else {
@@ -121,21 +123,16 @@ extension TonalModels {
                 quote: quote,
                 modelType: type)
 
-            
-            
-            
-//            GraniteLogger.info("\(dataSet.description)", .expedition, focus: true)
-            
-            
-            
             do {
                 try dataForDavid.addDataPoint(
                     input: dataSet.asArray,
                     output: dataSet.output,
                     label: security.date.asString)
+                
+                GraniteLogger.info(dataSet.description, .ml, symbol: "🛠")
             }
             catch {
-               print("Invalid data set created")
+                GraniteLogger.error("invalid dataSet", .ml)
             }
 
             let david = SVMModel(
@@ -148,8 +145,6 @@ extension TonalModels {
 
             david.Cost = 1e3
             david.train(data: dataForDavid)
-
-            print("[MODEL GENERATION] Completed adding a day to model for \(type)")
 
             modelsToAppend.append(type.model(for: david))
         }

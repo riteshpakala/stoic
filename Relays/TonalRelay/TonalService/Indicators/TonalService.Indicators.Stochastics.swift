@@ -14,12 +14,20 @@ extension TonalServiceModels.Indicators {
             let percentKs: [Double]
             let percentDs: [Double]
             
+            var absoluteKs: [Double] {
+                percentKs.map { $0 * 100 }
+            }
+            
+            var absoluteDs: [Double] {
+                percentDs.map { $0 * 100 }
+            }
+            
             var toString: String {
                 """
                 📈📈📈📈📈📈
-                [Stochastics]
-                percentK: \(percentKs)
-                percentD: \(percentDs)
+                [Stochastics - \(String(describing: dates.first?.asString))]
+                percentK: \(percentKs.first ?? 0.0)
+                percentD: \(percentDs.first ?? 0.0)
                 📈
                 """
             }
@@ -70,7 +78,7 @@ extension TonalServiceModels.Indicators {
                 let param1 = (security.lastValue - lowestOfLows)
                 let param2 = (highestOfHighs - lowestOfLows)
                 
-                let percentK: Double = abs(param1/param2) * 100
+                let percentK: Double = abs(param1/param2)
                 percentKs.append(percentK)
                 dates.append(security.date)
             }
