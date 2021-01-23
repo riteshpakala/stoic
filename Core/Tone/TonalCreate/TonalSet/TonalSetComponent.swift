@@ -35,7 +35,10 @@ public struct TonalSetComponent: GraniteComponent {
                                       Brand.Colors.marble],
                              cornerRadius: 0.0,
                              direction: .top)
-                            .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0)
+                            .shadow(color: Color.black,
+                                    radius: 8.0,
+                                    x: 4.0,
+                                    y: 3.0)
                             .offset(x: 0,
                                     y: (geometry.size.height*(1.0 - state.sentimentLoadingProgress.asCGFloat)))
                             .animation(.default)
