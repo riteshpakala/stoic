@@ -96,33 +96,30 @@ extension TonalService {
                     switch modelType {
                     case .close:
                         return [
-                            indicators.avgMomentum,
                             indicators.avgVolatility,
-                            indicators.vwa,
+                            indicators.vwaPreviousDay,
                             indicators.smaWA(),
-                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
                             sentiment.pos,
                             sentiment.neg,
                             sentiment.neu
                         ]
                     case .low:
                         return [
-                            indicators.avgMomentum,
                             indicators.avgVolatility,
-                            indicators.vwa,
-                            indicators.basePair.previous.lowValue/indicators.sma(),
-                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            indicators.vwaPreviousDay,
+                            indicators.smaWA(),
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
                             sentiment.pos,
                             sentiment.neg,
                             sentiment.neu
                         ]
                     case .high:
                         return [
-                            indicators.avgMomentum,
                             indicators.avgVolatility,
-                            indicators.vwa,
-                            indicators.basePair.previous.highValue/indicators.sma(),
-                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            indicators.vwaPreviousDay,
+                            indicators.smaWA(),
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
                             sentiment.pos,
                             sentiment.neg,
                             sentiment.neu
@@ -130,10 +127,7 @@ extension TonalService {
                     case .volume:
                         return [
                             indicators.avgMomentum,
-                            indicators.avgVolatility,
-                            indicators.vwa,
-                            indicators.smaWA(),
-                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
                             sentiment.pos,
                             sentiment.neg,
                             sentiment.neu
@@ -142,9 +136,8 @@ extension TonalService {
                         return [
                             indicators.avgMomentum,
                             indicators.avgVolatility,
-                            indicators.vwa,
-                            indicators.smaWA(),
-                            indicators.stochastic.values.percentDs.first ?? 0.0,
+                            indicators.vwaPreviousDay,
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
                             sentiment.pos,
                             sentiment.neg,
                             sentiment.neu
@@ -182,9 +175,12 @@ extension TonalService {
                         Value: \(security.lastValue)
                         Pair: \(indicators.basePair.toString)
                         Change: \(security.changePercentValue)
+                        Volume: \(security.volumeValue)
                         \(indicators.averagesToString)
                         \(sentiment.asString)
                         \(indicators.stochastic.values.toString)
+                        Previus stochs:
+                        \(indicators.stochasticPreviousDay.values.toString)
                         '''''''''''''''''''''''''''''
                         💽
                         """

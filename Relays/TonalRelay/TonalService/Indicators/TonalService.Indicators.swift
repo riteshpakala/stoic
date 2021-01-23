@@ -52,6 +52,10 @@ extension TonalServiceModels {
         var stochastic: Stochastics {
             .init([security] + history)
         }
+        
+        var stochasticPreviousDay: Stochastics {
+            .init(history)
+        }
     }
 }
 

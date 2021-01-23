@@ -67,7 +67,7 @@ public struct SecurityDetailComponent: GraniteComponent {
             
             if state.model != nil {
                 
-                 PaddingVertical()
+                PaddingVertical()
                 GraniteText("\(state.currentPrediction)",
                             Brand.Colors.purple,
                             .title,

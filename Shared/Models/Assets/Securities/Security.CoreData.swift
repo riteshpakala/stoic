@@ -14,7 +14,6 @@ extension Security {
     public func apply(to quote: QuoteObject) {
         quote.exchangeName = exchangeName
         quote.ticker = ticker
-        quote.intervalType = interval.rawValue
         quote.securityType = securityType.rawValue
         quote.name = name
     }
@@ -81,10 +80,9 @@ extension Security {
     public func getQuoteObject(moc: NSManagedObjectContext,
                                _ completion: @escaping ((QuoteObject?) -> Void)) {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(ticker == %@) AND (name == %@) AND (intervalType == %@)",
+        request.predicate = NSPredicate(format: "(ticker == %@) AND (name == %@)",
                                         self.ticker,
-                                        self.name,
-                                        self.interval.rawValue)
+                                        self.name)
         
         moc.performAndWait {
             completion(try? moc.fetch(request).first)

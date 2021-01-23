@@ -42,12 +42,11 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let find = connection.retrieve(\EnvironmentDependency.tone.find),
-              let quote = find.quote else {
+        guard let find = connection.retrieve(\EnvironmentDependency.tone.find) else {
             return
         }
         
-        let securities = quote.securities
+        let securities = find.securitiesDaily
         let days: Int = event.days
         state.days = days
         //

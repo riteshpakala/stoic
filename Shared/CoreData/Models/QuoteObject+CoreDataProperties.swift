@@ -16,7 +16,6 @@ extension QuoteObject {
         return NSFetchRequest<QuoteObject>(entityName: "QuoteObject")
     }
 
-    @NSManaged public var intervalType: String
     @NSManaged public var ticker: String
     @NSManaged public var securityType: String
     @NSManaged public var exchangeName: String

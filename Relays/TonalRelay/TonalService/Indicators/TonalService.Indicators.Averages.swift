@@ -28,8 +28,16 @@ extension TonalServiceModels.Indicators {
         history.map { $0.volumeValue }.reduce(0, +) / history.count.asDouble
     }
     
+    var avgVolumePreviousDay: Double {
+        history.suffix(history.count-1).map { $0.volumeValue }.reduce(0, +) / history.count.asDouble
+    }
+    
     var vwa: Double {
         security.volumeValue / avgVolume
+    }
+    
+    var vwaPreviousDay: Double {
+        (history.first ?? security).volumeValue / avgVolumePreviousDay
     }
     
     func sma(_ days: Int = 24) -> Double {

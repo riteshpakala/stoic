@@ -26,7 +26,6 @@
     </entity>
     <entity name="QuoteObject" representedClassName=".QuoteObject" syncable="YES">
         <attribute name="exchangeName" attributeType="String"/>
-        <attribute name="intervalType" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="securityType" attributeType="String"/>
         <attribute name="ticker" attributeType="String"/>
@@ -37,7 +36,6 @@
             <uniquenessConstraint>
                 <constraint value="ticker"/>
                 <constraint value="securityType"/>
-                <constraint value="intervalType"/>
                 <constraint value="exchangeName"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
@@ -134,7 +132,7 @@
         <element name="FloorObject" positionX="-36" positionY="-441" width="128" height="89"/>
         <element name="NetworkResponseObject" positionX="-45" positionY="-450" width="128" height="59"/>
         <element name="PortfolioObject" positionX="-45" positionY="-450" width="128" height="89"/>
-        <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="149"/>
+        <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="134"/>
         <element name="SearchResponseObject" positionX="-36" positionY="-441" width="128" height="89"/>
         <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="299"/>
         <element name="SentimentObject" positionX="-45" positionY="-450" width="128" height="149"/>

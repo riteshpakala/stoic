@@ -40,7 +40,7 @@ public struct TonalSetComponent: GraniteComponent {
                                     x: 4.0,
                                     y: 3.0)
                             .offset(x: 0,
-                                    y: (geometry.size.height*(1.0 - state.sentimentLoadingProgress.asCGFloat)))
+                                    y: (geometry.size.height*(1.0 - (state.sentimentLoadingProgress.isNaN ? 0.0 : state.sentimentLoadingProgress.asCGFloat))))
                             .animation(.default)
             }
             

@@ -32,11 +32,21 @@ struct GetSecurityPredictionExpedition: GraniteExpedition {
         //Neu = Y
         //Float(0.5 + (0.5*(sentiment.posAverage-sentiment.negAverage))),
         
-        state.tune = .init(
-                        pos: posValue,
-                        neg: negValue,
-                        neu: neuValue,
-                        compound: state.tune.compound)
+        if let tuner = connection.retrieve(\EnvironmentDependency.detail.slider){
+            let newSentiment: SentimentOutput = .init(
+                pos: posValue,
+                neg: negValue,
+                neu: neuValue,
+                compound: state.tune.compound)
+            
+            tuner.sentiment = newSentiment
+            
+            state.tune = .init(
+                            pos: posValue,
+                            neg: negValue,
+                            neu: neuValue,
+                            compound: state.tune.compound)
+        }
         
         guard event.isActive == false else { return }
         
@@ -44,7 +54,7 @@ struct GetSecurityPredictionExpedition: GraniteExpedition {
             return
         }
         
-        state.currentPrediction = model.predict(state.tune, modelType: .close)
+        state.currentPrediction = model.predict(state.tune, modelType: .volume)
         state.currentPredictionPlotData = [(Date.today, state.currentPrediction.asCGFloat)]
     }
 }

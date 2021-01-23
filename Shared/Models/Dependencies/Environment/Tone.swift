@@ -11,7 +11,7 @@ import GraniteUI
 public class Tone: ObservableObject {
     public struct Constraints {
         public static var maxDays: Int = 30
-        public static var minDays: Int = 4
+        public static var minDays: Int = 2
     }
     
     var range: [TonalRange]? {
@@ -91,9 +91,12 @@ public class Tone: ObservableObject {
             didSet {
                 if quote != nil && quote?.ticker == ticker {
                     state = .found
+                    self.securitiesDaily = quote?.securities.dailies ?? []
                 }
             }
         }
+        
+        var securitiesDaily: [Security] = []
         
         //DEV:
         //start at the percent of the days selected

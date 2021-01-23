@@ -24,10 +24,9 @@ extension NSManagedObjectContext {
 extension Quote {
     public func getObjectRequest() -> NSFetchRequest<QuoteObject> {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
-        request.predicate = NSPredicate(format: "(ticker == %@) AND (name == %@) AND (intervalType == %@)",
+        request.predicate = NSPredicate(format: "(ticker == %@) AND (name == %@)",
                                         self.ticker,
-                                        self.name,
-                                        self.intervalType.rawValue)
+                                        self.name)
         
         return request
     }
@@ -45,8 +44,7 @@ extension Quote {
 
 extension QuoteObject {
     public var asQuote: Quote {
-        .init(intervalType: SecurityInterval(rawValue: self.intervalType) ?? .day,
-              ticker: self.ticker,
+        .init(ticker: self.ticker,
               securityType: SecurityType(rawValue: self.securityType) ?? .unassigned,
               exchangeName: self.exchangeName,
               name: self.name,
@@ -56,7 +54,6 @@ extension QuoteObject {
     public func contains(security: Security) -> Bool {
         return self.ticker == security.ticker &&
             self.name == security.name &&
-            self.securityType == security.securityType.rawValue &&
-            self.intervalType == security.interval.rawValue
+            self.securityType == security.securityType.rawValue
     }
 }

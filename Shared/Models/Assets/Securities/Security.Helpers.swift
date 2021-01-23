@@ -23,6 +23,19 @@ extension Array where Element == Security {
     var sortDesc: [Security] {
         self.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
     }
+    
+    var dailies: [Security] {
+        let ordered: [Security] = self.sortDesc
+        var datesAdded = Set<Date>()
+        var added: [Security] = []
+        for elem in ordered {
+            if !datesAdded.contains(elem.date.simple) {
+                datesAdded.insert(elem.date.simple)
+                added.append(elem)
+            }
+        }
+        return added
+    }
 }
 
 extension Array where Element == SecurityObject {

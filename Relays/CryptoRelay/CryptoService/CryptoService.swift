@@ -20,10 +20,6 @@ public class CryptoService {
         case nyse
     }
     
-    public func yahooV7(matching ticker: String, from pastEpoch: String, to futureEpoch: String) -> String {
-        return "https://query1.finance.yahoo.com/v7/finance/download/\(ticker)?period1=\(pastEpoch)&period2=\(futureEpoch)&interval=1h&events=history"
-    }
-    
     public var quotes: String {
         coinGecko+"simple/price"
     }

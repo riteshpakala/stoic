@@ -10,7 +10,6 @@ import Foundation
 import GraniteUI
 
 public struct Quote {
-    var intervalType: SecurityInterval
     var ticker: String
     var securityType: SecurityType
     var exchangeName: String
@@ -42,7 +41,7 @@ public struct Quote {
     }
     
     public var quoteID: String {
-        ticker+name+intervalType.rawValue
+        ticker+name
     }
     
     var needsUpdate: Bool {
@@ -62,8 +61,7 @@ extension Quote {
     public func contains(security: Security) -> Bool {
         return self.ticker == security.ticker &&
             self.name == security.name &&
-            self.securityType == security.securityType &&
-            self.intervalType == security.interval
+            self.securityType == security.securityType
     }
 }
 

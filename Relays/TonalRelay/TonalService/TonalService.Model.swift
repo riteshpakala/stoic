@@ -175,14 +175,12 @@ extension TonalModels {
         case none
         
         var inDim: Int {
-//            switch self {
-//            case .volume:
-//                return 5
-//            default:
-//                return 7
-//            }
-            
-            return 8
+            switch self {
+            case .volume:
+                return 5
+            default:
+                return 7
+            }
         }
         
         func model(for model: SVMModel) -> Model {

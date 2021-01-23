@@ -37,14 +37,31 @@ public struct TonalModel: Asset {
     }
     
     public func predict(_ sentiment: SentimentOutput = .neutral,
-                        modelType: TonalModels.ModelType = .close) -> Double {
+                        modelType: TonalModels.ModelType = .close,
+                        scale: Bool = true) -> Double {
         guard let output = david.predict(quote,
                                          modelType,
                                          range: self.range,
                                          sentiment: sentiment) else {
             return 0.0
         }
-        return output//david.scale(prediction: output, latestSecurity.lastValue)
+        
+        if scale {
+            switch modelType {
+            case .close:
+                return david.scale(prediction: output, latestSecurity.lastValue)
+            case .high:
+                return david.scale(prediction: output, latestSecurity.highValue)
+            case .low:
+                return david.scale(prediction: output, latestSecurity.lowValue)
+            case .volume:
+                return david.scale(prediction: output, latestSecurity.volumeValue)
+            default:
+                return output
+            }
+        } else {
+            return output
+        }
     }
     
     func predict(days: Int,
