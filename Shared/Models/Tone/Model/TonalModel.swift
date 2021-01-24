@@ -9,6 +9,25 @@ import Foundation
 import CoreData
 import GraniteUI
 
+public struct TonalPrediction {
+    let close: Double
+    let low: Double
+    let high: Double
+    let volume: Double
+    
+    var asString: String {
+        """
+        high: \(high)
+        close: \(close)
+        low: \(low)
+        volume: \(volume)
+        """
+    }
+    
+    static var zero: TonalPrediction {
+        .init(close: 0, low: 0, high: 0, volume: 0)
+    }
+}
 public struct TonalModel: Asset {
     let date: Date
     let daysTrained: Int
@@ -34,6 +53,15 @@ public struct TonalModel: Asset {
         self.date = date
         self.modelID = id
         self.latestSecurity = quote.securities.sortDesc.first ?? EmptySecurity()
+    }
+    
+    public func predictAll(_ sentiment: SentimentOutput = .neutral) -> TonalPrediction {
+        let close: Double = predict(sentiment, modelType: .close)
+        let low: Double = predict(sentiment, modelType: .low)
+        let high: Double = predict(sentiment, modelType: .high)
+        let volume: Double = predict(sentiment, modelType: .volume)
+        
+        return .init(close: close, low: low, high: high, volume: volume)
     }
     
     public func predict(_ sentiment: SentimentOutput = .neutral,

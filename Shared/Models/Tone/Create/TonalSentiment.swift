@@ -21,7 +21,7 @@ public struct TonalSentiment {
     let sentimentsByDay: [Date: SentimentOutput]
     let sentimentDefaultsByDay: [Date: SentimentOutput]
     
-    public init(_ sounds: [TonalSound], disparity: Double = 0.04) {
+    public init(_ sounds: [TonalSound], disparity: Double = 0.024) {
         let uniques = Array(Set(sounds))
         
         dates = uniques.map({ $0.date }).uniques
@@ -38,7 +38,8 @@ public struct TonalSentiment {
         
         var soundsFoundByDay: [Date: [TonalSound]] = [:]
         datesByDay.forEach { date in
-            soundsFoundByDay[date] = uniques.filter { $0.date.asString == date.asString }
+            let sentiments = uniques.filter { $0.date.asString == date.asString }
+            soundsFoundByDay[date] = sentiments
         }
         self.soundsByDay = soundsFoundByDay
         
@@ -100,7 +101,7 @@ extension Array where Element == SentimentOutput {
         let posSum = self.compactMap { $0.pos }.reduce(0, +)
         let negSum = self.compactMap { $0.neg }.reduce(0, +)
         let neuSum = self.compactMap { $0.neu }.reduce(0, +)
-        let compSum = self.compactMap { $0.compound }.reduce(0, +)
+        let compSum = self.compactMap { $0.pos - $0.neg }.reduce(0, +)
         let total: Double = (self.count).asDouble
         
         return SentimentOutput.init(pos: posSum/total,

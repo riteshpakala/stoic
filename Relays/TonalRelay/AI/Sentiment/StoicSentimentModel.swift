@@ -55,8 +55,16 @@ public class SentimentOutput: Archiveable {
         try container.encode(date, forKey: .date)
     }
     
+    public var magnitude: Double {
+        pos - neg
+    }
+    
     public var asString: String {
         "[neg: \((neg*100).asInt)% | pos: \((pos*100).asInt)%] // bias: \((neu*100).asInt)%"
+    }
+    
+    public var magnitudeAsString: String {
+        "[magnitude: \(magnitude)]"
     }
     
     public var description: String {
@@ -145,6 +153,8 @@ class StoicSentimentModel {
         
         //
         
+        
+        //MODEL
         var predictions: [[Float]] = []
         for list in input_array {
             for (i, item) in list.enumerated() {
@@ -158,8 +168,6 @@ class StoicSentimentModel {
                 predictions.append(c)
             }
         }
-        
-        //MODEL
         
         let allValues: [Float] = predictions.flatMap { $0 }
         

@@ -68,9 +68,9 @@ public struct SecurityDetailComponent: GraniteComponent {
             if state.model != nil {
                 
                 PaddingVertical()
-                GraniteText("\(state.currentPrediction)",
+                GraniteText(state.currentPrediction.asString,
                             Brand.Colors.purple,
-                            .title,
+                            .headline,
                             .bold)
                 
                 SentimentSliderComponent(state: tunerState)

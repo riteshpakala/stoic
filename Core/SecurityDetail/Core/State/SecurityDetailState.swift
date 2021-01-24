@@ -50,7 +50,7 @@ public class SecurityDetailState: GraniteState {
     
     var model: TonalModel? = nil
     var tune: SentimentOutput = .neutral
-    var currentPrediction: Double = 0.0
+    var currentPrediction: TonalPrediction = .zero
     var currentPredictionPlotData: GraphPageViewModel.PlotData? = nil
     
     public init(_ kind: SecurityDetailType,

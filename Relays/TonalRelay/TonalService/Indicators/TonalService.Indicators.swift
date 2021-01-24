@@ -67,4 +67,8 @@ extension TonalServiceModels.Indicators {
     var change: Double {
         (basePair.base.lastValue - basePair.previous.lastValue) / basePair.previous.lastValue
     }
+    
+    var volChange: Double {
+        (basePair.base.lastValue - basePair.previous.lastValue) / basePair.previous.lastValue
+    }
 }

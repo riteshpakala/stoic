@@ -19,10 +19,20 @@ extension TonalServiceModels.Indicators {
             (paired.base.lastValue - paired.previous.lastValue) / 2
         }
         
+        var change: Double {
+            (paired.base.lastValue - paired.previous.lastValue) / paired.previous.lastValue
+        }
+        
+        var volMomentum: Double {
+            paired.base.volumeValue > paired.previous.volumeValue ? 1 : -1
+        }
+        
         var volumeVolatiliy: Double {
             (paired.base.volumeValue - paired.previous.volumeValue) / 2
         }
         
-        
+        var volumeChange: Double {
+            (paired.base.volumeValue - paired.previous.volumeValue) / paired.previous.volumeValue
+        }
     }
 }

@@ -177,9 +177,9 @@ extension TonalModels {
         var inDim: Int {
             switch self {
             case .volume:
-                return 5
+                return 6
             default:
-                return 7
+                return 6
             }
         }
         

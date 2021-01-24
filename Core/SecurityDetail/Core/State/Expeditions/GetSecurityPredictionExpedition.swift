@@ -54,7 +54,7 @@ struct GetSecurityPredictionExpedition: GraniteExpedition {
             return
         }
         
-        state.currentPrediction = model.predict(state.tune, modelType: .volume)
-        state.currentPredictionPlotData = [(Date.today, state.currentPrediction.asCGFloat)]
+        state.currentPrediction = model.predictAll(state.tune)
+//        state.currentPredictionPlotData = [(Date.today, state.currentPrediction.asCGFloat)]
     }
 }

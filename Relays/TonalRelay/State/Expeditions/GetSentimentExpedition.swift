@@ -112,6 +112,9 @@ struct TonalHistoryExpedition: GraniteExpedition {
             
                 for result in chunk {
                     if let prediction = model.predict(result.content, matching: query) {
+                        
+//                        GraniteLogger.info(prediction.asString, .expedition, focus: true)
+                        
                         let sound = TonalSound.init(
                                         date: result.date.asDouble.date(),
                                         content: result.content,

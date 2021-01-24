@@ -71,7 +71,9 @@ extension TonalModels {
                             quote: quote,
                             modelType: type)
                         
-                        GraniteLogger.info("inserting dataSet:\n\(dataSet.description)", .ml, focus: true)
+                        if modelType == .close {
+                            GraniteLogger.info("inserting dataSet:\n\(dataSet.description)", .ml, focus: true)
+                        }
                         
                         try dataForDavid.addDataPoint(
                             input: dataSet.asArray,

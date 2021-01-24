@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GraniteUI
 
 extension TonalService {
     struct AI {
@@ -96,52 +97,42 @@ extension TonalService {
                     switch modelType {
                     case .close:
                         return [
-                            indicators.avgVolatility,
-                            indicators.vwaPreviousDay,
+                            indicators.avgVolatility(),
                             indicators.smaWA(),
+                            indicators.avgChange(),
+                            indicators.vwa(),
                             indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.pos,
-                            sentiment.neg,
-                            sentiment.neu
+                            sentiment.magnitude,
                         ]
                     case .low:
                         return [
-                            indicators.avgVolatility,
-                            indicators.vwaPreviousDay,
+                            indicators.avgVolatility(),
                             indicators.smaWA(),
+                            indicators.avgChange(),
+                            indicators.vwa(),
                             indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.pos,
-                            sentiment.neg,
-                            sentiment.neu
+                            sentiment.magnitude,
                         ]
                     case .high:
                         return [
-                            indicators.avgVolatility,
-                            indicators.vwaPreviousDay,
+                            indicators.avgVolatility(),
                             indicators.smaWA(),
+                            indicators.avgChange(),
+                            indicators.vwa(),
                             indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.pos,
-                            sentiment.neg,
-                            sentiment.neu
+                            sentiment.magnitude,
                         ]
                     case .volume:
                         return [
-                            indicators.avgMomentum,
+                            indicators.avgVolatility(),
+                            indicators.smaWA(),
+                            indicators.avgVolChange(),
+                            indicators.vwa(),
                             indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.pos,
-                            sentiment.neg,
-                            sentiment.neu
+                            sentiment.magnitude,
                         ]
                     default:
-                        return [
-                            indicators.avgMomentum,
-                            indicators.avgVolatility,
-                            indicators.vwaPreviousDay,
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.pos,
-                            sentiment.neg,
-                            sentiment.neu
-                        ]
+                        return []
                     }
                 }
 
@@ -177,7 +168,7 @@ extension TonalService {
                         Change: \(security.changePercentValue)
                         Volume: \(security.volumeValue)
                         \(indicators.averagesToString)
-                        \(sentiment.asString)
+                        \(sentiment.magnitudeAsString)
                         \(indicators.stochastic.values.toString)
                         Previus stochs:
                         \(indicators.stochasticPreviousDay.values.toString)

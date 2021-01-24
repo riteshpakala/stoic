@@ -12,35 +12,47 @@ extension TonalServiceModels.Indicators {
         historyPaired.map { $0.volatility }
     }
     
-    var avgMomentum: Double {
-        volatilities.map { $0.momentum }.reduce(0, +) / history.count.asDouble
+    func slicedVolatilities(_ days: Int = 4) -> [Volatility] {
+        Array(volatilities.prefix(days))
     }
     
-    var avgVolatility: Double {
-        volatilities.map { $0.volatility }.reduce(0, +) / history.count.asDouble
+    func avgMomentum(_ days: Int = 120) -> Double {
+        slicedVolatilities(days).map { $0.momentum }.reduce(0, +) / days.asDouble
     }
     
-    var avgVolVolatility: Double {
-        volatilities.map { $0.volumeVolatiliy }.reduce(0, +) / history.count.asDouble
+    func avgVolMomentum(_ days: Int = 120) -> Double {
+        slicedVolatilities(days).map { $0.volMomentum }.reduce(0, +) / days.asDouble
     }
     
-    var avgVolume: Double {
-        history.map { $0.volumeValue }.reduce(0, +) / history.count.asDouble
+    func avgVolatility(_ days: Int = 12) -> Double {
+        slicedVolatilities(days).map { $0.volatility }.reduce(0, +) / days.asDouble
     }
     
-    var avgVolumePreviousDay: Double {
-        history.suffix(history.count-1).map { $0.volumeValue }.reduce(0, +) / history.count.asDouble
+    func avgVolVolatility(_ days: Int = 12) -> Double {
+        slicedVolatilities(days).map { $0.volumeVolatiliy }.reduce(0, +) / days.asDouble
     }
     
-    var vwa: Double {
-        security.volumeValue / avgVolume
+    func avgChange(_ days: Int = 4) -> Double {
+        slicedVolatilities(days).map { $0.change }.reduce(0, +) / days.asDouble
     }
     
-    var vwaPreviousDay: Double {
-        (history.first ?? security).volumeValue / avgVolumePreviousDay
+    func avgVolChange(_ days: Int = 4) -> Double {
+        slicedVolatilities(days).map { $0.volumeChange }.reduce(0, +) / days.asDouble
     }
     
-    func sma(_ days: Int = 24) -> Double {
+    func avgVolume(_ days: Int = 12) -> Double {
+        history.prefix(days).map { $0.volumeValue }.reduce(0, +) / days.asDouble
+    }
+    
+    func avgVolumePreviousDay(_ days: Int = 24) -> Double {
+        history.suffix(history.count-1).prefix(days).map { $0.volumeValue }.reduce(0, +) / days.asDouble
+    }
+    
+    func vwa(_ days: Int = 12) -> Double {
+        security.volumeValue / avgVolume(days)
+    }
+    
+    func sma(_ days: Int = 12) -> Double {
         let prefix = history.prefix(days)
         
         if prefix.count == days {
@@ -64,13 +76,18 @@ extension Security {
 extension TonalServiceModels.Indicators {
     var averagesToString: String {
         """
-        Reference: \(history.first?.date.asString ?? "error")
-        avgMomentum: \(avgMomentum)
-        avgVolatility: \(avgVolatility)
-        avgVolVolatility: \(avgVolVolatility)
-        avgVolume: \(avgVolume)
-        vwa: \(vwa)
-        sma20: \(sma())
+        %%%%%%%%%%%%%
+        Comparing To: \(history.first?.date.asString ?? "error")
+        avgMomentum: \(avgMomentum())
+        avgVolatility: \(avgVolatility())
+        avgChange: \(avgChange())
+        avgVolume: \(avgVolume())
+        avgVolMomentum: \(avgVolMomentum())
+        avgVolVolatility: \(avgVolVolatility())
+        avgVolumeChange: \(avgVolChange())
+        vwa: \(vwa())
+        sma12: \(sma(12))
+        sma20: \(sma(20))
         sma24: \(sma(24))
         smaWA24: \(smaWA())
         sma200: \(sma(200))
