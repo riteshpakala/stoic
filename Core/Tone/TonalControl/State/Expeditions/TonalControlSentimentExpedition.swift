@@ -1,17 +1,17 @@
 //
-//  GetSecurityPredictionExpedition.swift
+//  TonalControlProcessExpedition.swift
 //  * stoic
 //
-//  Created by Ritesh Pakala on 1/21/21.
+//  Created by Ritesh Pakala on 1/25/21.
 //  Copyright (c) 2021 ___ORGANIZATIONNAME___. All rights reserved.
 //
 import GraniteUI
 import SwiftUI
 import Combine
 
-struct GetSecurityPredictionExpedition: GraniteExpedition {
+struct TonalControlSentimentExpedition: GraniteExpedition {
     typealias ExpeditionEvent = SentimentSliderEvents.Value
-    typealias ExpeditionState = SecurityDetailState
+    typealias ExpeditionState = TonalControlState
     
     func reduce(
         event: ExpeditionEvent,
@@ -32,21 +32,13 @@ struct GetSecurityPredictionExpedition: GraniteExpedition {
         //Neu = Y
         //Float(0.5 + (0.5*(sentiment.posAverage-sentiment.negAverage))),
         
-        if let tuner = connection.retrieve(\EnvironmentDependency.detail.slider){
-            let newSentiment: SentimentOutput = .init(
-                pos: posValue,
-                neg: negValue,
-                neu: neuValue,
-                compound: state.tune.compound)
-            
-            tuner.sentiment = newSentiment
-            
-            state.tune = .init(
-                            pos: posValue,
-                            neg: negValue,
-                            neu: neuValue,
-                            compound: state.tune.compound)
-        }
+        let newSentiment: SentimentOutput = .init(
+            pos: posValue,
+            neg: negValue,
+            neu: neuValue,
+            compound: 0.0)
+        
+        state.tuner.sentiment = newSentiment
         
         guard event.isActive == false else { return }
         
@@ -54,7 +46,7 @@ struct GetSecurityPredictionExpedition: GraniteExpedition {
             return
         }
         
-        state.currentPrediction = model.predictAll(state.tune)
+        state.currentPrediction = model.predictAll(state.tuner.sentiment)
 //        state.currentPredictionPlotData = [(Date.today, state.currentPrediction.asCGFloat)]
     }
 }

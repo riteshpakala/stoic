@@ -164,13 +164,17 @@ extension TonalService {
                         '''''''''''''''''''''''''''''
                         [ Security Data Set - \(security.securityType) - \(security.date.asString) ]
                         Value: \(security.lastValue)
-                        Pair: \(indicators.basePair.toString)
                         Change: \(security.changePercentValue)
                         Volume: \(security.volumeValue)
+                        - Previous Data Set - \(indicators.basePair.previous.date.asString)
+                        Value: \(indicators.basePair.previous.lastValue)
+                        Change: \(indicators.basePair.previous.changePercentValue)
+                        Volume: \(indicators.basePair.previous.volumeValue)
+                        ----
                         \(indicators.averagesToString)
                         \(sentiment.magnitudeAsString)
                         \(indicators.stochastic.values.toString)
-                        Previus stochs:
+                        Previus stoichs:
                         \(indicators.stochasticPreviousDay.values.toString)
                         '''''''''''''''''''''''''''''
                         💽

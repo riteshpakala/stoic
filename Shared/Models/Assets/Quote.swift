@@ -14,7 +14,21 @@ public struct Quote {
     var securityType: SecurityType
     var exchangeName: String
     var name: String
-    var securities: [Security]
+    var securities: [Security] 
+    var dailySecurities: [Security]
+    
+    public init(ticker: String,
+                securityType: SecurityType,
+                exchangeName: String,
+                name: String,
+                securities: [Security]) {
+        self.ticker = ticker
+        self.securityType = securityType
+        self.exchangeName = exchangeName
+        self.name = name
+        self.securities = securities
+        self.dailySecurities = securities.dailies
+    }
     
     var latestSecurity: Security {
         securities.sortDesc.first ?? EmptySecurity()

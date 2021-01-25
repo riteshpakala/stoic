@@ -650,8 +650,6 @@
 		71AE03152593168F007A4AE0 /* GetStockHistoryExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE03132593168F007A4AE0 /* GetStockHistoryExpedition.swift */; };
 		71AE032025931AD1007A4AE0 /* FindTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */; };
 		71AE032125931AD1007A4AE0 /* FindTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */; };
-		71B0153E25B9E49600111739 /* GetSecurityPredictionExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0153D25B9E49600111739 /* GetSecurityPredictionExpedition.swift */; };
-		71B0153F25B9E49600111739 /* GetSecurityPredictionExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0153D25B9E49600111739 /* GetSecurityPredictionExpedition.swift */; };
 		71B062352597169E00D1833D /* SetTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B062342597169E00D1833D /* SetTheToneExpedition.swift */; };
 		71B062362597169E00D1833D /* SetTheToneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B062342597169E00D1833D /* SetTheToneExpedition.swift */; };
 		71B42FB625A875DD00A23F4D /* HoldingsEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B42FB225A875DD00A23F4D /* HoldingsEvents.swift */; };
@@ -794,6 +792,14 @@
 		71DE186A25A6D94D00911AD1 /* GraphComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DE186425A6D94D00911AD1 /* GraphComponent.swift */; };
 		71E3DD2625B767FE00C7795C /* StockService.TradingDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E3DD2525B767FE00C7795C /* StockService.TradingDay.swift */; };
 		71E3DD2725B767FE00C7795C /* StockService.TradingDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E3DD2525B767FE00C7795C /* StockService.TradingDay.swift */; };
+		71E8389025BF70D2002D8AAD /* TonalControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8388C25BF70D2002D8AAD /* TonalControlComponent.swift */; };
+		71E8389125BF70D2002D8AAD /* TonalControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8388C25BF70D2002D8AAD /* TonalControlComponent.swift */; };
+		71E8389225BF70D2002D8AAD /* TonalControlEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8388D25BF70D2002D8AAD /* TonalControlEvents.swift */; };
+		71E8389325BF70D2002D8AAD /* TonalControlEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8388D25BF70D2002D8AAD /* TonalControlEvents.swift */; };
+		71E8389425BF70D2002D8AAD /* TonalControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8388F25BF70D2002D8AAD /* TonalControlState.swift */; };
+		71E8389525BF70D2002D8AAD /* TonalControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8388F25BF70D2002D8AAD /* TonalControlState.swift */; };
+		71E838A025BF7987002D8AAD /* TonalControlSentimentExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8389F25BF7987002D8AAD /* TonalControlSentimentExpedition.swift */; };
+		71E838A125BF7987002D8AAD /* TonalControlSentimentExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E8389F25BF7987002D8AAD /* TonalControlSentimentExpedition.swift */; };
 		71EE6FFA258D347F005B2B8E /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE6FF9258D347E005B2B8E /* Tests_iOS.swift */; };
 		71EE7005258D347F005B2B8E /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE7004258D347F005B2B8E /* Tests_macOS.swift */; };
 		71EE7007258D347F005B2B8E /* __stoicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE6FDE258D347C005B2B8E /* __stoicApp.swift */; };
@@ -1175,7 +1181,6 @@
 		71ADF23125B272F100B3B16E /* Strategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategy.swift; sourceTree = "<group>"; };
 		71AE03132593168F007A4AE0 /* GetStockHistoryExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStockHistoryExpedition.swift; sourceTree = "<group>"; };
 		71AE031F25931AD1007A4AE0 /* FindTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTheToneExpedition.swift; sourceTree = "<group>"; };
-		71B0153D25B9E49600111739 /* GetSecurityPredictionExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSecurityPredictionExpedition.swift; sourceTree = "<group>"; };
 		71B062342597169E00D1833D /* SetTheToneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTheToneExpedition.swift; sourceTree = "<group>"; };
 		71B42FB225A875DD00A23F4D /* HoldingsEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoldingsEvents.swift; sourceTree = "<group>"; };
 		71B42FB325A875DD00A23F4D /* HoldingsComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoldingsComponent.swift; sourceTree = "<group>"; };
@@ -1247,6 +1252,10 @@
 		71DE186325A6D94D00911AD1 /* GraphState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphState.swift; sourceTree = "<group>"; };
 		71DE186425A6D94D00911AD1 /* GraphComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphComponent.swift; sourceTree = "<group>"; };
 		71E3DD2525B767FE00C7795C /* StockService.TradingDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockService.TradingDay.swift; sourceTree = "<group>"; };
+		71E8388C25BF70D2002D8AAD /* TonalControlComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalControlComponent.swift; sourceTree = "<group>"; };
+		71E8388D25BF70D2002D8AAD /* TonalControlEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalControlEvents.swift; sourceTree = "<group>"; };
+		71E8388F25BF70D2002D8AAD /* TonalControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalControlState.swift; sourceTree = "<group>"; };
+		71E8389F25BF7987002D8AAD /* TonalControlSentimentExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalControlSentimentExpedition.swift; sourceTree = "<group>"; };
 		71EE6FDE258D347C005B2B8E /* __stoicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = __stoicApp.swift; sourceTree = "<group>"; };
 		71EE6FDF258D347C005B2B8E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		71EE6FE0258D347E005B2B8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -2712,6 +2721,7 @@
 		7179D3E325AC936E00C82063 /* Tone */ = {
 			isa = PBXGroup;
 			children = (
+				71E8388B25BF70D2002D8AAD /* TonalControl */,
 				71ACC23825B0AB9100E02AE3 /* TonalDetail */,
 				7118A224259313FD007E7EAB /* TonalCreate */,
 				7179D3D025AC936500C82063 /* TonalModels */,
@@ -2925,7 +2935,6 @@
 			children = (
 				71C2BF7125ABA9AD006445EB /* GetSecurityDetailExpedition.swift */,
 				71C2BF8025ABB1CE006445EB /* SecurityDetailResultExpedition.swift */,
-				71B0153D25B9E49600111739 /* GetSecurityPredictionExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -3127,6 +3136,33 @@
 				71DE186325A6D94D00911AD1 /* GraphState.swift */,
 			);
 			path = State;
+			sourceTree = "<group>";
+		};
+		71E8388B25BF70D2002D8AAD /* TonalControl */ = {
+			isa = PBXGroup;
+			children = (
+				71E8388E25BF70D2002D8AAD /* State */,
+				71E8388D25BF70D2002D8AAD /* TonalControlEvents.swift */,
+				71E8388C25BF70D2002D8AAD /* TonalControlComponent.swift */,
+			);
+			path = TonalControl;
+			sourceTree = "<group>";
+		};
+		71E8388E25BF70D2002D8AAD /* State */ = {
+			isa = PBXGroup;
+			children = (
+				71E8389E25BF7976002D8AAD /* Expeditions */,
+				71E8388F25BF70D2002D8AAD /* TonalControlState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		71E8389E25BF7976002D8AAD /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				71E8389F25BF7987002D8AAD /* TonalControlSentimentExpedition.swift */,
+			);
+			path = Expeditions;
 			sourceTree = "<group>";
 		};
 		71EE6FD8258D347B005B2B8E = {
@@ -3549,7 +3585,6 @@
 				7189C9BA25AE660800D98A85 /* TonalService.Indicators.Stochastics.swift in Sources */,
 				71DC58F125988F84004935CF /* SVM.swift in Sources */,
 				710889AF2591B29800795EDF /* Aggregates.swift in Sources */,
-				71B0153E25B9E49600111739 /* GetSecurityPredictionExpedition.swift in Sources */,
 				71434342259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
 				71434353259076F4001F26A4 /* Angle+Convenience.swift in Sources */,
 				71149ED025A7A2D200148D68 /* Home.swift in Sources */,
@@ -3598,6 +3633,7 @@
 				71D63F402592BBAB0085D718 /* AssetGridItemContainerState.swift in Sources */,
 				71D63F702592BFC40085D718 /* AssetSectionEvents.swift in Sources */,
 				7123B1252593C6CB00E5BD69 /* StockDataObject+CoreDataClass.swift in Sources */,
+				71E8389225BF70D2002D8AAD /* TonalControlEvents.swift in Sources */,
 				7143433C259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
 				7123B12B2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
 				711402C8258DBC2F00BA387D /* GetTradingDayExpedition.swift in Sources */,
@@ -3605,6 +3641,7 @@
 				7123B1292593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */,
 				7183D56725A428AE00FB91A9 /* GraphLinePlot+Segmented.swift in Sources */,
 				7183D56525A428AE00FB91A9 /* GraphLinePlot+NotSegmented.swift in Sources */,
+				71E8389425BF70D2002D8AAD /* TonalControlState.swift in Sources */,
 				71D63EC52592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */,
 				7183D52E25A4268E00FB91A9 /* BasicButton.swift in Sources */,
 				7118A22D259313FD007E7EAB /* TonalCreateEvents.swift in Sources */,
@@ -3612,6 +3649,7 @@
 				7125BE4225A1384A00F22717 /* SentimentSliderState.swift in Sources */,
 				7143430525907622001F26A4 /* RepresentableAsInt.swift in Sources */,
 				7125BDC125A1318D00F22717 /* RangeSliderStyleConfiguration.swift in Sources */,
+				71E838A025BF7987002D8AAD /* TonalControlSentimentExpedition.swift in Sources */,
 				7123B1032593C29F00E5BD69 /* version0001.xcdatamodeld in Sources */,
 				7125BE6725A1388400F22717 /* PointSlider.swift in Sources */,
 				710889A72591B29800795EDF /* Markets.swift in Sources */,
@@ -3730,6 +3768,7 @@
 				71C08EC525AFA59300765894 /* CryptoService.swift in Sources */,
 				7125BE1225A1328A00F22717 /* EnvironmentValues+TrackValue.swift in Sources */,
 				71DC58EF25988F84004935CF /* Kernel.swift in Sources */,
+				71E8389025BF70D2002D8AAD /* TonalControlComponent.swift in Sources */,
 				7125BE5F25A1388400F22717 /* AnyPointSliderStyle.swift in Sources */,
 				71140298258DB5E700BA387D /* StockEvents.swift in Sources */,
 				71D63F3E2592BBAB0085D718 /* AssetGridItemContainerComponent.swift in Sources */,
@@ -3960,6 +3999,7 @@
 				710889722591B29800795EDF /* Promise+Race.swift in Sources */,
 				710C916D25A6501F00ECB355 /* Passthrough.swift in Sources */,
 				7169534B25A7AD3400641BCE /* GraniteScrollView.swift in Sources */,
+				71E8389325BF70D2002D8AAD /* TonalControlEvents.swift in Sources */,
 				7139F67525981BD300D9C84B /* TonalTuneEvents.swift in Sources */,
 				7143435E259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */,
 				711402D1258DBD0900BA387D /* GetTradingDayExpedition.swift in Sources */,
@@ -4086,6 +4126,7 @@
 				71332A3425A79DD0005A72A9 /* AssetSearchEvents.swift in Sources */,
 				7179ACA725AC9472003FD06F /* TonalCompileEvents.swift in Sources */,
 				71D3C2E025AA88F50033350B /* Broadcasts.swift in Sources */,
+				71E838A125BF7987002D8AAD /* TonalControlSentimentExpedition.swift in Sources */,
 				71C08EE425AFC11200765894 /* SecurityEvents.swift in Sources */,
 				7134427B25A38245002C0315 /* Sentiment.CoreData.swift in Sources */,
 				71C08EEB25AFC21F00765894 /* Security.Group.swift in Sources */,
@@ -4165,6 +4206,7 @@
 				71434356259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
 				710889A22591B29800795EDF /* Promise+nil.swift in Sources */,
 				71C08E9B25AF772F00765894 /* SearchResponse.swift in Sources */,
+				71E8389525BF70D2002D8AAD /* TonalControlState.swift in Sources */,
 				710889942591B29800795EDF /* Promise+Error.swift in Sources */,
 				7189C9B425AE5E2F00D98A85 /* TonalModelTappedExpedition.swift in Sources */,
 				711D546125A6913B0074D334 /* Geometry.swift in Sources */,
@@ -4268,7 +4310,6 @@
 				71D63EF52592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BEAC25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */,
 				7118A22E259313FD007E7EAB /* TonalCreateEvents.swift in Sources */,
-				71B0153F25B9E49600111739 /* GetSecurityPredictionExpedition.swift in Sources */,
 				71B4304825A8A26400A23F4D /* SearchSecurityResultExpedition.swift in Sources */,
 				71C08EC625AFA59300765894 /* CryptoService.swift in Sources */,
 				710889842591B29800795EDF /* Promise+Chain.swift in Sources */,
@@ -4320,6 +4361,7 @@
 				7125BDDE25A131D200F22717 /* EnvironmentValues+TrackRange.swift in Sources */,
 				7136B65E25A008B40014F693 /* PortfolioComponent.swift in Sources */,
 				71D63F6D2592BFC40085D718 /* AssetSectionComponent.swift in Sources */,
+				71E8389125BF70D2002D8AAD /* TonalControlComponent.swift in Sources */,
 				712415F325A35F2200169B9C /* Search.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

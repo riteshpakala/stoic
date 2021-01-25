@@ -68,20 +68,9 @@ public struct SecurityDetailComponent: GraniteComponent {
             if state.model != nil {
                 
                 PaddingVertical()
-                GraniteText(state.currentPrediction.asString,
-                            Brand.Colors.purple,
-                            .headline,
-                            .bold)
                 
-                SentimentSliderComponent(state: tunerState)
-                    .listen(to: command)
-                    .padding(.leading, Brand.Padding.large)
-                    .padding(.trailing, Brand.Padding.large)
-               
-                GraniteText(tunerState.sentiment.asString,
-                            Brand.Colors.yellow,
-                            .subheadline,
-                            .regular)
+                TonalControlComponent(state: .init(tunerState, model: state.model))
+                    .share(.init(dep(\.hosted)))
             }
         }
     }

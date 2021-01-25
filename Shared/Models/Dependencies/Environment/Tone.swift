@@ -91,12 +91,9 @@ public class Tone: ObservableObject {
             didSet {
                 if quote != nil && quote?.ticker == ticker {
                     state = .found
-                    self.securitiesDaily = quote?.securities.dailies ?? []
                 }
             }
         }
-        
-        var securitiesDaily: [Security] = []
         
         //DEV:
         //start at the percent of the days selected

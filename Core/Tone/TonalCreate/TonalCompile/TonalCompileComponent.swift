@@ -51,10 +51,11 @@ public struct TonalCompileComponent: GraniteComponent {
             .padding(.bottom, Brand.Padding.medium)
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
-            .frame(minWidth: 300)
+            .frame(maxWidth: .infinity)
             
             Spacer()
         }
+        .frame(maxWidth: .infinity)
     }
 }
 

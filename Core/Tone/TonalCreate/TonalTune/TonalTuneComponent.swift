@@ -51,28 +51,35 @@ public struct TonalTuneComponent: GraniteComponent {
                             
                             VStack {
                                 GraniteText(sentimentDate.asString,
-                                            .subheadline,
-                                            .regular)
+                                            .headline,
+                                            .bold,
+                                            .leading)
+                                            .padding(.bottom,
+                                                     Brand.Padding.medium)
                                 
                                 SentimentSliderComponent(state: getSentiment(date: sentimentDate)).listen(to: command)
                                 
                                 GraniteText(getTunerSentiment(date: sentimentDate).asString,
                                             Brand.Colors.yellow,
                                             .subheadline,
-                                            .regular)
+                                            .bold,
+                                            .trailing)
+                                            .padding(.top,
+                                                     Brand.Padding.medium)
                             }
+                            .padding(.leading, Brand.Padding.large)
+                            .padding(.trailing, Brand.Padding.large)
                         }
                     }
                 }
                 .padding(.top, Brand.Padding.large)
-                .padding(.leading, Brand.Padding.large)
-                .padding(.trailing, Brand.Padding.large)
                 
                 GraniteButtonComponent(state: .init("tune")).onTapGesture {
                     sendEvent(TonalTuneEvents.Tune())
                 }
             }
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
