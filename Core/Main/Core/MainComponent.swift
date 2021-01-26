@@ -21,12 +21,32 @@ public struct MainComponent: GraniteComponent {
                                                     target: \.router.route)))
     }
     
+    var controls: ControlBar {
+        ControlBar(isIPhone: EnvironmentConfig.isIPhone,
+                   currentRoute: command.center.routerDependency.router.route,
+                   onRoute: { route in
+            command.center.routerDependency.router.request(route)
+        })
+    }
+    
     public var body: some View {
-        VStack {
-            environment
-                .share(.init(dep(\.routerDependency)))
-                .ignoresSafeArea(.keyboard, edges: .bottom)
+        if EnvironmentConfig.isIPhone {
+            VStack {
+                environment
+                    .share(.init(dep(\.routerDependency)))
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
+                controls
+            }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+            .background(Color.black)
+        } else {
+            HStack {
+                controls
+                environment
+                    .share(.init(dep(\.routerDependency)))
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
+            }
+            .background(Color.black)
         }
-        .background(Color.black)
     }
 }

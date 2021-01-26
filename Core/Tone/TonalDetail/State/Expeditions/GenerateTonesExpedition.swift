@@ -40,6 +40,6 @@ struct GenerateTonesExpedition: GraniteExpedition {
     }
     
     func preparePredictions(_ model: TonalModel) {
-        model.predict(days: 12)
+//        model.predict(days: 12)
     }
 }

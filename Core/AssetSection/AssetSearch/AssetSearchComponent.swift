@@ -21,6 +21,8 @@ public struct AssetSearchComponent: GraniteComponent {
                 state: state.searchState)
                 .share(.init(dep(\.hosted,
                                  AssetSearchCenter.route)))
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium)
             
             HStack {
                 Spacer()
@@ -37,8 +39,6 @@ public struct AssetSearchComponent: GraniteComponent {
             }
         }
         .padding(.top, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.medium)
-        .padding(.trailing, Brand.Padding.medium)
-        .padding(.bottom, state.securityData.isNotEmpty ? 0.0 : Brand.Padding.large)
+        .padding(.bottom, command.center.securities?.isNotEmpty == true ? 0.0 : Brand.Padding.large)
     }
 }

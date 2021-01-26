@@ -99,6 +99,14 @@ extension Date {
         
         return abs(components.day ?? 0)
     }
+    
+    func hoursFrom(_ date: Date) -> Int {
+        let todaysDate = self
+        let latestTickerDate = date
+        let components = Calendar.nyCalendar.dateComponents([.hour], from: latestTickerDate, to: todaysDate)
+        
+        return abs(components.hour ?? 0)
+    }
 }
 
 //MARK: -- Sorting

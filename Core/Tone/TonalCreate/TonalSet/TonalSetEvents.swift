@@ -16,5 +16,9 @@ struct TonalSetEvents {
         public init(_ range: TonalRange) {
             self.range = range
         }
+        
+        public var async: DispatchQueue? {
+            DispatchQueue.global(qos: .utility)
+        }
     }
 }

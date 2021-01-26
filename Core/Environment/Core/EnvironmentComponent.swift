@@ -20,14 +20,6 @@ public struct EnvironmentComponent: GraniteComponent {
         .init(repeating: GridItem(.flexible()), count: command.center.maxWidth)
     }
     
-    var controls: ControlBar {
-        ControlBar(isIPhone: EnvironmentConfig.isIPhone,
-                   currentRoute: command.center.routerDependency.router.route,
-                   onRoute: { route in
-            command.center.routerDependency.router.request(route)
-        })
-    }
-    
     public var body: some View {
         if EnvironmentConfig.isIPhone {
             GeometryReader { proxy in
@@ -35,10 +27,10 @@ public struct EnvironmentComponent: GraniteComponent {
                        spacing: Brand.Padding.small) {
                     ScrollView {
                         //Max Windows Height
-                        ForEach(0..<command.center.maxHeight, id: \.self) { col in
+                        ForEach(0..<command.center.maxWidth, id: \.self) { col in
                             VStack(spacing: 0) {
                             
-                                ForEach(0..<command.center.maxWidth, id: \.self) { row in
+                                ForEach(0..<command.center.maxHeight, id: \.self) { row in
                                     if row < state.activeWindowConfigs.count,
                                        col < state.activeWindowConfigs[row].count,
                                        state.activeWindowConfigs[row][col].kind != .unassigned {
@@ -61,12 +53,6 @@ public struct EnvironmentComponent: GraniteComponent {
                     }
                     .padding(.top, proxy.safeAreaInsets.top)
                     .background(Brand.Colors.black)
-                    
-                    
-                    controls
-                        .opacity(state.activeWindowConfigs.isEmpty ? 0.0 : 1.0)
-                    
-                    
                 }.frame(minWidth: 0,
                         maxWidth: .infinity,
                         minHeight: 0,
@@ -76,12 +62,10 @@ public struct EnvironmentComponent: GraniteComponent {
             }
         } else {
             HStack(spacing:  command.center.nonIPhoneHStackSpacing) {
-                controls.opacity(state.activeWindowConfigs.isEmpty ? 0.0 : 1.0)
-                Spacer()
                 //Max Windows Height
-                ForEach(0..<command.center.maxHeight, id: \.self) { col in
+                ForEach(0..<command.center.maxWidth, id: \.self) { col in
                     VStack(spacing: Brand.Padding.small) {
-                        ForEach(0..<command.center.maxWidth, id: \.self) { row in
+                        ForEach(0..<command.center.maxHeight, id: \.self) { row in
                             if row < state.activeWindowConfigs.count,
                                col < state.activeWindowConfigs[row].count,
                                state.activeWindowConfigs[row][col].kind != .unassigned {

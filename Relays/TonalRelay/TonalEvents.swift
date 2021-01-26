@@ -39,6 +39,10 @@ struct TonalEvents {
         {
             self.data = data
         }
+        
+        public var async: DispatchQueue? {
+            DispatchQueue.global(qos: .utility)
+        }
     }
     
     public struct TonalSounds: GraniteEvent {

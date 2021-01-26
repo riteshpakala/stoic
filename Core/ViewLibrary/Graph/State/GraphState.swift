@@ -34,7 +34,7 @@ public class GraphCenter: GraniteCenter<GraphState> {
     }
     
     var timeDisplay: TimeDisplayOption {
-        .daily
+        .hourly
     }
 }
 

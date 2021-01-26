@@ -23,7 +23,7 @@ struct TonalFindEvents {
         }
         
         public var async: DispatchQueue? {
-            DispatchQueue.init(label: "tonal.find.parse.serial")
+            DispatchQueue.global(qos: .utility)
         }
     }
 }

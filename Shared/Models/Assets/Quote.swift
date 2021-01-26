@@ -60,8 +60,9 @@ public struct Quote {
     
     var needsUpdate: Bool {
         let days: Int = Date.today.daysFrom(latestSecurity.date)
-        
-        return abs(days) > 0 || securities.count < 4
+        let hours: Int = Date.today.hoursFrom(latestSecurity.date)
+        let shouldUpdateHour = Date.today.timeComponents().hour <= Date.today.closingHour
+        return ((abs(days) > 0 || (hours >= 1 && shouldUpdateHour)) && Date.today.validTradingDay) || securities.count < 4 
     }
 }
 

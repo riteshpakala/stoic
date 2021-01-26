@@ -24,7 +24,7 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
         VStack {
             VStack(alignment: .leading, spacing: 0.0) {
                 Spacer()
-                HStack(spacing: 0.0) {
+                HStack(spacing: Brand.Padding.large) {
                     GraniteText(state.label,
                                 .subheadline,
                                 .regular,
@@ -34,15 +34,14 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                     
                     GraniteText("price",
                                 .subheadline,
-                                .regular)
-                                .padding(.trailing,
-                                         Brand.Padding.large)
+                                .regular,
+                                .trailing)
                     
                     switch state.assetGridType {
                     case .standard:
                         GraniteText("change",
                                     .subheadline,
-                                    .regular)
+                                    .regular).frame(width: 60)
                     case .add:
                         GraniteText("add",
                                     .subheadline,
@@ -54,12 +53,13 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                     default:
                         EmptyView.init()
                     }
-                    
-                    
                 }
                 .padding(.bottom, Brand.Padding.xSmall)
+                .padding(.leading, Brand.Padding.large)
+                .padding(.trailing, Brand.Padding.medium)
                 
-                Rectangle().frame(height: 2.0, alignment: .leading).foregroundColor(.black)
+                Rectangle()
+                    .frame(height: 2.0, alignment: .leading).foregroundColor(.black)
             }.frame(minHeight: 42, idealHeight: 42, maxHeight: 42)
             
             ScrollView {
@@ -68,6 +68,7 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                         AssetGridItemComponent(state: .init(state.assetGridType,
                                                             radioSelections: state.radioSelections))
                             .payload(.init(object: asset))
+                            .padding(.top, Brand.Padding.small)
                             .onTapGesture(
                                 perform: {
                                     if state.assetGridType == .radio {
@@ -91,7 +92,7 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                     }.padding(.leading, Brand.Padding.medium)
                 }
             }.frame(maxWidth: .infinity,
-                    minHeight: state.assetData.count > 0 ? 48 : 0.0,
+                    minHeight: state.assetData.count > 0 ? 66 : 0.0,
                     alignment: .center)
             
             if state.assetGridType == .radio {

@@ -97,7 +97,7 @@ extension TonalService {
                     switch modelType {
                     case .close:
                         return [
-                            indicators.avgVolatility(),
+                            indicators.avgMomentum(),
                             indicators.smaWA(),
                             indicators.avgChange(),
                             indicators.vwa(),
@@ -106,7 +106,7 @@ extension TonalService {
                         ]
                     case .low:
                         return [
-                            indicators.avgVolatility(),
+                            indicators.avgMomentum(),
                             indicators.smaWA(),
                             indicators.avgChange(),
                             indicators.vwa(),
@@ -115,7 +115,7 @@ extension TonalService {
                         ]
                     case .high:
                         return [
-                            indicators.avgVolatility(),
+                            indicators.avgMomentum(),
                             indicators.smaWA(),
                             indicators.avgChange(),
                             indicators.vwa(),
@@ -124,7 +124,7 @@ extension TonalService {
                         ]
                     case .volume:
                         return [
-                            indicators.avgVolatility(),
+                            indicators.avgMomentum(),
                             indicators.smaWA(),
                             indicators.avgVolChange(),
                             indicators.vwa(),

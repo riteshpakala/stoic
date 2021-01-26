@@ -23,6 +23,7 @@ public struct PortfolioComponent: GraniteComponent {
                 switch state.type {
                 case .expanded, .preview:
                     portfolioHeader
+                    PaddingVertical(Brand.Padding.xSmall)
                     portfolioStrategy
                     GraniteButtonComponent(
                         state: .init(.add,
@@ -111,17 +112,13 @@ public struct PortfolioComponent: GraniteComponent {
                 .padding(.bottom, Brand.Padding.large)
             
         }
+        .shadow(color: Color.black.opacity(0.57), radius: 4.0, x: 1.0, y: 2.0)
+        .background(GradientView(direction: .topLeading)
+                        .shadow(color: Color.black, radius: 8.0, x: 3.0, y: 3.0))
         .padding(.top, Brand.Padding.large)
         .padding(.leading, Brand.Padding.large)
         .padding(.trailing, Brand.Padding.large)
         .padding(.bottom, Brand.Padding.large)
-        .shadow(color: Color.black.opacity(0.57), radius: 4.0, x: 1.0, y: 2.0)
-        .background(GradientView(direction: .topLeading)
-                        .padding(.top, Brand.Padding.large)
-                        .padding(.leading, Brand.Padding.large)
-                        .padding(.trailing, Brand.Padding.large)
-                        .padding(.bottom, Brand.Padding.large)
-                        .shadow(color: Color.black, radius: 8.0, x: 3.0, y: 3.0))
                        
             
         

@@ -64,7 +64,7 @@ public struct GraniteButtonComponent: GraniteComponent {
                             GraniteText("+", Brand.Colors.black,
                                         .headline,
                                         .bold)
-                                        .shadow(color: .black, radius: 6, x: 1, y: 1)
+                                        .shadow(color: .black, radius: 10, x: 1, y: 1)
                         
                         
                         ).frame(width: 24, height: 24)

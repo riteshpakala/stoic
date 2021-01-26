@@ -52,8 +52,6 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
         ]
     }
     
-    
-    
     var securities: [Security]? {
         switch state.context {
         case .portfolio:

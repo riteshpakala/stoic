@@ -19,35 +19,32 @@ public struct AssetGridItemComponent: GraniteComponent {
     public var body: some View {
         VStack(spacing: 0) {
             HStack {
-                if let image = state.asset.symbolImage {
-                    state.asset.symbolColor.frame(
+                GradientView(colors: [Brand.Colors.greyV2.opacity(0.66),
+                                      Brand.Colors.grey.opacity(0.24)],
+                             cornerRadius: 6.0,
+                             direction: .topLeading)
+                    .frame(
                         width: 36,
                         height: 36,
-                        alignment: .center).overlay (
-                            
-                        image
-                        .frame(width: 20,
-                               height: 20,
-                               alignment: .center)
-                        .foregroundColor(Brand.Colors.black)
-                        
-                        
-                        )
-                        .cornerRadius(6.0)
-                        .shadow(color: .black, radius: 4, x: 1, y: 1)
-                } else {
-                    Text(state.asset.symbol)
-                        .frame(
-                            width: 36,
-                            height: 36,
-                            alignment: .center)
-                        .font(Fonts.live(.title3, .bold))
-                        .foregroundColor(Brand.Colors.black)
-                        .background(state.asset.symbolColor
-    //                                    .granite_innerShadow(radius: 2)
-                                        .cornerRadius(6.0))
-                        .shadow(color: Color.black.opacity(0.42), radius: 4, x: 1, y: 1)
-                }
+                        alignment: .center)
+                    .overlay (
+                        VStack {
+                            if let image = state.asset.symbolImage {
+                                image
+                                .frame(width: 20,
+                                       height: 20,
+                                       alignment: .center)
+                                .foregroundColor(Brand.Colors.black)
+                            } else {
+                                GraniteText(state.asset.symbol,
+                                            Brand.Colors.black,
+                                            .title3, .bold)
+                            }
+                        }
+                    
+                    )
+                    .background(state.asset.symbolColor.cornerRadius(6.0)
+                                    .shadow(color: Color.black, radius: 6.0, x: 3.0, y: 2.0))
                 
                 VStack(alignment: .leading) {
                     GraniteText(state.asset.title,
@@ -61,7 +58,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                                 .regular,
                                 .leading,
                                 style: .init(radius: 2, offset: .init(x: 1, y: 1)))
-                }.padding(.trailing, 12)
+                }
                 
                 VStack {
                     GraniteText(state.asset.description1,
@@ -75,26 +72,24 @@ public struct AssetGridItemComponent: GraniteComponent {
                                 .subheadline,
                                 .regular,
                                 .trailing)
-                }.padding(.trailing, 12)
-                
-                
+                }.padding(.trailing, Brand.Padding.medium)
                 
                 VStack(alignment: .center, spacing: 2) {
                     Spacer()
                     
                     switch state.assetGridType {
                     case .standard:
-                        VStack(alignment: .center, spacing: 2) {
+                        VStack(alignment: .center, spacing: 4) {
                             GraniteText(state.asset.description2,
                                         state.asset.symbolColor,
                                         .subheadline,
                                         .regular)
-                                .frame(height: 12, alignment: .bottom)
+                                .frame(width: 60, height: 12, alignment: .bottom)
                             
                             (state.security.isGainer ? Brand.Colors.green : Brand.Colors.red)
                                 .clipShape(Circle())
                                 .frame(width: 6, height: 6, alignment: .top)
-                        }.padding(.leading, Brand.Padding.small)
+                        }
                     case .add:
                         Circle()
                             .foregroundColor(state.asset.symbolColor).overlay(
@@ -130,11 +125,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                                             .padding(.trailing, Brand.Padding.xSmall)
                                             .padding(.bottom, Brand.Padding.xSmall)
                                             .shadow(color: .black, radius: 2, x: 1, y: 1)
-                                    
-                                    
                                     )
-                            
-                            
                             )
                             .frame(width: 24, height: 24)
                             .padding(.leading, Brand.Padding.small)
@@ -145,8 +136,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                     
                     Spacer()
                 }
-                .foregroundColor(Brand.Colors.marble)
-                .fixedSize()
+                .padding(.trailing, Brand.Padding.medium)
                 
             }
             
@@ -155,5 +145,6 @@ public struct AssetGridItemComponent: GraniteComponent {
                 .foregroundColor(.black)
                 .padding(.top, Brand.Padding.small)
         }
+        .padding(.leading, Brand.Padding.large)
     }
 }

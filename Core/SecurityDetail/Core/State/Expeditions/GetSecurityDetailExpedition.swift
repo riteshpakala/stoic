@@ -90,15 +90,15 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 if let quote = quote {
                     if quote.needsUpdate {
                         guard stage == .none else {
-                            GraniteLogger.error("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(self)", .expedition)
+                            GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(self)", .expedition)
                             return
                         }
                         
                         if state.isExpanded {
-                            GraniteLogger.error("quote needs update (expanded)", .expedition, focus: true, symbol: "🎡")
+                            GraniteLogger.info("quote needs update (expanded)", .expedition, focus: true, symbol: "🎡")
                             connection.update(\EnvironmentDependency.detail.stage, value: .fetching)
                         } else {
-                            GraniteLogger.error("quote needs update (preview) ", .expedition, focus: true, symbol: "🎡")
+                            GraniteLogger.info("quote needs update (preview) ", .expedition, focus: true, symbol: "🎡")
                             portfolio?.updateDetailStage(state.security, stage: .fetching)
                             connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
                         }
@@ -106,6 +106,8 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         updateQuote(from: state.security, connection)
                         
                     } else {
+                        GraniteLogger.info("quote is up to date", .expedition, focus: true, symbol: "🎡")
+                        
                         //The second to last statement required before set in expanded
                         //Thelast statement required before set in preview
                         if state.isExpanded {
@@ -117,7 +119,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     
                 } else {
                     guard stage == .none else {
-                        GraniteLogger.error("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(self)", .expedition)
+                        GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(self)", .expedition)
                         return
                     }
                     

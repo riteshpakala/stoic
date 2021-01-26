@@ -105,11 +105,11 @@ extension Security {
     }
     
     public var description1_sub: String {
-        "\(self.isGainer ? "+" : "")$\(self.changeAbsoluteValue.display)"
+        "\(self.isGainer ? "+" : "-")$\(self.changeAbsoluteValue.display.replacingOccurrences(of: "-", with: ""))"
     }
     
     public var description2: String {
-        "\(self.changePercentValue.percent)%"
+        "\(self.isGainer ? "+" : "")\(self.changePercentValue.percent)%"
     }
 }
 

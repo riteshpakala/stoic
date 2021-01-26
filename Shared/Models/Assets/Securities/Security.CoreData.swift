@@ -35,26 +35,30 @@ extension Security {
     }
     
     public func record(to moc: NSManagedObjectContext) -> SecurityObject? {
-        switch self.securityType {
-        case .crypto:
-            let object = CryptoDataObject(context: moc)
-            if let crypto = self as? CryptoCurrency {
-                crypto.apply(to: object)
-                return object
-            } else {
+        guard let object = try? moc.fetch(self.getObjectRequest()).first else {
+            switch self.securityType {
+            case .crypto:
+                let object = CryptoDataObject(context: moc)
+                if let crypto = self as? CryptoCurrency {
+                    crypto.apply(to: object)
+                    return object
+                } else {
+                    return nil
+                }
+            case .stock:
+                let object = StockDataObject(context: moc)
+                if let stock = self as? Stock {
+                    stock.apply(to: object)
+                    return object
+                } else {
+                    return nil
+                }
+            default:
                 return nil
             }
-        case .stock:
-            let object = StockDataObject(context: moc)
-            if let stock = self as? Stock {
-                stock.apply(to: object)
-                return object
-            } else {
-                return nil
-            }
-        default:
-            return nil
         }
+        
+        return object
     }
     
     public func getObjectRequest() -> NSFetchRequest<SecurityObject> {
@@ -142,7 +146,6 @@ extension Security {
                            moc: NSManagedObjectContext,
                            _ added: @escaping ((Portfolio?) -> Void)) {
         moc.performAndWait {
-            
             guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
             let floor = FloorObject(context: moc)
             floor.coordX = Int32(location.x)
@@ -152,10 +155,9 @@ extension Security {
             moc.getPortfolioObject(username) { portfolioObject in
                 do {
                     if let portfolio = portfolioObject {
-                        recordedSecurity.portfolio = portfolio
                         recordedSecurity.floor = floor
-                        portfolio.addToSecurities(recordedSecurity)
                         floor.portfolio = portfolio
+                        portfolio.removeFromFloor(floor)
                         portfolio.addToFloor(floor)
                         try moc.save()
                         added(portfolio.asPortfolio)

@@ -35,6 +35,8 @@ public struct HoldingsComponent: GraniteComponent {
                                     .headline,
                                     .bold,
                                     .leading)
+                            .padding(.leading, Brand.Padding.medium)
+                            .padding(.trailing, Brand.Padding.medium)
                         
                         AssetGridComponent(state: .init(state.context.assetGridType,
                                                         context: state.context))
@@ -44,8 +46,6 @@ public struct HoldingsComponent: GraniteComponent {
                             
                     }
                     .padding(.top, Brand.Padding.large)
-                    .padding(.leading, Brand.Padding.medium)
-                    .padding(.trailing, Brand.Padding.medium)
                     
                     if state.type == .add {
                         Spacer()

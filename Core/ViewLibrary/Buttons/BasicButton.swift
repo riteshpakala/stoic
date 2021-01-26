@@ -14,8 +14,8 @@ struct BasicButton: View {
         HStack(alignment: .center) {
             
             ZStack {
-                GradientView(colors: [Brand.Colors.yellow,
-                                      Brand.Colors.salmon],
+                GradientView(colors: [Brand.Colors.marbleV2.opacity(0.66),
+                                      Brand.Colors.marble.opacity(0.24)],
                              cornerRadius: 6.0,
                              direction: .topLeading).overlay(
                     
@@ -24,11 +24,10 @@ struct BasicButton: View {
                                 .subheadline,
                                 .bold,
                                 .center)
-                        .shadow(color: Color.black.opacity(0.42),
-                                radius: 3, x: 1, y: 1)
                 )
                 .frame(width: 120, height: 36, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0)
+                .background(Brand.Colors.salmon.cornerRadius(6.0)
+                                .shadow(color: Color.black, radius: 6.0, x: 3.0, y: 2.0))
                 
             }
         }
