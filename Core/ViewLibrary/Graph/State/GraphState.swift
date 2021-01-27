@@ -34,7 +34,12 @@ public class GraphCenter: GraniteCenter<GraphState> {
     }
     
     var timeDisplay: TimeDisplayOption {
-        .hourly
+        switch state.quote?.securityType {
+        case .crypto:
+            return .hourly
+        default:
+            return .daily
+        }
     }
 }
 

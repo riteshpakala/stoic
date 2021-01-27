@@ -21,19 +21,16 @@ public struct TonalCreateComponent: GraniteComponent {
         case .find:
             TonalFindComponent()
                 .listen(to: command, .stop)
-                .share(.init(dep(\.hosted,
-                                 TonalSetCenter.route)))
+                .share(.init(dep(\.hosted)))
         case .set:
             TonalSetComponent(state: inject(\.envDependency,
                                             target: \.tone.set.state))
                 .listen(to: command, .stop)
-                .share(.init(dep(\.hosted,
-                                 TonalTuneCenter.route))).showEmptyState
+                .share(.init(dep(\.hosted))).showEmptyState
         case .tune:
             TonalTuneComponent()
                 .listen(to: command, .stop)
-                .share(.init(dep(\.hosted,
-                                 TonalCompileCenter.route))).showEmptyState
+                .share(.init(dep(\.hosted))).showEmptyState
         case .compile:
             TonalCompileComponent()
                 .listen(to: command, .stop)

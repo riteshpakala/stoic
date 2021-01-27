@@ -34,14 +34,14 @@ extension Security {
         
     }
     
-    public func record(to moc: NSManagedObjectContext) -> SecurityObject? {
+    public func record(to moc: NSManagedObjectContext) -> (SecurityObject, Bool)? {
         guard let object = try? moc.fetch(self.getObjectRequest()).first else {
             switch self.securityType {
             case .crypto:
                 let object = CryptoDataObject(context: moc)
                 if let crypto = self as? CryptoCurrency {
                     crypto.apply(to: object)
-                    return object
+                    return (object, false)
                 } else {
                     return nil
                 }
@@ -49,7 +49,7 @@ extension Security {
                 let object = StockDataObject(context: moc)
                 if let stock = self as? Stock {
                     stock.apply(to: object)
-                    return object
+                    return (object, false)
                 } else {
                     return nil
                 }
@@ -58,7 +58,7 @@ extension Security {
             }
         }
         
-        return object
+        return (object, true)
     }
     
     public func getObjectRequest() -> NSFetchRequest<SecurityObject> {
@@ -104,7 +104,9 @@ extension Security {
                                moc: NSManagedObjectContext,
                                _ added: @escaping ((Portfolio?) -> Void)) {
         moc.performAndWait {
-            guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
+            guard let recordedSecurityPayload = self.record(to: moc) else { added(nil); return }
+            
+            let recordedSecurity = recordedSecurityPayload.0
             
             do {
                 let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
@@ -121,6 +123,9 @@ extension Security {
             moc.getPortfolioObject(username) { portfolioObject in
                 do {
                     if let portfolio = portfolioObject {
+                        guard portfolio.securities?.filter({ $0.name == self.name })
+                                .isEmpty == true else { added(nil); return }
+                        
                         recordedSecurity.portfolio = portfolio
                         portfolio.addToSecurities(recordedSecurity)
                         try moc.save()
@@ -146,22 +151,42 @@ extension Security {
                            moc: NSManagedObjectContext,
                            _ added: @escaping ((Portfolio?) -> Void)) {
         moc.performAndWait {
-            guard let recordedSecurity = self.record(to: moc) else { added(nil); return }
-            let floor = FloorObject(context: moc)
-            floor.coordX = Int32(location.x)
-            floor.coordY = Int32(location.y)
-            floor.security = recordedSecurity
+            guard let recordedSecurityPayload = self.record(to: moc) else { added(nil); return }
+            
+            let recordedSecurity = recordedSecurityPayload.0
             
             moc.getPortfolioObject(username) { portfolioObject in
                 do {
+                    let floor: FloorObject
+                    
                     if let portfolio = portfolioObject {
-                        recordedSecurity.floor = floor
-                        floor.portfolio = portfolio
-                        portfolio.removeFromFloor(floor)
-                        portfolio.addToFloor(floor)
+                        if let floorFound = portfolio.floor?.first(where: { $0.security?.name == recordedSecurity.name }) {
+                            floor = floorFound
+                        } else {
+                            floor = FloorObject(context: moc)
+                            recordedSecurity.portfolio = portfolio
+                            recordedSecurity.floor = floor
+                            floor.portfolio = portfolio
+                            portfolio.addToFloor(floor)
+                        }
+                        
+                        if !recordedSecurityPayload.1,
+                           portfolio.securities?.filter({ $0.name == self.name })
+                            .isEmpty == true {
+                            portfolio.addToSecurities(recordedSecurity)
+                        }
+                        
+                        floor.coordX = Int32(location.x)
+                        floor.coordY = Int32(location.y)
+                        
                         try moc.save()
                         added(portfolio.asPortfolio)
                     } else {
+                        floor = FloorObject(context: moc)
+                        floor.coordX = Int32(location.x)
+                        floor.coordY = Int32(location.y)
+                        floor.security = recordedSecurity
+                        
                         let portfolio = PortfolioObject.init(context: moc)
                         portfolio.username = username
                         recordedSecurity.portfolio = portfolio
@@ -187,11 +212,11 @@ extension Array where Element == SecurityObject {
     }
     
     var latests: [SecurityObject] {
-        self.compactMap { security in
+        return self.compactMap { security in
             if let securities = security.quote?.securities {
                 return Array(securities).sortDesc.first
             } else {
-                return nil
+                return security
             }
         }
     }
@@ -204,7 +229,7 @@ extension Set where Element == SecurityObject {
                 return Array(securities).sortDesc.first
             } else {
                 GraniteLogger.info("\(security.quote == nil)", .utility)
-                return nil
+                return security
             }
         }
     }

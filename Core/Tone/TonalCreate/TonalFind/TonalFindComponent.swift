@@ -27,8 +27,7 @@ public struct TonalFindComponent: GraniteComponent {
                 AssetSearchComponent(
                     state: inject(\.envDependency,
                                      target: \.searchTone.state))
-                    .share(.init(dep(\.hosted,
-                                     TonalFindCenter.route)))
+                    .share(.init(dep(\.hosted)))
             }
             
             if command.center.findState == .parsed {

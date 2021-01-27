@@ -27,9 +27,11 @@ extension TonalServiceModels {
         let security: Security
         let history: [Security]
         let historyPaired: [PairedSecurity]
+        let quote: Quote
         
         public init(_ security: Security,
                     with quote: Quote) {
+            self.quote = quote
             self.security = security
             let securities: [Security] = quote.dailySecurities.sortDesc.filterBelow(security.date)
             self.history = Array(securities.prefix(Indicators.trailingDays))

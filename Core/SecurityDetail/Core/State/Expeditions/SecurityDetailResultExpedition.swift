@@ -32,9 +32,9 @@ struct StockDetailResultExpedition: GraniteExpedition {
         stocks.save(moc: coreDataInstance) { quote in
             if state.isExpanded {
                 if quote != nil {
-                    connection.update(\EnvironmentDependency.detail.quote, value: quote)
+                    connection.update(\EnvironmentDependency.detail.quote, value: quote, .here)
                 } else {
-                    connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
+                    connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching, .here)
                 }
             } else {
                 if quote != nil {
@@ -42,7 +42,7 @@ struct StockDetailResultExpedition: GraniteExpedition {
                 } else {
                     portfolio?.updateDetailStage(state.security, stage: .failedFetching)
                 }
-                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
+                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
             }
         }
     }
@@ -68,9 +68,9 @@ struct CryptoDetailResultExpedition: GraniteExpedition {
         crypto.save(moc: coreDataInstance) { quote in
             if state.isExpanded {
                 if quote != nil {
-                    connection.update(\EnvironmentDependency.detail.quote, value: quote)
+                    connection.update(\EnvironmentDependency.detail.quote, value: quote, .here)
                 } else {
-                    connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching)
+                    connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching, .here)
                 }
             } else {
                 if quote != nil {
@@ -78,7 +78,7 @@ struct CryptoDetailResultExpedition: GraniteExpedition {
                 } else {
                     portfolio?.updateDetailStage(state.security, stage: .failedFetching)
                 }
-                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
+                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
             }
         }
     }

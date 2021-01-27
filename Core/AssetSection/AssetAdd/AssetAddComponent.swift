@@ -20,7 +20,7 @@ public struct AssetAddComponent: GraniteComponent {
         VStack {
             Spacer()
             AssetSearchComponent(state: state.searchState.state)
-                .share(.init(dep(\.hosted)))
+                .share(.init(dep(\.hosted, AssetAddCenter.route)))
             Spacer()
         }
     }

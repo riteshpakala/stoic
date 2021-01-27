@@ -47,7 +47,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     return
                 }
                 if quote?.contains(security: state.security) == false {
-                    connection.update(\EnvironmentDependency.detail.stage, value: .none)
+                    connection.update(\EnvironmentDependency.detail.stage, value: .none, .here)
                     
                     GraniteLogger.info("quote not compatible\nrequesting a new quote\nself:\(self)", .expedition)
                 } else {
@@ -79,7 +79,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         GraniteLogger.info("no quote found, need to re-fetch the history of the \(state.securityType)\nself:\(self)", .expedition)
                         
                         portfolio?.updateDetailStage(state.security, stage: .none)
-                        connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
+                        connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
                     }
                 }
             }
@@ -96,11 +96,11 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         
                         if state.isExpanded {
                             GraniteLogger.info("quote needs update (expanded)", .expedition, focus: true, symbol: "🎡")
-                            connection.update(\EnvironmentDependency.detail.stage, value: .fetching)
+                            connection.update(\EnvironmentDependency.detail.stage, value: .fetching, .here)
                         } else {
                             GraniteLogger.info("quote needs update (preview) ", .expedition, focus: true, symbol: "🎡")
                             portfolio?.updateDetailStage(state.security, stage: .fetching)
-                            connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
+                            connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
                         }
                         
                         updateQuote(from: state.security, connection)
@@ -111,7 +111,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         //The second to last statement required before set in expanded
                         //Thelast statement required before set in preview
                         if state.isExpanded {
-                            connection.update(\EnvironmentDependency.detail.quote, value: quote)
+                            connection.update(\EnvironmentDependency.detail.quote, value: quote, .here)
                         } else {
                             state.quote = quote
                         }
@@ -125,10 +125,10 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     
                     GraniteLogger.info("quote was not found\nfetching quote/\(state.securityType) history\nself:\(self)", .expedition)
                     if state.isExpanded {
-                        connection.update(\EnvironmentDependency.detail.stage, value: .fetching)
+                        connection.update(\EnvironmentDependency.detail.stage, value: .fetching, .here)
                     } else {
                         portfolio?.updateDetailStage(state.security, stage: .fetching)
-                        connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
+                        connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
                     }
                     
                     updateQuote(from: state.security, connection)

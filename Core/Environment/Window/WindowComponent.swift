@@ -30,7 +30,8 @@ public struct WindowComponent: GraniteComponent {
                 .share(.init(dep(\.hosted)))
         case .floor:
             FloorComponent()
-                .share(.init(dep(\.hosted)))
+                .share(.init(dep(\.hosted,
+                                 WindowCenter.route)))
         case .search:
             AssetSearchComponent(state: inject(\.envDependency,
                                                   target: \.search.state))

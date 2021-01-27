@@ -13,6 +13,11 @@
         <attribute name="coordY" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PortfolioObject" inverseName="floor" inverseEntity="PortfolioObject"/>
         <relationship name="security" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="floor" inverseEntity="SecurityObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="security"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="NetworkResponseObject" representedClassName=".NetworkResponseObject" isAbstract="YES" syncable="YES">
         <attribute name="responseType" attributeType="String"/>

@@ -97,34 +97,34 @@ extension TonalService {
                     switch modelType {
                     case .close:
                         return [
-                            indicators.avgMomentum(),
+                            indicators.emaWA(),
                             indicators.smaWA(),
-                            indicators.avgChange(),
+                            indicators.avgVolChange(),
                             indicators.vwa(),
                             indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
                             sentiment.magnitude,
                         ]
                     case .low:
                         return [
-                            indicators.avgMomentum(),
+                            indicators.emaWA(),
                             indicators.smaWA(),
-                            indicators.avgChange(),
+                            indicators.avgVolChange(),
                             indicators.vwa(),
                             indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
                             sentiment.magnitude,
                         ]
                     case .high:
                         return [
-                            indicators.avgMomentum(),
+                            indicators.emaWA(),
                             indicators.smaWA(),
-                            indicators.avgChange(),
+                            indicators.avgVolChange(),
                             indicators.vwa(),
                             indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
                             sentiment.magnitude,
                         ]
                     case .volume:
                         return [
-                            indicators.avgMomentum(),
+                            indicators.emaWA(),
                             indicators.smaWA(),
                             indicators.avgVolChange(),
                             indicators.vwa(),

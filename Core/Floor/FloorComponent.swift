@@ -61,8 +61,7 @@ public struct FloorComponent: GraniteComponent {
                         
                         HoldingsComponent(state: inject(\.envDependency,
                                                         target: \.holdingsFloor))
-                            .share(.init(dep(\.hosted,
-                                             FloorCenter.route)))
+                            .share(.init(dep(\.hosted)))
                     }, onExitTap: {
                         sendEvent(FloorEvents.ExitAddToFloor(), haptic: .light)
                     })

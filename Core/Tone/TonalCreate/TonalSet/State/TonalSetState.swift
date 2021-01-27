@@ -46,11 +46,8 @@ public class TonalSetCenter: GraniteCenter<TonalSetState> {
     
     public override var links: [GraniteLink] {
         [
-            
             .relay(\TonalState.sentimentProgress,
                    \TonalSetState.sentimentLoadingProgress, .dependant)
-    
         ]
-    
     }
 }
