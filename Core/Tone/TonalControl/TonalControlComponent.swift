@@ -71,6 +71,7 @@ public struct TonalControlComponent: GraniteComponent {
                         .bold)
                         .padding(.top,
                                  Brand.Padding.medium)
+                        .padding(.bottom, Brand.Padding.medium)
                         .shadow(color: .black,
                                 radius: 3, x: 1, y: 2)
             

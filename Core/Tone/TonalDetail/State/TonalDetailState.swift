@@ -16,6 +16,7 @@ public enum TonalDetailStage {
 }
 public class TonalDetailState: GraniteState {
     let model: TonalModel?
+    var tuner: SentimentSliderState = .init(.neutral, date: .today)
     
     public init(_ model: TonalModel?) {
         self.model = model

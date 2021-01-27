@@ -18,8 +18,8 @@ public struct TonalDetailComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            
-            
+            TonalControlComponent(state: .init(state.tuner, model: state.model))
+                .share(.init(dep(\.hosted)))
         }.frame(maxWidth: .infinity,
                 maxHeight: 200)
         .padding(.bottom, Brand.Padding.large)

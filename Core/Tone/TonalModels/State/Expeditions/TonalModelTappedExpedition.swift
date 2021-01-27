@@ -19,5 +19,19 @@ struct TonalModelTappedExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        guard let model = event.asset.asModel else { return }
+        let security = model.latestSecurity
+        guard let router = connection.retrieve(\EnvironmentDependency.router),
+              let modelType = connection.retrieve(\EnvironmentDependency.tonalModels.type) else {
+            return
+        }
+        
+        switch modelType {
+        case .general:
+            connection.update(\EnvironmentDependency.tonalModels.type, value: .specified(security))
+            router?.request(.securityDetail(.init(object: security)))
+        case .specified:
+            connection.update(\EnvironmentDependency.detail.model, value: model)
+        }
     }
 }

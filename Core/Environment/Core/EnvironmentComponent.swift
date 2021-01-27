@@ -78,10 +78,10 @@ public struct EnvironmentComponent: GraniteComponent {
                                 }
                             }
                         }
-                        .background(Brand.Colors.black)
                     }
                     
-                }.frame(minWidth: 0,
+                }.background(Color.black)
+                 .frame(minWidth: 0,
                         maxWidth: .infinity,
                         minHeight: 0,
                         maxHeight: .infinity,

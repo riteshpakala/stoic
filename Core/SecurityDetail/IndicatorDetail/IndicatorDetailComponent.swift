@@ -26,7 +26,10 @@ public struct IndicatorDetailComponent: GraniteComponent {
             }
             
         }.frame(maxWidth: .infinity,
-                maxHeight: 200)
-        .padding(.bottom, Brand.Padding.large)
+                maxHeight: 120)
+        .padding(.top, Brand.Padding.medium)
+        .padding(.trailing, Brand.Padding.medium)
+        .padding(.leading, Brand.Padding.medium)
+        .padding(.bottom, Brand.Padding.medium)
     }
 }

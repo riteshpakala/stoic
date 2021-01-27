@@ -38,7 +38,9 @@ public struct WindowComponent: GraniteComponent {
                 .share(.init(dep(\.hosted,
                                  WindowCenter.route)))
         case .securityDetail(let kind):
-            SecurityDetailComponent(state: .init(kind))
+            SecurityDetailComponent(state: .init(kind,
+                                                 quote: command.center.envDependency.detail.quote,
+                                                 model: command.center.envDependency.detail.model))
                 .share(.init(dep(\.hosted,
                                  WindowCenter.route)))
         case .tonalCreate(let stage):
@@ -48,9 +50,6 @@ public struct WindowComponent: GraniteComponent {
             TonalModelsComponent(state: inject(\.envDependency,
                                                target: \.tonalModels))
                 .payload(payload)
-                .share(.init(dep(\.hosted)))
-        case .tonalDetail:
-            TonalDetailComponent()
                 .share(.init(dep(\.hosted)))
         case .special:
             SpecialComponent()
