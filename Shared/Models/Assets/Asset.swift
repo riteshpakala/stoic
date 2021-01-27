@@ -45,7 +45,7 @@ extension Asset {
 
 extension TonalModel {
     public var title: String {
-        self.quote.ticker
+        self.quote.ticker.uppercased()
     }
     
     public var subtitle: String {

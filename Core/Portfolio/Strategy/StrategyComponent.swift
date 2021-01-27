@@ -78,7 +78,7 @@ public struct StrategyComponent: GraniteComponent {
                                             HStack(spacing: Brand.Padding.large) {
                                                 
                                                 VStack(spacing: Brand.Padding.xSmall) {
-                                                    GraniteText("\(quote.ticker)",
+                                                    GraniteText("\(quote.ticker.uppercased())",
                                                                 .title2,
                                                                 .bold,
                                                                 .leading)
@@ -109,7 +109,7 @@ public struct StrategyComponent: GraniteComponent {
                                                                 .shadow(color: .black, radius: 4, x: 1, y: 2))
                                                 
                                                 VStack(spacing: Brand.Padding.xSmall) {
-                                                    GraniteText("\(quote.ticker)",
+                                                    GraniteText("\(quote.ticker.uppercased())",
                                                                 .title2,
                                                                 .bold,
                                                                 .leading)

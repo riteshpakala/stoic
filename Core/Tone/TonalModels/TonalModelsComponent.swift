@@ -23,6 +23,8 @@ public struct TonalModelsComponent: GraniteComponent {
                             .headline,
                             .bold,
                             .leading)
+                    .padding(.leading, Brand.Padding.medium)
+                    .padding(.trailing, Brand.Padding.medium)
                 
                 
                 AssetGridComponent(state: .init(.standard, context: .tonalBrowser(.empty)))
@@ -30,8 +32,6 @@ public struct TonalModelsComponent: GraniteComponent {
                     .listen(to: command, .stop).showEmptyState
                     
             }.padding(.top, Brand.Padding.large)
-            .padding(.leading, Brand.Padding.medium)
-            .padding(.trailing, Brand.Padding.medium)
             
             Spacer()
             GraniteButtonComponent(
