@@ -49,7 +49,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 if quote?.contains(security: state.security) == false {
                     connection.update(\EnvironmentDependency.detail.stage, value: .none, .here)
                     
-                    GraniteLogger.info("quote not compatible\nrequesting a new quote\nself:\(self)", .expedition)
+                    GraniteLogger.info("quote not compatible\nrequesting a new quote\nself:\(self)", .expedition, focus: true)
                 } else {
                     //Should be the final stage of the SecurityDetail in its EXPANDED
                     //state.
@@ -123,7 +123,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         return
                     }
                     
-                    GraniteLogger.info("quote was not found\nfetching quote/\(state.securityType) history\nself:\(self)", .expedition)
+                    GraniteLogger.info("quote was not found\nfetching quote/\(state.securityType) history\nself:\(self)", .expedition, focus: true)
                     if state.isExpanded {
                         connection.update(\EnvironmentDependency.detail.stage, value: .fetching, .here)
                     } else {

@@ -21,17 +21,17 @@ struct TonalModelTappedExpedition: GraniteExpedition {
         
         guard let model = event.asset.asModel else { return }
         let security = model.latestSecurity
-        guard let router = connection.retrieve(\EnvironmentDependency.router),
-              let modelType = connection.retrieve(\EnvironmentDependency.tonalModels.type) else {
+        guard let router = connection.retrieve(\EnvironmentDependency.router) else {
             return
         }
         
-        switch modelType {
-        case .general:
+        switch router?.route {
+        case .securityDetail:
+            print("{TEST} \(model.date.asString)")
+            connection.update(\EnvironmentDependency.detail.model, value: model)
+        default:
             connection.update(\EnvironmentDependency.tonalModels.type, value: .specified(security))
             router?.request(.securityDetail(.init(object: security)))
-        case .specified:
-            connection.update(\EnvironmentDependency.detail.model, value: model)
         }
     }
 }

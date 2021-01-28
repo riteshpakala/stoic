@@ -19,7 +19,6 @@ struct UserExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        
         coreDataInstance.getPortfolio(username: "test") { portfolio in
             if let portfolio = portfolio {
                 connection.update(\RouterDependency.router.env.user.portfolio,
