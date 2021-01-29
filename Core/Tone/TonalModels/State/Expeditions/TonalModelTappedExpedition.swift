@@ -27,7 +27,6 @@ struct TonalModelTappedExpedition: GraniteExpedition {
         
         switch router?.route {
         case .securityDetail:
-            print("{TEST} \(model.date.asString)")
             connection.update(\EnvironmentDependency.detail.model, value: model)
         default:
             connection.update(\EnvironmentDependency.tonalModels.type, value: .specified(security))

@@ -34,7 +34,7 @@ public struct TonalModel: Asset {
     let david: TonalModels
     let tuners: [SentimentOutput]
     let range: [Date]
-    let quote: Quote
+    private(set) var quote: Quote
     let modelID: String
     var latestSecurity: Security
     
@@ -55,7 +55,7 @@ public struct TonalModel: Asset {
         self.latestSecurity = quote.securities.sortDesc.first ?? EmptySecurity()
     }
     
-    public func predictAll(_ sentiment: SentimentOutput = .neutral) -> TonalPrediction {
+    public mutating func predictAll(_ sentiment: SentimentOutput = .neutral) -> TonalPrediction {
         let close: Double = predict(sentiment, modelType: .close)
         let low: Double = predict(sentiment, modelType: .low)
         let high: Double = predict(sentiment, modelType: .high)
@@ -64,9 +64,10 @@ public struct TonalModel: Asset {
         return .init(close: close, low: low, high: high, volume: volume)
     }
     
-    public func predict(_ sentiment: SentimentOutput = .neutral,
+    public mutating func predict(_ sentiment: SentimentOutput = .neutral,
                         modelType: TonalModels.ModelType = .close,
                         scale: Bool = true) -> Double {
+        quote.precompute()
         guard let output = david.predict(quote,
                                          modelType,
                                          range: self.range,
@@ -92,9 +93,10 @@ public struct TonalModel: Asset {
         }
     }
     
-    func predict(days: Int,
+    mutating func predict(days: Int,
                  sentiment: SentimentOutput = .neutral,
                  modelType: TonalModels.ModelType = .close) {
+        quote.precompute()
         
         var quoteToModify = quote
         var modelToModify = david

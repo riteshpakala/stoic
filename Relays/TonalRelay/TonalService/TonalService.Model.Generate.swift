@@ -24,11 +24,13 @@ extension TonalModels {
         let securityObjects = range.objects
         
         securityObjects.first?.getQuote(moc: moc) { quote in
-            guard let quote = quote else {
+            guard var quote = quote else {
                 GraniteLogger.info("failed to retrieve quote\nself: \(self)", .relay, focus: true)
                 completion(nil)
                 return
             }
+            
+            quote.precompute()
             
             let securities = securityObjects
             let sentiments = tone.tune.sentiments

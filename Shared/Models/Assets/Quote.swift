@@ -15,7 +15,10 @@ public struct Quote {
     var exchangeName: String
     var name: String
     var securities: [Security] 
-    var dailySecurities: [Security]
+    var dailySecurities: [Security] {
+        precomputedDailies ?? securities.dailies
+    }
+    var precomputedDailies: [Security]? = nil
     
     public init(ticker: String,
                 securityType: SecurityType,
@@ -27,7 +30,11 @@ public struct Quote {
         self.exchangeName = exchangeName
         self.name = name
         self.securities = securities
-        self.dailySecurities = securities.dailies
+    }
+    
+    public mutating func precompute() {
+        guard self.precomputedDailies == nil else { return }
+        self.precomputedDailies = dailySecurities
     }
     
     var latestSecurity: Security {

@@ -42,7 +42,7 @@ struct TonalControlSentimentExpedition: GraniteExpedition {
         
         guard event.isActive == false else { return }
         
-        guard let model = state.model else {
+        guard var model = state.model else {
             return
         }
         
