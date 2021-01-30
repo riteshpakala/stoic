@@ -11,6 +11,6 @@ import SwiftUI
 import Combine
 
 struct TonalModelsEvents {
-    public struct Get: GraniteEvent {
-    }
+    public struct Add: GraniteEvent {}
+    public struct Get: GraniteEvent {}
 }

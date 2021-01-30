@@ -14,7 +14,7 @@ struct SCNNodes {
     var cameraNode: SCNNode {
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 12)
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 24)
         cameraNode.rotation = SCNVector4(0, 0, 0, 0)
         return cameraNode
     }
@@ -83,7 +83,7 @@ struct SceneKitView : NSViewRepresentable {
         scene.rootNode.addChildNode(nodes.ambientLightNode)
         scene.rootNode.addChildNode(nodes.alexanderNode)
         
-        scene.rootNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: -2, y: 2, z: 2, duration: 12)))
+        scene.rootNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: -2, y: 2, z: 0, duration: 57)))
         
         let scnView = SCNView()
         scnView.scene = scene
@@ -99,4 +99,28 @@ struct SceneKitView : NSViewRepresentable {
 #else
 import UIKit
 
+struct SceneKitView : UIViewRepresentable {
+    
+    let scene = SCNScene.init()
+    let nodes: SCNNodes = .init()
+
+    func makeUIView(context: UIViewRepresentableContext<SceneKitView>) -> SCNView {
+   
+        scene.rootNode.addChildNode(nodes.cameraNode)
+        scene.rootNode.addChildNode(nodes.lightNode)
+        scene.rootNode.addChildNode(nodes.ambientLightNode)
+        scene.rootNode.addChildNode(nodes.alexanderNode)
+        
+        scene.rootNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: -2, y: 2, z: 2, duration: 12)))
+        
+        let scnView = SCNView()
+        scnView.scene = scene
+        return scnView
+    }
+
+    func updateUIView(_ scnView: SCNView, context: Context) {
+        scnView.allowsCameraControl = true
+        scnView.backgroundColor = .black
+    }
+}
 #endif

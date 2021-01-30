@@ -18,7 +18,7 @@ public struct SpecialComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-//            SceneKitView()
+            SceneKitView()
         }
     }
 }

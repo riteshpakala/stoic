@@ -53,6 +53,10 @@ public struct WindowComponent: GraniteComponent {
                 .share(.init(dep(\.hosted)))
         case .special:
             SpecialComponent()
+        case .discuss:
+            DiscussComponent()
+        case .settings:
+            SettingsComponent()
         default:
             EmptyView.init().hidden()
         }

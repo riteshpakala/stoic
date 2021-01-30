@@ -78,6 +78,10 @@ public enum WindowType: Hashable {
     case tonalBrowser(GranitePayload)
     case tonalDetail
     
+    case discuss
+    
+    case settings
+    
     case unassigned
     
     var max: Int {

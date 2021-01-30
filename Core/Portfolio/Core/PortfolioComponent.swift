@@ -74,42 +74,38 @@ public struct PortfolioComponent: GraniteComponent {
                 GraniteText("trading day: \(Date.nextTradingDay.asString)",
                             .headline,
                             .bold,
-                            .center,
                             style: .init(gradient: [Brand.Colors.black.opacity(0.75),
                                                     Brand.Colors.black.opacity(0.36)]))
                     .padding(.top, Brand.Padding.large)
-                    .padding(.leading, Brand.Padding.medium)
                     .padding(.bottom, Brand.Padding.medium)
                 
             }
             
             //User details
-            HStack(spacing: Brand.Padding.medium) {
+            VStack(spacing: Brand.Padding.medium) {
                 GraniteText("username: \(command.center.username)",
                             .headline,
-                            .bold,
-                            .leading)
+                            .bold)
                 
                 GraniteText("age: 12 days",
                             .headline,
-                            .bold,
-                            .trailing)
+                            .bold)
             }
             .padding(.top, Brand.Padding.xSmall)
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
-            //Strategy
             
+            //Strategy
             GraniteText("sign out",
                         Brand.Colors.red,
                         .subheadline,
-                        .bold,
-                        .center)
+                        .bold)
                 .padding(.top, Brand.Padding.medium)
                 .padding(.bottom, Brand.Padding.large)
             
         }
-        .shadow(color: Color.black.opacity(0.57), radius: 4.0, x: 1.0, y: 2.0)
+        .frame(maxWidth: .infinity)
+        .shadow(color: Color.black.opacity(0.75), radius: 1.0, x: 1.0, y: 1.0)
         .background(GradientView(direction: .topLeading)
                         .shadow(color: Color.black, radius: 8.0, x: 3.0, y: 3.0))
         .padding(.top, Brand.Padding.medium)

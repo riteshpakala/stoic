@@ -124,6 +124,40 @@ public struct ControlBar: View {
                     Spacer()
                 }
                 
+                GraniteButtonComponent(state: .init(.image("community_icon"),
+                                                    selected: currentRoute == .discuss && isIPhone,
+                                                    size: .init(iconSize)))
+                                        .padding(.trailing,
+                                                 isIPhone ? 0.0 : Brand.Padding.medium)
+                
+                if !isIPhone {
+                    GraniteText("discuss",
+                                fontSize,
+                                .regular,
+                                .leading,
+                                style: .v2Selection,
+                                selected: currentRoute == .discuss)
+                } else {
+                    Spacer()
+                }
+            }
+            .modifier(TapAndLongPressModifier(tapAction: {
+                GraniteHaptic.light.invoke()
+                onRoute(.discuss)
+                
+            }))
+            
+            if isIPhone {
+                PaddingHorizontal(Brand.Padding.large)
+            } else {
+                PaddingVertical(Brand.Padding.medium9)
+            }
+            
+            HStack(alignment: .center) {
+                if isIPhone {
+                    Spacer()
+                }
+                
                 GraniteButtonComponent(state: .init(.image("model_icon"),
                                                     selected: currentRoute == .models && isIPhone,
                                                     size: .init(iconSize)))

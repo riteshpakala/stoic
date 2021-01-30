@@ -37,7 +37,7 @@ public class TonalModelsState: GraniteState {
     public required init() {
         self.stage = .none
         self.type = .general
-    }
+    } 
 }
 
 public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
@@ -54,7 +54,8 @@ public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetTonalModelsExpedition.Discovery(),
-            TonalModelTappedExpedition.Discovery()
+            TonalModelTappedExpedition.Discovery(),
+            TonalModelAddExpedition.Discovery()
         ]
     }
 }

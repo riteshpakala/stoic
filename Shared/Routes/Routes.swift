@@ -14,6 +14,7 @@ public indirect enum Route: ID, Equatable {
     case intro
     case floor
     case models
+    case discuss
     case settings
     case securityDetail(GranitePayload)
     case debug(Route)

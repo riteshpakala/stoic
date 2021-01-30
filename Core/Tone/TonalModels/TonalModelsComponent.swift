@@ -37,9 +37,7 @@ public struct TonalModelsComponent: GraniteComponent {
                 state: .init(.add,
                              padding: .init(0, 0, Brand.Padding.xSmall, 0),
                              action: {
-                                
-                                GraniteHaptic.light.invoke()
-//                              set(\.addToPortfolio, value: true)
+                                sendEvent(TonalModelsEvents.Add(), haptic: .light)
                              }))
         }
     }

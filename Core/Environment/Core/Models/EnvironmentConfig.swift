@@ -27,6 +27,7 @@ public struct EnvironmentConfig {
         case modelBrowser
         case securityDetail(GranitePayload)
         case settings
+        case discuss
         
         public var page: Page {
             switch self {
@@ -55,6 +56,14 @@ public struct EnvironmentConfig {
                             [.securityDetail(.expanded(payload)), .portfolio(.holdings)],
                             [.unassigned, .tonalBrowser(payload)]
                         ])
+            case .discuss:
+                return .init(windows: [
+                    [.discuss]
+                ])
+            case .settings:
+                return .init(windows: [
+                    [.settings, .special]
+                ])
             default:
                 return .init(windows: [])
             }
@@ -79,6 +88,10 @@ extension EnvironmentConfig {
             return .init(kind: .securityDetail(payload))
         case .intro:
             return .init(kind: .intro)
+        case .settings:
+            return .init(kind: .settings)
+        case .discuss:
+            return .init(kind: .discuss)
         default:
             return .init(kind: .home)
         }

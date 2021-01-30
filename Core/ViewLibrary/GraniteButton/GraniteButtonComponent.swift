@@ -66,14 +66,13 @@ public struct GraniteButtonComponent: GraniteComponent {
                             GraniteText("+", Brand.Colors.black,
                                         .headline,
                                         .bold)
-                                .shadow(color: .black, radius: 10, x: 1, y: 1)
                             
                             
                         ).frame(width: 24, height: 24)
                         .padding(.top, Brand.Padding.medium)
                         .padding(.leading, Brand.Padding.small)
                         .padding(.bottom, Brand.Padding.medium)
-                        .shadow(color: .black, radius: 3, x: 1, y: 1)
+                        .shadow(color: Color.black.opacity(0.75), radius: 1, x: 1, y: 1)
                 }
             }
         }
