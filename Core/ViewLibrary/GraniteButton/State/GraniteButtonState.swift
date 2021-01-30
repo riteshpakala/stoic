@@ -14,6 +14,7 @@ public enum GraniteButtonType {
     case text(String)
     case image(String)
     case add
+    case addNoSeperator
 }
 
 public class GraniteButtonState: GraniteState {
@@ -22,8 +23,10 @@ public class GraniteButtonState: GraniteState {
     let padding: EdgeInsets
     let size: CGSize
     let selectionColor: Color
+    let action: (() -> Void)?
     
-    public init(_ text: String) {
+    public init(_ text: String,
+                action: (() -> Void)? = nil) {
         self.type = .text(text)
         self.selected = false
         self.size = .zero
@@ -32,18 +35,21 @@ public class GraniteButtonState: GraniteState {
                              Brand.Padding.medium,
                              Brand.Padding.large,
                              Brand.Padding.medium)
+        self.action = action
     }
     
     public init(_ type: GraniteButtonType,
                 selected: Bool = false,
                 size: CGSize = .zero,
                 selectionColor: Color = .black,
-                padding: EdgeInsets = .init(0, 0, 0, 0)) {
+                padding: EdgeInsets = .init(0, 0, 0, 0),
+                action: (() -> Void)? = nil) {
         self.type = type
         self.size = size
         self.selectionColor = selectionColor
         self.selected = selected
         self.padding = padding
+        self.action = action
     }
     
     required init() {
@@ -55,6 +61,7 @@ public class GraniteButtonState: GraniteState {
                              Brand.Padding.medium,
                              Brand.Padding.large,
                              Brand.Padding.medium)
+        self.action = nil
     }
 }
 

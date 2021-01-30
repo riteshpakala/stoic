@@ -38,13 +38,15 @@ public struct TonalCompileComponent: GraniteComponent {
             
             VStack {
                 if command.center.compileState == .readyToCompile {
-                    GraniteButtonComponent(state: .init("compile")).onTapGesture {
-                        sendEvent(TonalCompileEvents.Compile())
-                    }
+                    GraniteButtonComponent(state: .init("compile",
+                                                        action: {
+                                                            sendEvent(TonalCompileEvents.Compile(), haptic: .light)
+                                                        }))
                 } else if command.center.compileState == .compiled {
-                    GraniteButtonComponent(state: .init("save")).onTapGesture {
-                        sendEvent(TonalCompileEvents.Save())
-                    }
+                    GraniteButtonComponent(state: .init("save",
+                                                        action: {
+                                                            sendEvent(TonalCompileEvents.Save(), haptic: .light)
+                                                        }))
                 }
             }
             .padding(.top, Brand.Padding.large)

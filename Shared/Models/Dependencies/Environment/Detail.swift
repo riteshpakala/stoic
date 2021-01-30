@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class Detail: ObservableObject {
+class Detail {
     var stage: SecurityDetailStage = .none {
         didSet {
             if stage == .none {

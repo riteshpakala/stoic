@@ -13,9 +13,16 @@ extension TonalServiceModels {
         var range: TonalRange? = nil
         var sounds: [[TonalSound]]
         var completed: [Date] = []
+        var data: [TonalServiceModels.Tweets]
+        var chunks: Int = 1
+        
+        var dataResults: [TonalServiceModels.Tweets.Meta] {
+            data.flatMap { $0.result }
+        }
         
         public init() {
             sounds = []
+            data = []
         }
         
 //        mutating func update(soundChunk: [TonalSound]) {
@@ -29,6 +36,18 @@ extension TonalServiceModels {
 //                    
 //                } )
 //        }
+    }
+}
+
+extension TonalServiceModels.TonalSounds {
+    var datesIngested: [Date] {
+        let dates = data.flatMap { tweet in tweet.result.compactMap { $0.date.asDouble.date().simple } }.uniques
+        
+        return dates.filter({ datesSimple.contains($0.simple.asString) })
+    }
+    
+    var isPrepared: Bool {
+        datesIngested.count == dates.count
     }
 }
 
@@ -53,8 +72,13 @@ extension TonalServiceModels.TonalSounds {
         return dates
     }
     
+    var datesSimple: [String] {
+        dates.map { $0.simple.asString }
+    }
+    
     func progress(threads: Int, dateChunks: Int) -> Double {
-        sounds.count.asDouble / (dates.count * threads).asDouble
+        ((datesIngested.count.asDouble/dates.count.asDouble) * 0.75) +
+        ((completed.count.asDouble/chunks.asDouble) * 0.25)
     }
     
     var compiled: [TonalSound] {

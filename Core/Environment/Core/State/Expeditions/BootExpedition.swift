@@ -47,8 +47,7 @@ struct BootExpedition: GraniteExpedition {
         
         state.activeWindowConfigs = windowsConfig
         
-        GraniteLogger.info("setup windows for Environment - \(state.config.kind)\nwindows: \(state.activeWindowConfigs.flatMap { $0 }.count)\nself:\(self)",
-                            .expedition)
+        GraniteLogger.info("setup windows for Environment - \(state.config.kind)\nwindows: \(state.activeWindowConfigs.flatMap { $0 }.count)\nself:\(String(describing: self))", .expedition)
     /*
          
          

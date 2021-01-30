@@ -71,6 +71,12 @@ public struct Quote {
 //        let shouldUpdateHour = latestSecurity.date.timeComponents().hour <= Date.today.closingHour && latestSecurity.securityType == .stock
         return ((abs(days) > 0 || (hours >= 1)) && Date.today.validTradingDay) || securities.count < 4
     }
+    
+    var updateTime: Int? {
+        let hours: Int = Date.today.hoursFrom(latestSecurity.date)
+        let days = max(1, hours/24)
+        return securities.count < 4 ? nil : days
+    }
 }
 
 extension Quote {

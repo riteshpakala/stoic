@@ -30,7 +30,7 @@ extension CryptoService {
                         listPayload = try decoder.decode([CryptoServiceModels.List.Coin].self, from: data)
                     } catch let error {
                         listPayload = nil
-                        GraniteLogger.error("failed decoding crypto coin\nself: \(self)", .relay)
+                        GraniteLogger.error("failed decoding crypto coin\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
                     }
                     
                     let response = listPayload?.compactMap {

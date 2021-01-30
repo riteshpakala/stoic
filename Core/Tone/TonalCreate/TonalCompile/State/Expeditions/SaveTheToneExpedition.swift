@@ -20,13 +20,13 @@ struct SaveTheToneExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         guard let tone = connection.retrieve(\EnvironmentDependency.tone) else {
-            GraniteLogger.error("saving tonal model failed - no tone\nself:\(self)",
+            GraniteLogger.error("saving tonal model failed - no tone\nself:String(describing: self)",
                                 .expedition)
             return
         }
         
         guard let quote = tone.find.quote else {
-            GraniteLogger.error("saving tonal model failed - no quote\nself:\(self)",
+            GraniteLogger.error("saving tonal model failed - no quote\nself:String(describing: self)",
                                 .expedition)
             return
         }
@@ -35,7 +35,7 @@ struct SaveTheToneExpedition: GraniteExpedition {
         let tuners = Array(tone.tune.tuners.map { $0.value.slider.sentiment })
         let range = tone.selectedRange?.dates ?? []
         guard let model = tone.compile.model else {
-            GraniteLogger.error("saving tonal model failed - no model\nself:\(self)",
+            GraniteLogger.error("saving tonal model failed - no model\nself:String(describing: self)",
                                 .expedition)
             return
         }
@@ -50,7 +50,7 @@ struct SaveTheToneExpedition: GraniteExpedition {
             if success {
                 connection.update(\EnvironmentDependency.tone.compile.tonalModel, value: tonalModel)
                 
-                GraniteLogger.info("saved tonal model\nself:\(self)", .expedition)
+                GraniteLogger.info("saved tonal model\nself:String(describing: self)", .expedition)
             }
         }
     }

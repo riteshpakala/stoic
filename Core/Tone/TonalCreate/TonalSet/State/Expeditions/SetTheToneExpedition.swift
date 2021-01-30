@@ -19,7 +19,7 @@ struct SetTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
        
-        GraniteLogger.info("tonal range selected:\n\(event.range)\nself:\(self)", .expedition)
+        GraniteLogger.info("tonal range selected:\n\(event.range)\nself:String(describing: self)", .expedition)
         
         connection.update(\EnvironmentDependency.tone.selectedRange, value: event.range)
         
@@ -58,12 +58,12 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         //to understand how it's getting hit so many times
         //in the beam event system part of the Tonal Relay
         //
-        GraniteLogger.info("sentiment history received & saving\nself:\(self)", .expedition)
+        GraniteLogger.info("sentiment history received & saving\nself:String(describing: self)", .expedition)
         
         guard let tone = connection.retrieve(\EnvironmentDependency.tone),
               let range = tone.selectedRange else {
             
-            GraniteLogger.info("sentiment history saving failed \nself:\(self)", .expedition)
+            GraniteLogger.info("sentiment history saving failed \nself:String(describing: self)", .expedition)
             return
         }
         

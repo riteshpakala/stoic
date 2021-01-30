@@ -59,9 +59,9 @@ struct FindTheToneExpedition: GraniteExpedition {
             } else {
                 switch security.securityType {
                 case .crypto:
-                    connection.request(CryptoEvents.GetCryptoHistory.init(security: security))
+                    connection.request(CryptoEvents.GetCryptoHistory.init(security: security, daysAgo: quote?.updateTime))
                 case .stock:
-                    connection.request(StockEvents.GetStockHistory.init(security: security))
+                    connection.request(StockEvents.GetStockHistory.init(security: security, daysAgo: quote?.updateTime))
                 default:
                     break
                 }

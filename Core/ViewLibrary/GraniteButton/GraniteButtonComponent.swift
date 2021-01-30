@@ -36,17 +36,17 @@ public struct GraniteButtonComponent: GraniteComponent {
                                              cornerRadius: 6.0,
                                              direction: .topLeading).overlay (
                                                 
-                                        Brand.Colors.black
-                                                        .opacity(0.57)
-                                                        .cornerRadius(4.0)
-                                                        .shadow(color: .black, radius: 4, x: 2, y: 2)
-                                                        .padding(.top, 4)
-                                                        .padding(.leading, 4)
-                                                        .padding(.trailing, 4)
-                                                        .padding(.bottom, 4)
-                                        
-                                    
-                                    )
+                                                Brand.Colors.black
+                                                    .opacity(0.57)
+                                                    .cornerRadius(4.0)
+                                                    .shadow(color: .black, radius: 4, x: 2, y: 2)
+                                                    .padding(.top, 4)
+                                                    .padding(.leading, 4)
+                                                    .padding(.trailing, 4)
+                                                    .padding(.bottom, 4)
+                                                
+                                                
+                                             )
                                     .padding(.top, -8)
                                     .padding(.leading, -8)
                                     .padding(.trailing, -8)
@@ -55,18 +55,20 @@ public struct GraniteButtonComponent: GraniteComponent {
                             }
                         }
                     )
-            case .add:
+            case .add, .addNoSeperator:
                 VStack(spacing: 0) {
-                    PaddingVertical(Brand.Padding.xSmall)
+                    if case .add = state.type {
+                        PaddingVertical(Brand.Padding.xSmall)
+                    }
                     Circle()
                         .foregroundColor(Brand.Colors.marble).overlay(
-                        
+                            
                             GraniteText("+", Brand.Colors.black,
                                         .headline,
                                         .bold)
-                                        .shadow(color: .black, radius: 10, x: 1, y: 1)
-                        
-                        
+                                .shadow(color: .black, radius: 10, x: 1, y: 1)
+                            
+                            
                         ).frame(width: 24, height: 24)
                         .padding(.top, Brand.Padding.medium)
                         .padding(.leading, Brand.Padding.small)
@@ -79,5 +81,6 @@ public struct GraniteButtonComponent: GraniteComponent {
         .padding(.leading, state.padding.leading)
         .padding(.trailing, state.padding.trailing)
         .padding(.bottom, state.padding.bottom)
+        .modifier(TapAndLongPressModifier(tapAction: { state.action?() }))
     }
 }

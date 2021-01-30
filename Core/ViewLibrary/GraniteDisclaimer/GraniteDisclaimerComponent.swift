@@ -44,9 +44,9 @@ public struct GraniteDisclaimerComponent: GraniteComponent {
             
             Spacer()
         }
-        .padding(.top, Brand.Padding.large)
-        .padding(.bottom, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.large)
-        .padding(.trailing, Brand.Padding.large)
+        .padding(.top, Brand.Padding.medium)
+        .padding(.bottom, Brand.Padding.medium)
+        .padding(.leading, Brand.Padding.medium)
+        .padding(.trailing, Brand.Padding.medium)
     }
 }

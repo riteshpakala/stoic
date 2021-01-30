@@ -9,7 +9,6 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-public class Broadcasts: ObservableObject {
-    @ObservedObject
+public class Broadcasts {
     var movers: BroadcastsMovers = .init()
 }

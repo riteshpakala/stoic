@@ -24,12 +24,14 @@ public struct HoldingsComponent: GraniteComponent {
                         .share(.init(dep(\.hosted)))
                     Spacer()
                     PaddingVertical(Brand.Padding.xSmall)
-                    GraniteButtonComponent(state: .init("cancel")).onTapGesture {
-                        set(\.addToPortfolio, value: false)
-                    }
+                    GraniteButtonComponent(state: .init("cancel",
+                                                        action: {
+                                                            
+                                                            set(\.addToPortfolio, value: false)
+                                                        }))
                 }
             } else {
-                VStack {
+                VStack(spacing: 0) {
                     VStack(alignment: .leading) {
                         GraniteText("portfolio",
                                     .headline,
@@ -48,17 +50,13 @@ public struct HoldingsComponent: GraniteComponent {
                     .padding(.top, Brand.Padding.large)
                     
                     if state.type == .add {
-                        Spacer()
                         GraniteButtonComponent(
                             state: .init(.add,
-                                         padding:
-                                            .init(Brand.Padding.medium,
-                                                  0,
-                                                  Brand.Padding.xSmall,
-                                                  0))).onTapGesture {
-                                                    GraniteHaptic.light.invoke()
-                                                    set(\.addToPortfolio, value: true)
-                                                }
+                                         padding: .init(0,0,Brand.Padding.xSmall,0),
+                                         action: {
+                                           GraniteHaptic.light.invoke()
+                                           set(\.addToPortfolio, value: true)
+                                         }))
                     }
                 }
             }

@@ -27,6 +27,8 @@ public struct AssetSectionComponent: GraniteComponent {
                     set(\.securityType, value: index == 0 ? .stock : .crypto)
                 })
             }
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
                 AssetGridComponent(state: .init(.standard, context: state.windowType))
                     .listen(to: command)
@@ -34,7 +36,5 @@ public struct AssetSectionComponent: GraniteComponent {
             }
         }
         .padding(.top, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.medium)
-        .padding(.trailing, Brand.Padding.medium)
     }
 }

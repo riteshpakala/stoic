@@ -26,7 +26,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        GraniteLogger.info("fetching stock movers:\n\(url.absoluteString)\nself: \(self)", .relay)
+        GraniteLogger.info("fetching stock movers:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay)
         
         var request = URLRequest(
             url: url,
@@ -52,7 +52,7 @@ extension StockService {
                         movers = try decoder.decode(StockServiceModels.Movers.self, from: data)
                     } catch let error {
                         movers = nil
-                        GraniteLogger.error("failed fetching stock movers:\n\(error.localizedDescription)\nself: \(self)", .relay)
+                        GraniteLogger.error("failed fetching stock movers:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
                     }
                     
                     return movers != nil ? [movers!] : nil

@@ -21,11 +21,11 @@ struct StockDetailResultExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
-            GraniteLogger.error("no portfolio found\nself:\(self)", .expedition)
+            GraniteLogger.error("no portfolio found\nself:String(describing: self)", .expedition)
             return
         }
         
-        GraniteLogger.info("relaying stock quotes\nself:\(self)", .expedition, focus: true)
+        GraniteLogger.info("relaying stock quotes\nself:String(describing: self)", .expedition, focus: true)
         
         let stocks = event.data
         
@@ -59,7 +59,7 @@ struct CryptoDetailResultExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
-            GraniteLogger.error("no portfolio found\nself:\(self)", .expedition)
+            GraniteLogger.error("no portfolio found\nself:String(describing: self)", .expedition)
             return
         }
         

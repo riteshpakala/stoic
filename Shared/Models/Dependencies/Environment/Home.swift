@@ -9,6 +9,6 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class Home: ObservableObject {
+class Home {
     var ticker: String = ""
 }

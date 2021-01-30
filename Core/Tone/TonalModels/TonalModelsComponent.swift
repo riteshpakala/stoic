@@ -17,7 +17,7 @@ public struct TonalModelsComponent: GraniteComponent {
     public init() {}
     
     public var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             VStack(alignment: .leading) {
                 GraniteText("your models",
                             .headline,
@@ -33,17 +33,14 @@ public struct TonalModelsComponent: GraniteComponent {
                     
             }.padding(.top, Brand.Padding.large)
             
-            Spacer()
             GraniteButtonComponent(
                 state: .init(.add,
-                             padding:
-                                .init(Brand.Padding.medium,
-                                      0,
-                                      Brand.Padding.xSmall,
-                                      0))).onTapGesture {
-                                        GraniteHaptic.light.invoke()
-//                                        set(\.addToPortfolio, value: true)
-                                    }
+                             padding: .init(0, 0, Brand.Padding.xSmall, 0),
+                             action: {
+                                
+                                GraniteHaptic.light.invoke()
+//                              set(\.addToPortfolio, value: true)
+                             }))
         }
     }
 }

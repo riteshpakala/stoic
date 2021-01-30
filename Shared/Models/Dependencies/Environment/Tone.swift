@@ -8,7 +8,7 @@ import SwiftUI
 import Foundation
 import GraniteUI
 
-public class Tone: ObservableObject {
+public class Tone {
     public struct Constraints {
         public static var maxDays: Int = 30
         public static var minDays: Int = 2
@@ -22,7 +22,7 @@ public class Tone: ObservableObject {
     
     public var target: Security? {
         guard let security = selectedRange?.objects.first else {
-            GraniteLogger.error("no target security found in the tone dependency\nself:\(self)", .dependency)
+            GraniteLogger.error("no target security found in the tone dependency\nself:\(String(describing: self))", .dependency)
             return nil
         }
         

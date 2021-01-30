@@ -74,9 +74,10 @@ public struct TonalTuneComponent: GraniteComponent {
                 }
                 .padding(.top, Brand.Padding.large)
                 
-                GraniteButtonComponent(state: .init("tune")).onTapGesture {
-                    sendEvent(TonalTuneEvents.Tune())
-                }
+                GraniteButtonComponent(state: .init("tune",
+                                                    action: {
+                                                        sendEvent(TonalTuneEvents.Tune(), haptic: .light)
+                                                    }))
             }
         }
         .frame(maxWidth: .infinity)

@@ -33,7 +33,7 @@ extension CryptoService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        GraniteLogger.info("fetching crypto quotes:\n\(url.absoluteString)\nself: \(self)", .relay)
+        GraniteLogger.info("fetching crypto quotes:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay)
         
         var request = URLRequest(
             url: url,
@@ -53,7 +53,7 @@ extension CryptoService {
                         response = try decoder.decode([String:[String:Double?]].self, from: data)
                     } catch let error {
                         response = nil
-                        GraniteLogger.error("failed fetching crypto quotes:\n\(error.localizedDescription)\nself: \(self)", .relay)
+                        GraniteLogger.error("failed fetching crypto quotes:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
                     }
                     
                     

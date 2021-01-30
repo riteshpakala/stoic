@@ -56,7 +56,7 @@ public struct ClockRelay: GraniteRelay {
         guard enabled else { return }
 //        sendRelay(ClockEvents.Updated())
         for event in command.events {
-            GraniteLogger.info("⏱ clock relay is firing\nself: \(self)", .relay)
+            GraniteLogger.info("⏱ clock relay is firing\nself: \(String(describing: self))", .relay)
             for relay in command.center.relays {
                 relay.beam?.rebound(.init(command, .broadcast), event)
             }

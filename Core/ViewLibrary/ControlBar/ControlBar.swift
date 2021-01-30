@@ -73,10 +73,12 @@ public struct ControlBar: View {
                     Spacer()
                 }
                
-            }.onTapGesture {
+            }
+            .modifier(TapAndLongPressModifier(tapAction: {
                 GraniteHaptic.light.invoke()
                 onRoute(.home)
-            }
+                
+            }))
                 
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large)
@@ -105,10 +107,11 @@ public struct ControlBar: View {
                 } else {
                     Spacer()
                 }
-            }.onTapGesture {
+            }
+            .modifier(TapAndLongPressModifier(tapAction: {
                 GraniteHaptic.light.invoke()
                 onRoute(.floor)
-            }
+            }))
             
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large)
@@ -137,10 +140,12 @@ public struct ControlBar: View {
                 } else {
                     Spacer()
                 }
-            }.onTapGesture {
+            }
+            .modifier(TapAndLongPressModifier(tapAction: {
                 GraniteHaptic.light.invoke()
                 onRoute(.models)
-            }
+                
+            }))
             
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large)
@@ -169,10 +174,12 @@ public struct ControlBar: View {
                 } else {
                     Spacer()
                 }
-            }.onTapGesture {
+            }
+            .modifier(TapAndLongPressModifier(tapAction: {
                 GraniteHaptic.light.invoke()
                 onRoute(.settings)
-            }
+                
+            }))
             
 //            #if DEBUG
 //

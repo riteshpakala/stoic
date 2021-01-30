@@ -10,7 +10,6 @@ import GraniteUI
 import SwiftUI
 
 class RouterDependency: DependencyManager {
-    @ObservedObject
     var router: Router = .init()
     
     public override init(identifier: String,
@@ -21,7 +20,7 @@ class RouterDependency: DependencyManager {
     }
 }
 
-public class Router: ObservableObject {
+public class Router {
     var route: Route = .home//.debug(.models)
     
     var root: GraniteAdAstra? = nil
@@ -33,7 +32,7 @@ public class Router: ObservableObject {
     }
     
     public func request(_ route: Route) {
-        GraniteLogger.info("requesting route \(route)\nself:\(self)", .dependency)
+        GraniteLogger.info("requesting route \(route)\nself:\(String(describing: self))", .dependency)
         self.route = route
         self.root?.toTheStars(target: nil, .here)
     }

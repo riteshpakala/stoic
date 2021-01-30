@@ -26,9 +26,9 @@ struct GetSentimentExpedition: GraniteExpedition {
 //        let chunks: [[Date]] = state.service.soundAggregate.dates.chunked(into: state.service.soundAggregate.dates.count/2)
         
         let dates: [Date] = state.service.soundAggregate.dates
-        GraniteLogger.info("sentiment dates to process: \(dates.map { $0.simple })\n self: \(self)", .expedition, focus: true)
+        GraniteLogger.info("sentiment dates to process: \(dates.map { $0.simple })\n self: \(String(describing: self))", .expedition)
         if let date = dates.first(where: {
-                                    !state.service.soundAggregate.completed.contains($0.simple) }) {
+                                    !state.service.soundAggregate.datesIngested.contains($0.simple) }) {
             
             
             let sinceDateChunk = date
@@ -38,7 +38,7 @@ struct GetSentimentExpedition: GraniteExpedition {
                                 .ProcessSentiment
                                 .init(sinceDate: sinceDateChunk,
                                       untilDate: untilDateChunk,
-                                      ticker: event.range.symbol))
+                                      ticker: event.range.symbol), .contact)
         }
 //        for date in dates {
 ////            let sorted = chunk.sorted(by: { $0.compare($1) == .orderedDescending })
@@ -68,7 +68,7 @@ struct ProcessSentimentExpedition: GraniteExpedition {
         
         let days = event.untilDate.daysFrom(event.sinceDate)
         
-        GraniteLogger.info("🧘 processing: \(event.sinceDate) - \(event.untilDate)\n self: \(self)", .expedition)
+        GraniteLogger.info("🧘 ingesting: \(event.sinceDate) - \(event.untilDate)\n\(state.service.soundAggregate.datesIngested.count)/\(state.service.soundAggregate.dates.count)\n---\n\(state.service.soundAggregate.datesIngested.map { $0.simple })\n\(state.service.soundAggregate.dates.map { $0.simple }) \n self: \(String(describing: self))", .expedition, focus: true)
         
         publisher = state
             .service
@@ -92,13 +92,30 @@ struct TonalHistoryExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        
         guard let tweet = event.data.first else { return }
+        state.service.soundAggregate.data.append(tweet)
+        
+        guard state.service.soundAggregate.isPrepared else {
+            
+            if let range = state.service.soundAggregate.range {
+                connection.request(TonalEvents.GetSentiment.init(range: range), .contact)
+            }
+            
+            return
+        }
+        
+        GraniteLogger.info("🗽 Sentiment is prepared to train\n self: \(String(describing: self))", .expedition, focus: true)
         
         state.stage = .predicting
         
+        let results = state.service.soundAggregate.dataResults
+        
         //TODO: abstract this out to be focused on social
         //to make way for the other Tonal categories
-        let chunks = tweet.result.chunked(into: ceil(max(tweet.result.count.asDouble/state.modelThreads.asDouble, 1)).asInt)
+        let chunks = results.chunked(into: ceil(max(results.count.asDouble/state.modelThreads.asDouble, 1)).asInt)
+        
+        state.service.soundAggregate.chunks = chunks.count
         
         var currentOps: [BlockOperation] = []
         for (_, chunk) in chunks.enumerated() {
@@ -108,7 +125,6 @@ struct TonalHistoryExpedition: GraniteExpedition {
                 let query = tweet.query
                 let model: StoicSentimentModel = .init()
                 var sounds: [TonalSound] = []
-            
             
                 for result in chunk {
                     if let prediction = model.predict(result.content, matching: query) {
@@ -122,11 +138,10 @@ struct TonalHistoryExpedition: GraniteExpedition {
                         sounds.append(sound)
                     }
                 }
-
+                
                 connection.request(TonalEvents
                                     .TonalSounds
-                                    .init(sounds: sounds),
-                                   queue: .main)
+                                    .init(sounds: sounds))
                 
             })
             
@@ -136,18 +151,8 @@ struct TonalHistoryExpedition: GraniteExpedition {
         state.operationQueue.addOperations(currentOps, waitUntilFinished: false)
         
         state.operationQueue.addBarrierBlock {
-            GraniteLogger.info("🪔 completed processing: \(tweet.result.map { $0.date.asDouble.date().asString }.uniques)\n self: \(self)", .expedition, focus: true)
-            if let range = state.service.soundAggregate.range {
-                connection.request(TonalEvents.GetSentiment.init(range: range), .contact)
-            }
+            GraniteLogger.info("🪔 completed processing: \(state.service.soundAggregate.completed.map { $0.simple.asString })\n self: \(String(describing: self))", .expedition, focus: true)
         }
-    }
-    
-    var thread: DispatchQueue {
-        DispatchQueue.init(label: "tonal.relay.predict",
-                           qos: .utility,
-                           attributes: .concurrent,
-                           autoreleaseFrequency: .workItem)
     }
 }
 
@@ -164,9 +169,11 @@ struct TonalSoundsExpedition: GraniteExpedition {
         state.service.soundAggregate.completed.append(event.sounds.first?.date.simple ?? Date.today)
         state.service.soundAggregate.sounds.append(event.sounds)
         
+        GraniteLogger.info("tonal progress: \(state.sentimentProgress) \n self: \(String(describing: self))", .expedition, focus: true)
+        
         if state.sentimentProgress >= 1.0 && state.stage != .compiling {
             
-            GraniteLogger.info("compiling sentiment\n self: \(self)", .expedition, focus: true)
+            GraniteLogger.info("compiling sentiment\n self: \(String(describing: self))", .expedition, focus: true)
             
             let compiled = state.service.soundAggregate.compiled
             state.service.reset()

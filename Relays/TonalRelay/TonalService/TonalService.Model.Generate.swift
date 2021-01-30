@@ -16,7 +16,7 @@ extension TonalModels {
                                 _ completion: @escaping ((TonalModels?) -> Void)) {
         
         guard let range = tone.selectedRange else {
-            GraniteLogger.error("failed to retrieve range\nself: \(self)", .relay, focus: true)
+            GraniteLogger.error("failed to retrieve range\nself: \(String(describing: self))", .relay, focus: true)
             completion(nil)
             return
         }
@@ -25,7 +25,7 @@ extension TonalModels {
         
         securityObjects.first?.getQuote(moc: moc) { quote in
             guard var quote = quote else {
-                GraniteLogger.info("failed to retrieve quote\nself: \(self)", .relay, focus: true)
+                GraniteLogger.info("failed to retrieve quote\nself: \(String(describing: self))", .relay, focus: true)
                 completion(nil)
                 return
             }
@@ -41,7 +41,7 @@ extension TonalModels {
             // the time comparable is equivalent to the data
             // size
             guard bucket.isValid else {
-                GraniteLogger.info("failed to bucket\n\(bucket.pockets.count)\n\(bucket.rangeDates)\nself: \(self)", .relay, focus: true)
+                GraniteLogger.info("failed to bucket\n\(bucket.pockets.count)\n\(bucket.rangeDates)\nself: \(String(describing: self))", .relay, focus: true)
                 return
             }
             

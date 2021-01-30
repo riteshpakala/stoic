@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-public class BroadcastsMovers: ObservableObject{
+public class BroadcastsMovers{
     public struct Categories {
         let topVolume: [Security]
         let winners: [Security]

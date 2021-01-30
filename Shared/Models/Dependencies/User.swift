@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class User: ObservableObject {
+class User {
     
     var portfolio: Portfolio? = nil
     

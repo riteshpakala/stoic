@@ -19,7 +19,7 @@ extension TonalService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        GraniteLogger.info("fetching -> \(url.absoluteString) - self: \(self)", .relay)
+        GraniteLogger.info("fetching -> \(url.absoluteString) - self: \(String(describing: self))", .relay)
         
         let decoder = JSONDecoder()
         
@@ -32,7 +32,7 @@ extension TonalService {
                         prepare = try decoder.decode(TonalServiceModels.Tweets.Prepare.self, from: data)
                     } catch let error {
                         prepare = nil
-                        GraniteLogger.error("\(error.localizedDescription) - self: \(self)", .relay)
+                        GraniteLogger.error("\(error.localizedDescription) - self: \(String(describing: self))", .relay)
                     }
                     
                     guard let preparedTweet = prepare else { return nil }
@@ -48,7 +48,7 @@ extension TonalService {
                         }
                     } catch let error {
                         meta = nil
-                        GraniteLogger.error("\(error.localizedDescription) - self: \(self)", .relay)
+                        GraniteLogger.error("\(error.localizedDescription) - self: \(String(describing: self))", .relay)
                     }
                     
                     guard let metaObject = meta else { return nil }

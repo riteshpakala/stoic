@@ -18,7 +18,7 @@ public struct PortfolioComponent: GraniteComponent {
     
     public var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: 0) {
                 
                 switch state.type {
                 case .expanded, .preview:
@@ -27,14 +27,11 @@ public struct PortfolioComponent: GraniteComponent {
                     portfolioStrategy
                     GraniteButtonComponent(
                         state: .init(.add,
-                                     padding:
-                                        .init(0,
-                                              0,
-                                              Brand.Padding.xSmall,
-                                              0))).onTapGesture {
-                                                GraniteHaptic.light.invoke()
-                                                set(\.stage, value: .adding)
-                                            }
+                                     padding: .init(0,0,Brand.Padding.xSmall,0),
+                                     action: {
+                                       GraniteHaptic.light.invoke()
+                                       set(\.stage, value: .adding)
+                                     }))
                 default:
                     EmptyView.init().hidden()
                 }
@@ -115,10 +112,10 @@ public struct PortfolioComponent: GraniteComponent {
         .shadow(color: Color.black.opacity(0.57), radius: 4.0, x: 1.0, y: 2.0)
         .background(GradientView(direction: .topLeading)
                         .shadow(color: Color.black, radius: 8.0, x: 3.0, y: 3.0))
-        .padding(.top, Brand.Padding.large)
-        .padding(.leading, Brand.Padding.large)
-        .padding(.trailing, Brand.Padding.large)
-        .padding(.bottom, Brand.Padding.large)
+        .padding(.top, Brand.Padding.medium)
+        .padding(.leading, Brand.Padding.medium)
+        .padding(.trailing, Brand.Padding.medium)
+        .padding(.bottom, Brand.Padding.medium)
                        
             
         

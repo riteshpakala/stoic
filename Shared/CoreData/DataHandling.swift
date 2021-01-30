@@ -16,7 +16,7 @@ extension NSObject {
                     withRootObject: self,
                     requiringSecureCoding: true)
         } catch let error {
-            GraniteLogger.error("failed to archive for core data\n\(error.localizedDescription)\nself:\(self)", .utility)
+            GraniteLogger.error("failed to archive for core data\n\(error.localizedDescription)\nself:String(describing: self)", .utility)
             return nil
         }
     }
@@ -29,7 +29,7 @@ extension Archiveable {
         do {
             return try encoder.encode(self)
         } catch let error {
-            GraniteLogger.error("failed to fetch archived data from core data\n\(error.localizedDescription)\nself:\(self)", .utility)
+            GraniteLogger.error("failed to fetch archived data from core data\n\(error.localizedDescription)\nself:String(describing: self)", .utility)
             return nil
         }
     }

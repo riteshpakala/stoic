@@ -21,7 +21,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
-            GraniteLogger.error("no portfolio found\nself:\(self)", .expedition)
+            GraniteLogger.error("no portfolio found\nself:\(String(describing: self))", .expedition)
             return
         }
         
@@ -49,7 +49,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 if quote?.contains(security: state.security) == false {
                     connection.update(\EnvironmentDependency.detail.stage, value: .none, .here)
                     
-                    GraniteLogger.info("quote not compatible\nrequesting a new quote\nself:\(self)", .expedition, focus: true)
+                    GraniteLogger.info("quote not compatible\nrequesting a new quote\nself:\(String(describing: self))", .expedition, focus: true)
                 } else {
                     //Should be the final stage of the SecurityDetail in its EXPANDED
                     //state.
@@ -58,13 +58,13 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     //without another draw call that will cause the command to send an
                     //object request
                     //
-                    GraniteLogger.info("quote found\nrequesting a detail generation\nself:\(self)", .expedition)
+                    GraniteLogger.info("quote found\nrequesting a detail generation\nself:String(describing: self)", .expedition)
                     state.quote = quote
                 }
             } else {
                 state.security.getQuote(moc: coreDataInstance) { quote in
                     if let quote = quote {
-                        GraniteLogger.info("quote received for preview: \(quote.ticker)\nupdating dependency\nself:\(self)", .expedition)
+                        GraniteLogger.info("quote received for preview: \(quote.ticker)\nupdating dependency\nself:String(describing: self)", .expedition)
                         state.quote = quote
                         
                     } else {
@@ -76,7 +76,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         //
                         //???: There could be a solution running expeditions asynchronously,
                         //to complete jobs and then recontinue when necessary
-                        GraniteLogger.info("no quote found, need to re-fetch the history of the \(state.securityType)\nself:\(self)", .expedition)
+                        GraniteLogger.info("no quote found, need to re-fetch the history of the \(state.securityType)\nself:String(describing: self)", .expedition)
                         
                         portfolio?.updateDetailStage(state.security, stage: .none)
                         connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
@@ -90,7 +90,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 if let quote = quote {
                     if quote.needsUpdate {
                         guard stage == .none else {
-                            GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(self)", .expedition)
+                            GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:String(describing: self)", .expedition)
                             return
                         }
                         
@@ -103,7 +103,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                             connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
                         }
                         
-                        updateQuote(from: state.security, connection)
+                        updateQuote(from: state.security, connection, quote)
                         
                     } else {
                         GraniteLogger.info("quote is up to date", .expedition, focus: true, symbol: "🎡")
@@ -119,11 +119,11 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     
                 } else {
                     guard stage == .none else {
-                        GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(self)", .expedition)
+                        GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:String(describing: self)", .expedition)
                         return
                     }
                     
-                    GraniteLogger.info("quote was not found\nfetching quote/\(state.securityType) history\nself:\(self)", .expedition, focus: true)
+                    GraniteLogger.info("quote was not found\nfetching quote/\(state.securityType) history\nself:String(describing: self)", .expedition, focus: true)
                     if state.isExpanded {
                         connection.update(\EnvironmentDependency.detail.stage, value: .fetching, .here)
                     } else {
@@ -131,18 +131,18 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
                     }
                     
-                    updateQuote(from: state.security, connection)
+                    updateQuote(from: state.security, connection, quote)
                 }
             }
         }
     }
     
-    func updateQuote(from security: Security, _ connection: GraniteConnection) {
+    func updateQuote(from security: Security, _ connection: GraniteConnection, _ quote: Quote?) {
         switch security.securityType {
         case .crypto:
-            connection.request(CryptoEvents.GetCryptoHistory.init(security: security))
+            connection.request(CryptoEvents.GetCryptoHistory.init(security: security, daysAgo: quote?.updateTime))
         case .stock:
-            connection.request(StockEvents.GetStockHistory.init(security: security))
+            connection.request(StockEvents.GetStockHistory.init(security: security, daysAgo: quote?.updateTime))
         default:
             break
         }

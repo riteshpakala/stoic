@@ -19,7 +19,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        GraniteLogger.info("getting valid trading days:\n\(url.absoluteString)\nself: \(self)", .relay)
+        GraniteLogger.info("getting valid trading days:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay)
         
         return session
                 .dataTaskPublisher(for: url)

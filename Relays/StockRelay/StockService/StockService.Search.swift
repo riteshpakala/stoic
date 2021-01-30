@@ -19,7 +19,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        GraniteLogger.info("searching stock:\n\(url.absoluteString)\nself: \(self)", .relay)
+        GraniteLogger.info("searching stock:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay)
         
         let decoder = JSONDecoder()
         
@@ -32,7 +32,7 @@ extension StockService {
                         chart = try decoder.decode([[String:String]].self, from: data)
                     } catch let error {
                         chart = nil
-                        GraniteLogger.error("failed searching stock:\n\(error.localizedDescription)\nself: \(self)", .relay)
+                        GraniteLogger.error("failed searching stock:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
                     }
                     
                     return chart != nil ? [StockServiceModels.Search.init(data: chart!)] : nil

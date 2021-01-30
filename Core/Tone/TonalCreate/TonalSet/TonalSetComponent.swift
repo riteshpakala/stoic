@@ -86,9 +86,9 @@ public struct TonalSetComponent: GraniteComponent {
                                        alignment: .center)
                                 .cornerRadius(8)
                                 .shadow(color: .black, radius: 4, x: 2, y: 2)
-                                .onTapGesture(perform:
-                                                sendEvent(TonalSetEvents.Set(
-                                                            tonalRangeIndex), haptic: .light))
+                                .modifier(TapAndLongPressModifier(tapAction: {
+                                                                    sendEvent(TonalSetEvents.Set(
+                                                                                tonalRangeIndex), haptic: .light) }))
                                 
                                 GraniteText(tonalRangeIndex.avgSimilarityDisplay,
                                             tonalRangeIndex.avgSimilarityColor,

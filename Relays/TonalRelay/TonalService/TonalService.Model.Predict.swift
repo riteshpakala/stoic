@@ -55,14 +55,14 @@ extension TonalModels {
                         _ completion: @escaping ((Double) -> Void)) {
         
         guard let selectedRange = tone.selectedRange else {
-            GraniteLogger.error("failed to retrieve selected tonal range - self: \(self)", .relay)
+            GraniteLogger.error("failed to retrieve selected tonal range - self: \(String(describing: self))", .relay)
             completion(0.0)
             return
         }
         
         selectedRange.objects.first?.getQuote(moc: moc) { [weak self] quote in
             guard let quote = quote else {
-                GraniteLogger.error("failed to retrieve quote - self: \(self)", .relay)
+                GraniteLogger.error("failed to retrieve quote - self: \(String(describing: self))", .relay)
                 completion(0.0)
                 return
             }
@@ -113,7 +113,7 @@ extension TonalModels {
                     modelType: self.currentType,
                     predicting: true)
             
-            GraniteLogger.info("predicting:\n\(dataSet.description)\nself: \(self)", .relay)
+            GraniteLogger.info("predicting:\n\(dataSet.description)\nself: \(String(describing: self))", .relay)
             
             try testData.addTestDataPoint(input: dataSet.asArray)
         }
@@ -126,7 +126,7 @@ extension TonalModels {
             return nil
         }
         
-        GraniteLogger.info("predicting for: \(modelType)\noutput: \(output)\nself: \(self)", .ml)
+        GraniteLogger.info("predicting for: \(modelType)\noutput: \(output)\nself: \(String(describing: self))", .ml)
         
         switch modelType {
         case .close:
@@ -144,7 +144,7 @@ extension TonalModels {
     
     public func testPredict(tone: Tone, moc: NSManagedObjectContext) {
         predict(tone, .neutral, moc: moc) { prediction in
-            GraniteLogger.info("test prediction output: \(prediction)\nself: \(self)", .ml)
+            GraniteLogger.info("test prediction output: \(prediction)\nself: \(String(describing: self))", .ml)
         }
     }
 }

@@ -10,11 +10,10 @@ import SwiftUI
 import GraniteUI
 
 class SearchDependency: DependencyManager {
-    @ObservedObject
     var search: SearchQuery = .init()
 }
 
-public class SearchQuery: ObservableObject {
+public class SearchQuery {
     var state: AssetSearchState
     
     var securityGroup: SecurityGroup = .init()

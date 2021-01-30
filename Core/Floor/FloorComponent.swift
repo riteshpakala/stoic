@@ -87,18 +87,11 @@ public struct FloorComponent: GraniteComponent {
                         } else {
                             HStack {
                                 Spacer()
-                                Circle()
-                                    .foregroundColor(Brand.Colors.marble).overlay(
-                                    
-                                        GraniteText("+",
-                                                    Brand.Colors.black,
-                                                    .headline,
-                                                    .bold)
-                                                    .shadow(color: .black, radius: 3, x: 1, y: 1)
-                                    
-                                    )
-                                    .frame(width: 24, height: 24)
-                                    .onTapGesture(perform: sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col)), haptic: .light))
+                                GraniteButtonComponent(
+                                    state: .init(.addNoSeperator,
+                                                 action: {
+                                                    sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col)), haptic: .light)
+                                                 }))
                                 Spacer()
                             }.frame(maxWidth: .infinity,
                                     maxHeight: .infinity).background(Brand.Colors.black)

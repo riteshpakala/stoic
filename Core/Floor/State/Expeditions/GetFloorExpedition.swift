@@ -28,7 +28,7 @@ struct GetFloorExpedition: GraniteExpedition {
             empty(state)
             return
         }
-        GraniteLogger.info("floors recieved: \(floors.count) - self: \(self)", .expedition)
+        GraniteLogger.info("floors recieved: \(floors.count) - self: \(String(describing: self))", .expedition)
         if floors.isEmpty {
             empty(state)
         } else {

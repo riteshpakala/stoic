@@ -79,12 +79,12 @@ public struct StockEvents {
         let daysAgo: Int
         
         public init(security: Security,
-                    daysAgo: Int = 2400,
+                    daysAgo: Int? = nil,
                     interval: SecurityInterval = .day)//730 = 2 years - 1825 = 5 years
         {
             self.security = security
             self.interval = interval
-            self.daysAgo = daysAgo
+            self.daysAgo = daysAgo ?? 2400
         }
         
         public var beam: GraniteBeamType {
