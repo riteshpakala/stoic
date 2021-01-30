@@ -1271,9 +1271,9 @@
 		71EE6FDE258D347C005B2B8E /* __stoicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = __stoicApp.swift; sourceTree = "<group>"; };
 		71EE6FDF258D347C005B2B8E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		71EE6FE0258D347E005B2B8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		71EE6FE5258D347E005B2B8E /* * stoic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "* stoic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		71EE6FE5258D347E005B2B8E /* stoic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stoic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71EE6FE8258D347E005B2B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		71EE6FED258D347E005B2B8E /* * stoic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "* stoic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		71EE6FED258D347E005B2B8E /* stoic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stoic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71EE6FEF258D347E005B2B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		71EE6FF0258D347E005B2B8E /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		71EE6FF5258D347E005B2B8E /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3231,8 +3231,8 @@
 		71EE6FE6258D347E005B2B8E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				71EE6FE5258D347E005B2B8E /* * stoic.app */,
-				71EE6FED258D347E005B2B8E /* * stoic.app */,
+				71EE6FE5258D347E005B2B8E /* stoic.app */,
+				71EE6FED258D347E005B2B8E /* stoic.app */,
 				71EE6FF5258D347E005B2B8E /* Tests iOS.xctest */,
 				71EE7000258D347F005B2B8E /* Tests macOS.xctest */,
 			);
@@ -3404,9 +3404,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		71EE6FE4258D347E005B2B8E /* * stoic (iOS) */ = {
+		71EE6FE4258D347E005B2B8E /* stoic (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 71EE700F258D347F005B2B8E /* Build configuration list for PBXNativeTarget "* stoic (iOS)" */;
+			buildConfigurationList = 71EE700F258D347F005B2B8E /* Build configuration list for PBXNativeTarget "stoic (iOS)" */;
 			buildPhases = (
 				71EE6FE1258D347E005B2B8E /* Sources */,
 				71EE6FE2258D347E005B2B8E /* Frameworks */,
@@ -3416,17 +3416,17 @@
 			);
 			dependencies = (
 			);
-			name = "* stoic (iOS)";
+			name = "stoic (iOS)";
 			packageProductDependencies = (
 				71EE7035258D4296005B2B8E /* GraniteUI */,
 			);
 			productName = "* stoic (iOS)";
-			productReference = 71EE6FE5258D347E005B2B8E /* * stoic.app */;
+			productReference = 71EE6FE5258D347E005B2B8E /* stoic.app */;
 			productType = "com.apple.product-type.application";
 		};
-		71EE6FEC258D347E005B2B8E /* * stoic (macOS) */ = {
+		71EE6FEC258D347E005B2B8E /* stoic (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 71EE7012258D347F005B2B8E /* Build configuration list for PBXNativeTarget "* stoic (macOS)" */;
+			buildConfigurationList = 71EE7012258D347F005B2B8E /* Build configuration list for PBXNativeTarget "stoic (macOS)" */;
 			buildPhases = (
 				71EE6FE9258D347E005B2B8E /* Sources */,
 				71EE6FEA258D347E005B2B8E /* Frameworks */,
@@ -3436,12 +3436,12 @@
 			);
 			dependencies = (
 			);
-			name = "* stoic (macOS)";
+			name = "stoic (macOS)";
 			packageProductDependencies = (
 				71EE7037258D429B005B2B8E /* GraniteUI */,
 			);
 			productName = "* stoic (macOS)";
-			productReference = 71EE6FED258D347E005B2B8E /* * stoic.app */;
+			productReference = 71EE6FED258D347E005B2B8E /* stoic.app */;
 			productType = "com.apple.product-type.application";
 		};
 		71EE6FF4258D347E005B2B8E /* Tests iOS */ = {
@@ -3505,7 +3505,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 71EE6FDC258D347B005B2B8E /* Build configuration list for PBXProject "* stoic" */;
+			buildConfigurationList = 71EE6FDC258D347B005B2B8E /* Build configuration list for PBXProject "stoic" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -3517,8 +3517,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				71EE6FE4258D347E005B2B8E /* * stoic (iOS) */,
-				71EE6FEC258D347E005B2B8E /* * stoic (macOS) */,
+				71EE6FE4258D347E005B2B8E /* stoic (iOS) */,
+				71EE6FEC258D347E005B2B8E /* stoic (macOS) */,
 				71EE6FF4258D347E005B2B8E /* Tests iOS */,
 				71EE6FFF258D347F005B2B8E /* Tests macOS */,
 			);
@@ -4427,12 +4427,12 @@
 /* Begin PBXTargetDependency section */
 		71EE6FF7258D347E005B2B8E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 71EE6FE4258D347E005B2B8E /* * stoic (iOS) */;
+			target = 71EE6FE4258D347E005B2B8E /* stoic (iOS) */;
 			targetProxy = 71EE6FF6258D347E005B2B8E /* PBXContainerItemProxy */;
 		};
 		71EE7002258D347F005B2B8E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 71EE6FEC258D347E005B2B8E /* * stoic (macOS) */;
+			target = 71EE6FEC258D347E005B2B8E /* stoic (macOS) */;
 			targetProxy = 71EE7001258D347F005B2B8E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -4555,7 +4555,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W86P37BZ85;
+				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -4563,8 +4563,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.linenandsole.--stoic";
-				PRODUCT_NAME = "* stoic";
+				MARKETING_VERSION = 0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = nyc.stoic.main;
+				PRODUCT_NAME = stoic;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4577,7 +4578,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W86P37BZ85;
+				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -4585,8 +4586,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.linenandsole.--stoic";
-				PRODUCT_NAME = "* stoic";
+				MARKETING_VERSION = 0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = nyc.stoic.main;
+				PRODUCT_NAME = stoic;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4603,7 +4605,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = W86P37BZ85;
+				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -4612,8 +4614,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.linenandsole.--stoic";
-				PRODUCT_NAME = "* stoic";
+				PRODUCT_BUNDLE_IDENTIFIER = nyc.stoic.main;
+				PRODUCT_NAME = stoic;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
 			};
@@ -4628,7 +4630,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = W86P37BZ85;
+				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = macOS/Info.plist;
@@ -4637,8 +4639,8 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.linenandsole.--stoic";
-				PRODUCT_NAME = "* stoic";
+				PRODUCT_BUNDLE_IDENTIFIER = nyc.stoic.main;
+				PRODUCT_NAME = stoic;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
 			};
@@ -4736,7 +4738,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		71EE6FDC258D347B005B2B8E /* Build configuration list for PBXProject "* stoic" */ = {
+		71EE6FDC258D347B005B2B8E /* Build configuration list for PBXProject "stoic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				71EE700D258D347F005B2B8E /* Debug */,
@@ -4745,7 +4747,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		71EE700F258D347F005B2B8E /* Build configuration list for PBXNativeTarget "* stoic (iOS)" */ = {
+		71EE700F258D347F005B2B8E /* Build configuration list for PBXNativeTarget "stoic (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				71EE7010258D347F005B2B8E /* Debug */,
@@ -4754,7 +4756,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		71EE7012258D347F005B2B8E /* Build configuration list for PBXNativeTarget "* stoic (macOS)" */ = {
+		71EE7012258D347F005B2B8E /* Build configuration list for PBXNativeTarget "stoic (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				71EE7013258D347F005B2B8E /* Debug */,
