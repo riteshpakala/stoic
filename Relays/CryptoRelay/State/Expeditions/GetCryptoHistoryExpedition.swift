@@ -75,7 +75,8 @@ struct GetCryptoHistoryExpedition: GraniteExpedition {
                                                    interval: event.interval,
                                                    exchangeName: state.exchange,
                                                    name: event.security.name,
-                                                   isStrategy: event.security.isStrategy))
+                                                   hasStrategy: event.security.hasStrategy,
+                                                   hasPortfolio: event.security.hasPortfolio))
                             }
                         }
                     }

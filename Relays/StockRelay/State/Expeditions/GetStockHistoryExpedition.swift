@@ -60,7 +60,8 @@ struct GetStockHistoryExpedition: GraniteExpedition {
                             interval: event.interval,
                             exchangeName: result.meta.exchangeName,
                             name: event.security.name,
-                            isStrategy: event.security.isStrategy)
+                            hasStrategy: event.security.hasStrategy,
+                            hasPortfolio: event.security.hasPortfolio)
                         
                         stocks.append(stock)
                     }

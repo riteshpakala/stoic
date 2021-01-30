@@ -22,7 +22,6 @@ public class AssetGridItemState: GraniteState {
     }
     
     var radioSelections: [String] = []
-    
     var input: String = ""
     let assetGridType: AssetGridType
     public init(_ type: AssetGridType, radioSelections: [String] = []) {

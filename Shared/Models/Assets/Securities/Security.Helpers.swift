@@ -29,7 +29,8 @@ extension Array where Element == Security {
         var datesAdded = Set<Date>()
         var added: [Security] = []
         for elem in ordered {
-            if !datesAdded.contains(elem.date.simple) {
+            if !datesAdded.contains(elem.date.simple) &&
+                elem.date.timeComponents().hour >= elem.date.openingHour  {
                 datesAdded.insert(elem.date.simple)
                 added.append(elem)
             }

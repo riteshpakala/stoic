@@ -88,6 +88,7 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
                 interval: .day,
                 exchangeName: exchange,
                 name: symbol,
-                isStrategy: false)
+                hasStrategy: false,
+                hasPortfolio: false)
     }
 }

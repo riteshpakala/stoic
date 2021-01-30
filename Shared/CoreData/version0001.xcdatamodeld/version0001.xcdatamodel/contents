@@ -66,7 +66,6 @@
         <attribute name="highValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="indicator" attributeType="String"/>
         <attribute name="intervalType" attributeType="String"/>
-        <attribute name="isStrategy" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="lowValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
@@ -139,7 +138,7 @@
         <element name="PortfolioObject" positionX="-45" positionY="-450" width="128" height="89"/>
         <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="134"/>
         <element name="SearchResponseObject" positionX="-36" positionY="-441" width="128" height="89"/>
-        <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="299"/>
+        <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="284"/>
         <element name="SentimentObject" positionX="-45" positionY="-450" width="128" height="149"/>
         <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
         <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>

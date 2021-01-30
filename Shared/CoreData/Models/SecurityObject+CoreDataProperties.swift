@@ -29,12 +29,18 @@ extension SecurityObject {
     @NSManaged public var securityType: String
     @NSManaged public var ticker: String
     @NSManaged public var volumeValue: Double
-    @NSManaged public var isStrategy: Bool
     @NSManaged public var floor: FloorObject?
     @NSManaged public var portfolio: PortfolioObject?
     @NSManaged public var quote: QuoteObject?
     @NSManaged public var sentiment: Set<SentimentObject>?
 
+    public var hasStrategy: Bool {
+        quote?.strategy != nil
+    }
+    
+    public var hasPortfolio: Bool {
+        portfolio != nil
+    }
 }
 
 // MARK: Generated accessors for sentiment

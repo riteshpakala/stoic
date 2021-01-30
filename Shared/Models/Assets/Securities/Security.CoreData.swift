@@ -290,7 +290,8 @@ extension StockDataObject {
               interval: SecurityInterval(rawValue: self.intervalType) ?? .day,
               exchangeName: self.exchangeName,
               name: self.name,
-              isStrategy: self.isStrategy)
+              hasStrategy: self.hasStrategy,
+              hasPortfolio: self.hasPortfolio)
     }
 }
 
@@ -309,6 +310,7 @@ extension CryptoDataObject {
               interval: SecurityInterval(rawValue: self.intervalType) ?? .hour,
               exchangeName: self.exchangeName,
               name: self.name,
-              isStrategy: self.isStrategy)
+              hasStrategy: self.hasStrategy,
+              hasPortfolio: self.hasPortfolio)
     }
 }

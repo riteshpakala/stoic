@@ -180,7 +180,8 @@ struct GetCryptoSearchQuotesExpedition: GraniteExpedition {
                                             interval: .hour,
                                             exchangeName: symbol.exchangeName,
                                             name: item.name,
-                                            isStrategy: false))
+                                            hasStrategy: false,
+                                            hasPortfolio: false))
                         
                     }
                 }

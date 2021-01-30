@@ -86,6 +86,7 @@ extension Array where Element == Security {
     func expanded(from chunk: [Security]) -> [Security] {
         let sortedChunk = chunk.sortDesc
         let ordered = self.sortDesc
+        
         if let lastSecurity = sortedChunk.last,
            let lastSecurityIndex = ordered.firstIndex(where: { $0.isEqual(to: lastSecurity) } ),
            lastSecurityIndex + 1 < ordered.count {

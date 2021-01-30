@@ -51,7 +51,8 @@ public protocol Security: Asset {
     
     var interval: SecurityInterval { get set }
     
-    var isStrategy: Bool { get set }
+    var hasStrategy: Bool { get set }
+    var hasPortfolio: Bool { get set }
 }
 
 extension Security {
@@ -126,5 +127,6 @@ public struct EmptySecurity: Security {
     
     public var exchangeName: String = "?"
     
-    public var isStrategy: Bool = false
+    public var hasStrategy: Bool = false
+    public var hasPortfolio: Bool = false
 }
