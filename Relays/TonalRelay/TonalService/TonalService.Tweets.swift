@@ -27,42 +27,39 @@ extension TonalService {
                 .dataTaskPublisher(for: url)
                 .compactMap { (data, response) -> [TonalServiceModels.Tweets]? in
                    
-                    let prepare: TonalServiceModels.Tweets.Prepare?
+                    let prepare: [TonalServiceModels.Tweets.Meta]?
                     do {
-                        prepare = try decoder.decode(TonalServiceModels.Tweets.Prepare.self, from: data)
+                        prepare = try decoder.decode([TonalServiceModels.Tweets.Meta].self, from: data)
                     } catch let error {
                         prepare = nil
-                        GraniteLogger.error("\(error.localizedDescription) - self: \(String(describing: self))", .relay)
+                        GraniteLogger.info("\(error) - self: \(String(describing: self))", .relay, focus: true)
                     }
                     
                     guard let preparedTweet = prepare else { return nil }
-                
-                    guard let objectData = preparedTweet.result.data(using: .utf8) else { return nil }
                     
-                    let meta: [TonalServiceModels.Tweets.Meta]?
-                    do {
-                        if let json = (try JSONSerialization.jsonObject(with: objectData, options: .mutableContainers)) as? [[String:Any]] {
-                            meta = json.map { TonalServiceModels.Tweets.Meta.init(content: $0["content"] as? String ?? "", date: $0["date"] as? Int ?? 0) }
-                        } else {
-                            meta = nil
-                        }
-                    } catch let error {
-                        meta = nil
-                        GraniteLogger.error("\(error.localizedDescription) - self: \(String(describing: self))", .relay)
-                    }
-                    
-                    guard let metaObject = meta else { return nil }
-                    
-                    return [TonalServiceModels.Tweets.init(result: metaObject, query: query)]
+                    return [TonalServiceModels.Tweets.init(result: preparedTweet, query: query)]
                 
                 }.eraseToAnyPublisher()
     }
 }
 extension TonalServiceModels {
-    public struct Tweets: Decodable {
-        public struct Meta: Decodable {
+    public struct Tweets: Codable {
+        public struct Response: Codable {
+            let result: [Meta]
+            
+            enum CodingKeys: String, CodingKey {
+                case result = "result"
+            }
+        }
+        
+        public struct Meta: Codable {
             let content: String
             let date: Int
+            
+            enum CodingKeys: String, CodingKey {
+                case content = "content"
+                case date = "date"
+            }
         }
         
         let result: [Meta]

@@ -11,7 +11,14 @@ import SwiftUI
 import Combine
 
 public class SpecialState: GraniteState {
+    var scene: SceneKitView = SceneKitView()
 }
 
 public class SpecialCenter: GraniteCenter<SpecialState> {
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            SetupSceneExpedition.Discovery()
+        ]
+    }
 }

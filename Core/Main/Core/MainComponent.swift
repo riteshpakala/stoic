@@ -30,23 +30,27 @@ public struct MainComponent: GraniteComponent {
     }
     
     public var body: some View {
-        if EnvironmentConfig.isIPhone {
-            VStack {
-                environment
-                    .share(.init(dep(\.routerDependency)))
-                    .ignoresSafeArea(.keyboard, edges: .bottom)
-                controls
+        if state.isAuthenticated {
+            if EnvironmentConfig.isIPhone {
+                VStack {
+                    environment
+                        .share(.init(dep(\.routerDependency)))
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
+                    controls
+                }
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .background(Color.black)
+            } else {
+                HStack {
+                    controls
+                    environment
+                        .share(.init(dep(\.routerDependency)))
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
+                }
+                .background(Color.black)
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
-            .background(Color.black)
         } else {
-            HStack {
-                controls
-                environment
-                    .share(.init(dep(\.routerDependency)))
-                    .ignoresSafeArea(.keyboard, edges: .bottom)
-            }
-            .background(Color.black)
+            LoginComponent().share(.init(dep(\.routerDependency)))
         }
     }
 }

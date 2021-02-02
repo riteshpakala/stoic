@@ -11,5 +11,5 @@ import SwiftUI
 import Combine
 
 struct MainEvents {
-   
+    struct User: GraniteEvent {}
 }

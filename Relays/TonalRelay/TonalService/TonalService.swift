@@ -17,7 +17,7 @@ public class TonalService {
     }
     
     public func stoicV1(matching query: String, since pastDate: String, until toDate: String, count: Int = 100) -> String {
-        return "https://ritesh-d2a6fee2-eval-prod.apigee.net/understand/tonal/social?query=\(query)&until=\(toDate)&since=\(pastDate)&count=\(count)"
+        return "https://ncohrcycu7.execute-api.us-east-2.amazonaws.com/default/stoic-tonal?query=\(query)&until=\(toDate)&since=\(pastDate)&count=\(count)"
     }
     
     var soundAggregate: TonalServiceModels.TonalSounds = .init()

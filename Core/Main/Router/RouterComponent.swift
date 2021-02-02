@@ -9,12 +9,15 @@
 import GraniteUI
 import SwiftUI
 import Combine
+import Firebase
 
 public struct RouterComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<RouterCenter, RouterState> = .init()
     
-    public init() {}
+    public init() {
+        FirebaseApp.configure()
+    }
     
     public var body: some View {
         MainComponent().share(.init(dep(\.routerDependency)))

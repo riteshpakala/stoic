@@ -175,6 +175,14 @@
 		71149EE025A7A5AA00148D68 /* SearchAssetExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71149EDE25A7A5AA00148D68 /* SearchAssetExpedition.swift */; };
 		71149EF225A7A67C00148D68 /* AssetSelectedExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71149EF125A7A67C00148D68 /* AssetSelectedExpedition.swift */; };
 		71149EF325A7A67C00148D68 /* AssetSelectedExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71149EF125A7A67C00148D68 /* AssetSelectedExpedition.swift */; };
+		711598BA25C87E450026B5AE /* RoundedEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711598B925C87E450026B5AE /* RoundedEdge.swift */; };
+		711598BB25C87E450026B5AE /* RoundedEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711598B925C87E450026B5AE /* RoundedEdge.swift */; };
+		711598C225C8883F0026B5AE /* SetupSceneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711598C125C8883F0026B5AE /* SetupSceneExpedition.swift */; };
+		711598C325C8883F0026B5AE /* SetupSceneExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711598C125C8883F0026B5AE /* SetupSceneExpedition.swift */; };
+		711598C925C897A50026B5AE /* AuthExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711598C825C897A50026B5AE /* AuthExpedition.swift */; };
+		711598CA25C897A50026B5AE /* AuthExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711598C825C897A50026B5AE /* AuthExpedition.swift */; };
+		711598D025C8A2D60026B5AE /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711598CF25C8A2D60026B5AE /* Auth.swift */; };
+		711598D125C8A2D60026B5AE /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711598CF25C8A2D60026B5AE /* Auth.swift */; };
 		7118A1E72593134A007E7EAB /* TonalEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A1E32593134A007E7EAB /* TonalEvents.swift */; };
 		7118A1E82593134A007E7EAB /* TonalEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A1E32593134A007E7EAB /* TonalEvents.swift */; };
 		7118A1E92593134A007E7EAB /* TonalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118A1E52593134A007E7EAB /* TonalState.swift */; };
@@ -426,6 +434,8 @@
 		713F27BF25B275AE00C3871E /* Strategy.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713F27BE25B275AE00C3871E /* Strategy.CoreData.swift */; };
 		713F27C825B276FA00C3871E /* Strategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ADF23125B272F100B3B16E /* Strategy.swift */; };
 		713F27CD25B276FF00C3871E /* Strategy.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713F27BE25B275AE00C3871E /* Strategy.CoreData.swift */; };
+		71432F6425C78B7F006BEECC /* Discuss in Frameworks */ = {isa = PBXBuildFile; productRef = 71432F6325C78B7F006BEECC /* Discuss */; };
+		71432F6625C78B84006BEECC /* Discuss in Frameworks */ = {isa = PBXBuildFile; productRef = 71432F6525C78B84006BEECC /* Discuss */; };
 		7143414925905E53001F26A4 /* MenloFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143414825905E53001F26A4 /* MenloFont.swift */; };
 		7143415325905E5B001F26A4 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143415225905E5B001F26A4 /* Fonts.swift */; };
 		7143417125906012001F26A4 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7143415225905E5B001F26A4 /* Fonts.swift */; };
@@ -581,6 +591,16 @@
 		7179D3D825AC936500C82063 /* TonalModelsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179D3D325AC936500C82063 /* TonalModelsComponent.swift */; };
 		7179D3D925AC936500C82063 /* TonalModelsEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179D3D425AC936500C82063 /* TonalModelsEvents.swift */; };
 		7179D3DA25AC936500C82063 /* TonalModelsEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179D3D425AC936500C82063 /* TonalModelsEvents.swift */; };
+		717D9AC725C8639D00B9354D /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D9AC425C8639D00B9354D /* LoginState.swift */; };
+		717D9AC825C8639D00B9354D /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D9AC425C8639D00B9354D /* LoginState.swift */; };
+		717D9AC925C8639D00B9354D /* LoginEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D9AC525C8639D00B9354D /* LoginEvents.swift */; };
+		717D9ACA25C8639D00B9354D /* LoginEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D9AC525C8639D00B9354D /* LoginEvents.swift */; };
+		717D9ACB25C8639D00B9354D /* LoginComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D9AC625C8639D00B9354D /* LoginComponent.swift */; };
+		717D9ACC25C8639D00B9354D /* LoginComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D9AC625C8639D00B9354D /* LoginComponent.swift */; };
+		717D9AD725C8673C00B9354D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 717D9AD625C8673C00B9354D /* FirebaseAuth */; };
+		717D9AE625C867DC00B9354D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 717D9AE525C867DC00B9354D /* GoogleService-Info.plist */; };
+		717D9AE725C867DC00B9354D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 717D9AE525C867DC00B9354D /* GoogleService-Info.plist */; };
+		717D9AF125C8689400B9354D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 717D9AF025C8689400B9354D /* FirebaseAuth */; };
 		717EFD7C25C51B940094AE45 /* TapAndLongPressModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */; };
 		717EFD7D25C51B940094AE45 /* TapAndLongPressModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */; };
 		7183D52E25A4268E00FB91A9 /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D52D25A4268E00FB91A9 /* BasicButton.swift */; };
@@ -736,6 +756,18 @@
 		71C2BFB325ABE26A006445EB /* GetFloorExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C2BFB125ABE26A006445EB /* GetFloorExpedition.swift */; };
 		71CA211825A4AEC900C448D7 /* TonalService.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA211725A4AEC900C448D7 /* TonalService.Model.swift */; };
 		71CA211925A4AEC900C448D7 /* TonalService.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA211725A4AEC900C448D7 /* TonalService.Model.swift */; };
+		71CC7D9225C8E76300610B8A /* NetworkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */; };
+		71CC7D9325C8E76300610B8A /* NetworkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */; };
+		71CC7D9425C8E76300610B8A /* NetworkRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8D25C8E76200610B8A /* NetworkRelay.swift */; };
+		71CC7D9525C8E76300610B8A /* NetworkRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8D25C8E76200610B8A /* NetworkRelay.swift */; };
+		71CC7D9625C8E76300610B8A /* NetworkState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8F25C8E76200610B8A /* NetworkState.swift */; };
+		71CC7D9725C8E76300610B8A /* NetworkState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8F25C8E76200610B8A /* NetworkState.swift */; };
+		71CC7D9825C8E76300610B8A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D9125C8E76200610B8A /* NetworkService.swift */; };
+		71CC7D9925C8E76300610B8A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D9125C8E76200610B8A /* NetworkService.swift */; };
+		71CC7DA425C8E7D800610B8A /* Get.Update.UserExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7DA325C8E7D800610B8A /* Get.Update.UserExpedition.swift */; };
+		71CC7DA525C8E7D800610B8A /* Get.Update.UserExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7DA325C8E7D800610B8A /* Get.Update.UserExpedition.swift */; };
+		71CC7DB825C8F2AE00610B8A /* NetworkService.Apply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7DB725C8F2AE00610B8A /* NetworkService.Apply.swift */; };
+		71CC7DB925C8F2AE00610B8A /* NetworkService.Apply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7DB725C8F2AE00610B8A /* NetworkService.Apply.swift */; };
 		71D3C2C825AA88150033350B /* MoversExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3C2C725AA88150033350B /* MoversExpedition.swift */; };
 		71D3C2D125AA88190033350B /* MoversExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3C2C725AA88150033350B /* MoversExpedition.swift */; };
 		71D3C2DF25AA88F50033350B /* Broadcasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D3C2DE25AA88F50033350B /* Broadcasts.swift */; };
@@ -964,6 +996,11 @@
 		71149ED625A7A47600148D68 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		71149EDE25A7A5AA00148D68 /* SearchAssetExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAssetExpedition.swift; sourceTree = "<group>"; };
 		71149EF125A7A67C00148D68 /* AssetSelectedExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSelectedExpedition.swift; sourceTree = "<group>"; };
+		711598B025C86DFF0026B5AE /* stoic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = stoic.entitlements; sourceTree = "<group>"; };
+		711598B925C87E450026B5AE /* RoundedEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedEdge.swift; sourceTree = "<group>"; };
+		711598C125C8883F0026B5AE /* SetupSceneExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupSceneExpedition.swift; sourceTree = "<group>"; };
+		711598C825C897A50026B5AE /* AuthExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthExpedition.swift; sourceTree = "<group>"; };
+		711598CF25C8A2D60026B5AE /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		7118A1E32593134A007E7EAB /* TonalEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalEvents.swift; sourceTree = "<group>"; };
 		7118A1E52593134A007E7EAB /* TonalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalState.swift; sourceTree = "<group>"; };
 		7118A1E62593134A007E7EAB /* TonalRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalRelay.swift; sourceTree = "<group>"; };
@@ -1090,6 +1127,7 @@
 		713D25AD258E42BF005FB4D4 /* ClockState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockState.swift; sourceTree = "<group>"; };
 		713D729D258EE95800E00203 /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../granite; sourceTree = "<group>"; };
 		713F27BE25B275AE00C3871E /* Strategy.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategy.CoreData.swift; sourceTree = "<group>"; };
+		71432F5E25C78B2F006BEECC /* discuss */ = {isa = PBXFileReference; lastKnownFileType = folder; name = discuss; path = ../discuss; sourceTree = "<group>"; };
 		7143414825905E53001F26A4 /* MenloFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenloFont.swift; sourceTree = "<group>"; };
 		7143415225905E5B001F26A4 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		7143417725906410001F26A4 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
@@ -1168,6 +1206,10 @@
 		7179D3D225AC936500C82063 /* TonalModelsState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalModelsState.swift; sourceTree = "<group>"; };
 		7179D3D325AC936500C82063 /* TonalModelsComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalModelsComponent.swift; sourceTree = "<group>"; };
 		7179D3D425AC936500C82063 /* TonalModelsEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalModelsEvents.swift; sourceTree = "<group>"; };
+		717D9AC425C8639D00B9354D /* LoginState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginState.swift; sourceTree = "<group>"; };
+		717D9AC525C8639D00B9354D /* LoginEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginEvents.swift; sourceTree = "<group>"; };
+		717D9AC625C8639D00B9354D /* LoginComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginComponent.swift; sourceTree = "<group>"; };
+		717D9AE525C867DC00B9354D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAndLongPressModifier.swift; sourceTree = "<group>"; };
 		7183D52D25A4268E00FB91A9 /* BasicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
 		7183D53625A428AE00FB91A9 /* GraphPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphPageViewModel.swift; sourceTree = "<group>"; };
@@ -1246,6 +1288,12 @@
 		71C2BFA525ABE1ED006445EB /* FloorEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorEvents.swift; sourceTree = "<group>"; };
 		71C2BFB125ABE26A006445EB /* GetFloorExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFloorExpedition.swift; sourceTree = "<group>"; };
 		71CA211725A4AEC900C448D7 /* TonalService.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Model.swift; sourceTree = "<group>"; };
+		71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEvents.swift; sourceTree = "<group>"; };
+		71CC7D8D25C8E76200610B8A /* NetworkRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRelay.swift; sourceTree = "<group>"; };
+		71CC7D8F25C8E76200610B8A /* NetworkState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkState.swift; sourceTree = "<group>"; };
+		71CC7D9125C8E76200610B8A /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		71CC7DA325C8E7D800610B8A /* Get.Update.UserExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Get.Update.UserExpedition.swift; sourceTree = "<group>"; };
+		71CC7DB725C8F2AE00610B8A /* NetworkService.Apply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Apply.swift; sourceTree = "<group>"; };
 		71D3C2C725AA88150033350B /* MoversExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoversExpedition.swift; sourceTree = "<group>"; };
 		71D3C2DE25AA88F50033350B /* Broadcasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcasts.swift; sourceTree = "<group>"; };
 		71D3C2EE25AA890B0033350B /* Broadcasts.Movers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcasts.Movers.swift; sourceTree = "<group>"; };
@@ -1325,6 +1373,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				71EE7036258D4296005B2B8E /* GraniteUI in Frameworks */,
+				717D9AD725C8673C00B9354D /* FirebaseAuth in Frameworks */,
+				71432F6425C78B7F006BEECC /* Discuss in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1333,6 +1383,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				71EE7038258D429B005B2B8E /* GraniteUI in Frameworks */,
+				717D9AF125C8689400B9354D /* FirebaseAuth in Frameworks */,
+				71432F6625C78B84006BEECC /* Discuss in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1663,7 +1715,6 @@
 			children = (
 				71D3C2C625AA87430033350B /* Broadcasts */,
 				711484FE259E15A700464684 /* BootExpedition.swift */,
-				71F902FA25AB225E00E6A085 /* UserExpedition.swift */,
 				7126ED7B25B77B6800195901 /* VariablesExpedition.swift */,
 			);
 			path = Expeditions;
@@ -1681,6 +1732,7 @@
 		71149EFC25A7AAA700148D68 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
+				711598CF25C8A2D60026B5AE /* Auth.swift */,
 				71149ECF25A7A2D200148D68 /* Home.swift */,
 				71C2BF8B25ABC128006445EB /* Detail.swift */,
 				712415F125A35F2200169B9C /* Search.swift */,
@@ -1690,9 +1742,18 @@
 			path = Environment;
 			sourceTree = "<group>";
 		};
+		711598C025C8882A0026B5AE /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				711598C125C8883F0026B5AE /* SetupSceneExpedition.swift */,
+			);
+			path = Expeditions;
+			sourceTree = "<group>";
+		};
 		7118A1D725931321007E7EAB /* Relays */ = {
 			isa = PBXGroup;
 			children = (
+				71CC7D8B25C8E76200610B8A /* NetworkRelay */,
 				7118A1E22593134A007E7EAB /* TonalRelay */,
 				7108892C2591B21F00795EDF /* CryptoRelay */,
 				713D25AA258E42BF005FB4D4 /* ClockRelay */,
@@ -2253,6 +2314,7 @@
 			isa = PBXGroup;
 			children = (
 				712D3D0125A6B9BD005EE3F9 /* Padding.swift */,
+				711598B925C87E450026B5AE /* RoundedEdge.swift */,
 				71017E1225B23EB900E056A5 /* PagerView.swift */,
 				7169535025A7ADB400641BCE /* Run.swift */,
 				717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */,
@@ -2403,9 +2465,18 @@
 			path = State;
 			sourceTree = "<group>";
 		};
+		713DF21025C869E200AC083D /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				71F902FA25AB225E00E6A085 /* UserExpedition.swift */,
+			);
+			path = Expeditions;
+			sourceTree = "<group>";
+		};
 		7143414525905DDA001F26A4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				717D9ADC25C867AB00B9354D /* Credentials */,
 				714343DC2590837B001F26A4 /* Design */,
 				71434176259063FC001F26A4 /* Brand */,
 				7143414625905DE2001F26A4 /* Fonts */,
@@ -2702,6 +2773,7 @@
 		7179AD3125ACE5E5003FD06F /* State */ = {
 			isa = PBXGroup;
 			children = (
+				711598C025C8882A0026B5AE /* Expeditions */,
 				7179AD3225ACE5E5003FD06F /* SpecialState.swift */,
 			);
 			path = State;
@@ -2763,6 +2835,41 @@
 				7179D3D025AC936500C82063 /* TonalModels */,
 			);
 			path = Tone;
+			sourceTree = "<group>";
+		};
+		717D9AC225C8639D00B9354D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				717D9AC325C8639D00B9354D /* State */,
+				717D9AC525C8639D00B9354D /* LoginEvents.swift */,
+				717D9AC625C8639D00B9354D /* LoginComponent.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		717D9AC325C8639D00B9354D /* State */ = {
+			isa = PBXGroup;
+			children = (
+				717D9AD125C8640D00B9354D /* Expeditions */,
+				717D9AC425C8639D00B9354D /* LoginState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		717D9AD125C8640D00B9354D /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				711598C825C897A50026B5AE /* AuthExpedition.swift */,
+			);
+			path = Expeditions;
+			sourceTree = "<group>";
+		};
+		717D9ADC25C867AB00B9354D /* Credentials */ = {
+			isa = PBXGroup;
+			children = (
+				717D9AE525C867DC00B9354D /* GoogleService-Info.plist */,
+			);
+			path = Credentials;
 			sourceTree = "<group>";
 		};
 		7183D52C25A4267000FB91A9 /* Buttons */ = {
@@ -3022,6 +3129,51 @@
 			path = Expeditions;
 			sourceTree = "<group>";
 		};
+		71CC7D8B25C8E76200610B8A /* NetworkRelay */ = {
+			isa = PBXGroup;
+			children = (
+				71CC7D9025C8E76200610B8A /* NetworkService */,
+				71CC7D8E25C8E76200610B8A /* State */,
+				71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */,
+				71CC7D8D25C8E76200610B8A /* NetworkRelay.swift */,
+			);
+			path = NetworkRelay;
+			sourceTree = "<group>";
+		};
+		71CC7D8E25C8E76200610B8A /* State */ = {
+			isa = PBXGroup;
+			children = (
+				71CC7DA225C8E7A100610B8A /* Expeditions */,
+				71CC7D8F25C8E76200610B8A /* NetworkState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		71CC7D9025C8E76200610B8A /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				71CC7D9125C8E76200610B8A /* NetworkService.swift */,
+				71CC7DB625C8F2A000610B8A /* User */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		71CC7DA225C8E7A100610B8A /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				71CC7DA325C8E7D800610B8A /* Get.Update.UserExpedition.swift */,
+			);
+			path = Expeditions;
+			sourceTree = "<group>";
+		};
+		71CC7DB625C8F2A000610B8A /* User */ = {
+			isa = PBXGroup;
+			children = (
+				71CC7DB725C8F2AE00610B8A /* NetworkService.Apply.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		71D3C2C525AA87350033350B /* Securities */ = {
 			isa = PBXGroup;
 			children = (
@@ -3059,6 +3211,7 @@
 		71D63CC9258E92B1003B0BAF /* State */ = {
 			isa = PBXGroup;
 			children = (
+				713DF21025C869E200AC083D /* Expeditions */,
 				71D63CCA258E92B1003B0BAF /* MainState.swift */,
 			);
 			path = State;
@@ -3258,6 +3411,8 @@
 		71EE6FD8258D347B005B2B8E = {
 			isa = PBXGroup;
 			children = (
+				711598B025C86DFF0026B5AE /* stoic.entitlements */,
+				71432F5E25C78B2F006BEECC /* discuss */,
 				713D729D258EE95800E00203 /* granite */,
 				7118A1D725931321007E7EAB /* Relays */,
 				71EE7024258D34ED005B2B8E /* Core */,
@@ -3346,6 +3501,7 @@
 				71D63F672592BFC40085D718 /* AssetSection */,
 				71ED8F4C25C5E513000F6366 /* Discuss */,
 				711484CD259E0E2E00464684 /* Environment */,
+				717D9AC225C8639D00B9354D /* Login */,
 				71D63CC7258E92B1003B0BAF /* Main */,
 			);
 			path = Core;
@@ -3479,6 +3635,8 @@
 			name = "stoic (iOS)";
 			packageProductDependencies = (
 				71EE7035258D4296005B2B8E /* GraniteUI */,
+				71432F6325C78B7F006BEECC /* Discuss */,
+				717D9AD625C8673C00B9354D /* FirebaseAuth */,
 			);
 			productName = "* stoic (iOS)";
 			productReference = 71EE6FE5258D347E005B2B8E /* stoic.app */;
@@ -3499,6 +3657,8 @@
 			name = "stoic (macOS)";
 			packageProductDependencies = (
 				71EE7037258D429B005B2B8E /* GraniteUI */,
+				71432F6525C78B84006BEECC /* Discuss */,
+				717D9AF025C8689400B9354D /* FirebaseAuth */,
 			);
 			productName = "* stoic (macOS)";
 			productReference = 71EE6FED258D347E005B2B8E /* stoic.app */;
@@ -3571,8 +3731,12 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 71EE6FD8258D347B005B2B8E;
+			packageReferences = (
+				717D9AD525C8673C00B9354D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 71EE6FE6258D347E005B2B8E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -3595,6 +3759,7 @@
 				71EE700B258D347F005B2B8E /* Assets.xcassets in Resources */,
 				71DC58D325988F56004935CF /* Words.json in Resources */,
 				7179AD5925ACE6B6003FD06F /* alexander.obj in Resources */,
+				717D9AE625C867DC00B9354D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3607,6 +3772,7 @@
 				71EE700C258D347F005B2B8E /* Assets.xcassets in Resources */,
 				71DC58D425988F56004935CF /* Words.json in Resources */,
 				7179AD5A25ACE6B6003FD06F /* alexander.obj in Resources */,
+				717D9AE725C867DC00B9354D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3661,6 +3827,7 @@
 				7179AD4325ACE694003FD06F /* SceneKitWrapped.swift in Sources */,
 				71017E2F25B24A8F00E056A5 /* GraniteDisclaimerState.swift in Sources */,
 				7125BDFE25A1328900F22717 /* ValueSliderStyle.swift in Sources */,
+				71CC7D9425C8E76300610B8A /* NetworkRelay.swift in Sources */,
 				7139F67425981BD300D9C84B /* TonalTuneEvents.swift in Sources */,
 				7125BE6125A1388400F22717 /* PointSliderStyle.swift in Sources */,
 				71434357259076F4001F26A4 /* LinearGradient+Convenience.swift in Sources */,
@@ -3761,6 +3928,7 @@
 				7139F629259810C000D9C84B /* TonalSetEvents.swift in Sources */,
 				71D63EEC25926B860085D718 /* StockService.swift in Sources */,
 				71ADF23225B272F100B3B16E /* Strategy.swift in Sources */,
+				71CC7DB825C8F2AE00610B8A /* NetworkService.Apply.swift in Sources */,
 				719AD86C25B10746001350FA /* GraniteEmptyEvents.swift in Sources */,
 				711484B4259E0C7B00464684 /* WindowEvents.swift in Sources */,
 				7125BDC325A1318D00F22717 /* AnyRangeSliderStyle.swift in Sources */,
@@ -3773,6 +3941,7 @@
 				7108890D2591B08300795EDF /* Security.swift in Sources */,
 				7124163A25A3771800169B9C /* SentimentObject+CoreDataClass.swift in Sources */,
 				71DE186725A6D94D00911AD1 /* GraphState.swift in Sources */,
+				711598C225C8883F0026B5AE /* SetupSceneExpedition.swift in Sources */,
 				710889B12591B29800795EDF /* Exchanges.swift in Sources */,
 				71434320259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
 				7189C9C825AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift in Sources */,
@@ -3810,6 +3979,7 @@
 				710889F32591BC8C00795EDF /* Categories.swift in Sources */,
 				71CA211825A4AEC900C448D7 /* TonalService.Model.swift in Sources */,
 				7143EEDF25994FC300B1DCB5 /* TonalService.Sounds.swift in Sources */,
+				711598C925C897A50026B5AE /* AuthExpedition.swift in Sources */,
 				71434328259076EB001F26A4 /* Int+Angle.swift in Sources */,
 				710889322591B24700795EDF /* CryptoState.swift in Sources */,
 				7125BE8B25A148BA00F22717 /* TonalFindComponent.swift in Sources */,
@@ -3857,8 +4027,10 @@
 				711484FF259E15A700464684 /* BootExpedition.swift in Sources */,
 				71ACC24125B0AB9100E02AE3 /* TonalDetailEvents.swift in Sources */,
 				7189C9C125AE8E0B00D98A85 /* GetCryptoHistoryExpedition.swift in Sources */,
+				711598D025C8A2D60026B5AE /* Auth.swift in Sources */,
 				710889772591B29800795EDF /* Await+Operators.swift in Sources */,
 				7143431A259076EB001F26A4 /* String+Convenience.swift in Sources */,
+				71CC7DA425C8E7D800610B8A /* Get.Update.UserExpedition.swift in Sources */,
 				711484D6259E0E2E00464684 /* EnvironmentEvents.swift in Sources */,
 				71C08EC525AFA59300765894 /* CryptoService.swift in Sources */,
 				7125BE1225A1328A00F22717 /* EnvironmentValues+TrackValue.swift in Sources */,
@@ -3870,6 +4042,7 @@
 				7179ACAC25AC9472003FD06F /* CompileTheToneExpedition.swift in Sources */,
 				7183D54F25A428AE00FB91A9 /* TimeDisplayModeSelector.swift in Sources */,
 				71B4302D25A88A9900A23F4D /* AssetAddEvents.swift in Sources */,
+				717D9ACB25C8639D00B9354D /* LoginComponent.swift in Sources */,
 				7125BDCB25A1318D00F22717 /* VerticalRangeSliderStyle.swift in Sources */,
 				710C917425A6505700ECB355 /* GraniteText.swift in Sources */,
 				7139F67B25981C3200D9C84B /* TuneTheToneExpedition.swift in Sources */,
@@ -3878,7 +4051,9 @@
 				710889852591B29800795EDF /* Await.swift in Sources */,
 				714342FF25907622001F26A4 /* UINumericType.swift in Sources */,
 				71C08E9225AF770100765894 /* NetworkResponse.swift in Sources */,
+				717D9AC725C8639D00B9354D /* LoginState.swift in Sources */,
 				7123787525B268B40097E6DD /* StrategyObject+CoreDataClass.swift in Sources */,
+				71CC7D9625C8E76300610B8A /* NetworkState.swift in Sources */,
 				7136B65B25A008B40014F693 /* PortfolioState.swift in Sources */,
 				71ED8F1225C5C6A8000F6366 /* TonalModelAddExpedition.swift in Sources */,
 				71EE7092258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
@@ -3900,6 +4075,7 @@
 				7118A1E92593134A007E7EAB /* TonalState.swift in Sources */,
 				7183D54D25A428AE00FB91A9 /* Misc.Plot.swift in Sources */,
 				7108899B2591B29800795EDF /* Promise+Then.swift in Sources */,
+				71CC7D9825C8E76300610B8A /* NetworkService.swift in Sources */,
 				71BDF2962599430A00F66EA2 /* TonalService.Utilities.swift in Sources */,
 				7179D3BA25AC911700C82063 /* GraniteButtonState.swift in Sources */,
 				71494D4D25ABE72C0086E598 /* Floor.CoreData.swift in Sources */,
@@ -3916,8 +4092,10 @@
 				710889892591B29800795EDF /* Async.swift in Sources */,
 				714342E725907253001F26A4 /* InnerShadowExtensions.swift in Sources */,
 				71EE7090258D9072005B2B8E /* AssetGridItemComponent.swift in Sources */,
+				717D9AC925C8639D00B9354D /* LoginEvents.swift in Sources */,
 				7143EEE7259955D800B1DCB5 /* Tone.swift in Sources */,
 				7125BD8825A1316500F22717 /* DefaultVerticalValueView.swift in Sources */,
+				711598BA25C87E450026B5AE /* RoundedEdge.swift in Sources */,
 				7143414925905E53001F26A4 /* MenloFont.swift in Sources */,
 				7125BE0625A1328900F22717 /* HorizontalValueSliderStyle.swift in Sources */,
 				7125BE0E25A1328A00F22717 /* EnviromnentValues+ValueTrackConfiguration.swift in Sources */,
@@ -3941,6 +4119,7 @@
 				7183D55325A428AE00FB91A9 /* MovingNumbersView.swift in Sources */,
 				71BE145E25A15B170015D157 /* GetStockSearchExpedition.swift in Sources */,
 				7139F6962598221700D9C84B /* TonalSentiment.swift in Sources */,
+				71CC7D9225C8E76300610B8A /* NetworkEvents.swift in Sources */,
 				71143E0925A4C78300379E4B /* TonalService.Indicators.Volatility.swift in Sources */,
 				71DC58D725988F56004935CF /* StoicSentimentModel.swift in Sources */,
 				710889692591B29800795EDF /* Cryptowatcher+Aggregates.swift in Sources */,
@@ -4092,7 +4271,9 @@
 				7125BDFF25A1328900F22717 /* ValueSliderStyle.swift in Sources */,
 				71ED8F3425C5D2E9000F6366 /* SettingsEvents.swift in Sources */,
 				7183D56225A428AE00FB91A9 /* GraphLinePlotConfig.swift in Sources */,
+				71CC7DA525C8E7D800610B8A /* Get.Update.UserExpedition.swift in Sources */,
 				719AD86D25B10746001350FA /* GraniteEmptyEvents.swift in Sources */,
+				71CC7DB925C8F2AE00610B8A /* NetworkService.Apply.swift in Sources */,
 				7183D55425A428AE00FB91A9 /* MovingNumbersView.swift in Sources */,
 				7125BE6625A1388400F22717 /* PointSliderOptions.swift in Sources */,
 				7125BE0325A1328900F22717 /* ValueSliderStyleConfiguration.swift in Sources */,
@@ -4129,6 +4310,7 @@
 				710889332591B24700795EDF /* CryptoState.swift in Sources */,
 				7143417125906012001F26A4 /* Fonts.swift in Sources */,
 				7125BE6425A1388400F22717 /* RectangularPointSliderStyle.swift in Sources */,
+				711598D125C8A2D60026B5AE /* Auth.swift in Sources */,
 				71BDF2972599430A00F66EA2 /* TonalService.Utilities.swift in Sources */,
 				71DE186825A6D94D00911AD1 /* GraphState.swift in Sources */,
 				71B062362597169E00D1833D /* SetTheToneExpedition.swift in Sources */,
@@ -4147,6 +4329,7 @@
 				71BE145F25A15B170015D157 /* GetStockSearchExpedition.swift in Sources */,
 				7108898C2591B29800795EDF /* Promise+First.swift in Sources */,
 				710889A02591B29800795EDF /* Promise+Helpers.swift in Sources */,
+				71CC7D9925C8E76300610B8A /* NetworkService.swift in Sources */,
 				7179ACE025AC9987003FD06F /* TonalModelObject+CoreDataClass.swift in Sources */,
 				7199B29E25C1210100B1A2B3 /* GraniteLoadingEvents.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
@@ -4157,6 +4340,7 @@
 				7109642A25A59FBD0021B42B /* TonalService.Model.DataSet.swift in Sources */,
 				7179AD0825AC9D6C003FD06F /* SaveTheToneExpedition.swift in Sources */,
 				71148507259E24F900464684 /* EnvironmentConfig.swift in Sources */,
+				71CC7D9525C8E76300610B8A /* NetworkRelay.swift in Sources */,
 				71DC58F425988F84004935CF /* DataSet.swift in Sources */,
 				7118A1E82593134A007E7EAB /* TonalEvents.swift in Sources */,
 				71D63EFC2592A90D0085D718 /* StockService.Movers.swift in Sources */,
@@ -4173,6 +4357,7 @@
 				71D3C2F025AA890B0033350B /* Broadcasts.Movers.swift in Sources */,
 				71BE146625A15DB60015D157 /* StockService.Search.swift in Sources */,
 				71C2BF8225ABB1CE006445EB /* SecurityDetailResultExpedition.swift in Sources */,
+				71CC7D9725C8E76300610B8A /* NetworkState.swift in Sources */,
 				7143430425907622001F26A4 /* RepresentableAsCGFloat.swift in Sources */,
 				7183D55E25A428AE00FB91A9 /* LinePlotValueStick.swift in Sources */,
 				71C08E8B25AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift in Sources */,
@@ -4276,12 +4461,16 @@
 				7189C9C925AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift in Sources */,
 				71B4302C25A88A9900A23F4D /* AssetAddComponent.swift in Sources */,
 				71C08E8525AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */,
+				717D9ACA25C8639D00B9354D /* LoginEvents.swift in Sources */,
+				711598CA25C897A50026B5AE /* AuthExpedition.swift in Sources */,
 				71143DE925A4C14F00379E4B /* Quote.swift in Sources */,
 				71B42FDC25A87B0B00A23F4D /* PortfolioObject+CoreDataProperties.swift in Sources */,
 				7179AD3725ACE5E5003FD06F /* SpecialState.swift in Sources */,
 				7183D56825A428AE00FB91A9 /* GraphLinePlot+Segmented.swift in Sources */,
 				711484D3259E0E2E00464684 /* EnvironmentComponent.swift in Sources */,
 				7179D3D625AC936500C82063 /* TonalModelsState.swift in Sources */,
+				711598BB25C87E450026B5AE /* RoundedEdge.swift in Sources */,
+				717D9ACC25C8639D00B9354D /* LoginComponent.swift in Sources */,
 				7108897C2591B29800795EDF /* PromiseError.swift in Sources */,
 				71D63F3F2592BBAB0085D718 /* AssetGridItemContainerComponent.swift in Sources */,
 				7179AD6525ACF493003FD06F /* UIKit.swift in Sources */,
@@ -4364,6 +4553,7 @@
 				71149EE025A7A5AA00148D68 /* SearchAssetExpedition.swift in Sources */,
 				7179AD1B25ACC985003FD06F /* GraniteModal.swift in Sources */,
 				7125BDC225A1318D00F22717 /* RangeSliderStyleConfiguration.swift in Sources */,
+				711598C325C8883F0026B5AE /* SetupSceneExpedition.swift in Sources */,
 				71332A1625A78D09005A72A9 /* SecurityDetailState.swift in Sources */,
 				71434327259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,
 				7125BDE025A131D200F22717 /* EnvironmentValues+RangeTrackConfiguration.swift in Sources */,
@@ -4436,6 +4626,7 @@
 				7125BE8C25A148BA00F22717 /* TonalFindComponent.swift in Sources */,
 				7109643125A5A1F40021B42B /* TonalSound.swift in Sources */,
 				7105341725A50E97006A75DD /* TonalRange.CoreData.swift in Sources */,
+				71CC7D9325C8E76300610B8A /* NetworkEvents.swift in Sources */,
 				7179D3D825AC936500C82063 /* TonalModelsComponent.swift in Sources */,
 				711402B1258DB9ED00BA387D /* StockEvents.swift in Sources */,
 				7125BDC025A1318D00F22717 /* RangeSliderStyle.swift in Sources */,
@@ -4443,6 +4634,7 @@
 				71017E3225B24A8F00E056A5 /* GraniteDisclaimerEvents.swift in Sources */,
 				7108897A2591B29800795EDF /* WhenAll.swift in Sources */,
 				7143433F259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
+				717D9AC825C8639D00B9354D /* LoginState.swift in Sources */,
 				7143435C259076F4001F26A4 /* Path+Convenience.swift in Sources */,
 				71D63F072592A9800085D718 /* StockService.Utilities.swift in Sources */,
 				710889742591B29800795EDF /* Promise+Finally.swift in Sources */,
@@ -4628,6 +4820,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = stoic.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_PREVIEWS = YES;
@@ -4651,6 +4844,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = stoic.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_PREVIEWS = YES;
@@ -4676,7 +4870,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CV8LAA8JAP;
@@ -4701,7 +4895,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CV8LAA8JAP;
@@ -4859,7 +5053,36 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		717D9AD525C8673C00B9354D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		71432F6325C78B7F006BEECC /* Discuss */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Discuss;
+		};
+		71432F6525C78B84006BEECC /* Discuss */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Discuss;
+		};
+		717D9AD625C8673C00B9354D /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 717D9AD525C8673C00B9354D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		717D9AF025C8689400B9354D /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 717D9AD525C8673C00B9354D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		71EE7035258D4296005B2B8E /* GraniteUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GraniteUI;

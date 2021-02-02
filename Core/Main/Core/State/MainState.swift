@@ -9,13 +9,27 @@
 import GraniteUI
 import SwiftUI
 import Combine
+import CryptoKit
+import Firebase
 
 public class MainState: GraniteState {
-    var count: Int = 0
+    var isAuthenticated: Bool = false
 }
 
 public class MainCenter: GraniteCenter<MainState> {
     var routerDependency: RouterDependency {
         return dependency.hosted as? RouterDependency ?? .init(identifier: "none")
+    }
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            UserExpedition.Discovery(),
+        ]
+    }
+    
+    public override var links: [GraniteLink] {
+        [
+            .onAppear(MainEvents.User(), .dependant)
+        ]
     }
 }

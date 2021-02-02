@@ -18,6 +18,8 @@ struct BootExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        
         let page: EnvironmentConfig.Page = state.config.kind.page
         
         var windowsConfig: [[WindowConfig]] = []

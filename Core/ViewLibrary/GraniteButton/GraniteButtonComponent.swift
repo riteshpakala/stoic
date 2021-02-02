@@ -20,7 +20,10 @@ public struct GraniteButtonComponent: GraniteComponent {
         VStack {
             switch state.type {
             case .text(let text):
-                BasicButton(text: text)
+                BasicButton(text: text,
+                            textColor: state.textColor,
+                            colors: state.textColors,
+                            shadow: state.textShadow)
             case .image(let name):
                 Image(name)
                     .resizable()

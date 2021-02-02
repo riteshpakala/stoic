@@ -83,14 +83,12 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     public override var links: [GraniteLink] {
         [
             .onAppear(EnvironmentEvents.Boot()),
-            .onAppear(EnvironmentEvents.User(), .dependant)
         ]
     }
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
             BootExpedition.Discovery(),
-            UserExpedition.Discovery(),
             VariablesExpedition.Discovery(),
             MoversCryptoExpedition.Discovery(),
             MoversStockExpedition.Discovery()

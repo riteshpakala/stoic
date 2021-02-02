@@ -21,7 +21,7 @@ class RouterDependency: DependencyManager {
 }
 
 public class Router {
-    var route: Route = .home//.debug(.models)
+    var route: Route = .discuss//.debug(.models)
     
     var root: GraniteAdAstra? = nil
     var env: EnvironmentDependency = .init(identifier: "envDependency")

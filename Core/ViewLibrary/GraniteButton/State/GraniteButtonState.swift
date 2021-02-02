@@ -25,17 +25,29 @@ public class GraniteButtonState: GraniteState {
     let selectionColor: Color
     let action: (() -> Void)?
     
+    let textColor: Color
+    let textColors: [Color]
+    let textShadow: Color
+    
     public init(_ text: String,
+                textColor: Color = Brand.Colors.black,
+                colors: [Color] = [Brand.Colors.marbleV2.opacity(0.66), Brand.Colors.marble],
+                shadow: Color = Brand.Colors.black.opacity(0.57),
+                padding: EdgeInsets = .init(Brand.Padding.large,
+                                            Brand.Padding.medium,
+                                            Brand.Padding.large,
+                                            Brand.Padding.medium) ,
                 action: (() -> Void)? = nil) {
         self.type = .text(text)
         self.selected = false
         self.size = .zero
         self.selectionColor = .black
-        self.padding = .init(Brand.Padding.large,
-                             Brand.Padding.medium,
-                             Brand.Padding.large,
-                             Brand.Padding.medium)
+        self.padding = padding
         self.action = action
+        
+        self.textColor = textColor
+        self.textColors = colors
+        self.textShadow = shadow
     }
     
     public init(_ type: GraniteButtonType,
@@ -50,6 +62,10 @@ public class GraniteButtonState: GraniteState {
         self.selected = selected
         self.padding = padding
         self.action = action
+        
+        self.textColor = Brand.Colors.black
+        self.textColors = [Brand.Colors.marbleV2.opacity(0.66), Brand.Colors.marble]
+        self.textShadow = Brand.Colors.black.opacity(0.57)
     }
     
     required init() {
@@ -62,6 +78,10 @@ public class GraniteButtonState: GraniteState {
                              Brand.Padding.large,
                              Brand.Padding.medium)
         self.action = nil
+        
+        self.textColor = Brand.Colors.black
+        self.textColors = [Brand.Colors.marbleV2.opacity(0.66), Brand.Colors.marble]
+        self.textShadow = Brand.Colors.black.opacity(0.57)
     }
 }
 

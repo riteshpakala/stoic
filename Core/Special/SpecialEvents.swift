@@ -11,4 +11,5 @@ import SwiftUI
 import Combine
 
 struct SpecialEvents {
+    public struct Start: GraniteEvent {}
 }

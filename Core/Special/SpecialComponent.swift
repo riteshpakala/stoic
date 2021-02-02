@@ -18,7 +18,10 @@ public struct SpecialComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            SceneKitView()
+            state.scene.onAppear(perform: {
+                state.scene.clear()
+                state.scene.run()
+            })
         }
     }
 }
