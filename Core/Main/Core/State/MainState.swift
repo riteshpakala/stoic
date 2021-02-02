@@ -19,13 +19,13 @@ public class MainCenter: GraniteCenter<MainState> {
     let networkRelay: NetworkRelay = .init()
     
     var routerDependency: RouterDependency {
-        return (dependency.hosted as? RouterDependency ?? .init(identifier: "none")).bind(self)
+        return (dependency.hosted as? RouterDependency ?? .init(identifier: "none"))
     }
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
             UserExpedition.Discovery(),
-            LoginMainResultExpedition.Discovery()
+            LoginResultExpedition.Discovery()
         ]
     }
     
@@ -36,6 +36,6 @@ public class MainCenter: GraniteCenter<MainState> {
     }
     
     var isAuthenticated : Bool {
-        routerDependency.env.auth.isReady && FirebaseAuth.Auth.auth().currentUser != nil
+        routerDependency.router.env.user.info.isReady && FirebaseAuth.Auth.auth().currentUser != nil
     }
 }

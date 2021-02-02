@@ -110,7 +110,7 @@ struct AuthExpedition: GraniteExpedition {
     }
 }
 
-struct LoginResultExpedition: GraniteExpedition {
+struct AuthResultExpedition: GraniteExpedition {
     typealias ExpeditionEvent = NetworkEvents.User.Get.Result
     typealias ExpeditionState = LoginState
     
@@ -121,11 +121,11 @@ struct LoginResultExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         if let user = event.user {
-            let auth: Auth = .init(user: .init(username: user.username,
+            let info: UserInfo = .init(username: user.username,
                                                email: user.email,
-                                               created: (Int(user.created) ?? 0).asDouble.date()))
+                                               created: (Int(user.created) ?? 0).asDouble.date())
             
-            connection.update(\RouterDependency.env.auth, value: auth)
+            connection.update(\RouterDependency.router.env.user.info, value: info)
             
             state.success = true
         }

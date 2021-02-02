@@ -47,7 +47,7 @@ public class LoginCenter: GraniteCenter<LoginState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             AuthExpedition.Discovery(),
-            LoginResultExpedition.Discovery(),
+            AuthResultExpedition.Discovery(),
             ApplyResultExpedition.Discovery(),
         ]
     }

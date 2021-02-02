@@ -10,10 +10,23 @@ import GraniteUI
 import SwiftUI
 
 class User {
+    var info: UserInfo = .empty
     
     var portfolio: Portfolio? = nil
     
     var portfolioExpandedState: PortfolioState = .init(.expanded)
-    
 }
 
+public struct UserInfo {
+    var username: String
+    var email: String
+    var created: Date
+    
+    static var empty: UserInfo {
+        return .init(username: "", email: "", created: .today)
+    }
+    
+    public var isReady: Bool {
+        self.username.isNotEmpty && self.email.isNotEmpty
+    }
+}
