@@ -30,7 +30,7 @@ public struct MainComponent: GraniteComponent {
     }
     
     public var body: some View {
-        if state.isAuthenticated {
+        if command.center.isAuthenticated {
             if EnvironmentConfig.isIPhone {
                 VStack {
                     environment

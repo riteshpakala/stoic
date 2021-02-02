@@ -13,17 +13,19 @@ import CryptoKit
 import Firebase
 
 public class MainState: GraniteState {
-    var isAuthenticated: Bool = false
 }
 
 public class MainCenter: GraniteCenter<MainState> {
+    let networkRelay: NetworkRelay = .init()
+    
     var routerDependency: RouterDependency {
-        return dependency.hosted as? RouterDependency ?? .init(identifier: "none")
+        return (dependency.hosted as? RouterDependency ?? .init(identifier: "none")).bind(self)
     }
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
             UserExpedition.Discovery(),
+            LoginMainResultExpedition.Discovery()
         ]
     }
     
@@ -31,5 +33,9 @@ public class MainCenter: GraniteCenter<MainState> {
         [
             .onAppear(MainEvents.User(), .dependant)
         ]
+    }
+    
+    var isAuthenticated : Bool {
+        routerDependency.env.auth.isReady && FirebaseAuth.Auth.auth().currentUser != nil
     }
 }

@@ -19,6 +19,12 @@ struct GetExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        publisher = state
+            .service
+            .login(uid: event.id)
+            .replaceError(with: nil)
+            .map { NetworkEvents.User.Get.Result(user: $0) }
+            .eraseToAnyPublisher()
     }
 }
 
@@ -32,6 +38,12 @@ struct UpdateUserExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        publisher = state
+            .service
+            .signup(uid: event.id, email: event.email, username: event.username)
+            .replaceError(with: false)
+            .map { NetworkEvents.User.Update.Result(success: $0) }
+            .eraseToAnyPublisher()
     }
 }
 

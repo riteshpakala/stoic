@@ -665,6 +665,10 @@
 		719AD86F25B10746001350FA /* GraniteEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD86925B10746001350FA /* GraniteEmptyState.swift */; };
 		719AD87A25B10A03001350FA /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD87925B10A03001350FA /* GradientView.swift */; };
 		719AD87B25B10A03001350FA /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD87925B10A03001350FA /* GradientView.swift */; };
+		719CDB6625C91F6A008322F0 /* NetworkService.Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CDB6525C91F6A008322F0 /* NetworkService.Signup.swift */; };
+		719CDB6725C91F6A008322F0 /* NetworkService.Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CDB6525C91F6A008322F0 /* NetworkService.Signup.swift */; };
+		719CDB6D25C92240008322F0 /* NetworkService.Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CDB6C25C92240008322F0 /* NetworkService.Login.swift */; };
+		719CDB6E25C92240008322F0 /* NetworkService.Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CDB6C25C92240008322F0 /* NetworkService.Login.swift */; };
 		71ACC23D25B0AB9100E02AE3 /* TonalDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC23A25B0AB9100E02AE3 /* TonalDetailState.swift */; };
 		71ACC23E25B0AB9100E02AE3 /* TonalDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC23A25B0AB9100E02AE3 /* TonalDetailState.swift */; };
 		71ACC23F25B0AB9100E02AE3 /* TonalDetailComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ACC23B25B0AB9100E02AE3 /* TonalDetailComponent.swift */; };
@@ -1242,6 +1246,8 @@
 		719AD86725B10746001350FA /* GraniteEmptyEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteEmptyEvents.swift; sourceTree = "<group>"; };
 		719AD86925B10746001350FA /* GraniteEmptyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteEmptyState.swift; sourceTree = "<group>"; };
 		719AD87925B10A03001350FA /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		719CDB6525C91F6A008322F0 /* NetworkService.Signup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Signup.swift; sourceTree = "<group>"; };
+		719CDB6C25C92240008322F0 /* NetworkService.Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Login.swift; sourceTree = "<group>"; };
 		71ACC23A25B0AB9100E02AE3 /* TonalDetailState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalDetailState.swift; sourceTree = "<group>"; };
 		71ACC23B25B0AB9100E02AE3 /* TonalDetailComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalDetailComponent.swift; sourceTree = "<group>"; };
 		71ACC23C25B0AB9100E02AE3 /* TonalDetailEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalDetailEvents.swift; sourceTree = "<group>"; };
@@ -3170,6 +3176,8 @@
 			isa = PBXGroup;
 			children = (
 				71CC7DB725C8F2AE00610B8A /* NetworkService.Apply.swift */,
+				719CDB6525C91F6A008322F0 /* NetworkService.Signup.swift */,
+				719CDB6C25C92240008322F0 /* NetworkService.Login.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -4092,6 +4100,7 @@
 				710889892591B29800795EDF /* Async.swift in Sources */,
 				714342E725907253001F26A4 /* InnerShadowExtensions.swift in Sources */,
 				71EE7090258D9072005B2B8E /* AssetGridItemComponent.swift in Sources */,
+				719CDB6625C91F6A008322F0 /* NetworkService.Signup.swift in Sources */,
 				717D9AC925C8639D00B9354D /* LoginEvents.swift in Sources */,
 				7143EEE7259955D800B1DCB5 /* Tone.swift in Sources */,
 				7125BD8825A1316500F22717 /* DefaultVerticalValueView.swift in Sources */,
@@ -4116,6 +4125,7 @@
 				71B42FDB25A87B0B00A23F4D /* PortfolioObject+CoreDataProperties.swift in Sources */,
 				7125BDC725A1318D00F22717 /* HorizontalRangeSliderStyle.swift in Sources */,
 				7143435F259076F4001F26A4 /* Color+Convenience.swift in Sources */,
+				719CDB6D25C92240008322F0 /* NetworkService.Login.swift in Sources */,
 				7183D55325A428AE00FB91A9 /* MovingNumbersView.swift in Sources */,
 				71BE145E25A15B170015D157 /* GetStockSearchExpedition.swift in Sources */,
 				7139F6962598221700D9C84B /* TonalSentiment.swift in Sources */,
@@ -4320,6 +4330,7 @@
 				7108896A2591B29800795EDF /* Cryptowatcher+Aggregates.swift in Sources */,
 				711D545425A684E80074D334 /* RouterState.swift in Sources */,
 				71017E4C25B25D6100E056A5 /* StrategyEvents.swift in Sources */,
+				719CDB6725C91F6A008322F0 /* NetworkService.Signup.swift in Sources */,
 				7139F67125981BD300D9C84B /* TonalTuneComponent.swift in Sources */,
 				7125BE1325A1328A00F22717 /* EnvironmentValues+TrackValue.swift in Sources */,
 				71434323259076EB001F26A4 /* Float+Angle.swift in Sources */,
@@ -4623,6 +4634,7 @@
 				71DC58D225988F56004935CF /* Lemmatizer.swift in Sources */,
 				7125BE4525A1384A00F22717 /* SentimentSliderComponent.swift in Sources */,
 				710889902591B29800795EDF /* Promise.swift in Sources */,
+				719CDB6E25C92240008322F0 /* NetworkService.Login.swift in Sources */,
 				7125BE8C25A148BA00F22717 /* TonalFindComponent.swift in Sources */,
 				7109643125A5A1F40021B42B /* TonalSound.swift in Sources */,
 				7105341725A50E97006A75DD /* TonalRange.CoreData.swift in Sources */,

@@ -7,6 +7,7 @@
 //
 import GraniteUI
 import Foundation
+import Firebase
 import Combine
 
 struct AuthExpedition: GraniteExpedition {
@@ -82,10 +83,52 @@ struct AuthExpedition: GraniteExpedition {
         switch state.stage {
         case .apply:
             connection.request(NetworkEvents.User.Apply.init(email: state.email))
+        case .signup:
+            FirebaseAuth.Auth.auth().createUser(withEmail: state.email,
+                                   password: state.password) { authResult, error in
+              
+                if let user = authResult?.user, error == nil {
+                    connection.request(NetworkEvents.User.Update.init(id: user.uid, email: state.email, username: state.username, intent: .signup))
+                } else {
+                    GraniteLogger.info("Firebase Auth Error: \n\(String(describing: error?.localizedDescription))", .expedition, focus: true)
+                }
+            }
+        case .login:
+            FirebaseAuth.Auth.auth().signIn(withEmail: state.email,
+                                            password: state.password) { authResult, error in
+                
+                if let user = authResult?.user, error == nil {
+                    connection.request(NetworkEvents.User.Get.init(id: user.uid))
+                } else {
+                    GraniteLogger.info("Firebase Auth Login Error: \n\(String(describing: error?.localizedDescription))", .expedition, focus: true)
+                }
+            }
         default:
             break
         }
         
+    }
+}
+
+struct LoginResultExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = NetworkEvents.User.Get.Result
+    typealias ExpeditionState = LoginState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        if let user = event.user {
+            let auth: Auth = .init(user: .init(username: user.username,
+                                               email: user.email,
+                                               created: (Int(user.created) ?? 0).asDouble.date()))
+            
+            connection.update(\RouterDependency.env.auth, value: auth)
+            
+            state.success = true
+        }
     }
 }
 
