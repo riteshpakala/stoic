@@ -123,8 +123,10 @@ struct AuthResultExpedition: GraniteExpedition {
         if let user = event.user {
             let info: UserInfo = .init(username: user.username,
                                                email: user.email,
-                                               created: (Int(user.created) ?? 0).asDouble.date())
+                                               created: (Int(user.created) ?? 0).asDouble.date(),
+                                               uid: event.id)
             
+            connection.update(\RouterDependency.router.env.authState, value: .authenticated, .here)
             connection.update(\RouterDependency.router.env.user.info, value: info)
             
             state.success = true

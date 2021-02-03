@@ -23,7 +23,7 @@ struct GetExpedition: GraniteExpedition {
             .service
             .login(uid: event.id)
             .replaceError(with: nil)
-            .map { NetworkEvents.User.Get.Result(user: $0) }
+            .map { NetworkEvents.User.Get.Result(user: $0, id: event.id) }
             .eraseToAnyPublisher()
     }
 }

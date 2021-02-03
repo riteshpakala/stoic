@@ -12,11 +12,18 @@ import Combine
 import CryptoKit
 import Firebase
 
+public enum MainStage {
+    case authenticated
+    case willAuthenticate
+    case none
+}
 public class MainState: GraniteState {
+    var stage: MainStage = .none
 }
 
 public class MainCenter: GraniteCenter<MainState> {
     let networkRelay: NetworkRelay = .init()
+    let discussRelay: DiscussRelay = .init()
     
     var routerDependency: RouterDependency {
         return (dependency.hosted as? RouterDependency ?? .init(identifier: "none"))
@@ -35,7 +42,7 @@ public class MainCenter: GraniteCenter<MainState> {
         ]
     }
     
-    var isAuthenticated : Bool {
-        routerDependency.router.env.user.info.isReady && FirebaseAuth.Auth.auth().currentUser != nil
+    var authState: AuthState {
+        routerDependency.router.env.authState
     }
 }

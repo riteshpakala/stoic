@@ -47,6 +47,6 @@ public class PortfolioCenter: GraniteCenter<PortfolioState> {
     }
     
     var username: String {
-        portfolio?.username ?? "unknown"
+        user.info.username
     }
 }

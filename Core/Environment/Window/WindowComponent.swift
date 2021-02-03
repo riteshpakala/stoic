@@ -55,6 +55,8 @@ public struct WindowComponent: GraniteComponent {
             SpecialComponent()
         case .discuss:
             DiscussComponent()
+                .share(.init(dep(\.hosted)))
+                .listen(to: command)
         case .settings:
             SettingsComponent()
         default:

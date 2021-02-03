@@ -90,33 +90,6 @@
           "revision": "afa9a1ace74e116848d4f743599ab83e584ff8cb",
           "version": "1.2.12"
         }
-      },
-      {
-        "package": "swift-nio",
-        "repositoryURL": "https://github.com/apple/swift-nio.git",
-        "state": {
-          "branch": null,
-          "revision": "43931b7a7daf8120a487601530c8bc03ce711992",
-          "version": "2.25.1"
-        }
-      },
-      {
-        "package": "swift-nio-irc",
-        "repositoryURL": "https://github.com/SwiftNIOExtras/swift-nio-irc.git",
-        "state": {
-          "branch": null,
-          "revision": "a6039d09cd84e05abbbde21b08f256a64d1a8853",
-          "version": "0.8.0"
-        }
-      },
-      {
-        "package": "swift-nio-transport-services",
-        "repositoryURL": "https://github.com/apple/swift-nio-transport-services",
-        "state": {
-          "branch": null,
-          "revision": "5a352330c09a323e59ebd99afdf4ca3964c217bc",
-          "version": "1.9.1"
-        }
       }
     ]
   },

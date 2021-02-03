@@ -10,7 +10,7 @@ import GraniteUI
 import SwiftUI
 
 class User {
-    var info: UserInfo = .empty
+    var info: UserInfo = .empty 
     
     var portfolio: Portfolio? = nil
     
@@ -21,9 +21,10 @@ public struct UserInfo {
     var username: String
     var email: String
     var created: Date
+    var uid: String
     
     static var empty: UserInfo {
-        return .init(username: "", email: "", created: .today)
+        return .init(username: "", email: "", created: .today, uid: "")
     }
     
     public var isReady: Bool {

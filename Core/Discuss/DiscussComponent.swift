@@ -9,81 +9,16 @@
 import GraniteUI
 import SwiftUI
 import Combine
-import Discuss
 
 public struct DiscussComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<DiscussCenter, DiscussState> = .init()
     
-    public init() {
-        
-        client.connect()
-        client.delegate = self
-        client.sendMessage(IRCMessage.init(command: .JOIN(channels: [IRCChannelName.init("#general")!], keys: nil)))
-        
-    }
-    
-    open class Options : IRCClientOptions {
-        
-        open var thinkingTime   : TimeInterval = 2.0
-        open var sessionTimeout : TimeInterval = 2 * 60.0
-        
-        override public init(port           : Int             = 6697,
-                             host           : String          = "ec2-54-176-70-40.us-west-1.compute.amazonaws.com",
-                             password       : String?         = nil,
-                             nickname       : IRCNickName,
-                             userInfo       : IRCUserInfo?    = nil,
-                             eventLoopGroup : EventLoopGroup? = nil)
-        {
-            super.init(port: port,
-                       host: host,
-                       password: password,
-                       nickname: nickname,
-                       userInfo: userInfo,
-                       eventLoopGroup: eventLoopGroup)
-        }
-    }
-    
-    lazy var client: IRCClient = {
-        .init(options: Options.init(nickname: IRCNickName.init("zion")!))
-    }()
+    public init() {}
     
     @State var selection: Set<Int> = [0]
     
     @State var showMembers = true
-}
-
-extension DiscussComponent: IRCClientDelegate {
-    public func client(_ client: IRCClient, registered nick: IRCNickName,
-                       with userInfo: IRCUserInfo) {
-        
-        
-        
-        print("\(nick.stringValue) is ready and listening!")
-    }
-    public func client(_ client: IRCClient, received message: IRCMessage) {}
-    
-    public func clientFailedToRegister(_ client: IRCClient) {}
-    
-    public func client(_ client: IRCClient, messageOfTheDay: String) {}
-    public func client(_ client: IRCClient,
-                       notice message: String,
-                       for recipients: [ IRCMessageRecipient ]) {}
-    public func client(_ client: IRCClient,
-                       message: String, from sender: IRCUserID,
-                       for recipients: [ IRCMessageRecipient ]) {}
-    public func client(_ client: IRCClient, changedUserModeTo mode: IRCUserMode) {}
-    public func client(_ client: IRCClient, changedNickTo nick: IRCNickName) {}
-    
-    public func client(_ client: IRCClient,
-                       user: IRCUserID, joined channels: [ IRCChannelName ]) {}
-    public func client(_ client: IRCClient,
-                       user: IRCUserID, left   channels: [ IRCChannelName ],
-                       with message: String?) {}
-    public func client(_ client: IRCClient,
-                       changeTopic: String, of channel: IRCChannelName) {}
-    
-    
 }
 
 //MARK: -- View
@@ -91,17 +26,38 @@ extension DiscussComponent {
     // Label("INFORMATION", systemImage: "info")
     public var body: some View {
         ZStack {
-            MainView(showMembers: $showMembers)
+            MainView(showMembers: $showMembers,
+                     messages: state.messages,
+                     message: _state.currentMessage,
+                     onMessageSend:  {
+                        sendEvent(DiscussRelayEvents.Messages.Send.init(message: state.currentMessage), .contact)
+                        let messages = state.messages
+                        let message = DiscussMessage
+                            .init(color: Brand.Colors.yellow,
+                                  data: .init(username: command.center.user.username,
+                                              message: state.currentMessage,
+                                              channel: state.currentChannel,
+                                              date: .today,
+                                              messageType: .channel))
+                        set(\.messages, value: messages + [message])
+                        set(\.currentMessage, value: "")
+                     })
         }
     }
     
     struct MainView: View {
         @Binding var showMembers: Bool
+        var messages: [DiscussMessage]
+        @Binding var message: String
+        var onMessageSend: (() -> ())
         
         var body: some View {
             HStack {
                 VStack(alignment: .leading) {
-                    Channel(showMembers: $showMembers)
+                    Channel(messages: messages,
+                            showMembers: $showMembers,
+                            message: $message,
+                            onMessageSend: onMessageSend)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
@@ -109,21 +65,11 @@ extension DiscussComponent {
     }
     
     struct Channel: View {
-        @State var messages = [
-            "Here’s to the crazy ones",
-            "the misfits, the rebels, the troublemakers",
-            "the round pegs in the square holes…",
-            "the ones who see things differently — they’re not fond of rules…",
-            "You can quote them, disagree with them, glorify or vilify them",
-            "but the only thing you can’t do is ignore them because they change things…",
-            "they push the human race forward",
-            "and while some may see them as the crazy ones",
-            "we see genius",
-            "because the ones who are crazy enough to think that they can change the world",
-            "are the ones who do."
-        ]
+        var messages: [DiscussMessage]
         
         @Binding var showMembers: Bool
+        @Binding var message: String
+        var onMessageSend: (() -> ())
         
         var body: some View {
             HStack {
@@ -131,13 +77,14 @@ extension DiscussComponent {
                     ScrollView {
                         VStack(spacing: 16) {
                             ForEach(messages, id: \.self) { message in
-                                Message(text: message)
+                                Message(data: message)
                             }
                         }
                         .padding()
                     }
                     
-                    MessageBar()
+                    MessageBar(message: $message,
+                               onMessageSend: onMessageSend)
                 }
                 
                 if showMembers {
@@ -214,47 +161,32 @@ extension DiscussComponent {
     }
     
     struct Message: View {
-        @State var text: String
-        var names = [
-            "astral lexus",
-            "code_pranav",
-            "username",
-            "itsjack123",
-            "fieryfox999"
-        ]
-        var colors = [
-            Color.red,
-            Color.orange,
-            Color.yellow,
-            Color.green,
-            Color.blue,
-            Color.purple
-        ]
+        var data: DiscussMessage
         
         var body: some View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
                         .trim(from:0, to: 1)
-                        .foregroundColor(colors.randomElement())
+                        .foregroundColor(data.color)
                         .frame(width: 40, height: 40)
-                    Image("discordwhite")
-                        .resizable()
+                    
+                    Rectangle()
                         .frame(width:35, height: 25)
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(alignment: .firstTextBaseline) {
-                        Text(names.randomElement()!)
+                        Text(data.data.username)
                             .font(.headline)
-                            .foregroundColor(colors.randomElement())
+                            .foregroundColor(data.color)
                         
-                        Text("9:41 AM")
+                        Text(data.data.date.asStringWithTime)
                             .font(.callout)
                             .foregroundColor(.secondary)
                     }
                     
-                    Text(text)
+                    Text(data.data.message)
                         .font(.body)
                         .fontWeight(.regular)
                 }
@@ -265,8 +197,9 @@ extension DiscussComponent {
     }
     
     struct MessageBar: View {
-        
+        @Binding var message: String
         @Environment(\.colorScheme) var colorScheme
+        var onMessageSend: (() -> ())
         
         var body: some View {
             VStack(spacing: 0) {
@@ -274,7 +207,11 @@ extension DiscussComponent {
                 HStack {
                     Image(systemName: "plus.circle.fill").padding()
                         .font(.title)
-                    Text("Message #general").foregroundColor(.gray)
+                    TextField("Message #general",
+                              text: $message,
+                              onCommit: onMessageSend)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .foregroundColor(.gray)
                         .font(.title2)
                     Spacer()
                     Image(systemName: "gift.fill").padding()

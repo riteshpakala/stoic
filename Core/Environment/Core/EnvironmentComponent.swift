@@ -101,6 +101,7 @@ extension EnvironmentComponent {
     func window(_ config: WindowConfig) -> some View {
        let window = createWindow(config)
                         .share(.init(dep(\.envDependency)))
+                        .listen(to: command)
                         .background(Brand.Colors.black)
                         .border(state.route.isDebug ? Brand.Colors.red : .clear,
                                 width: state.route.isDebug ? 4.0 : 0.0)

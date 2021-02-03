@@ -19,6 +19,7 @@ struct NetworkEvents {
             }
             public struct Result: GraniteEvent {
                 let user: NetworkServiceModels.User.Item?
+                let id: String
                 
                 public var beam: GraniteBeamType {
                     .rebound

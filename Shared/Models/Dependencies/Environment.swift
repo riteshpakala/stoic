@@ -10,6 +10,8 @@ import GraniteUI
 import SwiftUI
 
 class EnvironmentDependency: DependencyManager {
+    var authState: AuthState = .none
+    
     var home: Home = .init()
     
     var detail: Detail = .init()

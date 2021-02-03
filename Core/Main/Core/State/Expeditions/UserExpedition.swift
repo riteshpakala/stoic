@@ -23,7 +23,11 @@ struct UserExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         if  let user = FirebaseAuth.Auth.auth().currentUser {
-            connection.request(NetworkEvents.User.Get.init(id: user.uid))
+            if connection.retrieve(\RouterDependency.router.env.authState) == AuthState.none {
+                connection.request(NetworkEvents.User.Get.init(id: user.uid))
+            }
+        } else {
+            connection.update(\RouterDependency.router.env.authState, value: .notAuthenticated, .here)
         }
     }
 }
@@ -41,14 +45,18 @@ struct LoginResultExpedition: GraniteExpedition {
         if let user = event.user {
             let info: UserInfo = .init(username: user.username,
                                                email: user.email,
-                                               created: (Int(user.created) ?? 0).asDouble.date())
+                                               created: (Int(user.created) ?? 0).asDouble.date(),
+                                               uid: event.id)
             
             coreDataInstance.getPortfolio(username: info.username) { portfolio in
                 if let portfolio = portfolio {
                     connection.update(\RouterDependency.router.env.user.portfolio,
                                       value: portfolio, .here)
                 }
+                connection.update(\RouterDependency.router.env.authState, value: .authenticated, .here)
                 connection.update(\RouterDependency.router.env.user.info, value: info, .here)
+                
+                connection.request(DiscussRelayEvents.Client.Set.init(user: info))
             }
         }
     }

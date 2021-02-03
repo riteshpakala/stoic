@@ -30,11 +30,13 @@ public struct MainComponent: GraniteComponent {
     }
     
     public var body: some View {
-        if command.center.isAuthenticated {
+        switch command.center.authState {
+        case .authenticated:
             if EnvironmentConfig.isIPhone {
                 VStack {
                     environment
                         .share(.init(dep(\.routerDependency)))
+                        .listen(to: command)
                         .ignoresSafeArea(.keyboard, edges: .bottom)
                     controls
                 }
@@ -45,12 +47,15 @@ public struct MainComponent: GraniteComponent {
                     controls
                     environment
                         .share(.init(dep(\.routerDependency)))
+                        .listen(to: command)
                         .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
                 .background(Color.black)
             }
-        } else {
+        case .notAuthenticated:
             LoginComponent().share(.init(dep(\.routerDependency)))
+        case .none:
+            GraniteLoadingComponent()
         }
     }
 }
