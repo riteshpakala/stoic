@@ -20,24 +20,25 @@ public struct EnvironmentComponent: GraniteComponent {
         .init(repeating: GridItem(.flexible()), count: command.center.maxWidth)
     }
     
-    @Environment(\.iDevicePadding) var iDevicePadding: CGFloat
-
     public var body: some View {
         ZStack {
             
             GraniteLoadingComponent()
             
             if EnvironmentConfig.isIPhone {
+//                GeometryReader { proxy in
                     VStack(alignment: .center,
                            spacing: Brand.Padding.small) {
                         ScrollView {
                             //Max Windows Height
                             ForEach(0..<command.center.maxWidth, id: \.self) { col in
                                 VStack(spacing: 0) {
+                                
                                     ForEach(0..<command.center.maxHeight, id: \.self) { row in
                                         if row < state.activeWindowConfigs.count,
                                            col < state.activeWindowConfigs[row].count,
                                            state.activeWindowConfigs[row][col].kind != .unassigned {
+                                            
                                             getWindow(row,
                                                       col,
                                                       state.activeWindowConfigs[row][col])
@@ -45,7 +46,8 @@ public struct EnvironmentComponent: GraniteComponent {
                                             PaddingVertical(Brand.Padding.small)
                                         }
                                     }
-                                }.frame(maxWidth: .infinity,
+                                }.frame(minWidth: 0,
+                                        maxWidth: .infinity,
                                         minHeight: EnvironmentConfig.iPhoneScreenHeight,
                                         idealHeight: EnvironmentConfig.iPhoneScreenHeight,
                                         maxHeight: EnvironmentConfig.iPhoneScreenHeight,
@@ -59,6 +61,7 @@ public struct EnvironmentComponent: GraniteComponent {
                             minHeight: 0,
                             maxHeight: .infinity,
                             alignment: .center)
+//                }
             } else {
                 HStack(spacing:  command.center.nonIPhoneHStackSpacing) {
                     //Max Windows Height
@@ -105,31 +108,5 @@ extension EnvironmentComponent {
     
     func createWindow(_ config: WindowConfig) -> WindowComponent {
         return WindowComponent(state: .init(config))
-    }
-}
-
-extension EdgeInsets {
-    var topBottom: CGFloat {
-        self.top + self.bottom
-    }
-}
-
-
-private struct iDevicePaddingKey: EnvironmentKey {
-    static let defaultValue: CGFloat = 0
-}
-
-
-extension EnvironmentValues {
-    var iDevicePadding: CGFloat {
-        get { self[iDevicePaddingKey.self] }
-        set { self[iDevicePaddingKey.self] = newValue }
-    }
-}
-
-
-extension View {
-    func iDevicePadding(_ myCustomValue: CGFloat) -> some View {
-        environment(\.iDevicePadding, myCustomValue)
     }
 }

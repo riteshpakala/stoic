@@ -14,7 +14,12 @@ public struct DiscussComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<DiscussCenter, DiscussState> = .init()
     
-    public init() {}
+    public init() {
+        
+        
+        print("WPWPWPWPWPWPWP")
+        
+    }
     
     @State var selection: Set<Int> = [0]
     
@@ -212,7 +217,7 @@ extension DiscussComponent {
 //                        .font(.title)
                     TextField("Message #general",
                               text: $message,
-                              onCommit: {})// onMessageSend)
+                              onCommit: onMessageSend)
                         .textFieldStyle(PlainTextFieldStyle())
                         .font(Fonts.live(.headline, .regular))
                         .frame(height: 42)
