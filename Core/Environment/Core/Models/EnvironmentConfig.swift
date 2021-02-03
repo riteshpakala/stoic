@@ -128,6 +128,14 @@ extension EnvironmentConfig {
         #endif
     }
     
+    public static var iPhoneScreenWidth: CGFloat {
+        #if canImport(UIKit)
+        return UIScreen.main.bounds.width
+        #else
+        return 0.0
+        #endif
+    }
+    
     public static var iPhoneScreenHeight: CGFloat {
         #if canImport(UIKit)
         return UIScreen.main.bounds.height - EnvironmentStyle.ControlBar.iPhone.maxHeight

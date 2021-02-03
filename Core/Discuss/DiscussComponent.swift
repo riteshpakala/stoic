@@ -72,12 +72,13 @@ extension DiscussComponent {
         var onMessageSend: (() -> ())
         
         var body: some View {
-            HStack {
+            ZStack {
                 VStack(spacing: 0) {
                     ScrollView {
                         VStack(spacing: 16) {
                             ForEach(messages, id: \.self) { message in
                                 Message(data: message)
+                                    .frame(height: 48)
                             }
                         }
                         .padding()
@@ -85,13 +86,15 @@ extension DiscussComponent {
                     
                     MessageBar(message: $message,
                                onMessageSend: onMessageSend)
+                               .frame(height: 57)
                 }
                 
-                if showMembers {
-                    MemberList()
-                }
+                //ZStack....
+//                if showMembers {
+//                    MemberList()
+//                }
                 
-            }
+            }.background(Color.black)
         }
     }
     
@@ -166,10 +169,10 @@ extension DiscussComponent {
         var body: some View {
             HStack(spacing: 12) {
                 ZStack {
-                    Circle()
-                        .trim(from:0, to: 1)
-                        .foregroundColor(data.color)
-                        .frame(width: 40, height: 40)
+//                    Circle()
+//                        .trim(from:0, to: 1)
+//                        .foregroundColor(data.color)
+//                        .frame(width: 40, height: 40)
                     
                     Rectangle()
                         .frame(width:35, height: 25)
@@ -178,16 +181,16 @@ extension DiscussComponent {
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(alignment: .firstTextBaseline) {
                         Text(data.data.username)
-                            .font(.headline)
+                            .font(Fonts.live(.subheadline, .bold))
                             .foregroundColor(data.color)
                         
                         Text(data.data.date.asStringWithTime)
-                            .font(.callout)
+                            .font(Fonts.live(.footnote, .regular))
                             .foregroundColor(.secondary)
                     }
                     
                     Text(data.data.message)
-                        .font(.body)
+                        .font(Fonts.live(.subheadline, .regular))
                         .fontWeight(.regular)
                 }
                 
@@ -205,25 +208,32 @@ extension DiscussComponent {
             VStack(spacing: 0) {
                 Divider()
                 HStack {
-                    Image(systemName: "plus.circle.fill").padding()
-                        .font(.title)
+//                    Image(systemName: "plus.circle.fill").padding()
+//                        .font(.title)
                     TextField("Message #general",
                               text: $message,
-                              onCommit: onMessageSend)
+                              onCommit: {})// onMessageSend)
                         .textFieldStyle(PlainTextFieldStyle())
-                        .foregroundColor(.gray)
-                        .font(.title2)
+                        .font(Fonts.live(.headline, .regular))
+                        .frame(height: 42)
+                        .padding(.top, Brand.Padding.small)
+                        .padding(.bottom, Brand.Padding.small)
+                        .padding(.trailing, Brand.Padding.medium)
+                        .padding(.leading, Brand.Padding.medium)
+                        .background(Color.clear)
                     Spacer()
-                    Image(systemName: "gift.fill").padding()
-                        .font(.title)
-                    Image(systemName: "photo.fill").padding()
-                        .font(.title)
-                    Image(systemName: "face.smiling").padding()
-                        .font(.title)
-                }.background(colorScheme == .light ? Color.init(.sRGB, red: 235/255, green: 237/255, blue: 239/255, opacity: 1.0) : Color.init(.sRGB, red: 64/255, green: 68/255, blue: 75/255, opacity: 1.0)).cornerRadius(10.0).padding(10)
+//                    Image(systemName: "gift.fill").padding()
+//                        .font(.title)
+//                    Image(systemName: "photo.fill").padding()
+//                        .font(.title)
+//                    Image(systemName: "face.smiling").padding()
+//                        .font(.title)
+                }.background(GradientView(colors: [Brand.Colors.black,
+                                                   Brand.Colors.black.opacity(0.0)],
+                                                   cornerRadius: 0.0,
+                                                   direction: .topLeading))
                 
             }
-            .foregroundColor(.secondary)
         }
     }
 }
