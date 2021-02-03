@@ -19,9 +19,31 @@ struct DiscussClientHandlingExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        guard state.service.server == nil else {
+            return
+        }
+        
         state.service.connect(user: .init(username: event.user.username, realName: event.user.username, nick: event.user.username, email: event.user.email, uid: event.user.uid))
+        
         state.service.connection = connection
         
+        guard let server = state.service.server else { return }
+        connection.request(DiscussRelayEvents.Client.Set.Result.init(server: server))
+    }
+}
+
+struct DiscussClientReconnectExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = DiscussRelayEvents.Client.Reconnect
+    typealias ExpeditionState = DiscussRelayState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        state.service.server = event.server
+        connection.request(DiscussRelayEvents.Channel.Join.init(name: event.channel))
     }
 }
 

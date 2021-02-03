@@ -11,7 +11,13 @@ import SwiftUI
 struct __stoicApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ZStack {
+                Brand.Colors.black.frame(maxWidth: .infinity,
+                                         maxHeight: .infinity,
+                                         alignment: .center).edgesIgnoringSafeArea(.all)
+                
+                ContentView()
+            }
         }
     }
 }

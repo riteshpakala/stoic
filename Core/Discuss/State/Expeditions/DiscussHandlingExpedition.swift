@@ -18,8 +18,14 @@ struct DiscussLoadExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-
+        
         connection.request(DiscussRelayEvents.Client.Listen.init(listener: connection), .contact)
+        
+        guard let messages = connection.retrieve(\EnvironmentDependency.discuss.state.messages) else {
+            return
+        }
+        
+        state.messages = messages
     }
 }
 
@@ -33,8 +39,47 @@ struct DiscussMessagesExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
+        guard var messages = connection.retrieve(\EnvironmentDependency.discuss.state.messages) else {
+            return
+        }
+        
         let discussMessage: DiscussMessage = .init(color: Brand.Colors.white,
                                                    data: event.payload)
-        state.messages.append(discussMessage)
+        
+        messages.append(discussMessage)
+        
+        state.messages = messages
+        connection.update(\EnvironmentDependency.discuss.state.messages, value: messages)
+    }
+}
+
+struct DiscussSendMessageExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = DiscussEvents.Send
+    typealias ExpeditionState = DiscussState
+
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+
+        guard let user = connection.retrieve(\EnvironmentDependency.user) else { return }
+        
+        connection.request(DiscussRelayEvents.Messages.Send.init(message: state.currentMessage),
+                           .contact)
+        
+        let message = DiscussMessage
+            .init(color: Brand.Colors.yellow,
+                  data: .init(username: user.info.username,
+                              message: state.currentMessage,
+                              channel: state.currentChannel,
+                              date: .today,
+                              messageType: .channel))
+        
+        state.messages.append(message)
+        state.currentMessage = ""
+        
+        connection.update(\EnvironmentDependency.discuss.state.messages, value: state.messages)
+        
     }
 }

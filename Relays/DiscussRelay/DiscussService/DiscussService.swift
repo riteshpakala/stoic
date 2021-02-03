@@ -12,7 +12,7 @@ import Combine
 public class DiscussService {
     internal let session: URLSession
     internal var server: DiscussServiceModels.IRCServer?
-    internal var connection: GraniteConnection? {
+    weak internal var connection: GraniteConnection? {
         didSet {
             server?.connection = connection
         }

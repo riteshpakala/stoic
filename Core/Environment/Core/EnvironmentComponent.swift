@@ -26,7 +26,7 @@ public struct EnvironmentComponent: GraniteComponent {
             GraniteLoadingComponent()
             
             if EnvironmentConfig.isIPhone {
-//                GeometryReader { proxy in
+                GeometryReader { proxy in
                     VStack(alignment: .center,
                            spacing: Brand.Padding.small) {
                         ScrollView {
@@ -43,16 +43,17 @@ public struct EnvironmentComponent: GraniteComponent {
                                                       col,
                                                       state.activeWindowConfigs[row][col])
                                             
-                                            PaddingVertical(Brand.Padding.small)
+                                            if  ((row + 1) * (col + 1)) < command.center.totalWindows {
+                                                PaddingVertical(Brand.Padding.small)
+                                            }
                                         }
                                     }
                                 }.frame(minWidth: 0,
                                         maxWidth: .infinity,
-                                        minHeight: EnvironmentConfig.iPhoneScreenHeight,
-                                        idealHeight: EnvironmentConfig.iPhoneScreenHeight,
-                                        maxHeight: EnvironmentConfig.iPhoneScreenHeight,
+                                        minHeight: command.center.environmentIPhoneSize.height,
+                                        idealHeight: command.center.environmentIPhoneSize.height,
+                                        maxHeight: command.center.environmentIPhoneSize.height,
                                         alignment: .center)
-                                .background(Color.black)
                             }
                         }
                         .background(Brand.Colors.black)
@@ -61,7 +62,12 @@ public struct EnvironmentComponent: GraniteComponent {
                             minHeight: 0,
                             maxHeight: .infinity,
                             alignment: .center)
-//                }
+                    .onAppear(perform: {
+                        if state.localFrame == nil {
+                            set(\.localFrame, value: proxy.localFrame)
+                        }
+                    })
+                }
             } else {
                 HStack(spacing:  command.center.nonIPhoneHStackSpacing) {
                     //Max Windows Height

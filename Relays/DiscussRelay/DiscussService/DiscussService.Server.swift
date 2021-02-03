@@ -26,7 +26,7 @@ extension DiscussServiceModels {
     }
     
     public class IRCServer {
-        public var connection: GraniteConnection? {
+        weak var connection: GraniteConnection? {
             didSet {
                 guard let connection = connection else {
                     return
@@ -137,15 +137,19 @@ extension DiscussServiceModels {
         
         public func send(_ message: String) {
             task.write((message + "\r\n").data(using: .utf8)!, timeout: 0) { [weak self] (error) in
-                if let _ = error {
-                    
+                if let error = error {
+                    GraniteLogger.info("\(error)", .utility, focus: true)
                 } else {
                     self?.connection?.request(DiscussRelayEvents.Messages.Receive.init(payload: .message("sent command \(message)")))
                 }
             }
         }
         
-        public func join(_ channelName: String) -> IRCChannel {
+        public func join(_ channelName: String) -> IRCChannel? {
+            self.channels.removeAll(where: { $0.name == channelName })
+//            guard !self.channels.map({ $0.name }).contains(channelName) else {
+//                return nil
+//            }
             send("JOIN #\(channelName)")
             let channel = IRCChannel(name: channelName, server: self)
             channel.connection = connection

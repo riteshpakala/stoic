@@ -16,7 +16,7 @@ extension DiscussServiceModels {
     }
     
     public class IRCChannel {
-        public var connection: GraniteConnection? = nil {
+        weak var connection: GraniteConnection? = nil {
             didSet {
                 guard let connection = connection else {
                     return

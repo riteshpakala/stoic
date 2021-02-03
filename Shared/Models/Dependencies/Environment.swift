@@ -16,6 +16,8 @@ class EnvironmentDependency: DependencyManager {
     
     var detail: Detail = .init()
     
+    var discuss: Discuss = .init()
+    
     var tone: Tone = .init()
 
     var tonalModels: TonalModelsState = .init()
@@ -34,11 +36,23 @@ class EnvironmentDependency: DependencyManager {
     
     var broadcasts: Broadcasts = .init()
     
+    var envSettings: EnvironmentStyle.Settings = .init()
+    
     weak var router: Router? = nil
 }
 
 extension DependencyManager {
     var env: EnvironmentDependency {
         return self as? EnvironmentDependency ?? .init(identifier: "none")
+    }
+}
+
+extension EnvironmentStyle {
+    public struct Settings {
+        public struct LocalFrame {
+            let data: CGRect
+        }
+        
+        var lf: LocalFrame? = nil
     }
 }

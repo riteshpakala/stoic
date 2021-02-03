@@ -23,7 +23,6 @@ struct DiscussSendExpedition: GraniteExpedition {
             connection.request(DiscussRelayEvents.Channel.Join.init(name: "general"))
             return
         }
-        
         GraniteLogger.info("Sent message: \(event.message)\n to #general", .relay, focus: true)
         
         state.channel?.send(event.message)

@@ -25,10 +25,28 @@ struct UserExpedition: GraniteExpedition {
         if  let user = FirebaseAuth.Auth.auth().currentUser {
             if connection.retrieve(\RouterDependency.router.env.authState) == AuthState.none {
                 connection.request(NetworkEvents.User.Get.init(id: user.uid))
+            } else if let discuss = connection.retrieve(\RouterDependency.router.env.discuss),
+                      let server = discuss.server {
+                
+                connection.request(DiscussRelayEvents.Client.Reconnect.init(server: server, channel: discuss.channel))
             }
         } else {
             connection.update(\RouterDependency.router.env.authState, value: .notAuthenticated, .here)
         }
+    }
+}
+
+struct DiscussSetResultExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = DiscussRelayEvents.Client.Set.Result
+    typealias ExpeditionState = MainState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        connection.update(\RouterDependency.router.env.discuss.server, value: event.server, .here)
     }
 }
 
@@ -55,7 +73,6 @@ struct LoginResultExpedition: GraniteExpedition {
                 }
                 connection.update(\RouterDependency.router.env.authState, value: .authenticated, .here)
                 connection.update(\RouterDependency.router.env.user.info, value: info, .here)
-                
                 connection.request(DiscussRelayEvents.Client.Set.init(user: info))
             }
         }

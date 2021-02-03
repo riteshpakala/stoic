@@ -81,7 +81,7 @@ public struct ControlBar: View {
             }))
                 
             if isIPhone {
-                PaddingHorizontal(Brand.Padding.large)
+                PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
             } else {
                 PaddingVertical(Brand.Padding.medium9)
             }
@@ -114,7 +114,7 @@ public struct ControlBar: View {
             }))
             
             if isIPhone {
-                PaddingHorizontal(Brand.Padding.large)
+                PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
             } else {
                 PaddingVertical(Brand.Padding.medium9)
             }
@@ -148,7 +148,7 @@ public struct ControlBar: View {
             }))
             
             if isIPhone {
-                PaddingHorizontal(Brand.Padding.large)
+                PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
             } else {
                 PaddingVertical(Brand.Padding.medium9)
             }
@@ -182,7 +182,7 @@ public struct ControlBar: View {
             }))
             
             if isIPhone {
-                PaddingHorizontal(Brand.Padding.large)
+                PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
             } else {
                 PaddingVertical(Brand.Padding.medium9)
             }

@@ -24,6 +24,7 @@ public class DiscussCenter: GraniteCenter<DiscussState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             DiscussLoadExpedition.Discovery(),
+            DiscussSendMessageExpedition.Discovery(),
             DiscussMessagesExpedition.Discovery()
         ]
     }

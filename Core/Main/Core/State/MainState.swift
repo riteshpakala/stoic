@@ -32,6 +32,7 @@ public class MainCenter: GraniteCenter<MainState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             UserExpedition.Discovery(),
+            DiscussSetResultExpedition.Discovery(),
             LoginResultExpedition.Discovery()
         ]
     }

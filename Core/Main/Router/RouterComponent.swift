@@ -20,6 +20,7 @@ public struct RouterComponent: GraniteComponent {
     }
     
     public var body: some View {
-        MainComponent().share(.init(dep(\.routerDependency)))
+        MainComponent()
+            .share(.init(dep(\.routerDependency)))
     }
 }

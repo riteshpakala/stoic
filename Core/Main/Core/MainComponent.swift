@@ -29,6 +29,7 @@ public struct MainComponent: GraniteComponent {
         })
     }
     
+    
     public var body: some View {
         switch command.center.authState {
         case .authenticated:
@@ -39,8 +40,6 @@ public struct MainComponent: GraniteComponent {
                         .listen(to: command)
                     controls
                 }
-                .edgesIgnoringSafeArea(.all)
-                .background(Color.black)
             } else {
                 HStack {
                     controls

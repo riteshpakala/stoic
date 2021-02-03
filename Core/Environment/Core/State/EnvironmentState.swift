@@ -17,7 +17,7 @@ public class EnvironmentState: GraniteState {
     
     let route: Route
     //
-    var count:Int = 0
+    var localFrame: CGRect? = nil
     
     public init(_ route: Route?) {
         self.route = route ?? .none
@@ -56,6 +56,10 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
         state.activeWindowConfigs.count
     }
     
+    var totalWindows: Int {
+        state.activeWindowConfigs.flatMap { group in group.filter({ $0.kind != .unassigned }) }.count
+    }
+    
     var nonIPhoneHStackSpacing: CGFloat {
         if maxWidth < 2 {
             return 0.0
@@ -83,6 +87,7 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     public override var links: [GraniteLink] {
         [
             .onAppear(EnvironmentEvents.Boot()),
+            .onAppear(EnvironmentEvents.Variables(), .dependant),
         ]
     }
     
@@ -109,5 +114,10 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
                         Int(EnvironmentStyle.minWidth) :
                         state.activeWindowConfigs[0].count)*WindowStyle.maxWidth,
             CGFloat(state.activeWindowConfigs.count)*WindowStyle.maxHeight)
+    }
+    
+    public var environmentIPhoneSize: CGSize {
+        return .init(width: .infinity,
+                     height: (state.localFrame?.height ?? EnvironmentConfig.iPhoneScreenHeight))
     }
 }

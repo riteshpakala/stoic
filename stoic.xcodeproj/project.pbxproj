@@ -551,6 +551,8 @@
 		71494D6825ABE9BD0086E598 /* FloorConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71494D6625ABE9BD0086E598 /* FloorConfig.swift */; };
 		71494D7225ABEE2A0086E598 /* AddToFloorExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71494D7125ABEE2A0086E598 /* AddToFloorExpedition.swift */; };
 		71494D7325ABEE2A0086E598 /* AddToFloorExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71494D7125ABEE2A0086E598 /* AddToFloorExpedition.swift */; };
+		714AD71C25CB3F3B00752A92 /* Discuss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714AD71B25CB3F3B00752A92 /* Discuss.swift */; };
+		714AD71D25CB3F3B00752A92 /* Discuss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714AD71B25CB3F3B00752A92 /* Discuss.swift */; };
 		7156AC0225A8370900648941 /* GraniteToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7156AC0125A8370900648941 /* GraniteToggle.swift */; };
 		7156AC0B25A8371300648941 /* GraniteToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7156AC0125A8370900648941 /* GraniteToggle.swift */; };
 		7156AC1125A86E9B00648941 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7156AC1025A86E9B00648941 /* User.swift */; };
@@ -1210,6 +1212,7 @@
 		71494D4C25ABE72C0086E598 /* Floor.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.CoreData.swift; sourceTree = "<group>"; };
 		71494D6625ABE9BD0086E598 /* FloorConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorConfig.swift; sourceTree = "<group>"; };
 		71494D7125ABEE2A0086E598 /* AddToFloorExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFloorExpedition.swift; sourceTree = "<group>"; };
+		714AD71B25CB3F3B00752A92 /* Discuss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discuss.swift; sourceTree = "<group>"; };
 		7156AC0125A8370900648941 /* GraniteToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteToggle.swift; sourceTree = "<group>"; };
 		7156AC1025A86E9B00648941 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7169534925A7AD3400641BCE /* GraniteScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteScrollView.swift; sourceTree = "<group>"; };
@@ -1769,6 +1772,7 @@
 				711598CF25C8A2D60026B5AE /* AuthState.swift */,
 				71149ECF25A7A2D200148D68 /* Home.swift */,
 				71C2BF8B25ABC128006445EB /* Detail.swift */,
+				714AD71B25CB3F3B00752A92 /* Discuss.swift */,
 				712415F125A35F2200169B9C /* Search.swift */,
 				7143EEE6259955D800B1DCB5 /* Tone.swift */,
 				71D3C2E525AA88F90033350B /* Broadcasts */,
@@ -4179,6 +4183,7 @@
 				71BDF2962599430A00F66EA2 /* TonalService.Utilities.swift in Sources */,
 				7179D3BA25AC911700C82063 /* GraniteButtonState.swift in Sources */,
 				71494D4D25ABE72C0086E598 /* Floor.CoreData.swift in Sources */,
+				714AD71C25CB3F3B00752A92 /* Discuss.swift in Sources */,
 				7179ACBF25AC958F003FD06F /* TonalModel.swift in Sources */,
 				7183D56325A428AE00FB91A9 /* PressAndHorizontalDragGesture.swift in Sources */,
 				71EE7009258D347F005B2B8E /* ContentView.swift in Sources */,
@@ -4774,6 +4779,7 @@
 				71F1EC3B25A0F04400D32C52 /* HeaderState.swift in Sources */,
 				71C08E8725AF53AF00765894 /* NetworkResponseObject+CoreDataProperties.swift in Sources */,
 				713F27C825B276FA00C3871E /* Strategy.swift in Sources */,
+				714AD71D25CB3F3B00752A92 /* Discuss.swift in Sources */,
 				7179AD3925ACE5E5003FD06F /* SpecialComponent.swift in Sources */,
 				71D63F4A2592BC210085D718 /* MoversSecurityExpedition.swift in Sources */,
 				7183D55825A428AE00FB91A9 /* Misc.Visual.swift in Sources */,

@@ -22,6 +22,7 @@ public class DiscussRelayCenter: GraniteCenter<DiscussRelayState> {
             DiscussSendExpedition.Discovery(),
             DiscussReceiveExpedition.Discovery(),
             DiscussClientHandlingExpedition.Discovery(),
+            DiscussClientReconnectExpedition.Discovery(),
             DiscussClientRegisteredExpedition.Discovery(),
             DiscussClientListenerExpedition.Discovery(),
             DiscussChannelJoinExpedition.Discovery()

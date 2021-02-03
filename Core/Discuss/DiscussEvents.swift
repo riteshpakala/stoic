@@ -12,4 +12,5 @@ import Combine
 
 struct DiscussEvents {
     public struct Load: GraniteEvent {}
+    public struct Send: GraniteEvent {}
 }

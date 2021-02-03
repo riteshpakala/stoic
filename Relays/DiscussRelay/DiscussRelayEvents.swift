@@ -16,6 +16,23 @@ struct DiscussRelayEvents {
             public var beam: GraniteBeamType {
                 .rebound
             }
+            
+            public struct Result: GraniteEvent {
+                let server: DiscussServiceModels.IRCServer
+                
+                public var beam: GraniteBeamType {
+                    .rebound
+                }
+            }
+        }
+        
+        public struct Reconnect: GraniteEvent {
+            let server: DiscussServiceModels.IRCServer
+            let channel: String
+            
+            public var beam: GraniteBeamType {
+                .rebound
+            }
         }
         
         public struct Registered: GraniteEvent {

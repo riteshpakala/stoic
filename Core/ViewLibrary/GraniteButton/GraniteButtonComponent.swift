@@ -42,7 +42,7 @@ public struct GraniteButtonComponent: GraniteComponent {
                                                 Brand.Colors.black
                                                     .opacity(0.57)
                                                     .cornerRadius(4.0)
-                                                    .shadow(color: .black, radius: 4, x: 2, y: 2)
+                                                    .shadow(color: .black, radius: 2, x: 1, y: 1)
                                                     .padding(.top, 4)
                                                     .padding(.leading, 4)
                                                     .padding(.trailing, 4)
@@ -54,7 +54,7 @@ public struct GraniteButtonComponent: GraniteComponent {
                                     .padding(.leading, -8)
                                     .padding(.trailing, -8)
                                     .padding(.bottom, -8)
-                                    .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0)
+                                    .shadow(color: Color.black, radius: 2.0, x: 1.0, y: 2.0)
                             }
                         }
                     )

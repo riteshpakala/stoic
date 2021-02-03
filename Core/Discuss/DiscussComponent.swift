@@ -14,12 +14,7 @@ public struct DiscussComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<DiscussCenter, DiscussState> = .init()
     
-    public init() {
-        
-        
-        print("WPWPWPWPWPWPWP")
-        
-    }
+    public init() {}
     
     @State var selection: Set<Int> = [0]
     
@@ -34,19 +29,7 @@ extension DiscussComponent {
             MainView(showMembers: $showMembers,
                      messages: state.messages,
                      message: _state.currentMessage,
-                     onMessageSend:  {
-                        sendEvent(DiscussRelayEvents.Messages.Send.init(message: state.currentMessage), .contact)
-                        let messages = state.messages
-                        let message = DiscussMessage
-                            .init(color: Brand.Colors.yellow,
-                                  data: .init(username: command.center.user.username,
-                                              message: state.currentMessage,
-                                              channel: state.currentChannel,
-                                              date: .today,
-                                              messageType: .channel))
-                        set(\.messages, value: messages + [message])
-                        set(\.currentMessage, value: "")
-                     })
+                     onMessageSend: sendEvent(DiscussEvents.Send()))
         }
     }
     

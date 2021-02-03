@@ -25,7 +25,6 @@ public class Router {
     
     var root: GraniteAdAstra? = nil
     var env: EnvironmentDependency = .init(identifier: "envDependency")
-    var envState: EnvironmentState = .init()
     
     public init() {
         self.env.router = self
