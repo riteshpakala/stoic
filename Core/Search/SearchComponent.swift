@@ -24,6 +24,7 @@ public struct SearchComponent: GraniteComponent {
                         .resizable()
                         .frame(width: 20, height: 20, alignment: .leading)
                         .padding(.leading, Brand.Padding.medium)
+                        .foregroundColor(Brand.Colors.grey)
                     
                     TextField("search markets",
                               text: link(\.query,

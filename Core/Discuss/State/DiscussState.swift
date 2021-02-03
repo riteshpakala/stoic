@@ -38,4 +38,12 @@ public class DiscussCenter: GraniteCenter<DiscussState> {
     var user: UserInfo {
         envDependency.user.info
     }
+    
+    public var environmentSafeArea: CGFloat {
+        if let height = envDependency.envSettings.lf?.data.height {
+            return abs(EnvironmentConfig.iPhoneScreenHeight - height)
+        } else {
+            return 0
+        }
+    }
 }

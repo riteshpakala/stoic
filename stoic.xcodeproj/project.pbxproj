@@ -553,6 +553,8 @@
 		71494D7325ABEE2A0086E598 /* AddToFloorExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71494D7125ABEE2A0086E598 /* AddToFloorExpedition.swift */; };
 		714AD71C25CB3F3B00752A92 /* Discuss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714AD71B25CB3F3B00752A92 /* Discuss.swift */; };
 		714AD71D25CB3F3B00752A92 /* Discuss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714AD71B25CB3F3B00752A92 /* Discuss.swift */; };
+		714AD72325CB4BE000752A92 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714AD72225CB4BE000752A92 /* Keyboard.swift */; };
+		714AD72425CB4BE000752A92 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714AD72225CB4BE000752A92 /* Keyboard.swift */; };
 		7156AC0225A8370900648941 /* GraniteToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7156AC0125A8370900648941 /* GraniteToggle.swift */; };
 		7156AC0B25A8371300648941 /* GraniteToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7156AC0125A8370900648941 /* GraniteToggle.swift */; };
 		7156AC1125A86E9B00648941 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7156AC1025A86E9B00648941 /* User.swift */; };
@@ -1213,6 +1215,7 @@
 		71494D6625ABE9BD0086E598 /* FloorConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloorConfig.swift; sourceTree = "<group>"; };
 		71494D7125ABEE2A0086E598 /* AddToFloorExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFloorExpedition.swift; sourceTree = "<group>"; };
 		714AD71B25CB3F3B00752A92 /* Discuss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discuss.swift; sourceTree = "<group>"; };
+		714AD72225CB4BE000752A92 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		7156AC0125A8370900648941 /* GraniteToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteToggle.swift; sourceTree = "<group>"; };
 		7156AC1025A86E9B00648941 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7169534925A7AD3400641BCE /* GraniteScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteScrollView.swift; sourceTree = "<group>"; };
@@ -2353,6 +2356,7 @@
 			isa = PBXGroup;
 			children = (
 				712D3D0125A6B9BD005EE3F9 /* Padding.swift */,
+				714AD72225CB4BE000752A92 /* Keyboard.swift */,
 				711598B925C87E450026B5AE /* RoundedEdge.swift */,
 				71017E1225B23EB900E056A5 /* PagerView.swift */,
 				7169535025A7ADB400641BCE /* Run.swift */,
@@ -4175,6 +4179,7 @@
 				7125BDFC25A1328900F22717 /* ValueSlider.swift in Sources */,
 				7125BE0C25A1328A00F22717 /* HorizontalValueTrack.swift in Sources */,
 				71332A1525A78D09005A72A9 /* SecurityDetailState.swift in Sources */,
+				714AD72325CB4BE000752A92 /* Keyboard.swift in Sources */,
 				710889972591B29800795EDF /* Promise+Validate.swift in Sources */,
 				7118A1E92593134A007E7EAB /* TonalState.swift in Sources */,
 				7183D54D25A428AE00FB91A9 /* Misc.Plot.swift in Sources */,
@@ -4645,6 +4650,7 @@
 				7195A54A25B906AD00F1E829 /* TonalService.Model.Generate.swift in Sources */,
 				710889662591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
 				7125BDC625A1318D00F22717 /* EnvironmentValues+RangeSliderStyle.swift in Sources */,
+				714AD72425CB4BE000752A92 /* Keyboard.swift in Sources */,
 				7143435A259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
 				71B4302E25A88A9900A23F4D /* AssetAddEvents.swift in Sources */,
 				7125BE9025A148BA00F22717 /* TonalFindEvents.swift in Sources */,

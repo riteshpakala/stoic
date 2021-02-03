@@ -43,9 +43,9 @@ public struct EnvironmentConfig {
                         ])
             case .modelCreate:
                 return .init(windows: [
-                             [.tonalCreate(.find), .tonalCreate(.tune), .tonalCreate(.compile)],
-                             [.unassigned, .unassigned, .unassigned],
-                             [.tonalCreate(.set), .unassigned, .unassigned]
+                            [.tonalCreate(.find), .unassigned, .unassigned],
+                            [.unassigned, .unassigned, .unassigned],
+                            [.tonalCreate(.set), .tonalCreate(.tune), .tonalCreate(.compile)]
                         ])
             case .floor:
                 return .init(windows: [
@@ -138,7 +138,7 @@ extension EnvironmentConfig {
     
     public static var iPhoneScreenHeight: CGFloat {
         #if canImport(UIKit)
-        return UIScreen.main.bounds.height - EnvironmentStyle.ControlBar.iPhone.maxHeight
+        return UIScreen.main.bounds.height - (EnvironmentStyle.ControlBar.iPhone.maxHeight + Brand.Padding.small)
         #else
         return 0.0
         #endif

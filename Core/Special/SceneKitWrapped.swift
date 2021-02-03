@@ -93,7 +93,7 @@ struct SceneKitView : NSViewRepresentable {
 
     func updateNSView(_ scnView: SCNView, context: Context) {
         scnView.allowsCameraControl = true
-        scnView.backgroundColor = .black
+        scnView.backgroundColor = NSColor(Brand.Colors.black)
     }
     
     func run() {
@@ -128,7 +128,7 @@ struct SceneKitView : UIViewRepresentable {
 
     func updateUIView(_ scnView: SCNView, context: Context) {
         scnView.allowsCameraControl = true
-        scnView.backgroundColor = .black
+        scnView.backgroundColor = UIColor(Brand.Colors.black)
     }
     
     func run() {

@@ -57,7 +57,7 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     }
     
     var totalWindows: Int {
-        state.activeWindowConfigs.flatMap { group in group.filter({ $0.kind != .unassigned }) }.count
+        state.activeWindowConfigs.flatMap { group in group.map { $0 } }.count
     }
     
     var nonIPhoneHStackSpacing: CGFloat {

@@ -12,4 +12,5 @@ import Combine
 
 struct MainEvents {
     struct User: GraniteEvent {}
+    struct Logout: GraniteEvent {}
 }

@@ -43,4 +43,9 @@ public class FloorCenter: GraniteCenter<FloorState> {
             ExitAddToFloorExpedition.Discovery()
         ]
     }
+    
+    public var environmentIPhoneSize: CGSize {
+        return .init(width: .infinity,
+                     height: (envDependency.envSettings.lf?.data.height ?? EnvironmentConfig.iPhoneScreenHeight))
+    }
 }

@@ -28,6 +28,7 @@ public struct WindowComponent: GraniteComponent {
         case .portfolio(let type):
             PortfolioComponent(state: .init(type))
                 .share(.init(dep(\.hosted)))
+                .listen(to: command)
         case .floor:
             FloorComponent()
                 .share(.init(dep(\.hosted,

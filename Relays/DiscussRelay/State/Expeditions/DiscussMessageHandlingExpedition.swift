@@ -23,7 +23,7 @@ struct DiscussSendExpedition: GraniteExpedition {
             connection.request(DiscussRelayEvents.Channel.Join.init(name: "general"))
             return
         }
-        GraniteLogger.info("Sent message: \(event.message)\n to #general", .relay, focus: true)
+        GraniteLogger.info("Sent message: \(event.message)\n to #general", .relay)
         
         state.channel?.send(event.message)
     }
@@ -39,7 +39,7 @@ struct DiscussReceiveExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        GraniteLogger.info(event.payload.asString, .expedition, focus: true)
+        GraniteLogger.info(event.payload.asString, .expedition)
         
         switch event.payload.messageType {
         case .channel:
@@ -47,6 +47,5 @@ struct DiscussReceiveExpedition: GraniteExpedition {
         default:
             break
         }
-//        state.client?.channel.send(event.message)
     }
 }

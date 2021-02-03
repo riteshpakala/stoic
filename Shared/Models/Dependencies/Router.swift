@@ -35,6 +35,10 @@ public class Router {
         self.route = route
         self.root?.toTheStars(target: nil, .here)
     }
+    
+    public func flush() {
+        env = .init(identifier: "envDependency")
+    }
 }
 
 extension DependencyManager {

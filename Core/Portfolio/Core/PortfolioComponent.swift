@@ -102,6 +102,7 @@ public struct PortfolioComponent: GraniteComponent {
                         .bold)
                 .padding(.top, Brand.Padding.medium)
                 .padding(.bottom, Brand.Padding.large)
+                .modifier(TapAndLongPressModifier.init(tapAction: sendEvent(MainEvents.Logout(), .contact, haptic: .light) ))
             
         }
         .frame(maxWidth: .infinity)

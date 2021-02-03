@@ -36,6 +36,25 @@ struct UserExpedition: GraniteExpedition {
     }
 }
 
+struct LogoutExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = MainEvents.Logout
+    typealias ExpeditionState = MainState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        do {
+            try FirebaseAuth.Auth.auth().signOut()
+            connection.retrieve(\RouterDependency.router)?.flush()
+            connection.update(\RouterDependency.router.env.authState, value: .notAuthenticated, .here)
+        } catch let error {
+            GraniteLogger.info("Error logging out \(String(describing: error))", .expedition, focus: true)
+        }
+    }
+}
+
 struct DiscussSetResultExpedition: GraniteExpedition {
     typealias ExpeditionEvent = DiscussRelayEvents.Client.Set.Result
     typealias ExpeditionState = MainState

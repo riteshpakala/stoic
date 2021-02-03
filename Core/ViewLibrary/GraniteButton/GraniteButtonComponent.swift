@@ -31,6 +31,7 @@ public struct GraniteButtonComponent: GraniteComponent {
                     .frame(width: state.size.width,
                            height: state.size.height,
                            alignment: .leading)
+                    .foregroundColor(Brand.Colors.white)
                     .background(
                         Passthrough {
                             if state.selected {

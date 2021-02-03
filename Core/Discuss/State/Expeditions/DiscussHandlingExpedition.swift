@@ -63,7 +63,8 @@ struct DiscussSendMessageExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
-        guard let user = connection.retrieve(\EnvironmentDependency.user) else { return }
+        guard state.currentMessage.isNotEmpty,
+              let user = connection.retrieve(\EnvironmentDependency.user) else { return }
         
         connection.request(DiscussRelayEvents.Messages.Send.init(message: state.currentMessage),
                            .contact)

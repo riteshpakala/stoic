@@ -40,9 +40,9 @@ public struct FloorComponent: GraniteComponent {
                     VStack(spacing: Brand.Padding.small) {
                         generate.frame(minWidth: 0,
                                        maxWidth: .infinity,
-                                       minHeight: EnvironmentConfig.iPhoneScreenHeight,
-                                       idealHeight: EnvironmentConfig.iPhoneScreenHeight,
-                                       maxHeight: EnvironmentConfig.iPhoneScreenHeight,
+                                       minHeight: command.center.environmentIPhoneSize.height,
+                                       idealHeight: command.center.environmentIPhoneSize.height,
+                                       maxHeight: command.center.environmentIPhoneSize.height,
                                        alignment: .center)
                     }
                     .background(Color.black)

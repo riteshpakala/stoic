@@ -26,7 +26,8 @@ extension DiscussComponent {
     // Label("INFORMATION", systemImage: "info")
     public var body: some View {
         ZStack {
-            MainView(showMembers: $showMembers,
+            MainView(safeAreaPadding: command.center.environmentSafeArea,
+                     showMembers: $showMembers,
                      messages: state.messages,
                      message: _state.currentMessage,
                      onMessageSend: sendEvent(DiscussEvents.Send()))
@@ -34,6 +35,7 @@ extension DiscussComponent {
     }
     
     struct MainView: View {
+        var safeAreaPadding: CGFloat
         @Binding var showMembers: Bool
         var messages: [DiscussMessage]
         @Binding var message: String
@@ -41,8 +43,15 @@ extension DiscussComponent {
         
         var body: some View {
             HStack {
-                VStack(alignment: .leading) {
-                    Channel(messages: messages,
+                VStack(alignment: .leading, spacing: 0) {
+                    
+                    ChannelBrowser(channels: ["general"])
+                        .frame(height: 42 + Brand.Padding.medium)
+                        .padding(.trailing, Brand.Padding.medium)
+                        .padding(.leading, Brand.Padding.medium)
+                    
+                    Channel(safeAreaPadding: safeAreaPadding,
+                            messages: messages,
                             showMembers: $showMembers,
                             message: $message,
                             onMessageSend: onMessageSend)
@@ -52,7 +61,44 @@ extension DiscussComponent {
         }
     }
     
+    struct ChannelBrowser: View {
+        var channels: [String]
+        
+        let rows = [
+            GridItem(.flexible()),
+        ]
+        
+        var body: some View {
+            VStack(alignment: .center) {
+                ScrollView {
+                    LazyHGrid.init(rows: rows, alignment: .center) {
+                        ForEach(channels, id: \.self) { channel in
+                            VStack(alignment: .center) {
+                                Spacer()
+                                ZStack {
+                                    GradientView(colors: [Color.black, Color.black.opacity(0.0)],
+                                                 cornerRadius: 6.0,
+                                                 direction: .topLeading).overlay(
+                                        
+                                        GraniteText("#"+channel,
+                                                    .subheadline,
+                                                    .bold)
+                                    )
+                                    .frame(width: 120, height: 36, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                    .shadow(color: Color.black, radius: 1, x: 0, y: 1)
+                                    
+                                }
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+            }.background(Brand.Colors.black)
+        }
+    }
+    
     struct Channel: View {
+        var safeAreaPadding: CGFloat
         var messages: [DiscussMessage]
         
         @Binding var showMembers: Bool
@@ -74,7 +120,8 @@ extension DiscussComponent {
                     
                     MessageBar(message: $message,
                                onMessageSend: onMessageSend)
-                               .frame(height: 57)
+                        .frame(height: 48)
+                        .keyboardObserving(offset: -safeAreaPadding)
                 }
                 
                 //ZStack....
@@ -203,9 +250,9 @@ extension DiscussComponent {
                               onCommit: onMessageSend)
                         .textFieldStyle(PlainTextFieldStyle())
                         .font(Fonts.live(.headline, .regular))
-                        .frame(height: 42)
+                        .frame(height: 36)
                         .padding(.top, Brand.Padding.small)
-                        .padding(.bottom, Brand.Padding.small)
+                        .padding(.bottom, Brand.Padding.medium)
                         .padding(.trailing, Brand.Padding.medium)
                         .padding(.leading, Brand.Padding.medium)
                         .background(Color.clear)

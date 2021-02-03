@@ -34,12 +34,13 @@ public struct MainComponent: GraniteComponent {
         switch command.center.authState {
         case .authenticated:
             if EnvironmentConfig.isIPhone {
-                VStack {
+                VStack(spacing: 0) {
                     environment
                         .share(.init(dep(\.routerDependency)))
                         .listen(to: command)
                     controls
                 }
+                .ignoresSafeArea(.keyboard, edges: .bottom)
             } else {
                 HStack {
                     controls

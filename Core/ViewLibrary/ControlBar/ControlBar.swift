@@ -30,6 +30,7 @@ public struct ControlBar: View {
                     minHeight: EnvironmentStyle.ControlBar.iPhone.minHeight,
                     maxHeight: EnvironmentStyle.ControlBar.iPhone.maxHeight,
                     alignment: .center)
+            .padding(.top, Brand.Padding.small)
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
         } else {
