@@ -29,6 +29,6 @@ public struct GraniteLoadingComponent: GraniteComponent {
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black)
+        .background(Brand.Colors.black)
     }
 }

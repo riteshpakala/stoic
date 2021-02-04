@@ -30,7 +30,34 @@ public struct LoginComponent: GraniteComponent {
                     case .experience:
                         experience
                     default:
-                        auth
+                        if state.stage != .none {
+                            GraniteText("< back", Brand.Colors.marble, .subheadline, .regular, .leading)
+                                .modifier(TapAndLongPressModifier.init(tapAction: {
+                                                                        
+                                    set(\.stage, value: .none)
+                                    set(\.success, value: false)
+                                    set(\.error, value: nil)
+                                    
+                                }))
+                                .padding(.top, Brand.Padding.medium)
+                                .padding(.bottom, Brand.Padding.medium)
+                        }
+                        
+                        if state.success {
+                            VStack {
+                                Spacer()
+                                if state.stage == .apply {
+                                    GraniteText("succesfully applied.",
+                                                Brand.Colors.marble,
+                                                .headline,
+                                                .bold,
+                                                .center)
+                                }
+                                Spacer()
+                            }
+                        } else {
+                            auth
+                        }
                     }
                 }
                 .frame(maxWidth: 300, maxHeight: .infinity)
@@ -87,15 +114,6 @@ public struct LoginComponent: GraniteComponent {
     
     var auth: some View {
         VStack(spacing: 0) {
-            GraniteText("< back", Brand.Colors.marble, .subheadline, .regular, .leading)
-                .modifier(TapAndLongPressModifier.init(tapAction: {
-                                                        
-                    set(\.stage, value: .none)
-                    set(\.error, value: nil)
-                    
-                }))
-                .padding(.top, Brand.Padding.medium)
-                .padding(.bottom, Brand.Padding.medium)
             
             HStack {
                 
@@ -112,7 +130,7 @@ public struct LoginComponent: GraniteComponent {
             if state.stage != .apply {
                 HStack {
                     
-                    TextField("password",
+                    SecureField("password",
                               text: _state.password)
                         .background(Color.clear)
                         .textFieldStyle(PlainTextFieldStyle())
@@ -210,6 +228,7 @@ public struct LoginComponent: GraniteComponent {
                                                         sendEvent(LoginEvents.Auth())
                                                     }))
             }
+            .padding(.top, Brand.Padding.medium)
         }
         .padding(.leading, Brand.Padding.medium)
         .padding(.trailing, Brand.Padding.medium)
