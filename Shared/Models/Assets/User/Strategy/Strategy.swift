@@ -27,6 +27,20 @@ public struct Strategy: Hashable, Identifiable {
     var date: Date
     var investmentData: Strategy.Investments
     
+    var endDate: Date {
+        var candidate = date.advanceDate(value: 12)
+        
+        for _ in 0..<12 {
+            if candidate.validTradingDay {
+                break
+            } else {
+                candidate = candidate.advanceDate(value: 1)
+            }
+        }
+        
+        return candidate
+    }
+    
     public init(_ quotes: [Quote],
                 _ name: String,
                 _ date: Date,

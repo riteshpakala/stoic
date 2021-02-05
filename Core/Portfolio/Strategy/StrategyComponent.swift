@@ -40,13 +40,31 @@ public struct StrategyComponent: GraniteComponent {
                 ForEach(command.center.strategies, id: \.self) { strategy in
                     VStack {
                     
-                        GraniteText(strategy.name,
-                                    Brand.Colors.white,
-                                    .title3,
-                                    .bold,
-                                    .trailing)
-                                    .padding(.bottom,
-                                             Brand.Padding.medium)
+                        HStack {
+                            GraniteText(strategy.name,
+                                        Brand.Colors.white,
+                                        .title2,
+                                        .bold,
+                                        .leading)
+                                        .padding(.bottom,
+                                                 Brand.Padding.medium)
+                            
+                            VStack {
+                                GraniteText("\(strategy.endDate.simple.asString)",
+                                            Brand.Colors.purple,
+                                            .headline,
+                                            .bold,
+                                            .trailing)
+                                
+                                GraniteText("ends in \(strategy.endDate.daysFrom(strategy.date)) days",
+                                            Brand.Colors.purple,
+                                            .subheadline,
+                                            .regular,
+                                            .trailing)
+                            }
+                            .padding(.bottom,
+                                     Brand.Padding.medium)
+                        }
                         
                         PaddingVertical(Brand.Padding.xSmall).padding(.bottom, Brand.Padding.medium)
                         

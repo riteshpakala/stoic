@@ -35,7 +35,7 @@ public class TonalState: GraniteState {
         var queue: OperationQueue = .init()
         queue.maxConcurrentOperationCount = modelThreads
         queue.name = "tonal.relay.predict.op"
-        queue.qualityOfService = .utility
+        queue.qualityOfService = .background
         return queue
     }()
 }

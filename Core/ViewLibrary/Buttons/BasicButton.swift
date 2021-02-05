@@ -28,7 +28,7 @@ struct BasicButton: View {
                                 .center)
                 )
                 .frame(width: 120, height: 36, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                .shadow(color: shadow, radius: 1, x: 0, y: 1)
+                .shadow(color: shadow, radius: 2, x: 1, y: 1)
                 
             }
         }

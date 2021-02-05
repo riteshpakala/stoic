@@ -20,9 +20,16 @@ public struct RouterComponent: GraniteComponent {
     }
     
     public var body: some View {
+        #if os(iOS)
         MainComponent()
             .share(.init(dep(\.routerDependency)))
             .statusBar(hidden: true)
             .colorScheme(.dark)
+        #else
+        
+        MainComponent()
+            .share(.init(dep(\.routerDependency)))
+            .colorScheme(.dark)
+        #endif
     }
 }

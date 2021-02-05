@@ -118,10 +118,17 @@ extension DiscussComponent {
                         .padding()
                     }
                     
+                    #if os(iOS)
                     MessageBar(message: $message,
                                onMessageSend: onMessageSend)
                         .frame(height: 48)
                         .keyboardObserving(offset: -safeAreaPadding)
+                    #else
+                    
+                    MessageBar(message: $message,
+                               onMessageSend: onMessageSend)
+                        .frame(height: 48)
+                    #endif
                 }
                 
                 //ZStack....

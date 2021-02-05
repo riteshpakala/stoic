@@ -100,7 +100,7 @@ extension Security {
         }
     }
     
-    public func addToPortfolio(username: String = "test",
+    public func addToPortfolio(username: String,
                                moc: NSManagedObjectContext,
                                _ added: @escaping ((Portfolio?) -> Void)) {
         moc.performAndWait {
@@ -148,7 +148,7 @@ extension Security {
         }
     }
     
-    public func addToFloor(username: String = "test",
+    public func addToFloor(username: String,
                            location: CGPoint,
                            moc: NSManagedObjectContext,
                            _ added: @escaping ((Portfolio?) -> Void)) {

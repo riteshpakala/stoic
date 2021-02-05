@@ -31,8 +31,9 @@ public class GraniteButtonState: GraniteState {
     
     public init(_ text: String,
                 textColor: Color = Brand.Colors.black,
-                colors: [Color] = [Brand.Colors.marbleV2.opacity(0.66), Brand.Colors.marble],
-                shadow: Color = Brand.Colors.black.opacity(0.57),
+                colors: [Color] = [Brand.Colors.marbleV2,
+                                   Brand.Colors.marble.opacity(0.42)],
+                shadow: Color = Color.black.opacity(0.57),
                 padding: EdgeInsets = .init(Brand.Padding.large,
                                             Brand.Padding.medium,
                                             Brand.Padding.large,

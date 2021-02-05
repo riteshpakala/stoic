@@ -75,6 +75,7 @@ public struct GraniteButtonComponent: GraniteComponent {
                         ).frame(width: 24, height: 24)
                         .padding(.top, Brand.Padding.medium)
                         .padding(.leading, Brand.Padding.small)
+                        .padding(.trailing, Brand.Padding.small)
                         .padding(.bottom, Brand.Padding.medium)
                         .shadow(color: Color.black.opacity(0.75), radius: 1, x: 1, y: 1)
                 }

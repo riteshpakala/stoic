@@ -20,6 +20,10 @@ struct HoldingSelectedExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        guard let user = connection.retrieve(\EnvironmentDependency.user) else {
+            return
+        }
+        
         guard let security = event.asset.asSecurity else { return }
         switch state.context {
         case .portfolio:
@@ -37,7 +41,9 @@ struct HoldingSelectedExpedition: GraniteExpedition {
             } else {
                 location = .zero
             }
-            security.addToFloor(location: location, moc: coreDataInstance) { portfolio in
+            security.addToFloor(username: user.info.username,
+                                location: location,
+                                moc: coreDataInstance) { portfolio in
                 if let portfolio = portfolio {
                     connection.update(\EnvironmentDependency.user.portfolio,
                                       value: portfolio)
