@@ -52,17 +52,61 @@ public struct SecurityDetailComponent: GraniteComponent {
                         
                     }
                 }
+                
                 GraphComponent(state: .init(state.quote))
                     .frame(maxWidth: .infinity,
                            maxHeight: .infinity)
+                
+                
+                VStack {
+                    GraniteText(command.center.security.symbol,
+                                .title3,
+                                .bold,
+                                .trailing,
+                                style: .init(gradient: [Color.black.opacity(0.75),
+                                                        Color.black.opacity(0.36)]))
+                    Spacer()
+                }
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium)
+                .padding(.top, Brand.Padding.medium)
+                
+                VStack {
+                    Spacer()
+                    GraniteText(command.center.security.title,
+                                .title3,
+                                .bold,
+                                .leading,
+                                style: .init(gradient: [Color.black.opacity(0.75),
+                                                        Color.black.opacity(0.36)]))
+                }
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium)
+                .padding(.bottom, Brand.Padding.medium)
                 
             }
             
             if case .expanded = state.kind,
                command.center.loaded {
                 PaddingVertical()
-                IndicatorDetailComponent(state: .init(state.quote))
-                    .share(.init(dep(\.hosted)))
+                ZStack {
+                    IndicatorDetailComponent(state: .init(state.quote))
+                        .share(.init(dep(\.hosted)))
+                    
+                    VStack {
+                        Spacer()
+                        GraniteText("stochastics",
+                                    .headline,
+                                    .bold,
+                                    .leading,
+                                    style: .init(gradient: [Color.black.opacity(0.75),
+                                                            Color.black.opacity(0.36)]))
+                    }
+                    .padding(.leading, Brand.Padding.medium)
+                    .padding(.trailing, Brand.Padding.medium)
+                    .padding(.bottom, Brand.Padding.medium)
+                }.frame(maxWidth: .infinity,
+                        maxHeight: 120)
             }
             
             if state.model != nil {

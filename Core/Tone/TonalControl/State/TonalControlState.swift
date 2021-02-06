@@ -68,7 +68,9 @@ public class TonalControlCenter: GraniteCenter<TonalControlState> {
                                        graphType: .price(.init(priceSize: .headline,
                                                                dateSize: .footnote,
                                                                dateValuePadding: Brand.Padding.large,
-                                                               pricePadding: 0)))
+                                                               pricePadding: 0,
+                                                               widthOfPriceViewIndicators: 165,
+                                                               widthOfPriceView: 174)))
         
         let predictionLowPlotData: SomePlotData.PlotData = [(Date.nextTradingDay, state.currentPrediction.low.asCGFloat)]
         
@@ -81,7 +83,9 @@ public class TonalControlCenter: GraniteCenter<TonalControlState> {
                                       graphType: .price(.init(priceSize: .headline,
                                                               dateSize: .footnote,
                                                               dateValuePadding: Brand.Padding.large,
-                                                              pricePadding: 0)))
+                                                              pricePadding: 0,
+                                                              widthOfPriceViewIndicators: 165,
+                                                              widthOfPriceView: 174)))
         
         return (high, low)
     }

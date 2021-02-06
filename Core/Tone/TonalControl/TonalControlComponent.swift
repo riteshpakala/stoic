@@ -41,14 +41,14 @@ public struct TonalControlComponent: GraniteComponent {
                     }
                 }
                 .frame(height: 144)
-                .padding(.leading, Brand.Padding.medium)
+                .padding(.leading, Brand.Padding.small)
             }
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
             
         }
         
-        HStack {
+        ZStack {
             GraniteText(state.tuner.sentiment.asString,
                         Brand.Colors.yellow,
                         .subheadline,
@@ -56,7 +56,7 @@ public struct TonalControlComponent: GraniteComponent {
                         .leading)
                         .shadow(color: .black,
                                 radius: 3, x: 1, y: 2)
-            GraniteText("[ prediction placeholder ]",
+            GraniteText("// placeholder",
                         Brand.Colors.purple,
                         .subheadline,
                         .regular,

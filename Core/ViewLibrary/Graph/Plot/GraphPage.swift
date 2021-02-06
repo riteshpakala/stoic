@@ -14,9 +14,11 @@ public struct GraphStyle {
     let dateSize: Fonts.FontSize
     let dateValuePadding: CGFloat
     let pricePadding: CGFloat
+    let widthOfPriceViewIndicators: CGFloat
+    let widthOfPriceView: CGFloat
     
     public static var basic: GraphStyle {
-        .init(priceSize: .title2, dateSize: .headline, dateValuePadding: Brand.Padding.large, pricePadding: Brand.Padding.small)
+        .init(priceSize: .title2, dateSize: .headline, dateValuePadding: Brand.Padding.large, pricePadding: Brand.Padding.small, widthOfPriceViewIndicators: 183, widthOfPriceView: 220)
     }
 }
 
@@ -34,39 +36,12 @@ public enum GraphType {
         }
     }
     
-    var priceSize: Fonts.FontSize {
+    var style: GraphStyle {
         switch self {
         case .price(let style):
-            return style.priceSize
+            return style
         default:
-            return .title2
-        }
-    }
-    
-    var pricePadding: CGFloat {
-        switch self {
-        case .price(let style):
-            return style.pricePadding
-        default:
-            return Brand.Padding.small
-        }
-    }
-    
-    var dateSize: Fonts.FontSize {
-        switch self {
-        case .price(let style):
-            return style.dateSize
-        default:
-            return .headline
-        }
-    }
-    
-    var dateValuePadding: CGFloat {
-        switch self {
-        case .price(let style):
-            return style.dateValuePadding
-        default:
-            return Brand.Padding.large
+            return .basic
         }
     }
     
@@ -196,7 +171,7 @@ struct GraphPage: View {
                 VStack(alignment: .leading, spacing: 0) {
                     stockHeaderAndPrice(plotData: plotData+predictionPlotData)
                 }.padding(.top, Brand.Padding.small)
-                .padding(.leading, someModel.graphType.pricePadding)
+                .padding(.leading, someModel.graphType.style.pricePadding)
             }
             
             VStack {
@@ -265,14 +240,14 @@ extension GraphPage {
                 VStack(spacing: Brand.Padding.xSmall) {
                     if !someModel.graphType.showStockHeader {
                         buildMovingPriceView(input: value,
-                                             fixedWidth: 183,
+                                             fixedWidth: someModel.graphType.style.widthOfPriceViewIndicators,
                                              alignment: .center)
                             .font(Fonts.live(.title3, .bold))
                     }
                     Text("\(dateString)")
                         .foregroundColor(Brand.Colors.marble)
-                        .font(Fonts.live(someModel.graphType.dateSize, .bold))
-                }.padding(.top, someModel.graphType.dateValuePadding)
+                        .font(Fonts.live(someModel.graphType.style.dateSize, .bold))
+                }.padding(.top, someModel.graphType.style.dateValuePadding)
         })
             //.frame(height: 280)
 //            .foregroundColor(themeColor)
@@ -298,12 +273,12 @@ extension GraphPage {
             Text(someModel.graphType.symbol)
                 .background(with: Brand.Colors.black.opacity(0.75))
                     .frame(width: someModel.graphType.titleTextSpacing)
-            buildMovingPriceView(input: plotData[currentIndex].price)
-        }.font(Fonts.live(someModel.graphType.priceSize, .bold))
+            buildMovingPriceView(input: plotData[currentIndex].price, fixedWidth: someModel.graphType.style.widthOfPriceView)
+        }.font(Fonts.live(someModel.graphType.style.priceSize, .bold))
     }
     
     func buildMovingPriceView(input: CGFloat,
-                              fixedWidth: CGFloat = 240,
+                              fixedWidth: CGFloat,
                               alignment: Alignment = .leading) -> some View {
         return MovingNumbersView(
             number: Double(input),
