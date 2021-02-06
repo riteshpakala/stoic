@@ -41,7 +41,7 @@ extension NetworkService {
         let decoder = JSONDecoder()
         return session
                 .dataTaskPublisher(for: request)
-            .compactMap { (data, response) -> NetworkServiceModels.User.Item? in
+                .compactMap { (data, response) -> NetworkServiceModels.User.Item? in
                     let users: NetworkServiceModels.User?
                     do {
                         

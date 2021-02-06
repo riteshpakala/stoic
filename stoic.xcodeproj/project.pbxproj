@@ -563,6 +563,8 @@
 		7169534B25A7AD3400641BCE /* GraniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169534925A7AD3400641BCE /* GraniteScrollView.swift */; };
 		7169535125A7ADB400641BCE /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169535025A7ADB400641BCE /* Run.swift */; };
 		7169535225A7ADB400641BCE /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169535025A7ADB400641BCE /* Run.swift */; };
+		71727D2825CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */; };
+		71727D2925CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */; };
 		7179ACA625AC9472003FD06F /* TonalCompileEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AC9F25AC9472003FD06F /* TonalCompileEvents.swift */; };
 		7179ACA725AC9472003FD06F /* TonalCompileEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AC9F25AC9472003FD06F /* TonalCompileEvents.swift */; };
 		7179ACA825AC9472003FD06F /* TonalCompileState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179ACA125AC9472003FD06F /* TonalCompileState.swift */; };
@@ -1220,6 +1222,7 @@
 		7156AC1025A86E9B00648941 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7169534925A7AD3400641BCE /* GraniteScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteScrollView.swift; sourceTree = "<group>"; };
 		7169535025A7ADB400641BCE /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
+		71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Apply.Code.swift; sourceTree = "<group>"; };
 		7179AC9F25AC9472003FD06F /* TonalCompileEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCompileEvents.swift; sourceTree = "<group>"; };
 		7179ACA125AC9472003FD06F /* TonalCompileState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCompileState.swift; sourceTree = "<group>"; };
 		7179ACA325AC9472003FD06F /* PredictTheToneExpedition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictTheToneExpedition.swift; sourceTree = "<group>"; };
@@ -3269,6 +3272,7 @@
 			isa = PBXGroup;
 			children = (
 				71CC7DB725C8F2AE00610B8A /* NetworkService.Apply.swift */,
+				71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */,
 				719CDB6525C91F6A008322F0 /* NetworkService.Signup.swift */,
 				719CDB6C25C92240008322F0 /* NetworkService.Login.swift */,
 			);
@@ -4323,6 +4327,7 @@
 				710889872591B29800795EDF /* Promise+Timeout.swift in Sources */,
 				7125BDD925A131D200F22717 /* RangeTrackConfiguration.swift in Sources */,
 				71DC58D125988F56004935CF /* Lemmatizer.swift in Sources */,
+				71727D2825CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */,
 				712562A225B286DE00C8AC68 /* GetStrategyExpedition.swift in Sources */,
 				710889812591B29800795EDF /* PromiseBlocks.swift in Sources */,
 				7183D56F25A428AE00FB91A9 /* GraphPageBusinessLogic.swift in Sources */,
@@ -4562,6 +4567,7 @@
 				71EE7076258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
 				710889AC2591B29800795EDF /* Fetchable.swift in Sources */,
 				7125BE1525A1328A00F22717 /* VerticalValueTrack.swift in Sources */,
+				71727D2925CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */,
 				7136A2BE25CA3CF500B923C1 /* DiscussClientHandlingExpedition.swift in Sources */,
 				7125BDDC25A131D200F22717 /* HorizontalRangeTrack.swift in Sources */,
 				711484B5259E0C7B00464684 /* WindowEvents.swift in Sources */,

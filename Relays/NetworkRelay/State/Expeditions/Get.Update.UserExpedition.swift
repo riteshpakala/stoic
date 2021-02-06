@@ -41,8 +41,8 @@ struct UpdateUserExpedition: GraniteExpedition {
         publisher = state
             .service
             .signup(uid: event.id, email: event.email, username: event.username)
-            .replaceError(with: false)
-            .map { NetworkEvents.User.Update.Result(success: $0) }
+            .replaceError(with: .init(success: false, user: nil, id: ""))
+            .map { $0 }
             .eraseToAnyPublisher()
     }
 }
@@ -62,6 +62,25 @@ struct ApplyUserExpedition: GraniteExpedition {
             .apply(email: event.email)
             .replaceError(with: false)
             .map { NetworkEvents.User.Apply.Result(success: $0) }
+            .eraseToAnyPublisher()
+    }
+}
+
+struct ApplyCodeExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = NetworkEvents.User.Apply.Code
+    typealias ExpeditionState = NetworkState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        publisher = state
+            .service
+            .isValidCode(event.code)
+            .replaceError(with: [])
+            .map { NetworkEvents.User.Apply.Code.Result(data: $0) }
             .eraseToAnyPublisher()
     }
 }

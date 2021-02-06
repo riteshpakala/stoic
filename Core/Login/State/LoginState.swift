@@ -49,6 +49,8 @@ public class LoginCenter: GraniteCenter<LoginState> {
             AuthExpedition.Discovery(),
             AuthResultExpedition.Discovery(),
             ApplyResultExpedition.Discovery(),
+            AppleCodeResultExpedition.Discovery(),
+            SignupResultExpedition.Discovery()
         ]
     }
 }

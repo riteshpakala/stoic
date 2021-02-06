@@ -84,15 +84,7 @@ struct AuthExpedition: GraniteExpedition {
         case .apply:
             connection.request(NetworkEvents.User.Apply.init(email: state.email))
         case .signup:
-            FirebaseAuth.Auth.auth().createUser(withEmail: state.email,
-                                   password: state.password) { authResult, error in
-              
-                if let user = authResult?.user, error == nil {
-                    connection.request(NetworkEvents.User.Update.init(id: user.uid, email: state.email, username: state.username, intent: .signup))
-                } else {
-                    GraniteLogger.info("Firebase Auth Error: \n\(String(describing: error?.localizedDescription))", .expedition, focus: true)
-                }
-            }
+            connection.request(NetworkEvents.User.Apply.Code.init(code: state.code))
         case .login:
             FirebaseAuth.Auth.auth().signIn(withEmail: state.email,
                                             password: state.password) { authResult, error in
@@ -107,6 +99,35 @@ struct AuthExpedition: GraniteExpedition {
             break
         }
         
+    }
+}
+
+struct AppleCodeResultExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = NetworkEvents.User.Apply.Code.Result
+    typealias ExpeditionState = LoginState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        if let result = event.data.first {
+            if result.isValid {
+                FirebaseAuth.Auth.auth().createUser(withEmail: state.email,
+                                       password: state.password) { authResult, error in
+
+                    if let user = authResult?.user, error == nil {
+                        connection.request(NetworkEvents.User.Update.init(id: user.uid, email: state.email, username: state.username, intent: .signup))
+                    } else {
+                        GraniteLogger.info("Firebase Auth Error: \n\(String(describing: error?.localizedDescription))", .expedition, focus: true)
+                    }
+                }
+            } else {
+                state.error = "// this code has been used"
+            }
+        } else {
+            state.error = "// this code is invalid"
+        }
     }
 }
 
@@ -130,6 +151,34 @@ struct AuthResultExpedition: GraniteExpedition {
             connection.update(\RouterDependency.router.env.user.info, value: info)
             
             state.success = true
+        }
+    }
+}
+
+struct SignupResultExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = NetworkEvents.User.Update.Result
+    typealias ExpeditionState = LoginState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        if let user = event.user {
+            let info: UserInfo = .init(username: user.username,
+                                               email: user.email,
+                                               created: (Int(user.created) ?? 0).asDouble.date(),
+                                               uid: event.id)
+            
+            coreDataInstance.getPortfolio(username: info.username) { portfolio in
+                if let portfolio = portfolio {
+                    connection.update(\RouterDependency.router.env.user.portfolio,
+                                      value: portfolio, .here)
+                }
+                connection.update(\RouterDependency.router.env.authState, value: .authenticated, .home)
+                connection.update(\RouterDependency.router.env.user.info, value: info, .home)
+                connection.request(DiscussRelayEvents.Client.Set.init(user: info))
+            }
         }
     }
 }

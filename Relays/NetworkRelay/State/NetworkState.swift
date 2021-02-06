@@ -19,7 +19,8 @@ public class NetworkCenter: GraniteCenter<NetworkState> {
         [
             GetExpedition.Discovery(),
             UpdateUserExpedition.Discovery(),
-            ApplyUserExpedition.Discovery()
+            ApplyUserExpedition.Discovery(),
+            ApplyCodeExpedition.Discovery()
         ]
     }
 }

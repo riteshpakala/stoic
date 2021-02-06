@@ -10,7 +10,7 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-struct NetworkEvents {
+public struct NetworkEvents {
     public struct User {
         public struct Get: GraniteEvent {
             let id: String
@@ -43,6 +43,8 @@ struct NetworkEvents {
             
             public struct Result: GraniteEvent {
                 let success: Bool
+                let user: NetworkServiceModels.User.Item?
+                let id: String
                 
                 public var beam: GraniteBeamType {
                     .rebound
@@ -61,6 +63,22 @@ struct NetworkEvents {
                 
                 public var beam: GraniteBeamType {
                     .rebound
+                }
+            }
+            
+            public struct Code: GraniteEvent {
+                let code: String
+                
+                public var beam: GraniteBeamType {
+                    .rebound
+                }
+                
+                public struct Result: GraniteEvent {
+                    let data: [NetworkServiceModels.Apply.Code.Meta]
+                    
+                    public var beam: GraniteBeamType {
+                        .rebound
+                    }
                 }
             }
         }

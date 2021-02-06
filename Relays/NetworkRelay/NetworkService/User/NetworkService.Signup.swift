@@ -10,16 +10,17 @@ import GraniteUI
 import Combine
 
 extension NetworkService {
-    public func signup(uid: String, email: String, username: String) -> AnyPublisher<Bool, URLError> {
+    public func signup(uid: String, email: String, username: String) -> AnyPublisher<NetworkEvents.User.Update.Result, URLError> {
         guard
             let urlComponents = URLComponents(string: "https://fchrx7pnd7.execute-api.us-west-1.amazonaws.com/default/stoic-user")
             else { preconditionFailure("Can't create url components...") }
         
+        let createdDate: Int = Date.today.timeIntervalSince1970.asInt
         let json: [String: Any] = ["TableName": "stoic-user",
                                    "Item": [ "userid": uid,
                                              "email": email,
                                              "username": username,
-                                             "created": "\(Date.today.timeIntervalSince1970.asInt)",
+                                             "created": "\(createdDate)",
                                              "lastOnline": "\(Date.today.timeIntervalSince1970.asInt)",
                                              "rank": "0",]]
 
@@ -46,8 +47,8 @@ extension NetworkService {
         
         return session
                 .dataTaskPublisher(for: request)
-                .compactMap { (data, response) -> Bool in
-                    return true
+                .compactMap { (data, response) -> NetworkEvents.User.Update.Result in
+                    return .init(success: true, user: .init(created: "\(createdDate)", email: email, username: username), id: uid)
                 }.eraseToAnyPublisher()
     }
 }
