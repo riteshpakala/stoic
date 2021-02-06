@@ -12,4 +12,7 @@ import Combine
 
 struct TonalControlEvents {
     public struct Generate: GraniteEvent {}
+    public struct Prediction: GraniteEvent {
+        let data: TonalPrediction
+    }
 }

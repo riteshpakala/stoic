@@ -45,12 +45,13 @@ struct CompileTheToneExpedition: GraniteExpedition {
                 connection.update(\EnvironmentDependency.tone.compile.state, value: .compiled)
                 connection.update(\EnvironmentDependency.tone.compile.model, value: model)
                 
-                let tonalModel: TonalModel = .init(model,
+                var tonalModel: TonalModel = .init(model,
                                                    daysTrained: daysTrained,
                                                    tuners: tuners,
                                                    quote: quote,
                                                    range: range)
                 
+                tonalModel.precompute()
                 connection.update(\EnvironmentDependency.tone.compile.tonalModel, value: tonalModel)
             }
         }

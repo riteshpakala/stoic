@@ -18,9 +18,10 @@ public struct TonalCreateComponent: GraniteComponent {
     
     public var body: some View {
         switch state.stage {
-        case .find:
+        case .find(let payload):
             TonalFindComponent()
                 .listen(to: command, .stop)
+                .payload(payload)
                 .share(.init(dep(\.hosted)))
         case .set:
             TonalSetComponent(state: inject(\.envDependency,

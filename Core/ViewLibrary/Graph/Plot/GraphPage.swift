@@ -9,9 +9,20 @@
 import Combine
 import SwiftUI
 
+public struct GraphStyle {
+    let priceSize: Fonts.FontSize
+    let dateSize: Fonts.FontSize
+    let dateValuePadding: CGFloat
+    let pricePadding: CGFloat
+    
+    public static var basic: GraphStyle {
+        .init(priceSize: .title2, dateSize: .headline, dateValuePadding: Brand.Padding.large, pricePadding: Brand.Padding.small)
+    }
+}
+
 public enum GraphType {
     case indicator(Color)
-    case price
+    case price(GraphStyle)
     case unassigned
     
     var symbol: String {
@@ -20,6 +31,42 @@ public enum GraphType {
             return ""
         default:
             return "$"
+        }
+    }
+    
+    var priceSize: Fonts.FontSize {
+        switch self {
+        case .price(let style):
+            return style.priceSize
+        default:
+            return .title2
+        }
+    }
+    
+    var pricePadding: CGFloat {
+        switch self {
+        case .price(let style):
+            return style.pricePadding
+        default:
+            return Brand.Padding.small
+        }
+    }
+    
+    var dateSize: Fonts.FontSize {
+        switch self {
+        case .price(let style):
+            return style.dateSize
+        default:
+            return .headline
+        }
+    }
+    
+    var dateValuePadding: CGFloat {
+        switch self {
+        case .price(let style):
+            return style.dateValuePadding
+        default:
+            return Brand.Padding.large
         }
     }
     
@@ -49,13 +96,18 @@ class SomePlotData: ObservableObject {
     @Published var trueDays: Int?
     @Published var graphType: GraphType = .unassigned
     @Published var timeDisplayMode: TimeDisplayOption = .daily
+    var segments: [Int] = []
     
     public init(_ data: PlotData,
+                predictionPlotData: PlotData = [],
+                segments: [Int] = [],
                 interval: TimeDisplayOption,
                 graphType: GraphType = .unassigned) {
         self.plotData = data
+        self.predictionPlotData = predictionPlotData
         self.timeDisplayMode = interval
         self.graphType = graphType
+        self.segments = segments
     }
     
     public init() {
@@ -103,16 +155,19 @@ struct GraphPage: View {
     }
     
     var plotDataSegments: [Int]? {
-        switch timeDisplayMode {
-        case .hourly:
-            return GraphPageViewModel.segmentByHours(values: currentPlotData)
-        case .daily:
-            return GraphPageViewModel.segmentByDays(values: currentPlotData)
-        case .monthly:
-            return GraphPageViewModel.segmentByMonths(values: currentPlotData)
-        case .weekly:
-            return GraphPageViewModel.segmentByYears(values: currentPlotData)
-        }
+        someModel.segments.isEmpty ? currentPlotData.enumerated().map { $0.offset } : someModel.segments
+        
+// OLD method, but the plot Data now comes in sorted as expected
+//        switch timeDisplayMode {
+//        case .hourly:
+//            return GraphPageViewModel.segmentByHours(values: currentPlotData)
+//        case .daily:
+//            return GraphPageViewModel.segmentByDays(values: currentPlotData)
+//        case .monthly:
+//            return GraphPageViewModel.segmentByMonths(values: currentPlotData)
+//        case .weekly:
+//            return GraphPageViewModel.segmentByYears(values: currentPlotData)
+//        }
     }
     
     var plotRelativeWidth: CGFloat {
@@ -140,7 +195,8 @@ struct GraphPage: View {
             if someModel.graphType.showStockHeader {
                 VStack(alignment: .leading, spacing: 0) {
                     stockHeaderAndPrice(plotData: plotData+predictionPlotData)
-                }.padding(.top, Brand.Padding.small).padding(.leading, Brand.Padding.small)
+                }.padding(.top, Brand.Padding.small)
+                .padding(.leading, someModel.graphType.pricePadding)
             }
             
             VStack {
@@ -215,8 +271,8 @@ extension GraphPage {
                     }
                     Text("\(dateString)")
                         .foregroundColor(Brand.Colors.marble)
-                        .font(Fonts.live(.headline, .bold))
-                }
+                        .font(Fonts.live(someModel.graphType.dateSize, .bold))
+                }.padding(.top, someModel.graphType.dateValuePadding)
         })
             //.frame(height: 280)
 //            .foregroundColor(themeColor)
@@ -243,7 +299,7 @@ extension GraphPage {
                 .background(with: Brand.Colors.black.opacity(0.75))
                     .frame(width: someModel.graphType.titleTextSpacing)
             buildMovingPriceView(input: plotData[currentIndex].price)
-        }.font(Fonts.live(.title2, .bold))
+        }.font(Fonts.live(someModel.graphType.priceSize, .bold))
     }
     
     func buildMovingPriceView(input: CGFloat,

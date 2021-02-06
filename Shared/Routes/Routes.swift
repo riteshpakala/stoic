@@ -13,7 +13,7 @@ public indirect enum Route: ID, Equatable {
     case home
     case intro
     case floor
-    case models
+    case models(GranitePayload)
     case discuss
     case settings
     case securityDetail(GranitePayload)
@@ -23,6 +23,15 @@ public indirect enum Route: ID, Equatable {
     var isDebug: Bool {
         switch self{
         case .debug:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var isModels: Bool {
+        switch self {
+        case .models:
             return true
         default:
             return false

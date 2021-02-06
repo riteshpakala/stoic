@@ -22,7 +22,7 @@ public struct EnvironmentConfig {
         case home
         case intro
         case floor
-        case modelCreate
+        case modelCreate(GranitePayload)
         case portfolio
         case modelBrowser
         case securityDetail(GranitePayload)
@@ -41,9 +41,9 @@ public struct EnvironmentConfig {
                             [ .unassigned, .unassigned , .winners(.stock) ],
                             [ .portfolio(.preview), .tonalBrowser(.empty), .losers(.stock)]
                         ])
-            case .modelCreate:
+            case .modelCreate(let payload):
                 return .init(windows: [
-                            [.tonalCreate(.find), .unassigned, .unassigned],
+                            [.tonalCreate(.find(payload)), .unassigned, .unassigned],
                             [.unassigned, .unassigned, .unassigned],
                             [.tonalCreate(.set), .tonalCreate(.tune), .tonalCreate(.compile)]
                         ])
@@ -82,8 +82,8 @@ extension EnvironmentConfig {
         switch item {
         case .floor:
             return .init(kind: .floor)
-        case .models:
-            return .init(kind: .modelCreate)
+        case .models(let payload):
+            return .init(kind: .modelCreate(payload))
         case .securityDetail(let payload):
             return .init(kind: .securityDetail(payload))
         case .intro:

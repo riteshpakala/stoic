@@ -30,7 +30,11 @@ class Detail {
     }
     
     var tonalStage: TonalDetailStage = .none 
-    var model: TonalModel?
+    var model: TonalModel? {
+        didSet {
+            model?.precompute()
+        }
+    }
     var slider: SentimentSliderState = .init(.neutral, date: .today)
     
     var indicators: TonalServiceModels.Indicators?

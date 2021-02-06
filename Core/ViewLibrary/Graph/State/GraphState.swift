@@ -27,7 +27,7 @@ public class GraphCenter: GraniteCenter<GraphState> {
         if let quote = state.quote {
             let data: GraphPageViewModel.PlotData = quote.daily().sortAsc.map { ($0.date, $0.lastValue.asCGFloat) }
             
-            return .init(data, interval: timeDisplay)
+            return .init(data, interval: timeDisplay, graphType: .price(.basic))
         } else {
             return .init()
         }

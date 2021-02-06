@@ -47,6 +47,8 @@ struct TonalControlSentimentExpedition: GraniteExpedition {
         }
         
         state.currentPrediction = model.predictAll(state.tuner.sentiment)
+        
+//        connection.request(TonalControlEvents.Prediction.init(data: state.currentPrediction), .contact)
 //        state.currentPredictionPlotData = [(Date.today, state.currentPrediction.asCGFloat)]
     }
 }

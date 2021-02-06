@@ -43,6 +43,9 @@ struct FindTheToneExpedition: GraniteExpedition {
                let quote = find.quote {
                 
                 connection.request(TonalFindEvents.Parse(quote, days: state.days))
+            } else if let security = state.payload?.object as? Security, stage == .none {
+                //TonalCreate booted with a security payload
+                connection.update(\EnvironmentDependency.tone.find.security, value: security)
             }
             
             return

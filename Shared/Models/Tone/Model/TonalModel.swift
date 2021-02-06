@@ -37,6 +37,8 @@ public struct TonalModel: Asset {
     private(set) var quote: Quote
     let modelID: String
     var latestSecurity: Security
+    var last12Securities: [Security]
+    var last12SecuritiesDailies: [Security] = []
     
     public init(_ david: TonalModels,
                 daysTrained: Int,
@@ -52,7 +54,15 @@ public struct TonalModel: Asset {
         self.range = range
         self.date = date
         self.modelID = id
-        self.latestSecurity = quote.securities.sortDesc.first ?? EmptySecurity()
+        let sorted = quote.securities.sortDesc
+        self.last12Securities = Array(sorted.prefix(12))
+        self.latestSecurity = last12Securities.first ?? EmptySecurity.init()
+    }
+    
+    public mutating func precompute() {
+        self.quote.precompute()
+        let sorted = quote.precomputedDailies?.sortDesc ?? self.last12Securities
+        self.last12SecuritiesDailies = Array(sorted.prefix(12))
     }
     
     public mutating func predictAll(_ sentiment: SentimentOutput = .neutral) -> TonalPrediction {

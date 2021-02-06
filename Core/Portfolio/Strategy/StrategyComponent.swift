@@ -56,7 +56,7 @@ public struct StrategyComponent: GraniteComponent {
                                             .bold,
                                             .trailing)
                                 
-                                GraniteText("ends in \(strategy.endDate.daysFrom(strategy.date)) days",
+                                GraniteText("ends in \(strategy.endDate.daysFrom(Date.today)) days",
                                             Brand.Colors.purple,
                                             .subheadline,
                                             .regular,

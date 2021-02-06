@@ -10,9 +10,9 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-public enum TonalCreateStage {
+public enum TonalCreateStage: ID, Hashable, Equatable {
     case none
-    case find
+    case find(GranitePayload)
     case set
     case tune
     case compile

@@ -160,7 +160,7 @@ public struct ControlBar: View {
                 }
                 
                 GraniteButtonComponent(state: .init(.image("model_icon"),
-                                                    selected: currentRoute == .models && isIPhone,
+                                                    selected: currentRoute.isModels && isIPhone,
                                                     size: .init(iconSize)))
                                         .padding(.trailing,
                                                  isIPhone ? 0.0 : Brand.Padding.medium)
@@ -171,14 +171,14 @@ public struct ControlBar: View {
                                 .regular,
                                 .leading,
                                 style: .v2Selection,
-                                selected: currentRoute == .models)
+                                selected: currentRoute.isModels)
                 } else {
                     Spacer()
                 }
             }
             .modifier(TapAndLongPressModifier(tapAction: {
                 GraniteHaptic.light.invoke()
-                onRoute(.models)
+                onRoute(.models(.init(object: nil)))
                 
             }))
             

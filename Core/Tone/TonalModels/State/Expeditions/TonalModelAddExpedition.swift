@@ -22,7 +22,6 @@ struct TonalModelAddExpedition: GraniteExpedition {
         guard let router = connection.retrieve(\EnvironmentDependency.router) else {
             return
         }
-        
-        router?.request(.models)
+        router?.request(.models(.init(object: state.security)))
     }
 }

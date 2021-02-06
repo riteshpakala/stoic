@@ -29,7 +29,7 @@ public struct GraphLinePlotConfig {
     public var glowingIndicatorWidth: CGFloat = 8.0
     
     /// Line width of the line plot. Default is `1.5`
-    public var plotLineWidth: CGFloat = 2.4
+    public var plotLineWidth: CGFloat = 2.7
     
     /// If all values are equal, we will draw a straight line. Default is 0.5 which draws a line at the middle.
     public var relativeYForStraightLine: CGFloat = 0.5
