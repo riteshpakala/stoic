@@ -213,6 +213,8 @@
 		7122297825A673A80032FC11 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7122297225A6739A0032FC11 /* Routes.swift */; };
 		7122298225A680030032FC11 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7122298125A680030032FC11 /* Router.swift */; };
 		7122298725A6803C0032FC11 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7122298125A680030032FC11 /* Router.swift */; };
+		7122EA3625D5AC170029A342 /* BroadcastsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7122EA3525D5AC170029A342 /* BroadcastsExpedition.swift */; };
+		7122EA3725D5AC170029A342 /* BroadcastsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7122EA3525D5AC170029A342 /* BroadcastsExpedition.swift */; };
 		7123787325B268B40097E6DD /* StrategyObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123787125B268B40097E6DD /* StrategyObject+CoreDataProperties.swift */; };
 		7123787425B268B40097E6DD /* StrategyObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123787125B268B40097E6DD /* StrategyObject+CoreDataProperties.swift */; };
 		7123787525B268B40097E6DD /* StrategyObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7123787225B268B40097E6DD /* StrategyObject+CoreDataClass.swift */; };
@@ -573,6 +575,10 @@
 		7169535225A7ADB400641BCE /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169535025A7ADB400641BCE /* Run.swift */; };
 		71727D2825CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */; };
 		71727D2925CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */; };
+		71783CC825D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71783CC625D5C84B00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift */; };
+		71783CC925D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71783CC625D5C84B00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift */; };
+		71783CCA25D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71783CC725D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift */; };
+		71783CCB25D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71783CC725D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift */; };
 		7179ACA625AC9472003FD06F /* TonalCompileEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AC9F25AC9472003FD06F /* TonalCompileEvents.swift */; };
 		7179ACA725AC9472003FD06F /* TonalCompileEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179AC9F25AC9472003FD06F /* TonalCompileEvents.swift */; };
 		7179ACA825AC9472003FD06F /* TonalCompileState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179ACA125AC9472003FD06F /* TonalCompileState.swift */; };
@@ -1054,6 +1060,7 @@
 		7121F6D72596F9B000BBD459 /* QuoteObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuoteObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7122297225A6739A0032FC11 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		7122298125A680030032FC11 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		7122EA3525D5AC170029A342 /* BroadcastsExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastsExpedition.swift; sourceTree = "<group>"; };
 		7123787125B268B40097E6DD /* StrategyObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StrategyObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7123787225B268B40097E6DD /* StrategyObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StrategyObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7123B1022593C29F00E5BD69 /* version0001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = version0001.xcdatamodel; sourceTree = "<group>"; };
@@ -1235,6 +1242,8 @@
 		7169534925A7AD3400641BCE /* GraniteScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteScrollView.swift; sourceTree = "<group>"; };
 		7169535025A7ADB400641BCE /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Apply.Code.swift; sourceTree = "<group>"; };
+		71783CC625D5C84B00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BaseNetworkResponseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		71783CC725D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BaseNetworkResponseObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7179AC9F25AC9472003FD06F /* TonalCompileEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCompileEvents.swift; sourceTree = "<group>"; };
 		7179ACA125AC9472003FD06F /* TonalCompileState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCompileState.swift; sourceTree = "<group>"; };
 		7179ACA325AC9472003FD06F /* PredictTheToneExpedition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictTheToneExpedition.swift; sourceTree = "<group>"; };
@@ -1771,6 +1780,7 @@
 				71D3C2C625AA87430033350B /* Broadcasts */,
 				711484FE259E15A700464684 /* BootExpedition.swift */,
 				7126ED7B25B77B6800195901 /* VariablesExpedition.swift */,
+				7122EA3525D5AC170029A342 /* BroadcastsExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -1919,6 +1929,8 @@
 		7123B11C2593C6CB00E5BD69 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				71783CC725D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift */,
+				71783CC625D5C84B00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift */,
 				71B42FDA25A87B0B00A23F4D /* PortfolioObject+CoreDataClass.swift */,
 				71B42FD925A87B0A00A23F4D /* PortfolioObject+CoreDataProperties.swift */,
 				7134426F25A37A2B002C0315 /* SocialDataObject+CoreDataClass.swift */,
@@ -3989,8 +4001,10 @@
 				7125BE0A25A1328A00F22717 /* VerticalValueSliderStyle.swift in Sources */,
 				71C08E8425AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */,
 				71DE186525A6D94D00911AD1 /* GraphEvents.swift in Sources */,
+				7122EA3625D5AC170029A342 /* BroadcastsExpedition.swift in Sources */,
 				710889A12591B29800795EDF /* Promise+nil.swift in Sources */,
 				71D63F6E2592BFC40085D718 /* AssetSectionState.swift in Sources */,
+				71783CCA25D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift in Sources */,
 				71C08E8A25AF53AF00765894 /* SearchResponseObject+CoreDataProperties.swift in Sources */,
 				711D546025A6913B0074D334 /* Geometry.swift in Sources */,
 				7125BD8625A1316500F22717 /* LinearValueMath.swift in Sources */,
@@ -4357,6 +4371,7 @@
 				71F1EC5625A0F47A00D32C52 /* SearchEvents.swift in Sources */,
 				7136A27425C9E90F00B923C1 /* DiscussRelayState.swift in Sources */,
 				7179AD3825ACE5E5003FD06F /* SpecialComponent.swift in Sources */,
+				71783CC825D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift in Sources */,
 				7199B29D25C1210100B1A2B3 /* GraniteLoadingEvents.swift in Sources */,
 				71AE032025931AD1007A4AE0 /* FindTheToneExpedition.swift in Sources */,
 				713F27BF25B275AE00C3871E /* Strategy.CoreData.swift in Sources */,
@@ -4436,6 +4451,7 @@
 				71434325259076EB001F26A4 /* Int+Convenience.swift in Sources */,
 				7108899A2591B29800795EDF /* Promise+Delay.swift in Sources */,
 				71C08EC025AFA59300765894 /* CryptoService.Quotes.swift in Sources */,
+				7122EA3725D5AC170029A342 /* BroadcastsExpedition.swift in Sources */,
 				7108897E2591B29800795EDF /* Promise+Unwrap.swift in Sources */,
 				719AD86B25B10746001350FA /* GraniteEmptyComponent.swift in Sources */,
 				7143EEE025994FC300B1DCB5 /* TonalService.Sounds.swift in Sources */,
@@ -4601,6 +4617,7 @@
 				711D545625A684E80074D334 /* RouterComponent.swift in Sources */,
 				71332A3225A79DD0005A72A9 /* AssetSearchComponent.swift in Sources */,
 				71434360259076F4001F26A4 /* Color+Convenience.swift in Sources */,
+				71783CC925D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift in Sources */,
 				7121F6DB2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */,
 				710889AE2591B29800795EDF /* Cryptowatcher+Assets.swift in Sources */,
 				71143E0A25A4C78300379E4B /* TonalService.Indicators.Volatility.swift in Sources */,
@@ -4828,6 +4845,7 @@
 				71ED8F5625C5E513000F6366 /* DiscussEvents.swift in Sources */,
 				71D63F6D2592BFC40085D718 /* AssetSectionComponent.swift in Sources */,
 				71E8389125BF70D2002D8AAD /* TonalControlComponent.swift in Sources */,
+				71783CCB25D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift in Sources */,
 				712415F325A35F2200169B9C /* Search.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

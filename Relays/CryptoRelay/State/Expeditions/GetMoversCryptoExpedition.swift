@@ -23,45 +23,79 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
             return
         }
         
+        var needsUpdate: Bool = true
+        coreDataInstance.networkResponse(forRoute: state.cryptoWatch.getAggregateSummariesRoute) { result in
+            if let data = result?.data {
+                if let movers = data.decodeNetwork(type: CryptoServiceModels.GetAggregateSummaries.self) {
+                
+                    connection.request(generateEvent(movers, max: state.max, exchange: state.exchange, currency: state.currency))
+                    
+                    needsUpdate = false
+                }
+            }
+        }
+        
+        guard needsUpdate else { return }
+        
+        GraniteLogger.info("fetching new movers\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
         
         let decoder = JSONDecoder()
         publisher = pub
             .replaceError(with: .init(data: nil, type: CryptoServiceModels.GetAggregateSummaries.self))
             .map { (response) in
-                guard let decoded = try? decoder.decode(response.type,
-                                                        from: response.data ?? Data()) else {
+                guard let rawData = response.data else {
                     return CryptoEvents.GlobalCategoryResult.init([], [], [])
                 }
                 
-                let markets = decoded.result.filter {
-                    $0.key.contains(state.currency) &&
-                    !$0.key.contains("\(state.currency)t") &&
-                    !$0.key.contains("\(state.currency)c") &&
-                     $0.key.contains(state.exchange)
-                }
-                    
-                let summariesSortedByVolume = markets.sorted(by: { $0.value.volume > $1.value.volume })
-                let summariesSortedByChange = markets.sorted(by: { $0.value.price.change.percentage > $1.value.price.change.percentage })
-
-                let summariesVolume = summariesSortedByVolume.prefix(state.max)
-                let summariesGainers = summariesSortedByChange.prefix(state.max)
-                let summariesLosers = summariesSortedByChange.suffix(state.max).sorted(by: { $0.value.price.change.percentage < $1.value.price.change.percentage })
-                
-                let topVolume: [CryptoCurrency] = summariesVolume.map {
-                    cryptoCurrency(state.exchange, state.currency, $0.key, $0.value)
+                guard let decoded = try? decoder.decode(response.type,
+                                                        from: rawData) else {
+                    return CryptoEvents.GlobalCategoryResult.init([], [], [])
                 }
                 
-                let gainers: [CryptoCurrency] = summariesGainers.map {
-                    cryptoCurrency(state.exchange, state.currency, $0.key, $0.value)
-                }
+                coreDataInstance.save(route: state.cryptoWatch.getAggregateSummariesRoute,
+                                      data: rawData,
+                                      responseType: .movers)
                 
-                let losers: [CryptoCurrency] = summariesLosers.map {
-                    cryptoCurrency(state.exchange, state.currency, $0.key, $0.value)
-                }
                 
-                return CryptoEvents.GlobalCategoryResult.init(topVolume, gainers, losers)
+                
+                return generateEvent(decoded, max: state.max, exchange: state.exchange, currency: state.currency)
             }.eraseToAnyPublisher()
         
+    }
+    
+    func generateEvent(_ decoded: CryptoServiceModels.GetAggregateSummaries,
+                       max: Int,
+                       exchange: String,
+                       currency: String) ->  CryptoEvents.GlobalCategoryResult {
+        let markets = decoded.result.filter {
+            $0.key.contains(currency) &&
+            !$0.key.contains("\(currency)t") &&
+            !$0.key.contains("\(currency)c") &&
+             $0.key.contains(exchange)
+        }
+            
+        let summariesSortedByVolume = markets.sorted(by: { $0.value.volume > $1.value.volume })
+        let summariesSortedByChange = markets.sorted(by: { $0.value.price.change.percentage > $1.value.price.change.percentage })
+
+        let summariesVolume = summariesSortedByVolume.prefix(max)
+        let summariesGainers = summariesSortedByChange.prefix(max)
+        let summariesLosers = summariesSortedByChange.suffix(max).sorted(by: { $0.value.price.change.percentage < $1.value.price.change.percentage })
+        
+        let topVolume: [CryptoCurrency] = summariesVolume.map {
+            cryptoCurrency(exchange, currency, $0.key, $0.value)
+        }
+        
+        let gainers: [CryptoCurrency] = summariesGainers.map {
+            cryptoCurrency(exchange, currency, $0.key, $0.value)
+        }
+        
+        let losers: [CryptoCurrency] = summariesLosers.map {
+            cryptoCurrency(exchange, currency, $0.key, $0.value)
+        }
+        
+        let result = CryptoEvents.GlobalCategoryResult.init(topVolume, gainers, losers)
+        
+        return result
     }
     
     func cryptoCurrency(

@@ -12,5 +12,6 @@ import Combine
 
 struct EnvironmentEvents {
     struct Boot: GraniteEvent {}
+    struct Broadcasts: GraniteEvent {}
     struct Variables: GraniteEvent {}
 }

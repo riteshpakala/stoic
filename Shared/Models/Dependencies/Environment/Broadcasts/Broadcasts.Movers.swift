@@ -9,7 +9,14 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-public class BroadcastsMovers{
+public class BroadcastsMovers {
+    public enum Category: String {
+        case topVolume
+        case winners
+        case losers
+        case unassigned
+    }
+    
     public struct Categories {
         let topVolume: [Security]
         let winners: [Security]

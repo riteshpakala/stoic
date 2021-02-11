@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import GraniteUI
 
 public class NetworkService {
     internal let session: URLSession
@@ -20,4 +21,23 @@ public class NetworkService {
 
 public struct NetworkServiceModels {
     
+}
+
+public protocol NetworkResponseData: Codable {
+    var rawData: Data? { get set }
+}
+
+extension Data {
+    public func decodeNetwork<T: NetworkResponseData>(type: T.Type, decoder: JSONDecoder? = nil) -> T? {
+        let decoder = decoder ?? JSONDecoder()
+        let result: T?
+        do {
+            result = try decoder.decode(T.self, from: self)
+        } catch let error {
+            result = nil
+            GraniteLogger.error("failed decoding:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
+        }
+        
+        return result
+    }
 }

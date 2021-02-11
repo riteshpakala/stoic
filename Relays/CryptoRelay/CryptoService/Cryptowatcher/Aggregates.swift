@@ -22,8 +22,9 @@ extension CryptoServiceModels {
      
      Example `result`: `["bitfinex:bfxbtc": [...]]`
      */
-    struct GetAggregateSummaries: Codable {
+    struct GetAggregateSummaries: NetworkResponseData {
         let result: Dictionary<String, MarketSummary>
         let allowance: Allowance
+        var rawData: Data?
     }
 }

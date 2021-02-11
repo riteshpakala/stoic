@@ -10,9 +10,9 @@ import Combine
 import GraniteUI
 
 extension StockService {
-    public func getMovers(count: Int = 12) -> AnyPublisher<[StockServiceModels.Movers], URLError> {
+    public func getMovers(count: Int = 12) -> AnyPublisher<NetworkResponseData?, URLError> {
         guard
-            var urlComponents = URLComponents(string: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers")
+            var urlComponents = URLComponents(string: movers)
             else { preconditionFailure("Can't create url components...") }
         
         let regionQuery: URLQueryItem = .init(name: "region", value: "US")
@@ -44,26 +44,22 @@ extension StockService {
         let decoder = JSONDecoder()
         return session
                 .dataTaskPublisher(for: request)
-                .compactMap { (data, response) -> [StockServiceModels.Movers]? in
+                .compactMap { (data, response) -> NetworkResponseData? in
                     
-                    let movers: StockServiceModels.Movers?
-                    do {
-                        
-                        movers = try decoder.decode(StockServiceModels.Movers.self, from: data)
-                    } catch let error {
-                        movers = nil
-                        GraniteLogger.error("failed fetching stock movers:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
-                    }
+                    var movers: StockServiceModels.Movers? = data.decodeNetwork(type: StockServiceModels.Movers.self, decoder: decoder)
                     
-                    return movers != nil ? [movers!] : nil
+                    movers?.rawData = data
+                    
+                    return movers
                 
                 }.eraseToAnyPublisher()
     }
 }
 
 extension StockServiceModels {
-    public struct Movers: Codable {
+    public struct Movers: NetworkResponseData {
         let finance: Finance
+        public var rawData: Data?
     }
     
     public struct Finance: Codable {

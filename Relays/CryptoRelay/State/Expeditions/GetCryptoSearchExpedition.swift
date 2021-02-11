@@ -32,7 +32,6 @@ struct GetCryptoSearchExpedition: GraniteExpedition {
     }
 }
 
-
 struct GetCryptoSearchBackendExpedition: GraniteExpedition {
     typealias ExpeditionEvent = CryptoEvents.SearchBackend
     typealias ExpeditionState = CryptoState

@@ -40,6 +40,10 @@ public class StockService {
                             year: String) -> String {
         return "https://api.tradier.com/v1/markets/calendar?month=\(month)&year=\(year)"
     }
+    
+    var movers: String {
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers"
+    }
 }
 
 public struct StockServiceModels {

@@ -44,6 +44,7 @@ extension SearchResponse {
         srObject.symbolName = self.symbolName
         srObject.responseType = self.responseType.rawValue
         srObject.id = self.id
+        srObject.date = .today
     }
 }
 

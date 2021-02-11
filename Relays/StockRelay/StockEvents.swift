@@ -46,7 +46,7 @@ public struct StockEvents {
     }
     
     public struct MoversData: GraniteEvent {
-        let data: [StockServiceModels.Movers]
+        let data: NetworkResponseData?
     }
     
     public struct MoverStockQuotes: GraniteEvent {

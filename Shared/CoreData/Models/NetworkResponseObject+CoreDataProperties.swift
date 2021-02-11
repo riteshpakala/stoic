@@ -18,6 +18,8 @@ extension NetworkResponseObject {
 
     @NSManaged public var route: String
     @NSManaged public var responseType: String
+    @NSManaged public var data: Data?
+    @NSManaged public var date: Date
 
 }
 

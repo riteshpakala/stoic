@@ -226,6 +226,12 @@ extension Security {
     }
 }
 
+extension Array where Element == Security {
+    func recordedObjects(moc: NSManagedObjectContext) -> [SecurityObject] {
+        self.compactMap { $0.record(to: moc)?.0 }
+    }
+}
+
 extension Array where Element == SecurityObject {
     var asSecurities: [Security] {
         self.compactMap { $0.asSecurity }
