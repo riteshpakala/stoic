@@ -22,5 +22,9 @@ struct GetStrategyExpedition: GraniteExpedition {
         guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
             return
         }
+        
+        if let strategy = portfolio?.strategies.first {
+            strategy.generate()
+        }
     }
 }

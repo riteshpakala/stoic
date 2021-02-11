@@ -45,7 +45,7 @@ public struct SecurityDetailComponent: GraniteComponent {
                          .preview:
                         
                         GraniteText("loading",
-                                    command.center.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
+                                    command.center.security.statusColor,
                                     .subheadline,
                                     .regular,
                                     .center)

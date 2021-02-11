@@ -19,17 +19,20 @@ public struct Quote {
         precomputedDailies ?? securities.dailies
     }
     var precomputedDailies: [Security]? = nil
+    var models: [TonalModel]
     
     public init(ticker: String,
                 securityType: SecurityType,
                 exchangeName: String,
                 name: String,
-                securities: [Security]) {
+                securities: [Security],
+                models: [TonalModel] = []) {
         self.ticker = ticker
         self.securityType = securityType
         self.exchangeName = exchangeName
         self.name = name
         self.securities = securities
+        self.models = models
     }
     
     public mutating func precompute() {

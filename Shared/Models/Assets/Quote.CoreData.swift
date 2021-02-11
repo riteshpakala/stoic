@@ -44,11 +44,16 @@ extension Quote {
 
 extension QuoteObject {
     public var asQuote: Quote {
-        .init(ticker: self.ticker,
-              securityType: SecurityType(rawValue: self.securityType) ?? .unassigned,
-              exchangeName: self.exchangeName,
-              name: self.name,
-              securities: self.securities.compactMap { $0.asSecurity })
+        var quote: Quote = .init(ticker: self.ticker,
+                              securityType: SecurityType(rawValue: self.securityType) ?? .unassigned,
+                              exchangeName: self.exchangeName,
+                              name: self.name,
+                              securities: self.securities.compactMap { $0.asSecurity })
+        
+        let models = (self.tonalModel?.compactMap( { $0.asToneFromQuote(quote) }) ?? []).sorted(by: { $0.date.compare($1.date) == .orderedDescending })
+        
+        quote.models = models
+        return quote
     }
     
     public func contains(security: Security) -> Bool {

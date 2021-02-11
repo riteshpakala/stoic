@@ -11,7 +11,7 @@ import GraniteUI
 
 public struct Strategy: Hashable, Identifiable {
     public var id: ObjectIdentifier {
-        .init(investmentData)
+        .init(investments)
     }
     
     public static func == (lhs: Strategy, rhs: Strategy) -> Bool {
@@ -25,7 +25,7 @@ public struct Strategy: Hashable, Identifiable {
     var quotes: [Quote]
     var name: String
     var date: Date
-    var investmentData: Strategy.Investments
+    var investments: Strategy.Investments
     
     var endDate: Date {
         var candidate = date.advanceDate(value: 12)
@@ -48,56 +48,25 @@ public struct Strategy: Hashable, Identifiable {
         self.quotes = quotes
         self.name = name
         self.date = date
-        self.investmentData = investmentData
-    }
-    
-    public class Investments: Archiveable {
-        let assetID: String
-        let amount: Double
-        let date: Date
+        self.investments = investmentData
         
-        public init(assetID: String,
-                    amount: Double,
-                    date: Date = Date.today) {
-            self.assetID = assetID
-            self.amount = amount
-            self.date = date
-            super.init()
+        //Update investments
+        for quote in quotes {
+            if let index = investments.items.firstIndex(where: { $0.assetID == quote.latestSecurity.assetID }) {
+                
+                let item = investments.items[index]
+                
+                item.changes.removeAll(where: { $0.date.simple.asString == quote.latestSecurity.date.simple.asString })
+                
+                //Since items are already stored in descending order
+                //if there was a removal it should remove the first item.
+                item.changes.insert(.init(quote.latestSecurity.lastValue,
+                                           quote.latestSecurity.date), at: 0)
+                
+                
+                self.investments.items[index].changes = item.changes
+            }
         }
-        
-        enum CodingKeys: String, CodingKey {
-            case assetID
-            case amount
-            case date
-        }
-        
-        required public convenience init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            
-            let assetID: String = try container.decode(String.self, forKey: .assetID)
-            let amount: Double = try container.decode(Double.self, forKey: .amount)
-            let date: Date = try container.decode(Date.self, forKey: .date)
-            
-            self.init(assetID: assetID,
-                      amount: amount,
-                      date: date)
-        }
-        
-        public override func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            
-            try container.encode(assetID, forKey: .assetID)
-            try container.encode(amount, forKey: .amount)
-            try container.encode(date, forKey: .date)
-        }
-        
-        public static var empty: Strategy.Investments {
-            .init(assetID: "", amount: .zero)
-        }
-    }
-    
-    public static var empty: Strategy {
-        .init([], "", .today, .empty)
     }
 }
 

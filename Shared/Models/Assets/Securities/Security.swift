@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public enum SecurityType: String {
     case crypto
@@ -90,6 +91,10 @@ extension Security {
     
     public var sentimentDate: Date {
         self.date.advanced(by: -1)
+    }
+    
+    public var statusColor: Color {
+        isGainer ? Brand.Colors.green : Brand.Colors.red
     }
     
     public func isEqual(to security: Security) -> Bool {

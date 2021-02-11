@@ -220,6 +220,10 @@ extension Security {
             }
         }
     }
+    
+    public var asInvestmentItem: Strategy.Investments.Item {
+        .init(security: self)
+    }
 }
 
 extension Array where Element == SecurityObject {

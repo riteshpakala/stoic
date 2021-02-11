@@ -25,6 +25,10 @@ extension Double {
         String(format: "%.2f%", self*100)
     }
     
+    var statusPercentDisplay: String {
+        return String(format: "%.2f%\(self > 0.0 ? "^" : "")%", self*100)
+    }
+    
     var percentRounded: String {
         "\(Int(ceil(self*100)))"
     }

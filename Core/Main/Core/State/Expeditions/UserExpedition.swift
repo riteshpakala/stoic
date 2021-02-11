@@ -22,6 +22,7 @@ struct UserExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        
         if  let user = FirebaseAuth.Auth.auth().currentUser {
             if connection.retrieve(\RouterDependency.router.env.authState) == AuthState.none {
                 connection.request(NetworkEvents.User.Get.init(id: user.uid))

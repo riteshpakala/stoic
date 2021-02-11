@@ -68,7 +68,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                                 .trailing)
                     
                     GraniteText(state.asset.description1_sub,
-                                state.security.isGainer ? Brand.Colors.green : Brand.Colors.red,
+                                state.security.statusColor,
                                 .subheadline,
                                 .regular,
                                 .trailing)
@@ -86,7 +86,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                                         .regular)
                                 .frame(width: 60, height: 12, alignment: .bottom)
                             
-                            (state.security.isGainer ? Brand.Colors.green : Brand.Colors.red)
+                            (state.security.statusColor)
                                 .clipShape(Circle())
                                 .frame(width: 6, height: 6, alignment: .top)
                         }

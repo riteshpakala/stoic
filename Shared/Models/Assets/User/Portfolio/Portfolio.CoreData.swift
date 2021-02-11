@@ -67,14 +67,23 @@ extension Portfolio {
                     }
                 }
                 
+                let investments: Strategy.Investments = .init(items: securities.map { $0.asInvestmentItem })
+                
                 let strategyToModify: StrategyObject
                 if let strategy = object?.strategies?.first {
                     strategyToModify = strategy
+                    
+                    if let oldInvestments = strategy.investmentData?.investments {
+                        oldInvestments.items.append(contentsOf: investments.items)
+                        
+                        strategyToModify.investmentData = oldInvestments.archived
+                    }
                 } else {
                     let strategy = StrategyObject.init(context: moc)
                     strategyToModify = strategy
                     strategyToModify.date = Date.today
                     strategyToModify.name = Date.today.simple.asString
+                    strategyToModify.investmentData = investments.archived
                 }
                 strategyToModify.portfolio = object
                 for quote in quotes {

@@ -95,9 +95,9 @@ public struct PortfolioComponent: GraniteComponent {
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
             
-            //Strategy
+            //Sign out
             GraniteText("sign out",
-                        Brand.Colors.red,
+                        Brand.Colors.redBurn,
                         .subheadline,
                         .bold)
                 .padding(.top, Brand.Padding.medium)
