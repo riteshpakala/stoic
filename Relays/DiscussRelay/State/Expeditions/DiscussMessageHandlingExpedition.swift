@@ -23,9 +23,18 @@ struct DiscussSendExpedition: GraniteExpedition {
             connection.request(DiscussRelayEvents.Channel.Join.init(name: "general"))
             return
         }
-        GraniteLogger.info("Sent message: \(event.message)\n to #general", .relay)
         
-        state.channel?.send(event.message)
+        if let index = state.conversations.firstIndex(where: { $0.channel.name == state.channel?.name }) {
+            state.conversations[index].messages.append(event.message)
+        } else if let channel = state.channel {
+            let conversation: Conversation = .init(channel)
+            conversation.messages.append(event.message)
+            state.conversations.append(conversation)
+        }
+        
+        state.channel?.send(event.message.data.message)
+        
+        GraniteLogger.info("Sent message: \(event.message.data.message)\n conversations: \(state.conversations.count) // id:\(ObjectIdentifier.init(state.service))\nmessages:\(state.conversations.first?.messages.count ?? 0) to #\(event.message.data.channel)", .relay, focus: true)
     }
 }
 
@@ -43,7 +52,17 @@ struct DiscussReceiveExpedition: GraniteExpedition {
         
         switch event.payload.messageType {
         case .channel:
-            state.listener?.request(DiscussRelayEvents.Messages.Result.init(payload: event.payload))
+//            state.listener?.request(DiscussRelayEvents.Messages.Result.init(payload: event.payload))
+            
+            if let index = state.conversations.firstIndex(where: { $0.channel.name == event.payload.channel }) {
+                state.conversations[index].messages.append(.init(color: .white, data: event.payload))
+            } else if let channel = state.channel {
+                let conversation: Conversation = .init(channel)
+                conversation.messages.append(.init(color: .white, data: event.payload))
+                state.conversations.append(conversation)
+            }
+            
+            GraniteLogger.info("Received message: \(event.payload.message)\n conversations: \(state.conversations.count) // id:\(ObjectIdentifier.init(state.service))\nmessages:\(state.conversations.first?.messages.count ?? 0) to #\(event.payload.channel)", .relay, focus: true)
         default:
             break
         }

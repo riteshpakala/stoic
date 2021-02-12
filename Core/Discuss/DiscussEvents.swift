@@ -11,6 +11,10 @@ import SwiftUI
 import Combine
 
 struct DiscussEvents {
-    public struct Load: GraniteEvent {}
+    public struct Load: GraniteEvent {
+        public var behavior: GraniteEventBehavior {
+            .quite
+        }
+    }
     public struct Send: GraniteEvent {}
 }

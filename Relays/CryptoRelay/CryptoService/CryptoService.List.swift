@@ -19,6 +19,8 @@ extension CryptoService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
+        GraniteLogger.info("searching crypto:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay, focus: true)
+        
         let decoder = JSONDecoder()
         
         return session

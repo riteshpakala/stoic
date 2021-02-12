@@ -44,6 +44,7 @@ public struct ClockRelay: GraniteRelay {
             .sink(receiveValue: timeOutput)
             .store(in: &state.effectCancellables)
     }
+    public func clean() {}
     
     public func cancel() {
         

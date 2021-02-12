@@ -59,14 +59,15 @@ struct CryptoDetailResultExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
-            GraniteLogger.error("no portfolio found\nself:String(describing: self)", .expedition)
+            GraniteLogger.info("no portfolio found\nself:String(describing: self)", .expedition, focus: true)
             return
         }
         
         let crypto = event.data
-        
+        print("{TEST} saving \(event.data.count)")
         crypto.save(moc: coreDataInstance) { quote in
             if state.isExpanded {
+                print("{TEST} saving \(quote == nil)")
                 if quote != nil {
                     connection.update(\EnvironmentDependency.detail.quote, value: quote, .here)
                 } else {

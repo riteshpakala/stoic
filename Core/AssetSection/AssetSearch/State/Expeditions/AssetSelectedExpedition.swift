@@ -26,6 +26,7 @@ struct AssetSelectedExpedition: GraniteExpedition {
         switch state.context {
         case .tonalCreate:
             guard let security = event.asset.asSecurity else { return }
+            
             connection.update(\EnvironmentDependency.tone.find.security, value: security)
         case .portfolio:
             guard let security = event.asset.asSecurity else { return }
@@ -55,12 +56,10 @@ struct AssetSelectedExpedition: GraniteExpedition {
             }
         case .search:
             guard let security = event.asset.asSecurity else { return }
-            guard let router = connection.retrieve(\EnvironmentDependency.router) else {
-                return
-            }
+            guard let router = connection.router else { return }
             connection.update(\EnvironmentDependency.tonalModels.type,
                               value: .specified(security))
-            router?.request(.securityDetail(.init(object: security)))
+            router.request(Route.securityDetail(.init(object: security)))
         default:
             break
         }

@@ -73,7 +73,8 @@ extension CryptoFetchable {
         return URLSession.shared
             .dataTaskPublisher(for: url)
             .compactMap {
-                CryptoFetchResult<T>.init(data: $0.data, type: type)
+                print($0.response)
+                return CryptoFetchResult<T>.init(data: $0.data, type: type)
             }.eraseToAnyPublisher()
     }
     

@@ -21,5 +21,6 @@ struct BroadcastsExpedition: GraniteExpedition {
         
         connection.request(StockEvents.GetMovers(), .rebound)
         connection.request(CryptoEvents.GetMovers(), .rebound)
+        
     }
 }

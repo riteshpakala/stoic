@@ -18,7 +18,6 @@ public struct StockRelay: GraniteRelay {
         
     }
     
-    public func setup() {
-        
-    }
+    public func setup() {}
+    public func clean() {}
 }

@@ -23,6 +23,10 @@ struct DiscussRelayEvents {
                 public var beam: GraniteBeamType {
                     .rebound
                 }
+                
+                public var behavior: GraniteEventBehavior {
+                    .quite
+                }
             }
         }
         
@@ -70,10 +74,14 @@ struct DiscussRelayEvents {
         }
         
         public struct Send: GraniteEvent {
-            let message: String
+            let message: DiscussMessage
             
             public var beam: GraniteBeamType {
                 .broadcast
+            }
+            
+            public var behavior: GraniteEventBehavior {
+                .quite
             }
         }
         
@@ -108,6 +116,10 @@ struct DiscussRelayEvents {
             
             public var beam: GraniteBeamType {
                 .broadcast
+            }
+            
+            public var behavior: GraniteEventBehavior {
+                .quite
             }
         }
     }

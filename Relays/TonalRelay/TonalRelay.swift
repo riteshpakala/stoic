@@ -17,4 +17,5 @@ public struct TonalRelay: GraniteRelay {
     public init() {}
     
     public func setup() {}
+    public func clean() {}
 }

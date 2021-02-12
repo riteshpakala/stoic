@@ -19,9 +19,10 @@ public class EnvironmentState: GraniteState {
     //
     var localFrame: CGRect? = nil
     
-    public init(_ route: Route?) {
-        self.route = route ?? .none
-        switch route {
+    public init(_ route: GraniteRoute?) {
+        let newRoute = route?.convert(to: Route.self) ?? .none
+        self.route = newRoute
+        switch newRoute {
         case .debug(let debugRoute):
             self.config = EnvironmentConfig.route(debugRoute)
         default:
@@ -71,12 +72,12 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     }
     
     //Dependencies
-    lazy var routerDependency: RouterDependency = {
-        self.hosted.fetch
-    }()
+    var routerDependency: RouterDependency {
+        hosted.fetch.add(self)
+    }
     
     lazy var envDependency: EnvironmentDependency = {
-        routerDependency.router.env.bind(self)
+        routerDependency.environment//.bind(self)
     }()
     //
     

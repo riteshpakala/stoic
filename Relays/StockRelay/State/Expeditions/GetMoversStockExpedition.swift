@@ -24,7 +24,7 @@ struct GetMoversStockExpedition: GraniteExpedition {
             if let data = result?.data {
                 let movers: StockServiceModels.Movers? = data.decodeNetwork(type: StockServiceModels.Movers.self)
                 
-                connection.request(StockEvents.MoversData(data: movers))
+                connection.request(StockEvents.MoversData(data: movers, cache: false))
                 
                 needsUpdate = false
             }
@@ -35,7 +35,7 @@ struct GetMoversStockExpedition: GraniteExpedition {
                 .service
                 .getMovers()
                 .replaceError(with: nil)
-                .map { StockEvents.MoversData(data: $0) }
+                .map { StockEvents.MoversData(data: $0, cache: true) }
                 .eraseToAnyPublisher()
 
             GraniteLogger.info("fetching new movers\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
@@ -55,7 +55,7 @@ struct MoversDataExpedition: GraniteExpedition {
         
         guard let data = event.data as? StockServiceModels.Movers else { return }
         
-        if let raw = data.rawData {
+        if event.cache, let raw = data.rawData {
             coreDataInstance.save(route: state.service.movers,
                                   data: raw,
                                   responseType: .movers)

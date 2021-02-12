@@ -11,6 +11,10 @@ import SwiftUI
 import Combine
 
 struct MainEvents {
-    struct User: GraniteEvent {}
+    struct User: GraniteEvent {
+        public var behavior: GraniteEventBehavior {
+            .quite
+        }
+    }
     struct Logout: GraniteEvent {}
 }

@@ -26,7 +26,7 @@ public class MainCenter: GraniteCenter<MainState> {
     let discussRelay: DiscussRelay = .init()
     
     var routerDependency: RouterDependency {
-        return (dependency.hosted as? RouterDependency ?? .init(identifier: "none"))
+        hosted.fetch.add(self)
     }
     
     public override var expeditions: [GraniteBaseExpedition] {
@@ -45,6 +45,6 @@ public class MainCenter: GraniteCenter<MainState> {
     }
     
     var authState: AuthState {
-        routerDependency.router.env.authState
+        routerDependency.authState
     }
 }

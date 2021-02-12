@@ -45,7 +45,7 @@ extension DiscussServiceModels {
         
         private var buffer = [String]()
         private var session: URLSession
-        private var task: URLSessionStreamTask!
+        public let task: URLSessionStreamTask
         private var channels = [DiscussServiceModels.IRCChannel]()
         
         public required init(hostname: String, port: Int, user: IRCUser, session: URLSession) {

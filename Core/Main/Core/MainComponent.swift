@@ -23,12 +23,11 @@ public struct MainComponent: GraniteComponent {
     
     var controls: ControlBar {
         ControlBar(isIPhone: EnvironmentConfig.isIPhone,
-                   currentRoute: command.center.routerDependency.router.route,
+                   currentRoute: command.center.routerDependency.router.route.convert(to: Route.self) ?? .home,
                    onRoute: { route in
             command.center.routerDependency.router.request(route)
         })
     }
-    
     
     public var body: some View {
         switch command.center.authState {

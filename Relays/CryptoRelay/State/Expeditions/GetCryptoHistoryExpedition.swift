@@ -36,11 +36,11 @@ struct GetCryptoHistoryExpedition: GraniteExpedition {
         publisher = pub
             .replaceError(with: .init(data: nil, type: CryptoServiceModels.GetMarketOHLC.self))
             .map { (response) in
+                
                 guard let decoded = try? decoder.decode(response.type,
                                                         from: response.data ?? Data()) else {
                     return CryptoEvents.History.init(data: [], interval: event.interval)
                 }
-                 
                 
                 var coins: [CryptoCurrency] = []
                 for key in decoded.result.keys {

@@ -32,7 +32,7 @@ extension StockService {
             timeoutInterval: 10.0)
         
         let headers = [
-            "x-rapidapi-key": "0c0e4882d8mshff3f1b457562c64p12c681jsn48b2eeb37946",
+            "x-rapidapi-key": "2a224e70a9msh9e0e2e3a2a20673p19f962jsn59435ee9b515",
             "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
         ]
         

@@ -47,6 +47,7 @@ public struct StockEvents {
     
     public struct MoversData: GraniteEvent {
         let data: NetworkResponseData?
+        let cache: Bool
     }
     
     public struct MoverStockQuotes: GraniteEvent {

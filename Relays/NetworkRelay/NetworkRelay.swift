@@ -15,4 +15,5 @@ public struct NetworkRelay: GraniteRelay {
     public var command: GraniteService<NetworkCenter, NetworkState> = .init()
     public init() {}
     public func setup() {}
+    public func clean() {}
 }

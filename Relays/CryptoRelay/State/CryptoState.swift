@@ -12,7 +12,7 @@ import Combine
 
 public class CryptoState: GraniteState {
     var currency: String = "usd"
-    var exchange: String = "coinbase-pro"
+    var exchange: String = "kraken"
     var max: Int = 12
     
     var cryptoWatch: Cryptowatcher = .init()

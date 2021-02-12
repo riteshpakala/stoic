@@ -19,7 +19,7 @@ struct MoversStockExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let movers = connection.retrieve(\RouterDependency.router.env.broadcasts.movers) else {
+        guard let movers = connection.retrieve(\RouterDependency.environment.broadcasts.movers) else {
             return
         }
         
@@ -37,11 +37,10 @@ struct MoversCryptoExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
-        guard let movers = connection.retrieve(\RouterDependency.router.env.broadcasts.movers) else {
+        guard let movers = connection.retrieve(\RouterDependency.environment.broadcasts.movers) else {
             return
         }
         
         movers.updateCrypto(categories: .init(event.topVolume, event.gainers, event.losers))
-
     }
 }

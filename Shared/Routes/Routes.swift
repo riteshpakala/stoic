@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-public indirect enum Route: ID, Equatable {
+public indirect enum Route: ID, GraniteRoute, Equatable {
     case home
     case intro
     case floor
@@ -36,6 +36,14 @@ public indirect enum Route: ID, Equatable {
         default:
             return false
         }
+    }
+    
+    public var host: GraniteAdAstra.Type? {
+        MainCenter.route
+    }
+    
+    public var home: GraniteAdAstra.Type? {
+        EnvironmentCenter.route
     }
 }
 

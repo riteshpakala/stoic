@@ -21,16 +21,16 @@ struct TonalModelTappedExpedition: GraniteExpedition {
         
         guard let model = event.asset.asModel else { return }
         let security = model.latestSecurity
-        guard let router = connection.retrieve(\EnvironmentDependency.router) else {
+        guard let router = connection.router else {
             return
         }
         
-        switch router?.route {
+        switch router.route.convert(to: Route.self) {
         case .securityDetail:
             connection.update(\EnvironmentDependency.detail.model, value: model)
         default:
             connection.update(\EnvironmentDependency.tonalModels.type, value: .specified(security))
-            router?.request(.securityDetail(.init(object: security)))
+            router.request(Route.securityDetail(.init(object: security)))
         }
     }
 }

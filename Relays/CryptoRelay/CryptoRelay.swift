@@ -29,4 +29,5 @@ public struct CryptoRelay: GraniteRelay {
 //        }
         
     }
+    public func clean() {}
 }

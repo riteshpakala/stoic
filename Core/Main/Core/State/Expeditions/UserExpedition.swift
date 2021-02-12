@@ -24,15 +24,14 @@ struct UserExpedition: GraniteExpedition {
         
         
         if  let user = FirebaseAuth.Auth.auth().currentUser {
-            if connection.retrieve(\RouterDependency.router.env.authState) == AuthState.none {
+            if connection.retrieve(\RouterDependency.authState) == AuthState.none {
                 connection.request(NetworkEvents.User.Get.init(id: user.uid))
-            } else if let discuss = connection.retrieve(\RouterDependency.router.env.discuss),
+            } else if let discuss = connection.retrieve(\RouterDependency.environment.discuss),
                       let server = discuss.server {
-                
                 connection.request(DiscussRelayEvents.Client.Reconnect.init(server: server, channel: discuss.channel))
             }
         } else {
-            connection.update(\RouterDependency.router.env.authState, value: .notAuthenticated, .here)
+            connection.update(\RouterDependency.authState, value: .notAuthenticated, .here)
         }
     }
 }
@@ -48,8 +47,8 @@ struct LogoutExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         do {
             try FirebaseAuth.Auth.auth().signOut()
-            connection.retrieve(\RouterDependency.router)?.flush()
-            connection.update(\RouterDependency.router.env.authState, value: .notAuthenticated, .here)
+            connection.router?.clean()
+            connection.update(\RouterDependency.authState, value: .notAuthenticated, .here)
         } catch let error {
             GraniteLogger.info("Error logging out \(String(describing: error))", .expedition, focus: true)
         }
@@ -66,7 +65,9 @@ struct DiscussSetResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        connection.update(\RouterDependency.router.env.discuss.server, value: event.server, .here)
+        connection.update(\RouterDependency.environment.discuss.server, value: event.server, .quiet)
+        
+        GraniteLogger.info("set discuss", .expedition, focus: true)
     }
 }
 
@@ -88,11 +89,13 @@ struct LoginResultExpedition: GraniteExpedition {
             
             coreDataInstance.getPortfolio(username: info.username) { portfolio in
                 if let portfolio = portfolio {
-                    connection.update(\RouterDependency.router.env.user.portfolio,
+                    connection.update(\RouterDependency.environment.user.portfolio,
                                       value: portfolio, .here)
                 }
-                connection.update(\RouterDependency.router.env.authState, value: .authenticated, .here)
-                connection.update(\RouterDependency.router.env.user.info, value: info, .here)
+                
+                GraniteLogger.info("set user", .expedition, focus: true)
+                connection.update(\RouterDependency.authState, value: .authenticated, .here)
+                connection.update(\RouterDependency.environment.user.info, value: info, .here)
                 connection.request(DiscussRelayEvents.Client.Set.init(user: info))
             }
         }

@@ -17,4 +17,7 @@ public struct DiscussRelay: GraniteRelay {
     public init() {}
     
     public func setup() {}
+    public func clean() {
+        GraniteLogger.info("clean relay", .event, focus: true)
+    }
 }

@@ -10,8 +10,6 @@ import GraniteUI
 import SwiftUI
 
 class EnvironmentDependency: DependencyManager {
-    var authState: AuthState = .none
-    
     var home: Home = .init()
     
     var detail: Detail = .init()
@@ -37,8 +35,6 @@ class EnvironmentDependency: DependencyManager {
     var broadcasts: Broadcasts = .init()
     
     var envSettings: EnvironmentStyle.Settings = .init()
-    
-    weak var router: Router? = nil
 }
 
 extension DependencyManager {

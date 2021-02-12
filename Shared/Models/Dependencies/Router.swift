@@ -10,34 +10,51 @@ import GraniteUI
 import SwiftUI
 
 class RouterDependency: DependencyManager {
-    var router: Router = .init()
+    lazy var router: Router = {
+        _router as? Router ?? .init()
+    }()
     
-    public override init(identifier: String,
-                         adAstra: GraniteAdAstra? = nil) {
-        super.init(identifier: identifier, adAstra: adAstra)
-        
-        router.root = adAstra
-    }
+    lazy var environment: EnvironmentDependency = {
+        router.dependencies.get(EnvironmentDependency.self) ?? .init()
+    }()
+    
+    var authState: AuthState = .none
 }
 
-public class Router {
-    var route: Route = .home//.debug(.models)
+public class Router: GraniteRouter {
+    public var route: GraniteRoute = Route.home//.debug(.models)
     
-    var root: GraniteAdAstra? = nil
-    var env: EnvironmentDependency = .init(identifier: "envDependency")
+    public var children: [GraniteAdAstra] = []
+    public lazy var dependencies: [DependencyManager] = [
+        EnvironmentDependency.init(self)
+    ]
     
-    public init() {
-        self.env.router = self
+    required public init() {
+//        self.env.router = self
     }
     
-    public func request(_ route: Route) {
-        GraniteLogger.info("requesting route \(route)\nself:\(String(describing: self))", .dependency)
-        self.route = route
-        self.root?.toTheStars(target: nil, .here)
-    }
+//    public func request(_ route: GraniteRoute) {
+//        GraniteLogger.info("requesting route \(route.target)\nself:\(String(describing: self))", .dependency, focus: true)
+//
+//        guard let newRoute = route.convert(to: Route.self) else { return }
+//
+//        self.route = newRoute
+//
+//
+//    }
+//
+//    public func request(_ route: Route) {
+//        self.route = route
+//
+//        if let child = children.first(where:  { type(of: $0) == route.target }) {
+//
+//            child.land()
+//            GraniteLogger.info("requesting route 2 \(route.target)\nself:\(String(describing: self))", .dependency, focus: true)
+//        }
+//    }
     
-    public func flush() {
-        env = .init(identifier: "envDependency")
+    public func clean() {
+//        _env = .init(identifier: "envDependency")
     }
 }
 

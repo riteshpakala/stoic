@@ -31,7 +31,7 @@ public class DiscussCenter: GraniteCenter<DiscussState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(DiscussEvents.Load(), .dependant)
+//            .onAppear(DiscussEvents.Load(), .dependant)
         ]
     }
     

@@ -29,6 +29,8 @@ struct DiscussClientHandlingExpedition: GraniteExpedition {
         
         guard let server = state.service.server else { return }
         connection.request(DiscussRelayEvents.Client.Set.Result.init(server: server))
+        
+        GraniteLogger.info("client was set, sending server back", .relay, focus: true)
     }
 }
 
@@ -44,6 +46,8 @@ struct DiscussClientReconnectExpedition: GraniteExpedition {
         
         state.service.server = event.server
         connection.request(DiscussRelayEvents.Channel.Join.init(name: event.channel))
+        
+        GraniteLogger.info("reconnecting to \(event.channel)", .relay, focus: true)
     }
 }
 
@@ -57,6 +61,8 @@ struct DiscussClientRegisteredExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         connection.request(DiscussRelayEvents.Channel.Join.init(name: "general"))
+        
+        GraniteLogger.info("client registered", .relay, focus: true)
     }
 }
 
@@ -71,6 +77,8 @@ struct DiscussClientListenerExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         state.listener = event.listener
+        
+        GraniteLogger.info("listener added", .relay, focus: true)
     }
 }
 
@@ -85,5 +93,7 @@ struct DiscussChannelJoinExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         state.channel = state.service.server?.join(event.name)
+        
+        GraniteLogger.info("Join channel: \(event.name)", .relay, focus: true)
     }
 }

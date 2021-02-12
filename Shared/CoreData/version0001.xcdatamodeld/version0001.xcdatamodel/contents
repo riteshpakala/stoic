@@ -26,10 +26,7 @@
         <attribute name="responseType" attributeType="String"/>
         <attribute name="route" attributeType="String"/>
         <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="date"/>
-                <constraint value="responseType"/>
-            </uniquenessConstraint>
+            <uniquenessConstraint/>
         </uniquenessConstraints>
     </entity>
     <entity name="PortfolioObject" representedClassName=".PortfolioObject" syncable="YES">

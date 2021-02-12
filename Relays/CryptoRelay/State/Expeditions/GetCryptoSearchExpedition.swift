@@ -25,6 +25,7 @@ struct GetCryptoSearchExpedition: GraniteExpedition {
         moc.checkSearchCache(forRoute: route) { responses in
             if let searchResponses = responses {
                 connection.request(CryptoEvents.SearchDataResult.init(event.query, data: searchResponses))
+                print(searchResponses.count)
             } else {
                 connection.request(CryptoEvents.SearchBackend(event.query))
             }
@@ -51,6 +52,7 @@ struct GetCryptoSearchBackendExpedition: GraniteExpedition {
                 result.forEach { response in
                     response.save(moc: coreDataInstance)
                 }
+                print(result.count)
                 
                 return CryptoEvents.SearchDataResult(event.query, data: result) }
             .eraseToAnyPublisher()
@@ -70,6 +72,7 @@ struct GetCryptoSearchResultExpedition: GraniteExpedition {
         var distances: [Int: [SearchResponse]] = [:]
         event.data.forEach { response in
             let distance = getLevDistance(response.entityDescription, forQuery: event.query)
+            
             
             if distance < 4 {
                 if distances.keys.contains(distance) {

@@ -62,8 +62,4 @@ extension Array where Element == CryptoCurrency {
             }
         }
     }
-    
-    func recordedObjects(moc: NSManagedObjectContext) -> [SecurityObject] {
-        self.compactMap { $0.record(to: moc)?.0 }
-    }
 }

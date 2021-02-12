@@ -19,7 +19,6 @@ struct BootExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        
         let page: EnvironmentConfig.Page = state.config.kind.page
         
         var windowsConfig: [[WindowConfig]] = []
@@ -50,7 +49,7 @@ struct BootExpedition: GraniteExpedition {
         state.activeWindowConfigs = windowsConfig
         
         GraniteLogger.info("setup windows for Environment - \(state.config.kind)\nwindows: \(state.activeWindowConfigs.flatMap { $0 }.count)\nself:\(String(describing: self))", .expedition)
-    /*
+      /*
          
          
          [ 0  0  0  0  0  0 ]
@@ -60,5 +59,6 @@ struct BootExpedition: GraniteExpedition {
          
          */
         
+        GraniteLogger.info("boot", .expedition, focus: true)
     }
 }

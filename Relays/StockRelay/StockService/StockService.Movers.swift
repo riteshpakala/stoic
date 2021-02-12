@@ -26,7 +26,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        GraniteLogger.info("fetching stock movers:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay)
+        GraniteLogger.info("fetching stock movers:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay, focus: true)
         
         var request = URLRequest(
             url: url,
@@ -34,7 +34,7 @@ extension StockService {
             timeoutInterval: 10.0)
         
         let headers = [
-            "x-rapidapi-key": "0c0e4882d8mshff3f1b457562c64p12c681jsn48b2eeb37946",
+            "x-rapidapi-key": "2a224e70a9msh9e0e2e3a2a20673p19f962jsn59435ee9b515",
             "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
         ]
         
@@ -49,7 +49,6 @@ extension StockService {
                     var movers: StockServiceModels.Movers? = data.decodeNetwork(type: StockServiceModels.Movers.self, decoder: decoder)
                     
                     movers?.rawData = data
-                    
                     return movers
                 
                 }.eraseToAnyPublisher()

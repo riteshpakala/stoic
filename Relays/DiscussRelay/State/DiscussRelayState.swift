@@ -10,10 +10,20 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+public class Conversation {
+    var messages: [DiscussMessage] = []
+    var channel: DiscussServiceModels.IRCChannel
+    
+    public init(_ channel: DiscussServiceModels.IRCChannel) {
+        self.channel = channel
+    }
+}
+
 public class DiscussRelayState: GraniteState {
     var service: DiscussService = .init()
     var channel: DiscussServiceModels.IRCChannel? = nil
     var listener: GraniteConnection? = nil
+    var conversations: [Conversation] = []
 }
 
 public class DiscussRelayCenter: GraniteCenter<DiscussRelayState> {

@@ -19,16 +19,17 @@ struct VariablesExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard var envSettings = connection.retrieve(\RouterDependency.router.env.envSettings) else {
+        guard var envSettings = connection.retrieve(\RouterDependency.environment.envSettings) else {
             return
         }
         
         if envSettings.lf == nil {
             let newLF = EnvironmentStyle.Settings.LocalFrame.init(data: state.localFrame ?? .zero)
             envSettings.lf = newLF
-            connection.update(\RouterDependency.router.env.envSettings, value: envSettings)
+            connection.update(\RouterDependency.environment.envSettings, value: envSettings, .here)
         } else {
             state.localFrame = envSettings.lf?.data
         }
+        
     }
 }

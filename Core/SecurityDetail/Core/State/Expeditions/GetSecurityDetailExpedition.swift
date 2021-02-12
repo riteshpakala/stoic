@@ -76,7 +76,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                         //
                         //???: There could be a solution running expeditions asynchronously,
                         //to complete jobs and then recontinue when necessary
-                        GraniteLogger.info("no quote found, need to re-fetch the history of the \(state.securityType)\nself:String(describing: self)", .expedition)
+                        GraniteLogger.info("no quote found, need to re-fetch the history of the \(state.securityType)\nself:\(String(describing: self))", .expedition)
                         
                         portfolio?.updateDetailStage(state.security, stage: .none)
                         connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
@@ -85,12 +85,14 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
             }
             
             break
+        case .fetching:
+            break
         default:
             state.security.getQuote(moc: coreDataInstance) { quote in
                 if let quote = quote {
                     if quote.needsUpdate {
                         guard stage == .none else {
-                            GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:String(describing: self)", .expedition)
+                            GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(String(describing: self))", .expedition, focus: true)
                             return
                         }
                         
@@ -119,11 +121,11 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     
                 } else {
                     guard stage == .none else {
-                        GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:String(describing: self)", .expedition)
+                        GraniteLogger.info("fetching quote/\(state.securityType) history failed\nstage is not none - \(stage)\nself:\(String(describing: self))", .expedition, focus: true)
                         return
                     }
                     
-                    GraniteLogger.info("quote was not found\nfetching quote/\(state.securityType) history\nself:String(describing: self)", .expedition, focus: true)
+                    GraniteLogger.info("quote was not found\nfetching quote/\(state.securityType) history\nself:\(String(describing: self))", .expedition, focus: true)
                     if state.isExpanded {
                         connection.update(\EnvironmentDependency.detail.stage, value: .fetching, .here)
                     } else {
