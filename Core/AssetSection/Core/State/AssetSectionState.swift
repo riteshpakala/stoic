@@ -27,6 +27,13 @@ public class AssetSectionState: GraniteState {
 }
 
 public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            AssetSectionSelectedExpedition.Discovery()
+        ]
+    }
+    
     //Dependencies
     lazy var envDependency: EnvironmentDependency = {
         self.hosted.env

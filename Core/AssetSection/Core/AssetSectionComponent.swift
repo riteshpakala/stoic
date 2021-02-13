@@ -31,7 +31,7 @@ public struct AssetSectionComponent: GraniteComponent {
             .padding(.trailing, Brand.Padding.medium)
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
                 AssetGridComponent(state: .init(.standard, context: state.windowType))
-                    .listen(to: command)
+                    .listen(to: command, .stop)
                     .payload(.init(object: command.center.movers)).showEmptyState
             }
         }

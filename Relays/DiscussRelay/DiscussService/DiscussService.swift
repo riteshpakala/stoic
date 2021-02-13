@@ -39,7 +39,6 @@ public struct DiscussServiceModels {
             self.uid = uid
         }
     }
-
 }
 
 public protocol DiscussServerDelegate {

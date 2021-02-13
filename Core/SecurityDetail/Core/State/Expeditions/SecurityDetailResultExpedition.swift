@@ -20,30 +20,12 @@ struct StockDetailResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
-            GraniteLogger.error("no portfolio found\nself:String(describing: self)", .expedition)
-            return
-        }
-        
-        GraniteLogger.info("relaying stock quotes\nself:String(describing: self)", .expedition, focus: true)
+        GraniteLogger.info("relaying stock quotes\nself: \(String(describing: self))", .expedition, focus: true)
         
         let stocks = event.data
         
         stocks.save(moc: coreDataInstance) { quote in
-            if state.isExpanded {
-                if quote != nil {
-                    connection.update(\EnvironmentDependency.detail.quote, value: quote, .here)
-                } else {
-                    connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching, .here)
-                }
-            } else {
-                if quote != nil {
-                    portfolio?.updateDetailQuote(state.security, quote: quote)
-                } else {
-                    portfolio?.updateDetailStage(state.security, stage: .failedFetching)
-                }
-                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
-            }
+            state.quote = quote
         }
     }
 }
@@ -58,27 +40,12 @@ struct CryptoDetailResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
-            GraniteLogger.info("no portfolio found\nself:String(describing: self)", .expedition, focus: true)
-            return
-        }
+        GraniteLogger.info("relaying crypto quotes\nself: \(String(describing: self))", .expedition, focus: true)
         
         let crypto = event.data
+        
         crypto.save(moc: coreDataInstance) { quote in
-            if state.isExpanded {
-                if quote != nil {
-                    connection.update(\EnvironmentDependency.detail.quote, value: quote, .here)
-                } else {
-                    connection.update(\EnvironmentDependency.detail.stage, value: .failedFetching, .here)
-                }
-            } else {
-                if quote != nil {
-                    portfolio?.updateDetailQuote(state.security, quote: quote)
-                } else {
-                    portfolio?.updateDetailStage(state.security, stage: .failedFetching)
-                }
-                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio, .here)
-            }
+            state.quote = quote
         }
     }
 }

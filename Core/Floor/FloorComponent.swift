@@ -32,6 +32,10 @@ public struct FloorComponent: GraniteComponent {
         return state.activeSecurities[row][col]
     }
     
+    func getQuote(row: Int, col: Int) -> Quote? {
+        return state.activeQuotes[row][col]
+    }
+    
     public var body: some View {
         ZStack {
             
@@ -63,7 +67,7 @@ public struct FloorComponent: GraniteComponent {
                                                         target: \.holdingsFloor))
                             .share(.init(dep(\.hosted)))
                     }, onExitTap: {
-                        sendEvent(FloorEvents.ExitAddToFloor(), haptic: .light)
+                        set(\.floorStage, value: .none, update: \EnvironmentDependency.holdingsFloor.floorStage)
                     })
                 }
             default:
@@ -81,16 +85,15 @@ public struct FloorComponent: GraniteComponent {
                        col < state.activeSecurities[row].count{
                         
                         if let security = getSecurity(row: row, col: col) {
-                            SecurityDetailComponent(state: .init(.floor(.init(object: security))))
-                                .share(.init(dep(\.hosted,
-                                             FloorCenter.route))).background(Brand.Colors.black)
+                            SecurityDetailComponent(state: .init(.floor(.init(object: security)), quote: getQuote(row: row, col: col)))
+                                .share(.init(dep(\.hosted))).background(Brand.Colors.black)
                         } else {
                             HStack {
                                 Spacer()
                                 GraniteButtonComponent(
                                     state: .init(.addNoSeperator,
                                                  action: {
-                                                    sendEvent(FloorEvents.AddToFloor(location: CGPoint.init(row, col)), haptic: .light)
+                                                    set(\.floorStage, value: .adding(CGPoint.init(row, col)), update: \EnvironmentDependency.holdingsFloor.floorStage)
                                                  }))
                                 Spacer()
                             }.frame(maxWidth: .infinity,

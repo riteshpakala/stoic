@@ -13,6 +13,7 @@ import Combine
 public class Conversation {
     var messages: [DiscussMessage] = []
     var channel: DiscussServiceModels.IRCChannel
+    var users: [DiscussServiceModels.User] = []
     
     public init(_ channel: DiscussServiceModels.IRCChannel) {
         self.channel = channel
@@ -24,6 +25,7 @@ public class DiscussRelayState: GraniteState {
     var channel: DiscussServiceModels.IRCChannel? = nil
     var listener: GraniteConnection? = nil
     var conversations: [Conversation] = []
+    var user: User? = nil
 }
 
 public class DiscussRelayCenter: GraniteCenter<DiscussRelayState> {
@@ -35,7 +37,11 @@ public class DiscussRelayCenter: GraniteCenter<DiscussRelayState> {
             DiscussClientReconnectExpedition.Discovery(),
             DiscussClientRegisteredExpedition.Discovery(),
             DiscussClientListenerExpedition.Discovery(),
-            DiscussChannelJoinExpedition.Discovery()
+            DiscussChannelJoinExpedition.Discovery(),
+            DiscussUserListExpedition.Discovery(),
+            DiscussUserJoinExpedition.Discovery(),
+            DiscussUserLeftExpedition.Discovery(),
+            DiscussUserQuitExpedition.Discovery()
         ]
     }
 }

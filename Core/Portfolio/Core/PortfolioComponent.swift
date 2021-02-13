@@ -87,7 +87,7 @@ public struct PortfolioComponent: GraniteComponent {
                             .headline,
                             .bold)
                 
-                GraniteText("age: 12 days",
+                GraniteText("age: \(command.center.age) days",
                             .headline,
                             .bold)
             }

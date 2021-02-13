@@ -18,7 +18,8 @@ public struct AssetGridComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            AssetGridItemContainerComponent(state: .init(state.assetGridType))
+            AssetGridItemContainerComponent(state: .init(state.assetGridType,
+                                                         leadingPadding: state.leadingPadding))
                 .listen(to: command)
                 .payload(state.payload)
                 .frame(

@@ -60,19 +60,21 @@ public struct AssetGridItemComponent: GraniteComponent {
                                 style: .init(radius: 2, offset: .init(x: 1, y: 1)))
                 }
                 
-                VStack {
-                    GraniteText(state.asset.description1,
-                                state.asset.symbolColor,
-                                .headline,
-                                .regular,
-                                .trailing)
-                    
-                    GraniteText(state.asset.description1_sub,
-                                state.security.statusColor,
-                                .subheadline,
-                                .regular,
-                                .trailing)
-                }.padding(.trailing, Brand.Padding.medium)
+                if state.asset.showDescription1 {
+                    VStack {
+                        GraniteText(state.asset.description1,
+                                    state.asset.symbolColor,
+                                    .headline,
+                                    .regular,
+                                    .trailing)
+                        
+                        GraniteText(state.asset.description1_sub,
+                                    state.security.statusColor,
+                                    .subheadline,
+                                    .regular,
+                                    .trailing)
+                    }.padding(.trailing, Brand.Padding.medium)
+                }
                 
                 VStack(alignment: .center, spacing: 2) {
                     Spacer()
@@ -80,11 +82,13 @@ public struct AssetGridItemComponent: GraniteComponent {
                     switch state.assetGridType {
                     case .standard:
                         VStack(alignment: .center, spacing: 4) {
-                            GraniteText(state.asset.description2,
-                                        state.asset.symbolColor,
-                                        .subheadline,
-                                        .regular)
-                                .frame(width: 60, height: 12, alignment: .bottom)
+                            if state.asset.showDescription2 {
+                                GraniteText(state.asset.description2,
+                                            state.asset.symbolColor,
+                                            .subheadline,
+                                            .regular)
+                                    .frame(width: 60, height: 12, alignment: .bottom)
+                            }
                             
                             (state.security.statusColor)
                                 .clipShape(Circle())
@@ -145,6 +149,5 @@ public struct AssetGridItemComponent: GraniteComponent {
                 .foregroundColor(.black)
                 .padding(.top, Brand.Padding.small)
         }
-        .padding(.leading, Brand.Padding.large)
     }
 }

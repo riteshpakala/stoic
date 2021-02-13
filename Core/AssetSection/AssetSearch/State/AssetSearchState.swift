@@ -41,7 +41,7 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
     let cryptoRelay: CryptoRelay = .init()
     
     var envDependency: EnvironmentDependency {
-        dependency.hosted.env
+        dependency.hosted.env.add(self)
     }
     
     public override var expeditions: [GraniteBaseExpedition] {

@@ -11,11 +11,13 @@ import SwiftUI
 import Combine
 
 struct FloorEvents {
-    public struct Get: GraniteEvent {}
+    public struct Get: GraniteEvent {
+    }
     
     public struct AddToFloor: GraniteEvent {
         let location: CGPoint
     }
     
-    public struct ExitAddToFloor: GraniteEvent {}
+    public struct ExitAddToFloor: GraniteEvent {
+    }
 }

@@ -12,8 +12,10 @@ import Combine
 
 public class DiscussState: GraniteState {
     var messages: [DiscussMessage] = []
+    var users: [User] = []
     var currentMessage: String = ""
     var currentChannel: String = "general"
+    var showMembers: Bool = false
 }
 
 public class DiscussCenter: GraniteCenter<DiscussState> {
@@ -31,7 +33,7 @@ public class DiscussCenter: GraniteCenter<DiscussState> {
     
     public override var links: [GraniteLink] {
         [
-//            .onAppear(DiscussEvents.Load(), .dependant)
+            .onAppear(DiscussEvents.Load(), .dependant)
         ]
     }
     

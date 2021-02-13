@@ -65,18 +65,20 @@ extension DiscussServiceModels {
         
         private func read() {
             task.readData(ofMinLength: 0, maxLength: 9999, timeout: 0) { (data, atEOF, error) in
-                guard let data = data, let message = String(data: data, encoding: .utf8) else {
+                guard let data = data,
+                      let message = String(data: data, encoding: .utf8) else {
                     return
                 }
                 
-                for line in message.split(separator: "\r\n") {
-                    self.processLine(String(line))
-                }
+//                for line in message.split(separator: "\r\n") {
+//                    self.process(String(line))
+//                }
+                self.process(message)
                 self.read()
             }
         }
         
-        private func processLine(_ message: String) {
+        private func process(_ message: String) {
             let input = IRCServerInputParser.parseServerMessage(message)
             switch input {
             case .serverMessage(_, let message):
@@ -99,6 +101,21 @@ extension DiscussServiceModels {
                                                                    channel: channelName)))
                     }
                 })
+            case .leftMessage(let user, let channelName):
+                self.channels.forEach({ (channel) in
+                    if channel.name == channelName {
+                        connection?.request(DiscussRelayEvents
+                                                .Server
+                                                .UserLeft
+                                                .init(username: user,
+                                                      channel: channelName))
+                    }
+                })
+            case .quitMessage(let user):
+                connection?.request(DiscussRelayEvents
+                                        .Server
+                                        .UserQuit
+                                        .init(username: user))
             case .channelMessage(let channelName, let user, let message):
                 self.channels.forEach({ (channel) in
                     if channel.name == channelName {
@@ -130,6 +147,8 @@ extension DiscussServiceModels {
                 if let connection = self.connection {
                     connection.request(DiscussRelayEvents.Client.Registered.init())
                 }
+            case .ping:
+                send("PONG")
             default:
                 break
             }

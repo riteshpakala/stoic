@@ -32,30 +32,34 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                     
                     Spacer()
                     
-                    GraniteText("price",
-                                .subheadline,
-                                .regular,
-                                .trailing)
+                    if command.center.showDescription1 {
+                        GraniteText("price",
+                                    .subheadline,
+                                    .regular,
+                                    .trailing)
+                    }
                     
-                    switch state.assetGridType {
-                    case .standard:
-                        GraniteText("change",
-                                    .subheadline,
-                                    .regular).frame(width: 60)
-                    case .add:
-                        GraniteText("add",
-                                    .subheadline,
-                                    .regular)
-                    case .radio:
-                        GraniteText("select",
-                                    .subheadline,
-                                    .regular)
-                    default:
-                        EmptyView.init()
+                    if command.center.showDescription2 {
+                        switch state.assetGridType {
+                        case .standard:
+                            GraniteText("change",
+                                        .subheadline,
+                                        .regular).frame(width: 60)
+                        case .add:
+                            GraniteText("add",
+                                        .subheadline,
+                                        .regular)
+                        case .radio:
+                            GraniteText("select",
+                                        .subheadline,
+                                        .regular)
+                        default:
+                            EmptyView.init()
+                        }
                     }
                 }
                 .padding(.bottom, Brand.Padding.xSmall)
-                .padding(.leading, Brand.Padding.large)
+                .padding(.leading, state.leadingPadding.isZero ? Brand.Padding.small : state.leadingPadding)
                 .padding(.trailing, Brand.Padding.medium)
                 
                 Rectangle()
@@ -89,7 +93,8 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                                                                     haptic: .light)
                                                 }
                                         }))
-                    }.padding(.leading, Brand.Padding.medium)
+                            .padding(.leading, state.leadingPadding.isZero ? Brand.Padding.small : state.leadingPadding)
+                    }.padding(.leading, state.leadingPadding.isZero ? 0 : Brand.Padding.medium)
                 }
             }.frame(maxWidth: .infinity,
                     minHeight: state.assetData.count > 0 ? 66 : 0.0,

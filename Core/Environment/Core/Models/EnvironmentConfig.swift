@@ -68,6 +68,15 @@ public struct EnvironmentConfig {
                 return .init(windows: [])
             }
         }
+        
+        var broadcastable: Bool {
+            switch self {
+            case .home:
+                return true
+            default:
+                return false
+            }
+        }
     }
     
     let kind: PageType

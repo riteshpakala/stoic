@@ -24,7 +24,7 @@ public class WindowState: GraniteState {
 
 public class WindowCenter: GraniteCenter<WindowState> {
     var envDependency: EnvironmentDependency {
-        self.hosted.env
+        self.hosted.fetch.environment
     }
     
     public override var loggerSymbol: String {

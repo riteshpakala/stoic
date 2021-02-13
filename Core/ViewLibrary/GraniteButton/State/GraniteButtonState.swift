@@ -49,6 +49,7 @@ public class GraniteButtonState: GraniteState {
         self.textColor = textColor
         self.textColors = colors
         self.textShadow = shadow
+        
     }
     
     public init(_ type: GraniteButtonType,

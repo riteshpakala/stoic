@@ -21,12 +21,7 @@ struct DiscussLoadExpedition: GraniteExpedition {
         
         connection.request(DiscussRelayEvents.Client.Listen.init(listener: connection), .contact)
         
-        GraniteLogger.info("loaded", .event, focus: true)
-        guard let messages = connection.retrieve(\EnvironmentDependency.discuss.state.messages) else {
-            return
-        }
-        
-        state.messages = messages
+        GraniteLogger.info("loaded", .event, focus: false)
     }
 }
 
@@ -39,18 +34,10 @@ struct DiscussMessagesExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-
-        guard var messages = connection.retrieve(\EnvironmentDependency.discuss.state.messages) else {
-            return
-        }
         
-        let discussMessage: DiscussMessage = .init(color: Brand.Colors.white,
-                                                   data: event.payload)
-        
-        messages.append(discussMessage)
-        
-        state.messages = messages
-        connection.update(\EnvironmentDependency.discuss.state.messages, value: messages)
+        state.currentChannel = event.payload.channel.name
+        state.messages = event.payload.messages
+        state.users = event.payload.users.map { User.guest(with: $0.username) }
     }
 }
 
@@ -79,10 +66,6 @@ struct DiscussSendMessageExpedition: GraniteExpedition {
         
         connection.request(DiscussRelayEvents.Messages.Send.init(message: message), .contact)
         
-//        state.messages.append(message)
         state.currentMessage = ""
-        
-//        connection.update(\EnvironmentDependency.discuss.state.messages, value: state.messages)
-        
     }
 }

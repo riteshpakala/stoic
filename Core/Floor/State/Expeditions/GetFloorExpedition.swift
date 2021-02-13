@@ -28,27 +28,41 @@ struct GetFloorExpedition: GraniteExpedition {
             empty(state)
             return
         }
-        GraniteLogger.info("floors recieved: \(floors.count) - self: \(String(describing: self))", .expedition)
+        
         if floors.isEmpty {
             empty(state)
         } else {
             var securities: [[Security?]] = []
+            var quotes: [[Quote?]] = []
             var cols: [Int] = .init(repeating: 0, count: FloorConfig.maxWindows.width.asInt)
             cols = cols.enumerated().map { $0.offset }
             //
 
             for row in 0..<FloorConfig.maxWindows.height.asInt {
                 var securitiesRow: [Security?] = []
+                var quotesRow: [Quote?] = []
 
                 for col in cols {
                     let point: CGPoint = .init(row, col)
-                    securitiesRow.append(floors.first(where: { $0.location == point })?.security)
+                    if let security = floors.first(where: { $0.location == point })?.security {
+                        
+                        securitiesRow.append(security)
+                        
+                        security.getQuote(moc: coreDataInstance) { quote in
+                            quotesRow.append(quote)
+                        }
+                    } else {
+                        securitiesRow.append(nil)
+                        quotesRow.append(nil)
+                    }
                 }
                 
                 securities.append(securitiesRow)
+                quotes.append(quotesRow)
             }
             
             state.activeSecurities = securities
+            state.activeQuotes = quotes
         }
         
     }

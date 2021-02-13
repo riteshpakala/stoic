@@ -63,12 +63,6 @@ public struct WindowComponent: GraniteComponent {
         default:
             EmptyView.init().hidden()
         }
-        
-//        VStack {
-//
-//        }.frame(maxWidth: .infinity,
-//                maxHeight: .infinity,
-//                alignment: .center)//.animation(.default)
     }
 }
 

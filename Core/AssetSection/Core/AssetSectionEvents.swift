@@ -10,5 +10,4 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-struct AssetSectionEvents {
-}
+struct AssetSectionEvents {}

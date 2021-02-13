@@ -43,9 +43,10 @@ public class IndicatorDetailCenter: GraniteCenter<IndicatorDetailState> {
         ]
     }
     
-    var stochastics: TonalServiceModels.Indicators.Stochastics? {
-        envDependency.detail.indicators?.stochastic
-    }
+    lazy var stochastics: TonalServiceModels.Indicators.Stochastics? = {
+        guard let quote = state.quote else { return nil }
+        return TonalServiceModels.Indicators.init(with: quote).stochastic
+    }()
     
     var plotData: (percentK: SomePlotData, percentD: SomePlotData) {
         if let stochastics = self.stochastics {

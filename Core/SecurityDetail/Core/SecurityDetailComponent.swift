@@ -23,8 +23,6 @@ public struct SecurityDetailComponent: GraniteComponent {
     }
     
     public var body: some View {
-        //DEV:
-        
         VStack {
             ZStack {
                 if !command.center.loadedQuote {
@@ -86,8 +84,7 @@ public struct SecurityDetailComponent: GraniteComponent {
                 
             }
             
-            if case .expanded = state.kind,
-               command.center.loaded {
+            if case .expanded = state.kind {
                 PaddingVertical()
                 ZStack {
                     IndicatorDetailComponent(state: .init(state.quote))

@@ -40,6 +40,8 @@ public struct Brand {
     
     public struct Padding {
         public static var large: CGFloat = 24
+        public static var xxMedium: CGFloat = 20
+        public static var xMedium: CGFloat = 16
         public static var medium: CGFloat = 12
         public static var medium9: CGFloat = 12
         public static var small: CGFloat = 6

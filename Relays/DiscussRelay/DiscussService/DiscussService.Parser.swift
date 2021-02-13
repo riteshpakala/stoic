@@ -32,51 +32,42 @@ extension DiscussServiceModels {
                     }
                 } else if rest.hasPrefix("JOIN") {
                     let user = source.components(separatedBy: "!")[0].trimmingCharacters(in: CharacterSet(charactersIn: ":"))
-                    let channel = rest[rest.index(message.startIndex, offsetBy: 5)...].trimmingCharacters(in: CharacterSet(charactersIn: "# "))
+                    let channel = rest[rest.index(message.startIndex, offsetBy: 5)...].trimmingCharacters(in: CharacterSet(charactersIn: ":#"))
                     return .joinMessage(user: user, channel: channel)
-                } else{
-                    let server = source.trimmingCharacters(in: CharacterSet(charactersIn: ": "))
+                } else if rest.hasPrefix("PART") {
+                    let user = source.components(separatedBy: "!")[0].trimmingCharacters(in: CharacterSet(charactersIn: ":"))
+                    let channel = rest[rest.index(message.startIndex, offsetBy: 5)...].trimmingCharacters(in: CharacterSet(charactersIn: ":#"))
+                    return .leftMessage(user: user, channel: channel)
+                } else if rest.hasPrefix("QUIT") {
+                    let user = source.components(separatedBy: "!")[0].trimmingCharacters(in: CharacterSet(charactersIn: ":"))
+                    return .quitMessage(user: user)
+                } else {
+                    let components = message.components(separatedBy: "\r\n")
                     
-                    // :development.irc.roundwallsoftware.com 353 mukman = #clearlyafakechannel :mukman @sgoodwin\r\n:development.irc.roundwallsoftware.com 366 mukman #clearlyafakechannel :End of /NAMES list.
+                    let namesListIndex = components.firstIndex(where: { $0.contains(":End of /NAMES list.") }) ?? 0
                     
-                    if rest.hasSuffix(":End of /NAMES list.") {
-                        let scanner = Scanner(string: rest)
-                        var users = [String]()
-                        var channelName = ""
-                        if let firstSet = scanner.scanUpToString("#") {
-                            let scanner2 = Scanner(string: firstSet)
-                            if let channelNamePre = scanner2.scanUpToString(" ") {
-                                channelName = channelNamePre.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
-                                let scanner3 = Scanner(string: channelNamePre)
-                                
-                                if let usersStrings = scanner3.scanUpToString(" ") {
-                                    users.append(usersStrings.trimmingCharacters(in: CharacterSet(charactersIn: ":")))
-                                }
+                    if namesListIndex > 0 && components.count > 1 {
+                        var users: [(channel: String, users: [String])] = []
+                        for i in 0..<namesListIndex {
+                            var segments = components[i].components(separatedBy: ":")
+                            let userList = segments.removeLast()
+                            let channel = segments.last?.components(separatedBy: "#").last?.trimmingCharacters(in: .whitespacesAndNewlines)
+                            if userList.isNotEmpty,
+                               let channelFound = channel {
+                                let usersParsed = userList.components(separatedBy: .whitespacesAndNewlines).filter { $0.isNotEmpty }
+                                users.append((channelFound, usersParsed))
                             }
                         }
-//                        scanner.scanUpTo("#", into: nil)
-//
-//                        var channel: NSString?
-//
-//                        scanner.scanUpTo(" ", into: &channel)
-//
-//                        let channelName = (channel as String?)!.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
-//
-//                        var users = [String]()
-//                        var user: NSString?
-//                        scanner.scanUpTo(" ", into: &user)
-//                        users.append((user as String?)!.trimmingCharacters(in: CharacterSet(charactersIn: ":")))
                         
-                        return .userList(channel: channelName, users: users)
-                    } else if rest.hasSuffix(":your unique ID") {
+                        if users.isNotEmpty, let list = users.first {
+                            return .userList(channel: list.channel, users: list.users)
+                        }
+                    } else if message.contains(":your unique ID") {
                         return .registered(user: rest.components(separatedBy: ":").first ?? rest)
-                    }
-                    
-                    if rest.contains(":") {
-                        let serverMessage = rest.components(separatedBy: ":")[1]
-                        return .serverMessage(server: server, message: serverMessage)
                     } else {
-                        return .serverMessage(server: server, message: rest)
+                        let server = source.trimmingCharacters(in: CharacterSet(charactersIn: ": "))
+                        
+                        return .serverMessage(server: server, message: "* discuss initialized")
                     }
                 }
             }
@@ -91,6 +82,8 @@ extension DiscussServiceModels {
         case serverMessage(server: String, message: String)
         case channelMessage(channel: String, user: String, message: String)
         case joinMessage(user: String, channel: String)
+        case leftMessage(user: String, channel: String)
+        case quitMessage(user: String)
         case userList(channel: String, users: [String])
         case registered(user: String)
         
@@ -108,6 +101,10 @@ extension DiscussServiceModels {
                 return lhsServer == rhsServer && lhsMessage == rhsMessage
             case (.joinMessage(let lhsUser, let lhsChannel), .joinMessage(let rhsUser, let rhsChannel)):
                 return lhsUser == rhsUser && lhsChannel == rhsChannel
+            case (.leftMessage(let lhsUser, let lhsChannel), .leftMessage(let rhsUser, let rhsChannel)):
+                return lhsUser == rhsUser && lhsChannel == rhsChannel
+            case (.quitMessage(let lhsUser), .quitMessage(let rhsUser)):
+                return lhsUser == rhsUser
             case (.userList(let lhsChannel, let lhsUsers), .userList(let rhsChannel, let rhsUsers)):
                 return lhsChannel == rhsChannel && lhsUsers == rhsUsers
             case (.registered(let lhsUser), .registered(let rhsUser)):

@@ -15,10 +15,6 @@ public struct DiscussComponent: GraniteComponent {
     public var command: GraniteCommand<DiscussCenter, DiscussState> = .init()
     
     public init() {}
-    
-    @State var selection: Set<Int> = [0]
-    
-    @State var showMembers = true
 }
 
 //MARK: -- View
@@ -27,22 +23,72 @@ extension DiscussComponent {
     public var body: some View {
         ZStack {
             MainView(safeAreaPadding: command.center.environmentSafeArea,
-                     showMembers: $showMembers,
+                     users: state.users,
                      messages: state.messages,
                      message: _state.currentMessage,
                      onMessageSend: sendEvent(DiscussEvents.Send()))
+           
+            
+            if EnvironmentConfig.isIPhone {
+                VStack(alignment: .trailing) {
+                    HStack {
+                        Spacer()
+                        
+                        GraniteButtonComponent(state: .init(.image("profile_icon"),
+                                                            selected: true,
+                                                            size: .init(16),
+                                                            padding: .init(Brand.Padding.xxMedium,
+                                                                           0,
+                                                                           0,
+                                                                           Brand.Padding.large),
+                                                            action: {
+                                                 GraniteHaptic.light.invoke()
+                                                 set(\.showMembers, value: true)
+                                             }))
+                    }
+                    
+                    
+                    Spacer()
+                }
+                
+                if state.showMembers {
+                    HStack {
+                        Spacer()
+                        VStack(alignment: .center) {
+                            GraniteButtonComponent(
+                                state: .init(.addNoSeperator,
+                                             padding: .init(0,0,Brand.Padding.xSmall,0),
+                                             action: {
+                                               GraniteHaptic.light.invoke()
+                                                set(\.showMembers, value: false)
+                                             })).transformEffect(.rotation(.init(degrees: 45)))
+                        }
+
+                        AssetGridComponent(state: .init(0, type: .standard, context: .discuss))
+                            .payload(.init(object: state.users))
+                            .frame(maxWidth: 240, maxHeight: .infinity).background(Brand.Colors.black)
+                    }
+                    .transition(.move(edge: .trailing))
+                    .animation(.default)
+                    
+                }
+            }
         }
     }
     
     struct MainView: View {
         var safeAreaPadding: CGFloat
-        @Binding var showMembers: Bool
+        var users: [User]
         var messages: [DiscussMessage]
         @Binding var message: String
         var onMessageSend: (() -> ())
         
+        let cols = [
+            GridItem(.flexible()),
+        ]
+        
         var body: some View {
-            HStack {
+            HStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 0) {
                     
                     ChannelBrowser(channels: ["general"])
@@ -52,10 +98,17 @@ extension DiscussComponent {
                     
                     Channel(safeAreaPadding: safeAreaPadding,
                             messages: messages,
-                            showMembers: $showMembers,
                             message: $message,
                             onMessageSend: onMessageSend)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                
+                if !EnvironmentConfig.isIPhone {
+                    PaddingHorizontal()
+                    
+                    AssetGridComponent(state: .init(0, type: .standard, context: .discuss))
+                        .payload(.init(object: users))
+                        .frame(maxWidth: 240, maxHeight: .infinity)
                 }
             }
         }
@@ -101,7 +154,6 @@ extension DiscussComponent {
         var safeAreaPadding: CGFloat
         var messages: [DiscussMessage]
         
-        @Binding var showMembers: Bool
         @Binding var message: String
         var onMessageSend: (() -> ())
         
@@ -110,13 +162,15 @@ extension DiscussComponent {
                 VStack(spacing: 0) {
                     ScrollView {
                         VStack(spacing: 16) {
-                            ForEach(messages, id: \.self) { message in
+                            ForEach(messages.reversed(), id: \.self) { message in
                                 Message(data: message)
                                     .frame(height: 48)
+                                    .scaleEffect(x: -1, y: -1, anchor: .center)
                             }
                         }
                         .padding()
                     }
+                    .rotationEffect(.degrees(180))
                     
                     #if os(iOS)
                     MessageBar(message: $message,
@@ -131,77 +185,7 @@ extension DiscussComponent {
                     #endif
                 }
                 
-                //ZStack....
-//                if showMembers {
-//                    MemberList()
-//                }
-                
             }.background(Color.black)
-        }
-    }
-    
-    struct MemberList: View {
-        var colors = [
-            Color.red,
-            Color.orange,
-            Color.yellow,
-            Color.green,
-            Color.blue,
-            Color.purple
-        ]
-        
-        var body: some View {
-            List{
-                Text("ADMIN - 1")
-                    .font(.caption)
-                HStack {
-                    ZStack {
-                        Image("pfp")
-                            .resizable()
-                            .clipShape(Circle())
-                            .frame(width: 35, height: 35, alignment: .leading)
-                    }
-                    VStack(alignment: .leading) {
-                        Text("code_pranav").font(.headline)
-                        Text("Playing Xcode").font(.callout).foregroundColor(.gray)
-                    }
-                    Spacer()
-                }
-                Text("ONLINE - 2")
-                    .font(.caption)
-                HStack {
-                    ZStack {
-                        Circle()
-                            .trim(from:0, to: 1)
-                            .foregroundColor(colors.randomElement())
-                            .frame(width: 35, height: 35)
-                        Image("discordwhite")
-                            .resizable()
-                            .frame(width:25, height: 18)
-                    }
-                    VStack(alignment: .leading) {
-                        Text("astral lexus").font(.headline)
-                        Text("Playing Twitter").font(.callout).foregroundColor(.gray)
-                    }
-                    Spacer()
-                }
-                HStack {
-                    ZStack {
-                        Circle()
-                            .trim(from:0, to: 1)
-                            .foregroundColor(colors.randomElement())
-                            .frame(width: 35, height: 35)
-                        Image("discordwhite")
-                            .resizable()
-                            .frame(width:25, height: 18)
-                    }
-                    VStack(alignment: .leading) {
-                        Text("username").font(.headline)
-                        Text("Playing Twitter").font(.callout).foregroundColor(.gray)
-                    }
-                    Spacer()
-                }
-            }.frame(minWidth: 100, idealWidth: 150, maxWidth: 200, maxHeight: .infinity).background(Color.init(.sRGB, red: 235/255, green: 237/255, blue: 239/255, opacity: 1.0))
         }
     }
     
@@ -211,13 +195,27 @@ extension DiscussComponent {
         var body: some View {
             HStack(spacing: 12) {
                 ZStack {
-//                    Circle()
-//                        .trim(from:0, to: 1)
-//                        .foregroundColor(data.color)
-//                        .frame(width: 40, height: 40)
-                    
-                    Rectangle()
-                        .frame(width:35, height: 25)
+                    GradientView(colors: [Brand.Colors.greyV2.opacity(0.66),
+                                          Brand.Colors.grey.opacity(0.24)],
+                                 cornerRadius: 6.0,
+                                 direction: .topLeading)
+                        .frame(
+                            width: 36,
+                            height: 36,
+                            alignment: .center)
+                        .overlay (
+                            VStack {
+                                GraniteText("",
+                                            Brand.Colors.black,
+                                            .title3, .bold)
+                            }
+                        
+                        )
+                        .background(data.color.cornerRadius(6.0)
+                                        .shadow(color: Color.black,
+                                                radius: 6.0,
+                                                x: 3.0,
+                                                y: 2.0))
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {

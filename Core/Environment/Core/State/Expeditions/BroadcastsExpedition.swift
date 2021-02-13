@@ -19,6 +19,8 @@ struct BroadcastsExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        guard state.config.kind.broadcastable else { return }
+        
         connection.request(StockEvents.GetMovers(), .rebound)
         connection.request(CryptoEvents.GetMovers(), .rebound)
         

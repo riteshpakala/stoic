@@ -13,6 +13,7 @@ public enum AssetType {
     case security
     case model
     case sentiment
+    case user
 }
 
 public protocol Asset: ID {
@@ -21,11 +22,16 @@ public protocol Asset: ID {
     
     var symbol: String { get }
     var symbolImage: Image? { get }
+    
     var symbolColor: Color { get }
+    
     var title: String { get }
     var subtitle: String { get }
+    var showDescription1: Bool { get }
     var description1: String { get }
     var description1_sub: String { get }
+    var description2Title: String? { get }
+    var showDescription2: Bool { get }
     var description2: String { get }
 }
 
@@ -40,6 +46,64 @@ extension Asset {
     
     var asModel: TonalModel? {
         return (self as? TonalModel)
+    }
+    
+    public var showDescription1: Bool {
+        true
+    }
+    
+    public var showDescription2: Bool {
+        true
+    }
+    
+    public var description2Title: String? {
+        nil
+    }
+}
+
+extension User {
+    public var assetType: AssetType {
+        .user
+    }
+    
+    public var assetID: String {
+        "id: "+self.info.uid
+    }
+    
+    public var symbol: String {
+        ""
+    }
+    
+    public var symbolColor: Color {
+        appearance.color
+    }
+    
+    public var title: String {
+        info.username
+    }
+    
+    public var subtitle: String {
+        "age: \(info.created.daysFrom(.today))"
+    }
+    
+    public var showDescription1: Bool {
+        false
+    }
+    
+    public var description1: String {
+        ""
+    }
+    
+    public var description1_sub: String {
+        ""
+    }
+    
+    public var showDescription2: Bool {
+        false
+    }
+    
+    public var description2: String {
+        ""
     }
 }
 

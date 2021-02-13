@@ -49,4 +49,8 @@ public class PortfolioCenter: GraniteCenter<PortfolioState> {
     var username: String {
         user.info.username
     }
+    
+    var age: Int {
+        user.info.created.daysFrom(.today)
+    }
 }

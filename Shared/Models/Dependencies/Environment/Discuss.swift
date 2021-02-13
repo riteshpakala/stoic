@@ -10,10 +10,6 @@ import GraniteUI
 import SwiftUI
 
 class Discuss {
-    var state: DiscussState = .init()
     var server: DiscussServiceModels.IRCServer? = nil
-    
-    var channel: String {
-        state.currentChannel
-    }
+    var channel: String = "general"
 }

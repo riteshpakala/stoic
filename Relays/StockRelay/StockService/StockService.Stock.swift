@@ -19,7 +19,7 @@ extension StockService {
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        GraniteLogger.info("fetching stock chart:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay)
+        GraniteLogger.info("fetching stock chart:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay, focus: true)
         
         let decoder = JSONDecoder()
         
@@ -30,9 +30,11 @@ extension StockService {
                     let chart: StockServiceModels.Stock?
                     do {
                         chart = try decoder.decode(StockServiceModels.Stock.self, from: data)
+                        
+                        GraniteLogger.info("fetched stock chart \nself: \(String(describing: self))", .relay, focus: true)
                     } catch let error {
                         chart = nil
-                        GraniteLogger.error("failed fetching stock chart:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
+                        GraniteLogger.info("failed fetching stock chart:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
                     }
                     
                     return chart != nil ? [chart!] : nil

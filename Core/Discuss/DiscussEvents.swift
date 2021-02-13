@@ -13,7 +13,7 @@ import Combine
 struct DiscussEvents {
     public struct Load: GraniteEvent {
         public var behavior: GraniteEventBehavior {
-            .quite
+            .quiet
         }
     }
     public struct Send: GraniteEvent {}

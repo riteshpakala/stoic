@@ -39,15 +39,27 @@ public class AssetGridState: GraniteState {
     }
     let assetGridType: AssetGridType
     
+    let leadingPadding: CGFloat
+    
     public init(_ type: AssetGridType,
                 context: WindowType) {
         self.assetGridType = type
         self.context = context
+        self.leadingPadding = Brand.Padding.large
+    }
+    
+    public init(_ leadingPadding: CGFloat,
+                type: AssetGridType,
+                context: WindowType) {
+        self.assetGridType = type
+        self.context = context
+        self.leadingPadding = leadingPadding
     }
     
     public required init() {
         self.assetGridType = .standard
         self.context = .unassigned
+        self.leadingPadding = Brand.Padding.large
     }
 }
 

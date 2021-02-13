@@ -23,14 +23,21 @@ struct DiscussClientHandlingExpedition: GraniteExpedition {
             return
         }
         
-        state.service.connect(user: .init(username: event.user.username, realName: event.user.username, nick: event.user.username, email: event.user.email, uid: event.user.uid))
+        let info = event.user.info
+        state.service.connect(user: .init(username: info.username,
+                                          realName: info.username,
+                                          nick: info.username,
+                                          email: info.email,
+                                          uid: info.uid))
         
         state.service.connection = connection
+        
+        state.user = event.user
         
         guard let server = state.service.server else { return }
         connection.request(DiscussRelayEvents.Client.Set.Result.init(server: server))
         
-        GraniteLogger.info("client was set, sending server back", .relay, focus: true)
+        GraniteLogger.info("client was set, sending server back", .relay, focus: false)
     }
 }
 
@@ -47,7 +54,7 @@ struct DiscussClientReconnectExpedition: GraniteExpedition {
         state.service.server = event.server
         connection.request(DiscussRelayEvents.Channel.Join.init(name: event.channel))
         
-        GraniteLogger.info("reconnecting to \(event.channel)", .relay, focus: true)
+        GraniteLogger.info("reconnecting to \(event.channel)", .relay, focus: false)
     }
 }
 
@@ -62,7 +69,7 @@ struct DiscussClientRegisteredExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         connection.request(DiscussRelayEvents.Channel.Join.init(name: "general"))
         
-        GraniteLogger.info("client registered", .relay, focus: true)
+        GraniteLogger.info("client registered", .relay, focus: false)
     }
 }
 
@@ -78,7 +85,11 @@ struct DiscussClientListenerExpedition: GraniteExpedition {
         
         state.listener = event.listener
         
-        GraniteLogger.info("listener added", .relay, focus: true)
+        GraniteLogger.info("listener added", .relay, focus: false)
+        
+        if let conversationToSend = state.conversations.first(where: { $0.channel.name == state.channel?.name }) {
+            state.listener?.request(DiscussRelayEvents.Messages.Result.init(payload: conversationToSend))
+        }
     }
 }
 
@@ -94,6 +105,8 @@ struct DiscussChannelJoinExpedition: GraniteExpedition {
         
         state.channel = state.service.server?.join(event.name)
         
-        GraniteLogger.info("Join channel: \(event.name)", .relay, focus: true)
+        state.service.server?.send("NAMES #\(event.name)")
+        
+        GraniteLogger.info("Join channel: \(event.name)", .relay, focus: false)
     }
 }

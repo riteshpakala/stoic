@@ -11,7 +11,7 @@ import Combine
 struct DiscussRelayEvents {
     public struct Client {
         public struct Set: GraniteEvent {
-            let user: UserInfo
+            let user: User
             
             public var beam: GraniteBeamType {
                 .rebound
@@ -25,7 +25,7 @@ struct DiscussRelayEvents {
                 }
                 
                 public var behavior: GraniteEventBehavior {
-                    .quite
+                    .quiet
                 }
             }
         }
@@ -49,6 +49,10 @@ struct DiscussRelayEvents {
                 .broadcast
             }
         }
+        
+        public struct Update: GraniteEvent {
+            let payload: Conversation
+        }
     }
     
     public struct Server {
@@ -56,8 +60,21 @@ struct DiscussRelayEvents {
             let user: DiscussServiceModels.User
         }
         
+        public struct UserLeft: GraniteEvent {
+            let username: String
+            let channel: String
+        }
+        
+        public struct UserQuit: GraniteEvent {
+            let username: String
+        }
+        
         public struct UserList: GraniteEvent {
             let users: [DiscussServiceModels.User]
+            
+            public struct Result: GraniteEvent {
+                let users: UserList
+            }
         }
     }
     
@@ -81,12 +98,12 @@ struct DiscussRelayEvents {
             }
             
             public var behavior: GraniteEventBehavior {
-                .quite
+                .quiet
             }
         }
         
         public struct Result: GraniteEvent {
-            let payload: Receive.Payload
+            let payload: Conversation
         }
         
         public struct Receive: GraniteEvent {
@@ -119,7 +136,7 @@ struct DiscussRelayEvents {
             }
             
             public var behavior: GraniteEventBehavior {
-                .quite
+                .quiet
             }
         }
     }

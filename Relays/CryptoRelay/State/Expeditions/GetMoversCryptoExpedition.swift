@@ -27,9 +27,9 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
         coreDataInstance.networkResponse(forRoute: state.cryptoWatch.getAggregateSummariesRoute) { result in
             if let data = result?.data {
                 if let movers = data.decodeNetwork(type: CryptoServiceModels.GetAggregateSummaries.self) {
-                
+
                     connection.request(generateEvent(movers, max: state.max, exchange: state.exchange, currency: state.currency))
-                    
+
                     needsUpdate = false
                 }
             }
@@ -51,12 +51,11 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
                                                         from: rawData) else {
                     return CryptoEvents.GlobalCategoryResult.init([], [], [])
                 }
+            
                 
                 coreDataInstance.save(route: state.cryptoWatch.getAggregateSummariesRoute,
                                       data: rawData,
                                       responseType: .movers)
-                
-                
                 
                 return generateEvent(decoded, max: state.max, exchange: state.exchange, currency: state.currency)
             }.eraseToAnyPublisher()
@@ -71,7 +70,7 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
             $0.key.contains(currency) &&
             !$0.key.contains("\(currency)t") &&
             !$0.key.contains("\(currency)c") &&
-             $0.key.contains(exchange)
+            $0.key.contains("\(exchange):")
         }
             
         let summariesSortedByVolume = markets.sorted(by: { $0.value.volume > $1.value.volume })

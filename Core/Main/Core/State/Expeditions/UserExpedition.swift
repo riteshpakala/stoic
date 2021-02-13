@@ -88,15 +88,15 @@ struct LoginResultExpedition: GraniteExpedition {
                                                uid: event.id)
             
             coreDataInstance.getPortfolio(username: info.username) { portfolio in
+                var newUser: User = .init(info: info)
                 if let portfolio = portfolio {
-                    connection.update(\RouterDependency.environment.user.portfolio,
-                                      value: portfolio, .here)
+                    newUser.portfolio = portfolio
                 }
+                connection.update(\RouterDependency.authState, value: .authenticated, .here)
+                connection.update(\RouterDependency.environment.user, value: newUser, .here)
+                connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
                 
                 GraniteLogger.info("set user", .expedition, focus: true)
-                connection.update(\RouterDependency.authState, value: .authenticated, .here)
-                connection.update(\RouterDependency.environment.user.info, value: info, .here)
-                connection.request(DiscussRelayEvents.Client.Set.init(user: info))
             }
         }
     }

@@ -17,6 +17,7 @@ public enum FloorStage: Equatable {
 
 public class FloorState: GraniteState {
     var activeSecurities: [[Security?]] = []
+    var activeQuotes: [[Quote?]] = []
     var floorStage: FloorStage = .none
     var floors: [Floor] = []
 }
@@ -27,7 +28,7 @@ public class FloorCenter: GraniteCenter<FloorState> {
     let tonalRelay: TonalRelay = .init()
     
     var envDependency: EnvironmentDependency {
-        dependency.hosted.env
+        dependency.hosted.env.add(self)
     }
     
     public override var links: [GraniteLink] {
