@@ -42,8 +42,7 @@ public struct PortfolioComponent: GraniteComponent {
                         PaddingVertical()
                     }
                     
-                    HoldingsComponent(state: inject(\.envDependency,
-                                                    target: \.holdingsPortfolio))
+                    HoldingsComponent(state: .init(context: .portfolio(.preview)))
                         .share(.init(dep(\.hosted)))
                 default:
                     EmptyView.init().hidden()
@@ -55,8 +54,7 @@ public struct PortfolioComponent: GraniteComponent {
             if state.stage == .adding {
                 VStack {
                     GraniteModal(content: {
-                        HoldingsComponent(state: inject(\.envDependency,
-                                                        target: \.holdingsStrategy))
+                        HoldingsComponent(state: .init(context: .portfolio(.holdings)))
                             .share(.init(dep(\.hosted,
                                              PortfolioCenter.route)))
                     }, onExitTap: {

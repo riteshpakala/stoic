@@ -19,19 +19,19 @@ struct SearchStockResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        switch state.context {
-        case .tonalCreate:
-            connection.update(\EnvironmentDependency.searchTone.securityGroup.stocks, value: event.result)
-            connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
-        case .portfolio:
-            connection.update(\EnvironmentDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.stocks, value: event.result)
-        case .floor:
-            connection.update(\EnvironmentDependency.holdingsFloor.assetAddState.searchState.securityGroup.stocks, value: event.result)
-        case .search:
-            connection.update(\EnvironmentDependency.search.securityGroup.stocks, value: event.result)
-        default:
-            break
-        }
+//        switch state.context {
+//        case .tonalCreate:
+//            connection.update(\EnvironmentDependency.searchTone.securityGroup.stocks, value: event.result)
+//            connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
+//        case .portfolio:
+//            connection.update(\EnvironmentDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.stocks, value: event.result)
+//        case .floor:
+//            connection.update(\EnvironmentDependency.holdingsFloor.assetAddState.searchState.securityGroup.stocks, value: event.result)
+//        case .search:
+//            connection.update(\EnvironmentDependency.search.securityGroup.stocks, value: event.result)
+//        default:
+//            break
+//        }
     }
 }
 
@@ -45,18 +45,20 @@ struct SearchCryptoResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        switch state.context {
-        case .tonalCreate:
-            connection.update(\EnvironmentDependency.searchTone.securityGroup.crypto, value: event.result)
-            connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
-        case .portfolio:
-            connection.update(\EnvironmentDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.crypto, value: event.result)
-        case .floor:
-            connection.update(\EnvironmentDependency.holdingsFloor.assetAddState.searchState.securityGroup.crypto, value: event.result)
-        case .search:
-            connection.update(\EnvironmentDependency.search.securityGroup.crypto, value: event.result)
-        default:
-            break
-        }
+        connection.request(SearchEvents.Result(securities: event.result), .contact)
+        
+//        switch state.context {
+//        case .tonalCreate:
+//            connection.update(\EnvironmentDependency.searchTone.securityGroup.crypto, value: event.result)
+//            connection.update(\EnvironmentDependency.tone.find.state, value: .searching)
+//        case .portfolio:
+//            connection.update(\EnvironmentDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.crypto, value: event.result)
+//        case .floor:
+//            connection.update(\EnvironmentDependency.holdingsFloor.assetAddState.searchState.securityGroup.crypto, value: event.result)
+//        case .search:
+//            connection.update(\EnvironmentDependency.search.securityGroup.crypto, value: event.result)
+//        default:
+//            break
+//        }
     }
 }

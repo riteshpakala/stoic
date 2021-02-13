@@ -75,6 +75,10 @@ struct CryptoEvents {
         public var beam: GraniteBeamType {
             .rebound
         }
+        
+        public var behavior: GraniteEventBehavior {
+            .quiet
+        }
     }
     
     //MARK: -- Crypto History

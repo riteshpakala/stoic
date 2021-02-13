@@ -26,9 +26,10 @@ class EnvironmentDependency: DependencyManager {
     
     var search: SearchQuery = .init(.init(.search))
     
-    var holdingsPortfolio: HoldingsState = .init( .init(.init(.portfolio(.holdings))))
-    var holdingsFloor: HoldingsState = .init( .init(.init(.floor)))
-    var holdingsStrategy: HoldingsState = .init( .init(.init(.strategy)), type: .radio)
+    var floorStage: FloorStage = .none
+//    var holdingsPortfolio: HoldingsState = .init( .init(.init(.portfolio(.holdings))))
+//    var holdingsFloor: HoldingsState = .init( .init(.init(.floor)))
+//    var holdingsStrategy: HoldingsState = .init( .init(.init(.strategy)), type: .radio)
 
     var strategiesPortfolio: StrategyState = .init()
     

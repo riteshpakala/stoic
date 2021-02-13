@@ -17,10 +17,8 @@ public struct AssetSearchComponent: GraniteComponent {
     public init() {}
     public var body: some View {
         VStack {
-            SearchComponent(
-                state: state.searchState)
-                .share(.init(dep(\.hosted,
-                                 AssetSearchCenter.route)))
+            SearchComponent(state: .init(state.securityType))
+                .listen(to: command)
                 .padding(.leading, Brand.Padding.medium)
                 .padding(.trailing, Brand.Padding.medium)
             
@@ -32,13 +30,13 @@ public struct AssetSearchComponent: GraniteComponent {
                 Spacer()
             }.padding(.top, Brand.Padding.medium)
             
-            if command.center.securities?.isNotEmpty == true {
-                AssetGridComponent(state: command.center.assetGridState)
-                    .payload(.init(object: command.center.securities))
-                    .listen(to: command, .stop)
+            if command.center.securities.isNotEmpty {
+                AssetGridComponent(state: .init(state.gridType))
+                    .payload(state.payload)
+                    .listen(to: command)
             }
         }
         .padding(.top, Brand.Padding.large)
-        .padding(.bottom, command.center.securities?.isNotEmpty == true ? 0.0 : Brand.Padding.large)
+        .padding(.bottom, command.center.securities.isNotEmpty ? 0.0 : Brand.Padding.large)
     }
 }

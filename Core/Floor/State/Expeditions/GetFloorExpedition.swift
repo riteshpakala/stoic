@@ -18,11 +18,7 @@ struct GetFloorExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        
-        if let stage = connection.retrieve(\EnvironmentDependency.holdingsFloor.floorStage) {
-            state.floorStage = stage
-        }
-        
+
         guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
               let floors = portfolio?.floors else {
             empty(state)

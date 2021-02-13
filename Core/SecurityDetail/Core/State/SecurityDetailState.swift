@@ -92,10 +92,6 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
         state.security
     }
     
-    var loaded: Bool {
-        envDependency.detail.stage == .loaded
-    }
-    
     var loadedQuote: Bool {
         state.quote != nil
     }

@@ -24,34 +24,39 @@ struct HoldingSelectedExpedition: GraniteExpedition {
             return
         }
         
-        guard let security = event.asset.asSecurity else { return }
-        switch state.context {
-        case .portfolio:
-            guard let router = connection.router else {
-                return
-            }
-            connection.update(\EnvironmentDependency.tonalModels.type,
-                              value: .specified(security))
-            router.request(Route.securityDetail(.init(object: security)))
-            
-        case .floor:
-            let location: CGPoint
-            if case let .adding(point) = state.floorStage {
-                location = point
-            } else {
-                location = .zero
-            }
-            security.addToFloor(username: user.info.username,
-                                location: location,
-                                moc: coreDataInstance) { portfolio in
-                if let portfolio = portfolio {
-                    connection.update(\EnvironmentDependency.user.portfolio,
-                                      value: portfolio)
-                }
-            }
-        default:
-            break
-        }
+        print("{TEST} we are here")
+        
+        //This should be adding to the user's portfolio
+        //And updating the floor as needed
+        
+//        guard let security = event.asset.asSecurity else { return }
+//        switch state.context {
+//        case .portfolio:
+//            guard let router = connection.router else {
+//                return
+//            }
+//            connection.update(\EnvironmentDependency.tonalModels.type,
+//                              value: .specified(security))
+//            router.request(Route.securityDetail(.init(object: security)))
+//
+//        case .floor:
+//            let location: CGPoint
+//            if case let .adding(point) = state.floorStage {
+//                location = point
+//            } else {
+//                location = .zero
+//            }
+//            security.addToFloor(username: user.info.username,
+//                                location: location,
+//                                moc: coreDataInstance) { portfolio in
+//                if let portfolio = portfolio {
+//                    connection.update(\EnvironmentDependency.user.portfolio,
+//                                      value: portfolio)
+//                }
+//            }
+//        default:
+//            break
+//        }
     }
 }
 

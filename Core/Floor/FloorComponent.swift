@@ -62,12 +62,10 @@ public struct FloorComponent: GraniteComponent {
             case .adding(_):
                 VStack {
                     GraniteModal(content: {
-                        
-                        HoldingsComponent(state: inject(\.envDependency,
-                                                        target: \.holdingsFloor))
+                        HoldingsComponent(state: .init(context: .floor))
                             .share(.init(dep(\.hosted)))
                     }, onExitTap: {
-                        set(\.floorStage, value: .none, update: \EnvironmentDependency.holdingsFloor.floorStage)
+                        set(\.floorStage, value: .none, update: \EnvironmentDependency.floorStage)
                     })
                 }
             default:
@@ -93,7 +91,7 @@ public struct FloorComponent: GraniteComponent {
                                 GraniteButtonComponent(
                                     state: .init(.addNoSeperator,
                                                  action: {
-                                                    set(\.floorStage, value: .adding(CGPoint.init(row, col)), update: \EnvironmentDependency.holdingsFloor.floorStage)
+                                                    set(\.floorStage, value: .adding(CGPoint.init(row, col)), update: \EnvironmentDependency.floorStage)
                                                  }))
                                 Spacer()
                             }.frame(maxWidth: .infinity,

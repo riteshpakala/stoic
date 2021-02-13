@@ -56,6 +56,19 @@ public class AssetGridState: GraniteState {
         self.leadingPadding = leadingPadding
     }
     
+    public init(_ leadingPadding: CGFloat,
+                type: AssetGridType) {
+        self.assetGridType = type
+        self.context = .unassigned
+        self.leadingPadding = leadingPadding
+    }
+    
+    public init(_ type: AssetGridType) {
+        self.assetGridType = type
+        self.context = .unassigned
+        self.leadingPadding = Brand.Padding.large
+    }
+    
     public required init() {
         self.assetGridType = .standard
         self.context = .unassigned

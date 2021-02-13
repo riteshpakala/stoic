@@ -14,33 +14,44 @@ public enum HoldingsType {
     case add
     case radio
     case standalone
+    
+    
 }
 
 public class HoldingsState: GraniteState {
     var addToPortfolio: Bool = false
-    var assetAddState: AssetAddState
+    
     var context: WindowType
-    var type: HoldingsType
-    var floorStage: FloorStage {
-        didSet {
-            assetAddState.searchState.state.floorStage = floorStage
+    
+    
+    var gridType: AssetGridType {
+        switch context {
+        case .floor:
+            return .add
+        case .portfolio(let type):
+            switch type {
+            case .preview, .expanded:
+                return .standard
+            default:
+                return .add
+            }
+        case .strategy:
+            return .radio
+        default:
+            return .standard
         }
     }
     
-    public init(_ searchState: SearchQuery,
-                floorStage: FloorStage? = nil,
-                type: HoldingsType = .add) {
-        self.assetAddState = .init(searchState)
-        self.context = self.assetAddState.searchState.state.context
-        self.floorStage = floorStage ?? .none
-        self.type = type
+    public init(context: WindowType) {
+        self.context = context
     }
     
     public required init() {
-        self.assetAddState = .init(.init(.init(.portfolio(.unassigned))))
-        self.context = .portfolio(.unassigned)
-        self.floorStage = .none
-        self.type = .add
+        self.context = .unassigned
+//        self.assetAddState = .init(.init(.init(.portfolio(.unassigned))))
+//        self.context = .portfolio(.unassigned)
+//        self.floorStage = .none
+//        self.type = .add
     }
 }
 

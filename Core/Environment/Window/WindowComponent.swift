@@ -40,7 +40,6 @@ public struct WindowComponent: GraniteComponent {
                                  WindowCenter.route)))
         case .securityDetail(let kind):
             SecurityDetailComponent(state: .init(kind,
-                                                 quote: command.center.envDependency.detail.quote,
                                                  model: command.center.envDependency.detail.model))
                 .share(.init(dep(\.hosted,
                                  WindowCenter.route)))

@@ -15,7 +15,7 @@ class RouterDependency: DependencyManager {
     }()
     
     lazy var environment: EnvironmentDependency = {
-        router.dependencies.get(EnvironmentDependency.self) ?? .init()
+        return router.dependencies.get(EnvironmentDependency.self) ?? .init()
     }()
     
     var authState: AuthState = .none

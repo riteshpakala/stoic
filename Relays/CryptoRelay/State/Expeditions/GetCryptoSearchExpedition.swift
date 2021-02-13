@@ -162,7 +162,6 @@ struct GetCryptoSearchQuotesExpedition: GraniteExpedition {
             .getQuotes(symbols: query)
             .replaceError(with: [])
             .map { result in
-                
                 var crypto: [CryptoCurrency] = []
                 for item in result {
                     if let symbol = event.data.first(where: { $0.entityDescription.lowercased() == item.name.lowercased()}) {

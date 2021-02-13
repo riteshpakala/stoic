@@ -19,8 +19,8 @@ struct AddToFloorExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        connection.update(\EnvironmentDependency.holdingsFloor.floorStage,
-                          value: .adding(event.location))
+//        connection.update(\EnvironmentDependency.holdingsFloor.floorStage,
+//                          value: .adding(event.location))
     }
 }
 
@@ -34,7 +34,7 @@ struct ExitAddToFloorExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        connection.update(\EnvironmentDependency.holdingsFloor.floorStage,
-                          value: .none)
+//        connection.update(\EnvironmentDependency.holdingsFloor.floorStage,
+//                          value: .none)
     }
 }

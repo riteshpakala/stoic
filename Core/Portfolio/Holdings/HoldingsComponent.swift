@@ -20,9 +20,11 @@ public struct HoldingsComponent: GraniteComponent {
         ZStack {
             if state.addToPortfolio {
                 VStack(spacing: 0) {
-                    AssetAddComponent(state: state.assetAddState)
-                        .share(.init(dep(\.hosted)))
                     Spacer()
+                    AssetSearchComponent(state: .init(state.context))
+                        .listen(to: command, .stop)
+                    Spacer()
+                    
                     PaddingVertical(Brand.Padding.xSmall)
                     GraniteButtonComponent(state: .init("cancel",
                                                         action: {
@@ -40,8 +42,7 @@ public struct HoldingsComponent: GraniteComponent {
                             .padding(.leading, Brand.Padding.medium)
                             .padding(.trailing, Brand.Padding.medium)
                         
-                        AssetGridComponent(state: .init(state.context.assetGridType,
-                                                        context: state.context))
+                        AssetGridComponent(state: .init(state.gridType))
                             .listen(to: command, .stop)
                             .payload(retrievePayload(\.envDependency,
                                                      target: \.user.portfolio?.holdings.securities)).showEmptyState
@@ -49,7 +50,7 @@ public struct HoldingsComponent: GraniteComponent {
                     }
                     .padding(.top, Brand.Padding.large)
                     
-                    if state.type == .add {
+                    if state.gridType == .add {
                         GraniteButtonComponent(
                             state: .init(.add,
                                          padding: .init(0,0,Brand.Padding.xSmall,0),

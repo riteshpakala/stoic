@@ -53,6 +53,7 @@ struct MoversDataExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        
         guard let data = event.data as? StockServiceModels.Movers else { return }
         
         if event.cache, let raw = data.rawData {

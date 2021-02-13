@@ -16,6 +16,17 @@ public class AssetSearchState: GraniteState {
     let context: WindowType
     var floorStage: FloorStage
     
+    var gridType: AssetGridType {
+        switch context {
+        case .floor, .portfolio:
+            return .add
+        case .strategy:
+            return .radio
+        default:
+            return .standard
+        }
+    }
+    
     var securityType: SecurityType = .stock {
         didSet {
             searchState.securityType = securityType
@@ -48,23 +59,25 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
         [
 //            SearchAssetStockExpedition.Discovery(),
 //            SearchAssetCryptoExpedition.Discovery(),
-            AssetSelectedExpedition.Discovery()
+            AssetSelectedExpedition.Discovery(),
+            SearchAssetExpedition.Discovery()
         ]
     }
     
-    var securities: [Security]? {
-        switch state.context {
-        case .portfolio:
-            return envDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.get(state.securityType)
-        case .floor:
-            return envDependency.holdingsFloor.assetAddState.searchState.securityGroup.get(state.securityType)
-        case .tonalCreate:
-            return envDependency.searchTone.securityGroup.get(state.securityType)
-        case .search:
-            return envDependency.search.securityGroup.get(state.securityType)
-        default:
-            return nil
-        }
+    var securities: [Security] {
+        return (state.payload?.object as? [Security]) ?? []
+//        switch state.context {
+//        case .portfolio:
+//            return envDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.get(state.securityType)
+//        case .floor:
+//            return envDependency.holdingsFloor.assetAddState.searchState.securityGroup.get(state.securityType)
+//        case .tonalCreate:
+//            return envDependency.searchTone.securityGroup.get(state.securityType)
+//        case .search:
+//            return envDependency.search.securityGroup.get(state.securityType)
+//        default:
+//            return nil
+//        }
     }
     
     var assetGridState: AssetGridState {

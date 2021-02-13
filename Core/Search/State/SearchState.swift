@@ -20,6 +20,11 @@ public class SearchState: GraniteState {
     
     let context: WindowType
     
+    public init(_ securityType: SecurityType) {
+        self.securityType = securityType
+        self.context = .unassigned
+    }
+    
     public init(_ context: WindowType) {
         self.context = context
     }

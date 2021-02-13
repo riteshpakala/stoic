@@ -37,23 +37,4 @@ public struct Portfolio {
         self.strategies = strategies
     }
     
-    public func stageForDetail(_ security: Security) -> SecurityDetailStage? {
-        if let index = floors.firstIndex(where: { $0.security?.assetID == security.assetID }) {
-            return floors[index].detail.stage
-        } else {
-            return nil
-        }
-    }
-    
-    public func updateDetailStage(_ security: Security, stage: SecurityDetailStage) {
-        if let index = floors.firstIndex(where: { $0.security?.assetID == security.assetID }) {
-            floors[index].detail.stage = stage
-        }
-    }
-    
-    public func updateDetailQuote(_ security: Security, quote: Quote?) {
-        if let index = floors.firstIndex(where: { $0.security?.assetID == security.assetID }) {
-            floors[index].detail.quote = quote
-        }
-    }
 }

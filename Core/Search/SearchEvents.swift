@@ -12,4 +12,7 @@ import Combine
 
 struct SearchEvents {
     public struct Query: GraniteEvent {}
+    public struct Result: GraniteEvent {
+        var securities: [Security]
+    }
 }
