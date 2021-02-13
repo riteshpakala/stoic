@@ -848,6 +848,8 @@
 		71D63F6F2592BFC40085D718 /* AssetSectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F6A2592BFC40085D718 /* AssetSectionState.swift */; };
 		71D63F702592BFC40085D718 /* AssetSectionEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F6B2592BFC40085D718 /* AssetSectionEvents.swift */; };
 		71D63F712592BFC40085D718 /* AssetSectionEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D63F6B2592BFC40085D718 /* AssetSectionEvents.swift */; };
+		71D7B5DF25D871DB009839C3 /* AssetGridType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7B5DE25D871DB009839C3 /* AssetGridType.swift */; };
+		71D7B5E025D871DB009839C3 /* AssetGridType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7B5DE25D871DB009839C3 /* AssetGridType.swift */; };
 		71DC58C725988F11004935CF /* StoicRNN_10.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71DC58C625988F11004935CF /* StoicRNN_10.mlmodel */; };
 		71DC58C825988F11004935CF /* StoicRNN_10.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 71DC58C625988F11004935CF /* StoicRNN_10.mlmodel */; };
 		71DC58D125988F56004935CF /* Lemmatizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DC58CD25988F56004935CF /* Lemmatizer.swift */; };
@@ -1376,6 +1378,7 @@
 		71D63F682592BFC40085D718 /* AssetSectionComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetSectionComponent.swift; sourceTree = "<group>"; };
 		71D63F6A2592BFC40085D718 /* AssetSectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetSectionState.swift; sourceTree = "<group>"; };
 		71D63F6B2592BFC40085D718 /* AssetSectionEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetSectionEvents.swift; sourceTree = "<group>"; };
+		71D7B5DE25D871DB009839C3 /* AssetGridType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetGridType.swift; sourceTree = "<group>"; };
 		71DC58C625988F11004935CF /* StoicRNN_10.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = StoicRNN_10.mlmodel; sourceTree = "<group>"; };
 		71DC58CD25988F56004935CF /* Lemmatizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lemmatizer.swift; sourceTree = "<group>"; };
 		71DC58CE25988F56004935CF /* Words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Words.json; sourceTree = "<group>"; };
@@ -3415,6 +3418,14 @@
 			path = AssetSection;
 			sourceTree = "<group>";
 		};
+		71D7B5DD25D871CE009839C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				71D7B5DE25D871DB009839C3 /* AssetGridType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		71DC58C525988EF6004935CF /* AI */ = {
 			isa = PBXGroup;
 			children = (
@@ -3638,6 +3649,7 @@
 		71EE7070258D8F88005B2B8E /* AssetGrid */ = {
 			isa = PBXGroup;
 			children = (
+				71D7B5DD25D871CE009839C3 /* Models */,
 				71EE708B258D9072005B2B8E /* AssetGridItem */,
 				71D63F372592BBAB0085D718 /* AssetGridItemContainer */,
 				71EE707F258D9036005B2B8E /* Core */,
@@ -4266,6 +4278,7 @@
 				71D63F6C2592BFC40085D718 /* AssetSectionComponent.swift in Sources */,
 				71C2BFAA25ABE1ED006445EB /* FloorEvents.swift in Sources */,
 				7183D55F25A428AE00FB91A9 /* GlowingIndicator.swift in Sources */,
+				71D7B5DF25D871DB009839C3 /* AssetGridType.swift in Sources */,
 				71143DE825A4C14F00379E4B /* Quote.swift in Sources */,
 				7121F6DA2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */,
 				71332A2F25A79DD0005A72A9 /* AssetSearchState.swift in Sources */,
@@ -4403,6 +4416,7 @@
 				712562A725B286E300C8AC68 /* GetStrategyExpedition.swift in Sources */,
 				7183D56025A428AE00FB91A9 /* GlowingIndicator.swift in Sources */,
 				71149ED825A7A47600148D68 /* Environment.swift in Sources */,
+				71D7B5E025D871DB009839C3 /* AssetGridType.swift in Sources */,
 				7183D55025A428AE00FB91A9 /* TimeDisplayModeSelector.swift in Sources */,
 				7125BD8F25A1316500F22717 /* DefaultThumb.swift in Sources */,
 				7199B2A025C1210100B1A2B3 /* GraniteLoadingState.swift in Sources */,

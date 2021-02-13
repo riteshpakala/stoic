@@ -22,7 +22,7 @@ extension NSObject {
     }
 }
 
-open class Archiveable: Codable {}
+public protocol Archiveable: Codable {}
 extension Archiveable {
     public var archived: Data? {
         let encoder = JSONEncoder()
@@ -34,4 +34,3 @@ extension Archiveable {
         }
     }
 }
-

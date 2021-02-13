@@ -47,7 +47,6 @@ public struct StockEvents {
     
     public struct MoversData: GraniteEvent {
         let data: NetworkResponseData?
-        let cache: Bool
     }
     
     public struct MoverStockQuotes: GraniteEvent {
@@ -70,10 +69,6 @@ public struct StockEvents {
         
         public var beam: GraniteBeamType {
             .rebound
-        }
-        
-        public var behavior: GraniteEventBehavior {
-            .quiet
         }
     }
     

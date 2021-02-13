@@ -18,16 +18,12 @@ struct AssetSelectedExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-
+        
 //        guard let user = connection.retrieve(\EnvironmentDependency.user) else {
 //            return
 //        }
 //
 //        switch state.context {
-//        case .tonalCreate:
-//            guard let security = event.asset.asSecurity else { return }
-//
-//            connection.update(\EnvironmentDependency.tone.find.security, value: security)
 //        case .portfolio:
 //            guard let security = event.asset.asSecurity else { return }
 //            security.addToPortfolio(username: user.info.username,
@@ -55,7 +51,7 @@ struct AssetSelectedExpedition: GraniteExpedition {
 //                }
 //            }
 //        case .search:
-        guard state.gridType == .standard else { return }
+        guard state.context == .unassigned else { return }
         guard let security = event.asset.asSecurity else { return }
         guard let router = connection.router else { return }
         

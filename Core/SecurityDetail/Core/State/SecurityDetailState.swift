@@ -48,10 +48,19 @@ public class SecurityDetailState: GraniteState {
         }
     }
     
+    var modelID: String = ""
     var model: TonalModel? = nil
     var tune: SentimentOutput = .neutral
     var currentPrediction: TonalPrediction = .zero
     var currentPredictionPlotData: GraphPageViewModel.PlotData? = nil
+    
+    public init(_ kind: SecurityDetailType,
+                quote: Quote? = nil,
+                modelID: String = "") {
+        self.kind = kind
+        self.quote = quote
+        self.modelID = modelID
+    }
     
     public init(_ kind: SecurityDetailType,
                 quote: Quote? = nil,

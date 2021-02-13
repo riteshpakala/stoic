@@ -88,7 +88,7 @@ struct LoginResultExpedition: GraniteExpedition {
                                                uid: event.id)
             
             coreDataInstance.getPortfolio(username: info.username) { portfolio in
-                var newUser: User = .init(info: info)
+                let newUser: User = .init(info: info)
                 if let portfolio = portfolio {
                     newUser.portfolio = portfolio
                 }

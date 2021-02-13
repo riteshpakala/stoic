@@ -23,8 +23,15 @@ public struct NetworkServiceModels {
     
 }
 
-public protocol NetworkResponseData: Codable {
+public protocol NetworkResponseData: Archiveable {
     var rawData: Data? { get set }
+}
+
+extension NetworkResponseData {
+    public var rawData: Data? {
+        get { nil }
+        set {}
+    }
 }
 
 extension Data {

@@ -11,38 +11,19 @@ import SwiftUI
 import Combine
 
 public class AssetSearchState: GraniteState {
-    let searchState: SearchState
     var securityData: [Security] = []
     let context: WindowType
     var floorStage: FloorStage
-    
-    var gridType: AssetGridType {
-        switch context {
-        case .floor, .portfolio:
-            return .add
-        case .strategy:
-            return .radio
-        default:
-            return .standard
-        }
-    }
-    
-    var securityType: SecurityType = .stock {
-        didSet {
-            searchState.securityType = securityType
-        }
-    }
+    var securityType: SecurityType = .stock
     
     public init(_ context: WindowType,
                 floorStage: FloorStage? = nil) {
         self.context = context
-        self.searchState = .init(context)
         self.floorStage = floorStage ?? .none
     }
     
     public required init() {
         self.context = .unassigned
-        self.searchState = .init()
         self.floorStage = .none
     }
 }
@@ -57,8 +38,6 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
-//            SearchAssetStockExpedition.Discovery(),
-//            SearchAssetCryptoExpedition.Discovery(),
             AssetSelectedExpedition.Discovery(),
             SearchAssetExpedition.Discovery()
         ]
@@ -80,14 +59,7 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
 //        }
     }
     
-    var assetGridState: AssetGridState {
-        switch state.context {
-        case .portfolio,
-             .floor:
-            return .init(.add, context: state.context)
-        default:
-            return .init(.standard, context: state.context)
-        
-        }
+    var securityType: SecurityType {
+        securities.first?.securityType ?? .unassigned
     }
 }

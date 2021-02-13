@@ -10,69 +10,48 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-public enum AssetGridType {
-    case add
-    case radio
-    case standard
-    case standardStoics
-    case model
-}
 
-extension WindowType {
-    var assetGridType: AssetGridType {
-        switch self {
-        case .floor:
-            return .add
-        case .strategy:
-            return .radio
-        default:
-            return .standard
-        }
-    }
-}
 
 public class AssetGridState: GraniteState {
+    var type: AssetGridType
     var context: WindowType
     
     var assetData: [Asset] {
         payload?.object as? [Asset] ?? []
     }
-    let assetGridType: AssetGridType
     
     let leadingPadding: CGFloat
     
-    public init(_ type: AssetGridType,
-                context: WindowType) {
-        self.assetGridType = type
-        self.context = context
+    public init(context: WindowType) {
+        self.type = context.assetGridType
         self.leadingPadding = Brand.Padding.large
+        self.context = context
     }
     
-    public init(_ leadingPadding: CGFloat,
-                type: AssetGridType,
+    public init(_ type: AssetGridType,
                 context: WindowType) {
-        self.assetGridType = type
+        self.type = type
+        self.leadingPadding = Brand.Padding.large
         self.context = context
-        self.leadingPadding = leadingPadding
     }
     
     public init(_ leadingPadding: CGFloat,
                 type: AssetGridType) {
-        self.assetGridType = type
-        self.context = .unassigned
+        self.type = type
         self.leadingPadding = leadingPadding
+        self.context = .unassigned
     }
     
-    public init(_ type: AssetGridType) {
-        self.assetGridType = type
+    public init(_ leadingPadding: CGFloat) {
+        self.type = .standard
+        self.leadingPadding = leadingPadding
         self.context = .unassigned
-        self.leadingPadding = Brand.Padding.large
     }
     
     public required init() {
-        self.assetGridType = .standard
-        self.context = .unassigned
+        self.type = .standard
         self.leadingPadding = Brand.Padding.large
+        self.context = .unassigned
     }
 }
 

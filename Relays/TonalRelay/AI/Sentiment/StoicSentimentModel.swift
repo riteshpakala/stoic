@@ -26,7 +26,6 @@ public class SentimentOutput: Archiveable {
         self.neu = neu
         self.compound = compound
         self.date = date
-        super.init()
     }
     
     required public convenience init(from decoder: Decoder) throws {
@@ -45,7 +44,7 @@ public class SentimentOutput: Archiveable {
                   date: date)
     }
     
-    public override func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(pos, forKey: .pos)

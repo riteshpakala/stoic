@@ -34,7 +34,7 @@ extension StockService {
             timeoutInterval: 10.0)
         
         let headers = [
-            "x-rapidapi-key": "2a224e70a9msh9e0e2e3a2a20673p19f962jsn59435ee9b515",
+            "x-rapidapi-key": "f9fae3e5f7msh69967c7003f75bcp1523aejsn03e34851f3fc",
             "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
         ]
         
@@ -46,9 +46,7 @@ extension StockService {
                 .dataTaskPublisher(for: request)
                 .compactMap { (data, response) -> NetworkResponseData? in
                     
-                    var movers: StockServiceModels.Movers? = data.decodeNetwork(type: StockServiceModels.Movers.self, decoder: decoder)
-                    
-                    movers?.rawData = data
+                    let movers: StockServiceModels.Movers? = data.decodeNetwork(type: StockServiceModels.Movers.self, decoder: decoder)
                     return movers
                 
                 }.eraseToAnyPublisher()
@@ -58,7 +56,17 @@ extension StockService {
 extension StockServiceModels {
     public struct Movers: NetworkResponseData {
         let finance: Finance
-        public var rawData: Data?
+    }
+    
+    public struct MoversArchiveable: NetworkResponseData {
+        var movers: StockServiceModels.Movers?
+        var quotes: [StockServiceModels.Quotes]
+        
+        public init(_ movers: StockServiceModels.Movers? = nil,
+                    _ quotes: [StockServiceModels.Quotes] = []) {
+            self.movers = movers
+            self.quotes = quotes
+        }
     }
     
     public struct Finance: Codable {

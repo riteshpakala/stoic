@@ -27,7 +27,7 @@ struct TonalModelTappedExpedition: GraniteExpedition {
         
         switch router.route.convert(to: Route.self) {
         case .securityDetail:
-            connection.update(\EnvironmentDependency.detail.model, value: model)
+            connection.update(\EnvironmentDependency.detail.modelID, value: model.assetID)
         default:
             connection.update(\EnvironmentDependency.tonalModels.type, value: .specified(security))
             router.request(Route.securityDetail(.init(object: security)))

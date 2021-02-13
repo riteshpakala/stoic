@@ -51,6 +51,7 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
+            ToneSelectedExpedition.Discovery(),
             FindTheToneExpedition.Discovery(),
             StockHistoryExpedition.Discovery(),
             CryptoHistoryExpedition.Discovery(),

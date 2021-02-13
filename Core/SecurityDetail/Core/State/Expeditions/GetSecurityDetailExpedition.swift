@@ -30,6 +30,10 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 
                 state.quote = quote
                 
+                if let model = state.quote?.models.first(where: { $0.assetID == state.modelID }) {
+                    state.model = model
+                }
+                
             } else {
                 updateQuote(from: state.security, connection, quote)
             }

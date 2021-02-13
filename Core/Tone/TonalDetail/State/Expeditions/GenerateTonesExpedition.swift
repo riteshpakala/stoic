@@ -26,7 +26,7 @@ struct GenerateTonesExpedition: GraniteExpedition {
             return
         }
         
-        guard let quote = detail.model?.quote else {
+        guard let quote = state.model?.quote else {
             return
         }
     

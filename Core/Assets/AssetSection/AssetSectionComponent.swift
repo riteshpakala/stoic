@@ -21,7 +21,13 @@ public struct AssetSectionComponent: GraniteComponent {
     public var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                GraniteText(state.windowType.label, .headline, .bold)
+                if command.center.toggleTitle {
+                    GraniteToggle(options: .init(command.center.toggleTitleLabels), onToggle: { index in
+                        set(\.toggleTitleIndex, value: index)
+                    })
+                } else {
+                    GraniteText(state.context.label, .headline, .bold)
+                }
                 Spacer()
                 GraniteToggle(options: .init(["stock", "crypto"]), onToggle: { index in
                     set(\.securityType, value: index == 0 ? .stock : .crypto)
@@ -30,7 +36,7 @@ public struct AssetSectionComponent: GraniteComponent {
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                AssetGridComponent(state: .init(.standard, context: state.windowType))
+                AssetGridComponent(state: .init(context: state.context))
                     .listen(to: command, .stop)
                     .payload(.init(object: command.center.movers)).showEmptyState
             }

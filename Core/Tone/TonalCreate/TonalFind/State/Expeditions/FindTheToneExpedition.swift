@@ -9,6 +9,23 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+struct ToneSelectedExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = AssetGridItemContainerEvents.AssetTapped
+    typealias ExpeditionState = TonalFindState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        guard let security = event.asset.asSecurity else { return }
+
+        connection.update(\EnvironmentDependency.tone.find.security, value: security)
+    }
+}
+
+
 struct FindTheToneExpedition: GraniteExpedition {
     typealias ExpeditionEvent = TonalFindEvents.Find
     typealias ExpeditionState = TonalFindState

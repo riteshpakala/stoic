@@ -12,16 +12,17 @@ import Combine
 
 public class AssetSectionState: GraniteState {
     var securityType: SecurityType
-    var windowType: WindowType
+    var toggleTitleIndex: Int = 0
+    var context: WindowType
     
-    public init(windowType: WindowType, _ securityType: SecurityType) {
-        self.windowType = windowType
+    public init(context: WindowType, _ securityType: SecurityType) {
+        self.context = context
         self.securityType = securityType
         super.init()
     }
     
     required init() {
-        self.windowType = .unassigned
+        self.context = .unassigned
         self.securityType = .unassigned
     }
 }
@@ -45,9 +46,18 @@ public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
             return []
         }
         
-        switch state.windowType {
+        switch state.context {
         case .topVolume:
             return categories.topVolume
+        case .winnersAndLosers:
+            switch toggleTitleLabels[state.toggleTitleIndex] {
+            case WindowType.winners(.unassigned).label:
+                return categories.winners
+            case WindowType.losers(.unassigned).label:
+                return categories.losers
+            default:
+                return []
+            }
         case .winners:
             return categories.winners
         case .losers:
@@ -56,4 +66,23 @@ public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
             return []
         }
     }
+    
+    var toggleTitle: Bool {
+        switch state.context {
+        case .winnersAndLosers:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var toggleTitleLabels: [String] {
+        switch state.context {
+        case .winnersAndLosers:
+            return ["winners", "losers"]
+        default:
+            return []
+        }
+    }
 }
+

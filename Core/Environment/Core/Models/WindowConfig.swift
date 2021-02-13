@@ -60,6 +60,7 @@ public enum WindowType: Hashable {
     case topVolume(SecurityType)
     case winners(SecurityType)
     case losers(SecurityType)
+    case winnersAndLosers(SecurityType)
     
     case securityDetail(SecurityDetailType)
     
@@ -89,6 +90,7 @@ public enum WindowType: Hashable {
         case .winners,
              .losers,
              .topVolume,
+             .winnersAndLosers,
              .recents,
              .publicModels :
             return 3

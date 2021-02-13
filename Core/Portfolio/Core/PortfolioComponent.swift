@@ -54,7 +54,7 @@ public struct PortfolioComponent: GraniteComponent {
             if state.stage == .adding {
                 VStack {
                     GraniteModal(content: {
-                        HoldingsComponent(state: .init(context: .portfolio(.holdings)))
+                        HoldingsComponent(state: .init(context: .strategy))
                             .share(.init(dep(\.hosted,
                                              PortfolioCenter.route)))
                     }, onExitTap: {

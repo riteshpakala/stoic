@@ -24,10 +24,9 @@ public struct TonalFindComponent: GraniteComponent {
                 .padding(.top, Brand.Padding.medium)
             
             VStack {
-                AssetSearchComponent(
-                    state: inject(\.envDependency,
-                                     target: \.searchTone.state))
+                AssetSearchComponent(state: .init(.tonalCreate(.none)))
                     .share(.init(dep(\.hosted)))
+                    .listen(to: command, .stop)
             }
             
             if command.center.findState == .parsed {

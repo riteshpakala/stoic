@@ -35,7 +35,6 @@ public class TonalModels: Archiveable {
                 volume = svmModel
             }
         }
-        super.init()
     }
     
     enum CodingKeys: String, CodingKey {
@@ -71,7 +70,7 @@ public class TonalModels: Archiveable {
         self.currentType = ModelType.init(rawValue: typeValue) ?? .none
     }
     
-    public override func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(close, forKey: .close)

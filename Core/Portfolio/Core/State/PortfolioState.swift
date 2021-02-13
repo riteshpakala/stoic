@@ -14,6 +14,8 @@ public enum PortfolioType: Equatable, Hashable {
     case expanded
     case preview
     case holdings
+    case add
+    case addMultiple
     case unassigned
 }
 public enum PortfolioStage: Equatable {

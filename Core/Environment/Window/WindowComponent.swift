@@ -20,9 +20,10 @@ public struct WindowComponent: GraniteComponent {
         switch state.config.kind {
         case .topVolume(let securityType),
              .winners(let securityType),
-             .losers(let securityType):
+             .losers(let securityType),
+             .winnersAndLosers(let securityType):
             AssetSectionComponent(
-                state: .init(windowType: state.config.kind,
+                state: .init(context: state.config.kind,
                              securityType))
                 .share(.init(dep(\.hosted)))
         case .portfolio(let type):
@@ -34,13 +35,12 @@ public struct WindowComponent: GraniteComponent {
                 .share(.init(dep(\.hosted,
                                  WindowCenter.route)))
         case .search:
-            AssetSearchComponent(state: inject(\.envDependency,
-                                                  target: \.search.state))
+            AssetSearchComponent()
                 .share(.init(dep(\.hosted,
                                  WindowCenter.route)))
         case .securityDetail(let kind):
             SecurityDetailComponent(state: .init(kind,
-                                                 model: command.center.envDependency.detail.model))
+                                                 modelID: command.center.envDependency.detail.modelID))
                 .share(.init(dep(\.hosted,
                                  WindowCenter.route)))
         case .tonalCreate(let stage):

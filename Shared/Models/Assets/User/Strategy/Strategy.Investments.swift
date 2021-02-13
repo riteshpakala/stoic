@@ -29,7 +29,6 @@ extension Strategy {
                             _ date: Date = Date.today) {
                     self.amount = amount
                     self.date = date
-                    super.init()
                 }
                 
                 enum CodingKeys: String, CodingKey {
@@ -46,7 +45,7 @@ extension Strategy {
                     self.init(amount, date)
                 }
                 
-                public override func encode(to encoder: Encoder) throws {
+                public func encode(to encoder: Encoder) throws {
                     var container = encoder.container(keyedBy: CodingKeys.self)
                     
                     try container.encode(amount, forKey: .amount)
@@ -79,7 +78,6 @@ extension Strategy {
                 self.exchangeName = security.exchangeName
                 self.assetID = security.assetID
                 self.initial = .init(security.lastValue, security.date)
-                super.init()
             }
             
             public init(ticker: String,
@@ -92,7 +90,6 @@ extension Strategy {
                 self.companyName = companyName
                 self.assetID = assetID
                 self.initial = initial
-                super.init()
             }
             
             public static var empty: Strategy.Investments.Item {
@@ -127,7 +124,7 @@ extension Strategy {
                 self.changes = changes.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
             }
             
-            public override func encode(to encoder: Encoder) throws {
+            public func encode(to encoder: Encoder) throws {
                 var container = encoder.container(keyedBy: CodingKeys.self)
                 
                 try container.encode(ticker, forKey: .ticker)
@@ -171,7 +168,6 @@ extension Strategy {
         
         public init(items: [Item] = []) {
             self.items = items
-            super.init()
         }
         
         enum CodingKeys: String, CodingKey {
@@ -186,7 +182,7 @@ extension Strategy {
             self.init(items: items)
         }
         
-        public override func encode(to encoder: Encoder) throws {
+        public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             
             try container.encode(items, forKey: .items)

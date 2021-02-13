@@ -64,7 +64,7 @@ extension DiscussComponent {
                                              })).transformEffect(.rotation(.init(degrees: 45)))
                         }
 
-                        AssetGridComponent(state: .init(0, type: .standard, context: .discuss))
+                        AssetGridComponent(state: .init(0))
                             .payload(.init(object: state.users))
                             .frame(maxWidth: 240, maxHeight: .infinity).background(Brand.Colors.black)
                     }
@@ -106,7 +106,7 @@ extension DiscussComponent {
                 if !EnvironmentConfig.isIPhone {
                     PaddingHorizontal()
                     
-                    AssetGridComponent(state: .init(0, type: .standard, context: .discuss))
+                    AssetGridComponent(state: .init(0))
                         .payload(.init(object: users))
                         .frame(maxWidth: 240, maxHeight: .infinity)
                 }

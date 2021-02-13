@@ -10,37 +10,10 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-public enum HoldingsType {
-    case add
-    case radio
-    case standalone
-    
-    
-}
-
 public class HoldingsState: GraniteState {
     var addToPortfolio: Bool = false
     
     var context: WindowType
-    
-    
-    var gridType: AssetGridType {
-        switch context {
-        case .floor:
-            return .add
-        case .portfolio(let type):
-            switch type {
-            case .preview, .expanded:
-                return .standard
-            default:
-                return .add
-            }
-        case .strategy:
-            return .radio
-        default:
-            return .standard
-        }
-    }
     
     public init(context: WindowType) {
         self.context = context

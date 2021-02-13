@@ -21,7 +21,7 @@ public struct HoldingsComponent: GraniteComponent {
             if state.addToPortfolio {
                 VStack(spacing: 0) {
                     Spacer()
-                    AssetSearchComponent(state: .init(state.context))
+                    AssetSearchComponent(state: .init(.portfolio(.add)))
                         .listen(to: command, .stop)
                     Spacer()
                     
@@ -42,7 +42,7 @@ public struct HoldingsComponent: GraniteComponent {
                             .padding(.leading, Brand.Padding.medium)
                             .padding(.trailing, Brand.Padding.medium)
                         
-                        AssetGridComponent(state: .init(state.gridType))
+                        AssetGridComponent(state: .init(.standard, context: state.context))
                             .listen(to: command, .stop)
                             .payload(retrievePayload(\.envDependency,
                                                      target: \.user.portfolio?.holdings.securities)).showEmptyState
@@ -50,15 +50,13 @@ public struct HoldingsComponent: GraniteComponent {
                     }
                     .padding(.top, Brand.Padding.large)
                     
-                    if state.gridType == .add {
-                        GraniteButtonComponent(
-                            state: .init(.add,
-                                         padding: .init(0,0,Brand.Padding.xSmall,0),
-                                         action: {
-                                           GraniteHaptic.light.invoke()
-                                           set(\.addToPortfolio, value: true)
-                                         }))
-                    }
+                    GraniteButtonComponent(
+                        state: .init(.add,
+                                     padding: .init(0,0,Brand.Padding.xSmall,0),
+                                     action: {
+                                       GraniteHaptic.light.invoke()
+                                       set(\.addToPortfolio, value: true)
+                                     }))
                 }
             }
         }

@@ -19,6 +19,10 @@ struct AssetGridItemContainerEvents {
         public init(_ asset: Asset) {
             self.asset = asset
         }
+        
+        public var behavior: GraniteEventBehavior {
+            .quiet
+        }
     }
     public struct AssetsSelected: GraniteEvent {
         public let assetIDs: [String]
