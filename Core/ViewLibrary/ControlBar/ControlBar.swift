@@ -59,7 +59,11 @@ public struct ControlBar: View {
                 
                 GraniteButtonComponent(state: .init(.image("home_icon"),
                                                     selected: currentRoute == .home && isIPhone,
-                                                    size: .init(iconSize)))
+                                                    size: .init(iconSize),
+                                                    action: {
+                                                        GraniteHaptic.light.invoke()
+                                                        onRoute(.home)
+                                                    }))
                                         .padding(.trailing,
                                                  isIPhone ? 0.0 : Brand.Padding.medium)
                 
@@ -73,13 +77,7 @@ public struct ControlBar: View {
                 } else {
                     Spacer()
                 }
-               
             }
-            .modifier(TapAndLongPressModifier(tapAction: {
-                GraniteHaptic.light.invoke()
-                onRoute(.home)
-                
-            }))
                 
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
@@ -94,7 +92,11 @@ public struct ControlBar: View {
                 
                 GraniteButtonComponent(state: .init(.image("floor_icon"),
                                                     selected: currentRoute == .floor && isIPhone,
-                                                    size: .init(iconSize)))
+                                                    size: .init(iconSize),
+                                                    action: {
+                                                        GraniteHaptic.light.invoke()
+                                                        onRoute(.floor)
+                                                    }))
                                         .padding(.trailing,
                                                  isIPhone ? 0.0 : Brand.Padding.medium)
                 
@@ -109,10 +111,6 @@ public struct ControlBar: View {
                     Spacer()
                 }
             }
-            .modifier(TapAndLongPressModifier(tapAction: {
-                GraniteHaptic.light.invoke()
-                onRoute(.floor)
-            }))
             
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
@@ -127,7 +125,11 @@ public struct ControlBar: View {
                 
                 GraniteButtonComponent(state: .init(.image("community_icon"),
                                                     selected: currentRoute == .discuss && isIPhone,
-                                                    size: .init(iconSize)))
+                                                    size: .init(iconSize),
+                                                    action: {
+                                                        GraniteHaptic.light.invoke()
+                                                        onRoute(.discuss)
+                                                    }))
                                         .padding(.trailing,
                                                  isIPhone ? 0.0 : Brand.Padding.medium)
                 
@@ -142,11 +144,6 @@ public struct ControlBar: View {
                     Spacer()
                 }
             }
-            .modifier(TapAndLongPressModifier(tapAction: {
-                GraniteHaptic.light.invoke()
-                onRoute(.discuss)
-                
-            }))
             
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
@@ -161,7 +158,11 @@ public struct ControlBar: View {
                 
                 GraniteButtonComponent(state: .init(.image("model_icon"),
                                                     selected: currentRoute.isModels && isIPhone,
-                                                    size: .init(iconSize)))
+                                                    size: .init(iconSize),
+                                                    action: {
+                                                        GraniteHaptic.light.invoke()
+                                                        onRoute(.models(.init(object: nil)))
+                                                    }))
                                         .padding(.trailing,
                                                  isIPhone ? 0.0 : Brand.Padding.medium)
                 
@@ -176,11 +177,6 @@ public struct ControlBar: View {
                     Spacer()
                 }
             }
-            .modifier(TapAndLongPressModifier(tapAction: {
-                GraniteHaptic.light.invoke()
-                onRoute(.models(.init(object: nil)))
-                
-            }))
             
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
@@ -195,7 +191,11 @@ public struct ControlBar: View {
                 
                 GraniteButtonComponent(state: .init(.image("settings_icon"),
                                                     selected: currentRoute == .settings && isIPhone,
-                                                    size: .init(iconSize)))
+                                                    size: .init(iconSize),
+                                                    action: {
+                                                        GraniteHaptic.light.invoke()
+                                                        onRoute(.settings)
+                                                    }))
                                         .padding(.trailing,
                                                  isIPhone ? 0.0 : Brand.Padding.medium)
                 
@@ -210,11 +210,6 @@ public struct ControlBar: View {
                     Spacer()
                 }
             }
-            .modifier(TapAndLongPressModifier(tapAction: {
-                GraniteHaptic.light.invoke()
-                onRoute(.settings)
-                
-            }))
             
 //            #if DEBUG
 //

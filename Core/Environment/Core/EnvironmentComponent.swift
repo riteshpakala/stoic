@@ -29,7 +29,7 @@ public struct EnvironmentComponent: GraniteComponent {
                 GeometryReader { proxy in
                     VStack(alignment: .center,
                            spacing: Brand.Padding.small) {
-                        ScrollView {
+                        ScrollView(showsIndicators: false) {
                             //Max Windows Height
                             ForEach(0..<command.center.maxWidth, id: \.self) { col in
                                 VStack(spacing: 0) {

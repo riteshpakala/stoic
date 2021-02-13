@@ -61,7 +61,8 @@ extension AssetGridComponent {
              .floor,
              .topVolume,
              .winners,
-             .losers:
+             .losers,
+             .winnersAndLosers:
             let securities: [Security]? = (state.payload?.object as? [Security])
             return securities == nil || securities?.isEmpty == true
         case .tonalBrowser:
