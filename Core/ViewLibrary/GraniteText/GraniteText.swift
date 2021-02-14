@@ -13,6 +13,7 @@ public struct GraniteText: View {
     let font: Font
     let color: Color
     let alignment: TextAlignment
+    let verticalAlignment: VerticalAlignment
     let style: TextShadowSettings
     let selected: Bool
     
@@ -68,6 +69,7 @@ public struct GraniteText: View {
                 _ size: Fonts.FontSize = .subheadline,
                 _ weight: Fonts.FontWeight = .regular,
                 _ alignment: TextAlignment = .center,
+                verticalAlignment: VerticalAlignment = .center,
                 style: TextShadowSettings = .basic,
                 selected: Bool = false) {
         self.text = text
@@ -76,12 +78,14 @@ public struct GraniteText: View {
         self.alignment = alignment
         self.style = style
         self.selected = selected
+        self.verticalAlignment = verticalAlignment
     }
     
     public init(_ text: String,
                 _ size: Fonts.FontSize = .subheadline,
                 _ weight: Fonts.FontWeight = .regular,
                 _ alignment: TextAlignment = .center,
+                verticalAlignment: VerticalAlignment = .center,
                 style: TextShadowSettings = .basic,
                 selected: Bool = false) {
         self.text = text
@@ -90,10 +94,12 @@ public struct GraniteText: View {
         self.alignment = alignment
         self.style = style
         self.selected = selected
+        self.verticalAlignment = verticalAlignment
     }
     
     public init(_ text: String,
                 _ alignment: TextAlignment = .center,
+                verticalAlignment: VerticalAlignment = .center,
                 style: TextShadowSettings = .basic,
                 selected: Bool = false) {
         self.text = text
@@ -102,10 +108,11 @@ public struct GraniteText: View {
         self.alignment = alignment
         self.style = style
         self.selected = selected
+        self.verticalAlignment = verticalAlignment
     }
     
     public var body: some View {
-        HStack(spacing: 0.0) {
+        HStack(alignment: verticalAlignment, spacing: 0.0) {
             if alignment == .trailing {
                 Spacer()
             }

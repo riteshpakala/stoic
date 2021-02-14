@@ -29,4 +29,13 @@ extension WindowType {
             return .standard
         }
     }
+    
+    var assetGridTypeForHoldings: AssetGridType {
+        switch self {
+        case .strategy:
+            return .radio
+        default:
+            return .standard
+        }
+    }
 }

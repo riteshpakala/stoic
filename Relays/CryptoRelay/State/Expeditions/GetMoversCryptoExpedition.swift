@@ -82,15 +82,15 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
         
         let topVolume: [CryptoCurrency] = summariesVolume.map {
             cryptoCurrency(exchange, currency, $0.key, $0.value)
-        }
+        }.sorted(by: { $0.volume > $1.volume })
         
         let gainers: [CryptoCurrency] = summariesGainers.map {
             cryptoCurrency(exchange, currency, $0.key, $0.value)
-        }
+        }.sorted(by: { $0.changePercent > $1.changePercent })
         
         let losers: [CryptoCurrency] = summariesLosers.map {
             cryptoCurrency(exchange, currency, $0.key, $0.value)
-        }
+        }.sorted(by: { $0.changePercent < $1.changePercent })
         
         let result = CryptoEvents.GlobalCategoryResult.init(topVolume, gainers, losers)
         

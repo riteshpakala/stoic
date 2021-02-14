@@ -87,7 +87,7 @@ public struct ControlBar: View {
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
             } else {
-                PaddingVertical(Brand.Padding.medium9)
+                PaddingVertical(Brand.Padding.medium)
             }
             
             HStack(alignment: .center) {
@@ -124,7 +124,7 @@ public struct ControlBar: View {
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
             } else {
-                PaddingVertical(Brand.Padding.medium9)
+                PaddingVertical(Brand.Padding.medium)
             }
             
             HStack(alignment: .center) {
@@ -161,7 +161,7 @@ public struct ControlBar: View {
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
             } else {
-                PaddingVertical(Brand.Padding.medium9)
+                PaddingVertical(Brand.Padding.medium)
             }
             
             HStack(alignment: .center) {
@@ -198,7 +198,7 @@ public struct ControlBar: View {
             if isIPhone {
                 PaddingHorizontal(Brand.Padding.large, Brand.Colors.black)
             } else {
-                PaddingVertical(Brand.Padding.medium9)
+                PaddingVertical(Brand.Padding.medium)
             }
             
             HStack(alignment: .center) {
@@ -237,7 +237,7 @@ public struct ControlBar: View {
 //            if isIPhone {
 //                PaddingHorizontal(Brand.Padding.large)
 //            } else {
-//                PaddingVertical(Brand.Padding.medium9)
+//                PaddingVertical(Brand.Padding.medium)
 //            }
 //            HStack(alignment: .center) {
 //                if isIPhone {

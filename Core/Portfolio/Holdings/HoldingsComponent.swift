@@ -42,7 +42,9 @@ public struct HoldingsComponent: GraniteComponent {
                             .padding(.leading, Brand.Padding.medium)
                             .padding(.trailing, Brand.Padding.medium)
                         
-                        AssetGridComponent(state: .init(.standard, context: state.context))
+                        
+                        AssetGridComponent(state: .init(state.context.assetGridTypeForHoldings,
+                                                        context: state.context))
                             .listen(to: command, .stop)
                             .payload(retrievePayload(\.envDependency,
                                                      target: \.user.portfolio?.holdings.securities)).showEmptyState

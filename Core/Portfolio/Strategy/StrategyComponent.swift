@@ -38,55 +38,56 @@ public struct StrategyComponent: GraniteComponent {
             
             VStack {
                 ForEach(command.center.strategies, id: \.self) { strategy in
-                    VStack {
+                    VStack(spacing: 0) {
                         
-                        title(strategy)
+                        title(strategy).padding(.bottom, Brand.Padding.medium9)
                         
-                        PaddingVertical(Brand.Padding.xSmall).padding(.bottom, Brand.Padding.medium)
+                        PaddingVertical(Brand.Padding.xSmall)
                         
                         ScrollView {
-                            LazyVGrid(columns: columns, spacing: Brand.Padding.large) {
+                            LazyVGrid(columns: columns, spacing: 0) {
                                 ForEach(strategy.investments.items, id: \.self) { item in
                                     
-                                        VStack {
+                                    VStack {
+                                        HStack(alignment: .top, spacing: 0) {
+                                            header(item)
                                             
-                                            HStack(alignment: .top) {
-                                                header(item)
+                                            VStack(alignment: .trailing) {
+                                                GraniteText(item.ticker.uppercased(),
+                                                            .title3,
+                                                            .bold,
+                                                            .trailing,
+                                                            style: .init(gradient: [Color.black.opacity(0.75),
+                                                                                    Color.black.opacity(0.36)]))
+                                                    .padding(.top, Brand.Padding.small)
                                                 
-                                                VStack {
-                                                    GraniteText(item.ticker.uppercased(),
-                                                                .title3,
-                                                                .bold,
-                                                                .trailing,
-                                                                style: .init(gradient: [Color.black.opacity(0.75),
-                                                                                        Color.black.opacity(0.36)]))
-                                                        .padding(.top, Brand.Padding.small)
-                                                    
-                                                    Spacer()
-                                                    
-                                                    GraniteText("close position",
-                                                                Brand.Colors.redBurn,
-                                                                .headline,
-                                                                .bold,
-                                                                .trailing)
-                                                        .shadow(color: Color.black,
-                                                                radius: 1.0, x: 1.0, y: 2.0)
-                                                        .modifier(TapAndLongPressModifier.init(tapAction: {} ))
-                                                }
-                                            }
-                                            .padding(.top, Brand.Padding.medium)
-                                            .padding(.leading, Brand.Padding.large)
-                                            .padding(.trailing, Brand.Padding.large)
-                                            .padding(.bottom, Brand.Padding.medium)
-                                            
-                                            PaddingVertical(Brand.Padding.xSmall)
-                                            
-                                            info(item)
-                                            
-                                        }.background(GradientView(colors: [Brand.Colors.marbleV2,
-                                                                           Brand.Colors.marble],
-                                                                  direction: .topLeading)
-                                                        .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0))
+                                                Spacer()
+                                                
+                                                GraniteText("close",
+                                                            Brand.Colors.redBurn,
+                                                            .headline,
+                                                            .bold,
+                                                            .trailing)
+                                                    .shadow(color: Color.black,
+                                                            radius: 1.0, x: 1.0, y: 2.0)
+                                                    .modifier(TapAndLongPressModifier.init(tapAction: {} ))
+                                            }.frame(maxWidth: 75, maxHeight: .infinity)
+                                        }
+                                        .padding(.top, Brand.Padding.medium)
+                                        .padding(.leading, Brand.Padding.xMedium)
+                                        .padding(.trailing, Brand.Padding.xMedium)
+                                        .padding(.bottom, Brand.Padding.medium)
+                                        
+                                        PaddingVertical(Brand.Padding.xSmall)
+                                        
+                                        info(item)
+                                        
+                                    }.background(GradientView(colors: [Brand.Colors.marbleV2,
+                                                                       Brand.Colors.marble],
+                                                              direction: .topLeading)
+                                                    .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0))
+                                                    .padding(.bottom, Brand.Padding.small)
+                                                    .padding(.top, Brand.Padding.medium)
                                 }
                             }
                         }
@@ -104,31 +105,56 @@ public struct StrategyComponent: GraniteComponent {
     }
     
     public func title(_ strategy: Strategy) -> some View {
-            HStack {
+        ZStack {
+            VStack(alignment: .leading, spacing: Brand.Padding.medium9) {
                 GraniteText(strategy.name,
                             Brand.Colors.white,
                             .title2,
                             .bold,
                             .leading)
-                            .padding(.bottom,
-                                     Brand.Padding.medium)
                 
-                VStack {
-                    GraniteText("\(strategy.endDate.simple.asString)",
-                                Brand.Colors.purple,
-                                .headline,
-                                .bold,
-                                .trailing)
-                    
-                    GraniteText("ends in \(strategy.endDate.daysFrom(Date.today)) days",
-                                Brand.Colors.purple,
-                                .subheadline,
-                                .regular,
-                                .trailing)
-                }
-                .padding(.bottom,
-                         Brand.Padding.medium)
+                GraniteText("ends \(strategy.endDate.simple.asString) [\(strategy.endDate.daysFrom(Date.today))]",
+                            Brand.Colors.purple,
+                            .subheadline,
+                            .regular,
+                            .leading,
+                            verticalAlignment: .top)
             }
+                
+            VStack(alignment: .trailing, spacing: Brand.Padding.xMedium) {
+                HStack {
+                    VStack(alignment: .center) {
+                        GraniteText("sync",
+                                    Brand.Colors.yellow,
+                                    .subheadline,
+                                    .regular,
+                                    .trailing)
+                    }
+                    
+                    GraniteButtonComponent(state: .init(.image("refresh_icon"),
+                                                        colors: [Brand.Colors.yellow,
+                                                                 Brand.Colors.purple],
+                                                        selected: true,
+                                                        size: .init(16),
+                                                        padding: .init(0,
+                                                                       Brand.Padding.medium9,
+                                                                       0,
+                                                                       Brand.Padding.medium9),
+                                                        action: {
+                                                                GraniteHaptic.light.invoke()
+                                                        }))
+                    
+                }
+                
+                GraniteText("last sync: \(Date.today.asString)",
+                            Brand.Colors.marble,
+                            .subheadline,
+                            .regular,
+                            .trailing,
+                            verticalAlignment: .top)
+                
+            }
+        }
     }
     
     public func header(_ item: Strategy.Investments.Item) -> some View {
@@ -164,23 +190,25 @@ public struct StrategyComponent: GraniteComponent {
         HStack(spacing: Brand.Padding.medium) {
             
             VStack(spacing: Brand.Padding.xSmall) {
-                GraniteText("initial",
-                            .footnote,
-                            .regular,
-                            .leading)
-                            .shadow(color: .black,
-                                    radius: 2, x: 2, y: 2)
                 
                 GraniteText("$\(item.initial.amount.display)",
-                            .headline,
+                            .subheadline,
                             .bold,
                             .leading)
                             .shadow(color: .black,
                                     radius: 2, x: 2, y: 2)
                                 
                 GraniteText("\(item.initial.date.asString)",
-                            .subheadline,
+                            .footnote,
                             .bold,
+                            .leading)
+                            .shadow(color: .black,
+                                    radius: 2, x: 2, y: 2)
+                
+                
+                GraniteText("initial",
+                            .footnote,
+                            .regular,
                             .leading)
                             .shadow(color: .black,
                                     radius: 2, x: 2, y: 2)
@@ -196,26 +224,28 @@ public struct StrategyComponent: GraniteComponent {
             
             
             VStack(spacing: Brand.Padding.xSmall) {
-                GraniteText("\(item.latestChange.date.asString)",
-                            .footnote,
-                            .regular,
-                            .leading)
-                            .shadow(color: .black,
-                                    radius: 2, x: 2, y: 2)
                 
                 GraniteText("$\(item.lastValue.display)",
-                            .headline,
+                            .subheadline,
                             .bold,
                             .leading)
                     .shadow(color: .black,
                             radius: 2, x: 2, y: 2)
                                 
                 GraniteText(item.latestChangePercent.statusPercentDisplay,
-                            .subheadline,
+                            .footnote,
                             .bold,
                             .leading)
                     .shadow(color: .black,
                             radius: 2, x: 2, y: 2)
+                
+                
+                GraniteText("\(item.latestChange.date.asString)",
+                            .footnote,
+                            .regular,
+                            .leading)
+                            .shadow(color: .black,
+                                    radius: 2, x: 2, y: 2)
             }
             .padding(.top, Brand.Padding.medium)
             .padding(.bottom, Brand.Padding.medium)
@@ -227,26 +257,28 @@ public struct StrategyComponent: GraniteComponent {
                             .shadow(color: .black, radius: 4, x: 1, y: 2))
             
             VStack(spacing: Brand.Padding.xSmall) {
-                GraniteText(item.tonalTargetDate.asString,
-                            .footnote,
-                            .regular,
-                            .leading)
-                            .shadow(color: .black,
-                                    radius: 2, x: 2, y: 2)
                 
                 GraniteText(item.tonalSummary,
-                            .headline,
+                            .subheadline,
                             .bold,
                             .leading)
                     .shadow(color: .black,
                             radius: 2, x: 2, y: 2)
                 
                 GraniteText("\(item.tonalAccuracy)",
-                            .subheadline,
+                            .footnote,
                             .bold,
                             .leading)
                     .shadow(color: .black,
                             radius: 2, x: 2, y: 2)
+                
+                
+                GraniteText(item.tonalTargetDate.asString,
+                            .footnote,
+                            .regular,
+                            .leading)
+                            .shadow(color: .black,
+                                    radius: 2, x: 2, y: 2)
             }
             .padding(.top, Brand.Padding.medium)
             .padding(.bottom, Brand.Padding.medium)

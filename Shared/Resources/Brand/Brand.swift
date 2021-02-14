@@ -43,7 +43,7 @@ public struct Brand {
         public static var xxMedium: CGFloat = 20
         public static var xMedium: CGFloat = 16
         public static var medium: CGFloat = 12
-        public static var medium9: CGFloat = 12
+        public static var medium9: CGFloat = 9
         public static var small: CGFloat = 6
         public static var xSmall: CGFloat = 3
     }

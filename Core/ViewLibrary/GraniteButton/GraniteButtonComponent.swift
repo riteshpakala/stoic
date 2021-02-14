@@ -35,8 +35,7 @@ public struct GraniteButtonComponent: GraniteComponent {
                     .background(
                         Passthrough {
                             if state.selected {
-                                GradientView(colors: [Brand.Colors.marbleV2,
-                                                      Brand.Colors.marble],
+                                GradientView(colors: state.textColors,
                                              cornerRadius: 6.0,
                                              direction: .topLeading).overlay (
                                                 

@@ -53,6 +53,8 @@ public class GraniteButtonState: GraniteState {
     }
     
     public init(_ type: GraniteButtonType,
+                colors: [Color] = [Brand.Colors.marbleV2,
+                                   Brand.Colors.marble],
                 selected: Bool = false,
                 size: CGSize = .zero,
                 selectionColor: Color = .black,
@@ -66,8 +68,11 @@ public class GraniteButtonState: GraniteState {
         self.action = action
         
         self.textColor = Brand.Colors.black
-        self.textColors = [Brand.Colors.marbleV2.opacity(0.66), Brand.Colors.marble]
+        self.textColors = colors
         self.textShadow = Brand.Colors.black.opacity(0.57)
+        
+//        [Brand.Colors.marbleV2.opacity(0.66),
+//                           Brand.Colors.marble]
     }
     
     required init() {
