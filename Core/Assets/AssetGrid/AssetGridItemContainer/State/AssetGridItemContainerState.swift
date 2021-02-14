@@ -22,11 +22,19 @@ public class AssetGridItemContainerState: GraniteState {
         case .model:
             return "model"
         case .security:
-            if let type = (assetData.first as? Security)?.securityType {
-                return "\(type)"
-            } else {
+            
+            let stockType = assetData.first(where: { $0.asSecurity?.securityType == .stock })
+            let cryptoType = assetData.first(where: { $0.asSecurity?.securityType == .crypto })
+            
+            let bothExists = stockType != nil && cryptoType != nil
+            
+            if bothExists {
                 return "security"
+            } else {
+                let typeLabel = stockType?.asSecurity?.securityType ?? cryptoType?.asSecurity?.securityType
+                return "\(typeLabel?.rawValue ?? "security")"
             }
+            
         case .user:
             return "user"
         default:
@@ -44,7 +52,7 @@ public class AssetGridItemContainerState: GraniteState {
     
     public required init() {
         self.assetGridType = .standard
-        self.leadingPadding = Brand.Padding.large
+        self.leadingPadding = Brand.Padding.medium
     }
 }
 

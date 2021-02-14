@@ -24,14 +24,14 @@ public class AssetGridState: GraniteState {
     
     public init(context: WindowType) {
         self.type = context.assetGridType
-        self.leadingPadding = Brand.Padding.large
+        self.leadingPadding = Brand.Padding.medium
         self.context = context
     }
     
     public init(_ type: AssetGridType,
                 context: WindowType) {
         self.type = type
-        self.leadingPadding = Brand.Padding.large
+        self.leadingPadding = Brand.Padding.medium
         self.context = context
     }
     
@@ -50,7 +50,7 @@ public class AssetGridState: GraniteState {
     
     public required init() {
         self.type = .standard
-        self.leadingPadding = Brand.Padding.large
+        self.leadingPadding = Brand.Padding.medium
         self.context = .unassigned
     }
 }

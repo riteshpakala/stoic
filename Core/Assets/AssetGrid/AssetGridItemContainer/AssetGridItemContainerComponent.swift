@@ -30,8 +30,6 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                                 .regular,
                                 .leading)
                     
-                    Spacer()
-                    
                     if command.center.showDescription1 {
                         GraniteText("price",
                                     .subheadline,
@@ -94,7 +92,7 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                                                 }
                                         }))
                             .padding(.leading, state.leadingPadding.isZero ? Brand.Padding.small : state.leadingPadding)
-                    }.padding(.leading, state.leadingPadding.isZero ? 0 : Brand.Padding.medium)
+                    }//.padding(.leading, state.leadingPadding.isZero ? 0 : Brand.Padding.medium)
                 }
             }.frame(maxWidth: .infinity,
                     minHeight: state.assetData.count > 0 ? 66 : 0.0,
