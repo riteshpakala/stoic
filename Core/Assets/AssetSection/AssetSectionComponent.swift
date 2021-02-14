@@ -32,6 +32,17 @@ public struct AssetSectionComponent: GraniteComponent {
                 GraniteToggle(options: .init(["stock", "crypto"]), onToggle: { index in
                     set(\.securityType, value: index == 0 ? .stock : .crypto)
                 })
+                
+                GraniteButtonComponent(state: .init(.image("refresh_icon"),
+                                                    selected: true,
+                                                    size: .init(16),
+                                                    padding: .init(0,
+                                                                   Brand.Padding.large,
+                                                                   Brand.Padding.xSmall,
+                                                                   Brand.Padding.small),
+                                                    action: {
+                                                            GraniteHaptic.light.invoke()
+                                                    }))
             }
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)

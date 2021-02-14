@@ -19,6 +19,7 @@ struct SearchAssetExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        print("{TEST} yoooo")
         state.payload = .init(object: event.securities)
     }
 }

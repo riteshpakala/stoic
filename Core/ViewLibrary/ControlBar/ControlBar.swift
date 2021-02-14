@@ -74,9 +74,14 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .v2Selection,
                                 selected: currentRoute == .home)
+                                .modifier(TapAndLongPressModifier(tapAction: {
+                                    GraniteHaptic.light.invoke()
+                                    onRoute(.home)
+                                }))
                 } else {
                     Spacer()
                 }
+               
             }
                 
             if isIPhone {
@@ -107,6 +112,10 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .v2Selection,
                                 selected: currentRoute == .floor)
+                                .modifier(TapAndLongPressModifier(tapAction: {
+                                    GraniteHaptic.light.invoke()
+                                    onRoute(.floor)
+                                }))
                 } else {
                     Spacer()
                 }
@@ -140,6 +149,10 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .v2Selection,
                                 selected: currentRoute == .discuss)
+                                .modifier(TapAndLongPressModifier(tapAction: {
+                                    GraniteHaptic.light.invoke()
+                                    onRoute(.discuss)
+                                }))
                 } else {
                     Spacer()
                 }
@@ -173,6 +186,10 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .v2Selection,
                                 selected: currentRoute.isModels)
+                                .modifier(TapAndLongPressModifier(tapAction: {
+                                    GraniteHaptic.light.invoke()
+                                    onRoute(.models(.init(object: nil)))
+                                }))
                 } else {
                     Spacer()
                 }
@@ -206,6 +223,10 @@ public struct ControlBar: View {
                                 .leading,
                                 style: .v2Selection,
                                 selected: currentRoute == .settings)
+                                .modifier(TapAndLongPressModifier(tapAction: {
+                                    GraniteHaptic.light.invoke()
+                                    onRoute(.settings)
+                                }))
                 } else {
                     Spacer()
                 }

@@ -55,6 +55,20 @@ public struct SearchComponent: GraniteComponent {
                     }
                 }
             }
+            
+            if state.isEditing && state.query.isNotEmpty {
+                Group {
+                    HStack {
+                        Spacer()
+                        GraniteText("searching for \"\(state.query)\"...", .footnote, .regular)
+                            .padding(.trailing, Brand.Padding.medium)
+                        ProgressView().scaleEffect(0.66)
+                        Spacer()
+                    }
+                    .transition(.move(edge: .top))
+                    .animation(.default)
+                }
+            }
         }
     }
 }
