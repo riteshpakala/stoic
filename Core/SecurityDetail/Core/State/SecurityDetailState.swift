@@ -92,6 +92,7 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetSecurityDetailExpedition.Discovery(),
+            RefreshSecurityDetailExpedition.Discovery(),
             StockDetailResultExpedition.Discovery(),
             CryptoDetailResultExpedition.Discovery()
         ]

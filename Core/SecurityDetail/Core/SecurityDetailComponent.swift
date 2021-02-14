@@ -23,7 +23,7 @@ public struct SecurityDetailComponent: GraniteComponent {
     }
     
     public var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             ZStack {
                 if !command.center.loadedQuote {
                     switch state.kind {
@@ -66,17 +66,31 @@ public struct SecurityDetailComponent: GraniteComponent {
                     Spacer()
                 }
                 .padding(.leading, Brand.Padding.medium)
-                .padding(.trailing, Brand.Padding.medium)
-                .padding(.top, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.xMedium)
+                .padding(.top, Brand.Padding.medium9)
                 
                 VStack {
                     Spacer()
-                    GraniteText(command.center.security.title,
-                                .title3,
-                                .bold,
-                                .leading,
-                                style: .init(gradient: [Color.black.opacity(0.75),
-                                                        Color.black.opacity(0.36)]))
+                    HStack {
+                        GraniteText(command.center.security.title,
+                                    .title3,
+                                    .bold,
+                                    .leading,
+                                    style: .init(gradient: [Color.black.opacity(0.75),
+                                                            Color.black.opacity(0.36)]))
+                        
+                        GraniteButtonComponent(state: .init(.image("refresh_icon"),
+                                                            selected: true,
+                                                            size: .init(16),
+                                                            padding: .init(0,
+                                                                           0,
+                                                                           Brand.Padding.xSmall,
+                                                                           Brand.Padding.xSmall),
+                                                            action: {
+                                                                    GraniteHaptic.light.invoke()
+                                                                    sendEvent(SecurityDetailEvents.Refresh())
+                                                            }))
+                    }
                 }
                 .padding(.leading, Brand.Padding.medium)
                 .padding(.trailing, Brand.Padding.medium)

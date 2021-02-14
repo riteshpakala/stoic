@@ -12,4 +12,5 @@ import Combine
 
 struct SecurityDetailEvents {
     public struct GetDetail: GraniteEvent {}
+    public struct Refresh: GraniteEvent {}
 }
