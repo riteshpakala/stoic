@@ -40,6 +40,16 @@ public struct StockEvents {
     
     //MARK: -- Movers
     public struct GetMovers: GraniteEvent {
+        public var refresh: Bool
+        public var syncWithStoics: Bool
+        public var useStoics: Bool
+        
+        public init(syncWithStoics: Bool = false, refresh: Bool = false, useStoics: Bool = false) {
+            self.syncWithStoics = syncWithStoics
+            self.refresh = refresh
+            self.useStoics = useStoics
+        }
+        
         public var beam: GraniteBeamType {
             .rebound
         }
@@ -47,11 +57,30 @@ public struct StockEvents {
     
     public struct MoversData: GraniteEvent {
         let data: NetworkResponseData?
+        public var syncWithStoics: Bool
+        public init(_ syncWithStoics: Bool = false,
+                    data: NetworkResponseData?) {
+            self.syncWithStoics = syncWithStoics
+            self.data = data
+        }
     }
     
     public struct MoverStockQuotes: GraniteEvent {
         let movers: StockServiceModels.Movers
         let quotes: [StockServiceModels.Quotes]
+        
+        public var syncWithStoics: Bool
+        public init(_ syncWithStoics: Bool = false,
+                    movers: StockServiceModels.Movers,
+                    quotes: [StockServiceModels.Quotes]) {
+            self.syncWithStoics = syncWithStoics
+            self.movers = movers
+            self.quotes = quotes
+        }
+    }
+    
+    public struct MoverUpdated: GraniteEvent {
+        let success: Bool
     }
     
     public struct GlobalCategoryResult: GraniteEvent {

@@ -20,29 +20,59 @@ struct GetMoversStockExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         var needsUpdate: Bool = true
-        coreDataInstance.networkResponse(forRoute: state.service.movers) { result in
-            if let data = result?.data {
+        
+        if !event.syncWithStoics {
+            coreDataInstance.networkResponse(forRoute: state.service.movers) { result in
+                let age = (result?.date ?? Date()).minutesFrom(.today)
                 
-                if let unarchivedData = data.decodeNetwork(type: StockServiceModels.MoversArchiveable.self),
-                   let movers = unarchivedData.movers {
-                    connection.request(StockEvents.MoverStockQuotes(movers: movers, quotes: unarchivedData.quotes))
-                    
-                    GraniteLogger.info("got the cached movers", .expedition, focus: true)
+                GraniteLogger.info("stock movers last updated: \(age) minutes ago", .expedition, focus: true)
+                //in minutes
+                guard age < 12 else {
+                    return
                 }
                 
-                needsUpdate = false
+                if let data = result?.data {
+                    
+                    if let unarchivedData = data.decodeNetwork(type: StockServiceModels.MoversArchiveable.self),
+                       let movers = unarchivedData.movers {
+                        
+                        connection.request(StockEvents.MoverStockQuotes(movers: movers, quotes: unarchivedData.quotes))
+                        
+                        GraniteLogger.info("got the cached movers", .expedition, focus: true)
+                    }
+                    
+                    needsUpdate = false
+                }
             }
         }
         
         if needsUpdate {
-            publisher = state
-                .service
-                .getMovers()
-                .replaceError(with: nil)
-                .map { StockEvents.MoversData(data: $0) }
-                .eraseToAnyPublisher()
+            if event.useStoics && !event.syncWithStoics {
+                publisher = state
+                    .service
+                    .getMoversFromStoic()
+                    .replaceError(with: nil)
+                    .map {
+                        if let movers = $0 as? StockServiceModels.MoversStoic,
+                           let data = movers.Items.first?.data {
+                            return StockEvents.MoversData(event.syncWithStoics, data: data)
+                        } else {
+                            GraniteLogger.info("failed", .network, focus: true)
+                            return StockEvents.MoversData(event.syncWithStoics, data: nil)
+                        }
+                    }.eraseToAnyPublisher()
 
-            GraniteLogger.info("fetching new movers\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
+                GraniteLogger.info("fetching new movers from stoic\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
+            } else {
+                publisher = state
+                    .service
+                    .getMovers()
+                    .replaceError(with: nil)
+                    .map { StockEvents.MoversData(event.syncWithStoics, data: $0) }
+                    .eraseToAnyPublisher()
+
+                GraniteLogger.info("fetching new movers\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
+            }
         }
     }
 }
@@ -56,7 +86,6 @@ struct MoversDataExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        
         
         guard let data = event.data as? StockServiceModels.Movers else { return }
         
@@ -75,7 +104,7 @@ struct MoversDataExpedition: GraniteExpedition {
                                           responseType: .movers)
                 }
                 
-                return StockEvents.MoverStockQuotes(movers: data, quotes: $0)
+                return StockEvents.MoverStockQuotes(event.syncWithStoics, movers: data, quotes: $0)
             }
             .eraseToAnyPublisher()
         
@@ -91,6 +120,20 @@ struct MoversStockQuotesExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        if event.syncWithStoics {
+            do {
+                let dict = try event.movers.toDictionary()
+                publisher = state
+                    .service
+                    .sendMovers(data: dict)
+                    .replaceError(with: false)
+                    .map { StockEvents.MoverUpdated(success: $0) }
+                    .eraseToAnyPublisher()
+            } catch let error {
+                GraniteLogger.info("\(error)\n\(String(describing: self))", .expedition, focus: true)
+            }
+        }
         
         guard let data = event.quotes.first?.quoteResponse else { return }
         

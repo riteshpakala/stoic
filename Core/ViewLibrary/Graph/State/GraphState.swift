@@ -12,9 +12,19 @@ import Combine
 
 public class GraphState: GraniteState {
     var quote: Quote? = nil
+    var securities: [Security] = []
     
     public init(_ quote: Quote?) {
         self.quote = quote
+        
+        switch quote?.securityType {
+        case .stock:
+            securities = quote?.daily(count: 60).sortAsc ?? []
+        case .crypto:
+            securities = quote?.intraday(count: 120).sortAsc ?? []
+        default:
+            break
+        }
     }
     
     public required init() {
@@ -24,13 +34,9 @@ public class GraphState: GraniteState {
 
 public class GraphCenter: GraniteCenter<GraphState> {
     var plotData: SomePlotData {
-        if let quote = state.quote {
-            let data: GraphPageViewModel.PlotData = quote.daily().sortAsc.map { ($0.date, $0.lastValue.asCGFloat) }
-            
-            return .init(data, interval: timeDisplay, graphType: .price(.basic))
-        } else {
-            return .init()
-        }
+        let data: GraphPageViewModel.PlotData = state.securities.map { ($0.date, $0.lastValue.asCGFloat) }
+        
+        return .init(data, interval: timeDisplay, graphType: .price(.basic))
     }
     
     var timeDisplay: TimeDisplayOption {

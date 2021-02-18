@@ -10,4 +10,11 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-struct AssetSectionEvents {}
+struct AssetSectionEvents {
+    public struct Refresh: GraniteEvent {
+        let sync: Bool
+        public init(sync: Bool = false){
+            self.sync = sync
+        }
+    }
+}

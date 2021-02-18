@@ -25,6 +25,14 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
         
         var needsUpdate: Bool = true
         coreDataInstance.networkResponse(forRoute: state.cryptoWatch.getAggregateSummariesRoute) { result in
+            let age = (result?.date ?? Date()).minutesFrom(.today)
+            
+            GraniteLogger.info("crypto movers last updated: \(age) minutes ago", .expedition, focus: true)
+            //in minutes
+            guard age < 12 else {
+                return
+            }
+            
             if let data = result?.data {
                 if let movers = data.decodeNetwork(type: CryptoServiceModels.GetAggregateSummaries.self) {
 

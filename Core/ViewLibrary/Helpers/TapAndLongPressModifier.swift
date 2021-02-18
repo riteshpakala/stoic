@@ -31,7 +31,6 @@ public struct TapAndLongPressModifier: ViewModifier {
 //                        isLongPressing = isPressing
 //                    }
 //                    .onEnded { item in
-//                        print("{TEST} \(item)")
 //                        
 //                    }
 //            )

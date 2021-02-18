@@ -205,6 +205,8 @@
 		711D545625A684E80074D334 /* RouterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D545025A684E80074D334 /* RouterComponent.swift */; };
 		711D546025A6913B0074D334 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D545F25A6913B0074D334 /* Geometry.swift */; };
 		711D546125A6913B0074D334 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711D545F25A6913B0074D334 /* Geometry.swift */; };
+		7120E0EB25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7120E0EA25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift */; };
+		7120E0EC25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7120E0EA25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift */; };
 		7121F6D82596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */; };
 		7121F6D92596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */; };
 		7121F6DA2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121F6D72596F9B000BBD459 /* QuoteObject+CoreDataClass.swift */; };
@@ -1056,6 +1058,7 @@
 		711D544F25A684E80074D334 /* RouterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterState.swift; sourceTree = "<group>"; };
 		711D545025A684E80074D334 /* RouterComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterComponent.swift; sourceTree = "<group>"; };
 		711D545F25A6913B0074D334 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
+		7120E0EA25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetSectionRefreshExpedition.swift; sourceTree = "<group>"; };
 		7121F6D62596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuoteObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7121F6D72596F9B000BBD459 /* QuoteObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuoteObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7122297225A6739A0032FC11 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
@@ -2395,6 +2398,7 @@
 			isa = PBXGroup;
 			children = (
 				713033D625D70132003E8FAD /* AssetSectionSelectedExpedition.swift */,
+				7120E0EA25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -4255,6 +4259,7 @@
 				714342E325907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */,
 				7109643025A5A1F40021B42B /* TonalSound.swift in Sources */,
 				7179D3D725AC936500C82063 /* TonalModelsComponent.swift in Sources */,
+				7120E0EB25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift in Sources */,
 				710889B32591B29800795EDF /* Cryptowatcher+Exchanges.swift in Sources */,
 				71C2BF8125ABB1CE006445EB /* SecurityDetailResultExpedition.swift in Sources */,
 				71143DF725A4C37300379E4B /* TonalService.Indicators.swift in Sources */,
@@ -4498,6 +4503,7 @@
 				712BD1E525BA6804004D6E94 /* GenerateIndicatorExpedition.swift in Sources */,
 				71143DFF25A4C70800379E4B /* TonalService.Indicators.Averages.swift in Sources */,
 				71D3C2D125AA88190033350B /* MoversExpedition.swift in Sources */,
+				7120E0EC25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift in Sources */,
 				7109642A25A59FBD0021B42B /* TonalService.Model.DataSet.swift in Sources */,
 				7179AD0825AC9D6C003FD06F /* SaveTheToneExpedition.swift in Sources */,
 				71148507259E24F900464684 /* EnvironmentConfig.swift in Sources */,

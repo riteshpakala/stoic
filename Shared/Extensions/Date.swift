@@ -106,6 +106,15 @@ extension Date {
         let components = Calendar.nyCalendar.dateComponents([.hour], from: latestTickerDate, to: todaysDate)
         
         return abs(components.hour ?? 0)
+        
+    }
+    
+    func minutesFrom(_ date: Date) -> Int {
+        let diff = Int(date.timeIntervalSince1970 - self.timeIntervalSince1970)
+
+        let hours = diff / 3600
+        let minutes = (diff - hours * 3600) / 60
+        return minutes
     }
 }
 

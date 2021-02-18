@@ -31,7 +31,7 @@ struct HoldingSelectedExpedition: GraniteExpedition {
                 security.addToPortfolio(username: user.info.username,
                                         moc: coreDataInstance) { portfolio in
                     if let portfolio = portfolio {
-                        GraniteLogger.info("\(portfolio.holdings.securities.map { $0.name })", .expedition)
+                        GraniteLogger.info("adding to portfolio:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
                         connection.update(\EnvironmentDependency.user.portfolio,
                                           value: portfolio)
                     }
@@ -51,10 +51,15 @@ struct HoldingSelectedExpedition: GraniteExpedition {
             } else {
                 location = .zero
             }
+            
+            
             security.addToFloor(username: user.info.username,
                                 location: location,
                                 moc: coreDataInstance) { portfolio in
                 if let portfolio = portfolio {
+                    
+                    GraniteLogger.info("adding to floor:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
+                    
                     connection.update(\EnvironmentDependency.user.portfolio,
                                       value: portfolio)
                 }
@@ -79,8 +84,6 @@ struct HoldingSelectionsConfirmedExpedition: GraniteExpedition {
               let securities = portfolio?.holdings.securities else {
             return
         }
-        
-        print("{TEST} adding multiple")
         
         switch state.context {
         case .strategy:

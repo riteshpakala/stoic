@@ -28,7 +28,7 @@ public struct GraniteToggle: View {
     }
     
     public var body: some View {
-        HStack(spacing: Brand.Padding.large) {
+        HStack(spacing: Brand.Padding.medium) {
             
             ForEach(0..<options.labels.count,
                     id: \.self) { index in

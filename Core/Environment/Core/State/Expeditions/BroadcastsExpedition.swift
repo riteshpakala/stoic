@@ -21,7 +21,7 @@ struct BroadcastsExpedition: GraniteExpedition {
         
         guard state.config.kind.broadcastable else { return }
         
-        connection.request(StockEvents.GetMovers(), .rebound)
+        connection.request(StockEvents.GetMovers(useStoics: true), .rebound)
         connection.request(CryptoEvents.GetMovers(), .rebound)
         
     }

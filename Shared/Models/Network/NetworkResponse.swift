@@ -18,11 +18,15 @@ public struct BaseNetworkResponse: NetworkResponse {
     public var route: String
     public var responseType: NetworkResponseType
     public var data: Data?
+    public var date: Date
 }
 
 extension NetworkResponseObject {
     var asNetworkResponse: BaseNetworkResponse {
-        return .init(route: self.route, responseType: NetworkResponseType.init(rawValue: self.responseType) ?? .unassigned, data: self.data)
+        return .init(route: self.route,
+                     responseType: NetworkResponseType.init(rawValue: self.responseType) ?? .unassigned,
+                     data: self.data,
+                     date: self.date)
     }
 }
 

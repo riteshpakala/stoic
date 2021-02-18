@@ -51,11 +51,101 @@ extension StockService {
                 
                 }.eraseToAnyPublisher()
     }
+    
+    public func getMoversFromStoic() -> AnyPublisher<NetworkResponseData?, URLError> {
+        guard
+            var urlComponents = URLComponents(string: "https://yqqa677w92.execute-api.us-west-1.amazonaws.com/default/stoic-movers")
+            else { preconditionFailure("Can't create url components...") }
+        
+        let tableQuery: URLQueryItem = .init(name: "TableName", value: "stoic-stock-movers")
+        let pageQuery: URLQueryItem = .init(name: "pageid", value: Date.today.asString)
+        
+        urlComponents.queryItems = [tableQuery, pageQuery]
+        
+        guard
+            let url = urlComponents.url
+            else { preconditionFailure("Can't create url from url components...") }
+        
+        GraniteLogger.info("getting movers from stoic \n\(url.absoluteString)\nself: \(String(describing: self))", .relay, focus: true)
+        
+        var request = URLRequest(
+            url: url,
+            cachePolicy: .useProtocolCachePolicy,
+            timeoutInterval: 10.0)
+        
+        let headers = [
+            "x-api-key": "2jzhkSc60N3LOdpI9J0NW5J6MnHbedFU2ypEJvcX"
+        ]
+        
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+        
+        let decoder = JSONDecoder()
+        return session
+                .dataTaskPublisher(for: request)
+                .compactMap { (data, response) -> NetworkResponseData? in
+                    let movers: StockServiceModels.MoversStoic?
+                    do {
+                        
+                        movers = try decoder.decode(StockServiceModels.MoversStoic.self, from: data)
+                    } catch let error {
+                        movers = nil
+                        GraniteLogger.info("failed fetching movers from Stoic:\n\(error)\nself: \(String(describing: self))", .relay, focus: true)
+                    }
+                    return movers
+                }.eraseToAnyPublisher()
+    }
+    
+    public func sendMovers(data: [String: Any]) -> AnyPublisher<Bool, URLError> {
+        guard
+            let urlComponents = URLComponents(string: "https://yqqa677w92.execute-api.us-west-1.amazonaws.com/default/stoic-movers")
+            else { preconditionFailure("Can't create url components...") }
+        
+        let createdDate: Int = Date.today.timeIntervalSince1970.asInt
+        let json: [String: Any] = ["TableName": "stoic-stock-movers",
+                                   "Item": [ "pageid": Date.today.asString, "date": createdDate, "data": data ]]
+
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        guard
+            let url = urlComponents.url
+            else { preconditionFailure("Can't create url from url components...") }
+        
+        GraniteLogger.info("sending movers \nself: \(String(describing: self))", .relay, focus: true)
+        
+        var request = URLRequest(
+            url: url,
+            cachePolicy: .useProtocolCachePolicy,
+            timeoutInterval: 10.0)
+        
+        let headers = [
+            "x-api-key": "2jzhkSc60N3LOdpI9J0NW5J6MnHbedFU2ypEJvcX"
+        ]
+        
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.httpBody = jsonData
+        
+        return session
+                .dataTaskPublisher(for: request)
+                .compactMap { (data, response) -> Bool in
+                    return true
+                }.eraseToAnyPublisher()
+    }
 }
 
 extension StockServiceModels {
     public struct Movers: NetworkResponseData {
         let finance: Finance
+    }
+    
+    public struct MoversStoic: NetworkResponseData {
+        struct Item: Codable {
+            let pageid: String
+            let date: Int
+            let data: StockServiceModels.Movers
+        }
+        let Items: [Item]
     }
     
     public struct MoversArchiveable: NetworkResponseData {

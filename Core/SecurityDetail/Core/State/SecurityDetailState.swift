@@ -99,7 +99,7 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     }
     
     var security: Security {
-        state.security
+        state.quote?.latestSecurity ?? state.security
     }
     
     var loadedQuote: Bool {

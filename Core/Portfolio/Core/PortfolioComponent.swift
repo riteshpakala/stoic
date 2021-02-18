@@ -67,40 +67,54 @@ public struct PortfolioComponent: GraniteComponent {
     
     var portfolioHeader: some View {
         VStack {
-            
             HStack(spacing: 0) {
-                GraniteText("trading day: \(Date.nextTradingDay.asString)",
+                GraniteText("\(command.center.username)",
                             .headline,
                             .bold,
+                            .trailing,
                             style: .init(gradient: [Brand.Colors.black.opacity(0.75),
                                                     Brand.Colors.black.opacity(0.36)]))
-                    .padding(.top, Brand.Padding.large)
+                    .padding(.top, Brand.Padding.medium)
                     .padding(.bottom, Brand.Padding.medium)
-                
             }
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
             
             //User details
             VStack(spacing: Brand.Padding.medium) {
-                GraniteText("username: \(command.center.username)",
-                            .headline,
-                            .bold)
                 
                 GraniteText("age: \(command.center.age) days",
                             .headline,
                             .bold)
             }
-            .padding(.top, Brand.Padding.xSmall)
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
+            .padding(.bottom, Brand.Padding.medium)
             
-            //Sign out
-            GraniteText("sign out",
-                        Brand.Colors.redBurn,
-                        .subheadline,
-                        .bold)
-                .padding(.top, Brand.Padding.medium)
-                .padding(.bottom, Brand.Padding.large)
-                .modifier(TapAndLongPressModifier.init(tapAction: sendEvent(MainEvents.Logout(), .contact, haptic: .light) ))
+            
+            HStack(spacing: 0) {
+                GraniteText("trading day: \(Date.nextTradingDay.asString)",
+                            .headline,
+                            .bold,
+                            .leading,
+                            style: .init(gradient: [Brand.Colors.black.opacity(0.75),
+                                                    Brand.Colors.black.opacity(0.36)]))
+                    .padding(.top, Brand.Padding.medium)
+                    .padding(.bottom, Brand.Padding.medium)
+                
+                //Sign out
+                GraniteText("sign out",
+                            Brand.Colors.redBurn,
+                            .subheadline,
+                            .bold)
+                    .padding(.top, Brand.Padding.medium)
+                    .padding(.bottom, Brand.Padding.medium)
+                    .modifier(TapAndLongPressModifier.init(tapAction: sendEvent(MainEvents.Logout(), .contact, haptic: .light) ))
+                
+                
+            }
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
             
         }
         .frame(maxWidth: .infinity)
@@ -111,9 +125,6 @@ public struct PortfolioComponent: GraniteComponent {
         .padding(.leading, Brand.Padding.medium)
         .padding(.trailing, Brand.Padding.medium)
         .padding(.bottom, Brand.Padding.medium)
-                       
-            
-        
     }
     
     var portfolioStrategy: some View {

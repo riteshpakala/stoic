@@ -79,11 +79,25 @@ public struct SecurityDetailComponent: GraniteComponent {
                                     style: .init(gradient: [Color.black.opacity(0.75),
                                                             Color.black.opacity(0.36)]))
                         
+                        switch state.kind {
+                        case .expanded:
+                            GraniteText("\(EnvironmentConfig.isIPhone ? "" : "last updated: ")\(command.center.security.date.asStringWithTime)",
+                                        Brand.Colors.marble,
+                                        .footnote,
+                                        .regular)
+                        default:
+                            GraniteText("\(command.center.security.date.asStringWithTime)",
+                                        Brand.Colors.marble,
+                                        .footnote,
+                                        .regular)
+                        }
+                        
+                        
                         GraniteButtonComponent(state: .init(.image("refresh_icon"),
                                                             selected: true,
                                                             size: .init(16),
                                                             padding: .init(0,
-                                                                           0,
+                                                                           Brand.Padding.medium,
                                                                            Brand.Padding.xSmall,
                                                                            Brand.Padding.xSmall),
                                                             action: {

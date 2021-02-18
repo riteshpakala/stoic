@@ -20,11 +20,20 @@ public struct AssetSectionComponent: GraniteComponent {
     
     public var body: some View {
         VStack(alignment: .leading) {
+            GraniteText("last updated: \(command.center.date.asStringWithTime)",
+                        Brand.Colors.marble,
+                        .footnote,
+                        .regular,
+                        .leading)
+                        .padding(.top, Brand.Padding.medium)
+                        .padding(.leading, Brand.Padding.medium)
+                        .padding(.bottom, Brand.Padding.small)
             HStack {
                 if command.center.toggleTitle {
                     GraniteToggle(options: .init(command.center.toggleTitleLabels), onToggle: { index in
                         set(\.toggleTitleIndex, value: index)
                     })
+                    .padding(.leading, Brand.Padding.small)
                 } else {
                     GraniteText(state.context.label, .headline, .bold)
                 }
@@ -33,15 +42,32 @@ public struct AssetSectionComponent: GraniteComponent {
                     set(\.securityType, value: index == 0 ? .stock : .crypto)
                 })
                 
+                #if DEBUG
+                GraniteButtonComponent(state: .init(.image("refresh_icon"),
+                                                    colors: [Brand.Colors.yellow,
+                                                             Brand.Colors.purple],
+                                                    selected: true,
+                                                    size: .init(16),
+                                                    padding: .init(0,
+                                                                   Brand.Padding.xMedium,
+                                                                   Brand.Padding.xSmall,
+                                                                   Brand.Padding.small),
+                                                    action: {
+                                                        GraniteHaptic.light.invoke()
+                                                        sendEvent(AssetSectionEvents.Refresh(sync: true))
+                                                    }))
+                #endif
+                
                 GraniteButtonComponent(state: .init(.image("refresh_icon"),
                                                     selected: true,
                                                     size: .init(16),
                                                     padding: .init(0,
-                                                                   Brand.Padding.large,
+                                                                   Brand.Padding.xMedium,
                                                                    Brand.Padding.xSmall,
                                                                    Brand.Padding.small),
                                                     action: {
-                                                            GraniteHaptic.light.invoke()
+                                                        GraniteHaptic.light.invoke()
+                                                        sendEvent(AssetSectionEvents.Refresh())
                                                     }))
             }
             .padding(.leading, Brand.Padding.medium)
@@ -52,6 +78,5 @@ public struct AssetSectionComponent: GraniteComponent {
                     .payload(.init(object: command.center.movers)).showEmptyState
             }
         }
-        .padding(.top, Brand.Padding.large)
     }
 }

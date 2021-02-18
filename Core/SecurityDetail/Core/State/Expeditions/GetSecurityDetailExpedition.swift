@@ -22,7 +22,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
         
         state.security.getQuote(moc: coreDataInstance) { quote in
             if let quote = quote {
-                GraniteLogger.info("quote received for preview: \(quote.ticker)\n\(quote.securities.count) securities found in the quote\nupdating dependency\nself: \(String(describing: self))", .expedition, focus: true)
+                GraniteLogger.info("quote received for preview: \(quote.ticker)\n\(quote.securities.count) securities found in the quote\nupdating dependency\n quote needs update: \(quote.needsUpdate)\nself: \(String(describing: self))", .expedition, focus: true)
                 
                 if quote.needsUpdate {
                     updateQuote(from: state.security, connection, quote)

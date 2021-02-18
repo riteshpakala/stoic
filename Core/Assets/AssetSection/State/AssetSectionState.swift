@@ -28,10 +28,15 @@ public class AssetSectionState: GraniteState {
 }
 
 public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
+    let stockRelay = StockRelay()
+    let cryptoRelay = CryptoRelay()
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            AssetSectionSelectedExpedition.Discovery()
+            AssetSectionSelectedExpedition.Discovery(),
+            AssetSectionNeedsRefreshExpedition.Discovery(),
+            AssetSectionMoversStockExpedition.Discovery(),
+            AssetSectionMoversCryptoExpedition.Discovery()
         ]
     }
     
@@ -40,6 +45,10 @@ public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
         self.hosted.env
     }()
     //
+    
+    var date: Date {
+        movers.first?.date ?? .today
+    }
     
     var movers: [Security] {
         guard let categories = envDependency.broadcasts.movers.get(state.securityType) else {

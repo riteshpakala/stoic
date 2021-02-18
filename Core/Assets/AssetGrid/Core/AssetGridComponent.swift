@@ -46,7 +46,7 @@ extension AssetGridComponent {
             return "add & save\na security to\nyour trading floor"
         case .tonalBrowser:
             return "create & save a tonal model\nfor it to appear here"
-        case .topVolume,.winners,.losers:
+        case .topVolume,.winners,.losers,.winnersAndLosers:
             return "fetching..."
         default:
             return ""
