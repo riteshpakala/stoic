@@ -29,12 +29,11 @@ struct GetStrategyExpedition: GraniteExpedition {
         if let strategy = portfolio.strategies.first {
             strategy.generate()
             
-            let securities = strategy.quotes.filter({ $0.needsUpdate }).map { $0.latestSecurity }
+            let assetIDs = strategy.investments.items.filter({ !$0.closed }).map { $0.assetID }
+            let securities = strategy.quotes.filter({ $0.needsUpdate && assetIDs.contains($0.latestSecurity.assetID) }).map { $0.latestSecurity }
             
             state.securitiesToSync = securities
             state.securities = strategy.quotes.map { $0.latestSecurity }
-            
-            
             
             GraniteLogger.info("getting strategy\nitems: \(strategy.investments.items.count)", .expedition, focus: true)
         }

@@ -35,7 +35,8 @@ struct SyncStrategyExpedition: GraniteExpedition {
             return
         }
         
-        let securities = strategy.quotes.filter({ $0.needsUpdate }).map { $0.latestSecurity }
+        let assetIDs = strategy.investments.items.filter({ !$0.closed }).map { $0.assetID }
+        let securities = strategy.quotes.filter({ $0.needsUpdate && assetIDs.contains($0.latestSecurity.assetID) }).map { $0.latestSecurity }
         
         guard securities.isNotEmpty else { return }
         

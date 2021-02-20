@@ -30,12 +30,15 @@ struct RemoveFromStrategyExpedition: GraniteExpedition {
             return
         }
         
+        
         coreDataInstance.removeFromStrategy(username: user.info.username, security) { updatedPortfolio in
             user.portfolio = updatedPortfolio
             
             connection.update(\EnvironmentDependency.user, value: user, .home)
             
-            GraniteLogger.info("\(security.ticker) reset", .expedition, focus: true)
+            state.securities.removeAll(where: { $0.assetID == event.assetID })
+            
+            GraniteLogger.info("\(security.ticker) removed", .expedition, focus: true)
         }
     }
 }

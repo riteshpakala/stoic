@@ -87,10 +87,11 @@ public struct StrategyComponent: GraniteComponent {
                                                 info(item)
                                             }
                                             
-                                        }.background(GradientView(colors: [Brand.Colors.marbleV2,
+                                        }.background(GradientView(colors: item.closed ? [Brand.Colors.black,
+                                                                           Brand.Colors.marble.opacity(0.24)] : [Brand.Colors.marbleV2,
                                                                            Brand.Colors.marble],
                                                                   direction: .topLeading)
-                                                        .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0))
+                                                        .shadow(color: Color.black, radius: 6.0, x: 2.0, y: 3.0))
                                                         .padding(.bottom, Brand.Padding.small)
                                                         .padding(.top, Brand.Padding.medium)
                                     }
@@ -101,6 +102,7 @@ public struct StrategyComponent: GraniteComponent {
                             
                         }.frame(maxWidth: .infinity,
                                 maxHeight: .infinity)
+                        .animation(.default)
                     }
                 }.frame(maxWidth: .infinity,
                         maxHeight: .infinity)
@@ -157,6 +159,7 @@ public struct StrategyComponent: GraniteComponent {
                                            }))
             }
         }
+        .clipped()
     }
     
     public func title(_ strategy: Strategy) -> some View {
@@ -231,34 +234,34 @@ public struct StrategyComponent: GraniteComponent {
     public func closed(_ item: Strategy.Investments.Item) -> some View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading) {
-                GraniteText(item.ticker.uppercased(),
-                            .title3,
-                            .bold,
-                            style: .init(gradient: [Color.black.opacity(0.75),
-                                                    Color.black.opacity(0.36)]))
-                    .padding(.top, Brand.Padding.small)
+                HStack(alignment: .center, spacing: Brand.Padding.medium) {
+                    GraniteText(item.ticker.uppercased(),
+                                Brand.Colors.black,
+                                .title3,
+                                .bold,
+                                style: .init(gradient: [Brand.Colors.marbleV2.opacity(0.75),
+                                                        Brand.Colors.marble.opacity(0.36)]))
+                    
+                    
+                    GraniteText("closed",
+                                Brand.Colors.marble,
+                                .headline,
+                                .bold)
+                }
+                .padding(.top, Brand.Padding.small)
+                .padding(.leading, Brand.Padding.small)
                 
                 Spacer()
                 
                 GraniteText("company name",
-                            Brand.Colors.black,
+                            Brand.Colors.marble,
                             .headline,
                             .bold)
                 
                 GraniteText("\(item.companyName)",
-                            Brand.Colors.black,
+                            Brand.Colors.marble,
                             .subheadline,
                             .regular)
-            }
-            Spacer()
-            
-            VStack {
-                Spacer()
-                GraniteText("closed",
-                            Brand.Colors.black,
-                            .headline,
-                            .bold)
-                Spacer()
             }
             
             Spacer()
@@ -341,11 +344,12 @@ public struct StrategyComponent: GraniteComponent {
                             set(\.wantsToRemove, value: item)
                         } ))
                     
+                    
                     GraniteText("close",
-                                Brand.Colors.black,
+                                Brand.Colors.yellow,
                                 .headline,
                                 .bold)
-                        .shadow(color: Color.black.opacity(0.75),
+                        .shadow(color: Color.black,
                                 radius: 1.0, x: 1.0, y: 2.0)
                         .modifier(TapAndLongPressModifier.init(tapAction: {
                             set(\.wantsToClose, value: item)
