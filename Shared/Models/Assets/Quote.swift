@@ -74,10 +74,10 @@ public struct Quote {
 //        let shouldUpdateHour = latestSecurity.date.timeComponents().hour <= Date.today.closingHour && latestSecurity.securityType == .stock
         
 //        let isToday: Bool = latestSecurity.date.dateComponents().day <= Date.today.dateComponents().day
-//        let afterHours: Bool = Date.today.closingHour <= latestSecurity.date.timeComponents().hour
+        let afterHours: Bool = Date.today.closingHour <= latestSecurity.date.timeComponents().hour && self.securityType == .stock
 //        let hourCheck: Int = Date.today.closingHour <= latestSecurity.date.timeComponents().hour ? hours + 1 : 1
         
-        return ((abs(days) > 0 || (hours >= 1)) || securities.count < 4)// && Date.today.validTradingDay) || securities.count < 4
+        return ((abs(days) > 0 || (hours >= 1)) || securities.count < 4) && !afterHours// && Date.today.validTradingDay) || securities.count < 4
     }
     
     var updateTime: Int? {

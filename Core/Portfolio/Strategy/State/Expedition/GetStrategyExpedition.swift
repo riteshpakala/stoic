@@ -19,12 +19,24 @@ struct GetStrategyExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
+        guard let user = connection.retrieve(\EnvironmentDependency.user),
+              let portfolio = user.portfolio else {
             return
         }
         
-        if let strategy = portfolio?.strategies.first {
+        state.user = user.info
+        
+        if let strategy = portfolio.strategies.first {
             strategy.generate()
+            
+            let securities = strategy.quotes.filter({ $0.needsUpdate }).map { $0.latestSecurity }
+            
+            state.securitiesToSync = securities
+            state.securities = strategy.quotes.map { $0.latestSecurity }
+            
+            
+            
+            GraniteLogger.info("getting strategy\nitems: \(strategy.investments.items.count)", .expedition, focus: true)
         }
     }
 }

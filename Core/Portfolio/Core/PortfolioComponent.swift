@@ -32,6 +32,7 @@ public struct PortfolioComponent: GraniteComponent {
                                        GraniteHaptic.light.invoke()
                                        set(\.stage, value: .adding)
                                      }))
+                        .background(Brand.Colors.black)
                 default:
                     EmptyView.init().hidden()
                 }

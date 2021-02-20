@@ -33,6 +33,86 @@ extension NSManagedObjectContext {
             completion(object?.asPortfolio)
         }
     }
+    
+    func resetStrategy(username: String,
+                       _ completion: @escaping((Portfolio?) -> Void)) {
+        self.getPortfolioObject(username) { object in
+            self.performAndWait {
+                //We are only using 1 strategy for now
+                //otherwise we would need to specify the strategy
+                if let strategy = object?.strategies?.first {
+                    strategy.date = .today
+                    strategy.name = strategy.date.asString
+                    
+                    object?.strategies = [strategy]
+                    
+                    try? self.save()
+                    
+                    completion(object?.asPortfolio)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
+    func removeFromStrategy(username: String,
+                            _ security: Security,
+                           _ completion: @escaping((Portfolio?) -> Void)) {
+        self.getPortfolioObject(username) { object in
+            self.performAndWait {
+                //We are only using 1 strategy for now
+                //otherwise we would need to specify the strategy
+                if let strategy = object?.strategies?.first {
+                    
+                    if let quote = strategy.quotes?.first(where: { $0.contains(security: security) }) {
+                        
+                        strategy.removeFromQuotes(quote)
+                        if let investments = strategy.investmentData?.investments {
+                            investments.items.removeAll(where: { $0.ticker == quote.ticker })
+                            
+                            strategy.investmentData = investments.archived
+                            
+                            
+                            try? self.save()
+                        }
+                    }
+                    
+                    completion(object?.asPortfolio)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
+    func closeFromStrategy(username: String,
+                            _ security: Security,
+                           _ completion: @escaping((Portfolio?) -> Void)) {
+        self.getPortfolioObject(username) { object in
+            self.performAndWait {
+                //We are only using 1 strategy for now
+                //otherwise we would need to specify the strategy
+                if let strategy = object?.strategies?.first {
+                    
+                    if let investments = strategy.investmentData?.investments,
+                       let index = investments.items.firstIndex(where: { $0.assetID == security.assetID }){
+                        
+                        investments.items[index].closed = true
+                        investments.items[index].closedChange = investments.items[index].latestChange
+                        
+                        strategy.investmentData = investments.archived
+                        
+                        try? self.save()
+                    }
+                    
+                    completion(object?.asPortfolio)
+                } else {
+                    completion(nil)
+                }
+            }
+        }
+    }
 }
 
 extension Portfolio {
@@ -67,6 +147,8 @@ extension Portfolio {
                     }
                 }
                 
+                //createst investments objects
+                //of the newly added securities
                 let investments: Strategy.Investments = .init(items: securities.map { $0.asInvestmentItem })
                 
                 let strategyToModify: StrategyObject

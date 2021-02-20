@@ -87,6 +87,8 @@ struct MoversDataExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        GraniteLogger.info("got the movers data for stocks - self: \(String(describing: self))", .network, focus: true)
+        
         guard let data = event.data as? StockServiceModels.Movers else { return }
         
         let symbols: [String] = data.finance.result.flatMap { item in item.quotes.map { $0.symbol } }
@@ -120,6 +122,8 @@ struct MoversStockQuotesExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        GraniteLogger.info("pushing with quotes - self: \(String(describing: self))", .network, focus: true)
         
         if event.syncWithStoics {
             do {

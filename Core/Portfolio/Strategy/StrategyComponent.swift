@@ -24,88 +24,144 @@ public struct StrategyComponent: GraniteComponent {
     ]
     
     public var body: some View {
-        VStack {
-            VStack {
-                GraniteText("strategy",
-                            .headline,
-                            .bold,
-                            .leading)
-                            .shadow(color: .black,
-                                    radius: 2,
-                                    x: 1,
-                                    y: 1)
+        ZStack {
+            GeometryReader { geometry in
+                GradientView(colors: [Brand.Colors.yellow,
+                                      Brand.Colors.purple],
+                             cornerRadius: 0.0,
+                             direction: .top)
+                            .shadow(color: Color.black,
+                                    radius: 8.0,
+                                    x: 4.0,
+                                    y: 3.0)
+                            .offset(x: 0,
+                                    y: (geometry.size.height*(1.0 - (state.syncProgress.isNaN ? 0.0 : state.syncProgress.asCGFloat))))
+                            .animation(.default)
             }
             
             VStack {
-                ForEach(command.center.strategies, id: \.self) { strategy in
-                    VStack(spacing: 0) {
-                        
-                        title(strategy).padding(.bottom, Brand.Padding.medium9)
-                        
-                        PaddingVertical(Brand.Padding.xSmall)
-                        
-                        ScrollView {
-                            LazyVGrid(columns: columns, spacing: 0) {
-                                ForEach(strategy.investments.items, id: \.self) { item in
-                                    
-                                    VStack {
-                                        HStack(alignment: .top, spacing: 0) {
-                                            header(item)
-                                            
-                                            VStack(alignment: .trailing) {
-                                                GraniteText(item.ticker.uppercased(),
-                                                            .title3,
-                                                            .bold,
-                                                            .trailing,
-                                                            style: .init(gradient: [Color.black.opacity(0.75),
-                                                                                    Color.black.opacity(0.36)]))
-                                                    .padding(.top, Brand.Padding.small)
-                                                
-                                                Spacer()
-                                                
-                                                GraniteText("close",
-                                                            Brand.Colors.redBurn,
-                                                            .headline,
-                                                            .bold,
-                                                            .trailing)
-                                                    .shadow(color: Color.black,
-                                                            radius: 1.0, x: 1.0, y: 2.0)
-                                                    .modifier(TapAndLongPressModifier.init(tapAction: {} ))
-                                            }.frame(maxWidth: 75, maxHeight: .infinity)
-                                        }
-                                        .padding(.top, Brand.Padding.medium)
-                                        .padding(.leading, Brand.Padding.xMedium)
-                                        .padding(.trailing, Brand.Padding.xMedium)
-                                        .padding(.bottom, Brand.Padding.medium)
-                                        
-                                        PaddingVertical(Brand.Padding.xSmall)
-                                        
-                                        info(item)
-                                        
-                                    }.background(GradientView(colors: [Brand.Colors.marbleV2,
-                                                                       Brand.Colors.marble],
-                                                              direction: .topLeading)
-                                                    .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0))
-                                                    .padding(.bottom, Brand.Padding.small)
-                                                    .padding(.top, Brand.Padding.medium)
-                                }
-                            }
-                        }
-                        
-                    }.frame(maxWidth: .infinity,
-                            maxHeight: .infinity)
+                VStack {
+                    GraniteText("strategy",
+                                .headline,
+                                .bold,
+                                .leading)
+                                .shadow(color: .black,
+                                        radius: 2,
+                                        x: 1,
+                                        y: 1)
                 }
-            }.frame(maxWidth: .infinity,
-                    maxHeight: .infinity)
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium)
             
+                VStack {
+                    ForEach(command.center.strategies, id: \.self) { strategy in
+                        VStack(spacing: 0) {
+                            
+                            title(strategy)
+                                .padding(.bottom, Brand.Padding.medium9)
+                                .padding(.leading, Brand.Padding.medium)
+                                .padding(.trailing, Brand.Padding.medium)
+                            
+                            PaddingVertical(Brand.Padding.xSmall)
+                            
+                            ScrollView {
+                                LazyVGrid(columns: columns, spacing: 0) {
+                                    ForEach(strategy.investments.items, id: \.self) { item in
+                                        
+                                        VStack {
+                                            if item.closed {
+                                                closed(item)
+                                                .padding(.top, Brand.Padding.medium)
+                                                .padding(.leading, Brand.Padding.xMedium)
+                                                .padding(.trailing, Brand.Padding.xMedium)
+                                                .padding(.bottom, Brand.Padding.medium)
+                                            } else {
+                                                header(item)
+                                                .padding(.top, Brand.Padding.medium)
+                                                .padding(.leading, Brand.Padding.xMedium)
+                                                .padding(.trailing, Brand.Padding.xMedium)
+                                                .padding(.bottom, Brand.Padding.medium)
+                                                
+                                                PaddingVertical(Brand.Padding.xSmall)
+                                                
+                                                info(item)
+                                            }
+                                            
+                                        }.background(GradientView(colors: [Brand.Colors.marbleV2,
+                                                                           Brand.Colors.marble],
+                                                                  direction: .topLeading)
+                                                        .shadow(color: Color.black, radius: 8.0, x: 4.0, y: 3.0))
+                                                        .padding(.bottom, Brand.Padding.small)
+                                                        .padding(.top, Brand.Padding.medium)
+                                    }
+                                }
+                                .padding(.leading, Brand.Padding.medium)
+                                .padding(.trailing, Brand.Padding.medium)
+                            }
+                            
+                        }.frame(maxWidth: .infinity,
+                                maxHeight: .infinity)
+                    }
+                }.frame(maxWidth: .infinity,
+                        maxHeight: .infinity)
+                .opacity(state.stage == .syncing ? 0.75 : 1.0)
+            }
+            .clipped()
+            .padding(.top, Brand.Padding.medium)
+            
+            if state.stage == .syncing {
+                GraniteDisclaimerComponent(state:
+                                            .init("please wait, * stoic is\nsyncing the quotes\nin your strategy", opacity: 0.57))
+            }
+            
+            if state.showResetDisclaimer {
+                GraniteDisclaimerComponent(state:
+                                            .init("are you sure you want to reset your strategy dates?", opacity: 0.57,
+                                           action: {
+                                            GraniteHaptic.light.invoke()
+                                            sendEvent(StrategyEvents.Reset())
+                                           },
+                                           cancel:{
+                                             GraniteHaptic.light.invoke()
+                                             set(\.showResetDisclaimer, value: false)
+                                           }))
+            }
+            
+            if state.showRemoveDisclaimer {
+                GraniteDisclaimerComponent(state:
+                                            .init("are you sure you want to remove \(state.wantsToRemove?.ticker.uppercased() ?? "") from your strategy?", opacity: 0.57,
+                                           action: {
+                                            if let item = state.wantsToRemove {
+                                                GraniteHaptic.light.invoke()
+                                                sendEvent(StrategyEvents.Remove(assetID: item.assetID))
+                                            }
+                                           },
+                                           cancel:{
+                                             GraniteHaptic.light.invoke()
+                                             set(\.wantsToRemove, value: nil)
+                                           }))
+            }
+            
+            if state.showCloseDisclaimer {
+                GraniteDisclaimerComponent(state:
+                                            .init("are you sure you want to remove \(state.wantsToClose?.ticker.uppercased() ?? "") from your strategy? Current status will remain in your strategy to keep track of your total net during the strategy's duration", opacity: 0.57,
+                                           action: {
+                                            if let item = state.wantsToClose {
+                                                GraniteHaptic.light.invoke()
+                                                sendEvent(StrategyEvents.Close(assetID: item.assetID))
+                                            }
+                                           },
+                                           cancel:{
+                                             GraniteHaptic.light.invoke()
+                                             set(\.wantsToClose, value: nil)
+                                           }))
+            }
         }
-        .padding(.top, Brand.Padding.medium)
-        .padding(.leading, Brand.Padding.medium)
-        .padding(.trailing, Brand.Padding.medium)
     }
     
     public func title(_ strategy: Strategy) -> some View {
         ZStack {
+            
             VStack(alignment: .leading, spacing: Brand.Padding.medium9) {
                 GraniteText(strategy.name,
                             Brand.Colors.white,
@@ -124,65 +180,179 @@ public struct StrategyComponent: GraniteComponent {
             VStack(alignment: .trailing, spacing: Brand.Padding.xMedium) {
                 HStack {
                     VStack(alignment: .center) {
-                        GraniteText("sync",
+                        GraniteText(state.statusLabel,
                                     Brand.Colors.yellow,
                                     .subheadline,
                                     .regular,
                                     .trailing)
                     }
                     
-                    GraniteButtonComponent(state: .init(.image("refresh_icon"),
-                                                        colors: [Brand.Colors.yellow,
-                                                                 Brand.Colors.purple],
-                                                        selected: true,
-                                                        size: .init(16),
-                                                        padding: .init(0,
-                                                                       Brand.Padding.medium9,
-                                                                       0,
-                                                                       Brand.Padding.medium9),
-                                                        action: {
+                    if state.stage != .syncing {
+                        GraniteButtonComponent(state: .init(.image("refresh_icon"),
+                                                            colors: [Brand.Colors.yellow,
+                                                                     Brand.Colors.purple],
+                                                            selected: true,
+                                                            size: .init(16),
+                                                            padding: .init(0,
+                                                                           Brand.Padding.medium9,
+                                                                           0,
+                                                                           Brand.Padding.medium9),
+                                                            action: {
                                                                 GraniteHaptic.light.invoke()
-                                                        }))
+                                                                sendEvent(StrategyEvents.Sync())
+                                                            }))
+                    } else {
+                        GraniteText("\(state.syncProgress.percentRounded)%",
+                                    Brand.Colors.yellow,
+                                    .subheadline,
+                                    .bold)
+                            .shadow(color: .black, radius: 2, x: 1, y: 1)
+                    }
                     
                 }
                 
-                GraniteText("last sync: \(Date.today.asString)",
-                            Brand.Colors.marble,
+                GraniteText("reset",
+                            Brand.Colors.redBurn,
                             .subheadline,
-                            .regular,
-                            .trailing,
-                            verticalAlignment: .top)
+                            .bold,
+                            .trailing)
+                    .shadow(color: Color.black,
+                            radius: 1.0, x: 1.0, y: 2.0)
+                    .modifier(TapAndLongPressModifier.init(tapAction: {
+                        
+                        set(\.showResetDisclaimer, value: true)
+                        
+                    } ))
                 
             }
         }
     }
     
+    public func closed(_ item: Strategy.Investments.Item) -> some View {
+        HStack(alignment: .top, spacing: 0) {
+            VStack(alignment: .leading) {
+                GraniteText(item.ticker.uppercased(),
+                            .title3,
+                            .bold,
+                            style: .init(gradient: [Color.black.opacity(0.75),
+                                                    Color.black.opacity(0.36)]))
+                    .padding(.top, Brand.Padding.small)
+                
+                Spacer()
+                
+                GraniteText("company name",
+                            Brand.Colors.black,
+                            .headline,
+                            .bold)
+                
+                GraniteText("\(item.companyName)",
+                            Brand.Colors.black,
+                            .subheadline,
+                            .regular)
+            }
+            Spacer()
+            
+            VStack {
+                Spacer()
+                GraniteText("closed",
+                            Brand.Colors.black,
+                            .headline,
+                            .bold)
+                Spacer()
+            }
+            
+            Spacer()
+            VStack(alignment: .leading, spacing: Brand.Padding.xSmall) {
+                
+                GraniteText("$\(item.closedAmount.display)",
+                            .subheadline,
+                            .bold)
+                    .shadow(color: .black,
+                            radius: 2, x: 2, y: 2)
+                                
+                GraniteText(item.closedPercent.statusPercentDisplay,
+                            .footnote,
+                            .bold)
+                    .shadow(color: .black,
+                            radius: 2, x: 2, y: 2)
+                
+                
+                GraniteText("\(item.closedDate.asString)",
+                            .footnote,
+                            .regular)
+                            .shadow(color: .black,
+                                    radius: 2, x: 2, y: 2)
+            }
+            .padding(.top, Brand.Padding.medium)
+            .padding(.bottom, Brand.Padding.medium)
+            .padding(.leading, Brand.Padding.medium)
+            .padding(.trailing, Brand.Padding.medium)
+            .background(item.closedStatusColor
+                            .opacity(0.57)
+                            .cornerRadius(6.0)
+                            .shadow(color: .black, radius: 4, x: 1, y: 2))
+        }
+    }
+    
     public func header(_ item: Strategy.Investments.Item) -> some View {
-        VStack {
-            GraniteText("company name",
-                        Brand.Colors.black,
-                        .headline,
-                        .bold,
-                        .leading)
+        HStack(alignment: .top, spacing: 0) {
+            VStack(alignment: .leading) {
+                GraniteText("company name",
+                            Brand.Colors.black,
+                            .headline,
+                            .bold)
+                
+                GraniteText("\(item.companyName)",
+                            Brand.Colors.black,
+                            .subheadline,
+                            .regular)
+                
+                GraniteText("exchange",
+                            Brand.Colors.black,
+                            .headline,
+                            .bold)
+                            .padding(.top, Brand.Padding.small)
+                
+                GraniteText("\(item.exchangeName)",
+                            Brand.Colors.black,
+                            .subheadline,
+                            .regular)
+            }
             
-            GraniteText("\(item.companyName)",
-                        Brand.Colors.black,
-                        .subheadline,
-                        .regular,
-                        .leading)
-            
-            GraniteText("exchange",
-                        Brand.Colors.black,
-                        .headline,
-                        .bold,
-                        .leading)
-                        .padding(.top, Brand.Padding.small)
-            
-            GraniteText("\(item.exchangeName)",
-                        Brand.Colors.black,
-                        .subheadline,
-                        .regular,
-                        .leading)
+            VStack(alignment: .trailing) {
+                GraniteText(item.ticker.uppercased(),
+                            .title3,
+                            .bold,
+                            .trailing,
+                            style: .init(gradient: [Color.black.opacity(0.75),
+                                                    Color.black.opacity(0.36)]))
+                    .padding(.top, Brand.Padding.small)
+                
+                Spacer()
+                
+                HStack(spacing: Brand.Padding.medium) {
+                    GraniteText("remove",
+                                Brand.Colors.redBurn,
+                                .headline,
+                                .bold)
+                        .shadow(color: Color.black,
+                                radius: 1.0, x: 1.0, y: 2.0)
+                        .modifier(TapAndLongPressModifier.init(tapAction: {
+                            set(\.wantsToRemove, value: item)
+                        } ))
+                    
+                    GraniteText("close",
+                                Brand.Colors.black,
+                                .headline,
+                                .bold)
+                        .shadow(color: Color.black.opacity(0.75),
+                                radius: 1.0, x: 1.0, y: 2.0)
+                        .modifier(TapAndLongPressModifier.init(tapAction: {
+                            set(\.wantsToClose, value: item)
+                        } ))
+                }
+                
+            }
         }
     }
     

@@ -649,6 +649,12 @@
 		717D9AF125C8689400B9354D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 717D9AF025C8689400B9354D /* FirebaseAuth */; };
 		717EFD7C25C51B940094AE45 /* TapAndLongPressModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */; };
 		717EFD7D25C51B940094AE45 /* TapAndLongPressModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */; };
+		7182163125E06DDB0089CF78 /* SyncStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182163025E06DDB0089CF78 /* SyncStrategyExpedition.swift */; };
+		7182163225E06DDB0089CF78 /* SyncStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182163025E06DDB0089CF78 /* SyncStrategyExpedition.swift */; };
+		7182163C25E07E580089CF78 /* ResetStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182163B25E07E580089CF78 /* ResetStrategyExpedition.swift */; };
+		7182163D25E07E580089CF78 /* ResetStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182163B25E07E580089CF78 /* ResetStrategyExpedition.swift */; };
+		7182164325E0895E0089CF78 /* ModifyStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182164225E0895E0089CF78 /* ModifyStrategyExpedition.swift */; };
+		7182164425E0895E0089CF78 /* ModifyStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182164225E0895E0089CF78 /* ModifyStrategyExpedition.swift */; };
 		7183D52E25A4268E00FB91A9 /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D52D25A4268E00FB91A9 /* BasicButton.swift */; };
 		7183D52F25A4268E00FB91A9 /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D52D25A4268E00FB91A9 /* BasicButton.swift */; };
 		7183D54B25A428AE00FB91A9 /* GraphPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D53625A428AE00FB91A9 /* GraphPageViewModel.swift */; };
@@ -1280,6 +1286,9 @@
 		717D9AC625C8639D00B9354D /* LoginComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginComponent.swift; sourceTree = "<group>"; };
 		717D9AE525C867DC00B9354D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAndLongPressModifier.swift; sourceTree = "<group>"; };
+		7182163025E06DDB0089CF78 /* SyncStrategyExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStrategyExpedition.swift; sourceTree = "<group>"; };
+		7182163B25E07E580089CF78 /* ResetStrategyExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetStrategyExpedition.swift; sourceTree = "<group>"; };
+		7182164225E0895E0089CF78 /* ModifyStrategyExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyStrategyExpedition.swift; sourceTree = "<group>"; };
 		7183D52D25A4268E00FB91A9 /* BasicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
 		7183D53625A428AE00FB91A9 /* GraphPageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphPageViewModel.swift; sourceTree = "<group>"; };
 		7183D53725A428AE00FB91A9 /* Misc.Plot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.Plot.swift; sourceTree = "<group>"; };
@@ -2010,6 +2019,9 @@
 			isa = PBXGroup;
 			children = (
 				712562A125B286DE00C8AC68 /* GetStrategyExpedition.swift */,
+				7182163025E06DDB0089CF78 /* SyncStrategyExpedition.swift */,
+				7182163B25E07E580089CF78 /* ResetStrategyExpedition.swift */,
+				7182164225E0895E0089CF78 /* ModifyStrategyExpedition.swift */,
 			);
 			path = Expedition;
 			sourceTree = "<group>";
@@ -4283,6 +4295,7 @@
 				71D63F6C2592BFC40085D718 /* AssetSectionComponent.swift in Sources */,
 				71C2BFAA25ABE1ED006445EB /* FloorEvents.swift in Sources */,
 				7183D55F25A428AE00FB91A9 /* GlowingIndicator.swift in Sources */,
+				7182163125E06DDB0089CF78 /* SyncStrategyExpedition.swift in Sources */,
 				71D7B5DF25D871DB009839C3 /* AssetGridType.swift in Sources */,
 				71143DE825A4C14F00379E4B /* Quote.swift in Sources */,
 				7121F6DA2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */,
@@ -4312,6 +4325,7 @@
 				713D25AF258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
 				719AD86A25B10746001350FA /* GraniteEmptyComponent.swift in Sources */,
 				710889832591B29800795EDF /* Promise+Chain.swift in Sources */,
+				7182163C25E07E580089CF78 /* ResetStrategyExpedition.swift in Sources */,
 				71332A1325A78D09005A72A9 /* SecurityDetailComponent.swift in Sources */,
 				71332A1125A78D09005A72A9 /* SecurityDetailEvents.swift in Sources */,
 				714343A92590789A001F26A4 /* GeometryFunctions.swift in Sources */,
@@ -4339,6 +4353,7 @@
 				71DC58D525988F56004935CF /* re.swift in Sources */,
 				71D63F492592BC210085D718 /* MoversSecurityExpedition.swift in Sources */,
 				7133385325A2B05200D739C4 /* ParseTonalRangeExpedition.swift in Sources */,
+				7182164325E0895E0089CF78 /* ModifyStrategyExpedition.swift in Sources */,
 				7139F67025981BD300D9C84B /* TonalTuneComponent.swift in Sources */,
 				7136B65D25A008B40014F693 /* PortfolioComponent.swift in Sources */,
 				71434361259076F4001F26A4 /* Edge+Convenience.swift in Sources */,
@@ -4433,6 +4448,7 @@
 				71ED8F3425C5D2E9000F6366 /* SettingsEvents.swift in Sources */,
 				7183D56225A428AE00FB91A9 /* GraphLinePlotConfig.swift in Sources */,
 				71CC7DA525C8E7D800610B8A /* Get.Update.UserExpedition.swift in Sources */,
+				7182163D25E07E580089CF78 /* ResetStrategyExpedition.swift in Sources */,
 				719AD86D25B10746001350FA /* GraniteEmptyEvents.swift in Sources */,
 				71CC7DB925C8F2AE00610B8A /* NetworkService.Apply.swift in Sources */,
 				7183D55425A428AE00FB91A9 /* MovingNumbersView.swift in Sources */,
@@ -4697,6 +4713,7 @@
 				7143418D259067D5001F26A4 /* Color.swift in Sources */,
 				7139F626259810C000D9C84B /* TonalSetComponent.swift in Sources */,
 				71434321259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
+				7182164425E0895E0089CF78 /* ModifyStrategyExpedition.swift in Sources */,
 				7179ACA925AC9472003FD06F /* TonalCompileState.swift in Sources */,
 				7195A54A25B906AD00F1E829 /* TonalService.Model.Generate.swift in Sources */,
 				710889662591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
@@ -4819,6 +4836,7 @@
 				71D63F072592A9800085D718 /* StockService.Utilities.swift in Sources */,
 				710889742591B29800795EDF /* Promise+Finally.swift in Sources */,
 				71F1EC5525A0F47A00D32C52 /* SearchState.swift in Sources */,
+				7182163225E06DDB0089CF78 /* SyncStrategyExpedition.swift in Sources */,
 				7108896E2591B29800795EDF /* PromiseState.swift in Sources */,
 				7195A54325B9069F00F1E829 /* TonalService.Model.Predict.swift in Sources */,
 				7156AC1225A86E9B00648941 /* User.swift in Sources */,
@@ -5007,7 +5025,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = stoic.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -5032,7 +5050,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = stoic.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -5060,7 +5078,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -5087,7 +5105,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = CV8LAA8JAP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

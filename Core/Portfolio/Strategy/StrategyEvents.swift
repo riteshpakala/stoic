@@ -12,4 +12,22 @@ import Combine
 
 struct StrategyEvents {
     public struct Get: GraniteEvent {}
+    public struct Reset: GraniteEvent {}
+    public struct Remove: GraniteEvent {
+        let assetID: String
+    }
+    public struct Close: GraniteEvent {
+        let assetID: String
+    }
+    public struct Sync: GraniteEvent {
+        public var behavior: GraniteEventBehavior {
+            .quiet
+        }
+    }
+    public struct Push: GraniteEvent {
+        public var behavior: GraniteEventBehavior {
+            .quiet
+        }
+    }
+    public struct SyncComplete: GraniteEvent {}
 }

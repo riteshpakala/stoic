@@ -102,6 +102,12 @@ extension Security {
             self.ticker == security.ticker &&
             self.exchangeName == security.exchangeName
     }
+    
+    var updateTime: Int {
+        let hours: Int = Date.today.hoursFrom(date)
+        let days = max(1, hours/24)
+        return days
+    }
 }
 
 public struct SecurityCharacteristics {

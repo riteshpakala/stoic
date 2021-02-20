@@ -71,6 +71,8 @@ extension Strategy {
             }
             
             var prediction: TonalPrediction? = nil
+            var closed: Bool = false
+            var closedChange: Change? = nil
             
             public init(security: Security) {
                 self.ticker = security.ticker
@@ -103,6 +105,8 @@ extension Strategy {
                 case assetID
                 case initial
                 case changes
+                case closed
+                case closedChange
             }
             
             required public convenience init(from decoder: Decoder) throws {
@@ -114,12 +118,17 @@ extension Strategy {
                 let assetID: String = try container.decode(String.self, forKey: .assetID)
                 let initial: Change = try container.decode(Change.self, forKey: .initial)
                 let changes: [Change] = try container.decode([Change].self, forKey: .changes)
+                let closed: Bool = (try? container.decode(Bool.self, forKey: .closed)) ?? false
+                let closedChange: Change? = try? container.decode(Change.self, forKey: .closedChange)
                 
                 self.init(ticker: ticker,
                           exchangeName: exchangeName,
                           companyName: companyName,
                           assetID: assetID,
                           initial: initial)
+                
+                self.closed = closed
+                self.closedChange = closedChange
                 
                 self.changes = changes.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
             }
@@ -133,6 +142,8 @@ extension Strategy {
                 try container.encode(assetID, forKey: .assetID)
                 try container.encode(initial, forKey: .initial)
                 try container.encode(changes, forKey: .changes)
+                try container.encode(closed, forKey: .closed)
+                try container.encode(closedChange, forKey: .closedChange)
             }
             
             public var asString: String {
