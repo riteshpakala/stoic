@@ -13,11 +13,13 @@ class Detail {
     var tonalStage: TonalDetailStage = .none
     var model: TonalModel? = nil {
         didSet {
+            guard modelID.isNotEmpty else { return }
             modelID = ""
         }
     }
     var modelID: String = "" {
         didSet {
+            guard model != nil else { return }
             model = nil
         }
     }

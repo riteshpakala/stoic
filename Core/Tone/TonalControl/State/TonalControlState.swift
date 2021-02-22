@@ -18,6 +18,11 @@ public class TonalControlState: GraniteState {
     public init(_ tuner: SentimentSliderState, model: TonalModel?) {
         self.tuner = tuner
         self.model = model
+        
+        //TODO: This is not a very good practice
+        if model != nil {
+            self.model?.precompute()
+        }
     }
     
     public required init() {

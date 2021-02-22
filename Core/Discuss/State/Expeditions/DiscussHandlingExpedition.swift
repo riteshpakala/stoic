@@ -37,7 +37,19 @@ struct DiscussMessagesExpedition: GraniteExpedition {
         
         state.currentChannel = event.payload.channel.name
         state.messages = event.payload.messages
-        state.users = event.payload.users.map { User.guest(with: $0.username) }
+        
+        let guests = event.payload.users.map { User.guest(with: $0.username) }
+        
+        //TODO: maybe it should be better if the DiscussRelay handles this
+        //instead of this expedition, if there's too many users, could be cumbersome
+        //or assetGridComponent could hold a record of the user, and yeah it has an @
+        //which is kind of nice in a way. Kind of seperates it a litter more.
+        if let user = connection.retrieve(\EnvironmentDependency.user),
+           let me = guests.firstIndex(where: { $0.info.username.replacingOccurrences(of: "@", with: "") == user.info.username }){
+            guests[me].appearance.color = Brand.Colors.yellow
+        }
+        
+        state.users = guests
     }
 }
 

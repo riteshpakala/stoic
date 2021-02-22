@@ -29,8 +29,11 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                 } else {
                     state.quote = quote
                     
-                    if let model = state.quote?.models.first(where: { $0.assetID == state.modelID }) {
+                    //Maybe we we should have a better way to check against model vs quote
+                    if let modelID = connection.retrieve(\EnvironmentDependency.detail.modelID),
+                       let model = quote.models.first(where: { $0.modelID == modelID }){
                         state.model = model
+                        print("{TEST} hmm \(modelID)")
                     }
                 }
                 

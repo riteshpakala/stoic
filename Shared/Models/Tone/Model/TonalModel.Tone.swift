@@ -42,7 +42,7 @@ extension TonalPrediction {
         }
         
         public var summary: String {
-            return "sell"
+            return "----"
         }
         
         public var accuracy: Double {
