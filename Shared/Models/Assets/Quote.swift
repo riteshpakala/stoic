@@ -77,7 +77,10 @@ public struct Quote {
         let afterHours: Bool = Date.today.closingHour <= latestSecurity.date.timeComponents().hour && self.securityType == .stock
 //        let hourCheck: Int = Date.today.closingHour <= latestSecurity.date.timeComponents().hour ? hours + 1 : 1
         
-        return ((abs(days) > 0 || (hours >= 1)) || securities.count < 4) && !afterHours// && Date.today.validTradingDay) || securities.count < 4
+        let daysAreOverdue = abs(days) > 0
+        let hoursAreOverdue = hours >= 1 && !afterHours
+        let noSecurities = securities.count < 4
+        return (daysAreOverdue || hoursAreOverdue || noSecurities)// && Date.today.validTradingDay) || securities.count < 4
     }
     
     var updateTime: Int? {

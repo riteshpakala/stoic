@@ -310,13 +310,13 @@ public struct StrategyComponent: GraniteComponent {
                             .subheadline,
                             .regular)
                 
-                GraniteText("exchange",
+                GraniteText("opened",
                             Brand.Colors.black,
                             .headline,
                             .bold)
                             .padding(.top, Brand.Padding.small)
                 
-                GraniteText("\(item.exchangeName)",
+                GraniteText(item.date.asStringWithTime,
                             Brand.Colors.black,
                             .subheadline,
                             .regular)

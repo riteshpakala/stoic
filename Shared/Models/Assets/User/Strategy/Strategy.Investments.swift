@@ -14,11 +14,11 @@ extension Strategy {
     public class Investments: Archiveable {
         public class Item: Archiveable, Identifiable, Hashable, Equatable {
             public static func == (lhs: Strategy.Investments.Item, rhs: Strategy.Investments.Item) -> Bool {
-                lhs.assetID+lhs.initial.date.asString == rhs.assetID+rhs.initial.date.asString
+                lhs.assetID+lhs.date.asStringWithTime == rhs.assetID+rhs.date.asStringWithTime
             }
             
             public func hash(into hasher: inout Hasher) {
-                hasher.combine(assetID+initial.date.asString)
+                hasher.combine(assetID+date.asStringWithTime)
             }
             
             public class Change: Archiveable {
@@ -64,6 +64,12 @@ extension Strategy {
             let exchangeName: String
             let companyName: String
             let assetID: String
+            
+            //Date Added Not to be mistaken for the date of
+            //the security
+            let date: Date
+            //
+            
             let initial: Change
             var changes: [Change] = []
             var latestChange: Change {
@@ -74,24 +80,27 @@ extension Strategy {
             var closed: Bool = false
             var closedChange: Change? = nil
             
-            public init(security: Security) {
+            public init(security: Security, date: Date = .today) {
                 self.ticker = security.ticker
                 self.companyName = security.name
                 self.exchangeName = security.exchangeName
                 self.assetID = security.assetID
                 self.initial = .init(security.lastValue, security.date)
+                self.date = date
             }
             
             public init(ticker: String,
                         exchangeName: String,
                         companyName: String,
                         assetID: String,
-                        initial: Change) {
+                        initial: Change,
+                        date: Date = .today) {
                 self.ticker = ticker
                 self.exchangeName = exchangeName
                 self.companyName = companyName
                 self.assetID = assetID
                 self.initial = initial
+                self.date = date
             }
             
             public static var empty: Strategy.Investments.Item {
@@ -107,6 +116,7 @@ extension Strategy {
                 case changes
                 case closed
                 case closedChange
+                case dateAdded
             }
             
             required public convenience init(from decoder: Decoder) throws {
@@ -120,12 +130,14 @@ extension Strategy {
                 let changes: [Change] = try container.decode([Change].self, forKey: .changes)
                 let closed: Bool = (try? container.decode(Bool.self, forKey: .closed)) ?? false
                 let closedChange: Change? = try? container.decode(Change.self, forKey: .closedChange)
+                let dateAdded: Date = try container.decode(Date.self, forKey: .dateAdded)
                 
                 self.init(ticker: ticker,
                           exchangeName: exchangeName,
                           companyName: companyName,
                           assetID: assetID,
-                          initial: initial)
+                          initial: initial,
+                          date: dateAdded)
                 
                 self.closed = closed
                 self.closedChange = closedChange
@@ -144,6 +156,7 @@ extension Strategy {
                 try container.encode(changes, forKey: .changes)
                 try container.encode(closed, forKey: .closed)
                 try container.encode(closedChange, forKey: .closedChange)
+                try container.encode(date, forKey: .dateAdded)
             }
             
             public var asString: String {
