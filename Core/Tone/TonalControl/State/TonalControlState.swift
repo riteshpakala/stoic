@@ -38,7 +38,15 @@ public class TonalControlCenter: GraniteCenter<TonalControlState> {
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
-            TonalControlSentimentExpedition.Discovery()
+            TonalControlSentimentExpedition.Discovery(),
+            TonalControlGenerateExpedition.Discovery(),
+            TonalControlPredictExpedition.Discovery()
+        ]
+    }
+    
+    public override var links: [GraniteLink] {
+        [
+            .onAppear(TonalControlEvents.Generate()),
         ]
     }
     

@@ -11,7 +11,14 @@ import SwiftUI
 import Combine
 
 struct TonalControlEvents {
-    public struct Generate: GraniteEvent {}
+    public struct Generate: GraniteEvent {
+        var behavior: GraniteEventBehavior {
+            .quiet
+        }
+    }
+    public struct Predict: GraniteEvent {
+        let sentiment: SentimentOutput
+    }
     public struct Prediction: GraniteEvent {
         let data: TonalPrediction
     }

@@ -99,6 +99,10 @@ public struct StockEvents {
         public var beam: GraniteBeamType {
             .rebound
         }
+        
+        public var behavior: GraniteEventBehavior {
+            .quiet
+        }
     }
     
     //MARK: -- Stock History

@@ -26,6 +26,7 @@ public struct WindowComponent: GraniteComponent {
                 state: .init(context: state.config.kind,
                              securityType))
                 .share(.init(dep(\.hosted)))
+                .attach(to: command)
         case .portfolio(let type):
             PortfolioComponent(state: .init(type))
                 .share(.init(dep(\.hosted)))

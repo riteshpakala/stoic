@@ -32,6 +32,9 @@ public struct TonalCompileComponent: GraniteComponent {
                                                      model: command.center.model))
                     .share(.init(dep(\.hosted,
                                      TonalCompileCenter.route)))
+                
+                
+                PaddingVertical()
             }
             
             Spacer()
@@ -43,6 +46,7 @@ public struct TonalCompileComponent: GraniteComponent {
                                                             sendEvent(TonalCompileEvents.Compile(), haptic: .light)
                                                         }))
                 } else if command.center.compileState == .compiled {
+                    
                     GraniteButtonComponent(state: .init("save",
                                                         action: {
                                                             sendEvent(TonalCompileEvents.Save(), haptic: .light)

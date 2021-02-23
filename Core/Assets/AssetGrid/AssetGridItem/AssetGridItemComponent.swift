@@ -61,18 +61,16 @@ public struct AssetGridItemComponent: GraniteComponent {
                 }
                 
                 if state.asset.showDescription1 {
-                    VStack {
+                    VStack(alignment: .trailing) {
                         GraniteText(state.asset.description1,
                                     state.asset.symbolColor,
                                     .headline,
-                                    .regular,
-                                    .trailing)
+                                    .regular)
                         
                         GraniteText(state.asset.description1_sub,
                                     state.security.statusColor,
                                     .subheadline,
-                                    .regular,
-                                    .trailing)
+                                    .regular)
                     }.padding(.trailing, Brand.Padding.medium)
                 }
                 

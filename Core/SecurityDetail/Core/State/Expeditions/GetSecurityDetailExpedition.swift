@@ -33,7 +33,6 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     if let modelID = connection.retrieve(\EnvironmentDependency.detail.modelID),
                        let model = quote.models.first(where: { $0.modelID == modelID }){
                         state.model = model
-                        print("{TEST} hmm \(modelID)")
                     }
                 }
                 

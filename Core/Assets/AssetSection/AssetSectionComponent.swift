@@ -30,7 +30,8 @@ public struct AssetSectionComponent: GraniteComponent {
                         .padding(.bottom, Brand.Padding.small)
             HStack {
                 if command.center.toggleTitle {
-                    GraniteToggle(options: .init(command.center.toggleTitleLabels), onToggle: { index in
+                    GraniteToggle(options: .init(command.center.toggleTitleLabels,
+                                                 padding: Brand.Padding.medium), onToggle: { index in
                         set(\.toggleTitleIndex, value: index)
                     })
                     .padding(.leading, Brand.Padding.small)
@@ -38,7 +39,8 @@ public struct AssetSectionComponent: GraniteComponent {
                     GraniteText(state.context.label, .headline, .bold)
                 }
                 Spacer()
-                GraniteToggle(options: .init(["stock", "crypto"]), onToggle: { index in
+                GraniteToggle(options: .init(["stock", "crypto"],
+                                             padding: Brand.Padding.medium), onToggle: { index in
                     set(\.securityType, value: index == 0 ? .stock : .crypto)
                 })
                 

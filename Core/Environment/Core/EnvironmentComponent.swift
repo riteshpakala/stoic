@@ -109,10 +109,12 @@ extension EnvironmentComponent {
                         .background(Brand.Colors.black)
                         .border(state.route.isDebug ? Brand.Colors.red : .clear,
                                 width: state.route.isDebug ? 4.0 : 0.0)
+        
+        
         return window
     }
     
     func createWindow(_ config: WindowConfig) -> WindowComponent {
-        return WindowComponent(state: .init(config))
+        return WindowComponent(state: .init(config)).attach(to: command)
     }
 }

@@ -24,6 +24,8 @@ struct MoversStockExpedition: GraniteExpedition {
         }
         
         movers.updateStock(categories: .init(event.topVolume, event.gainers, event.losers))
+        
+        connection.hear()
     }
 }
 
@@ -42,5 +44,7 @@ struct MoversCryptoExpedition: GraniteExpedition {
         }
         
         movers.updateCrypto(categories: .init(event.topVolume, event.gainers, event.losers))
+        
+        connection.hear()
     }
 }

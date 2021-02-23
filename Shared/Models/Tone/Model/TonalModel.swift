@@ -46,13 +46,15 @@ public struct TonalModel: Asset {
         self.last12SecuritiesDailies = Array(sorted.prefix(12))
     }
     
-    public mutating func predictAll(_ sentiment: SentimentOutput = .neutral) -> TonalPrediction {
-        let close: Double = predict(sentiment, modelType: .close)
-        let low: Double = predict(sentiment, modelType: .low)
-        let high: Double = predict(sentiment, modelType: .high)
-        let volume: Double = predict(sentiment, modelType: .volume)
+    public mutating func predictAll(_ sentiment: SentimentOutput? = nil) -> TonalPrediction {
+        let sentimentToUse = sentiment ?? david.sentimentAvg
         
-        return .init(close: close, low: low, high: high, volume: volume, date: date)
+        let close: Double = predict(sentimentToUse, modelType: .close)
+        let low: Double = predict(sentimentToUse, modelType: .low)
+        let high: Double = predict(sentimentToUse, modelType: .high)
+        let volume: Double = predict(sentimentToUse, modelType: .volume)
+        
+        return .init(close: close, low: low, high: high, volume: volume, date: .today)
     }
     
     public mutating func predict(_ sentiment: SentimentOutput = .neutral,

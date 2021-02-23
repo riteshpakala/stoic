@@ -14,7 +14,8 @@ extension Strategy {
             if let index = investments.items.firstIndex(where: { $0.assetID == quote.latestSecurity.assetID }) {
                 let mutableQuote: Quote = quote
                 var model = mutableQuote.models.first
-                let prediction = model?.predictAll()
+                var prediction = model?.predictAll()
+                prediction?.current = mutableQuote.latestValue
                 if let prediction = prediction {
                     self.investments.items[index].prediction = prediction
                 }

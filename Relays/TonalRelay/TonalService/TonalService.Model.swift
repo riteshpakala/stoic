@@ -18,6 +18,8 @@ public class TonalModels: Archiveable {
     public var low: SVMModel?
     public var volume: SVMModel?
     
+    private(set) var sentiments: [SentimentOutput] = []
+    
     public var recentSecurity: Security?
     
     public var currentType: ModelType = .close
@@ -37,6 +39,23 @@ public class TonalModels: Archiveable {
         }
     }
     
+    public init(models: [Model], sentiments: [SentimentOutput]) {
+        for model in models {
+            switch model {
+            case .close(let svmModel):
+                close = svmModel
+            case .high(let svmModel):
+                high = svmModel
+            case .low(let svmModel):
+                low = svmModel
+            case .volume(let svmModel):
+                volume = svmModel
+            }
+        }
+        
+        self.sentiments = sentiments
+    }
+    
     enum CodingKeys: String, CodingKey {
         case high
         case close
@@ -45,6 +64,7 @@ public class TonalModels: Archiveable {
         case stochasticK
         case stochasticD
         case currentType
+        case sentiments
     }
     
     required public convenience init(from decoder: Decoder) throws {
@@ -60,6 +80,8 @@ public class TonalModels: Archiveable {
         
         let typeValue: Int = try container.decode(Int.self, forKey: .currentType)
         
+        let sentiments: [SentimentOutput] = try container.decode([SentimentOutput].self, forKey: .sentiments)
+        
         self.init(
             models: [])
         
@@ -68,6 +90,7 @@ public class TonalModels: Archiveable {
         self.low = lowModel
         self.volume = volumeModel
         self.currentType = ModelType.init(rawValue: typeValue) ?? .none
+        self.sentiments = sentiments
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -82,6 +105,23 @@ public class TonalModels: Archiveable {
         try container.encode(volume, forKey: .volume)
         
         try container.encode(currentType.rawValue, forKey: .currentType)
+        
+        try container.encode(sentiments, forKey: .sentiments)
+    }
+    
+    public func store(sentiment: SentimentOutput) {
+        self.sentiments.append(sentiment)
+    }
+    
+    public var sentimentAvg: SentimentOutput {
+        let count: Double = sentiments.count.asDouble
+        let posAverage = sentiments.map { $0.pos }.reduce(0, +).asDouble / count
+        let negAverage = sentiments.map { $0.neg }.reduce(0, +).asDouble / count
+        let neuAverage = sentiments.map { $0.neu }.reduce(0, +).asDouble / count
+        let compAverage = sentiments.map { $0.compound }.reduce(0, +).asDouble / count
+        
+        
+        return .init(pos: posAverage, neg: negAverage, neu: neuAverage, compound: compAverage)
     }
 }
 

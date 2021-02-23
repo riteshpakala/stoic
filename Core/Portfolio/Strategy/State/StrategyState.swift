@@ -14,6 +14,11 @@ public enum StrategyStage: Equatable {
     case none
     case adding
     case syncing
+    case predicting
+    
+    public var busy: Bool {
+        self == .syncing || self == .predicting
+    }
 }
 public class StrategyState: GraniteState {
     var stage: StrategyStage = .none
@@ -43,7 +48,7 @@ public class StrategyState: GraniteState {
     var statusLabel: String {
         let count = securitiesToSync.count - securitiesSynced.count
         if count == .zero {
-            return "up to date"
+            return "predict"
         } else {
             return "sync \(count)"
         }
@@ -61,6 +66,7 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetStrategyExpedition.Discovery(),
+            SyncPredictionsExpedition.Discovery(),
             SyncStrategyExpedition.Discovery(),
             ResetStrategyExpedition.Discovery(),
             PushSecurityStrategyExpedition.Discovery(),

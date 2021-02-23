@@ -20,7 +20,7 @@ struct SyncStrategyExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard state.stage != .syncing else {
+        guard !state.stage.busy else {
             GraniteLogger.info("already syncing strategy!", .expedition, focus: true)
             return
         }
@@ -38,7 +38,11 @@ struct SyncStrategyExpedition: GraniteExpedition {
         let assetIDs = strategy.investments.items.filter({ !$0.closed }).map { $0.assetID }
         let securities = strategy.quotes.filter({ $0.needsUpdate && assetIDs.contains($0.latestSecurity.assetID) }).map { $0.latestSecurity }
         
-        guard securities.isNotEmpty else { return }
+        guard securities.isNotEmpty else {
+            connection.request(StrategyEvents.Predict())
+            state.stage = .predicting
+            return
+        }
         
         state.securitiesToSync = securities
         
@@ -47,6 +51,29 @@ struct SyncStrategyExpedition: GraniteExpedition {
         state.stage = .syncing
         
         GraniteLogger.info("Starting to Sync Strategy", .expedition, focus: true)
+    }
+}
+
+struct SyncPredictionsExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = StrategyEvents.Predict
+    typealias ExpeditionState = StrategyState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
+              let strategies = portfolio?.strategies else {
+            return
+        }
+        
+        for strategy in strategies {
+            strategy.generate()
+        }
+        
+        GraniteLogger.info("Starting to Sync Predictions", .expedition, focus: true)
     }
 }
 

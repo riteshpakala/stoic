@@ -24,6 +24,7 @@ struct StrategyEvents {
             .quiet
         }
     }
+    public struct Predict: GraniteEvent {}
     public struct Push: GraniteEvent {
         public var behavior: GraniteEventBehavior {
             .quiet

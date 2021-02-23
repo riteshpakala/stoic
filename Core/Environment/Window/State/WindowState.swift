@@ -27,6 +27,10 @@ public class WindowCenter: GraniteCenter<WindowState> {
         self.hosted.fetch.environment
     }
     
+    public override var behavior: GraniteEventBehavior {
+        .passthrough
+    }
+    
     public override var loggerSymbol: String {
         "🪟"
     }

@@ -45,7 +45,6 @@ struct TonalControlSentimentExpedition: GraniteExpedition {
         guard var model = state.model else {
             return
         }
-        print("{TEST} \(state.currentPrediction) \(state.model?.last12SecuritiesDailies.isEmpty)")
         
         state.currentPrediction = model.predictAll(state.tuner.sentiment)
         

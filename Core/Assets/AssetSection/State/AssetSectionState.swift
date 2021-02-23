@@ -31,6 +31,10 @@ public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
     let stockRelay = StockRelay()
     let cryptoRelay = CryptoRelay()
     
+    public override var behavior: GraniteEventBehavior {
+        .broadcastable
+    }
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             AssetSectionSelectedExpedition.Discovery(),

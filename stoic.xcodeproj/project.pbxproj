@@ -717,6 +717,8 @@
 		719AD86F25B10746001350FA /* GraniteEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD86925B10746001350FA /* GraniteEmptyState.swift */; };
 		719AD87A25B10A03001350FA /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD87925B10A03001350FA /* GradientView.swift */; };
 		719AD87B25B10A03001350FA /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AD87925B10A03001350FA /* GradientView.swift */; };
+		719CBCCF25E48DC100A53C93 /* TonalControlGenerate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CBCCE25E48DC100A53C93 /* TonalControlGenerate.swift */; };
+		719CBCD025E48DC100A53C93 /* TonalControlGenerate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CBCCE25E48DC100A53C93 /* TonalControlGenerate.swift */; };
 		719CDB6625C91F6A008322F0 /* NetworkService.Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CDB6525C91F6A008322F0 /* NetworkService.Signup.swift */; };
 		719CDB6725C91F6A008322F0 /* NetworkService.Signup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CDB6525C91F6A008322F0 /* NetworkService.Signup.swift */; };
 		719CDB6D25C92240008322F0 /* NetworkService.Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719CDB6C25C92240008322F0 /* NetworkService.Login.swift */; };
@@ -1320,6 +1322,7 @@
 		719AD86725B10746001350FA /* GraniteEmptyEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteEmptyEvents.swift; sourceTree = "<group>"; };
 		719AD86925B10746001350FA /* GraniteEmptyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteEmptyState.swift; sourceTree = "<group>"; };
 		719AD87925B10A03001350FA /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		719CBCCE25E48DC100A53C93 /* TonalControlGenerate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalControlGenerate.swift; sourceTree = "<group>"; };
 		719CDB6525C91F6A008322F0 /* NetworkService.Signup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Signup.swift; sourceTree = "<group>"; };
 		719CDB6C25C92240008322F0 /* NetworkService.Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Login.swift; sourceTree = "<group>"; };
 		71ACC23A25B0AB9100E02AE3 /* TonalDetailState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalDetailState.swift; sourceTree = "<group>"; };
@@ -3515,6 +3518,7 @@
 			isa = PBXGroup;
 			children = (
 				71E8389F25BF7987002D8AAD /* TonalControlSentimentExpedition.swift */,
+				719CBCCE25E48DC100A53C93 /* TonalControlGenerate.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -4114,6 +4118,7 @@
 				711484EF259E119200464684 /* WindowConfig.swift in Sources */,
 				71C08EC325AFA59300765894 /* CryptoService.Market.swift in Sources */,
 				710889A92591B29800795EDF /* Cryptowatcher+Pairs.swift in Sources */,
+				719CBCCF25E48DC100A53C93 /* TonalControlGenerate.swift in Sources */,
 				7143439E2590787E001F26A4 /* RenderIf.swift in Sources */,
 				71ED8F3525C5D2E9000F6366 /* SettingsState.swift in Sources */,
 				71434326259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,
@@ -4478,6 +4483,7 @@
 				7143EEE025994FC300B1DCB5 /* TonalService.Sounds.swift in Sources */,
 				7121F6D92596F9B000BBD459 /* QuoteObject+CoreDataProperties.swift in Sources */,
 				7122297825A673A80032FC11 /* Routes.swift in Sources */,
+				719CBCD025E48DC100A53C93 /* TonalControlGenerate.swift in Sources */,
 				7136B65C25A008B40014F693 /* PortfolioState.swift in Sources */,
 				710889CC2591B3B100795EDF /* Asset.swift in Sources */,
 				71ACC24A25B0AD7B00E02AE3 /* GenerateTonesExpedition.swift in Sources */,

@@ -47,6 +47,7 @@ extension TonalModels {
             
             GraniteLogger.info("generating tonal model", .ml, focus: true, symbol: "🛠")
             
+            var sentimentAvgs: [SentimentOutput] = []
             var models: [TonalModels.Model] = []
             for modelType in ModelType.allCases {
                 guard modelType != .none else { continue }
@@ -72,6 +73,8 @@ extension TonalModels {
                             pocket.avg,
                             quote: quote,
                             modelType: type)
+                        
+                        sentimentAvgs.append(pocket.avg)
                         
                         if modelType == .close {
                             GraniteLogger.info("inserting dataSet:\n\(dataSet.description)", .ml, focus: true)
@@ -105,7 +108,7 @@ extension TonalModels {
             
             GraniteLogger.info("tonal model generation - complete - ✅", .ml, focus: true)
             
-            completion(.init(models: models))
+            completion(.init(models: models, sentiments: sentimentAvgs))
         }
     }
     
@@ -114,7 +117,7 @@ extension TonalModels {
                        sentiment: SentimentOutput) -> TonalModels {
         
         var modelsToAppend: [Model] = []
-        
+        var sentimentAvgs: [SentimentOutput] = self.sentiments
         for type in ModelType.allCases {
             guard let model = self.model(forType: type),
                   let dataForDavid = model.dataSet else {
@@ -126,6 +129,8 @@ extension TonalModels {
                 sentiment,
                 quote: quote,
                 modelType: type)
+            
+            sentimentAvgs.append(sentiment)
 
             do {
                 try dataForDavid.addDataPoint(
@@ -153,6 +158,6 @@ extension TonalModels {
             modelsToAppend.append(type.model(for: david))
         }
         
-        return .init(models: modelsToAppend)
+        return .init(models: modelsToAppend, sentiments: sentimentAvgs)
     }
 }

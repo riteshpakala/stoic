@@ -15,8 +15,10 @@ public struct GraniteToggle: View {
     
     public struct Options {
         let labels: [String]
-        public init(_ options: [String]) {
+        let padding: CGFloat
+        public init(_ options: [String], padding: CGFloat = Brand.Padding.large) {
             labels = options
+            self.padding = padding
         }
     }
     
@@ -28,7 +30,7 @@ public struct GraniteToggle: View {
     }
     
     public var body: some View {
-        HStack(spacing: Brand.Padding.medium) {
+        HStack(spacing: options.padding) {
             
             ForEach(0..<options.labels.count,
                     id: \.self) { index in
