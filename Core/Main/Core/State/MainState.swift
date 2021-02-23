@@ -34,7 +34,8 @@ public class MainCenter: GraniteCenter<MainState> {
             UserExpedition.Discovery(),
             LogoutExpedition.Discovery(),
             DiscussSetResultExpedition.Discovery(),
-            LoginResultExpedition.Discovery()
+            LoginResultExpedition.Discovery(),
+            LoginAuthCompleteExpedition.Discovery()
         ]
     }
     

@@ -41,12 +41,12 @@ public struct GraniteDisclaimerComponent: GraniteComponent {
                                 
                             if state.isActionable {
                                 HStack {
-                                    GraniteButtonComponent(state: .init("cancel",
+                                    GraniteButtonComponent(state: .init(state.leftButtonText,
                                                                         textColor: Brand.Colors.greyV2,
                                                                         colors: [Brand.Colors.black,
                                                                                  Brand.Colors.black.opacity(0.24)],
                                                                         action: state.cancel))
-                                    GraniteButtonComponent(state: .init("okay",
+                                    GraniteButtonComponent(state: .init(state.rightButtonText,
                                                                         textColor: Brand.Colors.black,
                                                                         colors: [Brand.Colors.marbleV2,
                                                                                  Brand.Colors.marble.opacity(0.24)],

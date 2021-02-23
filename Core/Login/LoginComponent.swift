@@ -12,6 +12,8 @@ import Combine
 import AuthenticationServices
 
 public struct LoginComponent: GraniteComponent {
+    @Environment(\.openURL) var openURL
+    
     @ObservedObject
     public var command: GraniteCommand<LoginCenter, LoginState> = .init()
     
@@ -41,6 +43,7 @@ public struct LoginComponent: GraniteComponent {
                                 }))
                                 .padding(.top, Brand.Padding.medium)
                                 .padding(.bottom, Brand.Padding.medium)
+                                .padding(.leading, Brand.Padding.xSmall)
                         }
                         
                         if state.success {
@@ -124,6 +127,7 @@ public struct LoginComponent: GraniteComponent {
                     .font(Fonts.live(.headline, .regular))
                     .padding(.leading, Brand.Padding.small)
                     .padding(.trailing, Brand.Padding.small)
+                    .autocapitalization(.none)
             }
             .frame(height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             
@@ -137,6 +141,7 @@ public struct LoginComponent: GraniteComponent {
                         .font(Fonts.live(.headline, .regular))
                         .padding(.leading, Brand.Padding.small)
                         .padding(.trailing, Brand.Padding.small)
+                        .autocapitalization(.none)
                 }
                 .frame(height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(.top, Brand.Padding.medium)
@@ -153,6 +158,7 @@ public struct LoginComponent: GraniteComponent {
                         .font(Fonts.live(.headline, .regular))
                         .padding(.leading, Brand.Padding.small)
                         .padding(.trailing, Brand.Padding.small)
+                        .autocapitalization(.none)
                 }
                 .frame(height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(.top, Brand.Padding.medium)
@@ -167,8 +173,23 @@ public struct LoginComponent: GraniteComponent {
                         .font(Fonts.live(.headline, .regular))
                         .padding(.leading, Brand.Padding.small)
                         .padding(.trailing, Brand.Padding.small)
+                        .autocapitalization(.none)
                 }
                 .frame(height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                
+                
+                GraniteText("by signing up you agree to the terms & conditions",
+                            Brand.Colors.marble,
+                            .footnote,
+                            .regular)
+                    .padding(.top, Brand.Padding.medium)
+                    .modifier(TapAndLongPressModifier(tapAction: {
+                        //TODO: let's globalize this url
+                        if let url = URL(string: "https://www.iubenda.com/terms-and-conditions/17232390") {
+                            
+                            openURL(url)
+                        }
+                    }))
             default:
                 EmptyView().hidden()
             }

@@ -21,8 +21,13 @@ extension Date {
     var asString: String {
         return Calendar.nyDateFormatter.string(from: self)
     }
+    
     var asStringWithTime: String {
         return Calendar.nyTimeDayFormatter.string(from: self)
+    }
+    
+    func asStringTimedWithTime(_ second: Int) -> String {
+        return self.advanceDateBySeconds(value: second).asStringWithTime
     }
     
     func advanceDate(value: Int = 1) -> Date {
@@ -31,6 +36,10 @@ extension Date {
     
     func advanceDateHourly(value: Int = 1) -> Date {
         return Calendar.nyCalendar.date(byAdding: .hour, value: value, to: self) ?? self
+    }
+    
+    func advanceDateBySeconds(value: Int = 1) -> Date {
+        return Calendar.nyCalendar.date(byAdding: .second, value: value, to: self) ?? self
     }
     
     public static var today: Date {
@@ -119,6 +128,14 @@ extension Date {
         let hours = diff / 3600
         let minutes = (diff - hours * 3600) / 60
         return minutes
+    }
+    
+    func secondsFrom(_ date: Date) -> Int {
+        let diff = abs(Int(date.timeIntervalSince1970 - self.timeIntervalSince1970))
+
+        let hours = diff / 3600
+        let seconds = (diff - hours * 3600)
+        return seconds
     }
 }
 

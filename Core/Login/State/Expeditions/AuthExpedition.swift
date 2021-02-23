@@ -147,8 +147,10 @@ struct AuthResultExpedition: GraniteExpedition {
                                                created: (Int(user.created) ?? 0).asDouble.date(),
                                                uid: event.id)
             
-            connection.update(\RouterDependency.authState, value: .authenticated, .here)
+            connection.update(\RouterDependency.authState, value: .authenticated)
             connection.update(\RouterDependency.environment.user.info, value: info)
+            
+            connection.request(LoginEvents.AuthComplete.init(type: .login), .contact)
             
             state.success = true
         }
@@ -171,13 +173,21 @@ struct SignupResultExpedition: GraniteExpedition {
                                                uid: event.id)
             
             coreDataInstance.getPortfolio(username: info.username) { portfolio in
-                var newUser: User = .init(info: info)
+                let newUser: User = .init(info: info)
                 if let portfolio = portfolio {
                     newUser.portfolio = portfolio
                 }
                 connection.update(\RouterDependency.authState, value: .authenticated, .home)
                 connection.update(\RouterDependency.environment.user, value: newUser, .home)
                 connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
+                
+                switch state.stage {
+                case .signup:
+                    connection.request(LoginEvents.AuthComplete.init(type: .signup), .contact)
+                    state.success = true
+                default:
+                    break
+                }
             }
         }
     }

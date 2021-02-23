@@ -431,6 +431,12 @@
 		7136B65C25A008B40014F693 /* PortfolioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136B65725A008B40014F693 /* PortfolioState.swift */; };
 		7136B65D25A008B40014F693 /* PortfolioComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136B65825A008B40014F693 /* PortfolioComponent.swift */; };
 		7136B65E25A008B40014F693 /* PortfolioComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7136B65825A008B40014F693 /* PortfolioComponent.swift */; };
+		7137CF3E25E4D6060098ED5B /* GraniteTimerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7137CF3A25E4D6060098ED5B /* GraniteTimerComponent.swift */; };
+		7137CF3F25E4D6060098ED5B /* GraniteTimerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7137CF3A25E4D6060098ED5B /* GraniteTimerComponent.swift */; };
+		7137CF4025E4D6060098ED5B /* GraniteTimerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7137CF3B25E4D6060098ED5B /* GraniteTimerEvents.swift */; };
+		7137CF4125E4D6060098ED5B /* GraniteTimerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7137CF3B25E4D6060098ED5B /* GraniteTimerEvents.swift */; };
+		7137CF4225E4D6060098ED5B /* GraniteTimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7137CF3D25E4D6060098ED5B /* GraniteTimerState.swift */; };
+		7137CF4325E4D6060098ED5B /* GraniteTimerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7137CF3D25E4D6060098ED5B /* GraniteTimerState.swift */; };
 		7139F625259810C000D9C84B /* TonalSetComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7139F621259810C000D9C84B /* TonalSetComponent.swift */; };
 		7139F626259810C000D9C84B /* TonalSetComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7139F621259810C000D9C84B /* TonalSetComponent.swift */; };
 		7139F627259810C000D9C84B /* TonalSetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7139F623259810C000D9C84B /* TonalSetState.swift */; };
@@ -1179,6 +1185,9 @@
 		7136B65525A008B40014F693 /* PortfolioEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortfolioEvents.swift; sourceTree = "<group>"; };
 		7136B65725A008B40014F693 /* PortfolioState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortfolioState.swift; sourceTree = "<group>"; };
 		7136B65825A008B40014F693 /* PortfolioComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortfolioComponent.swift; sourceTree = "<group>"; };
+		7137CF3A25E4D6060098ED5B /* GraniteTimerComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteTimerComponent.swift; sourceTree = "<group>"; };
+		7137CF3B25E4D6060098ED5B /* GraniteTimerEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteTimerEvents.swift; sourceTree = "<group>"; };
+		7137CF3D25E4D6060098ED5B /* GraniteTimerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraniteTimerState.swift; sourceTree = "<group>"; };
 		7139F621259810C000D9C84B /* TonalSetComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalSetComponent.swift; sourceTree = "<group>"; };
 		7139F623259810C000D9C84B /* TonalSetState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalSetState.swift; sourceTree = "<group>"; };
 		7139F624259810C000D9C84B /* TonalSetEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalSetEvents.swift; sourceTree = "<group>"; };
@@ -2032,6 +2041,7 @@
 		7125BD6325A12EED00F22717 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				7137CF3925E4D6060098ED5B /* GraniteTimer */,
 				7199B29825C1210100B1A2B3 /* GraniteLoading */,
 				71017E2825B24A8F00E056A5 /* GraniteDisclaimer */,
 				719AD87825B109F9001350FA /* GradientView */,
@@ -2526,6 +2536,24 @@
 			isa = PBXGroup;
 			children = (
 				7136B65725A008B40014F693 /* PortfolioState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		7137CF3925E4D6060098ED5B /* GraniteTimer */ = {
+			isa = PBXGroup;
+			children = (
+				7137CF3C25E4D6060098ED5B /* State */,
+				7137CF3A25E4D6060098ED5B /* GraniteTimerComponent.swift */,
+				7137CF3B25E4D6060098ED5B /* GraniteTimerEvents.swift */,
+			);
+			path = GraniteTimer;
+			sourceTree = "<group>";
+		};
+		7137CF3C25E4D6060098ED5B /* State */ = {
+			isa = PBXGroup;
+			children = (
+				7137CF3D25E4D6060098ED5B /* GraniteTimerState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -4084,6 +4112,7 @@
 				71AE03142593168F007A4AE0 /* GetStockHistoryExpedition.swift in Sources */,
 				7125BE8D25A148BA00F22717 /* TonalFindState.swift in Sources */,
 				711D545125A684E80074D334 /* RouterEvents.swift in Sources */,
+				7137CF3E25E4D6060098ED5B /* GraniteTimerComponent.swift in Sources */,
 				7139F629259810C000D9C84B /* TonalSetEvents.swift in Sources */,
 				71D63EEC25926B860085D718 /* StockService.swift in Sources */,
 				71ADF23225B272F100B3B16E /* Strategy.swift in Sources */,
@@ -4226,6 +4255,7 @@
 				7125BE0025A1328900F22717 /* EnvironmentValues+ValueSliderStyle.swift in Sources */,
 				7143435B259076F4001F26A4 /* Path+Convenience.swift in Sources */,
 				710889652591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
+				7137CF4025E4D6060098ED5B /* GraniteTimerEvents.swift in Sources */,
 				7195A54225B9069F00F1E829 /* TonalService.Model.Predict.swift in Sources */,
 				71EE7075258D8F88005B2B8E /* AssetGridEvents.swift in Sources */,
 				7123B1272593C6CB00E5BD69 /* SecurityObject+CoreDataClass.swift in Sources */,
@@ -4344,6 +4374,7 @@
 				713D25B1258E42BF005FB4D4 /* ClockState.swift in Sources */,
 				7179ACAE25AC9472003FD06F /* TonalCompileComponent.swift in Sources */,
 				710889952591B29800795EDF /* Promise+Progress.swift in Sources */,
+				7137CF4225E4D6060098ED5B /* GraniteTimerState.swift in Sources */,
 				7143432A259076EB001F26A4 /* Double+Convenience.swift in Sources */,
 				7125BE0225A1328900F22717 /* ValueSliderStyleConfiguration.swift in Sources */,
 				7125BE6325A1388400F22717 /* RectangularPointSliderStyle.swift in Sources */,
@@ -4521,6 +4552,7 @@
 				7179ACE025AC9987003FD06F /* TonalModelObject+CoreDataClass.swift in Sources */,
 				7199B29E25C1210100B1A2B3 /* GraniteLoadingEvents.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
+				7137CF4325E4D6060098ED5B /* GraniteTimerState.swift in Sources */,
 				7123B12C2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
 				712BD1E525BA6804004D6E94 /* GenerateIndicatorExpedition.swift in Sources */,
 				71143DFF25A4C70800379E4B /* TonalService.Indicators.Averages.swift in Sources */,
@@ -4553,6 +4585,7 @@
 				710889702591B29800795EDF /* Promise+Recover.swift in Sources */,
 				7134427425A37A2C002C0315 /* SocialDataObject+CoreDataProperties.swift in Sources */,
 				7157F6B925D4D18D00404B1B /* Strategy.Tone.swift in Sources */,
+				7137CF3F25E4D6060098ED5B /* GraniteTimerComponent.swift in Sources */,
 				7179ACAF25AC9472003FD06F /* TonalCompileComponent.swift in Sources */,
 				7125BE0525A1328900F22717 /* AnyValueSliderStyle.swift in Sources */,
 				7125BE4325A1384A00F22717 /* SentimentSliderState.swift in Sources */,
@@ -4610,6 +4643,7 @@
 				71332A3425A79DD0005A72A9 /* AssetSearchEvents.swift in Sources */,
 				7179ACA725AC9472003FD06F /* TonalCompileEvents.swift in Sources */,
 				71D3C2E025AA88F50033350B /* Broadcasts.swift in Sources */,
+				7137CF4125E4D6060098ED5B /* GraniteTimerEvents.swift in Sources */,
 				71E838A125BF7987002D8AAD /* TonalControlSentimentExpedition.swift in Sources */,
 				71C08EE425AFC11200765894 /* SecurityEvents.swift in Sources */,
 				7134427B25A38245002C0315 /* Sentiment.CoreData.swift in Sources */,

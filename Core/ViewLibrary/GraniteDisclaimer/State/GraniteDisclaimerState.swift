@@ -17,6 +17,9 @@ public class GraniteDisclaimerState: GraniteState {
     let action: (() -> Void)?
     let cancel: (() -> Void)?
     
+    let leftButtonText: String = "cancel"
+    let rightButtonText: String = "okay"
+    
     var isActionable: Bool {
         action != nil
     }

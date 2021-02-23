@@ -18,6 +18,11 @@ public enum LoginStage {
     case experience
 }
 
+public enum LoginType {
+    case login
+    case signup
+}
+
 public class LoginState: GraniteState {
     var email: String = ""
     var password: String = ""

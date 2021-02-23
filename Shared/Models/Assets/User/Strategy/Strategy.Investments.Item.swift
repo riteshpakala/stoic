@@ -60,4 +60,18 @@ extension Strategy.Investments.Item {
             return "unavailable"
         }
     }
+    
+    //TODO: this counter needs to work with all intervals
+    //of securities
+    public var timer: GraniteTimerComponent {
+        if let prediction = self.prediction {
+            
+            return .init(state: .init(initial: prediction.modelDate,
+                                      type: .countdown,
+                                      limit: prediction.modelDate.secondsFrom(self.tone.targetDate),
+                                      style: .minimal))
+        } else {
+            return GraniteTimerComponent(state: .init(empty: true))
+        }
+    }
 }

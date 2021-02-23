@@ -103,14 +103,11 @@ public struct PortfolioComponent: GraniteComponent {
             
             
             HStack(spacing: 0) {
-                GraniteText("\(Date.today.asStringWithTime)",
-                            .headline,
-                            .bold,
-                            .leading,
-                            style: .init(gradient: [Brand.Colors.black.opacity(0.75),
-                                                    Brand.Colors.black.opacity(0.36)]))
+                GraniteTimerComponent()
                     .padding(.top, Brand.Padding.medium)
                     .padding(.bottom, Brand.Padding.medium)
+                
+                Spacer()
                 
                 //Sign out
                 GraniteText("sign out",

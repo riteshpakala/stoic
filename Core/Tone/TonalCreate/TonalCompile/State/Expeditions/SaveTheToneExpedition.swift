@@ -40,11 +40,26 @@ struct SaveTheToneExpedition: GraniteExpedition {
             return
         }
         
+        guard let security = tone.find.security else { return }
+        
+        var modelExists: Bool = false
+        
+        TonalModel.get(forSecurity: security,
+                       moc: coreDataInstance) { models in
+            modelExists = models.filter { $0.date == model.created }.isNotEmpty
+        }
+        
+        //TODO: Maybe a user error message is necessary here.
+        //its supposed blocks the same model saved multiple times.
+        //so hopefully it works.
+        guard !modelExists else { return }
+        
         let tonalModel: TonalModel = .init(model,
                                            daysTrained: daysTrained,
                                            tuners: tuners,
                                            quote: quote,
-                                           range: range)
+                                           range: range,
+                                           date: model.created)
         
         tonalModel.save(moc: coreDataInstance) { success in
             if success {

@@ -51,7 +51,9 @@ public struct MainComponent: GraniteComponent {
                 .background(Color.black)
             }
         case .notAuthenticated:
-            LoginComponent().share(.init(dep(\.routerDependency)))
+            LoginComponent()
+                .share(.init(dep(\.routerDependency)))
+                .listen(to: command)
         case .none:
             GraniteLoadingComponent()
         }

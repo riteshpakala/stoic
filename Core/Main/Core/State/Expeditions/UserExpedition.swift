@@ -101,3 +101,17 @@ struct LoginResultExpedition: GraniteExpedition {
         }
     }
 }
+
+struct LoginAuthCompleteExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = LoginEvents.AuthComplete
+    typealias ExpeditionState = MainState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        //TODO: Used as a proxy to refresh, but maybe can be used for something useful?
+    }
+}

@@ -13,6 +13,7 @@ public class TonalModels: Archiveable {
     
     public static let engine: String = "david.v00.02.00"
     
+    public var created: Date
     public var close: SVMModel?
     public var high: SVMModel?
     public var low: SVMModel?
@@ -37,6 +38,7 @@ public class TonalModels: Archiveable {
                 volume = svmModel
             }
         }
+        self.created = .today
     }
     
     public init(models: [Model], sentiments: [SentimentOutput]) {
@@ -54,6 +56,7 @@ public class TonalModels: Archiveable {
         }
         
         self.sentiments = sentiments
+        self.created = .today
     }
     
     enum CodingKeys: String, CodingKey {

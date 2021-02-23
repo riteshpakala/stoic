@@ -12,4 +12,7 @@ import Combine
 
 struct LoginEvents {
     public struct Auth: GraniteEvent {}
+    public struct AuthComplete: GraniteEvent {
+        let type: LoginType
+    }
 }
