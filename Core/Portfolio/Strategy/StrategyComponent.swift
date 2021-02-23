@@ -439,15 +439,8 @@ public struct StrategyComponent: GraniteComponent {
                     .shadow(color: .black,
                             radius: 2, x: 2, y: 2)
                 
-                GraniteText("\(item.tonalAccuracy)",
-                            .footnote,
-                            .bold,
-                            .leading)
-                    .shadow(color: .black,
-                            radius: 2, x: 2, y: 2)
                 
-                
-                GraniteText(item.tonalTargetDate.asString,
+                GraniteText(item.tonalGoal,
                             .footnote,
                             .regular,
                             .leading)

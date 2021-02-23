@@ -15,7 +15,7 @@ extension Strategy {
                 let mutableQuote: Quote = quote
                 var model = mutableQuote.models.first
                 var prediction = model?.predictAll()
-                prediction?.current = mutableQuote.latestValue
+                prediction?.current = self.investments.items[index].lastValue
                 if let prediction = prediction {
                     self.investments.items[index].prediction = prediction
                 }

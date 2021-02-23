@@ -27,13 +27,13 @@ public struct TonalControlComponent: GraniteComponent {
                 
                 VStack {
                     ZStack(alignment: .top) {
-                        GraniteText("high", .footnote, .regular, .trailing)
+                        GraniteText("upper bound", .footnote, .regular, .trailing)
                             .padding(.top, Brand.Padding.small)
                             .padding(.trailing, Brand.Padding.small)
                         GraphPage(someModel: command.center.plotData.high)
                     }
                     ZStack(alignment: .top) {
-                        GraniteText("low", .footnote, .regular, .trailing)
+                        GraniteText("lower bound", .footnote, .regular, .trailing)
                             .padding(.top, Brand.Padding.small)
                             .padding(.trailing, Brand.Padding.small)
                         GraphPage(someModel: command.center.plotData.low)
@@ -58,13 +58,33 @@ public struct TonalControlComponent: GraniteComponent {
                                                 Color.black.opacity(0.36)]))
                         .padding(.bottom, Brand.Padding.xSmall)
             
-            GraniteText(state.tuner.sentiment.asString,
-                        Brand.Colors.yellow,
-                        .subheadline,
-                        .bold,
-                        .trailing)
-                        .shadow(color: .black,
-                                radius: 3, x: 1, y: 2)
+//            GraniteText(state.tuner.sentiment.asString,
+//                        Brand.Colors.yellow,
+//                        .subheadline,
+//                        .bold,
+//                        .trailing)
+//                        .shadow(color: .black,
+//                                radius: 3, x: 1, y: 2)
+            
+            HStack(spacing: Brand.Padding.medium) {
+                GraniteText(state.tone.summary,
+                            Brand.Colors.purple,
+                            .subheadline,
+                            .bold,
+                            .trailing)
+                            .shadow(color: .black,
+                                    radius: 3, x: 1, y: 2)
+                
+                PaddingHorizontal(2).frame(height: Brand.Padding.medium)
+                
+                GraniteText(state.tone.goal,
+                            Brand.Colors.yellow,
+                            .subheadline,
+                            .bold)
+                            .shadow(color: .black,
+                                    radius: 3, x: 1, y: 2)
+            }.padding(.top, Brand.Padding.small)
+            
 //            GraniteText("",
 //                        Brand.Colors.purple,
 //                        .subheadline,

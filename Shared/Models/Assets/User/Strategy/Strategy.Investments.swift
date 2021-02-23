@@ -76,7 +76,15 @@ extension Strategy {
                 changes.first ?? initial
             }
             
-            var prediction: TonalPrediction? = nil
+            var prediction: TonalPrediction? = nil {
+                didSet {
+                    if let newPrediction = prediction {
+                        tone = .init(newPrediction,
+                                     context: .purchased)
+                    }
+                }
+            }
+            var tone: TonalPrediction.Tone = .zero
             var closed: Bool = false
             var closedChange: Change? = nil
             

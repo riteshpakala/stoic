@@ -37,21 +37,25 @@ extension Strategy.Investments.Item {
         latestChange.amount > initial.amount ? Brand.Colors.green : (latestChange.amount == initial.amount ? Brand.Colors.grey : Brand.Colors.red)
     }
     
-    public var tonalTargetDate: Date {
-        Date.nextTradingDay.simple
+    public var tonalGoal: String {
+        if self.prediction != nil {
+            return self.tone.goal
+        } else {
+            return "-"
+        }
     }
     
     public var tonalSummary: String {
-        if let prediction = self.prediction {
-            return prediction.asTone.summary
+        if self.prediction != nil {
+            return self.tone.summary
         } else {
             return "no model"
         }
     }
     
-    public var tonalAccuracy: String {
-        if let prediction = self.prediction {
-            return "acc: "+prediction.asTone.accuracy.percent
+    public var tonalDetail: String {
+        if self.prediction != nil {
+            return self.tone.detail
         } else {
             return "unavailable"
         }

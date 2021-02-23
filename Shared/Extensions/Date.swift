@@ -29,6 +29,10 @@ extension Date {
         return Calendar.nyCalendar.date(byAdding: .day, value: value, to: self) ?? self
     }
     
+    func advanceDateHourly(value: Int = 1) -> Date {
+        return Calendar.nyCalendar.date(byAdding: .hour, value: value, to: self) ?? self
+    }
+    
     public static var today: Date {
         let formatter = DateFormatter()
         formatter.timeZone = Calendar.nyTimezone

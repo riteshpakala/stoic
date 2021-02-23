@@ -12,7 +12,12 @@ import Combine
 
 public class TonalControlState: GraniteState {
     let tuner: SentimentSliderState
-    var currentPrediction: TonalPrediction = .zero
+    var currentPrediction: TonalPrediction = .zero {
+        didSet {
+            tone = currentPrediction.asTone
+        }
+    }
+    var tone: TonalPrediction.Tone = .zero
     var model: TonalModel? = nil
     
     public init(_ tuner: SentimentSliderState, model: TonalModel?) {

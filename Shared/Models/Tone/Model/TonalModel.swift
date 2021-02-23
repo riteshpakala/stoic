@@ -54,7 +54,15 @@ public struct TonalModel: Asset {
         let high: Double = predict(sentimentToUse, modelType: .high)
         let volume: Double = predict(sentimentToUse, modelType: .volume)
         
-        return .init(close: close, low: low, high: high, volume: volume, date: .today)
+        let prediction: TonalPrediction = .init(close: close,
+                                                low: low,
+                                                high: high,
+                                                volume: volume,
+                                                current: latestSecurity.lastValue,
+                                                modelDate: date,
+                                                securityDate: latestSecurity.date,
+                                                interval: latestSecurity.interval)
+        return prediction
     }
     
     public mutating func predict(_ sentiment: SentimentOutput = .neutral,
