@@ -45,6 +45,8 @@ public class TonalModelsState: GraniteState {
         self.type = .general
     }
     
+    //TODO: This progress should also include the initial quote
+    //syncing phase.
     var syncProgress: Double {
         Double(tonesSynced.count)/Double(tonesToSync.count)
     }

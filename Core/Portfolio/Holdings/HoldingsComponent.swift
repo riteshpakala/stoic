@@ -18,6 +18,20 @@ public struct HoldingsComponent: GraniteComponent {
    
     public var body: some View {
         ZStack {
+            GeometryReader { geometry in
+                GradientView(colors: [Brand.Colors.marbleV2,
+                                      Brand.Colors.marble],
+                             cornerRadius: 0.0,
+                             direction: .top)
+                            .shadow(color: Color.black,
+                                    radius: 8.0,
+                                    x: 4.0,
+                                    y: 3.0)
+                            .offset(x: 0,
+                                    y: (geometry.size.height*(1.0 - (state.syncProgress.isNaN ? 0.0 : state.syncProgress.asCGFloat))))
+                            .animation(.default)
+            }
+            
             if state.addToPortfolio {
                 VStack(spacing: 0) {
                     Spacer()
@@ -35,12 +49,34 @@ public struct HoldingsComponent: GraniteComponent {
             } else {
                 VStack(spacing: 0) {
                     VStack(alignment: .leading) {
-                        GraniteText("portfolio",
-                                    .headline,
-                                    .bold,
-                                    .leading)
-                            .padding(.leading, Brand.Padding.medium)
-                            .padding(.trailing, Brand.Padding.medium)
+                        HStack(alignment: .center) {
+                            GraniteText("portfolio",
+                                        .headline,
+                                        .bold)
+                            
+                            Spacer()
+                            
+                            GraniteText(state.statusLabel,
+                                        Brand.Colors.marble,
+                                        .subheadline,
+                                        .regular)
+                            
+                            GraniteButtonComponent(state: .init(.image("refresh_icon"),
+                                                                colors: [Brand.Colors.marbleV2,
+                                                                         Brand.Colors.marble],
+                                                                selected: true,
+                                                                size: .init(16),
+                                                                padding: .init(0,
+                                                                               Brand.Padding.medium9,
+                                                                               0,
+                                                                               Brand.Padding.medium9),
+                                                                action: {
+                                                                    GraniteHaptic.light.invoke()
+                                                                    sendEvent(HoldingsEvents.Update())
+                                                                }))
+                        }
+                        .padding(.leading, Brand.Padding.medium)
+                        .padding(.trailing, Brand.Padding.medium)
                         
                         
                         AssetGridComponent(state: .init(state.context.assetGridTypeForHoldings,
@@ -61,7 +97,13 @@ public struct HoldingsComponent: GraniteComponent {
                                      }))
                 }
             }
-        }
+            
+            if state.stage == .updating {
+                GraniteDisclaimerComponent(state:
+                                            .init("please wait, * stoic is\nupdating your portfolio\nwith the latest data.", opacity: 0.57))
+            }
+            
+        }.clipped()
     }
 }
 

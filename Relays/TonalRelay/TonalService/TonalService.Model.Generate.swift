@@ -168,6 +168,7 @@ extension TonalModels {
 //            modelsToAppend.append(type.model(for: david))
         }
         
+        self.created = quote.latestSecurity.date
         
 //        return .init(models: modelsToAppend, sentiments: sentimentAvgs)
     }

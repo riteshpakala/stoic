@@ -69,18 +69,9 @@ public struct Quote {
     }
     
     var needsUpdate: Bool {
-        let days: Int = Date.today.daysFrom(latestSecurity.date)
-        let hours: Int = Date.today.hoursFrom(latestSecurity.date)
-//        let shouldUpdateHour = latestSecurity.date.timeComponents().hour <= Date.today.closingHour && latestSecurity.securityType == .stock
-        
-//        let isToday: Bool = latestSecurity.date.dateComponents().day <= Date.today.dateComponents().day
-        let afterHours: Bool = Date.today.closingHour <= latestSecurity.date.timeComponents().hour && self.securityType == .stock
-//        let hourCheck: Int = Date.today.closingHour <= latestSecurity.date.timeComponents().hour ? hours + 1 : 1
-        
-        let daysAreOverdue = abs(days) > 0
-        let hoursAreOverdue = hours >= 1 && !afterHours
         let noSecurities = securities.count < 4
-        return (daysAreOverdue || hoursAreOverdue || noSecurities)// && Date.today.validTradingDay) || securities.count < 4
+        
+        return latestSecurity.isNotLatest || noSecurities// && Date.today.validTradingDay) || securities.count < 4
     }
     
     var updateTime: Int? {

@@ -151,7 +151,7 @@ public struct AssetGridItemComponent: GraniteComponent {
                 }
                 .padding(.trailing, Brand.Padding.medium)
                 
-            }
+            }.opacity(state.asset.inValid ? 0.75 : 1.0)
             
             Rectangle().frame(height: 2.0,
                               alignment: .leading)

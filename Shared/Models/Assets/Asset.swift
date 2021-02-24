@@ -33,6 +33,8 @@ public protocol Asset: ID {
     var description2Title: String? { get }
     var showDescription2: Bool { get }
     var description2: String { get }
+    
+    var inValid: Bool { get }
 }
 
 extension Asset {
@@ -59,6 +61,8 @@ extension Asset {
     public var description2Title: String? {
         nil
     }
+    
+    public var inValid: Bool { false }
 }
 
 extension User {
@@ -126,7 +130,7 @@ extension TonalModel {
     }
     
     public var symbolColor: Color {
-        self.needsUpdate ? Brand.Colors.marble : Brand.Colors.purple
+        self.needsUpdate ? Brand.Colors.grey : Brand.Colors.purple
     }
     
     public var description1: String {
@@ -140,6 +144,8 @@ extension TonalModel {
     public var description2: String {
         self.latestSecurity.description2
     }
+    
+    public var inValid: Bool { self.needsUpdate }
 }
 
 extension Security {
@@ -156,11 +162,15 @@ extension Security {
     }
     
     public var symbolColor: Color {
-        switch securityType {
-        case .crypto:
-            return Brand.Colors.orange
-        default:
-            return Brand.Colors.marble
+        if self.isLatest {
+            switch securityType {
+            case .crypto:
+                return Brand.Colors.orange
+            default:
+                return Brand.Colors.marble
+            }
+        } else {
+            return Brand.Colors.grey
         }
     }
     
@@ -175,6 +185,8 @@ extension Security {
     public var description2: String {
         "\(self.isGainer ? "+" : "")\(self.changePercentValue.percent)%"
     }
+    
+    public var inValid: Bool { !self.isLatest }
 }
 
 extension Sentiment {

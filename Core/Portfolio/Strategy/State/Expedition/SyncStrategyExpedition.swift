@@ -170,6 +170,9 @@ struct SyncCompleteStrategyExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        state.syncTimer?.invalidate()
+        state.syncTimer = nil
             
         state.securitiesSynced.removeAll()
         state.securitiesToSync.removeAll()

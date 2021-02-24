@@ -126,6 +126,8 @@ struct UpdateTonalModelCompleteExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
             
+        state.syncTimer?.invalidate()
+        state.syncTimer = nil
         state.tonesToSync.removeAll()
         state.tonesSynced.removeAll()
         state.securitiesToSync.removeAll()

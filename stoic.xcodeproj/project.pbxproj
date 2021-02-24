@@ -733,6 +733,10 @@
 		717D9AE625C867DC00B9354D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 717D9AE525C867DC00B9354D /* GoogleService-Info.plist */; };
 		717D9AE725C867DC00B9354D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 717D9AE525C867DC00B9354D /* GoogleService-Info.plist */; };
 		717D9AF125C8689400B9354D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 717D9AF025C8689400B9354D /* FirebaseAuth */; };
+		717E633F25E61A4F0095E991 /* UpdateHoldingsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717E633E25E61A4F0095E991 /* UpdateHoldingsExpedition.swift */; };
+		717E634025E61A4F0095E991 /* UpdateHoldingsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717E633E25E61A4F0095E991 /* UpdateHoldingsExpedition.swift */; };
+		717E634625E61CED0095E991 /* GetHoldingsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717E634525E61CED0095E991 /* GetHoldingsExpedition.swift */; };
+		717E634725E61CED0095E991 /* GetHoldingsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717E634525E61CED0095E991 /* GetHoldingsExpedition.swift */; };
 		717EFD7C25C51B940094AE45 /* TapAndLongPressModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */; };
 		717EFD7D25C51B940094AE45 /* TapAndLongPressModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */; };
 		7182163125E06DDB0089CF78 /* SyncStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182163025E06DDB0089CF78 /* SyncStrategyExpedition.swift */; };
@@ -1416,6 +1420,8 @@
 		717D9AC525C8639D00B9354D /* LoginEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginEvents.swift; sourceTree = "<group>"; };
 		717D9AC625C8639D00B9354D /* LoginComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginComponent.swift; sourceTree = "<group>"; };
 		717D9AE525C867DC00B9354D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		717E633E25E61A4F0095E991 /* UpdateHoldingsExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateHoldingsExpedition.swift; sourceTree = "<group>"; };
+		717E634525E61CED0095E991 /* GetHoldingsExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHoldingsExpedition.swift; sourceTree = "<group>"; };
 		717EFD7B25C51B940094AE45 /* TapAndLongPressModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAndLongPressModifier.swift; sourceTree = "<group>"; };
 		7182163025E06DDB0089CF78 /* SyncStrategyExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStrategyExpedition.swift; sourceTree = "<group>"; };
 		7182163B25E07E580089CF78 /* ResetStrategyExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetStrategyExpedition.swift; sourceTree = "<group>"; };
@@ -3430,6 +3436,8 @@
 			isa = PBXGroup;
 			children = (
 				71C2BF6925ABA5B8006445EB /* HoldingSelectedExpedition.swift */,
+				717E634525E61CED0095E991 /* GetHoldingsExpedition.swift */,
+				717E633E25E61A4F0095E991 /* UpdateHoldingsExpedition.swift */,
 			);
 			path = Expedition;
 			sourceTree = "<group>";
@@ -4241,6 +4249,7 @@
 				7125BD8625A1316500F22717 /* LinearValueMath.swift in Sources */,
 				7136A2D725CA3E7300B923C1 /* DiscussService.Channel.swift in Sources */,
 				71C2BFB225ABE26A006445EB /* GetFloorExpedition.swift in Sources */,
+				717E634625E61CED0095E991 /* GetHoldingsExpedition.swift in Sources */,
 				71DE186925A6D94D00911AD1 /* GraphComponent.swift in Sources */,
 				7118A229259313FD007E7EAB /* TonalCreateComponent.swift in Sources */,
 				71582E8625E5CFAF003D92F6 /* Scanner++.swift in Sources */,
@@ -4288,6 +4297,7 @@
 				71E838A025BF7987002D8AAD /* TonalControlSentimentExpedition.swift in Sources */,
 				7123B1032593C29F00E5BD69 /* version0001.xcdatamodeld in Sources */,
 				7125BE6725A1388400F22717 /* PointSlider.swift in Sources */,
+				717E633F25E61A4F0095E991 /* UpdateHoldingsExpedition.swift in Sources */,
 				710889A72591B29800795EDF /* Markets.swift in Sources */,
 				7123B1232593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift in Sources */,
 				71C08EC125AFA59300765894 /* CryptoService.Utilities.swift in Sources */,
@@ -4868,6 +4878,7 @@
 				7139F6B22598827F00D9C84B /* GetSentimentExpedition.swift in Sources */,
 				71582E8725E5CFAF003D92F6 /* Scanner++.swift in Sources */,
 				7156AC0B25A8371300648941 /* GraniteToggle.swift in Sources */,
+				717E634025E61A4F0095E991 /* UpdateHoldingsExpedition.swift in Sources */,
 				7123B1442593CC8C00E5BD69 /* DataHandling.swift in Sources */,
 				71332A3425A79DD0005A72A9 /* AssetSearchEvents.swift in Sources */,
 				7179ACA725AC9472003FD06F /* TonalCompileEvents.swift in Sources */,
@@ -5132,6 +5143,7 @@
 				7182163225E06DDB0089CF78 /* SyncStrategyExpedition.swift in Sources */,
 				7108896E2591B29800795EDF /* PromiseState.swift in Sources */,
 				7195A54325B9069F00F1E829 /* TonalService.Model.Predict.swift in Sources */,
+				717E634725E61CED0095E991 /* GetHoldingsExpedition.swift in Sources */,
 				7156AC1225A86E9B00648941 /* User.swift in Sources */,
 				71017E4E25B25D6100E056A5 /* StrategyComponent.swift in Sources */,
 				7183D56425A428AE00FB91A9 /* PressAndHorizontalDragGesture.swift in Sources */,

@@ -38,8 +38,6 @@ public struct TonalModelsComponent: GraniteComponent {
                         GraniteText("your models",
                                     .headline,
                                     .bold)
-                            .padding(.leading, Brand.Padding.medium)
-                            .padding(.trailing, Brand.Padding.medium)
                         
                         Spacer()
                         
@@ -61,8 +59,9 @@ public struct TonalModelsComponent: GraniteComponent {
                                                                 GraniteHaptic.light.invoke()
                                                                 sendEvent(TonalModelsEvents.Update())
                                                             }))
-                            .padding(.trailing, Brand.Padding.medium)
                     }
+                    .padding(.leading, Brand.Padding.medium)
+                    .padding(.trailing, Brand.Padding.medium)
                     
                     
                     AssetGridComponent(state: .init(.standard, context: .tonalBrowser(.empty)))
