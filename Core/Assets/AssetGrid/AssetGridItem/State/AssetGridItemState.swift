@@ -36,6 +36,5 @@ public class AssetGridItemState: GraniteState {
 }
 
 public class AssetGridItemCenter: GraniteCenter<AssetGridItemState> {
-    
 }
 

@@ -11,6 +11,23 @@ import SwiftUI
 import Combine
 
 struct TonalEvents {
+    public struct Think: GraniteEvent {
+        let security: Security
+        
+        public var beam: GraniteBeamType {
+            .rebound
+        }
+        
+        public struct Result: GraniteEvent {
+            let sounds: [TonalSound]
+            let security: Security
+            
+            public var beam: GraniteBeamType {
+                .rebound
+            }
+        }
+    }
+    
     public struct GetSentiment: GraniteEvent {
         let range: TonalRange
         let inComplete: Bool

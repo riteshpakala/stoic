@@ -16,6 +16,10 @@ public struct TonalRelay: GraniteRelay {
     
     public init() {}
     
-    public func setup() {}
-    public func clean() {}
+    public func setup() {
+        state.oracle.clean()
+    }
+    public func clean() {
+        state.oracle.clean()
+    }
 }

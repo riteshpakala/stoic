@@ -17,6 +17,7 @@ public struct TonalPrediction {
     var securityDate: Date
     let modelDate: Date
     let dateGenerated: Date = .today
+    let targetDate: Date
     let interval: SecurityInterval
     
     public init(close: Double,
@@ -25,6 +26,7 @@ public struct TonalPrediction {
                 volume: Double,
                 current: Double,
                 modelDate: Date,
+                targetDate: Date,
                 securityDate: Date,
                 interval: SecurityInterval) {
         self.close = close
@@ -35,6 +37,7 @@ public struct TonalPrediction {
         self.modelDate = modelDate
         self.interval = interval
         self.securityDate = securityDate
+        self.targetDate = targetDate
     }
     
     var asString: String {
@@ -47,7 +50,7 @@ public struct TonalPrediction {
     }
     
     static var zero: TonalPrediction {
-        .init(close: 0, low: 0, high: 0, volume: 0, current: 0, modelDate: .today, securityDate: .today, interval: .day)
+        .init(close: 0, low: 0, high: 0, volume: 0, current: 0, modelDate: .today, targetDate: .today, securityDate: .today, interval: .day)
     }
 }
 

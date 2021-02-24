@@ -26,6 +26,8 @@ struct GetTonalModelsExpedition: GraniteExpedition {
                        moc: coreDataInstance) { models in
             state.tones = models
             state.stage = .none
+            
+            state.tonesToSync = models.filter { $0.needsUpdate }.map { $0.modelID }
         }
     }
 }

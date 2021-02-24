@@ -77,12 +77,9 @@ public struct PortfolioComponent: GraniteComponent {
                     .padding(.top, Brand.Padding.medium)
                     .padding(.bottom, Brand.Padding.medium)
                 
-                GraniteText("trading day: \(Date.nextTradingDay.asString)",
-                            .headline,
-                            .bold,
-                            .trailing,
-                            style: .init(gradient: [Brand.Colors.black.opacity(0.75),
-                                                    Brand.Colors.black.opacity(0.36)]))
+                Spacer()
+                
+                GraniteTimerComponent()
                     .padding(.top, Brand.Padding.medium)
                     .padding(.bottom, Brand.Padding.medium)
             }
@@ -103,11 +100,16 @@ public struct PortfolioComponent: GraniteComponent {
             
             
             HStack(spacing: 0) {
-                GraniteTimerComponent()
+                
+                GraniteText("trading day: \(Date.nextTradingDay.asString)",
+                            .headline,
+                            .bold,
+                            .leading,
+                            style: .init(gradient: [Brand.Colors.black.opacity(0.75),
+                                                    Brand.Colors.black.opacity(0.36)]))
                     .padding(.top, Brand.Padding.medium)
                     .padding(.bottom, Brand.Padding.medium)
                 
-                Spacer()
                 
                 //Sign out
                 GraniteText("sign out",

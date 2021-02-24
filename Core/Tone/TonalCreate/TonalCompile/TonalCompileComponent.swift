@@ -23,7 +23,7 @@ public struct TonalCompileComponent: GraniteComponent {
     }
     
     public var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             if command.center.compileState == .compiled,
                let security = command.center.latestSecurity {
                 

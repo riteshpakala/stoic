@@ -49,7 +49,6 @@ extension TonalModelObject {
                      tuners: sentiment,
                      quote: quote.asQuote,
                      range: range,
-                     date: self.date,
                      id: self.id)
     }
     
@@ -67,13 +66,12 @@ extension TonalModelObject {
                      tuners: sentiment,
                      quote: quote,
                      range: range,
-                     date: self.date,
                      id: self.id)
     }
 }
 
 extension TonalModel {
-    func save(moc: NSManagedObjectContext, completion: @escaping ((Bool) -> Void)) {
+    func save(moc: NSManagedObjectContext, overwrite: Bool = false, completion: @escaping ((Bool) -> Void)) {
         guard let modelData = self.david.archived,
               let sentiment = self.tuners.archived,
               let range = self.range.archived else {
@@ -93,6 +91,10 @@ extension TonalModel {
                     object.quote = quote
                     object.range = range
                     quote?.addToTonalModel(object)
+                    
+                    if overwrite {
+                        object.id = self.modelID
+                    }
                     
                     try moc.save()
                     

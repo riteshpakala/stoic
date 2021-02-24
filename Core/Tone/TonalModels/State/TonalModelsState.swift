@@ -12,6 +12,7 @@ import Combine
 
 public enum TonalModelsStage {
     case fetching
+    case updating
     case none
 }
 
@@ -23,6 +24,11 @@ public enum TonalModelsType {
 public class TonalModelsState: GraniteState {
     var stage: TonalModelsStage
     var tones: [TonalModel]? = nil
+    var tonesToSync: [String] = []
+    var tonesSynced: [String] = []
+    var securitiesToSync: [Security] = []
+    var securitiesSynced: [String] = []
+    var syncTimer: Timer? = nil
     var type: TonalModelsType
     
     var security: Security? {
@@ -37,10 +43,27 @@ public class TonalModelsState: GraniteState {
     public required init() {
         self.stage = .none
         self.type = .general
-    } 
+    }
+    
+    var syncProgress: Double {
+        Double(tonesSynced.count)/Double(tonesToSync.count)
+    }
+    
+    var statusLabel: String {
+        let count = tonesToSync.count
+        if count == .zero {
+            return "up to date"
+        } else {
+            return "update \(count)"
+        }
+    }
 }
 
 public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
+    let stockRelay: StockRelay = .init()
+    let cryptoRelay: CryptoRelay = .init()
+    let tonalRelay: TonalRelay = .init()
+    
     var envDependency: EnvironmentDependency {
         dependency.hosted.env
     }
@@ -55,7 +78,15 @@ public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
         [
             GetTonalModelsExpedition.Discovery(),
             TonalModelTappedExpedition.Discovery(),
-            TonalModelAddExpedition.Discovery()
+            TonalModelAddExpedition.Discovery(),
+            UpdateTonalModelsExpedition.Discovery(),
+            PushTonalModelExpedition.Discovery(),
+            TrainTonalModelExpedition.Discovery(),
+            UpdateTonalModelCompleteExpedition.Discovery(),
+            ThinkTonalModelExpedition.Discovery(),
+            StockUpdatedHistoryTonalModelExpedition.Discovery(),
+            CryptoUpdatedHistoryTonalModelExpedition.Discovery()
+            
         ]
     }
 }

@@ -136,8 +136,14 @@
         <attribute name="range" attributeType="Binary"/>
         <attribute name="sentimentTuners" attributeType="Binary"/>
         <relationship name="quote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="tonalModel" inverseEntity="QuoteObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
+        <element name="BaseNetworkResponseObject" positionX="-45" positionY="-450" width="128" height="29"/>
         <element name="CryptoDataObject" positionX="-15.463134765625" positionY="-21.51837158203125" width="128" height="119"/>
         <element name="FloorObject" positionX="-36" positionY="-441" width="128" height="89"/>
         <element name="NetworkResponseObject" positionX="-45" positionY="-450" width="128" height="89"/>
@@ -149,7 +155,6 @@
         <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
         <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>
         <element name="StrategyObject" positionX="-45" positionY="-450" width="128" height="104"/>
-        <element name="TonalModelObject" positionX="-45" positionY="-450" width="128" height="163"/>
-        <element name="BaseNetworkResponseObject" positionX="-45" positionY="-450" width="128" height="29"/>
+        <element name="TonalModelObject" positionX="-45" positionY="-450" width="128" height="149"/>
     </elements>
 </model>

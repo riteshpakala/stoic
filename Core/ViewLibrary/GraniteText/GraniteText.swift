@@ -16,6 +16,7 @@ public struct GraniteText: View {
     let verticalAlignment: VerticalAlignment
     let style: TextShadowSettings
     let selected: Bool
+    let addSpacers: Bool
     
     public struct TextShadowSettings {
         let radius: CGFloat
@@ -71,7 +72,8 @@ public struct GraniteText: View {
                 _ alignment: TextAlignment = .center,
                 verticalAlignment: VerticalAlignment = .center,
                 style: TextShadowSettings = .basic,
-                selected: Bool = false) {
+                selected: Bool = false,
+                addSpacers: Bool = true) {
         self.text = text
         self.font = Fonts.live(size, weight)
         self.color = color
@@ -79,6 +81,7 @@ public struct GraniteText: View {
         self.style = style
         self.selected = selected
         self.verticalAlignment = verticalAlignment
+        self.addSpacers = addSpacers
     }
     
     public init(_ text: String,
@@ -87,7 +90,8 @@ public struct GraniteText: View {
                 _ alignment: TextAlignment = .center,
                 verticalAlignment: VerticalAlignment = .center,
                 style: TextShadowSettings = .basic,
-                selected: Bool = false) {
+                selected: Bool = false,
+                addSpacers: Bool = true) {
         self.text = text
         self.font = Fonts.live(size, weight)
         self.color = Brand.Colors.white
@@ -95,13 +99,15 @@ public struct GraniteText: View {
         self.style = style
         self.selected = selected
         self.verticalAlignment = verticalAlignment
+        self.addSpacers = addSpacers
     }
     
     public init(_ text: String,
                 _ alignment: TextAlignment = .center,
                 verticalAlignment: VerticalAlignment = .center,
                 style: TextShadowSettings = .basic,
-                selected: Bool = false) {
+                selected: Bool = false,
+                addSpacers: Bool = true) {
         self.text = text
         self.font = Fonts.live(.subheadline, .regular)
         self.color = Brand.Colors.white
@@ -109,11 +115,12 @@ public struct GraniteText: View {
         self.style = style
         self.selected = selected
         self.verticalAlignment = verticalAlignment
+        self.addSpacers = addSpacers
     }
     
     public var body: some View {
         HStack(alignment: verticalAlignment, spacing: 0.0) {
-            if alignment == .trailing {
+            if alignment == .trailing && addSpacers {
                 Spacer()
             }
             
@@ -207,7 +214,7 @@ public struct GraniteText: View {
 //            }
             
             
-            if alignment == .leading {
+            if alignment == .leading && addSpacers {
                 Spacer()
             }
         }

@@ -70,4 +70,8 @@ public class AssetGridItemContainerCenter: GraniteCenter<AssetGridItemContainerS
     var showDescription2: Bool {
         state.assetData.first?.showDescription2 == true
     }
+    
+    var assetType: AssetType {
+        state.assetData.first?.assetType ?? .security
+    }
 }

@@ -19,8 +19,9 @@ public struct SpecialComponent: GraniteComponent {
     public var body: some View {
         VStack {
             state.scene.onAppear(perform: {
-                state.scene.clear()
                 state.scene.run()
+            }).onDisappear(perform: {
+                state.scene.clear()
             })
         }
     }

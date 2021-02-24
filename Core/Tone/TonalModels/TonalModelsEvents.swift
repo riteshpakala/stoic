@@ -13,4 +13,20 @@ import Combine
 struct TonalModelsEvents {
     public struct Add: GraniteEvent {}
     public struct Get: GraniteEvent {}
+    public struct Update: GraniteEvent {
+        public var behavior: GraniteEventBehavior {
+            .quiet
+        }
+    }
+    public struct Push: GraniteEvent {
+        public var behavior: GraniteEventBehavior {
+            .quiet
+        }
+    }
+    public struct Train: GraniteEvent {
+        public var behavior: GraniteEventBehavior {
+            .quiet
+        }
+    }
+    public struct UpdateComplete: GraniteEvent {}
 }

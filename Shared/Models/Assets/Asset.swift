@@ -126,15 +126,15 @@ extension TonalModel {
     }
     
     public var symbolColor: Color {
-        Brand.Colors.purple
+        self.needsUpdate ? Brand.Colors.marble : Brand.Colors.purple
     }
     
     public var description1: String {
-        self.latestSecurity.description1
+        self.targetDate.asStringWithTime
     }
     
     public var description1_sub: String {
-        self.latestSecurity.description1_sub
+        ""
     }
     
     public var description2: String {

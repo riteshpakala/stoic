@@ -75,9 +75,10 @@ public struct SecurityDetailComponent: GraniteComponent {
                         GraniteText(command.center.security.title,
                                     .title3,
                                     .bold,
-                                    .leading,
                                     style: .init(gradient: [Color.black.opacity(0.75),
                                                             Color.black.opacity(0.36)]))
+                        
+                        Spacer()
                         
                         switch state.kind {
                         case .expanded:

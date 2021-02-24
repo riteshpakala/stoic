@@ -581,6 +581,86 @@
 		7157F6B225D4CF2800404B1B /* TonalModel.Tone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7157F6B025D4CF2800404B1B /* TonalModel.Tone.swift */; };
 		7157F6B825D4D18D00404B1B /* Strategy.Tone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7157F6B725D4D18D00404B1B /* Strategy.Tone.swift */; };
 		7157F6B925D4D18D00404B1B /* Strategy.Tone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7157F6B725D4D18D00404B1B /* Strategy.Tone.swift */; };
+		71582E1125E5BFE6003D92F6 /* UpdateTonalModelsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E1025E5BFE6003D92F6 /* UpdateTonalModelsExpedition.swift */; };
+		71582E1225E5BFE6003D92F6 /* UpdateTonalModelsExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E1025E5BFE6003D92F6 /* UpdateTonalModelsExpedition.swift */; };
+		71582E1825E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E1725E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift */; };
+		71582E1925E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E1725E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift */; };
+		71582E1F25E5CF52003D92F6 /* TonalService.Think.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E1E25E5CF52003D92F6 /* TonalService.Think.swift */; };
+		71582E2025E5CF52003D92F6 /* TonalService.Think.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E1E25E5CF52003D92F6 /* TonalService.Think.swift */; };
+		71582E4C25E5CFAE003D92F6 /* Data++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2625E5CFAE003D92F6 /* Data++.swift */; };
+		71582E4D25E5CFAE003D92F6 /* Data++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2625E5CFAE003D92F6 /* Data++.swift */; };
+		71582E4E25E5CFAE003D92F6 /* SwifterHTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2725E5CFAE003D92F6 /* SwifterHTTPRequest.swift */; };
+		71582E4F25E5CFAE003D92F6 /* SwifterHTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2725E5CFAE003D92F6 /* SwifterHTTPRequest.swift */; };
+		71582E5025E5CFAE003D92F6 /* SwifterClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2825E5CFAE003D92F6 /* SwifterClientProtocol.swift */; };
+		71582E5125E5CFAE003D92F6 /* SwifterClientProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2825E5CFAE003D92F6 /* SwifterClientProtocol.swift */; };
+		71582E5225E5CFAE003D92F6 /* SwifterLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2925E5CFAE003D92F6 /* SwifterLists.swift */; };
+		71582E5325E5CFAE003D92F6 /* SwifterLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2925E5CFAE003D92F6 /* SwifterLists.swift */; };
+		71582E5425E5CFAE003D92F6 /* Operator++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2A25E5CFAE003D92F6 /* Operator++.swift */; };
+		71582E5525E5CFAE003D92F6 /* Operator++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2A25E5CFAE003D92F6 /* Operator++.swift */; };
+		71582E5625E5CFAE003D92F6 /* Swifter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2C25E5CFAE003D92F6 /* Swifter.swift */; };
+		71582E5725E5CFAE003D92F6 /* Swifter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2C25E5CFAE003D92F6 /* Swifter.swift */; };
+		71582E5825E5CFAE003D92F6 /* SwifterAppOnlyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2D25E5CFAE003D92F6 /* SwifterAppOnlyClient.swift */; };
+		71582E5925E5CFAE003D92F6 /* SwifterAppOnlyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2D25E5CFAE003D92F6 /* SwifterAppOnlyClient.swift */; };
+		71582E5A25E5CFAE003D92F6 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2E25E5CFAE003D92F6 /* HMAC.swift */; };
+		71582E5B25E5CFAE003D92F6 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2E25E5CFAE003D92F6 /* HMAC.swift */; };
+		71582E5C25E5CFAE003D92F6 /* String++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2F25E5CFAE003D92F6 /* String++.swift */; };
+		71582E5D25E5CFAE003D92F6 /* String++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E2F25E5CFAE003D92F6 /* String++.swift */; };
+		71582E5E25E5CFAE003D92F6 /* SwifterTrends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3025E5CFAE003D92F6 /* SwifterTrends.swift */; };
+		71582E5F25E5CFAE003D92F6 /* SwifterTrends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3025E5CFAE003D92F6 /* SwifterTrends.swift */; };
+		71582E6025E5CFAE003D92F6 /* Int++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3125E5CFAE003D92F6 /* Int++.swift */; };
+		71582E6125E5CFAE003D92F6 /* Int++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3125E5CFAE003D92F6 /* Int++.swift */; };
+		71582E6225E5CFAE003D92F6 /* SwifterAccountsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3225E5CFAE003D92F6 /* SwifterAccountsClient.swift */; };
+		71582E6325E5CFAE003D92F6 /* SwifterAccountsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3225E5CFAE003D92F6 /* SwifterAccountsClient.swift */; };
+		71582E6425E5CFAE003D92F6 /* SwifterGIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3325E5CFAE003D92F6 /* SwifterGIF.swift */; };
+		71582E6525E5CFAE003D92F6 /* SwifterGIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3325E5CFAE003D92F6 /* SwifterGIF.swift */; };
+		71582E6625E5CFAE003D92F6 /* SwifterSuggested.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3425E5CFAE003D92F6 /* SwifterSuggested.swift */; };
+		71582E6725E5CFAE003D92F6 /* SwifterSuggested.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3425E5CFAE003D92F6 /* SwifterSuggested.swift */; };
+		71582E6825E5CFAE003D92F6 /* SwifterFavorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3525E5CFAE003D92F6 /* SwifterFavorites.swift */; };
+		71582E6925E5CFAE003D92F6 /* SwifterFavorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3525E5CFAE003D92F6 /* SwifterFavorites.swift */; };
+		71582E6A25E5CFAF003D92F6 /* SwifterPlaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3625E5CFAE003D92F6 /* SwifterPlaces.swift */; };
+		71582E6B25E5CFAF003D92F6 /* SwifterPlaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3625E5CFAE003D92F6 /* SwifterPlaces.swift */; };
+		71582E6C25E5CFAF003D92F6 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3725E5CFAE003D92F6 /* JSON.swift */; };
+		71582E6D25E5CFAF003D92F6 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3725E5CFAE003D92F6 /* JSON.swift */; };
+		71582E6E25E5CFAF003D92F6 /* SwifterSavedSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3825E5CFAE003D92F6 /* SwifterSavedSearches.swift */; };
+		71582E6F25E5CFAF003D92F6 /* SwifterSavedSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3825E5CFAE003D92F6 /* SwifterSavedSearches.swift */; };
+		71582E7025E5CFAF003D92F6 /* Dictionary++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3925E5CFAE003D92F6 /* Dictionary++.swift */; };
+		71582E7125E5CFAF003D92F6 /* Dictionary++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3925E5CFAE003D92F6 /* Dictionary++.swift */; };
+		71582E7225E5CFAF003D92F6 /* SwifterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3A25E5CFAE003D92F6 /* SwifterError.swift */; };
+		71582E7325E5CFAF003D92F6 /* SwifterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3A25E5CFAE003D92F6 /* SwifterError.swift */; };
+		71582E7425E5CFAF003D92F6 /* SwifterMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3B25E5CFAE003D92F6 /* SwifterMessages.swift */; };
+		71582E7525E5CFAF003D92F6 /* SwifterMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3B25E5CFAE003D92F6 /* SwifterMessages.swift */; };
+		71582E7625E5CFAF003D92F6 /* SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3C25E5CFAE003D92F6 /* SHA1.swift */; };
+		71582E7725E5CFAF003D92F6 /* SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3C25E5CFAE003D92F6 /* SHA1.swift */; };
+		71582E7825E5CFAF003D92F6 /* URL++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3D25E5CFAE003D92F6 /* URL++.swift */; };
+		71582E7925E5CFAF003D92F6 /* URL++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3D25E5CFAE003D92F6 /* URL++.swift */; };
+		71582E7A25E5CFAF003D92F6 /* SwifterUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3E25E5CFAE003D92F6 /* SwifterUsers.swift */; };
+		71582E7B25E5CFAF003D92F6 /* SwifterUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3E25E5CFAE003D92F6 /* SwifterUsers.swift */; };
+		71582E7C25E5CFAF003D92F6 /* SwifterFollowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3F25E5CFAE003D92F6 /* SwifterFollowers.swift */; };
+		71582E7D25E5CFAF003D92F6 /* SwifterFollowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E3F25E5CFAE003D92F6 /* SwifterFollowers.swift */; };
+		71582E7E25E5CFAF003D92F6 /* SwifterAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4025E5CFAE003D92F6 /* SwifterAuth.swift */; };
+		71582E7F25E5CFAF003D92F6 /* SwifterAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4025E5CFAE003D92F6 /* SwifterAuth.swift */; };
+		71582E8025E5CFAF003D92F6 /* SwifterOAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4125E5CFAE003D92F6 /* SwifterOAuthClient.swift */; };
+		71582E8125E5CFAF003D92F6 /* SwifterOAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4125E5CFAE003D92F6 /* SwifterOAuthClient.swift */; };
+		71582E8225E5CFAF003D92F6 /* SwifterTweets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4225E5CFAE003D92F6 /* SwifterTweets.swift */; };
+		71582E8325E5CFAF003D92F6 /* SwifterTweets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4225E5CFAE003D92F6 /* SwifterTweets.swift */; };
+		71582E8425E5CFAF003D92F6 /* SwifterHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4325E5CFAE003D92F6 /* SwifterHelp.swift */; };
+		71582E8525E5CFAF003D92F6 /* SwifterHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4325E5CFAE003D92F6 /* SwifterHelp.swift */; };
+		71582E8625E5CFAF003D92F6 /* Scanner++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4425E5CFAE003D92F6 /* Scanner++.swift */; };
+		71582E8725E5CFAF003D92F6 /* Scanner++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4425E5CFAE003D92F6 /* Scanner++.swift */; };
+		71582E8825E5CFAF003D92F6 /* SwifterCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4525E5CFAE003D92F6 /* SwifterCredential.swift */; };
+		71582E8925E5CFAF003D92F6 /* SwifterCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4525E5CFAE003D92F6 /* SwifterCredential.swift */; };
+		71582E8A25E5CFAF003D92F6 /* SwifterTimelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4625E5CFAE003D92F6 /* SwifterTimelines.swift */; };
+		71582E8B25E5CFAF003D92F6 /* SwifterTimelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4625E5CFAE003D92F6 /* SwifterTimelines.swift */; };
+		71582E8C25E5CFAF003D92F6 /* SwifterSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4725E5CFAE003D92F6 /* SwifterSearch.swift */; };
+		71582E8D25E5CFAF003D92F6 /* SwifterSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4725E5CFAE003D92F6 /* SwifterSearch.swift */; };
+		71582E9025E5CFAF003D92F6 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4925E5CFAE003D92F6 /* Utils.swift */; };
+		71582E9125E5CFAF003D92F6 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4925E5CFAE003D92F6 /* Utils.swift */; };
+		71582E9225E5CFAF003D92F6 /* SwifterTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4A25E5CFAE003D92F6 /* SwifterTag.swift */; };
+		71582E9325E5CFAF003D92F6 /* SwifterTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4A25E5CFAE003D92F6 /* SwifterTag.swift */; };
+		71582E9425E5CFAF003D92F6 /* SwifterSpam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4B25E5CFAE003D92F6 /* SwifterSpam.swift */; };
+		71582E9525E5CFAF003D92F6 /* SwifterSpam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4B25E5CFAE003D92F6 /* SwifterSpam.swift */; };
+		71582E9E25E5D53A003D92F6 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E9C25E5D53A003D92F6 /* SwiftyJSON.swift */; };
+		71582E9F25E5D53A003D92F6 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E9C25E5D53A003D92F6 /* SwiftyJSON.swift */; };
 		7169534A25A7AD3400641BCE /* GraniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169534925A7AD3400641BCE /* GraniteScrollView.swift */; };
 		7169534B25A7AD3400641BCE /* GraniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169534925A7AD3400641BCE /* GraniteScrollView.swift */; };
 		7169535125A7ADB400641BCE /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169535025A7ADB400641BCE /* Run.swift */; };
@@ -1261,6 +1341,46 @@
 		7157F6A925D4CE7C00404B1B /* Strategy.Investments.Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategy.Investments.Item.swift; sourceTree = "<group>"; };
 		7157F6B025D4CF2800404B1B /* TonalModel.Tone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalModel.Tone.swift; sourceTree = "<group>"; };
 		7157F6B725D4D18D00404B1B /* Strategy.Tone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategy.Tone.swift; sourceTree = "<group>"; };
+		71582E1025E5BFE6003D92F6 /* UpdateTonalModelsExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTonalModelsExpedition.swift; sourceTree = "<group>"; };
+		71582E1725E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSentiment.Think.Expedition.swift; sourceTree = "<group>"; };
+		71582E1E25E5CF52003D92F6 /* TonalService.Think.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Think.swift; sourceTree = "<group>"; };
+		71582E2625E5CFAE003D92F6 /* Data++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data++.swift"; sourceTree = "<group>"; };
+		71582E2725E5CFAE003D92F6 /* SwifterHTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterHTTPRequest.swift; sourceTree = "<group>"; };
+		71582E2825E5CFAE003D92F6 /* SwifterClientProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterClientProtocol.swift; sourceTree = "<group>"; };
+		71582E2925E5CFAE003D92F6 /* SwifterLists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterLists.swift; sourceTree = "<group>"; };
+		71582E2A25E5CFAE003D92F6 /* Operator++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operator++.swift"; sourceTree = "<group>"; };
+		71582E2C25E5CFAE003D92F6 /* Swifter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swifter.swift; sourceTree = "<group>"; };
+		71582E2D25E5CFAE003D92F6 /* SwifterAppOnlyClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterAppOnlyClient.swift; sourceTree = "<group>"; };
+		71582E2E25E5CFAE003D92F6 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
+		71582E2F25E5CFAE003D92F6 /* String++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String++.swift"; sourceTree = "<group>"; };
+		71582E3025E5CFAE003D92F6 /* SwifterTrends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterTrends.swift; sourceTree = "<group>"; };
+		71582E3125E5CFAE003D92F6 /* Int++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int++.swift"; sourceTree = "<group>"; };
+		71582E3225E5CFAE003D92F6 /* SwifterAccountsClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterAccountsClient.swift; sourceTree = "<group>"; };
+		71582E3325E5CFAE003D92F6 /* SwifterGIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterGIF.swift; sourceTree = "<group>"; };
+		71582E3425E5CFAE003D92F6 /* SwifterSuggested.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterSuggested.swift; sourceTree = "<group>"; };
+		71582E3525E5CFAE003D92F6 /* SwifterFavorites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterFavorites.swift; sourceTree = "<group>"; };
+		71582E3625E5CFAE003D92F6 /* SwifterPlaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterPlaces.swift; sourceTree = "<group>"; };
+		71582E3725E5CFAE003D92F6 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		71582E3825E5CFAE003D92F6 /* SwifterSavedSearches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterSavedSearches.swift; sourceTree = "<group>"; };
+		71582E3925E5CFAE003D92F6 /* Dictionary++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary++.swift"; sourceTree = "<group>"; };
+		71582E3A25E5CFAE003D92F6 /* SwifterError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterError.swift; sourceTree = "<group>"; };
+		71582E3B25E5CFAE003D92F6 /* SwifterMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterMessages.swift; sourceTree = "<group>"; };
+		71582E3C25E5CFAE003D92F6 /* SHA1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA1.swift; sourceTree = "<group>"; };
+		71582E3D25E5CFAE003D92F6 /* URL++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL++.swift"; sourceTree = "<group>"; };
+		71582E3E25E5CFAE003D92F6 /* SwifterUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterUsers.swift; sourceTree = "<group>"; };
+		71582E3F25E5CFAE003D92F6 /* SwifterFollowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterFollowers.swift; sourceTree = "<group>"; };
+		71582E4025E5CFAE003D92F6 /* SwifterAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterAuth.swift; sourceTree = "<group>"; };
+		71582E4125E5CFAE003D92F6 /* SwifterOAuthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterOAuthClient.swift; sourceTree = "<group>"; };
+		71582E4225E5CFAE003D92F6 /* SwifterTweets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterTweets.swift; sourceTree = "<group>"; };
+		71582E4325E5CFAE003D92F6 /* SwifterHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterHelp.swift; sourceTree = "<group>"; };
+		71582E4425E5CFAE003D92F6 /* Scanner++.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Scanner++.swift"; sourceTree = "<group>"; };
+		71582E4525E5CFAE003D92F6 /* SwifterCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterCredential.swift; sourceTree = "<group>"; };
+		71582E4625E5CFAE003D92F6 /* SwifterTimelines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterTimelines.swift; sourceTree = "<group>"; };
+		71582E4725E5CFAE003D92F6 /* SwifterSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterSearch.swift; sourceTree = "<group>"; };
+		71582E4925E5CFAE003D92F6 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		71582E4A25E5CFAE003D92F6 /* SwifterTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterTag.swift; sourceTree = "<group>"; };
+		71582E4B25E5CFAE003D92F6 /* SwifterSpam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterSpam.swift; sourceTree = "<group>"; };
+		71582E9C25E5D53A003D92F6 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		7169534925A7AD3400641BCE /* GraniteScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteScrollView.swift; sourceTree = "<group>"; };
 		7169535025A7ADB400641BCE /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Apply.Code.swift; sourceTree = "<group>"; };
@@ -2609,6 +2729,7 @@
 			isa = PBXGroup;
 			children = (
 				7139F6B02598827F00D9C84B /* GetSentimentExpedition.swift */,
+				71582E1725E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -2618,12 +2739,15 @@
 			children = (
 				7139F6A225983C2000D9C84B /* TonalService.swift */,
 				7139F6A92598816E00D9C84B /* TonalService.Tweets.swift */,
+				71582E1E25E5CF52003D92F6 /* TonalService.Think.swift */,
 				7143EEDE25994FC300B1DCB5 /* TonalService.Sounds.swift */,
 				71BDF2952599430A00F66EA2 /* TonalService.Utilities.swift */,
 				71CA211725A4AEC900C448D7 /* TonalService.Model.swift */,
 				7195A54125B9069F00F1E829 /* TonalService.Model.Predict.swift */,
 				7195A54825B906AD00F1E829 /* TonalService.Model.Generate.swift */,
 				7109642825A59FBD0021B42B /* TonalService.Model.DataSet.swift */,
+				71582E9A25E5D53A003D92F6 /* SwiftyJSON */,
+				71582E2525E5CFAE003D92F6 /* Swifter */,
 				71143DEE25A4C34400379E4B /* Indicators */,
 			);
 			path = TonalService;
@@ -2862,6 +2986,57 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		71582E2525E5CFAE003D92F6 /* Swifter */ = {
+			isa = PBXGroup;
+			children = (
+				71582E2625E5CFAE003D92F6 /* Data++.swift */,
+				71582E2725E5CFAE003D92F6 /* SwifterHTTPRequest.swift */,
+				71582E2825E5CFAE003D92F6 /* SwifterClientProtocol.swift */,
+				71582E2925E5CFAE003D92F6 /* SwifterLists.swift */,
+				71582E2A25E5CFAE003D92F6 /* Operator++.swift */,
+				71582E2C25E5CFAE003D92F6 /* Swifter.swift */,
+				71582E2D25E5CFAE003D92F6 /* SwifterAppOnlyClient.swift */,
+				71582E2E25E5CFAE003D92F6 /* HMAC.swift */,
+				71582E2F25E5CFAE003D92F6 /* String++.swift */,
+				71582E3025E5CFAE003D92F6 /* SwifterTrends.swift */,
+				71582E3125E5CFAE003D92F6 /* Int++.swift */,
+				71582E3225E5CFAE003D92F6 /* SwifterAccountsClient.swift */,
+				71582E3325E5CFAE003D92F6 /* SwifterGIF.swift */,
+				71582E3425E5CFAE003D92F6 /* SwifterSuggested.swift */,
+				71582E3525E5CFAE003D92F6 /* SwifterFavorites.swift */,
+				71582E3625E5CFAE003D92F6 /* SwifterPlaces.swift */,
+				71582E3725E5CFAE003D92F6 /* JSON.swift */,
+				71582E3825E5CFAE003D92F6 /* SwifterSavedSearches.swift */,
+				71582E3925E5CFAE003D92F6 /* Dictionary++.swift */,
+				71582E3A25E5CFAE003D92F6 /* SwifterError.swift */,
+				71582E3B25E5CFAE003D92F6 /* SwifterMessages.swift */,
+				71582E3C25E5CFAE003D92F6 /* SHA1.swift */,
+				71582E3D25E5CFAE003D92F6 /* URL++.swift */,
+				71582E3E25E5CFAE003D92F6 /* SwifterUsers.swift */,
+				71582E3F25E5CFAE003D92F6 /* SwifterFollowers.swift */,
+				71582E4025E5CFAE003D92F6 /* SwifterAuth.swift */,
+				71582E4125E5CFAE003D92F6 /* SwifterOAuthClient.swift */,
+				71582E4225E5CFAE003D92F6 /* SwifterTweets.swift */,
+				71582E4325E5CFAE003D92F6 /* SwifterHelp.swift */,
+				71582E4425E5CFAE003D92F6 /* Scanner++.swift */,
+				71582E4525E5CFAE003D92F6 /* SwifterCredential.swift */,
+				71582E4625E5CFAE003D92F6 /* SwifterTimelines.swift */,
+				71582E4725E5CFAE003D92F6 /* SwifterSearch.swift */,
+				71582E4925E5CFAE003D92F6 /* Utils.swift */,
+				71582E4A25E5CFAE003D92F6 /* SwifterTag.swift */,
+				71582E4B25E5CFAE003D92F6 /* SwifterSpam.swift */,
+			);
+			path = Swifter;
+			sourceTree = "<group>";
+		};
+		71582E9A25E5D53A003D92F6 /* SwiftyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				71582E9C25E5D53A003D92F6 /* SwiftyJSON.swift */,
+			);
+			path = SwiftyJSON;
+			sourceTree = "<group>";
+		};
 		7169534825A7AD2000641BCE /* GraniteScrollView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2926,6 +3101,7 @@
 			isa = PBXGroup;
 			children = (
 				7179AD0E25AC9FE5003FD06F /* GetTonalModelsExpedition.swift */,
+				71582E1025E5BFE6003D92F6 /* UpdateTonalModelsExpedition.swift */,
 				71ED8F1125C5C6A8000F6366 /* TonalModelAddExpedition.swift */,
 				7189C9B225AE5E2F00D98A85 /* TonalModelTappedExpedition.swift */,
 			);
@@ -3981,14 +4157,18 @@
 				7125BD8A25A1316500F22717 /* LinearRangeMath.swift in Sources */,
 				7179ACDF25AC9987003FD06F /* TonalModelObject+CoreDataClass.swift in Sources */,
 				71434359259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
+				71582E7625E5CFAF003D92F6 /* SHA1.swift in Sources */,
 				7136A29D25CA0B7B00B923C1 /* DiscussHandlingExpedition.swift in Sources */,
 				7143433E259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
 				71F902F425AB1E8D00E6A085 /* Portfolio.CoreData.swift in Sources */,
 				7179AD1A25ACC985003FD06F /* GraniteModal.swift in Sources */,
 				710889152591B09A00795EDF /* Stock.swift in Sources */,
+				71582E6825E5CFAE003D92F6 /* SwifterFavorites.swift in Sources */,
+				71582E5E25E5CFAE003D92F6 /* SwifterTrends.swift in Sources */,
 				71ACC23D25B0AB9100E02AE3 /* TonalDetailState.swift in Sources */,
 				71D63EF42592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BE4625A1384A00F22717 /* SentimentSliderEvents.swift in Sources */,
+				71582E6225E5CFAE003D92F6 /* SwifterAccountsClient.swift in Sources */,
 				7179D3BE25AC911700C82063 /* GraniteButtonComponent.swift in Sources */,
 				711484D2259E0E2E00464684 /* EnvironmentComponent.swift in Sources */,
 				71B42FB625A875DD00A23F4D /* HoldingsEvents.swift in Sources */,
@@ -3996,6 +4176,7 @@
 				7108897B2591B29800795EDF /* PromiseError.swift in Sources */,
 				7126ED7C25B77B6800195901 /* VariablesExpedition.swift in Sources */,
 				710889792591B29800795EDF /* WhenAll.swift in Sources */,
+				71582E6625E5CFAE003D92F6 /* SwifterSuggested.swift in Sources */,
 				71017E2D25B24A8F00E056A5 /* GraniteDisclaimerComponent.swift in Sources */,
 				7134427A25A38245002C0315 /* Sentiment.CoreData.swift in Sources */,
 				7125BE1025A1328A00F22717 /* ValueTrackConfiguration.swift in Sources */,
@@ -4013,6 +4194,7 @@
 				7125BE6125A1388400F22717 /* PointSliderStyle.swift in Sources */,
 				71434357259076F4001F26A4 /* LinearGradient+Convenience.swift in Sources */,
 				7108897D2591B29800795EDF /* Promise+Unwrap.swift in Sources */,
+				71582E6E25E5CFAF003D92F6 /* SwifterSavedSearches.swift in Sources */,
 				7139F6302598138800D9C84B /* Stock.CoreData.swift in Sources */,
 				71017E4F25B25D6100E056A5 /* StrategyState.swift in Sources */,
 				710889672591B29800795EDF /* Cryptowatcher+Markets.swift in Sources */,
@@ -4038,9 +4220,11 @@
 				7108896F2591B29800795EDF /* Promise+Recover.swift in Sources */,
 				7136A27625C9E90F00B923C1 /* DiscussRelay.swift in Sources */,
 				7189C9B325AE5E2F00D98A85 /* TonalModelTappedExpedition.swift in Sources */,
+				71582E9025E5CFAF003D92F6 /* Utils.swift in Sources */,
 				7124161025A36AEA00169B9C /* Sentiment.swift in Sources */,
 				71434322259076EB001F26A4 /* Float+Angle.swift in Sources */,
 				7108899F2591B29800795EDF /* Promise+Helpers.swift in Sources */,
+				71582E5625E5CFAE003D92F6 /* Swifter.swift in Sources */,
 				7183D56B25A428AE00FB91A9 /* Haptic.swift in Sources */,
 				7125BD8E25A1316500F22717 /* DefaultThumb.swift in Sources */,
 				7157F6B125D4CF2800404B1B /* TonalModel.Tone.swift in Sources */,
@@ -4059,9 +4243,13 @@
 				71C2BFB225ABE26A006445EB /* GetFloorExpedition.swift in Sources */,
 				71DE186925A6D94D00911AD1 /* GraphComponent.swift in Sources */,
 				7118A229259313FD007E7EAB /* TonalCreateComponent.swift in Sources */,
+				71582E8625E5CFAF003D92F6 /* Scanner++.swift in Sources */,
+				71582E8825E5CFAF003D92F6 /* SwifterCredential.swift in Sources */,
 				71C08EBF25AFA59300765894 /* CryptoService.Quotes.swift in Sources */,
 				7108897F2591B29800795EDF /* Promise+Aliases.swift in Sources */,
+				71582E4E25E5CFAE003D92F6 /* SwifterHTTPRequest.swift in Sources */,
 				7143415325905E5B001F26A4 /* Fonts.swift in Sources */,
+				71582E9225E5CFAF003D92F6 /* SwifterTag.swift in Sources */,
 				7179D3D525AC936500C82063 /* TonalModelsState.swift in Sources */,
 				71267A3E25A59A3F006132D8 /* Date.swift in Sources */,
 				7125BE8F25A148BA00F22717 /* TonalFindEvents.swift in Sources */,
@@ -4072,6 +4260,7 @@
 				7179AD3425ACE5E5003FD06F /* SpecialEvents.swift in Sources */,
 				7183D55B25A428AE00FB91A9 /* GraphInteractiveLinePlot.swift in Sources */,
 				7118A1E72593134A007E7EAB /* TonalEvents.swift in Sources */,
+				71582E7025E5CFAF003D92F6 /* Dictionary++.swift in Sources */,
 				7143417825906410001F26A4 /* Brand.swift in Sources */,
 				711484B8259E0C7B00464684 /* WindowState.swift in Sources */,
 				7125BE6B25A1388400F22717 /* EnvironmentValues+PointTrackConfiguration.swift in Sources */,
@@ -4082,6 +4271,7 @@
 				71E8389225BF70D2002D8AAD /* TonalControlEvents.swift in Sources */,
 				7143433C259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
 				7123B12B2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
+				71582E8025E5CFAF003D92F6 /* SwifterOAuthClient.swift in Sources */,
 				711402C8258DBC2F00BA387D /* GetTradingDayExpedition.swift in Sources */,
 				714342E525907253001F26A4 /* InnerShadowModel.swift in Sources */,
 				7123B1292593C6CB00E5BD69 /* CryptoDataObject+CoreDataClass.swift in Sources */,
@@ -4125,10 +4315,12 @@
 				71267A3325A588C6006132D8 /* Quote.CoreData.swift in Sources */,
 				7179D3D925AC936500C82063 /* TonalModelsEvents.swift in Sources */,
 				71ACC24925B0AD7B00E02AE3 /* GenerateTonesExpedition.swift in Sources */,
+				71582E6C25E5CFAF003D92F6 /* JSON.swift in Sources */,
 				71332A3325A79DD0005A72A9 /* AssetSearchEvents.swift in Sources */,
 				7108890D2591B08300795EDF /* Security.swift in Sources */,
 				7124163A25A3771800169B9C /* SentimentObject+CoreDataClass.swift in Sources */,
 				71DE186725A6D94D00911AD1 /* GraphState.swift in Sources */,
+				71582E5825E5CFAE003D92F6 /* SwifterAppOnlyClient.swift in Sources */,
 				711598C225C8883F0026B5AE /* SetupSceneExpedition.swift in Sources */,
 				710889B12591B29800795EDF /* Exchanges.swift in Sources */,
 				71434320259076EB001F26A4 /* Collection+Convenience.swift in Sources */,
@@ -4156,6 +4348,7 @@
 				710889752591B29800795EDF /* Promise+BridgeError.swift in Sources */,
 				7125BE1425A1328A00F22717 /* VerticalValueTrack.swift in Sources */,
 				71148506259E24F900464684 /* EnvironmentConfig.swift in Sources */,
+				71582E7825E5CFAF003D92F6 /* URL++.swift in Sources */,
 				7136A2BD25CA3CF500B923C1 /* DiscussClientHandlingExpedition.swift in Sources */,
 				710889A32591B29800795EDF /* Cryptowatcher.swift in Sources */,
 				710C916325A64FDA00ECB355 /* ControlBar.swift in Sources */,
@@ -4164,8 +4357,10 @@
 				7123B12D2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
 				7183D55D25A428AE00FB91A9 /* LinePlotValueStick.swift in Sources */,
 				7195A54925B906AD00F1E829 /* TonalService.Model.Generate.swift in Sources */,
+				71582E5225E5CFAE003D92F6 /* SwifterLists.swift in Sources */,
 				7183D55125A428AE00FB91A9 /* GraphPage.swift in Sources */,
 				71F902FB25AB225E00E6A085 /* UserExpedition.swift in Sources */,
+				71582E1825E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift in Sources */,
 				710889F32591BC8C00795EDF /* Categories.swift in Sources */,
 				71CA211825A4AEC900C448D7 /* TonalService.Model.swift in Sources */,
 				7143EEDF25994FC300B1DCB5 /* TonalService.Sounds.swift in Sources */,
@@ -4178,11 +4373,14 @@
 				710889632591B29800795EDF /* Assets.swift in Sources */,
 				710889932591B29800795EDF /* Promise+Error.swift in Sources */,
 				7125BDC525A1318D00F22717 /* EnvironmentValues+RangeSliderStyle.swift in Sources */,
+				71582E5425E5CFAE003D92F6 /* Operator++.swift in Sources */,
 				7157F6B825D4D18D00404B1B /* Strategy.Tone.swift in Sources */,
 				7123B1432593CC8C00E5BD69 /* DataHandling.swift in Sources */,
 				71ED8F3325C5D2E9000F6366 /* SettingsEvents.swift in Sources */,
 				71C08E9A25AF772F00765894 /* SearchResponse.swift in Sources */,
+				71582E4C25E5CFAE003D92F6 /* Data++.swift in Sources */,
 				7179AD0F25AC9FE5003FD06F /* GetTonalModelsExpedition.swift in Sources */,
+				71582E8225E5CFAF003D92F6 /* SwifterTweets.swift in Sources */,
 				7179ACA625AC9472003FD06F /* TonalCompileEvents.swift in Sources */,
 				71B42FBA25A875DD00A23F4D /* HoldingsState.swift in Sources */,
 				71D63F0D2592ABE30085D718 /* Array.swift in Sources */,
@@ -4198,10 +4396,12 @@
 				71D63CD0258E92B1003B0BAF /* MainEvents.swift in Sources */,
 				7143436D25907725001F26A4 /* MathOperators.swift in Sources */,
 				7199B29F25C1210100B1A2B3 /* GraniteLoadingState.swift in Sources */,
+				71582E6A25E5CFAF003D92F6 /* SwifterPlaces.swift in Sources */,
 				711D545525A684E80074D334 /* RouterComponent.swift in Sources */,
 				71149ED725A7A47600148D68 /* Environment.swift in Sources */,
 				710889302591B24700795EDF /* CryptoRelay.swift in Sources */,
 				71017E4D25B25D6100E056A5 /* StrategyComponent.swift in Sources */,
+				71582E5025E5CFAE003D92F6 /* SwifterClientProtocol.swift in Sources */,
 				7125BD9025A1316500F22717 /* AccentColor.swift in Sources */,
 				7136A2A825CA23DD00B923C1 /* DiscussMessage.swift in Sources */,
 				71088A132591C21600795EDF /* CryptoEvents.swift in Sources */,
@@ -4242,6 +4442,7 @@
 				7139F67B25981C3200D9C84B /* TuneTheToneExpedition.swift in Sources */,
 				7125BE4425A1384A00F22717 /* SentimentSliderComponent.swift in Sources */,
 				710889AB2591B29800795EDF /* Fetchable.swift in Sources */,
+				71582E8C25E5CFAF003D92F6 /* SwifterSearch.swift in Sources */,
 				710889852591B29800795EDF /* Await.swift in Sources */,
 				714342FF25907622001F26A4 /* UINumericType.swift in Sources */,
 				71C08E9225AF770100765894 /* NetworkResponse.swift in Sources */,
@@ -4250,9 +4451,11 @@
 				71CC7D9625C8E76300610B8A /* NetworkState.swift in Sources */,
 				7136B65B25A008B40014F693 /* PortfolioState.swift in Sources */,
 				71ED8F1225C5C6A8000F6366 /* TonalModelAddExpedition.swift in Sources */,
+				71582E6025E5CFAE003D92F6 /* Int++.swift in Sources */,
 				71EE7092258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
 				7143431C259076EB001F26A4 /* Double+Angle.swift in Sources */,
 				7125BE0025A1328900F22717 /* EnvironmentValues+ValueSliderStyle.swift in Sources */,
+				71582E8A25E5CFAF003D92F6 /* SwifterTimelines.swift in Sources */,
 				7143435B259076F4001F26A4 /* Path+Convenience.swift in Sources */,
 				710889652591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
 				7137CF4025E4D6060098ED5B /* GraniteTimerEvents.swift in Sources */,
@@ -4284,19 +4487,23 @@
 				7125BE6525A1388400F22717 /* PointSliderOptions.swift in Sources */,
 				71434318259076EB001F26A4 /* Comparible+Convenience.swift in Sources */,
 				71DC58FA259899A7004935CF /* Dictionary.swift in Sources */,
+				71582E5A25E5CFAE003D92F6 /* HMAC.swift in Sources */,
 				712BD1DC25BA678F004D6E94 /* IndicatorDetailComponent.swift in Sources */,
 				71149EF225A7A67C00148D68 /* AssetSelectedExpedition.swift in Sources */,
 				710889892591B29800795EDF /* Async.swift in Sources */,
 				714342E725907253001F26A4 /* InnerShadowExtensions.swift in Sources */,
 				71EE7090258D9072005B2B8E /* AssetGridItemComponent.swift in Sources */,
 				719CDB6625C91F6A008322F0 /* NetworkService.Signup.swift in Sources */,
+				71582E7C25E5CFAF003D92F6 /* SwifterFollowers.swift in Sources */,
 				717D9AC925C8639D00B9354D /* LoginEvents.swift in Sources */,
 				7143EEE7259955D800B1DCB5 /* Tone.swift in Sources */,
 				7125BD8825A1316500F22717 /* DefaultVerticalValueView.swift in Sources */,
 				711598BA25C87E450026B5AE /* RoundedEdge.swift in Sources */,
 				7143414925905E53001F26A4 /* MenloFont.swift in Sources */,
+				71582E7225E5CFAF003D92F6 /* SwifterError.swift in Sources */,
 				7125BE0625A1328900F22717 /* HorizontalValueSliderStyle.swift in Sources */,
 				7125BE0E25A1328A00F22717 /* EnviromnentValues+ValueTrackConfiguration.swift in Sources */,
+				71582E7425E5CFAF003D92F6 /* SwifterMessages.swift in Sources */,
 				71D3C2DF25AA88F50033350B /* Broadcasts.swift in Sources */,
 				7125BDBD25A1318D00F22717 /* RangeSlider.swift in Sources */,
 				71F1EC3E25A0F04400D32C52 /* HeaderComponent.swift in Sources */,
@@ -4317,6 +4524,7 @@
 				7143435F259076F4001F26A4 /* Color+Convenience.swift in Sources */,
 				719CDB6D25C92240008322F0 /* NetworkService.Login.swift in Sources */,
 				7183D55325A428AE00FB91A9 /* MovingNumbersView.swift in Sources */,
+				71582E5C25E5CFAE003D92F6 /* String++.swift in Sources */,
 				71BE145E25A15B170015D157 /* GetStockSearchExpedition.swift in Sources */,
 				7139F6962598221700D9C84B /* TonalSentiment.swift in Sources */,
 				71CC7D9225C8E76300610B8A /* NetworkEvents.swift in Sources */,
@@ -4326,6 +4534,7 @@
 				71ED8F5525C5E513000F6366 /* DiscussEvents.swift in Sources */,
 				71EE7077258D8F88005B2B8E /* AssetGridComponent.swift in Sources */,
 				7134428125A38A1D002C0315 /* TonalSound.CoreData.swift in Sources */,
+				71582E1F25E5CF52003D92F6 /* TonalService.Think.swift in Sources */,
 				7139F6AA2598816E00D9C84B /* TonalService.Tweets.swift in Sources */,
 				71D63F6C2592BFC40085D718 /* AssetSectionComponent.swift in Sources */,
 				71C2BFAA25ABE1ED006445EB /* FloorEvents.swift in Sources */,
@@ -4354,10 +4563,12 @@
 				7179AD6425ACF493003FD06F /* UIKit.swift in Sources */,
 				7139F6A325983C2000D9C84B /* TonalService.swift in Sources */,
 				71494D7225ABEE2A0086E598 /* AddToFloorExpedition.swift in Sources */,
+				71582E9E25E5D53A003D92F6 /* SwiftyJSON.swift in Sources */,
 				7105342525A53826006A75DD /* TonalSentiment.CoreData.swift in Sources */,
 				7123B16B2593DAD700E5BD69 /* StockService.Stock.swift in Sources */,
 				717EFD7C25C51B940094AE45 /* TapAndLongPressModifier.swift in Sources */,
 				713D25AF258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
+				71582E7A25E5CFAF003D92F6 /* SwifterUsers.swift in Sources */,
 				719AD86A25B10746001350FA /* GraniteEmptyComponent.swift in Sources */,
 				710889832591B29800795EDF /* Promise+Chain.swift in Sources */,
 				7182163C25E07E580089CF78 /* ResetStrategyExpedition.swift in Sources */,
@@ -4373,6 +4584,7 @@
 				7179D3BC25AC911700C82063 /* GraniteButtonEvents.swift in Sources */,
 				713D25B1258E42BF005FB4D4 /* ClockState.swift in Sources */,
 				7179ACAE25AC9472003FD06F /* TonalCompileComponent.swift in Sources */,
+				71582E8425E5CFAF003D92F6 /* SwifterHelp.swift in Sources */,
 				710889952591B29800795EDF /* Promise+Progress.swift in Sources */,
 				7137CF4225E4D6060098ED5B /* GraniteTimerState.swift in Sources */,
 				7143432A259076EB001F26A4 /* Double+Convenience.swift in Sources */,
@@ -4383,6 +4595,7 @@
 				71C2BFA825ABE1ED006445EB /* FloorState.swift in Sources */,
 				71017E1325B23EB900E056A5 /* PagerView.swift in Sources */,
 				71ED8F5125C5E513000F6366 /* DiscussState.swift in Sources */,
+				71582E6425E5CFAE003D92F6 /* SwifterGIF.swift in Sources */,
 				7143430125907622001F26A4 /* RepresentableAsDouble.swift in Sources */,
 				7125BDE125A131D200F22717 /* VerticalRangeTrack.swift in Sources */,
 				7125BD7525A12F1F00F22717 /* BasicSliderState.swift in Sources */,
@@ -4402,9 +4615,11 @@
 				71494D6725ABE9BD0086E598 /* FloorConfig.swift in Sources */,
 				7123B1762594382B00E5BD69 /* GetStockIntervalExpedition.swift in Sources */,
 				71C2BF8C25ABC128006445EB /* Detail.swift in Sources */,
+				71582E7E25E5CFAF003D92F6 /* SwifterAuth.swift in Sources */,
 				7118A22B259313FD007E7EAB /* TonalCreateState.swift in Sources */,
 				7125BE6D25A1388400F22717 /* EnvironmentValues+TrackPoint.swift in Sources */,
 				713033D725D70132003E8FAD /* AssetSectionSelectedExpedition.swift in Sources */,
+				71582E1125E5BFE6003D92F6 /* UpdateTonalModelsExpedition.swift in Sources */,
 				71B4300F25A889E500A23F4D /* FloorObject+CoreDataProperties.swift in Sources */,
 				71E3DD2625B767FE00C7795C /* StockService.TradingDay.swift in Sources */,
 				719AD87A25B10A03001350FA /* GradientView.swift in Sources */,
@@ -4417,6 +4632,7 @@
 				710889872591B29800795EDF /* Promise+Timeout.swift in Sources */,
 				7125BDD925A131D200F22717 /* RangeTrackConfiguration.swift in Sources */,
 				71DC58D125988F56004935CF /* Lemmatizer.swift in Sources */,
+				71582E9425E5CFAF003D92F6 /* SwifterSpam.swift in Sources */,
 				71727D2825CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */,
 				712562A225B286DE00C8AC68 /* GetStrategyExpedition.swift in Sources */,
 				710889812591B29800795EDF /* PromiseBlocks.swift in Sources */,
@@ -4449,8 +4665,10 @@
 			files = (
 				7136A2DF25CA3F1600B923C1 /* DiscussService.Parser.swift in Sources */,
 				7143431F259076EB001F26A4 /* Float+Convenience.swift in Sources */,
+				71582E7725E5CFAF003D92F6 /* SHA1.swift in Sources */,
 				710889922591B29800795EDF /* Promise+Zip.swift in Sources */,
 				7125BE1125A1328A00F22717 /* ValueTrackConfiguration.swift in Sources */,
+				71582E7B25E5CFAF003D92F6 /* SwifterUsers.swift in Sources */,
 				714343942590786E001F26A4 /* RenderedIf.swift in Sources */,
 				717EFD7D25C51B940094AE45 /* TapAndLongPressModifier.swift in Sources */,
 				7143431B259076EB001F26A4 /* String+Convenience.swift in Sources */,
@@ -4479,9 +4697,11 @@
 				719AD87B25B10A03001350FA /* GradientView.swift in Sources */,
 				71ED8F5425C5E513000F6366 /* DiscussComponent.swift in Sources */,
 				7183D55A25A428AE00FB91A9 /* GraphLinePlot.swift in Sources */,
+				71582E6725E5CFAE003D92F6 /* SwifterSuggested.swift in Sources */,
 				710889682591B29800795EDF /* Cryptowatcher+Markets.swift in Sources */,
 				7125BDFF25A1328900F22717 /* ValueSliderStyle.swift in Sources */,
 				71ED8F3425C5D2E9000F6366 /* SettingsEvents.swift in Sources */,
+				71582E6D25E5CFAF003D92F6 /* JSON.swift in Sources */,
 				7183D56225A428AE00FB91A9 /* GraphLinePlotConfig.swift in Sources */,
 				71CC7DA525C8E7D800610B8A /* Get.Update.UserExpedition.swift in Sources */,
 				7182163D25E07E580089CF78 /* ResetStrategyExpedition.swift in Sources */,
@@ -4523,6 +4743,7 @@
 				71434343259076EE001F26A4 /* CGFloat+Convenience.swift in Sources */,
 				7136A29E25CA0B7B00B923C1 /* DiscussHandlingExpedition.swift in Sources */,
 				710889332591B24700795EDF /* CryptoState.swift in Sources */,
+				71582E5725E5CFAE003D92F6 /* Swifter.swift in Sources */,
 				7143417125906012001F26A4 /* Fonts.swift in Sources */,
 				7136A28F25CA0ACD00B923C1 /* DiscussMessageHandlingExpedition.swift in Sources */,
 				7125BE6425A1388400F22717 /* RectangularPointSliderStyle.swift in Sources */,
@@ -4541,24 +4762,29 @@
 				719CDB6725C91F6A008322F0 /* NetworkService.Signup.swift in Sources */,
 				7139F67125981BD300D9C84B /* TonalTuneComponent.swift in Sources */,
 				7125BE1325A1328A00F22717 /* EnvironmentValues+TrackValue.swift in Sources */,
+				71582E1225E5BFE6003D92F6 /* UpdateTonalModelsExpedition.swift in Sources */,
 				71434323259076EB001F26A4 /* Float+Angle.swift in Sources */,
 				7123B1242593C6CB00E5BD69 /* SecurityObject+CoreDataProperties.swift in Sources */,
 				7125BE6E25A1388400F22717 /* EnvironmentValues+TrackPoint.swift in Sources */,
 				71CA211925A4AEC900C448D7 /* TonalService.Model.swift in Sources */,
 				71BE145F25A15B170015D157 /* GetStockSearchExpedition.swift in Sources */,
+				71582E5925E5CFAE003D92F6 /* SwifterAppOnlyClient.swift in Sources */,
 				7108898C2591B29800795EDF /* Promise+First.swift in Sources */,
 				710889A02591B29800795EDF /* Promise+Helpers.swift in Sources */,
+				71582E5125E5CFAE003D92F6 /* SwifterClientProtocol.swift in Sources */,
 				71CC7D9925C8E76300610B8A /* NetworkService.swift in Sources */,
 				7179ACE025AC9987003FD06F /* TonalModelObject+CoreDataClass.swift in Sources */,
 				7199B29E25C1210100B1A2B3 /* GraniteLoadingEvents.swift in Sources */,
 				71EE707A258D8F88005B2B8E /* AssetGridState.swift in Sources */,
 				7137CF4325E4D6060098ED5B /* GraniteTimerState.swift in Sources */,
+				71582E9F25E5D53A003D92F6 /* SwiftyJSON.swift in Sources */,
 				7123B12C2593C6CB00E5BD69 /* CryptoDataObject+CoreDataProperties.swift in Sources */,
 				712BD1E525BA6804004D6E94 /* GenerateIndicatorExpedition.swift in Sources */,
 				71143DFF25A4C70800379E4B /* TonalService.Indicators.Averages.swift in Sources */,
 				71D3C2D125AA88190033350B /* MoversExpedition.swift in Sources */,
 				7120E0EC25DEE36F006CFE32 /* AssetSectionRefreshExpedition.swift in Sources */,
 				7109642A25A59FBD0021B42B /* TonalService.Model.DataSet.swift in Sources */,
+				71582E5525E5CFAE003D92F6 /* Operator++.swift in Sources */,
 				7179AD0825AC9D6C003FD06F /* SaveTheToneExpedition.swift in Sources */,
 				71148507259E24F900464684 /* EnvironmentConfig.swift in Sources */,
 				71CC7D9525C8E76300610B8A /* NetworkRelay.swift in Sources */,
@@ -4589,6 +4815,7 @@
 				7179ACAF25AC9472003FD06F /* TonalCompileComponent.swift in Sources */,
 				7125BE0525A1328900F22717 /* AnyValueSliderStyle.swift in Sources */,
 				7125BE4325A1384A00F22717 /* SentimentSliderState.swift in Sources */,
+				71582E6325E5CFAE003D92F6 /* SwifterAccountsClient.swift in Sources */,
 				714343AA2590789A001F26A4 /* GeometryFunctions.swift in Sources */,
 				7183D56E25A428AE00FB91A9 /* TimeDisplayMode.swift in Sources */,
 				71D63CD1258E92B1003B0BAF /* MainEvents.swift in Sources */,
@@ -4616,6 +4843,7 @@
 				71F902FC25AB225E00E6A085 /* UserExpedition.swift in Sources */,
 				7125BDC825A1318D00F22717 /* HorizontalRangeSliderStyle.swift in Sources */,
 				7179ACC025AC958F003FD06F /* TonalModel.swift in Sources */,
+				71582E8525E5CFAF003D92F6 /* SwifterHelp.swift in Sources */,
 				7108898E2591B29800795EDF /* Promise+NoMatterWhat.swift in Sources */,
 				71143DF825A4C37300379E4B /* TonalService.Indicators.swift in Sources */,
 				71B4301025A889E500A23F4D /* FloorObject+CoreDataProperties.swift in Sources */,
@@ -4638,6 +4866,7 @@
 				7139F67C25981C3200D9C84B /* TuneTheToneExpedition.swift in Sources */,
 				7125BDDA25A131D200F22717 /* RangeTrackConfiguration.swift in Sources */,
 				7139F6B22598827F00D9C84B /* GetSentimentExpedition.swift in Sources */,
+				71582E8725E5CFAF003D92F6 /* Scanner++.swift in Sources */,
 				7156AC0B25A8371300648941 /* GraniteToggle.swift in Sources */,
 				7123B1442593CC8C00E5BD69 /* DataHandling.swift in Sources */,
 				71332A3425A79DD0005A72A9 /* AssetSearchEvents.swift in Sources */,
@@ -4662,6 +4891,7 @@
 				710889822591B29800795EDF /* PromiseBlocks.swift in Sources */,
 				71D63EC62592667E0085D718 /* GetMoversCryptoExpedition.swift in Sources */,
 				71C08EF225AFDAEF00765894 /* CryptoCurrency.CoreData.swift in Sources */,
+				71582E6125E5CFAE003D92F6 /* Int++.swift in Sources */,
 				712BD1DB25BA678F004D6E94 /* IndicatorDetailEvents.swift in Sources */,
 				7169535225A7ADB400641BCE /* Run.swift in Sources */,
 				7123B12E2593C6CB00E5BD69 /* StockDataObject+CoreDataProperties.swift in Sources */,
@@ -4679,6 +4909,7 @@
 				711D545625A684E80074D334 /* RouterComponent.swift in Sources */,
 				71332A3225A79DD0005A72A9 /* AssetSearchComponent.swift in Sources */,
 				71434360259076F4001F26A4 /* Color+Convenience.swift in Sources */,
+				71582E9525E5CFAF003D92F6 /* SwifterSpam.swift in Sources */,
 				71783CC925D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift in Sources */,
 				7121F6DB2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */,
 				710889AE2591B29800795EDF /* Cryptowatcher+Assets.swift in Sources */,
@@ -4689,6 +4920,7 @@
 				71332A3025A79DD0005A72A9 /* AssetSearchState.swift in Sources */,
 				7179ACAD25AC9472003FD06F /* CompileTheToneExpedition.swift in Sources */,
 				7189C9C925AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift in Sources */,
+				71582E9125E5CFAF003D92F6 /* Utils.swift in Sources */,
 				71C08E8525AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */,
 				717D9ACA25C8639D00B9354D /* LoginEvents.swift in Sources */,
 				711598CA25C897A50026B5AE /* AuthExpedition.swift in Sources */,
@@ -4707,14 +4939,17 @@
 				71DC58D625988F56004935CF /* re.swift in Sources */,
 				71AE032125931AD1007A4AE0 /* FindTheToneExpedition.swift in Sources */,
 				7124163D25A3771800169B9C /* SentimentObject+CoreDataProperties.swift in Sources */,
+				71582E8D25E5CFAF003D92F6 /* SwifterSearch.swift in Sources */,
 				7183D57025A428AE00FB91A9 /* GraphPageBusinessLogic.swift in Sources */,
 				71EE7091258D9072005B2B8E /* AssetGridItemComponent.swift in Sources */,
 				7143430625907622001F26A4 /* RepresentableAsInt.swift in Sources */,
 				71ED8F3625C5D2E9000F6366 /* SettingsState.swift in Sources */,
+				71582E5325E5CFAE003D92F6 /* SwifterLists.swift in Sources */,
 				710889C72591B3AC00795EDF /* Stock.swift in Sources */,
 				71434341259076EE001F26A4 /* CGVector+Convenience.swift in Sources */,
 				7139F6972598221700D9C84B /* TonalSentiment.swift in Sources */,
 				7124161125A36AEA00169B9C /* Sentiment.swift in Sources */,
+				71582E6525E5CFAE003D92F6 /* SwifterGIF.swift in Sources */,
 				7123787625B268B40097E6DD /* StrategyObject+CoreDataClass.swift in Sources */,
 				71F1EC5925A0F47A00D32C52 /* SearchComponent.swift in Sources */,
 				7125BD7825A12F1F00F22717 /* BasicSliderEvents.swift in Sources */,
@@ -4725,6 +4960,7 @@
 				7179AD1025AC9FE5003FD06F /* GetTonalModelsExpedition.swift in Sources */,
 				7125BE0725A1328900F22717 /* HorizontalValueSliderStyle.swift in Sources */,
 				713F27CD25B276FF00C3871E /* Strategy.CoreData.swift in Sources */,
+				71582E5B25E5CFAE003D92F6 /* HMAC.swift in Sources */,
 				711402AC258DB9EA00BA387D /* StockState.swift in Sources */,
 				71C2BF5325AB94B0006445EB /* Portfolio.swift in Sources */,
 				71EE7078258D8F88005B2B8E /* AssetGridComponent.swift in Sources */,
@@ -4762,6 +4998,7 @@
 				7143435A259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
 				7125BE9025A148BA00F22717 /* TonalFindEvents.swift in Sources */,
 				711484B9259E0C7B00464684 /* WindowState.swift in Sources */,
+				71582E4F25E5CFAE003D92F6 /* SwifterHTTPRequest.swift in Sources */,
 				7136A27725C9E90F00B923C1 /* DiscussRelay.swift in Sources */,
 				7189C9BB25AE660800D98A85 /* TonalService.Indicators.Stochastics.swift in Sources */,
 				71C2BF8D25ABC128006445EB /* Detail.swift in Sources */,
@@ -4771,6 +5008,7 @@
 				71DC58F225988F84004935CF /* SVM.swift in Sources */,
 				7183D55225A428AE00FB91A9 /* GraphPage.swift in Sources */,
 				71D63F412592BBAB0085D718 /* AssetGridItemContainerState.swift in Sources */,
+				71582E4D25E5CFAE003D92F6 /* Data++.swift in Sources */,
 				71C08EC225AFA59300765894 /* CryptoService.Utilities.swift in Sources */,
 				7179AD3525ACE5E5003FD06F /* SpecialEvents.swift in Sources */,
 				710889A42591B29800795EDF /* Cryptowatcher.swift in Sources */,
@@ -4785,9 +5023,13 @@
 				7157F6B225D4CF2800404B1B /* TonalModel.Tone.swift in Sources */,
 				71E3DD2725B767FE00C7795C /* StockService.TradingDay.swift in Sources */,
 				71B42FBB25A875DD00A23F4D /* HoldingsState.swift in Sources */,
+				71582E7F25E5CFAF003D92F6 /* SwifterAuth.swift in Sources */,
 				71149EE025A7A5AA00148D68 /* SearchAssetExpedition.swift in Sources */,
 				7179AD1B25ACC985003FD06F /* GraniteModal.swift in Sources */,
 				7125BDC225A1318D00F22717 /* RangeSliderStyleConfiguration.swift in Sources */,
+				71582E8325E5CFAF003D92F6 /* SwifterTweets.swift in Sources */,
+				71582E6B25E5CFAF003D92F6 /* SwifterPlaces.swift in Sources */,
+				71582E8125E5CFAF003D92F6 /* SwifterOAuthClient.swift in Sources */,
 				711598C325C8883F0026B5AE /* SetupSceneExpedition.swift in Sources */,
 				71332A1625A78D09005A72A9 /* SecurityDetailState.swift in Sources */,
 				71434327259076EB001F26A4 /* FloatingPoint+Convenience.swift in Sources */,
@@ -4795,6 +5037,7 @@
 				7125BE6225A1388400F22717 /* PointSliderStyle.swift in Sources */,
 				7118A1EC2593134A007E7EAB /* TonalRelay.swift in Sources */,
 				7123B1492593CF5900E5BD69 /* version0001.xcdatamodeld in Sources */,
+				71582E7D25E5CFAF003D92F6 /* SwifterFollowers.swift in Sources */,
 				7179D3BB25AC911700C82063 /* GraniteButtonState.swift in Sources */,
 				7134428225A38A1D002C0315 /* TonalSound.CoreData.swift in Sources */,
 				7118A22A259313FD007E7EAB /* TonalCreateComponent.swift in Sources */,
@@ -4817,6 +5060,7 @@
 				712BD1DD25BA678F004D6E94 /* IndicatorDetailComponent.swift in Sources */,
 				71EE7008258D347F005B2B8E /* __stoicApp.swift in Sources */,
 				71C08E8925AF53AF00765894 /* NetworkResponseObject+CoreDataClass.swift in Sources */,
+				71582E9325E5CFAF003D92F6 /* SwifterTag.swift in Sources */,
 				71C2BF6B25ABA5B8006445EB /* HoldingSelectedExpedition.swift in Sources */,
 				71088A182591C22400795EDF /* CryptoEvents.swift in Sources */,
 				7179D3DA25AC936500C82063 /* TonalModelsEvents.swift in Sources */,
@@ -4825,6 +5069,8 @@
 				71017E2E25B24A8F00E056A5 /* GraniteDisclaimerComponent.swift in Sources */,
 				7143431D259076EB001F26A4 /* Double+Angle.swift in Sources */,
 				710889862591B29800795EDF /* Await.swift in Sources */,
+				71582E8B25E5CFAF003D92F6 /* SwifterTimelines.swift in Sources */,
+				71582E6925E5CFAE003D92F6 /* SwifterFavorites.swift in Sources */,
 				7183D52F25A4268E00FB91A9 /* BasicButton.swift in Sources */,
 				71494D4E25ABE72C0086E598 /* Floor.CoreData.swift in Sources */,
 				71ED8F3825C5D2E9000F6366 /* SettingsComponent.swift in Sources */,
@@ -4843,6 +5089,7 @@
 				710889F82591BD1B00795EDF /* Categories.swift in Sources */,
 				710889962591B29800795EDF /* Promise+Progress.swift in Sources */,
 				7134427225A37A2C002C0315 /* SocialDataObject+CoreDataClass.swift in Sources */,
+				71582E1925E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift in Sources */,
 				711D545225A684E80074D334 /* RouterEvents.swift in Sources */,
 				71D63EF52592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BEAC25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */,
@@ -4853,6 +5100,7 @@
 				710889842591B29800795EDF /* Promise+Chain.swift in Sources */,
 				7139F67325981BD300D9C84B /* TonalTuneState.swift in Sources */,
 				712BD1D925BA678F004D6E94 /* IndicatorDetailState.swift in Sources */,
+				71582E7325E5CFAF003D92F6 /* SwifterError.swift in Sources */,
 				7143432B259076EB001F26A4 /* Double+Convenience.swift in Sources */,
 				7143430225907622001F26A4 /* RepresentableAsDouble.swift in Sources */,
 				7136A2D825CA3E7300B923C1 /* DiscussService.Channel.swift in Sources */,
@@ -4861,16 +5109,21 @@
 				710889902591B29800795EDF /* Promise.swift in Sources */,
 				719CDB6E25C92240008322F0 /* NetworkService.Login.swift in Sources */,
 				7125BE8C25A148BA00F22717 /* TonalFindComponent.swift in Sources */,
+				71582E8925E5CFAF003D92F6 /* SwifterCredential.swift in Sources */,
 				7109643125A5A1F40021B42B /* TonalSound.swift in Sources */,
 				7105341725A50E97006A75DD /* TonalRange.CoreData.swift in Sources */,
+				71582E7125E5CFAF003D92F6 /* Dictionary++.swift in Sources */,
 				71CC7D9325C8E76300610B8A /* NetworkEvents.swift in Sources */,
 				7179D3D825AC936500C82063 /* TonalModelsComponent.swift in Sources */,
 				711402B1258DB9ED00BA387D /* StockEvents.swift in Sources */,
 				7125BDC025A1318D00F22717 /* RangeSliderStyle.swift in Sources */,
+				71582E2025E5CF52003D92F6 /* TonalService.Think.swift in Sources */,
 				7143439F2590787E001F26A4 /* RenderIf.swift in Sources */,
 				71017E3225B24A8F00E056A5 /* GraniteDisclaimerEvents.swift in Sources */,
 				7108897A2591B29800795EDF /* WhenAll.swift in Sources */,
 				7143433F259076EE001F26A4 /* CGSize+Convenience.swift in Sources */,
+				71582E6F25E5CFAF003D92F6 /* SwifterSavedSearches.swift in Sources */,
+				71582E5D25E5CFAE003D92F6 /* String++.swift in Sources */,
 				717D9AC825C8639D00B9354D /* LoginState.swift in Sources */,
 				7143435C259076F4001F26A4 /* Path+Convenience.swift in Sources */,
 				71D63F072592A9800085D718 /* StockService.Utilities.swift in Sources */,
@@ -4884,6 +5137,7 @@
 				7183D56425A428AE00FB91A9 /* PressAndHorizontalDragGesture.swift in Sources */,
 				7143433D259076EE001F26A4 /* CGPoint+Convenience.swift in Sources */,
 				71267A3425A588C6006132D8 /* Quote.CoreData.swift in Sources */,
+				71582E7925E5CFAF003D92F6 /* URL++.swift in Sources */,
 				71D63CCD258E92B1003B0BAF /* MainComponent.swift in Sources */,
 				7123B13D2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */,
 				71ACC24225B0AB9100E02AE3 /* TonalDetailEvents.swift in Sources */,
@@ -4893,6 +5147,7 @@
 				71C08EC825AFA59300765894 /* CryptoService.List.swift in Sources */,
 				7143430825907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
 				71F1EC3B25A0F04400D32C52 /* HeaderState.swift in Sources */,
+				71582E7525E5CFAF003D92F6 /* SwifterMessages.swift in Sources */,
 				71C08E8725AF53AF00765894 /* NetworkResponseObject+CoreDataProperties.swift in Sources */,
 				713F27C825B276FA00C3871E /* Strategy.swift in Sources */,
 				714AD71D25CB3F3B00752A92 /* Discuss.swift in Sources */,
@@ -4901,6 +5156,7 @@
 				7183D55825A428AE00FB91A9 /* Misc.Visual.swift in Sources */,
 				71434339259076EE001F26A4 /* CGRect+Convenience.swift in Sources */,
 				71DC58F025988F84004935CF /* Kernel.swift in Sources */,
+				71582E5F25E5CFAE003D92F6 /* SwifterTrends.swift in Sources */,
 				7125BE4725A1384A00F22717 /* SentimentSliderEvents.swift in Sources */,
 				711484B7259E0C7B00464684 /* WindowComponent.swift in Sources */,
 				7125BDDE25A131D200F22717 /* EnvironmentValues+TrackRange.swift in Sources */,

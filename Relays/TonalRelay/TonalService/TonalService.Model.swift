@@ -25,7 +25,7 @@ public class TonalModels: Archiveable {
     
     public var currentType: ModelType = .close
     
-    public init(models: [Model]) {
+    public init(models: [Model], created: Date) {
         for model in models {
             switch model {
             case .close(let svmModel):
@@ -38,10 +38,10 @@ public class TonalModels: Archiveable {
                 volume = svmModel
             }
         }
-        self.created = .today
+        self.created = created
     }
     
-    public init(models: [Model], sentiments: [SentimentOutput]) {
+    public init(models: [Model], sentiments: [SentimentOutput], created: Date) {
         for model in models {
             switch model {
             case .close(let svmModel):
@@ -56,10 +56,11 @@ public class TonalModels: Archiveable {
         }
         
         self.sentiments = sentiments
-        self.created = .today
+        self.created = created
     }
     
     enum CodingKeys: String, CodingKey {
+        case created
         case high
         case close
         case low
@@ -72,6 +73,8 @@ public class TonalModels: Archiveable {
     
     required public convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let created: Date = try container.decode(Date.self, forKey: .created)
         
         let closeModel: SVMModel? = try? container.decode(SVMModel.self, forKey: .close)
         
@@ -86,7 +89,8 @@ public class TonalModels: Archiveable {
         let sentiments: [SentimentOutput] = try container.decode([SentimentOutput].self, forKey: .sentiments)
         
         self.init(
-            models: [])
+            models: [],
+            created: created)
         
         self.close = closeModel
         self.high = highModel
@@ -98,6 +102,8 @@ public class TonalModels: Archiveable {
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(created, forKey: .created)
         
         try container.encode(close, forKey: .close)
         

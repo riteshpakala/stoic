@@ -18,6 +18,9 @@ public enum TonalStage {
 }
 
 public class TonalState: GraniteState {
+    
+    let oracle = TonalService.TweetOracle()
+    
     let modelThreads: Int = 3
     let dataChunks: Int = 3
     let dataScale: Int = 360
@@ -49,6 +52,7 @@ public class TonalCenter: GraniteCenter<TonalState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetSentimentExpedition.Discovery(),
+            GetSentimentThinkExpedition.Discovery(),
             ProcessSentimentExpedition.Discovery(),
             TonalHistoryExpedition.Discovery(),
             TonalSoundsExpedition.Discovery()

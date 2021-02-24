@@ -127,7 +127,6 @@ public struct LoginComponent: GraniteComponent {
                     .font(Fonts.live(.headline, .regular))
                     .padding(.leading, Brand.Padding.small)
                     .padding(.trailing, Brand.Padding.small)
-                    .autocapitalization(.none)
             }
             .frame(height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             
@@ -141,7 +140,6 @@ public struct LoginComponent: GraniteComponent {
                         .font(Fonts.live(.headline, .regular))
                         .padding(.leading, Brand.Padding.small)
                         .padding(.trailing, Brand.Padding.small)
-                        .autocapitalization(.none)
                 }
                 .frame(height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(.top, Brand.Padding.medium)
@@ -158,7 +156,6 @@ public struct LoginComponent: GraniteComponent {
                         .font(Fonts.live(.headline, .regular))
                         .padding(.leading, Brand.Padding.small)
                         .padding(.trailing, Brand.Padding.small)
-                        .autocapitalization(.none)
                 }
                 .frame(height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding(.top, Brand.Padding.medium)
@@ -173,7 +170,6 @@ public struct LoginComponent: GraniteComponent {
                         .font(Fonts.live(.headline, .regular))
                         .padding(.leading, Brand.Padding.small)
                         .padding(.trailing, Brand.Padding.small)
-                        .autocapitalization(.none)
                 }
                 .frame(height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 

@@ -31,10 +31,18 @@ public struct AssetGridItemContainerComponent: GraniteComponent {
                                 .leading)
                     
                     if command.center.showDescription1 {
-                        GraniteText("price",
-                                    .subheadline,
-                                    .regular,
-                                    .trailing)
+                        switch command.center.assetType {
+                        case .model:
+                            GraniteText("expires",
+                                        .subheadline,
+                                        .regular,
+                                        .trailing)
+                        default:
+                            GraniteText("price",
+                                        .subheadline,
+                                        .regular,
+                                        .trailing)
+                        }
                     }
                     
                     if command.center.showDescription2 {

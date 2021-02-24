@@ -108,15 +108,15 @@ extension TonalModels {
             
             GraniteLogger.info("tonal model generation - complete - ✅", .ml, focus: true)
             
-            completion(.init(models: models, sentiments: sentimentAvgs))
+            completion(.init(models: models, sentiments: sentimentAvgs, created: quote.latestSecurity.date))
         }
     }
     
     public func append(security: Security,
                        quote: Quote,
-                       sentiment: SentimentOutput) -> TonalModels {
+                       sentiment: SentimentOutput) /*-> TonalModels*/ {
         
-        var modelsToAppend: [Model] = []
+//        var modelsToAppend: [Model] = []
         var sentimentAvgs: [SentimentOutput] = self.sentiments
         for type in ModelType.allCases {
             guard let model = self.model(forType: type),
@@ -155,9 +155,20 @@ extension TonalModels {
             david.Cost = 1e3
             david.train(data: dataForDavid)
 
-            modelsToAppend.append(type.model(for: david))
+            switch type.model(for: david) {
+            case .close(let model):
+                self.close = model
+            case .high(let model):
+                self.high = model
+            case .low(let model):
+                self.low = model
+            case .volume(let model):
+                self.volume = model
+            }
+//            modelsToAppend.append(type.model(for: david))
         }
         
-        return .init(models: modelsToAppend, sentiments: sentimentAvgs)
+        
+//        return .init(models: modelsToAppend, sentiments: sentimentAvgs)
     }
 }

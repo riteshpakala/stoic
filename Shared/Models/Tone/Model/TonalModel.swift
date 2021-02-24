@@ -10,7 +10,19 @@ import CoreData
 import GraniteUI
 
 public struct TonalModel: Asset {
-    let date: Date
+    var date: Date {
+        david.created
+    }
+    
+    var targetDate: Date {
+        switch latestSecurity.interval {
+        case .day:
+            return date.advanceDate(value: 1)
+        case .hour:
+            return date.advanceDateHourly(value: 1)
+        }
+    }
+    
     let daysTrained: Int
     let david: TonalModels
     let tuners: [SentimentOutput]
@@ -26,18 +38,20 @@ public struct TonalModel: Asset {
                 tuners: [SentimentOutput],
                 quote: Quote,
                 range: [Date],
-                date: Date = Date.today,
                 id: String = UUID().uuidString){
         self.david = david
         self.daysTrained = daysTrained
         self.tuners = tuners
         self.quote = quote
         self.range = range
-        self.date = date
         self.modelID = id
         let sorted = quote.securities.sortDesc
         self.last12Securities = Array(sorted.prefix(12))
         self.latestSecurity = last12Securities.first ?? EmptySecurity.init()
+    }
+    
+    var needsUpdate: Bool {
+        Date.today.compare(self.targetDate) == .orderedDescending
     }
     
     public mutating func precompute() {
@@ -60,6 +74,7 @@ public struct TonalModel: Asset {
                                                 volume: volume,
                                                 current: latestSecurity.lastValue,
                                                 modelDate: date,
+                                                targetDate: targetDate,
                                                 securityDate: latestSecurity.date,
                                                 interval: latestSecurity.interval)
         return prediction
@@ -100,7 +115,7 @@ public struct TonalModel: Asset {
         quote.precompute()
         
         var quoteToModify = quote
-        var modelToModify = david
+        let modelToModify = david
         var rangeToModify = range
         
         for i in 0..<days {
@@ -138,11 +153,18 @@ public struct TonalModel: Asset {
             }
             
             var securityToAdd = EmptySecurity.init()
-            print("[Security - \(securityToAdd.date.advanceDate(value: i))]")
-            print("close: \(david.scale(prediction: closePercent, nextSecurity.lastValue))")
-            print("high: \(david.scale(prediction: highPercent, nextSecurity.highValue))")
-            print("low: \(david.scale(prediction: lowPercent, nextSecurity.lowValue))")
-            print("volume: \(david.scale(prediction: volume, nextSecurity.volumeValue))\n")
+            
+            let detail: String =
+                """
+                [Security - \(securityToAdd.date.advanceDate(value: i))]
+                close: \(david.scale(prediction: closePercent, nextSecurity.lastValue))
+                high: \(david.scale(prediction: highPercent, nextSecurity.highValue))
+                low: \(david.scale(prediction: lowPercent, nextSecurity.lowValue))
+                volume: \(david.scale(prediction: volume, nextSecurity.volumeValue))
+                """
+            
+            GraniteLogger.info(detail, .utility, focus: true)
+            
             securityToAdd.date = securityToAdd.date.advanceDate(value: i)
             securityToAdd.lastValue = david.scale(prediction: closePercent, nextSecurity.lastValue)
             securityToAdd.highValue = david.scale(prediction: highPercent, nextSecurity.highValue)
@@ -153,9 +175,9 @@ public struct TonalModel: Asset {
 
             rangeToModify.insert(securityToAdd.date, at: 0)
 
-            modelToModify = modelToModify.append(security: securityToAdd,
-                                                 quote: quoteToModify,
-                                                 sentiment: sentiment)
+            modelToModify.append(security: securityToAdd,
+                                         quote: quoteToModify,
+                                         sentiment: sentiment)
         }
     }
 }

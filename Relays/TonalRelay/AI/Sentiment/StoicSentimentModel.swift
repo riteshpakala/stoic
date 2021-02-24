@@ -101,6 +101,14 @@ class StoicSentimentModel {
     
     func predict(_ utterance: String, matching: String) -> SentimentOutput? {
         guard shouldInfer(utterance, matching: matching) else { return nil }
+        return generate(utterance)
+    }
+    
+    func predict(_ utterance: String) -> SentimentOutput? {
+        return generate(utterance)
+    }
+    
+    func generate(_ utterance: String) -> SentimentOutput? {
         guard let model = self.model else { return nil }
         
         let cleaned = cleanTweet(utterance)

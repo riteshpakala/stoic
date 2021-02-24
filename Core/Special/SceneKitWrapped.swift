@@ -102,6 +102,7 @@ struct SceneKitView : NSViewRepresentable {
     
     func clear() {
         scene.rootNode.removeAllActions()
+        scene.rootNode.cleanup()
     }
 }
 
@@ -137,6 +138,17 @@ struct SceneKitView : UIViewRepresentable {
     
     func clear() {
         scene.rootNode.removeAllActions()
+        scene.rootNode.cleanup()
     }
 }
 #endif
+
+extension SCNNode {
+    func cleanup() {
+        for child in childNodes {
+            child.cleanup()
+        }
+        geometry = nil
+        removeFromParentNode()
+    }
+}

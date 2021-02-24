@@ -30,7 +30,11 @@ struct GetStrategyExpedition: GraniteExpedition {
             strategy.generate()
             
             let assetIDs = strategy.investments.items.filter({ !$0.closed }).map { $0.assetID }
-            let securities = strategy.quotes.filter({ $0.needsUpdate && assetIDs.contains($0.latestSecurity.assetID) }).map { $0.latestSecurity }
+            let quotes = strategy.quotes.filter({ assetIDs.contains($0.latestSecurity.assetID) })
+            
+            let securities = quotes.filter({ $0.needsUpdate }).map { $0.latestSecurity }
+            
+            let models = quotes.flatMap { $0.models }.filter { $0.needsUpdate }
             
             state.securitiesToSync = securities
             state.securities = strategy.quotes.map { $0.latestSecurity }
