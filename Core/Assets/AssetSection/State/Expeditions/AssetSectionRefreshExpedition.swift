@@ -28,7 +28,6 @@ struct AssetSectionNeedsRefreshExpedition: GraniteExpedition {
         default:
             break
         }
-        
     }
 }
 

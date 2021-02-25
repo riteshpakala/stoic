@@ -41,6 +41,14 @@ public class StockService {
         return "https://api.tradier.com/v1/markets/calendar?month=\(month)&year=\(year)"
     }
     
+    public var quotesStoic: String {
+        "https://wzda7iwzjd.execute-api.us-west-1.amazonaws.com/default/stoic-search"
+    }
+    
+    public var quotesYahoo: String {
+        "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes"
+    }
+    
     var movers: String {
         "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers"
     }

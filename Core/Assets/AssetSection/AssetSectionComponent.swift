@@ -44,21 +44,21 @@ public struct AssetSectionComponent: GraniteComponent {
                     set(\.securityType, value: index == 0 ? .stock : .crypto)
                 })
                 
-                #if DEBUG
-                GraniteButtonComponent(state: .init(.image("refresh_icon"),
-                                                    colors: [Brand.Colors.yellow,
-                                                             Brand.Colors.purple],
-                                                    selected: true,
-                                                    size: .init(16),
-                                                    padding: .init(0,
-                                                                   Brand.Padding.xMedium,
-                                                                   Brand.Padding.xSmall,
-                                                                   Brand.Padding.small),
-                                                    action: {
-                                                        GraniteHaptic.light.invoke()
-                                                        sendEvent(AssetSectionEvents.Refresh(sync: true))
-                                                    }))
-                #endif
+//                #if DEBUG
+//                GraniteButtonComponent(state: .init(.image("refresh_icon"),
+//                                                    colors: [Brand.Colors.yellow,
+//                                                             Brand.Colors.purple],
+//                                                    selected: true,
+//                                                    size: .init(16),
+//                                                    padding: .init(0,
+//                                                                   Brand.Padding.xMedium,
+//                                                                   Brand.Padding.xSmall,
+//                                                                   Brand.Padding.small),
+//                                                    action: {
+//                                                        GraniteHaptic.light.invoke()
+//                                                        sendEvent(AssetSectionEvents.Refresh(sync: true))
+//                                                    }))
+//                #endif
                 
                 GraniteButtonComponent(state: .init(.image("refresh_icon"),
                                                     selected: true,

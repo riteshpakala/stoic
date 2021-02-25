@@ -64,14 +64,15 @@ struct GetMoversStockExpedition: GraniteExpedition {
 
                 GraniteLogger.info("fetching new movers from stoic\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
             } else {
-                publisher = state
-                    .service
-                    .getMovers()
-                    .replaceError(with: nil)
-                    .map { StockEvents.MoversData(event.syncWithStoics, data: $0) }
-                    .eraseToAnyPublisher()
-
-                GraniteLogger.info("fetching new movers\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
+//                publisher = state
+//                    .service
+//                    .getMovers()
+//                    .replaceError(with: nil)
+//                    .map {
+//                        return StockEvents.MoversData(event.syncWithStoics, data: $0) }
+//                    .eraseToAnyPublisher()
+//
+                GraniteLogger.info("[DEPRECATED] fetching new movers\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
             }
         }
     }
@@ -89,7 +90,7 @@ struct MoversDataExpedition: GraniteExpedition {
         
         GraniteLogger.info("got the movers data for stocks - self: \(String(describing: self))", .network, focus: true)
         
-        guard let data = event.data as? StockServiceModels.Movers else { return }
+        guard let data = event.data as? StockServiceModels.Movers else { GraniteLogger.info("failed to push movers to fetch quotes - self: \(String(describing: self))", .network, focus: true); return }
         
         let symbols: [String] = data.finance.result.flatMap { item in item.quotes.map { $0.symbol } }
         
@@ -105,6 +106,7 @@ struct MoversDataExpedition: GraniteExpedition {
                                           data: data,
                                           responseType: .movers)
                 }
+                
                 
                 return StockEvents.MoverStockQuotes(event.syncWithStoics, movers: data, quotes: $0)
             }

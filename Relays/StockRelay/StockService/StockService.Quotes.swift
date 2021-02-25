@@ -12,28 +12,30 @@ import GraniteUI
 extension StockService {
     public func getQuotes(symbols: String) -> AnyPublisher<[StockServiceModels.Quotes], URLError> {
         guard
-            var urlComponents = URLComponents(string: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes")
+            var urlComponents = URLComponents(string: quotesStoic)
             else { preconditionFailure("Can't create url components...") }
+//        let regionQuery: URLQueryItem = .init(name: "region", value: "US")
+        let symbolsQuery: URLQueryItem = .init(name: "data", value: symbols)
         
-        let regionQuery: URLQueryItem = .init(name: "region", value: "US")
-        let symbolsQuery: URLQueryItem = .init(name: "symbols", value: symbols)
-        
-        urlComponents.queryItems = [regionQuery, symbolsQuery]
+        urlComponents.queryItems = [symbolsQuery]
         
         guard
             let url = urlComponents.url
             else { preconditionFailure("Can't create url from url components...") }
         
-        GraniteLogger.info("fetching stock quotes:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay)
+        GraniteLogger.info("fetching stock quotes:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay, focus: true)
         
         var request = URLRequest(
             url: url,
             cachePolicy: .useProtocolCachePolicy,
             timeoutInterval: 10.0)
         
+//        let headers = [
+//            "x-rapidapi-key": "2a224e70a9msh9e0e2e3a2a20673p19f962jsn59435ee9b515",
+//            "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+//        ]
         let headers = [
-            "x-rapidapi-key": "f9fae3e5f7msh69967c7003f75bcp1523aejsn03e34851f3fc",
-            "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
+            "x-api-key": "ytpIkHWQvL712vQSQl0eS6hBDhEy8YVY9gkyonVD"
         ]
         
         request.httpMethod = "GET"
@@ -50,7 +52,7 @@ extension StockService {
                         movers = try decoder.decode(StockServiceModels.Quotes.self, from: data)
                     } catch let error {
                         movers = nil
-                        GraniteLogger.error("failed fetching stock quotes:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
+                        GraniteLogger.info("failed fetching stock quotes:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay, focus: true)
                     }
                     
                     return movers != nil ? [movers!] : nil
