@@ -119,7 +119,7 @@ extension Security {
 //        let shouldUpdateHour = latestSecurity.date.timeComponents().hour <= Date.today.closingHour && latestSecurity.securityType == .stock
         
 //        let isToday: Bool = latestSecurity.date.dateComponents().day <= Date.today.dateComponents().day
-        let afterHours: Bool = Date.today.closingHour <= self.date.timeComponents().hour && self.securityType == .stock
+        let afterHours: Bool = Date.today.closingHour <= Date.today.timeComponents().hour && self.securityType == .stock
 //        let hourCheck: Int = Date.today.closingHour <= latestSecurity.date.timeComponents().hour ? hours + 1 : 1
         
         let daysAreOverdue = abs(days) > 0
