@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import GraniteUI
 
 @main
 struct __stoicApp: App {
+    
+    private let manager = GraniteDependencyManagerTest()
+    
     var body: some Scene {
         WindowGroup {
             ZStack {

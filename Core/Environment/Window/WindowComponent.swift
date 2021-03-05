@@ -25,39 +25,30 @@ public struct WindowComponent: GraniteComponent {
             AssetSectionComponent(
                 state: .init(context: state.config.kind,
                              securityType))
-                .share(.init(dep(\.hosted)))
+                
                 .attach(to: command)
         case .portfolio(let type):
             PortfolioComponent(state: .init(type))
-                .share(.init(dep(\.hosted)))
                 .listen(to: command)
         case .floor:
             FloorComponent()
-                .share(.init(dep(\.hosted,
-                                 WindowCenter.route)))
         case .search:
             AssetSearchComponent()
-                .share(.init(dep(\.hosted,
-                                 WindowCenter.route)))
         case .securityDetail(let kind):
             SecurityDetailComponent(state: .init(kind,
                                                  modelID: command.center.envDependency.detail.modelID))
-                .share(.init(dep(\.hosted,
-                                 WindowCenter.route)))
         case .tonalCreate(let stage):
             TonalCreateComponent(state: .init(stage))
-                .share(.init(dep(\.hosted)))
+                
         case .tonalBrowser(let payload):
             TonalModelsComponent(state: inject(\.envDependency,
                                                target: \.tonalModels))
-                .payload(payload)
-                .share(.init(dep(\.hosted)))
+                                        .payload(payload)
+                
         case .special:
             SpecialComponent()
         case .discuss:
-            DiscussComponent()
-                .share(.init(dep(\.hosted)))
-                .listen(to: command)
+            DiscussComponent().listen(to: command)
         case .settings:
             SettingsComponent()
         default:

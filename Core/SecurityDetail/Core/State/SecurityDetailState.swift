@@ -83,6 +83,9 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
         dependency.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var links: [GraniteLink] {
         [
             .onAppear(SecurityDetailEvents.GetDetail(), .dependant),

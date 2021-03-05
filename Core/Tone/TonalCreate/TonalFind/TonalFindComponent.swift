@@ -25,7 +25,7 @@ public struct TonalFindComponent: GraniteComponent {
             
             VStack {
                 AssetSearchComponent(state: .init(.tonalCreate(.none)))
-                    .share(.init(dep(\.hosted)))
+                    
                     .listen(to: command, .stop)
             }
             

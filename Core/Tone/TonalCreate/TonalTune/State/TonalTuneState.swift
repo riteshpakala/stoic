@@ -23,6 +23,9 @@ public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
         dependency.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     var tone: Tone {
         envDependency.tone
     }

@@ -117,7 +117,7 @@ public struct SecurityDetailComponent: GraniteComponent {
                 PaddingVertical()
                 ZStack {
                     IndicatorDetailComponent(state: .init(state.quote))
-                        .share(.init(dep(\.hosted)))
+                        
                     
                     VStack {
                         Spacer()
@@ -140,7 +140,7 @@ public struct SecurityDetailComponent: GraniteComponent {
                 PaddingVertical()
                 
                 TonalControlComponent(state: .init(tunerState, model: state.model))
-                    .share(.init(dep(\.hosted)))
+                    
             }
         }
     }

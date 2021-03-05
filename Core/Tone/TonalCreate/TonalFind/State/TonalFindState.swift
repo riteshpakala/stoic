@@ -37,6 +37,9 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
         dependency.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     var ticker: String {
         envDependency.tone.find.ticker ?? ""
     }

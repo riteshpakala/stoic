@@ -29,6 +29,9 @@ public class MainCenter: GraniteCenter<MainState> {
         hosted.fetch.add(self)
     }
     
+    @GraniteInject
+    var routerDependency2: RouterDependency2
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             UserExpedition.Discovery(),
@@ -41,11 +44,11 @@ public class MainCenter: GraniteCenter<MainState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(MainEvents.User(), .dependant)
+            .onAppear(MainEvents.User())
         ]
     }
     
     var authState: AuthState {
-        routerDependency.authState
+        routerDependency2.authState
     }
 }

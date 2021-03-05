@@ -9,6 +9,36 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
+class RouterDependency2: DependencyManager, GraniteInjectable {
+    lazy var router: Router = {
+        _router as? Router ?? .init()
+    }()
+    
+    lazy var environment: EnvironmentDependency = {
+        return router.dependencies.get(EnvironmentDependency.self) ?? .init()
+    }()
+    
+    var authState: AuthState = .none
+}
+
+class GraniteDependencyManagerTest {
+    private let router: RouterDependency2
+    private let environment: EnvironmentDependency2
+    
+    init() {
+        self.router = .init()
+        self.environment = .init()
+        addDependencies()
+    }
+    
+    private func addDependencies() {
+        let resolver = GraniteResolver.shared
+        
+        resolver.add(router)
+        resolver.add(environment)
+    }
+}
+
 class RouterDependency: DependencyManager {
     lazy var router: Router = {
         _router as? Router ?? .init()

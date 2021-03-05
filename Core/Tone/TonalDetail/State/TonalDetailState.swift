@@ -34,6 +34,9 @@ public class TonalDetailCenter: GraniteCenter<TonalDetailState> {
         dependency.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GenerateTonesExpedition.Discovery()

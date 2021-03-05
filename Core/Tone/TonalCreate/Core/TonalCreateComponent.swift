@@ -22,20 +22,20 @@ public struct TonalCreateComponent: GraniteComponent {
             TonalFindComponent()
                 .listen(to: command, .stop)
                 .payload(payload)
-                .share(.init(dep(\.hosted)))
+                
         case .set:
             TonalSetComponent(state: inject(\.envDependency,
                                             target: \.tone.set.state))
                 .listen(to: command, .stop)
-                .share(.init(dep(\.hosted))).showEmptyState
+                .showEmptyState
         case .tune:
             TonalTuneComponent()
                 .listen(to: command, .stop)
-                .share(.init(dep(\.hosted))).showEmptyState
+                .showEmptyState
         case .compile:
             TonalCompileComponent()
                 .listen(to: command, .stop)
-                .share(.init(dep(\.hosted))).showEmptyState
+                .showEmptyState
         default:
             EmptyView.init().hidden()
         }

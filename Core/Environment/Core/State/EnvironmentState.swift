@@ -79,6 +79,9 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     lazy var envDependency: EnvironmentDependency = {
         routerDependency.environment//.bind(self)
     }()
+    
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
     //
     
 //    public override var relays: [GraniteBaseRelay] {

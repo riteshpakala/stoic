@@ -44,7 +44,7 @@ public struct PortfolioComponent: GraniteComponent {
                     }
                     
                     HoldingsComponent(state: .init(context: .portfolio(.preview)))
-                        .share(.init(dep(\.hosted)))
+                        
                 default:
                     EmptyView.init().hidden()
                     
@@ -56,8 +56,6 @@ public struct PortfolioComponent: GraniteComponent {
                 VStack {
                     GraniteModal(content: {
                         HoldingsComponent(state: .init(context: .strategy))
-                            .share(.init(dep(\.hosted,
-                                             PortfolioCenter.route)))
                     }, onExitTap: {
                         set(\.stage, value: .none)
                     })
@@ -140,7 +138,6 @@ public struct PortfolioComponent: GraniteComponent {
         StrategyComponent(state: inject(\.envDependency,
                                         target: \.strategiesPortfolio))
             .listen(to: command, .stop)
-            .share(.init(dep(\.envDependency)))
             .showEmptyState
             .frame(maxHeight: .infinity)
     }

@@ -11,6 +11,7 @@ import SwiftUI
 import Combine
 
 public struct MainComponent: GraniteComponent {
+    
     @ObservedObject
     public var command: GraniteCommand<MainCenter, MainState> = .init()
     
@@ -35,7 +36,6 @@ public struct MainComponent: GraniteComponent {
             if EnvironmentConfig.isIPhone {
                 VStack(spacing: 0) {
                     environment
-                        .share(.init(dep(\.routerDependency)))
                         .listen(to: command)
                     controls
                 }
@@ -44,7 +44,6 @@ public struct MainComponent: GraniteComponent {
                 HStack {
                     controls
                     environment
-                        .share(.init(dep(\.routerDependency)))
                         .listen(to: command)
                         .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
@@ -52,7 +51,6 @@ public struct MainComponent: GraniteComponent {
             }
         case .notAuthenticated:
             LoginComponent()
-                .share(.init(dep(\.routerDependency)))
                 .listen(to: command)
         case .none:
             GraniteLoadingComponent()

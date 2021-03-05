@@ -31,6 +31,9 @@ public class IndicatorDetailCenter: GraniteCenter<IndicatorDetailState> {
         dependency.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GenerateIndicatorExpedition.Discovery()

@@ -30,8 +30,6 @@ public struct TonalCompileComponent: GraniteComponent {
                 SecurityDetailComponent(state: .init(.expanded(.init(object: security)),
                                                      quote: command.center.quote,
                                                      model: command.center.model))
-                    .share(.init(dep(\.hosted,
-                                     TonalCompileCenter.route)))
                 
                 
                 PaddingVertical()

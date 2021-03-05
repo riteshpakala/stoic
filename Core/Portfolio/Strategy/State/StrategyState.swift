@@ -63,6 +63,9 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
         self.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetStrategyExpedition.Discovery(),

@@ -40,6 +40,9 @@ public class PortfolioCenter: GraniteCenter<PortfolioState> {
         self.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     var user: User {
         envDependency.user
     }

@@ -27,6 +27,9 @@ public class WindowCenter: GraniteCenter<WindowState> {
         self.hosted.fetch.environment
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var behavior: GraniteEventBehavior {
         .passthrough
     }

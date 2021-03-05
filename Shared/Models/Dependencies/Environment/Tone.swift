@@ -8,7 +8,7 @@ import SwiftUI
 import Foundation
 import GraniteUI
 
-public class Tone {
+public class Tone: GraniteInjectable {
     public struct Constraints {
         public static var maxDays: Int = 30
         public static var minDays: Int = 2

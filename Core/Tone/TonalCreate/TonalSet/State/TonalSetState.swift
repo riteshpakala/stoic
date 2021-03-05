@@ -21,6 +21,9 @@ public class TonalSetCenter: GraniteCenter<TonalSetState> {
         dependency.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     var tone: Tone {
         envDependency.tone
     }

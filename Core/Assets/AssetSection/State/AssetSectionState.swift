@@ -48,6 +48,8 @@ public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
     lazy var envDependency: EnvironmentDependency = {
         self.hosted.env
     }()
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
     //
     
     var date: Date {

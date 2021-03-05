@@ -36,6 +36,9 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
         dependency.hosted.env.add(self)
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             AssetSelectedExpedition.Discovery(),

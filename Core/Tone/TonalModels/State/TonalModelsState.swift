@@ -70,6 +70,9 @@ public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
         dependency.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var links: [GraniteLink] {
         [
             .onAppear(TonalModelsEvents.Get(), .dependant),

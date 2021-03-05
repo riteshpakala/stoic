@@ -63,7 +63,7 @@ public struct FloorComponent: GraniteComponent {
                 VStack {
                     GraniteModal(content: {
                         HoldingsComponent(state: .init(context: .floor))
-                            .share(.init(dep(\.hosted)))
+                            
                     }, onExitTap: {
                         set(\.floorStage, value: .none, update: \EnvironmentDependency.floorStage)
                     })
@@ -84,7 +84,7 @@ public struct FloorComponent: GraniteComponent {
                         
                         if let security = getSecurity(row: row, col: col) {
                             SecurityDetailComponent(state: .init(.floor(.init(object: security)), quote: getQuote(row: row, col: col)))
-                                .share(.init(dep(\.hosted))).background(Brand.Colors.black)
+                                .background(Brand.Colors.black)
                         } else {
                             HStack {
                                 Spacer()

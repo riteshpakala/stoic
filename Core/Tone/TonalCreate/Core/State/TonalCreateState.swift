@@ -36,6 +36,9 @@ public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
         self.hosted.env
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var expeditions: [GraniteBaseExpedition] {
         []
     }

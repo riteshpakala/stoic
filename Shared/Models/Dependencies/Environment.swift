@@ -9,6 +9,28 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
+class EnvironmentDependency2: DependencyManager, GraniteInjectable {
+    var home: Home = .init()
+    
+    var detail: Detail = .init()
+    
+    var discuss: Discuss = .init()
+    
+    var tone: Tone = .init()
+
+    var tonalModels: TonalModelsState = .init()
+    
+    var user: User = .init()
+    
+    var floorStage: FloorStage = .none
+
+    var strategiesPortfolio: StrategyState = .init()
+    
+    var broadcasts: Broadcasts = .init()
+    
+    var envSettings: EnvironmentStyle.Settings = .init()
+}
+
 class EnvironmentDependency: DependencyManager {
     var home: Home = .init()
     

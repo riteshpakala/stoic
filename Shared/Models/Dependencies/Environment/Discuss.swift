@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class Discuss {
+class Discuss: GraniteInjectable {
     var server: DiscussServiceModels.IRCServer? = nil
     var channel: String = "general"
 }

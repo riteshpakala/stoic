@@ -9,6 +9,6 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class Home {
+class Home: GraniteInjectable {
     var ticker: String = ""
 }

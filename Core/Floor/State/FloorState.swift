@@ -31,6 +31,9 @@ public class FloorCenter: GraniteCenter<FloorState> {
         dependency.hosted.env.add(self)
     }
     
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
+    
     public override var links: [GraniteLink] {
         [
             .onAppear(FloorEvents.Get(), .dependant),
