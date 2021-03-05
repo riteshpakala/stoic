@@ -82,7 +82,7 @@ public struct HoldingsComponent: GraniteComponent {
                         AssetGridComponent(state: .init(state.context.assetGridTypeForHoldings,
                                                         context: state.context))
                             .listen(to: command, .stop)
-                            .payload(retrievePayload(\.envDependency2,
+                            .payload(injectPayload(\.envDependency,
                                                      target: \.user.portfolio?.holdings.securities)).showEmptyState
                             
                     }

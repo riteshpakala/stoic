@@ -8,7 +8,7 @@ import SwiftUI
 import Foundation
 import GraniteUI
 
-public class ToneDependency: GraniteInjectable {
+public class ToneDependency: GraniteDependable {
     var tone: Tone = .init()
 }
 

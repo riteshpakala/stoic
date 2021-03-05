@@ -71,8 +71,8 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
         }
     }
 
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     
 //    public override var relays: [GraniteBaseRelay] {

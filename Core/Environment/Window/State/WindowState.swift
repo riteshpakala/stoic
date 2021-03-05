@@ -23,8 +23,8 @@ public class WindowState: GraniteState {
 }
 
 public class WindowCenter: GraniteCenter<WindowState> {
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var behavior: GraniteEventBehavior {
         .passthrough

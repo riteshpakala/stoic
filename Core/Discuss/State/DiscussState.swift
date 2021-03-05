@@ -19,11 +19,11 @@ public class DiscussState: GraniteState {
 }
 
 public class DiscussCenter: GraniteCenter<DiscussState> {
-    @GraniteInject
+    @GraniteDependency
     var discussDependency: DiscussDependency
     
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
@@ -40,11 +40,11 @@ public class DiscussCenter: GraniteCenter<DiscussState> {
     }
     
     var user: UserInfo {
-        envDependency2.user.info
+        envDependency.user.info
     }
     
     public var environmentSafeArea: CGFloat {
-        if let height = envDependency2.envSettings.lf?.data.height {
+        if let height = envDependency.envSettings.lf?.data.height {
             return abs(EnvironmentConfig.iPhoneScreenHeight - height)
         } else {
             return 0

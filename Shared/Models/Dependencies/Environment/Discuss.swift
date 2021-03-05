@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class DiscussDependency: GraniteInjectable {
+class DiscussDependency: GraniteDependable {
     var discuss: Discuss = .init()
 }
 

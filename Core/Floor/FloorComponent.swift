@@ -65,7 +65,7 @@ public struct FloorComponent: GraniteComponent {
                         HoldingsComponent(state: .init(context: .floor))
                             
                     }, onExitTap: {
-                        set(\.floorStage, value: .none, update: \EnvironmentDependency2.floorStage)
+                        set(\.floorStage, value: .none, update: \EnvironmentDependency.floorStage)
                     })
                 }
             default:
@@ -91,7 +91,7 @@ public struct FloorComponent: GraniteComponent {
                                 GraniteButtonComponent(
                                     state: .init(.addNoSeperator,
                                                  action: {
-                                                    set(\.floorStage, value: .adding(CGPoint.init(row, col)), update: \EnvironmentDependency2.floorStage)
+                                                    set(\.floorStage, value: .adding(CGPoint.init(row, col)), update: \EnvironmentDependency.floorStage)
                                                  }))
                                 Spacer()
                             }.frame(maxWidth: .infinity,

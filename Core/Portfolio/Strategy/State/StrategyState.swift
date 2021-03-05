@@ -59,8 +59,8 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
@@ -84,6 +84,6 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     }
     
     var strategies: [Strategy] {
-        envDependency2.user.portfolio?.strategies ?? []
+        envDependency.user.portfolio?.strategies ?? []
     }
 }

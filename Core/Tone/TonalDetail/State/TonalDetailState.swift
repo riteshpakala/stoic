@@ -30,11 +30,11 @@ public class TonalDetailState: GraniteState {
 public class TonalDetailCenter: GraniteCenter<TonalDetailState> {
     let tonalRelay: TonalRelay = .init()
     
-    @GraniteInject
+    @GraniteDependency
     var detailDependency: DetailDependency
     
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [

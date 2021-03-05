@@ -33,11 +33,11 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
         ]
     }
 
-    @GraniteInject
+    @GraniteDependency
     var toneDependency: ToneDependency
     
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     var ticker: String {
         toneDependency.tone.find.ticker ?? ""

@@ -85,11 +85,11 @@ public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
 
-    @GraniteInject
+    @GraniteDependency
     var detailDependency: DetailDependency
     
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var links: [GraniteLink] {
         [

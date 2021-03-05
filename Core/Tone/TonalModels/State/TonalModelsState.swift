@@ -66,11 +66,11 @@ public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
 
-    @GraniteInject
+    @GraniteDependency
     var detailDependency: DetailDependency
     
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var links: [GraniteLink] {
         [

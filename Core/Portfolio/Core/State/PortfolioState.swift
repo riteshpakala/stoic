@@ -36,11 +36,11 @@ public class PortfolioState: GraniteState {
 }
 
 public class PortfolioCenter: GraniteCenter<PortfolioState> {
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     var user: User {
-        envDependency2.user
+        envDependency.user
     }
     
     var portfolio: Portfolio? {

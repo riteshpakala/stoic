@@ -25,7 +25,7 @@ struct TonalRangeChangedExpedition: GraniteExpedition {
         
         guard event.isActive == false else { return }
         
-        if let tonalFind = connection.retrieve2(\ToneDependency.tone.find.quote),
+        if let tonalFind = connection.retrieve(\ToneDependency.tone.find.quote),
            let quote = tonalFind {
             connection.request(TonalFindEvents.Parse(quote, days: state.days))
         }
@@ -110,7 +110,7 @@ struct ParseTonalRangeExpedition: GraniteExpedition {
                 }
             }
             
-            connection.update2(\ToneDependency.tone.range, value: candidates)
+            connection.update(\ToneDependency.tone.range, value: candidates)
         }
     }
     

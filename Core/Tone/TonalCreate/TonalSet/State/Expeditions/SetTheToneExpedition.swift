@@ -21,15 +21,15 @@ struct SetTheToneExpedition: GraniteExpedition {
        
         GraniteLogger.info("tonal range selected:\n\(event.range)\nself:String(describing: self)", .expedition)
         
-        connection.update2(\ToneDependency.tone.selectedRange, value: event.range)
+        connection.update(\ToneDependency.tone.selectedRange, value: event.range)
         
-        if let tone = connection.retrieve2(\ToneDependency.tone.find.quote) {
+        if let tone = connection.retrieve(\ToneDependency.tone.find.quote) {
             tone?.getObject(moc: coreDataInstance) { quote in
                 if let quote = quote {
                     event.range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
                         if let sentiment = sentimentResult?.sentiment {
-                            connection.update2(\ToneDependency.tone.tune.sentiment, value: sentiment)
-                            connection.update2(\ToneDependency.tone.set.stage, value: .none)
+                            connection.update(\ToneDependency.tone.tune.sentiment, value: sentiment)
+                            connection.update(\ToneDependency.tone.set.stage, value: .none)
                         } else {
                             connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range))
                         }
@@ -60,7 +60,7 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         //
         GraniteLogger.info("sentiment history received & saving\nself:String(describing: self)", .expedition)
         
-        guard let tone = connection.retrieve2(\ToneDependency.tone),
+        guard let tone = connection.retrieve(\ToneDependency.tone),
               let range = tone.selectedRange else {
             
             GraniteLogger.info("sentiment history saving failed \nself:String(describing: self)", .expedition)
@@ -74,8 +74,8 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
                 if success {
                     range.checkSentimentCache(quote, moc: moc) { sentimentResult in
                         if let sentiment = sentimentResult?.sentiment {
-                            connection.update2(\ToneDependency.tone.tune.sentiment, value: sentiment)
-                            connection.update2(\ToneDependency.tone.set.stage, value: .none)
+                            connection.update(\ToneDependency.tone.tune.sentiment, value: sentiment)
+                            connection.update(\ToneDependency.tone.set.stage, value: .none)
                         } else {
                             connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range))
                         }

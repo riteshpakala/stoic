@@ -25,13 +25,13 @@ public class MainCenter: GraniteCenter<MainState> {
     let networkRelay: NetworkRelay = .init()
     let discussRelay: DiscussRelay = .init()
     
-    @GraniteInject
-    var routerDependency2: RouterDependency2
+    @GraniteDependency
+    var routerDependency: RouterDependency
     
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
-    @GraniteInject
+    @GraniteDependency
     var discussDependency: DiscussDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
@@ -52,6 +52,6 @@ public class MainCenter: GraniteCenter<MainState> {
     }
     
     var authState: AuthState {
-        routerDependency2.authState
+        routerDependency.authState
     }
 }

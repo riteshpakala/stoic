@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-public class DetailDependency: GraniteInjectable {
+public class DetailDependency: GraniteDependable {
     var detail: Detail = .init()
 }
 

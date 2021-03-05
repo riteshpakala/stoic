@@ -22,11 +22,11 @@ struct UserExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-//        if var item = connection.retrieve2(\MyDependency.test) {
+//        if var item = connection.retrieve(\MyDependency.test) {
 //            print("{TEST} \(item)")
 //            item.inc()
-//            connection.update2(\MyDependency.test, value: item)
-//            if var item2 = connection.retrieve2(\MyDependency.test) {
+//            connection.update(\MyDependency.test, value: item)
+//            if var item2 = connection.retrieve(\MyDependency.test) {
 //                print("{TEST} \(item2)")
 //            }
 //        } else {
@@ -34,16 +34,16 @@ struct UserExpedition: GraniteExpedition {
 //        }
         
         if  let user = FirebaseAuth.Auth.auth().currentUser {
-            if connection.retrieve2(\RouterDependency2.authState) == AuthState.none {
+            if connection.retrieve(\RouterDependency.authState) == AuthState.none {
                 connection.request(NetworkEvents.User.Get.init(id: user.uid))
                 
-            } else if let discuss = connection.retrieve2(\DiscussDependency.discuss),
+            } else if let discuss = connection.retrieve(\DiscussDependency.discuss),
                       let server = discuss.server {
                 
                 connection.request(DiscussRelayEvents.Client.Reconnect.init(server: server, channel: discuss.channel))
             }
         } else {
-            connection.update2(\RouterDependency2.authState, value: .notAuthenticated, .here)
+            connection.update(\RouterDependency.authState, value: .notAuthenticated, .here)
         }
     }
 }
@@ -60,7 +60,7 @@ struct LogoutExpedition: GraniteExpedition {
         do {
             try FirebaseAuth.Auth.auth().signOut()
             connection.router?.clean()
-            connection.update2(\RouterDependency2.authState, value: .notAuthenticated, .here)
+            connection.update(\RouterDependency.authState, value: .notAuthenticated, .here)
         } catch let error {
             GraniteLogger.info("Error logging out \(String(describing: error))", .expedition, focus: true)
         }
@@ -77,7 +77,7 @@ struct DiscussSetResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        connection.update2(\DiscussDependency.discuss.server, value: event.server, .quiet)
+        connection.update(\DiscussDependency.discuss.server, value: event.server, .quiet)
         
         GraniteLogger.info("set discuss", .expedition, focus: true)
     }
@@ -104,8 +104,8 @@ struct LoginResultExpedition: GraniteExpedition {
                 if let portfolio = portfolio {
                     newUser.portfolio = portfolio
                 }
-                connection.update2(\RouterDependency2.authState, value: .authenticated, .here)
-                connection.update2(\EnvironmentDependency2.user, value: newUser, .here)
+                connection.update(\RouterDependency.authState, value: .authenticated, .here)
+                connection.update(\EnvironmentDependency.user, value: newUser, .here)
                 
                 connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
                 

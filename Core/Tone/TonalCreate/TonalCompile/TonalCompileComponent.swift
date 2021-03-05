@@ -17,7 +17,7 @@ public struct TonalCompileComponent: GraniteComponent {
     public init() {}
     
     var tunerState: SentimentSliderState {
-        let tuner = inject2(\.toneDependency,
+        let tuner = inject(\.toneDependency,
                                target: \.tone.compile.slider)
         return tuner ?? .init()
     }

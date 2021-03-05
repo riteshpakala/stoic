@@ -17,7 +17,7 @@ public struct SecurityDetailComponent: GraniteComponent {
     public init() {}
     
     var tunerState: SentimentSliderState {
-        let tuner = inject2(\.detailDependency,
+        let tuner = inject(\.detailDependency,
                                target: \.detail.slider)
         return tuner ?? .init()
     }

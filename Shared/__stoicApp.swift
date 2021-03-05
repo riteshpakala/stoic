@@ -11,7 +11,11 @@ import GraniteUI
 @main
 struct __stoicApp: App {
     
-    private let manager = GraniteDependencyManagerTest()
+    //Property wrapped injectable dependencies
+    //should exist at the most top-level component
+    //of an aplicatino interface. In this project
+    //its `App`
+    private let dependencies = StoicDependencies()
     
     var body: some Scene {
         WindowGroup {

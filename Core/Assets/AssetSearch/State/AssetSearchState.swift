@@ -32,8 +32,8 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
 
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
@@ -46,13 +46,13 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
         return (state.payload?.object as? [Security]) ?? []
 //        switch state.context {
 //        case .portfolio:
-//            return envDependency2.holdingsPortfolio.assetAddState.searchState.securityGroup.get(state.securityType)
+//            return envDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.get(state.securityType)
 //        case .floor:
-//            return envDependency2.holdingsFloor.assetAddState.searchState.securityGroup.get(state.securityType)
+//            return envDependency.holdingsFloor.assetAddState.searchState.securityGroup.get(state.securityType)
 //        case .tonalCreate:
-//            return envDependency2.searchTone.securityGroup.get(state.securityType)
+//            return envDependency.searchTone.securityGroup.get(state.securityType)
 //        case .search:
-//            return envDependency2.search.securityGroup.get(state.securityType)
+//            return envDependency.search.securityGroup.get(state.securityType)
 //        default:
 //            return nil
 //        }

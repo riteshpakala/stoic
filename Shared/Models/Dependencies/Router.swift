@@ -9,7 +9,7 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class RouterDependency2: DependencyManager, GraniteInjectable {
+class RouterDependency: GraniteDependable {
     public var route: GraniteRoute = Route.home
     
 //    lazy var environment: EnvironmentDependency = {
@@ -19,9 +19,9 @@ class RouterDependency2: DependencyManager, GraniteInjectable {
     var authState: AuthState = .none
 }
 
-class GraniteDependencyManagerTest {
-    private let router: RouterDependency2
-    private let environment: EnvironmentDependency2
+class StoicDependencies: GraniteDependencyManager {
+    private let router: RouterDependency
+    private let environment: EnvironmentDependency
     private let tone: ToneDependency
     private let detail: DetailDependency
     private let discuss: DiscussDependency
@@ -46,29 +46,29 @@ class GraniteDependencyManagerTest {
     }
 }
 
-class RouterDependency: DependencyManager {
-    lazy var router: Router = {
-        _router as? Router ?? .init()
-    }()
-    
-    lazy var environment: EnvironmentDependency = {
-        return router.dependencies.get(EnvironmentDependency.self) ?? .init()
-    }()
-    
-    var authState: AuthState = .none
-}
-
-public class Router: GraniteRouter {
-    public var route: GraniteRoute = Route.home//.debug(.models)
-    
-    public var children: [GraniteAdAstra] = []
-    public lazy var dependencies: [DependencyManager] = [
-        EnvironmentDependency.init(self)
-    ]
-    
-    required public init() {
-//        self.env.router = self
-    }
+//class RouterDependency: DependencyManager {
+//    lazy var router: Router = {
+//        _router as? Router ?? .init()
+//    }()
+//
+//    lazy var environment: EnvironmentDependency = {
+//        return router.dependencies.get(EnvironmentDependency.self) ?? .init()
+//    }()
+//
+//    var authState: AuthState = .none
+//}
+//
+//public class Router: GraniteRouter {
+//    public var route: GraniteRoute = Route.home//.debug(.models)
+//
+//    public var children: [GraniteAdAstra] = []
+//    public lazy var dependencies: [DependencyManager] = [
+//        EnvironmentDependency.init(self)
+//    ]
+//
+//    required public init() {
+////        self.env.router = self
+//    }
     
 //    public func request(_ route: GraniteRoute) {
 //        GraniteLogger.info("requesting route \(route.target)\nself:\(String(describing: self))", .dependency, focus: true)
@@ -90,13 +90,7 @@ public class Router: GraniteRouter {
 //        }
 //    }
     
-    public func clean() {
-//        _env = .init(identifier: "envDependency")
-    }
-}
-
-extension DependencyManager {
-    var fetch: RouterDependency {
-        return self as? RouterDependency ?? .init(identifier: "none")
-    }
-}
+//    public func clean() {
+////        _env = .init(identifier: "envDependency")
+//    }
+//}

@@ -17,11 +17,11 @@ public class TonalSetState: GraniteState {
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
     let tonalRelay: TonalRelay = .init()
 
-    @GraniteInject
+    @GraniteDependency
     var toneDependency: ToneDependency
     
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     var tone: Tone {
         toneDependency.tone

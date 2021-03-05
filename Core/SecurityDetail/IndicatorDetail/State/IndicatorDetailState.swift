@@ -27,8 +27,8 @@ public class IndicatorDetailCenter: GraniteCenter<IndicatorDetailState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
 
-    @GraniteInject
-    var envDependency2: EnvironmentDependency2
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [

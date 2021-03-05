@@ -21,7 +21,7 @@ struct RouteExpedition: GraniteExpedition {
         
         
         
-        connection.update2(\RouterDependency2.route, value: event.route)
+        connection.update(\RouterDependency.route, value: event.route)
         //TODO: Used as a proxy to refresh, but maybe can be used for something useful?
     }
 }
