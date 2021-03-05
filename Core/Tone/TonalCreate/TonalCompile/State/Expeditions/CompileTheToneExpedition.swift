@@ -20,7 +20,7 @@ struct CompileTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let tone = connection.retrieve(\EnvironmentDependency.tone) else {
+        guard let tone = connection.retrieve2(\ToneDependency.tone) else {
             GraniteLogger.error("compiling tonal model failed - no tone\nself:String(describing: self)",
                                     .expedition, focus: true)
             return
@@ -38,12 +38,12 @@ struct CompileTheToneExpedition: GraniteExpedition {
         
         GraniteLogger.info("compiling tonal model\nself:String(describing: self)", .expedition, focus: true)
         
-        connection.update(\EnvironmentDependency.tone.compile.state, value: .compiling)
+        connection.update2(\ToneDependency.tone.compile.state, value: .compiling)
         
         TonalModels.generate(tone: tone, moc: coreDataInstance) { model in
             if let model = model {
-                connection.update(\EnvironmentDependency.tone.compile.state, value: .compiled)
-                connection.update(\EnvironmentDependency.tone.compile.model, value: model)
+                connection.update2(\ToneDependency.tone.compile.state, value: .compiled)
+                connection.update2(\ToneDependency.tone.compile.model, value: model)
                 
                 var tonalModel: TonalModel = .init(model,
                                                    daysTrained: daysTrained,
@@ -52,7 +52,7 @@ struct CompileTheToneExpedition: GraniteExpedition {
                                                    range: range)
                 
                 tonalModel.precompute()
-                connection.update(\EnvironmentDependency.tone.compile.tonalModel, value: tonalModel)
+                connection.update2(\ToneDependency.tone.compile.tonalModel, value: tonalModel)
             }
         }
     }

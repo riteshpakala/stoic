@@ -18,15 +18,15 @@ public struct MainComponent: GraniteComponent {
     public init() {}
     
     var environment: EnvironmentComponent {
-        EnvironmentComponent(state: .init(inject(\.routerDependency,
-                                                    target: \.router.route)))
+        EnvironmentComponent(state: .init(inject2(\.routerDependency2,
+                                                    target: \.route)))
     }
     
     var controls: ControlBar {
         ControlBar(isIPhone: EnvironmentConfig.isIPhone,
-                   currentRoute: command.center.routerDependency.router.route.convert(to: Route.self) ?? .home,
+                   currentRoute: command.center.routerDependency2.route.convert(to: Route.self) ?? .home,
                    onRoute: { route in
-            command.center.routerDependency.router.request(route)
+                sendEvent(MainEvents.RequestRoute.init(route: route))
         })
     }
     

@@ -147,8 +147,8 @@ struct AuthResultExpedition: GraniteExpedition {
                                                created: (Int(user.created) ?? 0).asDouble.date(),
                                                uid: event.id)
             
-            connection.update(\RouterDependency.authState, value: .authenticated)
-            connection.update(\RouterDependency.environment.user.info, value: info)
+            connection.update2(\RouterDependency2.authState, value: .authenticated)
+            connection.update2(\EnvironmentDependency2.user.info, value: info)
             
             connection.request(LoginEvents.AuthComplete.init(type: .login), .contact)
             
@@ -177,8 +177,8 @@ struct SignupResultExpedition: GraniteExpedition {
                 if let portfolio = portfolio {
                     newUser.portfolio = portfolio
                 }
-                connection.update(\RouterDependency.authState, value: .authenticated, .home)
-                connection.update(\RouterDependency.environment.user, value: newUser, .home)
+                connection.update2(\RouterDependency2.authState, value: .authenticated, .home)
+                connection.update2(\EnvironmentDependency2.user, value: newUser, .home)
                 connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
                 
                 switch state.stage {

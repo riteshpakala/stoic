@@ -33,7 +33,7 @@ struct TonalTuneChangedExpedition: GraniteExpedition {
         //Neu = Y
         //Float(0.5 + (0.5*(sentiment.posAverage-sentiment.negAverage))),
         
-        if let tuner = connection.retrieve(\EnvironmentDependency.tone.tune.tuners),
+        if let tuner = connection.retrieve2(\ToneDependency.tone.tune.tuners),
            let tune = tuner[event.date]{
             
             tune.slider.sentiment = .init(
@@ -58,7 +58,7 @@ struct TuneTheToneExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        if let tuners = connection.retrieve(\EnvironmentDependency.tone.tune.tuners) {
+        if let tuners = connection.retrieve2(\ToneDependency.tone.tune.tuners) {
             var sentiments: [Date: SentimentOutput] = [:]
             let dates = Array(tuners.keys)
             for date in dates {
@@ -66,10 +66,10 @@ struct TuneTheToneExpedition: GraniteExpedition {
                     sentiments[date] = tuner.slider.sentiment
                 }
             }
-            connection.update(\EnvironmentDependency.tone.tune.sentiments,
+            connection.update2(\ToneDependency.tone.tune.sentiments,
                                   value: sentiments)
             
-            connection.update(\EnvironmentDependency.tone.compile.state,
+            connection.update2(\ToneDependency.tone.compile.state,
                                   value: .readyToCompile)
         }
     }

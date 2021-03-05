@@ -27,16 +27,12 @@ public class FloorCenter: GraniteCenter<FloorState> {
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
     
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env.add(self)
-    }
-    
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(FloorEvents.Get(), .dependant),
+            .onAppear(FloorEvents.Get()),
         ]
     }
     
@@ -50,6 +46,6 @@ public class FloorCenter: GraniteCenter<FloorState> {
     
     public var environmentIPhoneSize: CGSize {
         return .init(width: .infinity,
-                     height: (envDependency.envSettings.lf?.data.height ?? EnvironmentConfig.iPhoneScreenHeight))
+                     height: (envDependency2.envSettings.lf?.data.height ?? EnvironmentConfig.iPhoneScreenHeight))
     }
 }

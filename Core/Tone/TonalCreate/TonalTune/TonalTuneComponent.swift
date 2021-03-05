@@ -23,7 +23,7 @@ public struct TonalTuneComponent: GraniteComponent {
     ]
     
     func getSentiment(date: Date) -> SentimentSliderState {
-        let tuners = inject(\.envDependency,
+        let tuners = inject2(\.toneDependency,
                                target: \.tone.tune.tuners)
         
         return tuners?[date]?.slider ?? .init()
@@ -41,8 +41,8 @@ public struct TonalTuneComponent: GraniteComponent {
                         .bold)
                 .padding(.top, Brand.Padding.medium)
             Spacer()
-//            SliderBinding(depObject(\.envDependency,
-//                                    target: \EnvironmentDependency.$view.scrollOffset)!)
+//            SliderBinding(depObject(\.envDependency2,
+//                                    target: \EnvironmentDependency2.$view.scrollOffset)!)
             if command.center.sentimentIsAvailable {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: Brand.Padding.large) {

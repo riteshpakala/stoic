@@ -10,13 +10,11 @@ import GraniteUI
 import SwiftUI
 
 class RouterDependency2: DependencyManager, GraniteInjectable {
-    lazy var router: Router = {
-        _router as? Router ?? .init()
-    }()
+    public var route: GraniteRoute = Route.home
     
-    lazy var environment: EnvironmentDependency = {
-        return router.dependencies.get(EnvironmentDependency.self) ?? .init()
-    }()
+//    lazy var environment: EnvironmentDependency = {
+//        return router.dependencies.get(EnvironmentDependency.self) ?? .init()
+//    }()
     
     var authState: AuthState = .none
 }
@@ -24,10 +22,16 @@ class RouterDependency2: DependencyManager, GraniteInjectable {
 class GraniteDependencyManagerTest {
     private let router: RouterDependency2
     private let environment: EnvironmentDependency2
+    private let tone: ToneDependency
+    private let detail: DetailDependency
+    private let discuss: DiscussDependency
     
     init() {
         self.router = .init()
         self.environment = .init()
+        self.tone = .init()
+        self.detail = .init()
+        self.discuss = .init()
         addDependencies()
     }
     
@@ -36,6 +40,9 @@ class GraniteDependencyManagerTest {
         
         resolver.add(router)
         resolver.add(environment)
+        resolver.add(tone)
+        resolver.add(detail)
+        resolver.add(discuss)
     }
 }
 

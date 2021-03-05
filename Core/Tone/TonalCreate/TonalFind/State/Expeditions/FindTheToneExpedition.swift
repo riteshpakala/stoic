@@ -21,7 +21,7 @@ struct ToneSelectedExpedition: GraniteExpedition {
         
         guard let security = event.asset.asSecurity else { return }
 
-        connection.update(\EnvironmentDependency.tone.find.security, value: security)
+        connection.update2(\ToneDependency.tone.find.security, value: security)
     }
 }
 
@@ -41,8 +41,8 @@ struct FindTheToneExpedition: GraniteExpedition {
         // update the cache from last date saved to the recent day
         // requested on
         //
-        guard let find = connection.retrieve(\EnvironmentDependency.tone.find),
-              let stage = connection.retrieve(\EnvironmentDependency.tone.find.state) else {
+        guard let find = connection.retrieve2(\ToneDependency.tone.find),
+              let stage = connection.retrieve2(\ToneDependency.tone.find.state) else {
             
             return
         }
@@ -62,7 +62,7 @@ struct FindTheToneExpedition: GraniteExpedition {
                 connection.request(TonalFindEvents.Parse(quote, days: state.days))
             } else if let security = state.payload?.object as? Security, stage == .none {
                 //TonalCreate booted with a security payload
-                connection.update(\EnvironmentDependency.tone.find.security, value: security)
+                connection.update2(\ToneDependency.tone.find.security, value: security)
             }
             
             return
@@ -74,7 +74,7 @@ struct FindTheToneExpedition: GraniteExpedition {
             //DEV: cleaner and the ability to modify the hourly interval
             if let quote = quote,
                !quote.needsUpdate {
-                connection.update(\EnvironmentDependency.tone.find.quote, value: quote)
+                connection.update2(\ToneDependency.tone.find.quote, value: quote)
                 
             } else {
                 switch security.securityType {
@@ -104,7 +104,7 @@ struct StockHistoryExpedition: GraniteExpedition {
         
         stocks.save(moc: coreDataInstance) { quote in
             if let object = quote {
-                connection.update(\EnvironmentDependency.tone.find.quote, value: object)
+                connection.update2(\ToneDependency.tone.find.quote, value: object)
             }
         }
     }
@@ -124,7 +124,7 @@ struct CryptoHistoryExpedition: GraniteExpedition {
         
         crypto.save(moc: coreDataInstance) { quote in
             if let object = quote {
-                connection.update(\EnvironmentDependency.tone.find.quote, value: object)
+                connection.update2(\ToneDependency.tone.find.quote, value: object)
             }
         }
     }

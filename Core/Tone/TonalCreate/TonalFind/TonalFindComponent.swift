@@ -39,7 +39,7 @@ public struct TonalFindComponent: GraniteComponent {
                                 .leading)
                     
                     BasicSliderComponent(
-                        state: inject(\.envDependency,
+                        state: inject2(\.toneDependency,
                                          target: \.tone.find.sliderDays))
                         .listen(to: command)
                         .padding(.top, Brand.Padding.medium)

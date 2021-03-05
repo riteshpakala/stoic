@@ -30,7 +30,7 @@ struct GetSecurityDetailExpedition: GraniteExpedition {
                     state.quote = quote
                     
                     //Maybe we we should have a better way to check against model vs quote
-                    if let modelID = connection.retrieve(\EnvironmentDependency.detail.modelID),
+                    if let modelID = connection.retrieve2(\DetailDependency.detail.modelID),
                        let model = quote.models.first(where: { $0.modelID == modelID }){
                         state.model = model
                     }

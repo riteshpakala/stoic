@@ -25,7 +25,7 @@ struct SyncStrategyExpedition: GraniteExpedition {
             return
         }
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
+        guard let portfolio = connection.retrieve2(\EnvironmentDependency2.user.portfolio),
               let strategies = portfolio?.strategies else {
             return
         }
@@ -64,7 +64,7 @@ struct SyncPredictionsExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
+        guard let portfolio = connection.retrieve2(\EnvironmentDependency2.user.portfolio),
               let strategies = portfolio?.strategies else {
             return
         }
@@ -179,14 +179,14 @@ struct SyncCompleteStrategyExpedition: GraniteExpedition {
         
         state.stage = .none
         
-        guard let user = connection.retrieve(\EnvironmentDependency.user) else {
+        guard let user = connection.retrieve2(\EnvironmentDependency2.user) else {
             return
         }
         
         coreDataInstance.getPortfolio(username: user.info.username) { portfolio in
             user.portfolio = portfolio
             
-            connection.update(\EnvironmentDependency.user, value: user, .home)
+            connection.update2(\EnvironmentDependency2.user, value: user, .home)
             connection.request(StrategyEvents.Get())
 
             GraniteLogger.info("set user after strategy sync", .expedition, focus: true)

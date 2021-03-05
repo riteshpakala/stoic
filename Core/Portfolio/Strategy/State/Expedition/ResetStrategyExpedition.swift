@@ -22,7 +22,7 @@ struct ResetStrategyExpedition: GraniteExpedition {
         
         state.showResetDisclaimer = false
         
-        guard let user = connection.retrieve(\EnvironmentDependency.user) else {
+        guard let user = connection.retrieve2(\EnvironmentDependency2.user) else {
             return
         }
         
@@ -30,7 +30,7 @@ struct ResetStrategyExpedition: GraniteExpedition {
         coreDataInstance.resetStrategy(username: user.info.username) { updatedPortfolio in
             user.portfolio = updatedPortfolio
             
-            connection.update(\EnvironmentDependency.user, value: user, .home)
+            connection.update2(\EnvironmentDependency2.user, value: user, .home)
             
             GraniteLogger.info("strategy reset", .expedition, focus: true)
         }

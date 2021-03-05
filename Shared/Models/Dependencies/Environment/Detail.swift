@@ -9,7 +9,11 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class Detail: GraniteInjectable {
+public class DetailDependency: GraniteInjectable {
+    var detail: Detail = .init()
+}
+
+class Detail {
     var tonalStage: TonalDetailStage = .none
     var model: TonalModel? = nil {
         didSet {

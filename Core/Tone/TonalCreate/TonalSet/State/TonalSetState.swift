@@ -16,16 +16,15 @@ public class TonalSetState: GraniteState {
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
     let tonalRelay: TonalRelay = .init()
-    
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+
+    @GraniteInject
+    var toneDependency: ToneDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
     var tone: Tone {
-        envDependency.tone
+        toneDependency.tone
     }
     
     var stage: Tone.Set.State {
@@ -50,7 +49,7 @@ public class TonalSetCenter: GraniteCenter<TonalSetState> {
     public override var links: [GraniteLink] {
         [
             .relay(\TonalState.sentimentProgress,
-                   \TonalSetState.sentimentLoadingProgress, .dependant)
+                   \TonalSetState.sentimentLoadingProgress)
         ]
     }
 }

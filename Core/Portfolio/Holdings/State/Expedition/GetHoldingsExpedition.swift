@@ -20,7 +20,7 @@ struct GetHoldingsExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
+        guard let portfolio = connection.retrieve2(\EnvironmentDependency2.user.portfolio) else {
             return
         }
 

@@ -14,7 +14,4 @@ public class RouterState: GraniteState {
 }
 
 public class RouterCenter: GraniteCenter<RouterState> {
-    lazy var routerDependency: RouterDependency = {
-        .init(Router.init())
-    }()
 }

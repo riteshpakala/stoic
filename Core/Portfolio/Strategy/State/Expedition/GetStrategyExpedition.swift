@@ -19,7 +19,7 @@ struct GetStrategyExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let user = connection.retrieve(\EnvironmentDependency.user),
+        guard let user = connection.retrieve2(\EnvironmentDependency2.user),
               let portfolio = user.portfolio else {
             return
         }

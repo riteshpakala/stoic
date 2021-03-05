@@ -44,20 +44,15 @@ public class AssetSectionCenter: GraniteCenter<AssetSectionState> {
         ]
     }
     
-    //Dependencies
-    lazy var envDependency: EnvironmentDependency = {
-        self.hosted.env
-    }()
     @GraniteInject
     var envDependency2: EnvironmentDependency2
-    //
     
     var date: Date {
         movers.first?.date ?? .today
     }
     
     var movers: [Security] {
-        guard let categories = envDependency.broadcasts.movers.get(state.securityType) else {
+        guard let categories = envDependency2.broadcasts.movers.get(state.securityType) else {
             return []
         }
         

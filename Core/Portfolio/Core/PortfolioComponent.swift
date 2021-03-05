@@ -135,7 +135,7 @@ public struct PortfolioComponent: GraniteComponent {
     }
     
     var portfolioStrategy: some View {
-        StrategyComponent(state: inject(\.envDependency,
+        StrategyComponent(state: inject2(\.envDependency2,
                                         target: \.strategiesPortfolio))
             .listen(to: command, .stop)
             .showEmptyState

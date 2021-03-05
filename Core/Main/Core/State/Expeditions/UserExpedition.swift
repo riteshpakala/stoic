@@ -37,17 +37,12 @@ struct UserExpedition: GraniteExpedition {
             if connection.retrieve2(\RouterDependency2.authState) == AuthState.none {
                 connection.request(NetworkEvents.User.Get.init(id: user.uid))
                 
-                    print("{TEST} 0")
-            } else if let discuss = connection.retrieve2(\RouterDependency2.environment.discuss),
+            } else if let discuss = connection.retrieve2(\DiscussDependency.discuss),
                       let server = discuss.server {
-                print("{TEST} 1")
-                connection.request(DiscussRelayEvents.Client.Reconnect.init(server: server, channel: discuss.channel))
-            } else {
                 
-                    print("{TEST} -1")
+                connection.request(DiscussRelayEvents.Client.Reconnect.init(server: server, channel: discuss.channel))
             }
         } else {
-            print("{TEST} 2")
             connection.update2(\RouterDependency2.authState, value: .notAuthenticated, .here)
         }
     }
@@ -82,7 +77,7 @@ struct DiscussSetResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        connection.update2(\RouterDependency2.environment.discuss.server, value: event.server, .quiet)
+        connection.update2(\DiscussDependency.discuss.server, value: event.server, .quiet)
         
         GraniteLogger.info("set discuss", .expedition, focus: true)
     }
@@ -110,7 +105,8 @@ struct LoginResultExpedition: GraniteExpedition {
                     newUser.portfolio = portfolio
                 }
                 connection.update2(\RouterDependency2.authState, value: .authenticated, .here)
-                connection.update2(\RouterDependency2.environment.user, value: newUser, .here)
+                connection.update2(\EnvironmentDependency2.user, value: newUser, .here)
+                
                 connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
                 
                 GraniteLogger.info("set user", .expedition, focus: true)

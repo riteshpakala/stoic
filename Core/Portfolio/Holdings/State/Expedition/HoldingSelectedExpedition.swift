@@ -20,7 +20,7 @@ struct HoldingSelectedExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let user = connection.retrieve(\EnvironmentDependency.user) else {
+        guard let user = connection.retrieve2(\EnvironmentDependency2.user) else {
             return
         }
         guard let security = event.asset.asSecurity else { return }
@@ -32,19 +32,19 @@ struct HoldingSelectedExpedition: GraniteExpedition {
                                         moc: coreDataInstance) { portfolio in
                     if let portfolio = portfolio {
                         GraniteLogger.info("adding to portfolio:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
-                        connection.update(\EnvironmentDependency.user.portfolio,
+                        connection.update2(\EnvironmentDependency2.user.portfolio,
                                           value: portfolio)
                     }
                 }
             } else {
                 guard let router = connection.router else { return }
                 
-                connection.update(\EnvironmentDependency.tonalModels.type,
+                connection.update2(\EnvironmentDependency2.tonalModels.type,
                                   value: .specified(security))
                 router.request(Route.securityDetail(.init(object: security)))
             }
         case .floor:
-            guard let floorStage = connection.retrieve(\EnvironmentDependency.floorStage) else { return }
+            guard let floorStage = connection.retrieve2(\EnvironmentDependency2.floorStage) else { return }
             let location: CGPoint
             if case let .adding(point) = floorStage {
                 location = point
@@ -60,7 +60,7 @@ struct HoldingSelectedExpedition: GraniteExpedition {
                     
                     GraniteLogger.info("adding to floor:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
                     
-                    connection.update(\EnvironmentDependency.user.portfolio,
+                    connection.update2(\EnvironmentDependency2.user.portfolio,
                                       value: portfolio)
                 }
             }
@@ -80,7 +80,7 @@ struct HoldingSelectionsConfirmedExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
+        guard let portfolio = connection.retrieve2(\EnvironmentDependency2.user.portfolio),
               let securities = portfolio?.holdings.securities else {
             return
         }
@@ -89,7 +89,7 @@ struct HoldingSelectionsConfirmedExpedition: GraniteExpedition {
         case .strategy:
             let selections = securities.filter({ event.assetIDs.contains($0.assetID) })
             portfolio?.addToStrategy(selections, moc: coreDataInstance) { portfolio in
-                connection.update(\EnvironmentDependency.user.portfolio,
+                connection.update2(\EnvironmentDependency2.user.portfolio,
                                   value: portfolio)
             }
             break

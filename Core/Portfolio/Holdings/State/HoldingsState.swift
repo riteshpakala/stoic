@@ -57,10 +57,6 @@ public class HoldingsCenter: GraniteCenter<HoldingsState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
-    
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
@@ -79,7 +75,7 @@ public class HoldingsCenter: GraniteCenter<HoldingsState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(HoldingsEvents.Get(), .dependant)
+            .onAppear(HoldingsEvents.Get())
         ]
     }
 }

@@ -22,7 +22,7 @@ struct RemoveFromStrategyExpedition: GraniteExpedition {
         
         state.wantsToRemove = nil
         
-        guard let user = connection.retrieve(\EnvironmentDependency.user) else {
+        guard let user = connection.retrieve2(\EnvironmentDependency2.user) else {
             return
         }
         
@@ -34,7 +34,7 @@ struct RemoveFromStrategyExpedition: GraniteExpedition {
         coreDataInstance.removeFromStrategy(username: user.info.username, security) { updatedPortfolio in
             user.portfolio = updatedPortfolio
             
-            connection.update(\EnvironmentDependency.user, value: user, .home)
+            connection.update2(\EnvironmentDependency2.user, value: user, .home)
             
             state.securities.removeAll(where: { $0.assetID == event.assetID })
             
@@ -55,7 +55,7 @@ struct CloseFromStrategyExpedition: GraniteExpedition {
         
         state.wantsToClose = nil
         
-        guard let user = connection.retrieve(\EnvironmentDependency.user) else {
+        guard let user = connection.retrieve2(\EnvironmentDependency2.user) else {
             return
         }
         
@@ -66,7 +66,7 @@ struct CloseFromStrategyExpedition: GraniteExpedition {
         coreDataInstance.closeFromStrategy(username: user.info.username, security) { updatedPortfolio in
             user.portfolio = updatedPortfolio
             
-            connection.update(\EnvironmentDependency.user, value: user, .home)
+            connection.update2(\EnvironmentDependency2.user, value: user, .home)
             
             GraniteLogger.info("\(security.ticker) closed", .expedition, focus: true)
         }

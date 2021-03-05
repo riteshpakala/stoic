@@ -11,12 +11,6 @@ import SwiftUI
 
 class EnvironmentDependency2: DependencyManager, GraniteInjectable {
     var home: Home = .init()
-    
-    var detail: Detail = .init()
-    
-    var discuss: Discuss = .init()
-    
-    var tone: Tone = .init()
 
     var tonalModels: TonalModelsState = .init()
     

@@ -30,9 +30,8 @@ public class TonalDetailState: GraniteState {
 public class TonalDetailCenter: GraniteCenter<TonalDetailState> {
     let tonalRelay: TonalRelay = .init()
     
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+    @GraniteInject
+    var detailDependency: DetailDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2
@@ -45,7 +44,7 @@ public class TonalDetailCenter: GraniteCenter<TonalDetailState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(TonalDetailEvents.Generate(), .dependant)
+            .onAppear(TonalDetailEvents.Generate())
         ]
     }
 }

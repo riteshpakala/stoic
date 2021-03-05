@@ -463,6 +463,8 @@
 		7139F6AB2598816E00D9C84B /* TonalService.Tweets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7139F6A92598816E00D9C84B /* TonalService.Tweets.swift */; };
 		7139F6B12598827F00D9C84B /* GetSentimentExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7139F6B02598827F00D9C84B /* GetSentimentExpedition.swift */; };
 		7139F6B22598827F00D9C84B /* GetSentimentExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7139F6B02598827F00D9C84B /* GetSentimentExpedition.swift */; };
+		713B24CC25F2A84400DDF06B /* RouteExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713B24CB25F2A84400DDF06B /* RouteExpedition.swift */; };
+		713B24CD25F2A84400DDF06B /* RouteExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713B24CB25F2A84400DDF06B /* RouteExpedition.swift */; };
 		713D25AF258E42BF005FB4D4 /* ClockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AB258E42BF005FB4D4 /* ClockRelay.swift */; };
 		713D25B0258E42BF005FB4D4 /* ClockRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AB258E42BF005FB4D4 /* ClockRelay.swift */; };
 		713D25B1258E42BF005FB4D4 /* ClockState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713D25AD258E42BF005FB4D4 /* ClockState.swift */; };
@@ -1285,6 +1287,7 @@
 		7139F6A225983C2000D9C84B /* TonalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.swift; sourceTree = "<group>"; };
 		7139F6A92598816E00D9C84B /* TonalService.Tweets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Tweets.swift; sourceTree = "<group>"; };
 		7139F6B02598827F00D9C84B /* GetSentimentExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSentimentExpedition.swift; sourceTree = "<group>"; };
+		713B24CB25F2A84400DDF06B /* RouteExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteExpedition.swift; sourceTree = "<group>"; };
 		713D25AB258E42BF005FB4D4 /* ClockRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockRelay.swift; sourceTree = "<group>"; };
 		713D25AD258E42BF005FB4D4 /* ClockState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockState.swift; sourceTree = "<group>"; };
 		713D729D258EE95800E00203 /* granite */ = {isa = PBXFileReference; lastKnownFileType = folder; name = granite; path = ../granite; sourceTree = "<group>"; };
@@ -2780,6 +2783,7 @@
 			isa = PBXGroup;
 			children = (
 				71F902FA25AB225E00E6A085 /* UserExpedition.swift */,
+				713B24CB25F2A84400DDF06B /* RouteExpedition.swift */,
 			);
 			path = Expeditions;
 			sourceTree = "<group>";
@@ -4453,6 +4457,7 @@
 				7125BE4425A1384A00F22717 /* SentimentSliderComponent.swift in Sources */,
 				710889AB2591B29800795EDF /* Fetchable.swift in Sources */,
 				71582E8C25E5CFAF003D92F6 /* SwifterSearch.swift in Sources */,
+				713B24CC25F2A84400DDF06B /* RouteExpedition.swift in Sources */,
 				710889852591B29800795EDF /* Await.swift in Sources */,
 				714342FF25907622001F26A4 /* UINumericType.swift in Sources */,
 				71C08E9225AF770100765894 /* NetworkResponse.swift in Sources */,
@@ -4713,6 +4718,7 @@
 				71ED8F3425C5D2E9000F6366 /* SettingsEvents.swift in Sources */,
 				71582E6D25E5CFAF003D92F6 /* JSON.swift in Sources */,
 				7183D56225A428AE00FB91A9 /* GraphLinePlotConfig.swift in Sources */,
+				713B24CD25F2A84400DDF06B /* RouteExpedition.swift in Sources */,
 				71CC7DA525C8E7D800610B8A /* Get.Update.UserExpedition.swift in Sources */,
 				7182163D25E07E580089CF78 /* ResetStrategyExpedition.swift in Sources */,
 				719AD86D25B10746001350FA /* GraniteEmptyEvents.swift in Sources */,

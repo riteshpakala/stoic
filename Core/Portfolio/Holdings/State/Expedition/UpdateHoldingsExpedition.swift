@@ -23,7 +23,7 @@ struct UpdateHoldingsExpedition: GraniteExpedition {
             return
         }
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio) else {
+        guard let portfolio = connection.retrieve2(\EnvironmentDependency2.user.portfolio) else {
             return
         }
         
@@ -96,14 +96,14 @@ struct UpdateCompleteHoldingsExpedition: GraniteExpedition {
         state.securitiesToSync.removeAll()
         state.stage = .none
         
-        guard let user = connection.retrieve(\EnvironmentDependency.user) else {
+        guard let user = connection.retrieve2(\EnvironmentDependency2.user) else {
             return
         }
         
         coreDataInstance.getPortfolio(username: user.info.username) { portfolio in
             user.portfolio = portfolio
             
-            connection.update(\EnvironmentDependency.user, value: user, .home)
+            connection.update2(\EnvironmentDependency2.user, value: user, .home)
             connection.request(HoldingsEvents.Get())
 
             GraniteLogger.info("set user after Portfolio sync", .expedition, focus: true)

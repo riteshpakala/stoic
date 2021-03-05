@@ -16,15 +16,15 @@ public class TonalCompileState: GraniteState {
 }
 
 public class TonalCompileCenter: GraniteCenter<TonalCompileState> {
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+
+    @GraniteInject
+    var toneDependency: ToneDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
     var tone: Tone {
-        envDependency.tone
+        toneDependency.tone
     }
     
     var latestSecurity: Security? {

@@ -44,7 +44,7 @@ struct DiscussMessagesExpedition: GraniteExpedition {
         //instead of this expedition, if there's too many users, could be cumbersome
         //or assetGridComponent could hold a record of the user, and yeah it has an @
         //which is kind of nice in a way. Kind of seperates it a litter more.
-        if let user = connection.retrieve(\EnvironmentDependency.user),
+        if let user = connection.retrieve2(\EnvironmentDependency2.user),
            let me = guests.firstIndex(where: { $0.info.username.replacingOccurrences(of: "@", with: "") == user.info.username }){
             guests[me].appearance.color = Brand.Colors.yellow
         }
@@ -64,7 +64,7 @@ struct DiscussSendMessageExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
         guard state.currentMessage.isNotEmpty,
-              let user = connection.retrieve(\EnvironmentDependency.user) else { return }
+              let user = connection.retrieve2(\EnvironmentDependency2.user) else { return }
         
         
         let message = DiscussMessage

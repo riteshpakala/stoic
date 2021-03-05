@@ -65,17 +65,16 @@ public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
-    
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+
+    @GraniteInject
+    var detailDependency: DetailDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(TonalModelsEvents.Get(), .dependant),
+            .onAppear(TonalModelsEvents.Get()),
         ]
     }
     

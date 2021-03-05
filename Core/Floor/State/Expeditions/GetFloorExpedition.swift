@@ -19,7 +19,7 @@ struct GetFloorExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
 
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
+        guard let portfolio = connection.retrieve2(\EnvironmentDependency2.user.portfolio),
               let floors = portfolio?.floors else {
             empty(state)
             return

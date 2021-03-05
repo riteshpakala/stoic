@@ -19,7 +19,7 @@ struct SaveTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let tone = connection.retrieve(\EnvironmentDependency.tone) else {
+        guard let tone = connection.retrieve2(\ToneDependency.tone) else {
             GraniteLogger.error("saving tonal model failed - no tone\nself:String(describing: self)",
                                 .expedition)
             return
@@ -62,7 +62,7 @@ struct SaveTheToneExpedition: GraniteExpedition {
         
         tonalModel.save(moc: coreDataInstance) { success in
             if success {
-                connection.update(\EnvironmentDependency.tone.compile.tonalModel, value: tonalModel)
+                connection.update2(\ToneDependency.tone.compile.tonalModel, value: tonalModel)
                 
                 GraniteLogger.info("saved tonal model\nself:String(describing: self)", .expedition)
             }

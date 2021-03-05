@@ -61,6 +61,9 @@ public class LoginCenter: GraniteCenter<LoginState> {
     
     @GraniteInject
     var routerDependency2: RouterDependency2
+    
+    @GraniteInject
+    var envDependency2: EnvironmentDependency2
 }
 
 public struct AuthValidator {

@@ -21,7 +21,7 @@ public struct TonalSetComponent: GraniteComponent {
     ]
     
     func rangeIsSelected(_ index: TonalRange) -> Bool {
-        command.center.envDependency.tone.selectedRange == index
+        command.center.toneDependency.tone.selectedRange == index
     }
     
     func backgroundColorForRange(_ index: TonalRange) -> Color {

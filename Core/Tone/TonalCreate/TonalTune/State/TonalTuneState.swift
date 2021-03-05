@@ -18,16 +18,15 @@ public class TonalTuneCenter: GraniteCenter<TonalTuneState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
-    
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+
+    @GraniteInject
+    var toneDependency: ToneDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
     var tone: Tone {
-        envDependency.tone
+        toneDependency.tone
     }
     
     var tonalSentiment: TonalSentiment {

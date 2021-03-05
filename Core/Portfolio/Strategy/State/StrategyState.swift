@@ -59,10 +59,6 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     
-    var envDependency: EnvironmentDependency {
-        self.hosted.env
-    }
-    
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
@@ -83,11 +79,11 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(StrategyEvents.Get(), .dependant)
+            .onAppear(StrategyEvents.Get())
         ]
     }
     
     var strategies: [Strategy] {
-        envDependency.user.portfolio?.strategies ?? []
+        envDependency2.user.portfolio?.strategies ?? []
     }
 }

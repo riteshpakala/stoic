@@ -54,6 +54,12 @@ public class SecurityDetailState: GraniteState {
     var currentPrediction: TonalPrediction = .zero
     var currentPredictionPlotData: GraphPageViewModel.PlotData? = nil
     
+    public init(_ kind: SecurityDetailType) {
+        self.kind = kind
+        self.quote = nil
+        self.modelID = ""
+    }
+    
     public init(_ kind: SecurityDetailType,
                 quote: Quote? = nil,
                 modelID: String = "") {
@@ -78,17 +84,16 @@ public class SecurityDetailState: GraniteState {
 public class SecurityDetailCenter: GraniteCenter<SecurityDetailState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
-    
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+
+    @GraniteInject
+    var detailDependency: DetailDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(SecurityDetailEvents.GetDetail(), .dependant),
+            .onAppear(SecurityDetailEvents.GetDetail()),
         ]
     }
     

@@ -23,7 +23,7 @@ struct AssetSelectedExpedition: GraniteExpedition {
         guard let security = event.asset.asSecurity else { return }
         guard let router = connection.router else { return }
         
-        connection.update(\EnvironmentDependency.tonalModels.type,
+        connection.update2(\EnvironmentDependency2.tonalModels.type,
                           value: .specified(security))
         router.request(Route.securityDetail(.init(object: security)))
     }

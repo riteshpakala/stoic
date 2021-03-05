@@ -29,27 +29,26 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(TonalFindEvents.Find(), .dependant),
+            .onAppear(TonalFindEvents.Find()),
         ]
     }
-    
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+
+    @GraniteInject
+    var toneDependency: ToneDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2
     
     var ticker: String {
-        envDependency.tone.find.ticker ?? ""
+        toneDependency.tone.find.ticker ?? ""
     }
     
     var findState: Tone.Find.State {
-        envDependency.tone.find.state
+        toneDependency.tone.find.state
     }
     
     var daysSelected: Int {
-        envDependency.tone.find.daysSelected
+        toneDependency.tone.find.daysSelected
     }
     
     public override var expeditions: [GraniteBaseExpedition] {

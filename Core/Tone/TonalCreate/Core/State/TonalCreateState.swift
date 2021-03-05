@@ -32,9 +32,9 @@ public class TonalCreateState: GraniteState {
 }
 
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
-    var envDependency: EnvironmentDependency {
-        self.hosted.env
-    }
+    
+    @GraniteInject
+    var toneDependency: ToneDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2

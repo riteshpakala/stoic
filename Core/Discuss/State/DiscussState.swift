@@ -19,9 +19,8 @@ public class DiscussState: GraniteState {
 }
 
 public class DiscussCenter: GraniteCenter<DiscussState> {
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+    @GraniteInject
+    var discussDependency: DiscussDependency
     
     @GraniteInject
     var envDependency2: EnvironmentDependency2
@@ -36,16 +35,16 @@ public class DiscussCenter: GraniteCenter<DiscussState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(DiscussEvents.Load(), .dependant)
+            .onAppear(DiscussEvents.Load())
         ]
     }
     
     var user: UserInfo {
-        envDependency.user.info
+        envDependency2.user.info
     }
     
     public var environmentSafeArea: CGFloat {
-        if let height = envDependency.envSettings.lf?.data.height {
+        if let height = envDependency2.envSettings.lf?.data.height {
             return abs(EnvironmentConfig.iPhoneScreenHeight - height)
         } else {
             return 0

@@ -35,13 +35,13 @@ public struct WindowComponent: GraniteComponent {
         case .search:
             AssetSearchComponent()
         case .securityDetail(let kind):
-            SecurityDetailComponent(state: .init(kind,
-                                                 modelID: command.center.envDependency.detail.modelID))
+            SecurityDetailComponent(state: .init(kind))//,
+//                                                 modelID: command.center.detailDependency.detail.modelID))
         case .tonalCreate(let stage):
             TonalCreateComponent(state: .init(stage))
                 
         case .tonalBrowser(let payload):
-            TonalModelsComponent(state: inject(\.envDependency,
+            TonalModelsComponent(state: inject2(\.envDependency2,
                                                target: \.tonalModels))
                                         .payload(payload)
                 

@@ -70,19 +70,10 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
             return Brand.Padding.small
         }
     }
-    
-    //Dependencies
-    var routerDependency: RouterDependency {
-        hosted.fetch.add(self)
-    }
-    
-    lazy var envDependency: EnvironmentDependency = {
-        routerDependency.environment//.bind(self)
-    }()
-    
+
     @GraniteInject
     var envDependency2: EnvironmentDependency2
-    //
+    
     
 //    public override var relays: [GraniteBaseRelay] {
 //        [
@@ -94,7 +85,7 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
         [
             .onAppear(EnvironmentEvents.Boot()),
             .onAppear(EnvironmentEvents.Broadcasts()),
-            .onAppear(EnvironmentEvents.Variables(), .dependant),
+            .onAppear(EnvironmentEvents.Variables()),
         ]
     }
     
