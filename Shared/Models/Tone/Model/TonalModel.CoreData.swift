@@ -52,7 +52,24 @@ extension TonalModelObject {
                      id: self.id)
     }
     
-    func asToneFromQuote(_ quote: Quote) -> TonalModel? {
+    var asToneLight: TonalModel? {
+        guard var model = self.model.model,
+              let quote = self.quote,
+              let range = self.range.tonalRange else {
+            
+            GraniteLogger.error("TonalModelObject failed to convert to a TonalModel\nsentimentTuners is nil: \(self.sentimentTuners.sentimentTuners == nil)\ntonal model is nil: \(self.model.model == nil)\nquote is nil: \(self.quote == nil)\ntonalRange is nil: \(self.range.tonalRange == nil)", .utility)
+            return nil
+        }
+        
+        return .init(model,
+                     daysTrained: Int(self.daysTrained),
+                     tuners: [],
+                     quote: quote.asQuote,
+                     range: range,
+                     id: self.id)
+    }
+    
+    func asToneFromQuote(_ quote: Quote, light: Bool = false) -> TonalModel? {
         guard let sentiment = self.sentimentTuners.sentimentTuners,
               let model = self.model.model,
               let range = self.range.tonalRange else {
@@ -63,7 +80,7 @@ extension TonalModelObject {
         
         return .init(model,
                      daysTrained: Int(self.daysTrained),
-                     tuners: sentiment,
+                     tuners: light ? [] : sentiment,
                      quote: quote,
                      range: range,
                      id: self.id)

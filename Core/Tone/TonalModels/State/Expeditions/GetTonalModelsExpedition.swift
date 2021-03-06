@@ -23,6 +23,7 @@ struct GetTonalModelsExpedition: GraniteExpedition {
         state.stage = .fetching
         
         TonalModel.get(forSecurity: state.security,
+                       light: true,
                        moc: coreDataInstance) { models in
             state.tones = models
             state.stage = .none

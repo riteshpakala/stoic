@@ -20,8 +20,6 @@ class EnvironmentDependency: GraniteDependable {
 
     var strategiesPortfolio: StrategyState = .init()
     
-    var broadcasts: Broadcasts = .init()
-    
     var envSettings: EnvironmentStyle.Settings = .init()
 }
 

@@ -15,16 +15,23 @@ public struct MainComponent: GraniteComponent {
     @ObservedObject
     public var command: GraniteCommand<MainCenter, MainState> = .init()
     
-    public init() {}
+    
+    public init() {
+        command
+            .center
+            .routerDependency
+            .router
+            .refreshable = command.center
+    }
     
     var environment: EnvironmentComponent {
         EnvironmentComponent(state: .init(inject(\.routerDependency,
-                                                    target: \.route)))
+                                                    target: \.router.route)))
     }
     
     var controls: ControlBar {
         ControlBar(isIPhone: EnvironmentConfig.isIPhone,
-                   currentRoute: command.center.routerDependency.route.convert(to: Route.self) ?? .home,
+                   currentRoute: command.center.routerDependency.router.route.convert(to: Route.self) ?? .home,
                    onRoute: { route in
                 sendEvent(MainEvents.RequestRoute.init(route: route))
         })

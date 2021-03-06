@@ -21,7 +21,7 @@ struct TonalModelTappedExpedition: GraniteExpedition {
         
         guard let model = event.asset.asModel else { return }
         let security = model.latestSecurity
-        guard let router = connection.router else {
+        guard let router = connection.retrieve(\RouterDependency.router) else {
             return
         }
         

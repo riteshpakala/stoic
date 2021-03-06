@@ -41,7 +41,7 @@ struct AssetSectionMoversStockExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let movers = connection.retrieve(\EnvironmentDependency.broadcasts.movers) else {
+        guard let movers = connection.retrieve(\BroadcastDependency.movers) else {
             return
         }
         
@@ -59,7 +59,7 @@ struct AssetSectionMoversCryptoExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let movers = connection.retrieve(\EnvironmentDependency.broadcasts.movers) else {
+        guard let movers = connection.retrieve(\BroadcastDependency.movers) else {
             return
         }
         

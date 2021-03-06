@@ -17,6 +17,8 @@ public struct RouterComponent: GraniteComponent {
     
     public init() {
         FirebaseApp.configure()
+        
+        
     }
     
     public var body: some View {

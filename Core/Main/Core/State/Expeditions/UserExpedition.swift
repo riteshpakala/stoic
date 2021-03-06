@@ -59,7 +59,7 @@ struct LogoutExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         do {
             try FirebaseAuth.Auth.auth().signOut()
-            connection.router?.clean()
+            connection.retrieve(\RouterDependency.router)?.clean()
             connection.update(\RouterDependency.authState, value: .notAuthenticated, .here)
         } catch let error {
             GraniteLogger.info("Error logging out \(String(describing: error))", .expedition, focus: true)

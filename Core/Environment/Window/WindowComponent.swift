@@ -25,7 +25,6 @@ public struct WindowComponent: GraniteComponent {
             AssetSectionComponent(
                 state: .init(context: state.config.kind,
                              securityType))
-                
                 .attach(to: command)
         case .portfolio(let type):
             PortfolioComponent(state: .init(type))

@@ -37,7 +37,7 @@ struct HoldingSelectedExpedition: GraniteExpedition {
                     }
                 }
             } else {
-                guard let router = connection.router else { return }
+                guard let router = connection.retrieve(\RouterDependency.router) else { return }
                 
                 connection.update(\EnvironmentDependency.tonalModels.type,
                                   value: .specified(security))

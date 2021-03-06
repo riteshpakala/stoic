@@ -20,8 +20,7 @@ struct RouteExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         
-        
-        connection.update(\RouterDependency.route, value: event.route)
+        connection.retrieve(\RouterDependency.router)?.request(event.route)
         //TODO: Used as a proxy to refresh, but maybe can be used for something useful?
     }
 }

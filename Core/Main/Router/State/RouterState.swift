@@ -14,4 +14,7 @@ public class RouterState: GraniteState {
 }
 
 public class RouterCenter: GraniteCenter<RouterState> {
+    
+    @GraniteDependency
+    var routerDependency: RouterDependency
 }
