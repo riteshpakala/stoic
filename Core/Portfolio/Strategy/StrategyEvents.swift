@@ -11,7 +11,11 @@ import SwiftUI
 import Combine
 
 struct StrategyEvents {
-    public struct Get: GraniteEvent {}
+    public struct Get: GraniteEvent {
+        var async: DispatchQueue? {
+            GraniteThread.event
+        }
+    }
     public struct Reset: GraniteEvent {}
     public struct Remove: GraniteEvent {
         let assetID: String
@@ -23,8 +27,16 @@ struct StrategyEvents {
         public var behavior: GraniteEventBehavior {
             .quiet
         }
+        
+        var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
-    public struct Predict: GraniteEvent {}
+    public struct Predict: GraniteEvent {
+        var async: DispatchQueue? {
+            GraniteThread.event
+        }
+    }
     public struct Push: GraniteEvent {
         public var behavior: GraniteEventBehavior {
             .quiet

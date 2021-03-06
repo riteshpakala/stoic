@@ -68,8 +68,8 @@ extension NSManagedObjectContext {
                                         ticker,
                                         exchangeName)
         
-        self.performAndWait {
-            if let sentiment = try? self.fetch(request) {
+        self.performAndWait { [weak self] in
+            if let sentiment = try? self?.fetch(request) {
                 completion(sentiment)
             } else {
                 completion([])

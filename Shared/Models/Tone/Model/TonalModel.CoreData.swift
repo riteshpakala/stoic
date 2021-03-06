@@ -12,8 +12,8 @@ import GraniteUI
 extension NSManagedObjectContext {
     public func getTones(_ completion: @escaping (([TonalModelObject]) -> Void)) {
         let request: NSFetchRequest = TonalModelObject.fetchRequest()
-        self.performAndWait {
-            if let tones = try? self.fetch(request) {
+        self.performAndWait { [weak self] in
+            if let tones = try? self?.fetch(request) {
                 completion(tones)
             } else {
                 completion([])
@@ -97,27 +97,30 @@ extension TonalModel {
             return
         }
         
-        moc.performAndWait {
-            self.quote.getObject(moc: moc) { quote in
+        moc.performAndWait { [weak self] in
+            self?.quote.getObject(moc: moc) { [weak self] quote in
                 do {
                     let object = TonalModelObject(context: moc)
                     object.date = Date.today
-                    object.daysTrained = Int32(self.daysTrained)
+                    object.daysTrained = Int32(self?.daysTrained ?? 0)
                     object.model = modelData
                     object.sentimentTuners = sentiment
                     object.quote = quote
                     object.range = range
                     quote?.addToTonalModel(object)
                     
-                    if overwrite {
-                        object.id = self.modelID
+                    if overwrite, let modelID = self?.modelID {
+                        object.id = modelID
+                        
+                        try moc.save()
+                        completion(true)
+                    } else {
+                        
+                        completion(false)
                     }
                     
-                    try moc.save()
-                    
-                    completion(true)
                 } catch let error {
-                    GraniteLogger.error("failed to save tonal model", .utility)
+                    GraniteLogger.error("failed to save tonal model\n\(error)", .utility)
                     completion(false)
                 }
             }

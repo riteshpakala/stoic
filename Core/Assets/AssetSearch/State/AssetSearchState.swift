@@ -43,7 +43,7 @@ public class AssetSearchCenter: GraniteCenter<AssetSearchState> {
     }
     
     var securities: [Security] {
-        return (state.payload?.object as? [Security]) ?? []
+        return state.securityData
 //        switch state.context {
 //        case .portfolio:
 //            return envDependency.holdingsPortfolio.assetAddState.searchState.securityGroup.get(state.securityType)

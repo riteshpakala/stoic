@@ -11,8 +11,8 @@ import Foundation
 extension NSManagedObjectContext {
     public func getQuotes(_ completion: @escaping(([Quote]) -> Void)) {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
-        self.performAndWait {
-            if let quotes = try? self.fetch(request) {
+        self.performAndWait { [weak self] in
+            if let quotes = try? self?.fetch(request) {
                 completion(quotes.map { $0.asQuote })
             } else {
                 completion([])

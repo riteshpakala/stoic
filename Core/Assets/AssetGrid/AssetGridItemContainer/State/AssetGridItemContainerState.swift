@@ -11,9 +11,7 @@ import SwiftUI
 import Combine
 
 public class AssetGridItemContainerState: GraniteState {
-    var assetData: [Asset] {
-        return payload?.object as? [Asset] ?? []
-    }
+    var assetData: [Asset] = []
     
     var radioSelections: [String] = []
     
@@ -45,14 +43,18 @@ public class AssetGridItemContainerState: GraniteState {
     let assetGridType: AssetGridType
     let leadingPadding: CGFloat
     
-    public init(_ type: AssetGridType, leadingPadding: CGFloat) {
+    public init(_ type: AssetGridType,
+                leadingPadding: CGFloat,
+                assetData: [Asset]) {
         assetGridType = type
         self.leadingPadding = leadingPadding
+        self.assetData = assetData
     }
     
     public required init() {
         self.assetGridType = .standard
         self.leadingPadding = Brand.Padding.medium
+        self.assetData = []
     }
 }
 

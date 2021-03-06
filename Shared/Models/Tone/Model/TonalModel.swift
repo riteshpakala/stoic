@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import GraniteUI
 
-public struct TonalModel: Asset {
+public class TonalModel: Asset {
     var date: Date {
         david.created
     }
@@ -54,13 +54,13 @@ public struct TonalModel: Asset {
         Date.today.compare(self.targetDate) == .orderedDescending
     }
     
-    public mutating func precompute() {
+    public func precompute() {
         self.quote.precompute()
         let sorted = quote.precomputedDailies?.sortDesc ?? self.last12Securities
         self.last12SecuritiesDailies = Array(sorted.prefix(12))
     }
     
-    public mutating func predictAll(_ sentiment: SentimentOutput? = nil) -> TonalPrediction {
+    public func predictAll(_ sentiment: SentimentOutput? = nil) -> TonalPrediction {
         let sentimentToUse = sentiment ?? david.sentimentAvg
         
         let close: Double = predict(sentimentToUse, modelType: .close)
@@ -80,7 +80,7 @@ public struct TonalModel: Asset {
         return prediction
     }
     
-    public mutating func predict(_ sentiment: SentimentOutput = .neutral,
+    public func predict(_ sentiment: SentimentOutput = .neutral,
                         modelType: TonalModels.ModelType = .close,
                         scale: Bool = true) -> Double {
         quote.precompute()
@@ -109,7 +109,7 @@ public struct TonalModel: Asset {
         }
     }
     
-    mutating func predict(days: Int,
+    func predict(days: Int,
                  sentiment: SentimentOutput = .neutral,
                  modelType: TonalModels.ModelType = .close) {
         quote.precompute()

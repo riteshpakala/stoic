@@ -11,11 +11,22 @@ import SwiftUI
 import Combine
 
 struct EnvironmentEvents {
-    struct Boot: GraniteEvent {}
+    struct Boot: GraniteEvent {
+        var async: DispatchQueue? {
+            GraniteThread.event
+        }
+    }
     struct Broadcasts: GraniteEvent {
         public var behavior: GraniteEventBehavior {
             .quiet
         }
+        var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
-    struct Variables: GraniteEvent {}
+    struct Variables: GraniteEvent {
+        var async: DispatchQueue? {
+            GraniteThread.event
+        }
+    }
 }

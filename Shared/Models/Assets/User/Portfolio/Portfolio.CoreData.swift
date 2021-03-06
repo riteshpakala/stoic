@@ -12,8 +12,8 @@ import SwiftUI
 
 extension NSManagedObjectContext {
     public func pullPortfolios(_ completion: @escaping (([PortfolioObject]?) -> Void)) {
-        self.performAndWait {
-            completion(try? self.fetch(PortfolioObject.fetchRequest()))
+        self.performAndWait { [weak self] in
+            completion(try? self?.fetch(PortfolioObject.fetchRequest()))
         }
     }
     
@@ -23,8 +23,8 @@ extension NSManagedObjectContext {
         request.predicate = NSPredicate(format: "(username == %@)",
                                         username)
         
-        self.performAndWait {
-            completion(try? self.fetch(request).first)
+        self.performAndWait { [weak self] in
+            completion(try? self?.fetch(request).first)
         }
     }
     
@@ -37,7 +37,7 @@ extension NSManagedObjectContext {
     func resetStrategy(username: String,
                        _ completion: @escaping((Portfolio?) -> Void)) {
         self.getPortfolioObject(username) { object in
-            self.performAndWait {
+            self.performAndWait { [weak self] in
                 //We are only using 1 strategy for now
                 //otherwise we would need to specify the strategy
                 if let strategy = object?.strategies?.first {
@@ -46,7 +46,7 @@ extension NSManagedObjectContext {
                     
                     object?.strategies = [strategy]
                     
-                    try? self.save()
+                    try? self?.save()
                     
                     completion(object?.asPortfolio)
                 } else {
@@ -59,8 +59,8 @@ extension NSManagedObjectContext {
     func removeFromStrategy(username: String,
                             _ security: Security,
                            _ completion: @escaping((Portfolio?) -> Void)) {
-        self.getPortfolioObject(username) { object in
-            self.performAndWait {
+        self.getPortfolioObject(username) { [weak self] object in
+            self?.performAndWait { [weak self] in
                 //We are only using 1 strategy for now
                 //otherwise we would need to specify the strategy
                 if let strategy = object?.strategies?.first {
@@ -74,7 +74,7 @@ extension NSManagedObjectContext {
                             strategy.investmentData = investments.archived
                             
                             
-                            try? self.save()
+                            try? self?.save()
                         }
                     }
                     
@@ -89,8 +89,8 @@ extension NSManagedObjectContext {
     func closeFromStrategy(username: String,
                             _ security: Security,
                            _ completion: @escaping((Portfolio?) -> Void)) {
-        self.getPortfolioObject(username) { object in
-            self.performAndWait {
+        self.getPortfolioObject(username) { [weak self] object in
+            self?.performAndWait { [weak self] in
                 //We are only using 1 strategy for now
                 //otherwise we would need to specify the strategy
                 if let strategy = object?.strategies?.first {
@@ -103,7 +103,7 @@ extension NSManagedObjectContext {
                         
                         strategy.investmentData = investments.archived
                         
-                        try? self.save()
+                        try? self?.save()
                     }
                     
                     completion(object?.asPortfolio)

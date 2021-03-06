@@ -669,6 +669,8 @@
 		7169535225A7ADB400641BCE /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169535025A7ADB400641BCE /* Run.swift */; };
 		71727D2825CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */; };
 		71727D2925CE7952005E03F4 /* NetworkService.Apply.Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */; };
+		7175FC0125F3FCEE00F97D42 /* GraniteLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175FC0025F3FCEE00F97D42 /* GraniteLoop.swift */; };
+		7175FC0A25F3FD0100F97D42 /* GraniteLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175FC0025F3FCEE00F97D42 /* GraniteLoop.swift */; };
 		71783CC825D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71783CC625D5C84B00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift */; };
 		71783CC925D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71783CC625D5C84B00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift */; };
 		71783CCA25D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71783CC725D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift */; };
@@ -1391,6 +1393,7 @@
 		7169534925A7AD3400641BCE /* GraniteScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteScrollView.swift; sourceTree = "<group>"; };
 		7169535025A7ADB400641BCE /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Apply.Code.swift; sourceTree = "<group>"; };
+		7175FC0025F3FCEE00F97D42 /* GraniteLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteLoop.swift; sourceTree = "<group>"; };
 		71783CC625D5C84B00C671BB /* BaseNetworkResponseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BaseNetworkResponseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		71783CC725D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BaseNetworkResponseObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7179AC9F25AC9472003FD06F /* TonalCompileEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TonalCompileEvents.swift; sourceTree = "<group>"; };
@@ -2170,6 +2173,7 @@
 		7125BD6325A12EED00F22717 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				7175FBFF25F3FCE600F97D42 /* GraniteLoop */,
 				7137CF3925E4D6060098ED5B /* GraniteTimer */,
 				7199B29825C1210100B1A2B3 /* GraniteLoading */,
 				71017E2825B24A8F00E056A5 /* GraniteDisclaimer */,
@@ -3053,6 +3057,14 @@
 				7169534925A7AD3400641BCE /* GraniteScrollView.swift */,
 			);
 			path = GraniteScrollView;
+			sourceTree = "<group>";
+		};
+		7175FBFF25F3FCE600F97D42 /* GraniteLoop */ = {
+			isa = PBXGroup;
+			children = (
+				7175FC0025F3FCEE00F97D42 /* GraniteLoop.swift */,
+			);
+			path = GraniteLoop;
 			sourceTree = "<group>";
 		};
 		7179AC9E25AC9472003FD06F /* TonalCompile */ = {
@@ -4448,6 +4460,7 @@
 				7125BE5F25A1388400F22717 /* AnyPointSliderStyle.swift in Sources */,
 				71140298258DB5E700BA387D /* StockEvents.swift in Sources */,
 				71D63F3E2592BBAB0085D718 /* AssetGridItemContainerComponent.swift in Sources */,
+				7175FC0125F3FCEE00F97D42 /* GraniteLoop.swift in Sources */,
 				7179ACAC25AC9472003FD06F /* CompileTheToneExpedition.swift in Sources */,
 				7183D54F25A428AE00FB91A9 /* TimeDisplayModeSelector.swift in Sources */,
 				717D9ACB25C8639D00B9354D /* LoginComponent.swift in Sources */,
@@ -5180,6 +5193,7 @@
 				7125BDDE25A131D200F22717 /* EnvironmentValues+TrackRange.swift in Sources */,
 				7136B65E25A008B40014F693 /* PortfolioComponent.swift in Sources */,
 				71ED8F5625C5E513000F6366 /* DiscussEvents.swift in Sources */,
+				7175FC0A25F3FD0100F97D42 /* GraniteLoop.swift in Sources */,
 				71D63F6D2592BFC40085D718 /* AssetSectionComponent.swift in Sources */,
 				71E8389125BF70D2002D8AAD /* TonalControlComponent.swift in Sources */,
 				71783CCB25D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift in Sources */,

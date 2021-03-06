@@ -64,8 +64,9 @@ public struct TonalModelsComponent: GraniteComponent {
                     .padding(.trailing, Brand.Padding.medium)
                     
                     
-                    AssetGridComponent(state: .init(.standard, context: .tonalBrowser(.empty)))
-                        .payload(.init(object: state.tones))
+                    AssetGridComponent(state: .init(.standard,
+                                                    context: .tonalBrowser(.empty),
+                                                    assetData: state.tones ?? []))
                         .listen(to: command, .stop).showEmptyState
                         
                 }.padding(.top, Brand.Padding.large)

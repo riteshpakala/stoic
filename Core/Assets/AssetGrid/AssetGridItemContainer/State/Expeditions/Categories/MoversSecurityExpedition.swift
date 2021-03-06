@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct MoversSecurityExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = AssetGridItemContainerEvents.UpdateSecurities
+    typealias ExpeditionEvent = AssetGridEvents.UpdateSecurities
     typealias ExpeditionState = AssetGridItemContainerState
     
     func reduce(

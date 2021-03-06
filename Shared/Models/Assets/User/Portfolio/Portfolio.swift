@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Portfolio {
+public class Portfolio {
     let username: String
     let holdings: Holdings
     let floors: [Floor]

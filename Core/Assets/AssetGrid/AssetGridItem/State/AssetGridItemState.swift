@@ -11,9 +11,7 @@ import SwiftUI
 import Combine
 
 public class AssetGridItemState: GraniteState {
-    var asset: Asset {
-        payload?.object as? Asset ?? EmptySecurity()
-    }
+    var asset: Asset
     var security: Security {
         asset.asSecurity ?? ((payload?.object as? Security) ?? (asset.asModel?.latestSecurity ?? EmptySecurity()))
     }
@@ -24,14 +22,16 @@ public class AssetGridItemState: GraniteState {
     var radioSelections: [String] = []
     var input: String = ""
     let assetGridType: AssetGridType
-    public init(_ type: AssetGridType, radioSelections: [String] = []) {
+    public init(_ type: AssetGridType, radioSelections: [String] = [], asset: Asset) {
         assetGridType = type
         self.radioSelections = radioSelections
+        self.asset = asset
     }
     
     public required init() {
         self.assetGridType = .standard
         self.radioSelections = []
+        self.asset = EmptySecurity()
     }
 }
 

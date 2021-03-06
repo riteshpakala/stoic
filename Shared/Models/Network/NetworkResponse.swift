@@ -40,15 +40,16 @@ extension NSManagedObjectContext {
     public func save(route: String,
                      data: Data,
                      responseType: NetworkResponseType) {
-        self.performAndWait {
-            let object = BaseNetworkResponseObject.init(context: self)
+        self.performAndWait { [weak self] in
+            guard let this = self else { return }
+            let object = BaseNetworkResponseObject.init(context: this)
             object.date = .today
             object.data = data
             object.responseType = responseType.rawValue
             object.route = route
             
             do {
-                try self.save()
+                try self?.save()
             } catch let error {
                 GraniteLogger.info("failed to save network object for \(responseType)\n\(error) - self: \(String(describing: self))", .utility, focus: true)
             }
@@ -62,8 +63,8 @@ extension NSManagedObjectContext {
                                         route)
         
         
-        self.performAndWait {
-            if let object = try? self.fetch(request).first {
+        self.performAndWait { [weak self] in
+            if let object = try? self?.fetch(request).first {
                 completion(NetworkResponseType.init(rawValue: object.responseType))
             } else {
                 completion(nil)
@@ -80,8 +81,8 @@ extension NSManagedObjectContext {
         let sort = NSSortDescriptor(key: "date", ascending: false)
         request.sortDescriptors = [sort]
         
-        self.performAndWait {
-            completion(try? self.fetch(request).first?.asNetworkResponse)
+        self.performAndWait { [weak self] in
+            completion(try? self?.fetch(request).first?.asNetworkResponse)
         }
     }
     
@@ -95,8 +96,8 @@ extension NSManagedObjectContext {
         self.networkResponseExists(forRoute: route) { type in
             switch type {
             case .search:
-                self.performAndWait {
-                    if let objects = try? self.fetch(request) {
+                self.performAndWait { [weak self] in
+                    if let objects = try? self?.fetch(request) {
                         completion(objects.map { $0.asSearchResponse })
                     }
                 }

@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct TonalModelTappedExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = AssetGridItemContainerEvents.AssetTapped
+    typealias ExpeditionEvent = AssetGridEvents.AssetTapped
     typealias ExpeditionState = TonalModelsState
     
     func reduce(

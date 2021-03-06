@@ -80,10 +80,10 @@ public struct HoldingsComponent: GraniteComponent {
                         
                         
                         AssetGridComponent(state: .init(state.context.assetGridTypeForHoldings,
-                                                        context: state.context))
+                                                        context: state.context,
+                                                        assetData: command.center.securities))
                             .listen(to: command, .stop)
-                            .payload(injectPayload(\.envDependency,
-                                                     target: \.user.portfolio?.holdings.securities)).showEmptyState
+                            .showEmptyState
                             
                     }
                     .padding(.top, Brand.Padding.large)

@@ -40,10 +40,9 @@ public struct WindowComponent: GraniteComponent {
             TonalCreateComponent(state: .init(stage))
                 
         case .tonalBrowser(let payload):
-            TonalModelsComponent(state: inject(\.envDependency,
-                                               target: \.tonalModels))
-                                        .payload(payload)
-                
+            TonalModelsComponent(state: .init(inject(\.envDependency,
+                                                     target: \.tonalModels),
+                                              securityPayload: payload))
         case .special:
             SpecialComponent()
         case .discuss:

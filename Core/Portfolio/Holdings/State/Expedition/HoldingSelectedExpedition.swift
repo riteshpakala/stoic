@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 struct HoldingSelectedExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = AssetGridItemContainerEvents.AssetTapped
+    typealias ExpeditionEvent = AssetGridEvents.AssetTapped
     typealias ExpeditionState = HoldingsState
     
     func reduce(
@@ -71,7 +71,7 @@ struct HoldingSelectedExpedition: GraniteExpedition {
 }
 
 struct HoldingSelectionsConfirmedExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = AssetGridItemContainerEvents.AssetsSelected
+    typealias ExpeditionEvent = AssetGridEvents.AssetsSelected
     typealias ExpeditionState = HoldingsState
     
     func reduce(

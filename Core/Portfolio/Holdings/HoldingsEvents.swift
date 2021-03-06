@@ -11,7 +11,11 @@ import SwiftUI
 import Combine
 
 struct HoldingsEvents {
-    public struct Get: GraniteEvent {}
+    public struct Get: GraniteEvent {
+        var async: DispatchQueue? {
+            GraniteThread.event
+        }
+    }
     public struct Update: GraniteEvent {
         public var behavior: GraniteEventBehavior {
             .quiet

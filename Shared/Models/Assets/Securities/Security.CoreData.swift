@@ -239,7 +239,7 @@ extension Array where Element == SecurityObject {
     
     var latests: [SecurityObject] {
         return self.compactMap { security in
-            if let securities = security.quote?.securities {
+            if  let securities = security.quote?.securities {
                 return Array(securities).sortDesc.first
             } else {
                 return security

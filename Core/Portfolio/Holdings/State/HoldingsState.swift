@@ -78,4 +78,8 @@ public class HoldingsCenter: GraniteCenter<HoldingsState> {
             .onAppear(HoldingsEvents.Get())
         ]
     }
+    
+    var securities: [Asset] {
+        envDependency.user.portfolio?.holdings.securities ?? []
+    }
 }
