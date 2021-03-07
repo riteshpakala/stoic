@@ -1034,6 +1034,8 @@
 		71F902F525AB1E8D00E6A085 /* Portfolio.CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902F325AB1E8D00E6A085 /* Portfolio.CoreData.swift */; };
 		71F902FB25AB225E00E6A085 /* UserExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902FA25AB225E00E6A085 /* UserExpedition.swift */; };
 		71F902FC25AB225E00E6A085 /* UserExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902FA25AB225E00E6A085 /* UserExpedition.swift */; };
+		71F9694325F558DA000A7389 /* StrategyPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F9694225F558DA000A7389 /* StrategyPreview.swift */; };
+		71F9694825F558DC000A7389 /* StrategyPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F9694225F558DA000A7389 /* StrategyPreview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1578,6 +1580,7 @@
 		71F1EC5325A0F47A00D32C52 /* SearchComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchComponent.swift; sourceTree = "<group>"; };
 		71F902F325AB1E8D00E6A085 /* Portfolio.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.CoreData.swift; sourceTree = "<group>"; };
 		71F902FA25AB225E00E6A085 /* UserExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserExpedition.swift; sourceTree = "<group>"; };
+		71F9694225F558DA000A7389 /* StrategyPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1637,6 +1640,7 @@
 		71017E4625B25D6100E056A5 /* Strategy */ = {
 			isa = PBXGroup;
 			children = (
+				71F9694125F558CD000A7389 /* Views */,
 				71017E4925B25D6100E056A5 /* State */,
 				71017E4725B25D6100E056A5 /* StrategyEvents.swift */,
 				71017E4825B25D6100E056A5 /* StrategyComponent.swift */,
@@ -3954,6 +3958,14 @@
 			path = Portfolio;
 			sourceTree = "<group>";
 		};
+		71F9694125F558CD000A7389 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				71F9694225F558DA000A7389 /* StrategyPreview.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4213,6 +4225,7 @@
 				71C08E8425AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */,
 				71DE186525A6D94D00911AD1 /* GraphEvents.swift in Sources */,
 				7122EA3625D5AC170029A342 /* BroadcastsExpedition.swift in Sources */,
+				71F9694325F558DA000A7389 /* StrategyPreview.swift in Sources */,
 				710889A12591B29800795EDF /* Promise+nil.swift in Sources */,
 				71D63F6E2592BFC40085D718 /* AssetSectionState.swift in Sources */,
 				71783CCA25D5C84C00C671BB /* BaseNetworkResponseObject+CoreDataClass.swift in Sources */,
@@ -4949,6 +4962,7 @@
 				71EE7078258D8F88005B2B8E /* AssetGridComponent.swift in Sources */,
 				71267A3F25A59A3F006132D8 /* Date.swift in Sources */,
 				713D25B0258E42BF005FB4D4 /* ClockRelay.swift in Sources */,
+				71F9694825F558DC000A7389 /* StrategyPreview.swift in Sources */,
 				71434356259076F4001F26A4 /* UnitPoint+Convenience.swift in Sources */,
 				710889A22591B29800795EDF /* Promise+nil.swift in Sources */,
 				71C08E9B25AF772F00765894 /* SearchResponse.swift in Sources */,

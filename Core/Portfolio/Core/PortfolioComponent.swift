@@ -24,15 +24,6 @@ public struct PortfolioComponent: GraniteComponent {
                 case .expanded, .preview:
                     portfolioHeader
                     PaddingVertical(Brand.Padding.xSmall)
-                    portfolioStrategy
-                    GraniteButtonComponent(
-                        state: .init(.add,
-                                     padding: .init(0,0,Brand.Padding.xSmall,0),
-                                     action: {
-                                       GraniteHaptic.light.invoke()
-                                       set(\.stage, value: .adding)
-                                     }))
-                        .background(Brand.Colors.black)
                 default:
                     EmptyView.init().hidden()
                 }
@@ -46,7 +37,7 @@ public struct PortfolioComponent: GraniteComponent {
                     HoldingsComponent(state: .init(context: .portfolio(.preview)))
                         
                 default:
-                    EmptyView.init().hidden()
+                    portfolioStrategy
                     
                 }
                 
@@ -55,7 +46,7 @@ public struct PortfolioComponent: GraniteComponent {
             if state.stage == .adding {
                 VStack {
                     GraniteModal(content: {
-                        HoldingsComponent(state: .init(context: .strategy))
+                        HoldingsComponent(state: .init(context: .strategy(.none)))
                     }, onExitTap: {
                         set(\.stage, value: .none)
                     })

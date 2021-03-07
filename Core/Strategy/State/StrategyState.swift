@@ -10,6 +10,12 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+public enum StrategyType: Equatable, Hashable {
+    case expanded
+    case preview
+    case none
+}
+
 public enum StrategyStage: Equatable {
     case none
     case adding
@@ -22,6 +28,8 @@ public enum StrategyStage: Equatable {
 }
 public class StrategyState: GraniteState {
     var stage: StrategyStage = .none
+    
+    var type: StrategyType
     
     var user: UserInfo? = nil
     
@@ -54,11 +62,22 @@ public class StrategyState: GraniteState {
             return "sync \(count)"
         }
     }
+    
+    public init(_ type: StrategyType) {
+        self.type = type
+    }
+    
+    public required init() {
+        self.type = .preview
+    }
 }
 
 public class StrategyCenter: GraniteCenter<StrategyState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
+    
+    @GraniteDependency
+    var routerDependency: RouterDependency
     
     @GraniteDependency
     var envDependency: EnvironmentDependency

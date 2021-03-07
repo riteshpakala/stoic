@@ -29,6 +29,9 @@ public struct WindowComponent: GraniteComponent {
         case .portfolio(let type):
             PortfolioComponent(state: .init(type))
                 .listen(to: command)
+        case .strategy(let type):
+            StrategyComponent(state: .init(type))
+                .listen(to: command)
         case .floor:
             FloorComponent()
         case .search:

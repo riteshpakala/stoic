@@ -77,7 +77,6 @@ public class Tone {
                 lastState = oldValue
                 
                 if state == .parsed {
-                    print("{TEST} \(linkSet == nil)")
                     linkSet?.toTheStars()
                 }
             }
