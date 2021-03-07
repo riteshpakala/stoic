@@ -63,7 +63,7 @@ public struct EnvironmentConfig {
                 ])
             case .strategy:
                 return .init(windows: [
-                    [.portfolio(.expanded), .strategy(.expanded)]
+                    [.strategy(.expanded), .portfolio(.expanded)]
                 ])
             case .settings:
                 return .init(windows: [

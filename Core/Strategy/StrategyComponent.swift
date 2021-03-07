@@ -18,39 +18,68 @@ public struct StrategyComponent: GraniteComponent {
     
     public var body: some View {
         VStack(spacing: 0) {
-            StrategyPreview(command: command)
-            
-            PaddingVertical(Brand.Padding.xSmall)
-            HStack(alignment: .center) {
-                Spacer()
+            switch state.type {
+            case .preview:
+                StrategyPreview(command: command)
+                
+                PaddingVertical(Brand.Padding.xSmall)
+                HStack(alignment: .center) {
+                    Spacer()
+                    GraniteButtonComponent(
+                        state: .init("detail",
+                                    padding: .init(Brand.Padding.medium,
+                                                   0,
+                                                   Brand.Padding.medium,
+                                                   0),
+                                    action: route(Route.strategyDetail)))
+                    Spacer()
+                    GraniteButtonComponent(
+                        state: .init("+",
+                                    padding: .init(Brand.Padding.medium,
+                                                   0,
+                                                   Brand.Padding.medium,
+                                                   0),
+                                    action: {
+                                        sendEvent(TonalCompileEvents.Compile(), haptic: .light)
+                                    }))
+                    Spacer()
+                }
+            case .expanded:
+//                HStack(alignment: .center, spacing: Brand.Padding.medium) {
+//                    GraniteText("* stoic",
+//                                Brand.Colors.white,
+//                                .title3,
+//                                .bold,
+//                                .leading)
+//                    
+//                    Image("logo")
+//                        .resizable()
+//                        .frame(width: EnvironmentConfig.isIPhone ? 57 : 66,
+//                               height: EnvironmentConfig.isIPhone ? 57 : 66,
+//                               alignment: .center)
+//                    
+//                }
+//                .padding(.leading, Brand.Padding.medium9)
+//                .padding(.trailing, Brand.Padding.medium9)
+                
+                StrategyExpanded(command: command)
+                    .padding(.top, Brand.Padding.medium)
+                
                 GraniteButtonComponent(
-                    state: .init("detail",
-                                padding: .init(Brand.Padding.medium,
-                                               0,
-                                               Brand.Padding.medium,
-                                               0),
-                                action: route(Route.strategyDetail)))
-                Spacer()
-                GraniteButtonComponent(
-                    state: .init("+",
-                                padding: .init(Brand.Padding.medium,
-                                               0,
-                                               Brand.Padding.medium,
-                                               0),
-                                action: {
-                                    sendEvent(TonalCompileEvents.Compile(), haptic: .light)
-                                }))
-//                GraniteButtonComponent(
-//                    state: .init(.addNoSeperator,
-//                                 padding: .init(0,0,0,0),
-//                                 action: {
-//                                   GraniteHaptic.light.invoke()
-//                                   set(\.stage, value: .adding)
-//                                 }))
-//                    .background(Brand.Colors.black)
-                Spacer()
+                    state: .init(.add,
+                                 padding: .init(0,0,0,0),
+                                 action: {
+                                   GraniteHaptic.light.invoke()
+                                   set(\.stage, value: .adding)
+                                 }))
+                    .background(Brand.Colors.black)
+            default:
+                EmptyView().hidden()
+                
             }
-        }.padding(.bottom, Brand.Padding.xSmall)
+        }
+        .padding(.top, Brand.Padding.medium9)
+        .padding(.bottom, Brand.Padding.xSmall)
     }
 }
 

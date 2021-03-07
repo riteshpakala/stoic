@@ -1036,6 +1036,8 @@
 		71F902FC25AB225E00E6A085 /* UserExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F902FA25AB225E00E6A085 /* UserExpedition.swift */; };
 		71F9694325F558DA000A7389 /* StrategyPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F9694225F558DA000A7389 /* StrategyPreview.swift */; };
 		71F9694825F558DC000A7389 /* StrategyPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F9694225F558DA000A7389 /* StrategyPreview.swift */; };
+		71F9694E25F560E2000A7389 /* StrategyExpanded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F9694D25F560E2000A7389 /* StrategyExpanded.swift */; };
+		71F9695325F560E4000A7389 /* StrategyExpanded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F9694D25F560E2000A7389 /* StrategyExpanded.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1581,6 +1583,7 @@
 		71F902F325AB1E8D00E6A085 /* Portfolio.CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.CoreData.swift; sourceTree = "<group>"; };
 		71F902FA25AB225E00E6A085 /* UserExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserExpedition.swift; sourceTree = "<group>"; };
 		71F9694225F558DA000A7389 /* StrategyPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyPreview.swift; sourceTree = "<group>"; };
+		71F9694D25F560E2000A7389 /* StrategyExpanded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyExpanded.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3962,6 +3965,7 @@
 			isa = PBXGroup;
 			children = (
 				71F9694225F558DA000A7389 /* StrategyPreview.swift */,
+				71F9694D25F560E2000A7389 /* StrategyExpanded.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4355,6 +4359,7 @@
 				71F902FB25AB225E00E6A085 /* UserExpedition.swift in Sources */,
 				71582E1825E5CD81003D92F6 /* GetSentiment.Think.Expedition.swift in Sources */,
 				710889F32591BC8C00795EDF /* Categories.swift in Sources */,
+				71F9694E25F560E2000A7389 /* StrategyExpanded.swift in Sources */,
 				71CA211825A4AEC900C448D7 /* TonalService.Model.swift in Sources */,
 				7143EEDF25994FC300B1DCB5 /* TonalService.Sounds.swift in Sources */,
 				711598C925C897A50026B5AE /* AuthExpedition.swift in Sources */,
@@ -4992,6 +4997,7 @@
 				710889662591B29800795EDF /* Dictionary+QueryString.swift in Sources */,
 				7125BDC625A1318D00F22717 /* EnvironmentValues+RangeSliderStyle.swift in Sources */,
 				714AD72425CB4BE000752A92 /* Keyboard.swift in Sources */,
+				71F9695325F560E4000A7389 /* StrategyExpanded.swift in Sources */,
 				7143435A259076F4001F26A4 /* GeometryProxy+Convenience.swift in Sources */,
 				7125BE9025A148BA00F22717 /* TonalFindEvents.swift in Sources */,
 				711484B9259E0C7B00464684 /* WindowState.swift in Sources */,

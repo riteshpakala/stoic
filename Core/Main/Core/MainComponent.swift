@@ -22,6 +22,13 @@ public struct MainComponent: GraniteComponent {
             .routerDependency
             .router
             .home = command.center
+        
+        //TODO: //DEV:
+        command
+            .center
+            .routerDependency
+            .router
+            .request(Route.strategyDetail)
     }
     
     var environment: EnvironmentComponent {

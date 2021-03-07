@@ -30,12 +30,7 @@ public struct PortfolioComponent: GraniteComponent {
                 
                 switch state.type {
                 case .expanded, .holdings:
-                    if state.type == .expanded {
-                        PaddingVertical()
-                    }
-                    
                     HoldingsComponent(state: .init(context: .portfolio(.preview)))
-                        
                 default:
                     portfolioStrategy
                     
@@ -53,6 +48,10 @@ public struct PortfolioComponent: GraniteComponent {
                 }
             }
         }
+        //We want to reduce the size of the expanded view ON DESKTOP/TABLET, as it would be coupled
+        //with another component that is full width, displaying important details
+        //aka (StrategyComponent - expanded)
+        .frame(maxWidth: !EnvironmentConfig.isIPhone && state.type == .expanded ? EnvironmentStyle.idealWidth : .infinity)
     }
     
     var portfolioHeader: some View {
