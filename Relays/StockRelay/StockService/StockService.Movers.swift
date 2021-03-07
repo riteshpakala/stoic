@@ -41,14 +41,11 @@ extension StockService {
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         
-        let decoder = JSONDecoder()
         return session
                 .dataTaskPublisher(for: request)
                 .compactMap { (data, response) -> NetworkResponseData? in
-                    
-                    let movers: StockServiceModels.Movers? = data.decodeNetwork(type: StockServiceModels.Movers.self, decoder: decoder)
+                    let movers: StockServiceModels.Movers? = data.decodeNetwork(type: StockServiceModels.Movers.self)
                     return movers
-                
                 }.eraseToAnyPublisher()
     }
     
@@ -80,14 +77,14 @@ extension StockService {
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         
-        let decoder = JSONDecoder()
         return session
                 .dataTaskPublisher(for: request)
-                .compactMap { (data, response) -> NetworkResponseData? in
-                    let movers: StockServiceModels.MoversStoic?
+                .compactMap { [weak self] (data, response) -> NetworkResponseData? in
+                    var movers: StockServiceModels.MoversStoic?
                     do {
-                        
-                        movers = try decoder.decode(StockServiceModels.MoversStoic.self, from: data)
+                        try autoreleasepool {
+                            movers = try JSONDecoder().decode(StockServiceModels.MoversStoic.self, from: data)
+                        }
                     } catch let error {
                         movers = nil
                         GraniteLogger.info("failed fetching movers from Stoic:\n\(error)\nself: \(String(describing: self))", .relay, focus: true)
@@ -104,8 +101,14 @@ extension StockService {
         let createdDate: Int = Date.today.timeIntervalSince1970.asInt
         let json: [String: Any] = ["TableName": "stoic-stock-movers",
                                    "Item": [ "pageid": Date.today.asString, "date": createdDate, "data": data ]]
-
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        var jsonData: Data?
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: json)
+        } catch let error {
+            
+        }
+         
         
         guard
             let url = urlComponents.url
@@ -128,7 +131,7 @@ extension StockService {
         
         return session
                 .dataTaskPublisher(for: request)
-                .compactMap { (data, response) -> Bool in
+                .compactMap { [weak self] (data, response) -> Bool in
                     return true
                 }.eraseToAnyPublisher()
     }

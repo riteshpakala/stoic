@@ -11,12 +11,10 @@ import GraniteUI
 extension TonalRange {
     public func checkSentimentCache(
         _ quote: QuoteObject,
-        moc: NSManagedObjectContext,
-        completion: @escaping (((sentiment: TonalSentiment?, missing: TonalRange?)?) -> Void)) {
+        moc: NSManagedObjectContext) -> (sentiment: TonalSentiment?, missing: TonalRange?)? {
         
-        moc.getSentiment(quote, self) { data in
-            completion(data)
-        }
+        let data = moc.getSentiment(quote, self)
+        return data
     }
 }
 
@@ -66,20 +64,19 @@ extension Array where Element == Security {
         
         let indicators: [TonalIndicators] = self.map { TonalIndicators.init(date: $0.date, volatility: 1.0, volatilityCoeffecient: 1.0) }
         
-        self.first?.getQuote(moc: moc) { quote in
-            if let securities = quote?.securities {
-                completion(.init(objects: self,
-                             Array(securities).expanded(from: self),
-                             similarities,
-                             indicators,
-                             base: true))
-            } else {
-                completion(.init(objects: self,
-                             self,
-                             similarities,
-                             indicators,
-                             base: true))
-            }
+        let quote = self.first?.getQuote(moc: moc)
+        if let securities = quote?.securities {
+            completion(.init(objects: self,
+                         Array(securities).expanded(from: self),
+                         similarities,
+                         indicators,
+                         base: true))
+        } else {
+            completion(.init(objects: self,
+                         self,
+                         similarities,
+                         indicators,
+                         base: true))
         }
     }
     

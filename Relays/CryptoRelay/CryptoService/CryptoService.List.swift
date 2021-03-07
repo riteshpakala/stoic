@@ -21,29 +21,30 @@ extension CryptoService {
         
         GraniteLogger.info("searching crypto:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay, focus: true)
         
-        let decoder = JSONDecoder()
         
         return session
                 .dataTaskPublisher(for: url)
                 .compactMap { (data, response) -> [SearchResponse]? in
-                    
-                    let listPayload: [CryptoServiceModels.List.Coin]?
-                    do {
-                        listPayload = try decoder.decode([CryptoServiceModels.List.Coin].self, from: data)
-                    } catch let error {
-                        listPayload = nil
-                        GraniteLogger.error("failed decoding crypto coin\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
+                    autoreleasepool {
+                        let decoder = JSONDecoder()
+                        let listPayload: [CryptoServiceModels.List.Coin]?
+                        do {
+                            listPayload = try decoder.decode([CryptoServiceModels.List.Coin].self, from: data)
+                        } catch let error {
+                            listPayload = nil
+                            GraniteLogger.error("failed decoding crypto coin\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
+                        }
+                        
+                        let response = listPayload?.compactMap {
+                            SearchResponse.init(route: self.list,
+                                                exchangeName: "crypto-generalized",
+                                                entityDescription: $0.name,
+                                                symbolName: $0.symbol,
+                                                id: $0.id) }
+                        
+                        
+                        return response
                     }
-                    
-                    let response = listPayload?.compactMap {
-                        SearchResponse.init(route: self.list,
-                                            exchangeName: "crypto-generalized",
-                                            entityDescription: $0.name,
-                                            symbolName: $0.symbol,
-                                            id: $0.id) }
-                    
-                    
-                    return response
                     
                 
                 }.eraseToAnyPublisher()

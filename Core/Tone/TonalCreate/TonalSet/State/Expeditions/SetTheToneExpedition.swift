@@ -24,19 +24,17 @@ struct SetTheToneExpedition: GraniteExpedition {
         connection.update(\ToneDependency.tone.selectedRange, value: event.range)
         
         if let tone = connection.retrieve(\ToneDependency.tone.find.quote) {
-            tone?.getObject(moc: coreDataInstance) { quote in
-                if let quote = quote {
-                    event.range.checkSentimentCache(quote, moc: coreDataInstance) { sentimentResult in
-                        if let sentiment = sentimentResult?.sentiment {
-                            connection.update(\ToneDependency.tone.tune.sentiment, value: sentiment)
-                            connection.update(\ToneDependency.tone.set.stage, value: .none)
-                        } else {
-                            connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range))
-                        }
-                    }
+            let quote = tone?.getObject(moc: coreDataInstance)
+            if let quote = quote {
+                let sentimentResult = event.range.checkSentimentCache(quote, moc: coreDataInstance)
+                if let sentiment = sentimentResult?.sentiment {
+                    connection.update(\ToneDependency.tone.tune.sentiment, value: sentiment)
+                    connection.update(\ToneDependency.tone.set.stage, value: .none)
                 } else {
-                    connection.request(TonalEvents.GetSentiment.init(range: event.range))
+                    connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? event.range))
                 }
+            } else {
+                connection.request(TonalEvents.GetSentiment.init(range: event.range))
             }
         } else {
             connection.request(TonalEvents.GetSentiment.init(range: event.range))
@@ -68,19 +66,16 @@ struct TonalSentimentHistoryExpedition: GraniteExpedition {
         }
         
         let moc = coreDataInstance
-        tone.find.quote?.getObject(moc: moc) { quote in
-            guard let quote = quote else { return }
-            event.sentiment.save(range, moc: moc) { success in
-                if success {
-                    range.checkSentimentCache(quote, moc: moc) { sentimentResult in
-                        if let sentiment = sentimentResult?.sentiment {
-                            connection.update(\ToneDependency.tone.tune.sentiment, value: sentiment)
-                            connection.update(\ToneDependency.tone.set.stage, value: .none)
-                        } else {
-                            connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range))
-                        }
-                    }
-                }
+        let foundQuote = tone.find.quote?.getObject(moc: moc)
+        guard let quote = foundQuote else { return }
+        let success = event.sentiment.save(range, moc: moc)
+        if success {
+            let sentimentResult = range.checkSentimentCache(quote, moc: moc)
+            if let sentiment = sentimentResult?.sentiment {
+                connection.update(\ToneDependency.tone.tune.sentiment, value: sentiment)
+                connection.update(\ToneDependency.tone.set.stage, value: .none)
+            } else {
+                connection.request(TonalEvents.GetSentiment.init(range: sentimentResult?.missing ?? range))
             }
         }
     }

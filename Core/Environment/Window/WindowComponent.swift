@@ -34,8 +34,7 @@ public struct WindowComponent: GraniteComponent {
         case .search:
             AssetSearchComponent()
         case .securityDetail(let kind):
-            SecurityDetailComponent(state: .init(kind))//,
-//                                                 modelID: command.center.detailDependency.detail.modelID))
+            SecurityDetailComponent(state: .init(kind))
         case .tonalCreate(let stage):
             TonalCreateComponent(state: .init(stage))
                 

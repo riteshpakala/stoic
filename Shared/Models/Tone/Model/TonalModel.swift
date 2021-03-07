@@ -198,27 +198,22 @@ extension TonalModel {
 
 extension TonalModel {
     public static func get(moc: NSManagedObjectContext,
-                           light: Bool = false,
-                           _ completion: @escaping (([TonalModel]) -> Void)){
+                           light: Bool = false) -> [TonalModel] {
        
-        moc.getTones { tonalObjects in
-            completion(tonalObjects.compactMap { light ? $0.asToneLight : $0.asTone })
-        }
+        let tonalObjects = moc.getTones()
+        return tonalObjects.compactMap { light ? $0.asToneLight : $0.asTone }
     }
     
     public static func get(forSecurity security: Security?,
                            light: Bool = false,
-                           moc: NSManagedObjectContext,
-                           _ completion: @escaping (([TonalModel]) -> Void)) {
+                           moc: NSManagedObjectContext) -> [TonalModel] {
         
         guard let security = security else {
-            TonalModel.get(moc: moc, light: light, completion)
-            return
+            return TonalModel.get(moc: moc, light: light)
         }
         
-        moc.getTones(forSecurity: security) { tonalObjects in
-            completion(tonalObjects.compactMap { light ? $0.asToneLight : $0.asTone })
-        }
+        let tonalObjects = moc.getTones(forSecurity: security)
+        return tonalObjects.compactMap { light ? $0.asToneLight : $0.asTone }
     }
 }
 

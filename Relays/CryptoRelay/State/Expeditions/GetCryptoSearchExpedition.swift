@@ -22,12 +22,11 @@ struct GetCryptoSearchExpedition: GraniteExpedition {
         
         let moc = coreDataInstance
         
-        moc.checkSearchCache(forRoute: route) { responses in
-            if let searchResponses = responses {
-                connection.request(CryptoEvents.SearchDataResult.init(event.query, data: searchResponses))
-            } else {
-                connection.request(CryptoEvents.SearchBackend(event.query))
-            }
+        let responses = moc.checkSearchCache(forRoute: route)
+        if let searchResponses = responses {
+            connection.request(CryptoEvents.SearchDataResult.init(event.query, data: searchResponses))
+        } else {
+            connection.request(CryptoEvents.SearchBackend(event.query))
         }
     }
 }
@@ -46,10 +45,12 @@ struct GetCryptoSearchBackendExpedition: GraniteExpedition {
             .service
             .getList()
             .replaceError(with: [])
-            .map { result in
+            .map { [weak coreDataInstance] result in
+                
+                guard let instance = coreDataInstance else { return CryptoEvents.SearchDataResult(event.query, data: []) }
                 
                 result.forEach { response in
-                    response.save(moc: coreDataInstance)
+                    response.save(moc: instance)
                 }
                 
                 return CryptoEvents.SearchDataResult(event.query, data: result) }
@@ -156,7 +157,7 @@ struct GetCryptoSearchQuotesExpedition: GraniteExpedition {
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
         let query: String = event.data.compactMap { $0.id }.joined(separator: ",")
-        
+        let data = event.data
         publisher = state
             .service
             .getQuotes(symbols: query)
@@ -164,7 +165,7 @@ struct GetCryptoSearchQuotesExpedition: GraniteExpedition {
             .map { result in
                 var crypto: [CryptoCurrency] = []
                 for item in result {
-                    if let symbol = event.data.first(where: { $0.entityDescription.lowercased() == item.name.lowercased()}) {
+                    if let symbol = data.first(where: { $0.entityDescription.lowercased() == item.name.lowercased()}) {
                         
                         crypto.append(.init(ticker: symbol.symbolName,
                                             date: item.lastUpdatedAt.date(),

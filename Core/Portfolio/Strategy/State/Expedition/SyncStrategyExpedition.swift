@@ -129,7 +129,7 @@ struct StockUpdatedHistoryExpedition: GraniteExpedition {
         
         let stocks = event.data
         
-        stocks.save(moc: coreDataInstance) { _ in }
+        _ = stocks.save(moc: coreDataInstance)
         
         state.securitiesSynced.append(stocks.first?.assetID ?? "")
         
@@ -151,7 +151,7 @@ struct CryptoUpdatedHistoryExpedition: GraniteExpedition {
         
         let crypto = event.data
         
-        crypto.save(moc: coreDataInstance) { _ in }
+        _ = crypto.save(moc: coreDataInstance)
         
         state.securitiesSynced.append(crypto.first?.assetID ?? "")
         
@@ -183,14 +183,11 @@ struct SyncCompleteStrategyExpedition: GraniteExpedition {
             return
         }
         
-        coreDataInstance.getPortfolio(username: user.info.username) { portfolio in
-            user.portfolio = portfolio
-            
-            connection.update(\EnvironmentDependency.user, value: user, .home)
-            connection.request(StrategyEvents.Get())
-
-            GraniteLogger.info("set user after strategy sync", .expedition, focus: true)
-        }
+        let portfolio = coreDataInstance.getPortfolio(username: user.info.username)
+        user.portfolio = portfolio
+        
+        connection.update(\EnvironmentDependency.user, value: user, .home)
+        connection.request(StrategyEvents.Get())
         
         GraniteLogger.info("Strategy Sync Complete", .expedition, focus: true)
     }

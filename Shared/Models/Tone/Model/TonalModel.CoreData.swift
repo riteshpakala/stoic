@@ -10,25 +10,26 @@ import CoreData
 import GraniteUI
 
 extension NSManagedObjectContext {
-    public func getTones(_ completion: @escaping (([TonalModelObject]) -> Void)) {
+    public func getTones() -> [TonalModelObject] {
         let request: NSFetchRequest = TonalModelObject.fetchRequest()
-        self.performAndWait { [weak self] in
-            if let tones = try? self?.fetch(request) {
-                completion(tones)
-            } else {
-                completion([])
+        
+        let result: [TonalModelObject] = self.performAndWaitPlease { [weak self] in
+            do {
+                return try self?.fetch(request) ?? []
+            } catch let error {
+                return []
             }
         }
+        return result
     }
-    public func getTones(forSecurity security: Security,
-                         _ completion: @escaping (([TonalModelObject]) -> Void)) {
+    public func getTones(forSecurity security: Security) -> [TonalModelObject] {
         
-        security.getQuoteObject(moc: self) { quote in
-            if let model = quote?.tonalModel {
-                completion(Array(model))
-            } else {
-                completion([])
-            }
+        let quote = security.getQuoteObject(moc: self)
+        
+        if let model = quote?.tonalModel {
+            return Array(model)
+        } else {
+            return []
         }
     }
 }
@@ -88,42 +89,41 @@ extension TonalModelObject {
 }
 
 extension TonalModel {
-    func save(moc: NSManagedObjectContext, overwrite: Bool = false, completion: @escaping ((Bool) -> Void)) {
+    func save(moc: NSManagedObjectContext, overwrite: Bool = false) -> Bool {
         guard let modelData = self.david.archived,
               let sentiment = self.tuners.archived,
               let range = self.range.archived else {
             
-            completion(false)
-            return
+            return false
         }
         
-        moc.performAndWait { [weak self] in
-            self?.quote.getObject(moc: moc) { [weak self] quote in
-                do {
-                    let object = TonalModelObject(context: moc)
-                    object.date = Date.today
-                    object.daysTrained = Int32(self?.daysTrained ?? 0)
-                    object.model = modelData
-                    object.sentimentTuners = sentiment
-                    object.quote = quote
-                    object.range = range
-                    quote?.addToTonalModel(object)
+        let result: Bool = moc.performAndWaitPlease { [weak self] in
+            let quote = self?.quote.getObject(moc: moc)
+            do {
+                let object = TonalModelObject(context: moc)
+                object.date = Date.today
+                object.daysTrained = Int32(self?.daysTrained ?? 0)
+                object.model = modelData
+                object.sentimentTuners = sentiment
+                object.quote = quote
+                object.range = range
+                quote?.addToTonalModel(object)
+                
+                if overwrite, let modelID = self?.modelID {
+                    object.id = modelID
                     
-                    if overwrite, let modelID = self?.modelID {
-                        object.id = modelID
-                        
-                        try moc.save()
-                        completion(true)
-                    } else {
-                        
-                        completion(false)
-                    }
-                    
-                } catch let error {
-                    GraniteLogger.error("failed to save tonal model\n\(error)", .utility)
-                    completion(false)
+                    try moc.save()
+                    return true
+                } else {
+                    return false
                 }
+                
+            } catch let error {
+                GraniteLogger.error("failed to save tonal model\n\(error)", .utility)
+                return false
             }
         }
+        
+        return result
     }
 }

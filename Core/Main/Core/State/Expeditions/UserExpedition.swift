@@ -99,18 +99,17 @@ struct LoginResultExpedition: GraniteExpedition {
                                                created: (Int(user.created) ?? 0).asDouble.date(),
                                                uid: event.id)
             
-            coreDataInstance.getPortfolio(username: info.username) { portfolio in
-                let newUser: User = .init(info: info)
-                if let portfolio = portfolio {
-                    newUser.portfolio = portfolio
-                }
-                connection.update(\RouterDependency.authState, value: .authenticated, .here)
-                connection.update(\EnvironmentDependency.user, value: newUser, .here)
-                
-                connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
-                
-                GraniteLogger.info("set user", .expedition, focus: true)
+            let portfolio = coreDataInstance.getPortfolio(username: info.username)
+            let newUser: User = .init(info: info)
+            if let portfolio = portfolio {
+                newUser.portfolio = portfolio
             }
+            connection.update(\RouterDependency.authState, value: .authenticated, .here)
+            connection.update(\EnvironmentDependency.user, value: newUser, .here)
+            
+            connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
+            
+            GraniteLogger.info("set user", .expedition, focus: true)
         }
     }
 }

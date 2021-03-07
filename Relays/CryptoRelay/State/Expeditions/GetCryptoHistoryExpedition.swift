@@ -32,19 +32,25 @@ struct GetCryptoHistoryExpedition: GraniteExpedition {
         }
         
         
-        let decoder = JSONDecoder()
         publisher = pub
             .replaceError(with: .init(data: nil, type: CryptoServiceModels.GetMarketOHLC.self))
             .map { (response) in
                 
-                guard let decoded = try? decoder.decode(response.type,
-                                                        from: response.data ?? Data()) else {
-                    return CryptoEvents.History.init(data: [], interval: event.interval)
+                var decoded: CryptoServiceModels.GetMarketOHLC?
+                do {
+                    try autoreleasepool {
+                        decoded = try JSONDecoder().decode(response.type, from: response.data ?? Data())
+                    }
+                } catch let error {
+                    GraniteLogger.info("failed getting crypto movers \(error)")
+                    decoded = nil
                 }
                 
+                guard let decodedResult = decoded else { return CryptoEvents.History.init(data: [], interval: event.interval) }
+                
                 var coins: [CryptoCurrency] = []
-                for key in decoded.result.keys {
-                    if let history = decoded.result[key] {
+                for key in decodedResult.result.keys {
+                    if let history = decodedResult.result[key] {
                         for index in 0..<history.count {
                             let data = history[index]
                             

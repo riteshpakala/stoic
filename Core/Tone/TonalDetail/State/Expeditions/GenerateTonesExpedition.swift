@@ -32,10 +32,9 @@ struct GenerateTonesExpedition: GraniteExpedition {
     
         connection.update(\DetailDependency.detail.tonalStage, value: .generating)
         
-        quote.getObject(moc: coreDataInstance) { object in
-            if let tonalModel = object?.tonalModel?.first?.asTone {
-                preparePredictions(tonalModel)
-            }
+        let object = quote.getObject(moc: coreDataInstance)
+        if let tonalModel = object?.tonalModel?.first?.asTone {
+            preparePredictions(tonalModel)
         }
     }
     

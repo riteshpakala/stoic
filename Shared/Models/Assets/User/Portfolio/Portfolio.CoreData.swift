@@ -11,33 +11,51 @@ import GraniteUI
 import SwiftUI
 
 extension NSManagedObjectContext {
-    public func pullPortfolios(_ completion: @escaping (([PortfolioObject]?) -> Void)) {
-        self.performAndWait { [weak self] in
-            completion(try? self?.fetch(PortfolioObject.fetchRequest()))
+    public func pullPortfolios() -> [PortfolioObject]? {
+        let result: [PortfolioObject]? = self.performAndWaitPlease { [weak self] in
+            do {
+                if let objects = try self?.fetch(PortfolioObject.request()) {
+                    return objects
+                } else {
+                    return nil
+                }
+            } catch let error {
+                return nil
+            }
         }
+        
+        return result
     }
     
-    public func getPortfolioObject(_ username: String,
-                                   _ completion: @escaping((PortfolioObject?) -> Void)) {
+    public func getPortfolioObject(_ username: String) -> PortfolioObject? {
         let request: NSFetchRequest = PortfolioObject.fetchRequest()
         request.predicate = NSPredicate(format: "(username == %@)",
                                         username)
         
-        self.performAndWait { [weak self] in
-            completion(try? self?.fetch(request).first)
+        let result: PortfolioObject? = self.performAndWaitPlease { [weak self] in
+            do {
+                if let object = try self?.fetch(request).first {
+                    return object
+                } else {
+                    return nil
+                }
+            } catch let error {
+                return nil
+            }
         }
+        
+        return result
     }
     
-    public func getPortfolio(username: String, _ completion: @escaping ((Portfolio?) -> Void)){
-        self.getPortfolioObject(username) { object in
-            completion(object?.asPortfolio)
-        }
+    public func getPortfolio(username: String) -> Portfolio? {
+        let obj = self.getPortfolioObject(username)
+        return obj?.asPortfolio
     }
     
-    func resetStrategy(username: String,
-                       _ completion: @escaping((Portfolio?) -> Void)) {
-        self.getPortfolioObject(username) { object in
-            self.performAndWait { [weak self] in
+    func resetStrategy(username: String) -> Portfolio? {
+        let object = self.getPortfolioObject(username)
+        let result: Portfolio? = self.performAndWaitPlease { [weak self] in
+            do {
                 //We are only using 1 strategy for now
                 //otherwise we would need to specify the strategy
                 if let strategy = object?.strategies?.first {
@@ -46,21 +64,25 @@ extension NSManagedObjectContext {
                     
                     object?.strategies = [strategy]
                     
-                    try? self?.save()
+                    try self?.save()
                     
-                    completion(object?.asPortfolio)
+                    return object?.asPortfolio
                 } else {
-                    completion(nil)
+                    return nil
                 }
+            } catch let error {
+                return nil
             }
         }
+        
+        return result
     }
     
     func removeFromStrategy(username: String,
-                            _ security: Security,
-                           _ completion: @escaping((Portfolio?) -> Void)) {
-        self.getPortfolioObject(username) { [weak self] object in
-            self?.performAndWait { [weak self] in
+                            _ security: Security) -> Portfolio? {
+        let object = self.getPortfolioObject(username)
+        let result: Portfolio? = self.performAndWaitPlease { [weak self] in
+            do {
                 //We are only using 1 strategy for now
                 //otherwise we would need to specify the strategy
                 if let strategy = object?.strategies?.first {
@@ -74,62 +96,64 @@ extension NSManagedObjectContext {
                             strategy.investmentData = investments.archived
                             
                             
-                            try? self?.save()
+                            try self?.save()
                         }
                     }
                     
-                    completion(object?.asPortfolio)
+                    return object?.asPortfolio
                 } else {
-                    completion(nil)
+                    return nil
                 }
+            } catch let error {
+                return nil
             }
         }
+        
+        return result
     }
     
     func closeFromStrategy(username: String,
-                            _ security: Security,
-                           _ completion: @escaping((Portfolio?) -> Void)) {
-        self.getPortfolioObject(username) { [weak self] object in
-            self?.performAndWait { [weak self] in
+                            _ security: Security) -> Portfolio? {
+        
+        let object = self.getPortfolioObject(username)
+        let result: Portfolio? = self.performAndWaitPlease { [weak self] in
+            do {
                 //We are only using 1 strategy for now
                 //otherwise we would need to specify the strategy
-                if let strategy = object?.strategies?.first {
+                if let strategy = object?.strategies?.first,
+                   let investments = strategy.investmentData?.investments,
+                   let index = investments.items.firstIndex(where: { $0.assetID == security.assetID }){
                     
-                    if let investments = strategy.investmentData?.investments,
-                       let index = investments.items.firstIndex(where: { $0.assetID == security.assetID }){
-                        
-                        investments.items[index].closed = true
-                        investments.items[index].closedChange = investments.items[index].latestChange
-                        
-                        strategy.investmentData = investments.archived
-                        
-                        try? self?.save()
-                    }
+                    investments.items[index].closed = true
+                    investments.items[index].closedChange = investments.items[index].latestChange
                     
-                    completion(object?.asPortfolio)
+                    strategy.investmentData = investments.archived
+                    
+                    try self?.save()
                 } else {
-                    completion(nil)
+                    return nil
                 }
+                
+                return object?.asPortfolio
+            } catch let error {
+                return nil
             }
         }
+        
+        return result
     }
 }
 
 extension Portfolio {
 
     func addToStrategy(_ securities: [Security],
-                       moc: NSManagedObjectContext,
-                       _ completion: @escaping((Portfolio?) -> Void)) {
-        
-        moc.getPortfolioObject(self.username) { object in
-            
-            //TODO:
-            //Only keeping a single strategy alive for now
-            //will open it up later to manage multiple strategies
-            //at a time.
-            moc.performAndWait {
+                       moc: NSManagedObjectContext) -> Portfolio? {
+        let object = moc.getPortfolioObject(username)
+        let result: Portfolio? = moc.performAndWaitPlease { [weak self] in
+            do {
+                
                 let quoteRequest: NSFetchRequest = QuoteObject.fetchRequest()
-                guard let quoteObjects = try? moc.fetch(quoteRequest) else { return }
+                let quoteObjects = try moc.fetch(quoteRequest)
                 var quotes = quoteObjects.filter( { quote in securities.filter({ quote.contains(security: $0) }).isNotEmpty } )
                 let quotesMissing = securities.filter( { sec in quotes.filter({ $0.contains(security: sec) }).isEmpty } )
                 
@@ -177,34 +201,49 @@ extension Portfolio {
                 object?.removeFromStrategies(strategyToModify)
                 object?.addToStrategies(strategyToModify)
                 
-                try? moc.save()
+                try moc.save()
                 
-                completion(object?.asPortfolio)
+                return object?.asPortfolio
+            } catch let error {
+                return nil
             }
         }
+        
+        return result
     }
 }
 
 extension PortfolioObject {
     public var asPortfolio: Portfolio {
-        return .init(self.username,
+        
+        let username: String = self.username
+        
+        
+        let portfolio: Portfolio = .init(username, .init([]), [], [])
+        
+        return portfolio/*.init(self.username,
                      .init(Array(self.securities?.latests ?? .init()).asSecurities),
                      self.floor?.compactMap( { $0.asFloor } ) ?? [],
                      self.strategies?.compactMap( { $0.asStrategy }) ?? []
-                     )
+                     )*/
     }
     
     public static func hasSecurity(moc: NSManagedObjectContext,
-                                   username: String,
-                                   _ completion: @escaping((Bool) -> Void)) {
+                                   username: String) -> Bool {
         let request: NSFetchRequest = PortfolioObject.fetchRequest()
         request.predicate = NSPredicate(format: "(username == %@)",
                                         username)
         
-        moc.performAndWait {
-            let objects = try? moc.fetch(request)
-            
-            completion(objects != nil && objects?.isNotEmpty == true)
+        let exists: Bool = moc.performAndWaitPlease {
+            do {
+                let objects = try moc.fetch(request)
+                
+                return objects.isNotEmpty
+            } catch let error {
+                return false
+            }
         }
+        
+        return exists
     }
 }

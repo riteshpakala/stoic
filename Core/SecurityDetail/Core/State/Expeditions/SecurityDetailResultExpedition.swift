@@ -24,9 +24,9 @@ struct StockDetailResultExpedition: GraniteExpedition {
         
         let stocks = event.data
         
-        stocks.save(moc: coreDataInstance) { quote in
-            state.quote = quote
-        }
+        let quote = stocks.save(moc: coreDataInstance)
+        
+        state.quote = quote
     }
 }
 
@@ -44,8 +44,8 @@ struct CryptoDetailResultExpedition: GraniteExpedition {
         
         let crypto = event.data
         
-        crypto.save(moc: coreDataInstance) { quote in
-            state.quote = quote
-        }
+        let quote = crypto.save(moc: coreDataInstance)
+        
+        state.quote = quote
     }
 }

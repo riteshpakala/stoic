@@ -191,12 +191,11 @@ struct ThinkTonalModelExpedition: GraniteExpedition {
         
         state.tonesSynced.append(model.modelID)
         
-        model.save(moc: coreDataInstance, overwrite: true) { success in
-            if success {
-                connection.request(TonalModelsEvents.Train())
-                
-                GraniteLogger.info("saved new tonal model\nself:\(String(describing: self))", .expedition, focus: true)
-            }
+        let success = model.save(moc: coreDataInstance, overwrite: true)
+        if success {
+            connection.request(TonalModelsEvents.Train())
+            
+            GraniteLogger.info("saved new tonal model\nself:\(String(describing: self))", .expedition, focus: true)
         }
     }
 }
@@ -213,7 +212,7 @@ struct StockUpdatedHistoryTonalModelExpedition: GraniteExpedition {
         
         let stocks = event.data
         
-        stocks.save(moc: coreDataInstance) { _ in }
+        _ = stocks.save(moc: coreDataInstance)
         
         state.securitiesSynced.append(stocks.first?.assetID ?? "")
         
@@ -235,7 +234,7 @@ struct CryptoUpdatedHistoryTonalModelExpedition: GraniteExpedition {
         
         let crypto = event.data
         
-        crypto.save(moc: coreDataInstance) { _ in }
+        _ = crypto.save(moc: coreDataInstance)
         
         state.securitiesSynced.append(crypto.first?.assetID ?? "")
         

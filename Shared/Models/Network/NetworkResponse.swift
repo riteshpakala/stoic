@@ -55,25 +55,29 @@ extension NSManagedObjectContext {
             }
         }
     }
-    public func networkResponseExists(forRoute route: String,
-                                             _ completion: @escaping((NetworkResponseType?) -> Void)) {
+    public func networkResponseExists(forRoute route: String) -> NetworkResponseType? {
         
         let request: NSFetchRequest = NetworkResponseObject.fetchRequest()
         request.predicate = NSPredicate(format: "(route == %@)",
                                         route)
         
         
-        self.performAndWait { [weak self] in
-            if let object = try? self?.fetch(request).first {
-                completion(NetworkResponseType.init(rawValue: object.responseType))
-            } else {
-                completion(nil)
+        let result: NetworkResponseType? = self.performAndWaitPlease { [weak self] in
+            do {
+                if let object = try self?.fetch(request).first {
+                    return NetworkResponseType.init(rawValue: object.responseType)
+                } else {
+                    return nil
+                }
+            } catch let error {
+                return nil
             }
         }
+        
+        return result
     }
     
-    public func networkResponse(forRoute route: String,
-                                             _ completion: @escaping((BaseNetworkResponse?) -> Void)) {
+    public func networkResponse(forRoute route: String) -> BaseNetworkResponse? {
         
         let request: NSFetchRequest = BaseNetworkResponseObject.fetchRequest()
         request.predicate = NSPredicate(format: "(route == %@)",
@@ -81,30 +85,72 @@ extension NSManagedObjectContext {
         let sort = NSSortDescriptor(key: "date", ascending: false)
         request.sortDescriptors = [sort]
         
-        self.performAndWait { [weak self] in
-            completion(try? self?.fetch(request).first?.asNetworkResponse)
+        
+        let result = self.performAndWaitPlease { [weak self] in
+            return (try? self?.fetch(request).first?.asNetworkResponse)
         }
+        
+        return result
     }
     
-    public func checkSearchCache(forRoute route: String,
-                                 _ completion: @escaping(([SearchResponse]?) -> Void)) {
+    public func checkSearchCache(forRoute route: String) -> [SearchResponse]? {
         
         let request: NSFetchRequest = SearchResponseObject.fetchRequest()
         request.predicate = NSPredicate(format: "(route == %@)",
                                         route)
         
-        self.networkResponseExists(forRoute: route) { type in
-            switch type {
-            case .search:
-                self.performAndWait { [weak self] in
-                    if let objects = try? self?.fetch(request) {
-                        completion(objects.map { $0.asSearchResponse })
+        let type = networkResponseExists(forRoute: route)
+        
+        switch type {
+        case .search:
+            let result: [SearchResponse]? = self.performAndWaitPlease { [weak self] in
+                do {
+                    if let objects = try self?.fetch(request) {
+                        return objects.map { $0.asSearchResponse }
+                    } else {
+                        return nil
                     }
+                } catch let error {
+                    return nil
                 }
-            default:
-                completion(nil)
-                break
             }
+            return result
+        default:
+            return nil
+        }
+    }
+}
+extension NSManagedObjectContext {
+    func performAndWaitPlease<T>(_ block: () throws -> T) rethrows -> T {
+        return try _performAndWaitHelper(
+            fn: performAndWait, execute: block, rescue: { throw $0 }
+        )
+    }
+
+    /// Helper function for convincing the type checker that
+    /// the rethrows invariant holds for performAndWait.
+    ///
+    /// Source: https://github.com/apple/swift/blob/bb157a070ec6534e4b534456d208b03adc07704b/stdlib/public/SDK/Dispatch/Queue.swift#L228-L249
+    private func _performAndWaitHelper<T>(
+        fn: (() -> Void) -> Void,
+        execute work: () throws -> T,
+        rescue: ((Error) throws -> (T))) rethrows -> T
+    {
+        var result: T?
+        var error: Error?
+        withoutActuallyEscaping(work) { _work in
+            fn {
+                do {
+                    result = try _work()
+                } catch let e {
+                    error = e
+                }
+            }
+        }
+        if let e = error {
+            return try rescue(e)
+        } else {
+            return result!
         }
     }
 }

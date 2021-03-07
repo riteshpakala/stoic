@@ -39,7 +39,7 @@ public struct EnvironmentConfig {
                 return .init(windows: [
                             [ .search, .portfolio(.holdings), .topVolume(.stock), ],
                             [ .unassigned, .unassigned , .unassigned ],
-                            [ .portfolio(.preview), .tonalBrowser(.empty), .winnersAndLosers(.stock)]
+                            [ .unassigned, .tonalBrowser(.empty), .winnersAndLosers(.stock)]
                         ])
             case .modelCreate(let payload):
                 return .init(windows: [

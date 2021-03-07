@@ -27,12 +27,11 @@ struct ResetStrategyExpedition: GraniteExpedition {
         }
         
         
-        coreDataInstance.resetStrategy(username: user.info.username) { updatedPortfolio in
-            user.portfolio = updatedPortfolio
-            
-            connection.update(\EnvironmentDependency.user, value: user, .home)
-            
-            GraniteLogger.info("strategy reset", .expedition, focus: true)
-        }
+        let updatedPortfolio = coreDataInstance.resetStrategy(username: user.info.username)
+        user.portfolio = updatedPortfolio
+        
+        connection.update(\EnvironmentDependency.user, value: user, .home)
+        
+        GraniteLogger.info("strategy reset", .expedition, focus: true)
     }
 }

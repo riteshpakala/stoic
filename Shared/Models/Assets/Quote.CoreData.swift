@@ -9,15 +9,20 @@ import CoreData
 import Foundation
 
 extension NSManagedObjectContext {
-    public func getQuotes(_ completion: @escaping(([Quote]) -> Void)) {
+    public func getQuotes() -> [Quote] {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
-        self.performAndWait { [weak self] in
-            if let quotes = try? self?.fetch(request) {
-                completion(quotes.map { $0.asQuote })
-            } else {
-                completion([])
+        
+        let result: [Quote] = self.performAndWaitPlease { [weak self] in
+            
+            do {
+                let quotes = try self?.fetch(request) ?? []
+                return quotes.map { $0.asQuote }
+            } catch let error {
+                return []
             }
         }
+        
+        return result
     }
 }
 
@@ -31,14 +36,19 @@ extension Quote {
         return request
     }
     
-    public func getObject(moc: NSManagedObjectContext,
-                          _ completion: @escaping((QuoteObject?) -> Void)){
+    public func getObject(moc: NSManagedObjectContext) -> QuoteObject? {
         
         let request: NSFetchRequest = self.getObjectRequest()
         
-        moc.performAndWait {
-            completion(try? moc.fetch(request).first)
+        let result: QuoteObject? = moc.performAndWaitPlease {
+            do {
+                return try moc.fetch(request).first
+            } catch let error {
+                return nil
+            }
         }
+        
+        return result
     }
 }
 

@@ -28,13 +28,12 @@ struct HoldingSelectedExpedition: GraniteExpedition {
         switch state.context {
         case .portfolio:
             if state.addToPortfolio {
-                security.addToPortfolio(username: user.info.username,
-                                        moc: coreDataInstance) { portfolio in
-                    if let portfolio = portfolio {
-                        GraniteLogger.info("adding to portfolio:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
-                        connection.update(\EnvironmentDependency.user.portfolio,
-                                          value: portfolio)
-                    }
+                let portfolio = security.addToPortfolio(username: user.info.username,
+                                        moc: coreDataInstance)
+                if let portfolio = portfolio {
+                    GraniteLogger.info("adding to portfolio:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
+                    connection.update(\EnvironmentDependency.user.portfolio,
+                                      value: portfolio)
                 }
             } else {
                 guard let router = connection.retrieve(\RouterDependency.router) else { return }
@@ -53,16 +52,15 @@ struct HoldingSelectedExpedition: GraniteExpedition {
             }
             
             
-            security.addToFloor(username: user.info.username,
+            let portfolio = security.addToFloor(username: user.info.username,
                                 location: location,
-                                moc: coreDataInstance) { portfolio in
-                if let portfolio = portfolio {
-                    
-                    GraniteLogger.info("adding to floor:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
-                    
-                    connection.update(\EnvironmentDependency.user.portfolio,
-                                      value: portfolio)
-                }
+                                moc: coreDataInstance)
+            if let portfolio = portfolio {
+                
+                GraniteLogger.info("adding to floor:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
+                
+                connection.update(\EnvironmentDependency.user.portfolio,
+                                  value: portfolio)
             }
         default:
             break
@@ -88,10 +86,10 @@ struct HoldingSelectionsConfirmedExpedition: GraniteExpedition {
         switch state.context {
         case .strategy:
             let selections = securities.filter({ event.assetIDs.contains($0.assetID) })
-            portfolio?.addToStrategy(selections, moc: coreDataInstance) { portfolio in
-                connection.update(\EnvironmentDependency.user.portfolio,
-                                  value: portfolio)
-            }
+            let updatedPortfolio = portfolio?.addToStrategy(selections, moc: coreDataInstance)
+            connection.update(\EnvironmentDependency.user.portfolio,
+                              value: updatedPortfolio)
+            
             break
         default:
             break

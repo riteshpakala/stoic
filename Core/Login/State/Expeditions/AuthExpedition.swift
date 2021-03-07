@@ -172,22 +172,22 @@ struct SignupResultExpedition: GraniteExpedition {
                                                created: (Int(user.created) ?? 0).asDouble.date(),
                                                uid: event.id)
             
-            coreDataInstance.getPortfolio(username: info.username) { portfolio in
-                let newUser: User = .init(info: info)
-                if let portfolio = portfolio {
-                    newUser.portfolio = portfolio
-                }
-                connection.update(\RouterDependency.authState, value: .authenticated, .home)
-                connection.update(\EnvironmentDependency.user, value: newUser, .home)
-                connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
-                
-                switch state.stage {
-                case .signup:
-                    connection.request(LoginEvents.AuthComplete.init(type: .signup), .contact)
-                    state.success = true
-                default:
-                    break
-                }
+            let portfolio = coreDataInstance.getPortfolio(username: info.username)
+            
+            let newUser: User = .init(info: info)
+            if let portfolio = portfolio {
+                newUser.portfolio = portfolio
+            }
+            connection.update(\RouterDependency.authState, value: .authenticated, .home)
+            connection.update(\EnvironmentDependency.user, value: newUser, .home)
+            connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
+            
+            switch state.stage {
+            case .signup:
+                connection.request(LoginEvents.AuthComplete.init(type: .signup), .contact)
+                state.success = true
+            default:
+                break
             }
         }
     }
