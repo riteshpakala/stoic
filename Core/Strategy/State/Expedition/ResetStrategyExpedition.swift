@@ -30,6 +30,9 @@ struct ResetStrategyExpedition: GraniteExpedition {
         let updatedPortfolio = coreDataInstance.resetStrategy(username: user.info.username)
         user.portfolio = updatedPortfolio
         
+        state.strategy = state.strategy.updated(moc: coreDataInstance) ?? state.strategy
+        connection.update(\StrategyDependency.strategy, value: state.strategy)
+        
         connection.update(\EnvironmentDependency.user, value: user)
         
         GraniteLogger.info("strategy reset", .expedition, focus: true)

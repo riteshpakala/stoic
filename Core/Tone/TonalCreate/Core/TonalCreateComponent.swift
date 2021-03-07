@@ -23,8 +23,7 @@ public struct TonalCreateComponent: GraniteComponent {
                 .listen(to: command, .stop)
                 .payload(payload)
         case .set:
-            TonalSetComponent(state: inject(\.toneDependency,
-                                            target: \.tone.set.state))
+            TonalSetComponent()
                 .listen(to: command, .stop)
                 .showEmptyState
         case .tune:

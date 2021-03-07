@@ -902,6 +902,8 @@
 		71C2BFB325ABE26A006445EB /* GetFloorExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C2BFB125ABE26A006445EB /* GetFloorExpedition.swift */; };
 		71CA211825A4AEC900C448D7 /* TonalService.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA211725A4AEC900C448D7 /* TonalService.Model.swift */; };
 		71CA211925A4AEC900C448D7 /* TonalService.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA211725A4AEC900C448D7 /* TonalService.Model.swift */; };
+		71CA308525F543DB004518F9 /* TonalCreatePrepare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA308425F543DB004518F9 /* TonalCreatePrepare.swift */; };
+		71CA308625F543DB004518F9 /* TonalCreatePrepare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA308425F543DB004518F9 /* TonalCreatePrepare.swift */; };
 		71CC7D9225C8E76300610B8A /* NetworkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */; };
 		71CC7D9325C8E76300610B8A /* NetworkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */; };
 		71CC7D9425C8E76300610B8A /* NetworkRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8D25C8E76200610B8A /* NetworkRelay.swift */; };
@@ -1501,6 +1503,7 @@
 		71C2BFA525ABE1ED006445EB /* FloorEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorEvents.swift; sourceTree = "<group>"; };
 		71C2BFB125ABE26A006445EB /* GetFloorExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFloorExpedition.swift; sourceTree = "<group>"; };
 		71CA211725A4AEC900C448D7 /* TonalService.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Model.swift; sourceTree = "<group>"; };
+		71CA308425F543DB004518F9 /* TonalCreatePrepare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalCreatePrepare.swift; sourceTree = "<group>"; };
 		71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEvents.swift; sourceTree = "<group>"; };
 		71CC7D8D25C8E76200610B8A /* NetworkRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRelay.swift; sourceTree = "<group>"; };
 		71CC7D8F25C8E76200610B8A /* NetworkState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkState.swift; sourceTree = "<group>"; };
@@ -1946,6 +1949,7 @@
 				714AD71B25CB3F3B00752A92 /* Discuss.swift */,
 				712415F125A35F2200169B9C /* Search.swift */,
 				7143EEE6259955D800B1DCB5 /* Tone.swift */,
+				71ADF23025B272E600B3B16E /* Strategy */,
 				71D3C2E525AA88F90033350B /* Broadcasts */,
 			);
 			path = Environment;
@@ -2008,6 +2012,7 @@
 		7118A226259313FD007E7EAB /* State */ = {
 			isa = PBXGroup;
 			children = (
+				71CA308325F543CB004518F9 /* Expeditions */,
 				7118A227259313FD007E7EAB /* TonalCreateState.swift */,
 			);
 			path = State;
@@ -2646,7 +2651,6 @@
 		7136B65425A008B40014F693 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
-				71017E4625B25D6100E056A5 /* Strategy */,
 				71B42FB125A875DD00A23F4D /* Holdings */,
 				7156AC2A25A8716400648941 /* Core */,
 			);
@@ -3476,6 +3480,14 @@
 			path = Expeditions;
 			sourceTree = "<group>";
 		};
+		71CA308325F543CB004518F9 /* Expeditions */ = {
+			isa = PBXGroup;
+			children = (
+				71CA308425F543DB004518F9 /* TonalCreatePrepare.swift */,
+			);
+			path = Expeditions;
+			sourceTree = "<group>";
+		};
 		71CC7D8B25C8E76200610B8A /* NetworkRelay */ = {
 			isa = PBXGroup;
 			children = (
@@ -3818,6 +3830,7 @@
 				7125BD6325A12EED00F22717 /* ViewLibrary */,
 				7179AD2F25ACE5E5003FD06F /* Special */,
 				71F1EC4F25A0F47A00D32C52 /* Search */,
+				71017E4625B25D6100E056A5 /* Strategy */,
 				71C2BFA125ABE1ED006445EB /* Floor */,
 				7136B65425A008B40014F693 /* Portfolio */,
 				7179D3E325AC936E00C82063 /* Tone */,
@@ -3926,7 +3939,6 @@
 			isa = PBXGroup;
 			children = (
 				7156AC1025A86E9B00648941 /* User.swift */,
-				71ADF23025B272E600B3B16E /* Strategy */,
 				71494D4B25ABE7180086E598 /* Floor */,
 				71F902F225AB1E7D00E6A085 /* Portfolio */,
 			);
@@ -4478,6 +4490,7 @@
 				71F1EC3E25A0F04400D32C52 /* HeaderComponent.swift in Sources */,
 				7108891B2591B0A400795EDF /* CryptoCurrency.swift in Sources */,
 				71140299258DB5E700BA387D /* StockState.swift in Sources */,
+				71CA308525F543DB004518F9 /* TonalCreatePrepare.swift in Sources */,
 				71F1EC3A25A0F04400D32C52 /* HeaderState.swift in Sources */,
 				714342E325907253001F26A4 /* InnerShadowViewModifiers.swift in Sources */,
 				7109643025A5A1F40021B42B /* TonalSound.swift in Sources */,
@@ -4851,6 +4864,7 @@
 				71C08E9325AF770100765894 /* NetworkResponse.swift in Sources */,
 				710889782591B29800795EDF /* Await+Operators.swift in Sources */,
 				71F1EC3F25A0F04400D32C52 /* HeaderComponent.swift in Sources */,
+				71CA308625F543DB004518F9 /* TonalCreatePrepare.swift in Sources */,
 				7125BD8925A1316500F22717 /* DefaultVerticalValueView.swift in Sources */,
 				71EE7093258D9072005B2B8E /* AssetGridItemState.swift in Sources */,
 				71C2BFAB25ABE1ED006445EB /* FloorEvents.swift in Sources */,

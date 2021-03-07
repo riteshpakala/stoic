@@ -43,6 +43,10 @@ public class TonalCompileCenter: GraniteCenter<TonalCompileState> {
         tonalCompile.state
     }
     
+    var tuneState: Tone.Tune.State {
+        tone.tune.stage
+    }
+    
     var model: TonalModel? {
         tonalCompile.tonalModel
     }

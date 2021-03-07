@@ -32,6 +32,8 @@ public class TonalCreateState: GraniteState {
 }
 
 public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
+    @GraniteDependency
+    var routerDependency: RouterDependency
     
     @GraniteDependency
     var toneDependency: ToneDependency
@@ -40,6 +42,14 @@ public class TonalCreateCenter: GraniteCenter<TonalCreateState> {
     var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
-        []
+        [
+            PrepareTonalCreateExpedition.Discovery()
+        ]
+    }
+    
+    public override var links: [GraniteLink] {
+        [
+            .onAppear(TonalCreateEvents.Prepare(component: self))
+        ]
     }
 }

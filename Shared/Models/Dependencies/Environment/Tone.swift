@@ -75,6 +75,11 @@ public class Tone {
         var state: Find.State = .none {
             didSet {
                 lastState = oldValue
+                
+                if state == .parsed {
+                    print("{TEST} \(linkSet == nil)")
+                    linkSet?.toTheStars()
+                }
             }
         }
         var lastState: Find.State = .none
@@ -91,6 +96,7 @@ public class Tone {
         var ticker: String? {
             security?.ticker
         }
+        
         var quote: Quote? {
             didSet {
                 if quote != nil && quote?.ticker == ticker {
@@ -109,19 +115,43 @@ public class Tone {
             let days: Double = sliderDays.number*dayDiff
             return Int(days) + Tone.Constraints.minDays
         }
+        
+        var linkSet: GraniteAdAstra? = nil
     }
     
     public struct Set {
         public enum State {
+            case fetched
             case fetching
             case none
         }
         
-        var stage: State = .none
-        var state: TonalSetState = .init()
+        var stage: State = .none {
+            didSet {
+                if stage == .fetched {
+                    linkTune?.toTheStars()
+                }
+            }
+        }
+        
+        var linkTune: GraniteAdAstra? = nil
     }
     
     public struct Tune {
+        public enum State {
+            case readyToCompile
+            case confirmed
+            case none
+        }
+        
+        var stage: State = .none {
+            didSet {
+                if stage == .readyToCompile {
+                    linkCompile?.toTheStars()
+                }
+            }
+        }
+        
         var tuners: [Date: Tuner] = [:]
         var sentiments: [Date: SentimentOutput] = [:]
         
@@ -137,6 +167,8 @@ public class Tone {
                 }
             }
         }
+        
+        var linkCompile: GraniteAdAstra? = nil
     }
     
     public struct Tuner {
@@ -150,7 +182,6 @@ public class Tone {
         public enum State {
             case compiled
             case compiling
-            case readyToCompile
             case saved
             case none
         }
@@ -168,6 +199,21 @@ public class Tone {
         var slider: SentimentSliderState
         public init(_ sentimentOutput: SentimentOutput = .neutral) {
             slider = .init(sentimentOutput, date: Date.today)
+        }
+    }
+}
+
+extension Tone {
+    func loading(_ stage: TonalCreateStage, component: GraniteAdAstra) {
+        switch stage {
+        case .set:
+            find.linkSet = component
+        case .tune:
+            set.linkTune = component
+        case .compile:
+            tune.linkCompile = component
+        default:
+            break
         }
     }
 }

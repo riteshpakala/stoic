@@ -22,6 +22,8 @@ struct ToneSelectedExpedition: GraniteExpedition {
         guard let security = event.asset.asSecurity else { return }
 
         connection.update(\ToneDependency.tone.find.security, value: security)
+        
+        connection.request(TonalFindEvents.Find())
     }
 }
 
@@ -76,6 +78,8 @@ struct FindTheToneExpedition: GraniteExpedition {
            !quote.needsUpdate {
             connection.update(\ToneDependency.tone.find.quote, value: quote)
             
+            connection.request(TonalFindEvents.Find())
+            
         } else {
             switch security.securityType {
             case .crypto:
@@ -104,6 +108,7 @@ struct StockHistoryExpedition: GraniteExpedition {
         let quote = stocks.save(moc: coreDataInstance)
         if let object = quote {
             connection.update(\ToneDependency.tone.find.quote, value: object)
+            connection.request(TonalFindEvents.Find())
         }
     }
 }
@@ -123,6 +128,7 @@ struct CryptoHistoryExpedition: GraniteExpedition {
         let quote = crypto.save(moc: coreDataInstance)
         if let object = quote {
             connection.update(\ToneDependency.tone.find.quote, value: object)
+            connection.request(TonalFindEvents.Find())
         }
     }
 }

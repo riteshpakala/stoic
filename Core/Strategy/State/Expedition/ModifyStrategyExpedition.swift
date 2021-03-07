@@ -34,6 +34,9 @@ struct RemoveFromStrategyExpedition: GraniteExpedition {
         
         user.portfolio = updatedPortfolio
         
+        state.strategy = state.strategy.updated(moc: coreDataInstance) ?? state.strategy
+        connection.update(\StrategyDependency.strategy, value: state.strategy)
+        
         connection.update(\EnvironmentDependency.user, value: user)
         
         state.securities.removeAll(where: { $0.assetID == event.assetID })
@@ -64,6 +67,9 @@ struct CloseFromStrategyExpedition: GraniteExpedition {
         
         let updatedPortfolio = coreDataInstance.closeFromStrategy(username: user.info.username, security) 
         user.portfolio = updatedPortfolio
+        
+        state.strategy = state.strategy.updated(moc: coreDataInstance) ?? state.strategy
+        connection.update(\StrategyDependency.strategy, value: state.strategy)
         
         connection.update(\EnvironmentDependency.user, value: user)
         

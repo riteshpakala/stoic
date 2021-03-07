@@ -15,12 +15,17 @@ public class TonalModel: Asset {
     }
     
     var targetDate: Date {
-        switch latestSecurity.interval {
+        return date.advanceDate(value: 1)
+        
+        //TODO: Generally we would like daily models
+        //but for now all will be 24 hours
+        //as well as crypto
+        /* switch latestSecurity.interval {
         case .day:
             return date.advanceDate(value: 1)
         case .hour:
             return date.advanceDateHourly(value: 1)
-        }
+        } */
     }
     
     let daysTrained: Int

@@ -28,7 +28,6 @@ public class TonalModelsState: GraniteState {
     var tonesSynced: [String] = []
     var securitiesToSync: [Security] = []
     var securitiesSynced: [String] = []
-    var syncTimer: Timer? = nil
     var type: TonalModelsType
     
     var security: Security?

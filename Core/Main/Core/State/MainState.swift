@@ -32,6 +32,9 @@ public class MainCenter: GraniteCenter<MainState> {
     var envDependency: EnvironmentDependency
     
     @GraniteDependency
+    var strategyDependency: StrategyDependency
+    
+    @GraniteDependency
     var discussDependency: DiscussDependency
     
     public override var expeditions: [GraniteBaseExpedition] {

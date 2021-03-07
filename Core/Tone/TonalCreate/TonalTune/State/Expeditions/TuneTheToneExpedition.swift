@@ -69,7 +69,7 @@ struct TuneTheToneExpedition: GraniteExpedition {
             connection.update(\ToneDependency.tone.tune.sentiments,
                                   value: sentiments)
             
-            connection.update(\ToneDependency.tone.compile.state,
+            connection.update(\ToneDependency.tone.tune.stage,
                                   value: .readyToCompile)
         }
     }

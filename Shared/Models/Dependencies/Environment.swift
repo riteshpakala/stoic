@@ -17,8 +17,6 @@ class EnvironmentDependency: GraniteDependable {
     var user: User = .init()
     
     var floorStage: FloorStage = .none
-
-    var strategiesPortfolio: StrategyState = .init()
     
     var envSettings: EnvironmentStyle.Settings = .init()
 }

@@ -33,6 +33,7 @@ public class StrategyState: GraniteState {
     var securitiesToSync: [Security] = []
     var securitiesSynced: [String] = []
     var securities: [Security] = []
+    var strategy: Strategy = .init([], "", .today, .empty)
     
     var showResetDisclaimer: Bool = false
     var showCloseDisclaimer: Bool {
@@ -62,6 +63,9 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     @GraniteDependency
     var envDependency: EnvironmentDependency
     
+    @GraniteDependency
+    var strategyDependency: StrategyDependency
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetStrategyExpedition.Discovery(),
@@ -84,6 +88,6 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     }
     
     var strategies: [Strategy] {
-        envDependency.user.portfolio?.strategies ?? []
+        [state.strategy]
     }
 }

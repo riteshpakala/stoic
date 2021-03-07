@@ -34,9 +34,6 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
     }
     
     @GraniteDependency
-    var routerDependency: RouterDependency
-    
-    @GraniteDependency
     var toneDependency: ToneDependency
     
     @GraniteDependency

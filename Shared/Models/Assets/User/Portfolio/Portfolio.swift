@@ -11,7 +11,7 @@ public class Portfolio {
     let username: String
     let holdings: Holdings
     let floors: [Floor]
-    let strategies: [Strategy]
+    let strategies: [String]
     
     public struct Holdings {
         let securityGroup: SecurityGroup
@@ -30,7 +30,7 @@ public class Portfolio {
     public init(_ username: String,
                 _ holdings: Holdings,
                 _ floors: [Floor],
-                _ strategies: [Strategy]) {
+                _ strategies: [String]) {
         self.username = username
         self.holdings = holdings
         self.floors = floors

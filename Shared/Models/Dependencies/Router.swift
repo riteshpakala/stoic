@@ -15,36 +15,16 @@ class RouterDependency: GraniteRouterDependable {
 }
 
 public class Router: GraniteRouter {
-    public var route: GraniteRoute = Route.home
-    public var home: GraniteAdAstra? = nil
+//    public var route: GraniteRoute = Route.home
+//    public var home: GraniteAdAstra? = nil
     
-    required public init() {}
-    
-    public func request(_ route: GraniteRoute) {
-        guard let newRoute = route.convert(to: Route.self) else { return }
-
-        self.route = newRoute
-    }
-
-    public func loading(component: GraniteAdAstra?) {
-        print("{TEST} loading \(component)")
-    }
-    
-    public func closing(component: GraniteAdAstra?) {
-        print("{TEST} closing \(component)")
-    }
-    
-    public func request(_ route: Route) {
-        self.route = route
-        
-        home?.toTheStars()
-                    
-        GraniteLogger.info("requesting route 2 \nself:\(String(describing: self))",
-                           .dependency,
-                           focus: true)
-    }
-    
-    public func clean() {}
+//    public override func request(_ route: GraniteRoute) {
+//        guard let newRoute = route.convert(to: Route.self) else { return }
+//        clean()
+//
+//        self.route = newRoute
+//    }
+//
 }
 
 class StoicDependencies: GraniteDependencyManager {
@@ -54,6 +34,7 @@ class StoicDependencies: GraniteDependencyManager {
     private let detail: DetailDependency
     private let discuss: DiscussDependency
     private let broadcasts: BroadcastDependency
+    private let strategy: StrategyDependency
     
     init() {
         self.router = .init()
@@ -62,6 +43,7 @@ class StoicDependencies: GraniteDependencyManager {
         self.detail = .init()
         self.discuss = .init()
         self.broadcasts = .init()
+        self.strategy = .init()
         addDependencies()
     }
     
@@ -74,6 +56,7 @@ class StoicDependencies: GraniteDependencyManager {
         resolver.add(detail)
         resolver.add(discuss)
         resolver.add(broadcasts)
+        resolver.add(strategy)
     }
 }
 

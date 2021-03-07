@@ -216,12 +216,10 @@ extension Portfolio {
 extension PortfolioObject {
     public var asPortfolio: Portfolio {
         
-        let username: String = self.username
-        
         return .init(self.username,
                      .init(Array(self.securities?.latests ?? .init()).asSecurities),
                      self.floor?.compactMap( { $0.asFloor } ) ?? [],
-                     self.strategies?.compactMap( { $0.asStrategy }) ?? []
+                     self.strategies?.compactMap( { $0.asStrategy.name }) ?? []
                      )
     }
     

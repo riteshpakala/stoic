@@ -38,18 +38,20 @@ public struct TonalCompileComponent: GraniteComponent {
             Spacer()
             
             VStack {
-                if command.center.compileState == .readyToCompile {
-                    GraniteButtonComponent(state: .init("compile",
-                                                        action: {
-                                                            sendEvent(TonalCompileEvents.Compile(), haptic: .light)
-                                                        }))
-                } else if command.center.compileState == .compiled {
+                if command.center.compileState == .compiled {
                     
                     GraniteButtonComponent(state: .init("save",
                                                         action: {
                                                             sendEvent(TonalCompileEvents.Save(), haptic: .light)
                                                         }))
+                } else if command.center.tuneState == .readyToCompile {
+                    
+                    GraniteButtonComponent(state: .init("compile",
+                                                        action: {
+                                                            sendEvent(TonalCompileEvents.Compile(), haptic: .light)
+                                                        }))
                 }
+                
             }
             .padding(.top, Brand.Padding.large)
             .padding(.bottom, Brand.Padding.medium)
@@ -71,7 +73,7 @@ extension TonalCompileComponent {
     }
     
     public var isDependancyEmpty: Bool {
-        command.center.compileState == .none
+        command.center.tuneState != .readyToCompile
     }
     
     public var emptyPayload: GranitePayload? {

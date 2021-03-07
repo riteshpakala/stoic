@@ -25,9 +25,6 @@ public class TonalSetState: GraniteState {
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
     let tonalRelay: TonalRelay = .init()
-
-    @GraniteDependency
-    var routerDependency: RouterDependency
     
     @GraniteDependency
     var toneDependency: ToneDependency

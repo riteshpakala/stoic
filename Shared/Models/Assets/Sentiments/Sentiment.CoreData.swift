@@ -16,7 +16,7 @@ extension NSManagedObjectContext {
     //and then merge at the end, under the tonalrelay return for the final tonal
     //create submission
     //
-    public func getSentiment(_ quote: QuoteObject,
+    public func getSentiment(_ quote: Quote,
                              _ range: TonalRange) -> (sentiment: TonalSentiment?, missing: TonalRange?) {
         
         let dates = range.datesExpanded.map { $0.simple }
@@ -32,7 +32,7 @@ extension NSManagedObjectContext {
       
         let sentiment: TonalSentiment = .init(sounds)
         
-        GraniteLogger.info("🪝fetching sentiment\nsenti dates: \(sentimentObjects.map { $0.date.simple }.uniques.sortDesc)\nsecurity dates: \(securitiesFiltered.map { $0.date.simple }.uniques.sortDesc)", .expedition, focus: true)
+        GraniteLogger.info("🪝fetching sentiment\nsenti dates: \(sentimentObjects.map { $0.date.simple }.uniques.sortDesc)\nsecurity dates: \(securitiesFiltered.map { $0.date.simple }.uniques.sortDesc)\n\(quote.securities.count) \(range.objects.count)", .expedition, focus: true)
         
         if sentiment.isValid(against: range) {
             GraniteLogger.info("sentiments valid ✅", .expedition, focus: true)
@@ -40,14 +40,13 @@ extension NSManagedObjectContext {
         } else {
             let missingSentiment = securitiesFiltered.filter { !sentiment.datesByDay.contains($0.date.simple) }
             
-            GraniteLogger.info("sentiments not valid, fetching missing\ndates:\(missingSentiment.map { $0.date.simple })", .expedition)
+            GraniteLogger.info("sentiments not valid, fetching missing\ndates:\(missingSentiment.map { $0.date.simple })", .expedition, focus: true)
             
-            return (nil, .init(objects: Array(missingSentiment).asSecurities,
-                                  Array(securities)
-                                    .expanded(from: Array(missingSentiment))
-                                    .asSecurities,
-                                  range.similarities,
-                                  range.indicators))
+            
+            return (nil, .init(objects: missingSentiment,
+                               securities.expanded(from: missingSentiment),
+                               range.similarities,
+                               range.indicators))
         }
         
     }

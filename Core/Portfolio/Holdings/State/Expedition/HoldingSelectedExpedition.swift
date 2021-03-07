@@ -90,6 +90,11 @@ struct HoldingSelectionsConfirmedExpedition: GraniteExpedition {
             connection.update(\EnvironmentDependency.user.portfolio,
                               value: updatedPortfolio)
             
+            if let strategyName = updatedPortfolio?.strategies.first,
+               let strategy = coreDataInstance.getStrategy(strategyName) {
+                connection.update(\StrategyDependency.strategy, value: strategy)
+            }
+            
             break
         default:
             break

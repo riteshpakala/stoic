@@ -63,6 +63,9 @@ public class HoldingsCenter: GraniteCenter<HoldingsState> {
     @GraniteDependency
     var envDependency: EnvironmentDependency
     
+    @GraniteDependency
+    var strategyDependency: StrategyDependency
+    
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetHoldingsExpedition.Discovery(),

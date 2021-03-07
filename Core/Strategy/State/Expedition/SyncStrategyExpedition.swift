@@ -25,18 +25,8 @@ struct SyncStrategyExpedition: GraniteExpedition {
             return
         }
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
-              let strategies = portfolio?.strategies else {
-            return
-        }
-        
-        //There's only 1 strategy for now
-        guard let strategy = strategies.first else {
-            return
-        }
-        
-        let assetIDs = strategy.investments.items.filter({ !$0.closed }).map { $0.assetID }
-        let securities = strategy.quotes.filter({ $0.needsUpdate && assetIDs.contains($0.latestSecurity.assetID) }).map { $0.latestSecurity }
+        let assetIDs = state.strategy.investments.items.filter({ !$0.closed }).map { $0.assetID }
+        let securities = state.strategy.quotes.filter({ $0.needsUpdate && assetIDs.contains($0.latestSecurity.assetID) }).map { $0.latestSecurity }
         
         guard securities.isNotEmpty else {
             connection.request(StrategyEvents.Predict())
@@ -64,14 +54,7 @@ struct SyncPredictionsExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let portfolio = connection.retrieve(\EnvironmentDependency.user.portfolio),
-              let strategies = portfolio?.strategies else {
-            return
-        }
-        
-        for strategy in strategies {
-            strategy.generate()
-        }
+        state.strategy.generate()
         
         GraniteLogger.info("Starting to Sync Predictions", .expedition, focus: true)
     }
@@ -187,6 +170,11 @@ struct SyncCompleteStrategyExpedition: GraniteExpedition {
         user.portfolio = portfolio
         
         connection.update(\EnvironmentDependency.user, value: user)
+        
+        state.strategy = state.strategy.updated(moc: coreDataInstance) ?? state.strategy
+        
+        connection.update(\StrategyDependency.strategy, value: state.strategy)
+        
         connection.request(StrategyEvents.Get())
         
         GraniteLogger.info("Strategy Sync Complete", .expedition, focus: true)
