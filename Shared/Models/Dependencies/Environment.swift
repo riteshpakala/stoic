@@ -24,8 +24,8 @@ class EnvironmentDependency: GraniteDependable {
 }
 
 extension EnvironmentStyle {
-    public struct Settings {
-        public struct LocalFrame {
+    public struct Settings: Equatable {
+        public struct LocalFrame: Equatable {
             let data: CGRect
         }
         

@@ -17,7 +17,7 @@ public class EnvironmentState: GraniteState {
     
     let route: Route
     //
-    var localFrame: CGRect? = nil
+    var envSettings: EnvironmentStyle.Settings = .init()
     
     public init(_ route: GraniteRoute?) {
         let newRoute = route?.convert(to: Route.self) ?? .none
@@ -120,6 +120,6 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     
     public var environmentIPhoneSize: CGSize {
         return .init(width: .infinity,
-                     height: (state.localFrame?.height ?? EnvironmentConfig.iPhoneScreenHeight))
+                     height: (state.envSettings.lf?.data.height ?? EnvironmentConfig.iPhoneScreenHeight))
     }
 }

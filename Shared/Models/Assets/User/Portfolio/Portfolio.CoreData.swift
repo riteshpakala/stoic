@@ -218,14 +218,11 @@ extension PortfolioObject {
         
         let username: String = self.username
         
-        
-        let portfolio: Portfolio = .init(username, .init([]), [], [])
-        
-        return portfolio/*.init(self.username,
+        return .init(self.username,
                      .init(Array(self.securities?.latests ?? .init()).asSecurities),
                      self.floor?.compactMap( { $0.asFloor } ) ?? [],
                      self.strategies?.compactMap( { $0.asStrategy }) ?? []
-                     )*/
+                     )
     }
     
     public static func hasSecurity(moc: NSManagedObjectContext,

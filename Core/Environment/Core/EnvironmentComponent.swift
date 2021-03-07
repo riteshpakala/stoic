@@ -63,8 +63,11 @@ public struct EnvironmentComponent: GraniteComponent {
                             maxHeight: .infinity,
                             alignment: .center)
                     .onAppear(perform: {
-                        if state.localFrame == nil {
-                            set(\.localFrame, value: proxy.localFrame)
+                        var envSettings = command.center.envDependency.envSettings
+                        if envSettings.lf == nil {
+                            let newLF = EnvironmentStyle.Settings.LocalFrame.init(data: proxy.localFrame)
+                            envSettings.lf = newLF
+                            set(\.envSettings, value: envSettings, update: \EnvironmentDependency.envSettings)
                         }
                     })
                 }
