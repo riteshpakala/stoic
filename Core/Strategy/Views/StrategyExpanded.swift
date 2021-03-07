@@ -106,11 +106,6 @@ struct StrategyExpanded: View, GraniteEventResponder {
                 }
                 
                 Spacer()
-                
-                GraniteText("data: \(item.changes.count)",
-                            Brand.Colors.marble,
-                            .footnote,
-                            .regular)
             }
             
             ScrollView {
@@ -160,9 +155,17 @@ struct StrategyExpanded: View, GraniteEventResponder {
                     }
                 }
             }
+            
+            HStack {
+                GraniteText("data: \(item.changes.count)",
+                            Brand.Colors.marble,
+                            .footnote,
+                            .regular,
+                            .trailing)
+            }
         }
         .padding(.top, Brand.Padding.xMedium)
-        .padding(.bottom, Brand.Padding.medium9)
+        .padding(.bottom, Brand.Padding.small)
     }
     
     public func title(_ strategy: Strategy) -> some View {

@@ -27,8 +27,7 @@ public struct MainComponent: GraniteComponent {
         command
             .center
             .routerDependency
-            .router
-            .request(Route.strategyDetail)
+            .router.route = Route.strategyDetail
     }
     
     var environment: EnvironmentComponent {

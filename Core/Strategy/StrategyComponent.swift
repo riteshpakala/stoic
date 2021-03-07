@@ -45,25 +45,30 @@ public struct StrategyComponent: GraniteComponent {
                     Spacer()
                 }
             case .expanded:
-//                HStack(alignment: .center, spacing: Brand.Padding.medium) {
-//                    GraniteText("* stoic",
-//                                Brand.Colors.white,
-//                                .title3,
-//                                .bold,
-//                                .leading)
-//                    
-//                    Image("logo")
-//                        .resizable()
-//                        .frame(width: EnvironmentConfig.isIPhone ? 57 : 66,
-//                               height: EnvironmentConfig.isIPhone ? 57 : 66,
-//                               alignment: .center)
-//                    
-//                }
-//                .padding(.leading, Brand.Padding.medium9)
-//                .padding(.trailing, Brand.Padding.medium9)
+                HStack(alignment: .center, spacing: Brand.Padding.medium) {
+                    GraniteButtonComponent(
+                        state: .init("export",
+                                    padding: .init(0,
+                                                   0,
+                                                   0,
+                                                   0),
+                                    action: {}))
+                    
+                    Spacer()
+                    
+                        
+                    Image("logo_small")
+                        .resizable()
+                        .frame(width: 42,
+                               height: 42,
+                               alignment: .center)
+                }
+                .padding(.top, Brand.Padding.xSmall)
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium9)
                 
                 StrategyExpanded(command: command)
-                    .padding(.top, Brand.Padding.medium)
+                    .padding(.top, Brand.Padding.large)
                 
                 GraniteButtonComponent(
                     state: .init(.add,
