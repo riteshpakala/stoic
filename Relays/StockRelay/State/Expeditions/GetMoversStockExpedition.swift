@@ -22,27 +22,24 @@ struct GetMoversStockExpedition: GraniteExpedition {
         var needsUpdate: Bool = true
         
         if !event.syncWithStoics {
-            coreDataInstance.networkResponse(forRoute: state.service.movers) { result in
-                let age = (result?.date ?? Date()).minutesFrom(.today)
+            let result = coreDataInstance.networkResponse(forRoute: state.service.movers)
+            
+            let age = (result?.date ?? Date()).minutesFrom(.today)
+            
+            GraniteLogger.info("stock movers last updated: \(age) minutes ago", .expedition, focus: true)
+            
+            //in minutes
+            if age < 12, let data = result?.data {
                 
-                GraniteLogger.info("stock movers last updated: \(age) minutes ago", .expedition, focus: true)
-                //in minutes
-                guard age < 12 else {
-                    return
+                if let unarchivedData = data.decodeNetwork(type: StockServiceModels.MoversArchiveable.self),
+                   let movers = unarchivedData.movers {
+                    
+                    connection.request(StockEvents.MoverStockQuotes(movers: movers, quotes: unarchivedData.quotes))
+                    
+                    GraniteLogger.info("got the cached movers", .expedition, focus: true)
                 }
                 
-                if let data = result?.data {
-                    
-                    if let unarchivedData = data.decodeNetwork(type: StockServiceModels.MoversArchiveable.self),
-                       let movers = unarchivedData.movers {
-                        
-                        connection.request(StockEvents.MoverStockQuotes(movers: movers, quotes: unarchivedData.quotes))
-                        
-                        GraniteLogger.info("got the cached movers", .expedition, focus: true)
-                    }
-                    
-                    needsUpdate = false
-                }
+                needsUpdate = false
             }
         }
         

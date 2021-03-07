@@ -24,22 +24,19 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
         }
         
         var needsUpdate: Bool = true
-        coreDataInstance.networkResponse(forRoute: state.cryptoWatch.getAggregateSummariesRoute) { result in
-            let age = (result?.date ?? Date()).minutesFrom(.today)
-            
-            GraniteLogger.info("crypto movers last updated: \(age) minutes ago", .expedition, focus: true)
-            //in minutes
-            guard age < 12 else {
-                return
-            }
-            
-            if let data = result?.data {
-                if let movers = data.decodeNetwork(type: CryptoServiceModels.GetAggregateSummaries.self) {
+        let result = coreDataInstance.networkResponse(forRoute: state.cryptoWatch.getAggregateSummariesRoute)
+        
+        let age = (result?.date ?? Date()).minutesFrom(.today)
+        
+        GraniteLogger.info("crypto movers last updated: \(age) minutes ago", .expedition, focus: true)
 
-                    connection.request(generateEvent(movers, max: state.max, exchange: state.exchange, currency: state.currency))
+        //in minutes
+        if age < 12, let data = result?.data {
+            if let movers = data.decodeNetwork(type: CryptoServiceModels.GetAggregateSummaries.self) {
 
-                    needsUpdate = false
-                }
+                connection.request(generateEvent(movers, max: state.max, exchange: state.exchange, currency: state.currency))
+
+                needsUpdate = false
             }
         }
         
@@ -47,25 +44,32 @@ struct GetMoversCryptoExpedition: GraniteExpedition {
         
         GraniteLogger.info("fetching new movers\nneeds update:\(needsUpdate) - self: \(String(describing: self))", .network, focus: true)
         
-        let decoder = JSONDecoder()
         publisher = pub
             .replaceError(with: .init(data: nil, type: CryptoServiceModels.GetAggregateSummaries.self))
             .map { (response) in
-                guard let rawData = response.data else {
+                do {
+                    
+                    guard let rawData = response.data else {
+                        return CryptoEvents.GlobalCategoryResult.init([], [], [])
+                    }
+                    
+                    var decoded: CryptoServiceModels.GetAggregateSummaries?
+                    try autoreleasepool {
+                        decoded = try JSONDecoder().decode(response.type, from: rawData)
+                    }
+                
+                    coreDataInstance.save(route: state.cryptoWatch.getAggregateSummariesRoute,
+                                          data: rawData,
+                                          responseType: .movers)
+                    
+                    guard let decodedResult = decoded else { return CryptoEvents.GlobalCategoryResult.init([], [], []) }
+                    
+                    return generateEvent(decodedResult, max: state.max, exchange: state.exchange, currency: state.currency)
+                } catch let error {
+                    GraniteLogger.info("failed getting crypto movers \(error)")
                     return CryptoEvents.GlobalCategoryResult.init([], [], [])
                 }
                 
-                guard let decoded = try? decoder.decode(response.type,
-                                                        from: rawData) else {
-                    return CryptoEvents.GlobalCategoryResult.init([], [], [])
-                }
-            
-                
-                coreDataInstance.save(route: state.cryptoWatch.getAggregateSummariesRoute,
-                                      data: rawData,
-                                      responseType: .movers)
-                
-                return generateEvent(decoded, max: state.max, exchange: state.exchange, currency: state.currency)
             }.eraseToAnyPublisher()
         
     }

@@ -22,12 +22,12 @@ struct GetTonalModelsExpedition: GraniteExpedition {
         guard state.stage == .none else { return }
         state.stage = .fetching
         
-        TonalModel.get(forSecurity: state.security,
-                       moc: coreDataInstance) { models in
-            state.tones = models
-            state.stage = .none
-            
-            state.tonesToSync = models.filter { $0.needsUpdate }.map { $0.modelID }
-        }
+        let models = TonalModel.get(forSecurity: state.security,
+                       light: true,
+                       moc: coreDataInstance)
+        state.tones = models
+        state.stage = .none
+        
+        state.tonesToSync = models.filter { $0.needsUpdate }.map { $0.modelID }
     }
 }

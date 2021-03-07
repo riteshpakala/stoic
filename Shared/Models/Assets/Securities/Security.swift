@@ -125,7 +125,13 @@ extension Security {
         let daysAreOverdue = abs(days) > 0
         let hoursAreOverdue = hours >= 1 && !afterHours
         
-        return (daysAreOverdue || hoursAreOverdue)
+        //We add 1 to get the "Next Trading Day" after the last
+        let lastDay = Date.today.advanceDate(value: (-1*abs(days)) + 1)
+        let lastDayByHours = Date.today.advanceDate(value: (-1*abs(hours / 24) + 1))
+        
+        let isValidTradingDay = self.securityType == .crypto ? true : (lastDay.validTradingDay && lastDayByHours.validTradingDay)
+        
+        return (daysAreOverdue || hoursAreOverdue) && isValidTradingDay
     }
 }
 

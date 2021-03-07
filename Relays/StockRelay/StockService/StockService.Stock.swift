@@ -21,17 +21,17 @@ extension StockService {
         
         GraniteLogger.info("fetching stock chart:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay, focus: true)
         
-        let decoder = JSONDecoder()
         
         return session
                 .dataTaskPublisher(for: url)
-                .compactMap { (data, response) -> [StockServiceModels.Stock]? in
-                    
-                    let chart: StockServiceModels.Stock?
+                .compactMap { [weak self] (data, response) -> [StockServiceModels.Stock]? in
+                    var chart: StockServiceModels.Stock?
                     do {
-                        chart = try decoder.decode(StockServiceModels.Stock.self, from: data)
-                        
-                        GraniteLogger.info("fetched stock chart \nself: \(String(describing: self))", .relay, focus: true)
+                        try autoreleasepool {
+                            chart = try JSONDecoder().decode(StockServiceModels.Stock.self, from: data)
+                            
+                            GraniteLogger.info("fetched stock chart \nself: \(String(describing: self))", .relay, focus: true)
+                        }
                     } catch let error {
                         chart = nil
                         GraniteLogger.info("failed fetching stock chart:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)

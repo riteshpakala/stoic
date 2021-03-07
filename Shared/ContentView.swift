@@ -9,6 +9,7 @@ import GraniteUI
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
         RouterComponent()
     }

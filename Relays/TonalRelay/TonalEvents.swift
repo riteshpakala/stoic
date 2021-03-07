@@ -41,12 +41,20 @@ struct TonalEvents {
         public var beam: GraniteBeamType {
             .rebound
         }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
     
     public struct ProcessSentiment: GraniteEvent {
         let sinceDate: Date
         let untilDate: Date
         let ticker: String
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
     
     public struct TonalHistory: GraniteEvent {
@@ -58,12 +66,16 @@ struct TonalEvents {
         }
         
         public var async: DispatchQueue? {
-            DispatchQueue.global(qos: .utility)
+            GraniteThread.event
         }
     }
     
     public struct TonalSounds: GraniteEvent {
         let sounds: [TonalSound]
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
     
     public struct History: GraniteEvent {
@@ -71,6 +83,10 @@ struct TonalEvents {
         
         public var beam: GraniteBeamType {
             .rebound
+        }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
         }
     }
 }

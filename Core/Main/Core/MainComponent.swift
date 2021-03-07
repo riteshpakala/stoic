@@ -11,10 +11,25 @@ import SwiftUI
 import Combine
 
 public struct MainComponent: GraniteComponent {
+    
     @ObservedObject
     public var command: GraniteCommand<MainCenter, MainState> = .init()
     
-    public init() {}
+    
+    public init() {
+        command
+            .center
+            .routerDependency
+            .router
+            .home = command.center
+        
+        //TODO: //DEV:
+        command
+            .center
+            .routerDependency
+            .router
+            .request(Route.strategyDetail)
+    }
     
     var environment: EnvironmentComponent {
         EnvironmentComponent(state: .init(inject(\.routerDependency,
@@ -25,7 +40,7 @@ public struct MainComponent: GraniteComponent {
         ControlBar(isIPhone: EnvironmentConfig.isIPhone,
                    currentRoute: command.center.routerDependency.router.route.convert(to: Route.self) ?? .home,
                    onRoute: { route in
-            command.center.routerDependency.router.request(route)
+                sendEvent(MainEvents.RequestRoute.init(route: route))
         })
     }
     
@@ -35,7 +50,6 @@ public struct MainComponent: GraniteComponent {
             if EnvironmentConfig.isIPhone {
                 VStack(spacing: 0) {
                     environment
-                        .share(.init(dep(\.routerDependency)))
                         .listen(to: command)
                     controls
                 }
@@ -44,7 +58,6 @@ public struct MainComponent: GraniteComponent {
                 HStack {
                     controls
                     environment
-                        .share(.init(dep(\.routerDependency)))
                         .listen(to: command)
                         .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
@@ -52,7 +65,6 @@ public struct MainComponent: GraniteComponent {
             }
         case .notAuthenticated:
             LoginComponent()
-                .share(.init(dep(\.routerDependency)))
                 .listen(to: command)
         case .none:
             GraniteLoadingComponent()

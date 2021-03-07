@@ -46,9 +46,6 @@ struct PushTonalModelExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        state.syncTimer?.invalidate()
-        state.syncTimer = nil
-        
         guard let security = state.securitiesToSync.first(where: { !state.securitiesSynced.contains($0.assetID) }) else {
 
             connection.request(TonalModelsEvents.Train())
@@ -56,22 +53,15 @@ struct PushTonalModelExpedition: GraniteExpedition {
             return
         }
 
-        state.syncTimer = Timer.scheduledTimer(
-            withTimeInterval: 0.4.randomBetween(2.4),
-            repeats: false) { timer in
+        GraniteLogger.info("Pushing \(security.assetID) to Sync Quote\n \(security.updateTime) days old\n\(String(describing: self))", .expedition, focus: true)
 
-            timer.invalidate()
-
-            GraniteLogger.info("Pushing \(security.assetID) to Sync Quote\n \(security.updateTime) days old\n\(String(describing: self))", .expedition, focus: true)
-
-            switch security.securityType {
-            case .crypto:
-                connection.request(CryptoEvents.GetCryptoHistory.init(security: security, daysAgo: security.updateTime))
-            case .stock:
-                connection.request(StockEvents.GetStockHistory.init(security: security, daysAgo: security.updateTime))
-            default:
-                break
-            }
+        switch security.securityType {
+        case .crypto:
+            connection.request(CryptoEvents.GetCryptoHistory.init(security: security, daysAgo: security.updateTime))
+        case .stock:
+            connection.request(StockEvents.GetStockHistory.init(security: security, daysAgo: security.updateTime))
+        default:
+            break
         }
     }
 }
@@ -86,11 +76,6 @@ struct TrainTonalModelExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        state.syncTimer?.invalidate()
-        state.syncTimer = nil
-        
-        GraniteLogger.info("Training: \(state.tonesToSync.first(where: { !state.tonesSynced.contains($0)}))\n\(state.tonesSynced) \(state.tonesToSync)\n\(String(describing: self))", .expedition, focus: true)
-        
         guard let modelToSync = state.tonesToSync.first(where: { !state.tonesSynced.contains($0) }),
               let model = state.tones?.first(where: { $0.modelID == modelToSync })
                else {
@@ -100,19 +85,11 @@ struct TrainTonalModelExpedition: GraniteExpedition {
             return
         }
         
+        GraniteLogger.info("Training: \(state.tonesToSync.first(where: { !state.tonesSynced.contains($0)}))\n\(state.tonesSynced) \(state.tonesToSync)\n\(String(describing: self))", .expedition, focus: true)
+        
         let security = model.latestSecurity
 
-        state.syncTimer = Timer.scheduledTimer(
-            withTimeInterval: 0.4.randomBetween(2.4),
-            repeats: false) { timer in
-
-            timer.invalidate()
-            
-            connection.request(TonalEvents.Think.init(security: security))
-
-            GraniteLogger.info("Pushing \(security.assetID) to train, thinking first\n \(security.updateTime) days old\n\(String(describing: self))", .expedition, focus: true)
-
-        }
+        connection.request(TonalEvents.Think.init(security: security))
     }
 }
 
@@ -125,9 +102,7 @@ struct UpdateTonalModelCompleteExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-            
-        state.syncTimer?.invalidate()
-        state.syncTimer = nil
+        
         state.tonesToSync.removeAll()
         state.tonesSynced.removeAll()
         state.securitiesToSync.removeAll()
@@ -191,12 +166,11 @@ struct ThinkTonalModelExpedition: GraniteExpedition {
         
         state.tonesSynced.append(model.modelID)
         
-        model.save(moc: coreDataInstance, overwrite: true) { success in
-            if success {
-                connection.request(TonalModelsEvents.Train())
-                
-                GraniteLogger.info("saved new tonal model\nself:\(String(describing: self))", .expedition, focus: true)
-            }
+        let success = model.save(moc: coreDataInstance, overwrite: true)
+        if success {
+            connection.request(TonalModelsEvents.Train())
+            
+            GraniteLogger.info("saved new tonal model\nself:\(String(describing: self))", .expedition, focus: true)
         }
     }
 }
@@ -213,7 +187,7 @@ struct StockUpdatedHistoryTonalModelExpedition: GraniteExpedition {
         
         let stocks = event.data
         
-        stocks.save(moc: coreDataInstance) { _ in }
+        _ = stocks.save(moc: coreDataInstance)
         
         state.securitiesSynced.append(stocks.first?.assetID ?? "")
         
@@ -235,7 +209,7 @@ struct CryptoUpdatedHistoryTonalModelExpedition: GraniteExpedition {
         
         let crypto = event.data
         
-        crypto.save(moc: coreDataInstance) { _ in }
+        _ = crypto.save(moc: coreDataInstance)
         
         state.securitiesSynced.append(crypto.first?.assetID ?? "")
         

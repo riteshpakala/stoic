@@ -23,7 +23,7 @@ public struct TonalTuneComponent: GraniteComponent {
     ]
     
     func getSentiment(date: Date) -> SentimentSliderState {
-        let tuners = inject(\.envDependency,
+        let tuners = inject(\.toneDependency,
                                target: \.tone.tune.tuners)
         
         return tuners?[date]?.slider ?? .init()

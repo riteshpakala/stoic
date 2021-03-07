@@ -25,7 +25,6 @@ public struct TonalFindComponent: GraniteComponent {
             
             VStack {
                 AssetSearchComponent(state: .init(.tonalCreate(.none)))
-                    .share(.init(dep(\.hosted)))
                     .listen(to: command, .stop)
             }
             
@@ -39,7 +38,7 @@ public struct TonalFindComponent: GraniteComponent {
                                 .leading)
                     
                     BasicSliderComponent(
-                        state: inject(\.envDependency,
+                        state: inject(\.toneDependency,
                                          target: \.tone.find.sliderDays))
                         .listen(to: command)
                         .padding(.top, Brand.Padding.medium)

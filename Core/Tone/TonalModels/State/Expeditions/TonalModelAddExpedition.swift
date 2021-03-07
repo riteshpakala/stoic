@@ -19,7 +19,7 @@ struct TonalModelAddExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let router = connection.router else {
+        guard let router = connection.retrieve(\RouterDependency.router) else {
             return
         }
         router.request(Route.models(.init(object: state.security)))

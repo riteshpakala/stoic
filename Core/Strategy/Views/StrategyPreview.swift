@@ -1,20 +1,16 @@
 //
-//  StrategyComponent.swift
-//  * stoic
+//  StrategyPreview.swift
+//  stoic (iOS)
 //
-//  Created by Ritesh Pakala on 1/15/21.
-//  Copyright (c) 2021 ___ORGANIZATIONNAME___. All rights reserved.
+//  Created by Ritesh Pakala on 3/7/21.
 //
 
+import Foundation
 import GraniteUI
 import SwiftUI
-import Combine
 
-public struct StrategyComponent: GraniteComponent {
-    @ObservedObject
-    public var command: GraniteCommand<StrategyCenter, StrategyState> = .init()
-    
-    public init() {}
+struct StrategyPreview: View, GraniteEventResponder {
+    public var command: GraniteCommand<StrategyCenter, StrategyState>
     
     let parentColumns = [
         GridItem(.flexible()),
@@ -22,6 +18,15 @@ public struct StrategyComponent: GraniteComponent {
     let columns = [
         GridItem(.flexible()),
     ]
+    
+    let strategies: [Strategy]
+    let state: StrategyState
+    
+    public init(command: GraniteCommand<StrategyCenter, StrategyState>) {
+        self.state = command.state
+        self.strategies = command.center.strategies
+        self.command = command
+    }
     
     public var body: some View {
         ZStack {
@@ -54,7 +59,7 @@ public struct StrategyComponent: GraniteComponent {
                 .padding(.trailing, Brand.Padding.medium)
             
                 VStack {
-                    ForEach(command.center.strategies, id: \.self) { strategy in
+                    ForEach(strategies, id: \.self) { strategy in
                         VStack(spacing: 0) {
                             
                             title(strategy)
@@ -460,21 +465,5 @@ public struct StrategyComponent: GraniteComponent {
         .padding(.leading, Brand.Padding.medium)
         .padding(.trailing, Brand.Padding.medium)
         .padding(.bottom, Brand.Padding.medium)
-    }
-}
-
-//MARK: -- Empty State Settings
-extension StrategyComponent {
-    
-    public var emptyText: String {
-        "create strategies from your \ncurrently held stocks or crypto\n\n* stoic models will then\nguide your investments"
-    }
-    
-    public var isDependancyEmpty: Bool {
-        command.center.strategies.isEmpty
-    }
-    
-    public var emptyPayload: GranitePayload? {
-        return .init(object: [Brand.Colors.purple, Brand.Colors.yellow])
     }
 }

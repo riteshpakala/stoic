@@ -17,4 +17,8 @@ struct MainEvents {
         }
     }
     struct Logout: GraniteEvent {}
+    
+    struct RequestRoute: GraniteEvent {
+        public var route: Route
+    }
 }

@@ -31,8 +31,8 @@ public struct AssetSearchComponent: GraniteComponent {
             }.padding(.top, Brand.Padding.medium)
             
             if command.center.securities.isNotEmpty {
-                AssetGridComponent(state: .init(context: state.context))
-                    .payload(state.payload)
+                AssetGridComponent(state: .init(context: state.context,
+                                                assetData: state.securityData))
                     .listen(to: command)
             }
         }

@@ -26,10 +26,9 @@ public class IndicatorDetailCenter: GraniteCenter<IndicatorDetailState> {
     let tonalRelay: TonalRelay = .init()
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
-    
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
@@ -39,7 +38,7 @@ public class IndicatorDetailCenter: GraniteCenter<IndicatorDetailState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(IndicatorDetailEvents.Generate(), .dependant)
+            .onAppear(IndicatorDetailEvents.Generate())
         ]
     }
     

@@ -10,25 +10,26 @@ import CoreData
 import GraniteUI
 
 extension NSManagedObjectContext {
-    public func getTones(_ completion: @escaping (([TonalModelObject]) -> Void)) {
+    public func getTones() -> [TonalModelObject] {
         let request: NSFetchRequest = TonalModelObject.fetchRequest()
-        self.performAndWait {
-            if let tones = try? self.fetch(request) {
-                completion(tones)
-            } else {
-                completion([])
+        
+        let result: [TonalModelObject] = self.performAndWaitPlease { [weak self] in
+            do {
+                return try self?.fetch(request) ?? []
+            } catch let error {
+                return []
             }
         }
+        return result
     }
-    public func getTones(forSecurity security: Security,
-                         _ completion: @escaping (([TonalModelObject]) -> Void)) {
+    public func getTones(forSecurity security: Security) -> [TonalModelObject] {
         
-        security.getQuoteObject(moc: self) { quote in
-            if let model = quote?.tonalModel {
-                completion(Array(model))
-            } else {
-                completion([])
-            }
+        let quote = security.getQuoteObject(moc: self)
+        
+        if let model = quote?.tonalModel {
+            return Array(model)
+        } else {
+            return []
         }
     }
 }
@@ -52,7 +53,24 @@ extension TonalModelObject {
                      id: self.id)
     }
     
-    func asToneFromQuote(_ quote: Quote) -> TonalModel? {
+    var asToneLight: TonalModel? {
+        guard var model = self.model.model,
+              let quote = self.quote,
+              let range = self.range.tonalRange else {
+            
+            GraniteLogger.error("TonalModelObject failed to convert to a TonalModel\nsentimentTuners is nil: \(self.sentimentTuners.sentimentTuners == nil)\ntonal model is nil: \(self.model.model == nil)\nquote is nil: \(self.quote == nil)\ntonalRange is nil: \(self.range.tonalRange == nil)", .utility)
+            return nil
+        }
+        
+        return .init(model,
+                     daysTrained: Int(self.daysTrained),
+                     tuners: [],
+                     quote: quote.asQuote,
+                     range: range,
+                     id: self.id)
+    }
+    
+    func asToneFromQuote(_ quote: Quote, light: Bool = false) -> TonalModel? {
         guard let sentiment = self.sentimentTuners.sentimentTuners,
               let model = self.model.model,
               let range = self.range.tonalRange else {
@@ -63,7 +81,7 @@ extension TonalModelObject {
         
         return .init(model,
                      daysTrained: Int(self.daysTrained),
-                     tuners: sentiment,
+                     tuners: light ? [] : sentiment,
                      quote: quote,
                      range: range,
                      id: self.id)
@@ -71,39 +89,41 @@ extension TonalModelObject {
 }
 
 extension TonalModel {
-    func save(moc: NSManagedObjectContext, overwrite: Bool = false, completion: @escaping ((Bool) -> Void)) {
+    func save(moc: NSManagedObjectContext, overwrite: Bool = false) -> Bool {
         guard let modelData = self.david.archived,
               let sentiment = self.tuners.archived,
               let range = self.range.archived else {
             
-            completion(false)
-            return
+            return false
         }
         
-        moc.performAndWait {
-            self.quote.getObject(moc: moc) { quote in
-                do {
-                    let object = TonalModelObject(context: moc)
-                    object.date = Date.today
-                    object.daysTrained = Int32(self.daysTrained)
-                    object.model = modelData
-                    object.sentimentTuners = sentiment
-                    object.quote = quote
-                    object.range = range
-                    quote?.addToTonalModel(object)
-                    
-                    if overwrite {
-                        object.id = self.modelID
-                    }
+        let result: Bool = moc.performAndWaitPlease { [weak self] in
+            let quote = self?.quote.getObject(moc: moc)
+            do {
+                let object = TonalModelObject(context: moc)
+                object.date = Date.today
+                object.daysTrained = Int32(self?.daysTrained ?? 0)
+                object.model = modelData
+                object.sentimentTuners = sentiment
+                object.quote = quote
+                object.range = range
+                quote?.addToTonalModel(object)
+                
+                if overwrite, let modelID = self?.modelID {
+                    object.id = modelID
                     
                     try moc.save()
-                    
-                    completion(true)
-                } catch let error {
-                    GraniteLogger.error("failed to save tonal model", .utility)
-                    completion(false)
+                    return true
+                } else {
+                    return false
                 }
+                
+            } catch let error {
+                GraniteLogger.error("failed to save tonal model\n\(error)", .utility)
+                return false
             }
         }
+        
+        return result
     }
 }

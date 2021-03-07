@@ -12,10 +12,17 @@ import Combine
 
 struct TonalModelsEvents {
     public struct Add: GraniteEvent {}
-    public struct Get: GraniteEvent {}
+    public struct Get: GraniteEvent {
+        var async: DispatchQueue? {
+            GraniteThread.event
+        }
+    }
     public struct Update: GraniteEvent {
         public var behavior: GraniteEventBehavior {
             .quiet
+        }
+        var async: DispatchQueue? {
+            GraniteThread.event
         }
     }
     public struct Push: GraniteEvent {
@@ -26,6 +33,9 @@ struct TonalModelsEvents {
     public struct Train: GraniteEvent {
         public var behavior: GraniteEventBehavior {
             .quiet
+        }
+        var async: DispatchQueue? {
+            GraniteThread.event
         }
     }
     public struct UpdateComplete: GraniteEvent {}

@@ -53,6 +53,10 @@ public struct StockEvents {
         public var beam: GraniteBeamType {
             .rebound
         }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
     
     public struct MoversData: GraniteEvent {
@@ -62,6 +66,10 @@ public struct StockEvents {
                     data: NetworkResponseData?) {
             self.syncWithStoics = syncWithStoics
             self.data = data
+        }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
         }
     }
     
@@ -76,6 +84,10 @@ public struct StockEvents {
             self.syncWithStoics = syncWithStoics
             self.movers = movers
             self.quotes = quotes
+        }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
         }
     }
     
@@ -103,6 +115,10 @@ public struct StockEvents {
         public var behavior: GraniteEventBehavior {
             .quiet
         }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
     
     //MARK: -- Stock History
@@ -122,6 +138,10 @@ public struct StockEvents {
         
         public var beam: GraniteBeamType {
             .rebound
+        }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
         }
     }
     
@@ -147,6 +167,10 @@ public struct StockEvents {
         
         public var beam: GraniteBeamType {
             .rebound
+        }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
         }
     }
     

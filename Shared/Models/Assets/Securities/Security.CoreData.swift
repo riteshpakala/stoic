@@ -35,30 +35,39 @@ extension Security {
     }
     
     public func record(to moc: NSManagedObjectContext) -> (SecurityObject, Bool)? {
-        guard let object = try? moc.fetch(self.getObjectRequest()).first else {
-            switch self.securityType {
-            case .crypto:
-                let object = CryptoDataObject(context: moc)
-                if let crypto = self as? CryptoCurrency {
-                    crypto.apply(to: object)
-                    return (object, false)
+        let result: (SecurityObject, Bool)? = moc.performAndWaitPlease {
+            do {
+                if let object = try moc.fetch(self.getObjectRequest()).first {
+                    return (object, true)
                 } else {
-                    return nil
+                    switch self.securityType {
+                    case .crypto:
+                        let object = CryptoDataObject(context: moc)
+                        if let crypto = self as? CryptoCurrency {
+                            crypto.apply(to: object)
+                            return (object, false)
+                        } else {
+                            return nil
+                        }
+                    case .stock:
+                        let object = StockDataObject(context: moc)
+                        if let stock = self as? Stock {
+                            stock.apply(to: object)
+                            return (object, false)
+                        } else {
+                            return nil
+                        }
+                    default:
+                        return nil
+                    }
                 }
-            case .stock:
-                let object = StockDataObject(context: moc)
-                if let stock = self as? Stock {
-                    stock.apply(to: object)
-                    return (object, false)
-                } else {
-                    return nil
-                }
-            default:
+            } catch let error {
+                GraniteLogger.info("issue recording security", .utility, focus: true)
                 return nil
             }
         }
         
-        return (object, true)
+        return result
     }
     
     public func getObjectRequest() -> NSFetchRequest<SecurityObject> {
@@ -72,45 +81,51 @@ extension Security {
         return request
     }
     
-    public func getObject(moc: NSManagedObjectContext,
-                          _ completion: @escaping ((SecurityObject?) -> Void)) {
+    public func getObject(moc: NSManagedObjectContext) -> SecurityObject? {
         let request: NSFetchRequest = self.getObjectRequest()
         
-        moc.performAndWait {
-            completion(try? moc.fetch(request).first)
+        let result: SecurityObject? = moc.performAndWaitPlease {
+            do {
+                return try moc.fetch(request).first
+            } catch let error {
+                return nil
+            }
         }
+        
+        return result
     }
     
-    public func getQuoteObject(moc: NSManagedObjectContext,
-                               _ completion: @escaping ((QuoteObject?) -> Void)) {
+    public func getQuoteObject(moc: NSManagedObjectContext) -> QuoteObject? {
         let request: NSFetchRequest = QuoteObject.fetchRequest()
         request.predicate = NSPredicate(format: "(ticker == %@) AND (name == %@)",
                                         self.ticker,
                                         self.name)
         
-        moc.performAndWait {
-            completion(try? moc.fetch(request).first)
+        let result: QuoteObject? = moc.performAndWaitPlease {
+            do {
+                return try moc.fetch(request).first
+            } catch let error {
+                return nil
+            }
         }
+        
+        return result
     }
     
-    public func getQuote(moc: NSManagedObjectContext,
-                         _ completion: @escaping ((Quote?) -> Void)){
-        getQuoteObject(moc: moc) { quoteObject in
-            completion(quoteObject?.asQuote)
-        }
+    public func getQuote(moc: NSManagedObjectContext) -> Quote? {
+        return getQuoteObject(moc: moc)?.asQuote
     }
     
     public func addToPortfolio(username: String,
-                               moc: NSManagedObjectContext,
-                               _ added: @escaping ((Portfolio?) -> Void)) {
-        moc.performAndWait {
-            guard let recordedSecurityPayload = self.record(to: moc) else { added(nil); return }
-            
-            let recordedSecurity = recordedSecurityPayload.0
-            
-            //Create quote if possible to record security to it
-            //otherwise its a dangling security
+                               moc: NSManagedObjectContext) -> Portfolio? {
+        let result: Portfolio? = moc.performAndWaitPlease {
             do {
+                guard let recordedSecurityPayload = self.record(to: moc) else { return nil }
+                
+                let recordedSecurity = recordedSecurityPayload.0
+                
+                //Create quote if possible to record security to it
+                //otherwise its a dangling security
                 let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
                 
                 let quote: QuoteObject = quotes.first(where: { $0.contains(security: self) }) ?? QuoteObject.init(context: moc)
@@ -118,48 +133,45 @@ extension Security {
                 self.apply(to: quote)
                 recordedSecurity.quote = quote
                 quote.addToSecurities(recordedSecurity)
-            } catch let error {
-                GraniteLogger.error("failed createing a quote before adding to portfolio\(error.localizedDescription)", .expedition)
-            }
-            
-            moc.getPortfolioObject(username) { portfolioObject in
-                do {
-                    if let portfolio = portfolioObject {
-                        guard portfolio.securities?.filter({ $0.name == self.name })
-                                .isEmpty == true else { added(nil); return }
-                        
-                        recordedSecurity.portfolio = portfolio
-                        portfolio.addToSecurities(recordedSecurity)
-                        try moc.save()
-                        added(portfolio.asPortfolio)
-                    } else {
-                        let newPortfolio = PortfolioObject.init(context: moc)
-                        newPortfolio.username = username
-                        recordedSecurity.portfolio = newPortfolio
-                        newPortfolio.addToSecurities(recordedSecurity)
-                        try moc.save()
-                        added(newPortfolio.asPortfolio)
-                    }
-                } catch let error {
-                    GraniteLogger.error("failed adding to portfolio\(error.localizedDescription)", .expedition)
-                    added(nil)
+                
+                let portfolioObject = moc.getPortfolioObject(username)
+                
+                if let portfolio = portfolioObject {
+                    guard portfolio.securities?.filter({ $0.name == self.name })
+                            .isEmpty == true else { return nil }
+                    
+                    recordedSecurity.portfolio = portfolio
+                    portfolio.addToSecurities(recordedSecurity)
+                    try moc.save()
+                    return portfolio.asPortfolio
+                } else {
+                    let newPortfolio = PortfolioObject.init(context: moc)
+                    newPortfolio.username = username
+                    recordedSecurity.portfolio = newPortfolio
+                    newPortfolio.addToSecurities(recordedSecurity)
+                    try moc.save()
+                    return newPortfolio.asPortfolio
                 }
+            } catch let error {
+                GraniteLogger.error("failed adding to portfolio\(error.localizedDescription)", .expedition)
+                return nil
             }
         }
+        return result
     }
     
     public func addToFloor(username: String,
                            location: CGPoint,
-                           moc: NSManagedObjectContext,
-                           _ added: @escaping ((Portfolio?) -> Void)) {
-        moc.performAndWait {
-            guard let recordedSecurityPayload = self.record(to: moc) else { added(nil); return }
-            
-            let recordedSecurity = recordedSecurityPayload.0
-            
-            //Create quote if possible to record security to it
-            //otherwise its a dangling security
+                           moc: NSManagedObjectContext) -> Portfolio? {
+        
+        let result: Portfolio? = moc.performAndWaitPlease {
             do {
+                guard let recordedSecurityPayload = self.record(to: moc) else { return nil }
+                
+                let recordedSecurity = recordedSecurityPayload.0
+                
+                //Create quote if possible to record security to it
+                //otherwise its a dangling security
                 let quotes: [QuoteObject] = try moc.fetch(QuoteObject.fetchRequest())
                 
                 let quote: QuoteObject = quotes.first(where: { $0.contains(security: self) }) ?? QuoteObject.init(context: moc)
@@ -167,58 +179,56 @@ extension Security {
                 self.apply(to: quote)
                 recordedSecurity.quote = quote
                 quote.addToSecurities(recordedSecurity)
-            } catch let error {
-                GraniteLogger.error("failed createing a quote before adding to portfolio\(error.localizedDescription)", .expedition)
-            }
-            
-            moc.getPortfolioObject(username) { portfolioObject in
-                do {
-                    let floor: FloorObject
-                    
-                    if let portfolio = portfolioObject {
-                        if let floorFound = portfolio.floor?.first(where: { $0.security?.name == recordedSecurity.name }) {
-                            floor = floorFound
-                        } else {
-                            floor = FloorObject(context: moc)
-                            recordedSecurity.portfolio = portfolio
-                            recordedSecurity.floor = floor
-                            floor.portfolio = portfolio
-                            portfolio.addToFloor(floor)
-                        }
-                        
-                        if !recordedSecurityPayload.1,
-                           portfolio.securities?.filter({ $0.name == self.name })
-                            .isEmpty == true {
-                            portfolio.addToSecurities(recordedSecurity)
-                        }
-                        
-                        floor.coordX = Int32(location.x)
-                        floor.coordY = Int32(location.y)
-                        
-                        try moc.save()
-                        added(portfolio.asPortfolio)
+                
+                let portfolioObject = moc.getPortfolioObject(username)
+                
+                let floor: FloorObject
+                
+                if let portfolio = portfolioObject {
+                    if let floorFound = portfolio.floor?.first(where: { $0.security?.name == recordedSecurity.name }) {
+                        floor = floorFound
                     } else {
                         floor = FloorObject(context: moc)
-                        floor.coordX = Int32(location.x)
-                        floor.coordY = Int32(location.y)
-                        floor.security = recordedSecurity
-                        
-                        let portfolio = PortfolioObject.init(context: moc)
-                        portfolio.username = username
                         recordedSecurity.portfolio = portfolio
                         recordedSecurity.floor = floor
-                        portfolio.addToSecurities(recordedSecurity)
                         floor.portfolio = portfolio
                         portfolio.addToFloor(floor)
-                        try moc.save()
-                        added(portfolio.asPortfolio)
                     }
-                } catch let error {
-                    GraniteLogger.error("failed adding to portfolio\(error.localizedDescription)", .expedition)
-                    added(nil)
+                    
+                    if !recordedSecurityPayload.1,
+                       portfolio.securities?.filter({ $0.name == self.name })
+                        .isEmpty == true {
+                        portfolio.addToSecurities(recordedSecurity)
+                    }
+                    
+                    floor.coordX = Int32(location.x)
+                    floor.coordY = Int32(location.y)
+                    
+                    try moc.save()
+                    return portfolio.asPortfolio
+                } else {
+                    floor = FloorObject(context: moc)
+                    floor.coordX = Int32(location.x)
+                    floor.coordY = Int32(location.y)
+                    floor.security = recordedSecurity
+                    
+                    let portfolio = PortfolioObject.init(context: moc)
+                    portfolio.username = username
+                    recordedSecurity.portfolio = portfolio
+                    recordedSecurity.floor = floor
+                    portfolio.addToSecurities(recordedSecurity)
+                    floor.portfolio = portfolio
+                    portfolio.addToFloor(floor)
+                    try moc.save()
+                    return portfolio.asPortfolio
                 }
+            } catch let error {
+                GraniteLogger.error("failed adding to portfolio\(error.localizedDescription)", .expedition)
+                return nil
             }
         }
+        
+        return result
     }
     
     public var asInvestmentItem: Strategy.Investments.Item {
@@ -239,7 +249,7 @@ extension Array where Element == SecurityObject {
     
     var latests: [SecurityObject] {
         return self.compactMap { security in
-            if let securities = security.quote?.securities {
+            if  let securities = security.quote?.securities {
                 return Array(securities).sortDesc.first
             } else {
                 return security

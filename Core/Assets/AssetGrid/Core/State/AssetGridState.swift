@@ -16,45 +16,84 @@ public class AssetGridState: GraniteState {
     var type: AssetGridType
     var context: WindowType
     
-    var assetData: [Asset] {
-        payload?.object as? [Asset] ?? []
-    }
-    
+    var assetData: [Asset]
     let leadingPadding: CGFloat
     
-    public init(context: WindowType) {
+    var radioSelections: [String] = []
+    
+    var label: String {
+        switch assetData.first?.assetType {
+        case .model:
+            return "model"
+        case .security:
+            
+            let stockType = assetData.first(where: { $0.asSecurity?.securityType == .stock })
+            let cryptoType = assetData.first(where: { $0.asSecurity?.securityType == .crypto })
+            
+            let bothExists = stockType != nil && cryptoType != nil
+            
+            if bothExists {
+                return "security"
+            } else {
+                let typeLabel = stockType?.asSecurity?.securityType ?? cryptoType?.asSecurity?.securityType
+                return "\(typeLabel?.rawValue ?? "security")"
+            }
+            
+        case .user:
+            return "user"
+        default:
+            return "asset"
+        }
+    }
+    
+    public init(context: WindowType, assetData: [Asset]) {
         self.type = context.assetGridType
         self.leadingPadding = Brand.Padding.medium
         self.context = context
+        self.assetData = assetData
     }
     
     public init(_ type: AssetGridType,
-                context: WindowType) {
+                context: WindowType, assetData: [Asset]) {
         self.type = type
         self.leadingPadding = Brand.Padding.medium
         self.context = context
+        self.assetData = assetData
     }
     
     public init(_ leadingPadding: CGFloat,
-                type: AssetGridType) {
+                type: AssetGridType, assetData: [Asset]) {
         self.type = type
         self.leadingPadding = leadingPadding
         self.context = .unassigned
+        self.assetData = assetData
     }
     
-    public init(_ leadingPadding: CGFloat) {
+    public init(_ leadingPadding: CGFloat, assetData: [Asset]) {
         self.type = .standard
         self.leadingPadding = leadingPadding
         self.context = .unassigned
+        self.assetData = assetData
     }
     
     public required init() {
         self.type = .standard
         self.leadingPadding = Brand.Padding.medium
         self.context = .unassigned
+        self.assetData = []
     }
 }
 
 public class AssetGridCenter: GraniteCenter<AssetGridState> {
+    var showDescription1: Bool {
+        state.assetData.first?.showDescription1 == true
+    }
     
+    var showDescription2: Bool {
+        state.assetData.first?.showDescription2 == true
+    }
+    
+    var assetType: AssetType {
+        state.assetData.first?.assetType ?? .security
+    }
 }

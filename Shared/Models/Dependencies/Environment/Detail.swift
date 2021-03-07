@@ -9,6 +9,10 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
+public class DetailDependency: GraniteDependable {
+    var detail: Detail = .init()
+}
+
 class Detail {
     var tonalStage: TonalDetailStage = .none
     var model: TonalModel? = nil {

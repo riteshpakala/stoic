@@ -16,12 +16,13 @@ public struct AssetGridComponent: GraniteComponent {
     
     public init() {}
     
+    let columns = [
+        GridItem(.flexible()),
+    ]
+    
     public var body: some View {
         VStack {
-            AssetGridItemContainerComponent(state: .init(state.type,
-                                                         leadingPadding: state.leadingPadding))
-                .listen(to: command)
-                .payload(state.payload)
+            itemContainer
                 .frame(
 //                     minWidth: 300 + Brand.Padding.large,
 //                       idealWidth: 414 + Brand.Padding.large,
@@ -30,6 +31,109 @@ public struct AssetGridComponent: GraniteComponent {
 //                       idealHeight: 50 * 5,
                     maxHeight: .infinity,//75 * 5,
                     alignment: .leading)
+        }
+    }
+    
+    var itemContainer: some View {
+        VStack {
+            VStack(alignment: .leading, spacing: 0.0) {
+                Spacer()
+                HStack(spacing: Brand.Padding.large) {
+                    GraniteText(state.label,
+                                .subheadline,
+                                .regular,
+                                .leading)
+                    
+                    if command.center.showDescription1 {
+                        switch command.center.assetType {
+                        case .model:
+                            GraniteText("expires",
+                                        .subheadline,
+                                        .regular,
+                                        .trailing)
+                        default:
+                            GraniteText("price",
+                                        .subheadline,
+                                        .regular,
+                                        .trailing)
+                        }
+                    }
+                    
+                    if command.center.showDescription2 {
+                        switch state.type {
+                        case .standard:
+                            GraniteText("change",
+                                        .subheadline,
+                                        .regular).frame(width: 60)
+                        case .add:
+                            GraniteText("add",
+                                        .subheadline,
+                                        .regular)
+                        case .radio:
+                            GraniteText("select",
+                                        .subheadline,
+                                        .regular)
+                        default:
+                            EmptyView.init()
+                        }
+                    }
+                }
+                .padding(.bottom, Brand.Padding.xSmall)
+                .padding(.leading, state.leadingPadding.isZero ? Brand.Padding.small : state.leadingPadding)
+                .padding(.trailing, Brand.Padding.medium)
+                
+                Rectangle()
+                    .frame(height: 2.0, alignment: .leading).foregroundColor(.black)
+            }.frame(minHeight: 42, idealHeight: 42, maxHeight: 42)
+            
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 0) {
+                    ForEach(state.assetData, id: \.assetID) { asset in
+                        AssetGridItemComponent(state: .init(state.type,
+                                                            radioSelections: state.radioSelections,
+                                                            asset: asset))
+                            .padding(.top, Brand.Padding.small)
+                            .modifier(TapAndLongPressModifier(
+                                        tapAction: {
+                                                if state.type == .radio {
+                                                    var selections = state.radioSelections
+                                                    if selections.contains(asset.assetID) {
+                                                        selections.removeAll(where: { $0 == asset.assetID })
+                                                    } else {
+                                                        selections.append(asset.assetID)
+                                                    }
+                                                    Haptic.basic()
+                                                    return set(\.radioSelections, value: selections)
+                                                } else {
+                                                    
+                                                    return sendEvent(AssetGridEvents
+                                                                        .AssetTapped(
+                                                                            asset),
+                                                                    .contact,
+                                                                    haptic: .light)
+                                                }
+                                        }))
+                            .padding(.leading, state.leadingPadding.isZero ? Brand.Padding.small : state.leadingPadding)
+                    }//.padding(.leading, state.leadingPadding.isZero ? 0 : Brand.Padding.medium)
+                }
+            }.frame(maxWidth: .infinity,
+                    minHeight: state.assetData.count > 0 ? 66 : 0.0,
+                    alignment: .center)
+            
+            if state.type == .radio {
+                Spacer()
+                GraniteButtonComponent(state: .init("confirm",
+                                                    action: {
+                                                        if self.state.radioSelections.isNotEmpty {
+                                                            return sendEvent(AssetGridEvents
+                                                                                .AssetsSelected(
+                                                                                    state.radioSelections),
+                                                                                .contact,
+                                                                                haptic: .light)
+                                                        }
+                                                    }))
+                    .opacity(state.radioSelections.isEmpty ? 0.5 : 1.0)
+            }
         }
     }
 }
@@ -63,10 +167,10 @@ extension AssetGridComponent {
              .winners,
              .losers,
              .winnersAndLosers:
-            let securities: [Security]? = (state.payload?.object as? [Security])
+            let securities: [Security]? = (state.assetData as? [Security])
             return securities == nil || securities?.isEmpty == true
         case .tonalBrowser:
-            return (state.payload?.object as? [TonalModel])?.isEmpty == true
+            return (state.assetData as? [TonalModel])?.isEmpty == true
         default:
             return false
         }

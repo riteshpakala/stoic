@@ -19,7 +19,7 @@ struct SaveTheToneExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        guard let tone = connection.retrieve(\EnvironmentDependency.tone) else {
+        guard let tone = connection.retrieve(\ToneDependency.tone) else {
             GraniteLogger.error("saving tonal model failed - no tone\nself:String(describing: self)",
                                 .expedition)
             return
@@ -44,10 +44,9 @@ struct SaveTheToneExpedition: GraniteExpedition {
         
         var modelExists: Bool = false
         
-        TonalModel.get(forSecurity: security,
-                       moc: coreDataInstance) { models in
-            modelExists = models.filter { $0.date == model.created }.isNotEmpty
-        }
+        let models = TonalModel.get(forSecurity: security,
+                                    moc: coreDataInstance)
+        modelExists = models.filter { $0.date == model.created }.isNotEmpty
         
         //TODO: Maybe a user error message is necessary here.
         //its supposed blocks the same model saved multiple times.
@@ -60,12 +59,11 @@ struct SaveTheToneExpedition: GraniteExpedition {
                                            quote: quote,
                                            range: range)
         
-        tonalModel.save(moc: coreDataInstance) { success in
-            if success {
-                connection.update(\EnvironmentDependency.tone.compile.tonalModel, value: tonalModel)
-                
-                GraniteLogger.info("saved tonal model\nself:String(describing: self)", .expedition)
-            }
+        let success = tonalModel.save(moc: coreDataInstance)
+        if success {
+            connection.update(\ToneDependency.tone.compile.tonalModel, value: tonalModel)
+            
+            GraniteLogger.info("saved tonal model\nself:String(describing: self)", .expedition)
         }
     }
 }

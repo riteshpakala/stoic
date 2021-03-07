@@ -10,13 +10,11 @@ import GraniteUI
 
 extension TonalRange {
     public func checkSentimentCache(
-        _ quote: QuoteObject,
-        moc: NSManagedObjectContext,
-        completion: @escaping (((sentiment: TonalSentiment?, missing: TonalRange?)?) -> Void)) {
+        _ quote: Quote,
+        moc: NSManagedObjectContext) -> (sentiment: TonalSentiment?, missing: TonalRange?)? {
         
-        moc.getSentiment(quote, self) { data in
-            completion(data)
-        }
+        let data = moc.getSentiment(quote, self)
+        return data
     }
 }
 
@@ -59,27 +57,25 @@ extension Array where Element == SecurityObject {
 }
 
 extension Array where Element == Security {
-    func baseRange(moc: NSManagedObjectContext,
-                   completion: @escaping ((TonalRange) -> Void)) {
+    func baseRange(moc: NSManagedObjectContext) -> TonalRange {
         
         let similarities: [TonalSimilarity] = self.map { TonalSimilarity.init(date: $0.date, similarity: 1.0) }
         
         let indicators: [TonalIndicators] = self.map { TonalIndicators.init(date: $0.date, volatility: 1.0, volatilityCoeffecient: 1.0) }
         
-        self.first?.getQuote(moc: moc) { quote in
-            if let securities = quote?.securities {
-                completion(.init(objects: self,
-                             Array(securities).expanded(from: self),
-                             similarities,
-                             indicators,
-                             base: true))
-            } else {
-                completion(.init(objects: self,
-                             self,
-                             similarities,
-                             indicators,
-                             base: true))
-            }
+        let quote = self.first?.getQuote(moc: moc)
+        if let securities = quote?.securities {
+            return .init(objects: self,
+                         Array(securities).expanded(from: self),
+                         similarities,
+                         indicators,
+                         base: true)
+        } else {
+            return .init(objects: self,
+                         self,
+                         similarities,
+                         indicators,
+                         base: true)
         }
     }
     

@@ -10,6 +10,12 @@ import GraniteUI
 import SwiftUI
 import Combine
 
+public enum StrategyType: Equatable, Hashable {
+    case expanded
+    case preview
+    case none
+}
+
 public enum StrategyStage: Equatable {
     case none
     case adding
@@ -23,6 +29,8 @@ public enum StrategyStage: Equatable {
 public class StrategyState: GraniteState {
     var stage: StrategyStage = .none
     
+    var type: StrategyType
+    
     var user: UserInfo? = nil
     
     var syncProgress: Double {
@@ -33,6 +41,7 @@ public class StrategyState: GraniteState {
     var securitiesToSync: [Security] = []
     var securitiesSynced: [String] = []
     var securities: [Security] = []
+    var strategy: Strategy = .init([], "", .today, .empty)
     
     var showResetDisclaimer: Bool = false
     var showCloseDisclaimer: Bool {
@@ -53,15 +62,28 @@ public class StrategyState: GraniteState {
             return "sync \(count)"
         }
     }
+    
+    public init(_ type: StrategyType) {
+        self.type = type
+    }
+    
+    public required init() {
+        self.type = .preview
+    }
 }
 
 public class StrategyCenter: GraniteCenter<StrategyState> {
     let stockRelay: StockRelay = .init()
     let cryptoRelay: CryptoRelay = .init()
     
-    var envDependency: EnvironmentDependency {
-        self.hosted.env
-    }
+    @GraniteDependency
+    var routerDependency: RouterDependency
+    
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
+    
+    @GraniteDependency
+    var strategyDependency: StrategyDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
@@ -80,11 +102,11 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(StrategyEvents.Get(), .dependant)
+            .onAppear(StrategyEvents.Get())
         ]
     }
     
     var strategies: [Strategy] {
-        envDependency.user.portfolio?.strategies ?? []
+        [state.strategy]
     }
 }

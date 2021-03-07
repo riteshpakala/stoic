@@ -9,7 +9,11 @@ import Foundation
 import CoreGraphics
 import GraniteUI
 
-public struct Strategy: Hashable, Identifiable {
+public class StrategyDependency: GraniteDependable {
+    var strategy: Strategy = .init([], "", .today, .empty)
+}
+
+public class Strategy: Hashable, Identifiable {
     public var id: ObjectIdentifier {
         .init(investments)
     }

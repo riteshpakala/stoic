@@ -27,13 +27,12 @@ public class FloorCenter: GraniteCenter<FloorState> {
     let cryptoRelay: CryptoRelay = .init()
     let tonalRelay: TonalRelay = .init()
     
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env.add(self)
-    }
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(FloorEvents.Get(), .dependant),
+            .onAppear(FloorEvents.Get()),
         ]
     }
     

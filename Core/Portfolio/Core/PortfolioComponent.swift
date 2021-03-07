@@ -24,29 +24,15 @@ public struct PortfolioComponent: GraniteComponent {
                 case .expanded, .preview:
                     portfolioHeader
                     PaddingVertical(Brand.Padding.xSmall)
-                    portfolioStrategy
-                    GraniteButtonComponent(
-                        state: .init(.add,
-                                     padding: .init(0,0,Brand.Padding.xSmall,0),
-                                     action: {
-                                       GraniteHaptic.light.invoke()
-                                       set(\.stage, value: .adding)
-                                     }))
-                        .background(Brand.Colors.black)
                 default:
                     EmptyView.init().hidden()
                 }
                 
                 switch state.type {
                 case .expanded, .holdings:
-                    if state.type == .expanded {
-                        PaddingVertical()
-                    }
-                    
                     HoldingsComponent(state: .init(context: .portfolio(.preview)))
-                        .share(.init(dep(\.hosted)))
                 default:
-                    EmptyView.init().hidden()
+                    portfolioStrategy
                     
                 }
                 
@@ -55,15 +41,17 @@ public struct PortfolioComponent: GraniteComponent {
             if state.stage == .adding {
                 VStack {
                     GraniteModal(content: {
-                        HoldingsComponent(state: .init(context: .strategy))
-                            .share(.init(dep(\.hosted,
-                                             PortfolioCenter.route)))
+                        HoldingsComponent(state: .init(context: .strategy(.none)))
                     }, onExitTap: {
                         set(\.stage, value: .none)
                     })
                 }
             }
         }
+        //We want to reduce the size of the expanded view ON DESKTOP/TABLET, as it would be coupled
+        //with another component that is full width, displaying important details
+        //aka (StrategyComponent - expanded)
+        .frame(maxWidth: !EnvironmentConfig.isIPhone && state.type == .expanded ? EnvironmentStyle.idealWidth : .infinity)
     }
     
     var portfolioHeader: some View {
@@ -137,10 +125,8 @@ public struct PortfolioComponent: GraniteComponent {
     }
     
     var portfolioStrategy: some View {
-        StrategyComponent(state: inject(\.envDependency,
-                                        target: \.strategiesPortfolio))
+        StrategyComponent()
             .listen(to: command, .stop)
-            .share(.init(dep(\.envDependency)))
             .showEmptyState
             .frame(maxHeight: .infinity)
     }

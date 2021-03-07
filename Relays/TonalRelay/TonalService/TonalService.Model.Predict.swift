@@ -60,40 +60,39 @@ extension TonalModels {
             return
         }
         
-        selectedRange.objects.first?.getQuote(moc: moc) { [weak self] quote in
-            guard let quote = quote else {
-                GraniteLogger.error("failed to retrieve quote - self: \(String(describing: self))", .relay)
-                completion(0.0)
-                return
-            }
-            
-            let sortedSecurities = quote.securities.sortDesc
-            let security: Security
-            
-            if selectedRange.base {
-                guard let baseSecurity = sortedSecurities.first else {
-                    completion(0.0); return }
-                security = baseSecurity
-            } else {
-                let sortedRange = selectedRange.objects.sortDesc
-                
-                // We want to predict based off the "next day" in the sequence
-                // of days used to train the model that would be based on days
-                // of the past. Combines with today's sentiment, let's see
-                // how the future can meet the past.
-                //
-                guard let firstRangeSecurity = sortedRange.first else {
-                    completion(0.0); return }
-                
-                guard let lastSecurity = sortedSecurities.filterAbove(firstRangeSecurity.date).last else {
-                    completion(0.0); return
-                }
-                
-                security = lastSecurity
-            }
-            
-            completion(self?.run(security, sentiment, quote, modelType) ?? 0.0)
+        let foundQuote = selectedRange.objects.first?.getQuote(moc: moc)
+        guard let quote = foundQuote else {
+            GraniteLogger.error("failed to retrieve quote - self: \(String(describing: self))", .relay)
+            completion(0.0)
+            return
         }
+        
+        let sortedSecurities = quote.securities.sortDesc
+        let security: Security
+        
+        if selectedRange.base {
+            guard let baseSecurity = sortedSecurities.first else {
+                completion(0.0); return }
+            security = baseSecurity
+        } else {
+            let sortedRange = selectedRange.objects.sortDesc
+            
+            // We want to predict based off the "next day" in the sequence
+            // of days used to train the model that would be based on days
+            // of the past. Combines with today's sentiment, let's see
+            // how the future can meet the past.
+            //
+            guard let firstRangeSecurity = sortedRange.first else {
+                completion(0.0); return }
+            
+            guard let lastSecurity = sortedSecurities.filterAbove(firstRangeSecurity.date).last else {
+                completion(0.0); return
+            }
+            
+            security = lastSecurity
+        }
+        
+        completion(self.run(security, sentiment, quote, modelType) ?? 0.0)
     }
     
     public func run(_ security: Security,

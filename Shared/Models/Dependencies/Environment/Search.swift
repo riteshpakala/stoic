@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import GraniteUI
 
-class SearchDependency: DependencyManager {
+class SearchDependency {
     var search: SearchQuery = .init()
 }
 

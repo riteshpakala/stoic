@@ -6,9 +6,17 @@
 //
 
 import SwiftUI
+import GraniteUI
 
 @main
 struct __stoicApp: App {
+    
+    //Property wrapped injectable dependencies
+    //should exist at the most top-level component
+    //of an aplicatino interface. In this project
+    //its `App`
+    private let dependencies = StoicDependencies()
+    
     var body: some Scene {
         WindowGroup {
             ZStack {

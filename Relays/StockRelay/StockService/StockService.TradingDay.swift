@@ -23,7 +23,7 @@ extension StockService {
         
         return session
                 .dataTaskPublisher(for: url)
-                .compactMap { (data, response) -> [StockServiceModels.TradingDay] in
+                .compactMap { [weak self] (data, response) -> [StockServiceModels.TradingDay] in
                     
                     var tradingDays: [StockServiceModels.TradingDay] = []
                     if let content = String(data: data, encoding: .utf8) {
@@ -35,9 +35,6 @@ extension StockService {
                                 if  dateAndStatusSplit.count > 1,
                                     let dateString = dateAndStatusSplit.first,
                                     let status = dateAndStatusSplit.last {
-                                    
-                                    
-                                    
                                     if let date = dateString.asDate() {
                                         let isOpen: Bool = status == "open" ? true : false
                                         

@@ -9,57 +9,67 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class RouterDependency: DependencyManager {
-    lazy var router: Router = {
-        _router as? Router ?? .init()
-    }()
-    
-    lazy var environment: EnvironmentDependency = {
-        return router.dependencies.get(EnvironmentDependency.self) ?? .init()
-    }()
-    
+class RouterDependency: GraniteRouterDependable {
+    var router: Router = .init()
     var authState: AuthState = .none
 }
 
 public class Router: GraniteRouter {
-    public var route: GraniteRoute = Route.home//.debug(.models)
+//    public var route: GraniteRoute = Route.home
+//    public var home: GraniteAdAstra? = nil
     
-    public var children: [GraniteAdAstra] = []
-    public lazy var dependencies: [DependencyManager] = [
-        EnvironmentDependency.init(self)
-    ]
-    
-    required public init() {
-//        self.env.router = self
-    }
-    
-//    public func request(_ route: GraniteRoute) {
-//        GraniteLogger.info("requesting route \(route.target)\nself:\(String(describing: self))", .dependency, focus: true)
-//
+//    public override func request(_ route: GraniteRoute) {
 //        guard let newRoute = route.convert(to: Route.self) else { return }
+//        clean()
 //
 //        self.route = newRoute
-//
-//
 //    }
 //
-//    public func request(_ route: Route) {
-//        self.route = route
-//
-//        if let child = children.first(where:  { type(of: $0) == route.target }) {
-//
-//            child.land()
-//            GraniteLogger.info("requesting route 2 \(route.target)\nself:\(String(describing: self))", .dependency, focus: true)
-//        }
-//    }
+}
+
+class StoicDependencies: GraniteDependencyManager {
+    private let router: RouterDependency
+    private let environment: EnvironmentDependency
+    private let tone: ToneDependency
+    private let detail: DetailDependency
+    private let discuss: DiscussDependency
+    private let broadcasts: BroadcastDependency
+    private let strategy: StrategyDependency
     
-    public func clean() {
-//        _env = .init(identifier: "envDependency")
+    init() {
+        self.router = .init()
+        self.environment = .init()
+        self.tone = .init()
+        self.detail = .init()
+        self.discuss = .init()
+        self.broadcasts = .init()
+        self.strategy = .init()
+        addDependencies()
+    }
+    
+    private func addDependencies() {
+        let resolver = GraniteResolver.shared
+        
+        resolver.add(router)
+        resolver.add(environment)
+        resolver.add(tone)
+        resolver.add(detail)
+        resolver.add(discuss)
+        resolver.add(broadcasts)
+        resolver.add(strategy)
     }
 }
 
-extension DependencyManager {
-    var fetch: RouterDependency {
-        return self as? RouterDependency ?? .init(identifier: "none")
-    }
-}
+//class RouterDependency: DependencyManager {
+//    lazy var router: Router = {
+//        _router as? Router ?? .init()
+//    }()
+//
+//    lazy var environment: EnvironmentDependency = {
+//        return router.dependencies.get(EnvironmentDependency.self) ?? .init()
+//    }()
+//
+//    var authState: AuthState = .none
+//}
+//
+

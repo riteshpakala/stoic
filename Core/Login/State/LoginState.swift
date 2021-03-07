@@ -58,6 +58,12 @@ public class LoginCenter: GraniteCenter<LoginState> {
             SignupResultExpedition.Discovery()
         ]
     }
+    
+    @GraniteDependency
+    var routerDependency: RouterDependency
+    
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
 }
 
 public struct AuthValidator {

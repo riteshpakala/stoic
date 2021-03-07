@@ -18,7 +18,7 @@ struct GenerateTonesExpedition: GraniteExpedition {
         state: ExpeditionState,
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
-        guard let detail = connection.retrieve(\EnvironmentDependency.detail) else {
+        guard let detail = connection.retrieve(\DetailDependency.detail) else {
             return
         }
         
@@ -30,12 +30,11 @@ struct GenerateTonesExpedition: GraniteExpedition {
             return
         }
     
-        connection.update(\EnvironmentDependency.detail.tonalStage, value: .generating)
+        connection.update(\DetailDependency.detail.tonalStage, value: .generating)
         
-        quote.getObject(moc: coreDataInstance) { object in
-            if let tonalModel = object?.tonalModel?.first?.asTone {
-                preparePredictions(tonalModel)
-            }
+        let object = quote.getObject(moc: coreDataInstance)
+        if let tonalModel = object?.tonalModel?.first?.asTone {
+            preparePredictions(tonalModel)
         }
     }
     

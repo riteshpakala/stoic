@@ -30,16 +30,18 @@ struct RemoveFromStrategyExpedition: GraniteExpedition {
             return
         }
         
+        let updatedPortfolio = coreDataInstance.removeFromStrategy(username: user.info.username, security)
         
-        coreDataInstance.removeFromStrategy(username: user.info.username, security) { updatedPortfolio in
-            user.portfolio = updatedPortfolio
-            
-            connection.update(\EnvironmentDependency.user, value: user, .home)
-            
-            state.securities.removeAll(where: { $0.assetID == event.assetID })
-            
-            GraniteLogger.info("\(security.ticker) removed", .expedition, focus: true)
-        }
+        user.portfolio = updatedPortfolio
+        
+        state.strategy = state.strategy.updated(moc: coreDataInstance) ?? state.strategy
+        connection.update(\StrategyDependency.strategy, value: state.strategy)
+        
+        connection.update(\EnvironmentDependency.user, value: user)
+        
+        state.securities.removeAll(where: { $0.assetID == event.assetID })
+        
+        GraniteLogger.info("\(security.ticker) removed", .expedition, focus: true)
     }
 }
 
@@ -63,12 +65,14 @@ struct CloseFromStrategyExpedition: GraniteExpedition {
             return
         }
         
-        coreDataInstance.closeFromStrategy(username: user.info.username, security) { updatedPortfolio in
-            user.portfolio = updatedPortfolio
-            
-            connection.update(\EnvironmentDependency.user, value: user, .home)
-            
-            GraniteLogger.info("\(security.ticker) closed", .expedition, focus: true)
-        }
+        let updatedPortfolio = coreDataInstance.closeFromStrategy(username: user.info.username, security) 
+        user.portfolio = updatedPortfolio
+        
+        state.strategy = state.strategy.updated(moc: coreDataInstance) ?? state.strategy
+        connection.update(\StrategyDependency.strategy, value: state.strategy)
+        
+        connection.update(\EnvironmentDependency.user, value: user)
+        
+        GraniteLogger.info("\(security.ticker) closed", .expedition, focus: true)
     }
 }

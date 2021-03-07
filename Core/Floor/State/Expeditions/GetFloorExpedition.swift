@@ -44,9 +44,8 @@ struct GetFloorExpedition: GraniteExpedition {
                         
                         securitiesRow.append(security)
                         
-                        security.getQuote(moc: coreDataInstance) { quote in
-                            quotesRow.append(quote)
-                        }
+                        let quote = security.getQuote(moc: coreDataInstance)
+                        quotesRow.append(quote)
                     } else {
                         securitiesRow.append(nil)
                         quotesRow.append(nil)

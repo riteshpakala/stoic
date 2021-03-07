@@ -16,12 +16,15 @@ public class TonalCompileState: GraniteState {
 }
 
 public class TonalCompileCenter: GraniteCenter<TonalCompileState> {
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+
+    @GraniteDependency
+    var toneDependency: ToneDependency
+    
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     var tone: Tone {
-        envDependency.tone
+        toneDependency.tone
     }
     
     var latestSecurity: Security? {
@@ -38,6 +41,10 @@ public class TonalCompileCenter: GraniteCenter<TonalCompileState> {
     
     var compileState: Tone.Compile.State {
         tonalCompile.state
+    }
+    
+    var tuneState: Tone.Tune.State {
+        tone.tune.stage
     }
     
     var model: TonalModel? {

@@ -41,18 +41,17 @@ extension StockService {
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         
-        let decoder = JSONDecoder()
         return session
                 .dataTaskPublisher(for: request)
-                .compactMap { (data, response) -> [StockServiceModels.Quotes]? in
-                    
-                    let movers: StockServiceModels.Quotes?
+                .compactMap { [weak self] (data, response) -> [StockServiceModels.Quotes]? in
+                    var movers: StockServiceModels.Quotes?
                     do {
-                        
-                        movers = try decoder.decode(StockServiceModels.Quotes.self, from: data)
+                        try autoreleasepool {
+                            movers = try JSONDecoder().decode(StockServiceModels.Quotes.self, from: data)
+                        }
                     } catch let error {
                         movers = nil
-                        GraniteLogger.info("failed fetching stock quotes:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay, focus: true)
+                        GraniteLogger.info("failed fetching stock quotes:\n\(error.localizedDescription))", .relay, focus: true)
                     }
                     
                     return movers != nil ? [movers!] : nil

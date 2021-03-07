@@ -75,9 +75,10 @@ public struct AssetSectionComponent: GraniteComponent {
             .padding(.leading, Brand.Padding.medium)
             .padding(.trailing, Brand.Padding.medium)
             VStack(alignment: .leading, spacing: Brand.Padding.medium) {
-                AssetGridComponent(state: .init(context: state.context))
+                AssetGridComponent(state: .init(context: state.context,
+                                                assetData: command.center.movers))
                     .listen(to: command, .stop)
-                    .payload(.init(object: command.center.movers)).showEmptyState
+                    .showEmptyState
             }
         }
     }

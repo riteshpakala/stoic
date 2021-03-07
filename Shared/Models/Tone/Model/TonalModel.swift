@@ -9,18 +9,23 @@ import Foundation
 import CoreData
 import GraniteUI
 
-public struct TonalModel: Asset {
+public class TonalModel: Asset {
     var date: Date {
         david.created
     }
     
     var targetDate: Date {
-        switch latestSecurity.interval {
+        return date.advanceDate(value: 1)
+        
+        //TODO: Generally we would like daily models
+        //but for now all will be 24 hours
+        //as well as crypto
+        /* switch latestSecurity.interval {
         case .day:
             return date.advanceDate(value: 1)
         case .hour:
             return date.advanceDateHourly(value: 1)
-        }
+        } */
     }
     
     let daysTrained: Int
@@ -54,13 +59,13 @@ public struct TonalModel: Asset {
         Date.today.compare(self.targetDate) == .orderedDescending
     }
     
-    public mutating func precompute() {
+    public func precompute() {
         self.quote.precompute()
         let sorted = quote.precomputedDailies?.sortDesc ?? self.last12Securities
         self.last12SecuritiesDailies = Array(sorted.prefix(12))
     }
     
-    public mutating func predictAll(_ sentiment: SentimentOutput? = nil) -> TonalPrediction {
+    public func predictAll(_ sentiment: SentimentOutput? = nil) -> TonalPrediction {
         let sentimentToUse = sentiment ?? david.sentimentAvg
         
         let close: Double = predict(sentimentToUse, modelType: .close)
@@ -80,7 +85,7 @@ public struct TonalModel: Asset {
         return prediction
     }
     
-    public mutating func predict(_ sentiment: SentimentOutput = .neutral,
+    public func predict(_ sentiment: SentimentOutput = .neutral,
                         modelType: TonalModels.ModelType = .close,
                         scale: Bool = true) -> Double {
         quote.precompute()
@@ -109,7 +114,7 @@ public struct TonalModel: Asset {
         }
     }
     
-    mutating func predict(days: Int,
+    func predict(days: Int,
                  sentiment: SentimentOutput = .neutral,
                  modelType: TonalModels.ModelType = .close) {
         quote.precompute()
@@ -198,25 +203,22 @@ extension TonalModel {
 
 extension TonalModel {
     public static func get(moc: NSManagedObjectContext,
-                           _ completion: @escaping (([TonalModel]) -> Void)){
+                           light: Bool = false) -> [TonalModel] {
        
-        moc.getTones { tonalObjects in
-            completion(tonalObjects.compactMap { $0.asTone })
-        }
+        let tonalObjects = moc.getTones()
+        return tonalObjects.compactMap { light ? $0.asToneLight : $0.asTone }
     }
     
     public static func get(forSecurity security: Security?,
-                           moc: NSManagedObjectContext,
-                           _ completion: @escaping (([TonalModel]) -> Void)) {
+                           light: Bool = false,
+                           moc: NSManagedObjectContext) -> [TonalModel] {
         
         guard let security = security else {
-            TonalModel.get(moc: moc, completion)
-            return
+            return TonalModel.get(moc: moc, light: light)
         }
         
-        moc.getTones(forSecurity: security) { tonalObjects in
-            completion(tonalObjects.compactMap { $0.asTone })
-        }
+        let tonalObjects = moc.getTones(forSecurity: security)
+        return tonalObjects.compactMap { light ? $0.asToneLight : $0.asTone }
     }
 }
 

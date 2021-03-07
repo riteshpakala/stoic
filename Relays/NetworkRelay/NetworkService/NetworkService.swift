@@ -36,14 +36,16 @@ extension NetworkResponseData {
 
 extension Data {
     public func decodeNetwork<T: NetworkResponseData>(type: T.Type, decoder: JSONDecoder? = nil) -> T? {
-        let decoder = decoder ?? JSONDecoder()
-        let result: T?
-        do {
-            result = try decoder.decode(T.self, from: self)
-        } catch let error {
-            result = nil
-            GraniteLogger.error("failed decoding:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
-        }
+        
+        var result: T?
+            do {
+                try autoreleasepool {
+                    result = try (decoder ?? JSONDecoder()).decode(T.self, from: self)
+                }
+            } catch let error {
+                result = nil
+                GraniteLogger.error("failed decoding:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
+            }
         
         return result
     }

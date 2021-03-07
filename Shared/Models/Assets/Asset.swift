@@ -38,6 +38,9 @@ public protocol Asset: ID {
 }
 
 extension Asset {
+}
+
+extension Asset {
     public var symbolImage: Image? {
         nil
     }

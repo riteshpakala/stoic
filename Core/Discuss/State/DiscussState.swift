@@ -19,9 +19,11 @@ public class DiscussState: GraniteState {
 }
 
 public class DiscussCenter: GraniteCenter<DiscussState> {
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+    @GraniteDependency
+    var discussDependency: DiscussDependency
+    
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
@@ -33,7 +35,7 @@ public class DiscussCenter: GraniteCenter<DiscussState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(DiscussEvents.Load(), .dependant)
+            .onAppear(DiscussEvents.Load())
         ]
     }
     

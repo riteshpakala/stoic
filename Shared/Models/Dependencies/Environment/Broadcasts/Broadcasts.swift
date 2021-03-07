@@ -9,6 +9,6 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-public class Broadcasts {
+public class BroadcastDependency: GraniteDependable {
     var movers: BroadcastsMovers = .init()
 }

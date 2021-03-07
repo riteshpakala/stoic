@@ -57,6 +57,10 @@ struct CryptoEvents {
         public var beam: GraniteBeamType {
             .rebound
         }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
     
     public struct GlobalCategoryResult: GraniteEvent {
@@ -79,6 +83,10 @@ struct CryptoEvents {
         public var behavior: GraniteEventBehavior {
             .quiet
         }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
     
     //MARK: -- Crypto History
@@ -99,6 +107,10 @@ struct CryptoEvents {
         public var beam: GraniteBeamType {
             .rebound
         }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
+        }
     }
     
     public struct History: GraniteEvent {
@@ -107,6 +119,10 @@ struct CryptoEvents {
         
         public var beam: GraniteBeamType {
             .rebound
+        }
+        
+        public var async: DispatchQueue? {
+            GraniteThread.event
         }
     }
 }

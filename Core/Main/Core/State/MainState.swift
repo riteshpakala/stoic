@@ -25,12 +25,21 @@ public class MainCenter: GraniteCenter<MainState> {
     let networkRelay: NetworkRelay = .init()
     let discussRelay: DiscussRelay = .init()
     
-    var routerDependency: RouterDependency {
-        hosted.fetch.add(self)
-    }
+    @GraniteDependency
+    var routerDependency: RouterDependency
+    
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
+    
+    @GraniteDependency
+    var strategyDependency: StrategyDependency
+    
+    @GraniteDependency
+    var discussDependency: DiscussDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
+            RouteExpedition.Discovery(),
             UserExpedition.Discovery(),
             LogoutExpedition.Discovery(),
             DiscussSetResultExpedition.Discovery(),
@@ -41,7 +50,7 @@ public class MainCenter: GraniteCenter<MainState> {
     
     public override var links: [GraniteLink] {
         [
-            .onAppear(MainEvents.User(), .dependant)
+            .onAppear(MainEvents.User())
         ]
     }
     

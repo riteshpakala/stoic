@@ -42,51 +42,51 @@ extension CryptoService {
         
         request.httpMethod = "GET"
         
-        let decoder = JSONDecoder()
         return session
                 .dataTaskPublisher(for: request)
                 .compactMap { (data, response) -> [CryptoServiceModels.Quotes.Coin]? in
-                    
-                    let response: [String:[String:Double?]]?
-                    do {
+                    autoreleasepool {
+                        let decoder = JSONDecoder()
+                        let response: [String:[String:Double?]]?
+                        do {
+                            
+                            response = try decoder.decode([String:[String:Double?]].self, from: data)
+                        } catch let error {
+                            response = nil
+                            GraniteLogger.error("failed fetching crypto quotes:\n\(error.localizedDescription))", .relay)
+                        }
                         
-                        response = try decoder.decode([String:[String:Double?]].self, from: data)
-                    } catch let error {
-                        response = nil
-                        GraniteLogger.error("failed fetching crypto quotes:\n\(error.localizedDescription)\nself: \(String(describing: self))", .relay)
-                    }
-                    
-                    
-                    guard let result = response else {
-                        return nil
-                    }
-                    
-                    var coins: [CryptoServiceModels.Quotes.Coin] = []
-                    for key in result.keys {
                         
-                        if let values = result[key] {
-                            if let price = values[CryptoServiceModels.Quotes.Keys.price.rawValue] as? Double,
-                               let marketCap = values[CryptoServiceModels.Quotes.Keys.marketCap.rawValue] as? Double,
-                               let volume = values[CryptoServiceModels.Quotes.Keys.volume.rawValue] as? Double,
-                               let change = values[CryptoServiceModels.Quotes.Keys.change.rawValue] as? Double,
-                               let updatedAt = values[CryptoServiceModels.Quotes.Keys.updatedAt.rawValue] as? Double {
-                                
-                                
-                                
-                                coins.append(.init(price: price,
-                                                   marketCap: marketCap,
-                                                   volume24H: volume,
-                                                   change24h: change,
-                                                   lastUpdatedAt: updatedAt,
-                                                   currencyVS: "usd",
-                                                   name: key))
-                                
+                        guard let result = response else {
+                            return nil
+                        }
+                        
+                        var coins: [CryptoServiceModels.Quotes.Coin] = []
+                        for key in result.keys {
+                            
+                            if let values = result[key] {
+                                if let price = values[CryptoServiceModels.Quotes.Keys.price.rawValue] as? Double,
+                                   let marketCap = values[CryptoServiceModels.Quotes.Keys.marketCap.rawValue] as? Double,
+                                   let volume = values[CryptoServiceModels.Quotes.Keys.volume.rawValue] as? Double,
+                                   let change = values[CryptoServiceModels.Quotes.Keys.change.rawValue] as? Double,
+                                   let updatedAt = values[CryptoServiceModels.Quotes.Keys.updatedAt.rawValue] as? Double {
+                                    
+                                    
+                                    
+                                    coins.append(.init(price: price,
+                                                       marketCap: marketCap,
+                                                       volume24H: volume,
+                                                       change24h: change,
+                                                       lastUpdatedAt: updatedAt,
+                                                       currencyVS: "usd",
+                                                       name: key))
+                                    
+                                }
                             }
                         }
+                        
+                        return coins
                     }
-                    
-                    return coins
-                
                 }.eraseToAnyPublisher()
     }
 }

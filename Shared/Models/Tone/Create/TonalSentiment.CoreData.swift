@@ -17,9 +17,8 @@ extension SecurityObject {
 
 extension TonalSentiment {
     func save(_ range: TonalRange,
-              moc: NSManagedObjectContext,
-              completion: ((Bool) -> Void)? = nil) {
-        moc.performAndWait {
+              moc: NSManagedObjectContext) -> Bool {
+        let result: Bool = moc.performAndWaitPlease {
             let sentimentObjects: [SentimentObject] = self.sounds.values.flatMap { $0 }.map {
                 let sentimentObject = SentimentObject(context: moc)
                 $0.applyTo(sentimentObject)
@@ -33,18 +32,17 @@ extension TonalSentiment {
             
             let securities = range.expanded
             for security in securities {
-                security.getObject(moc: moc) { object in
-                    if let object = object {
-                        let date = object.date.simple
-                        object.addToSentiment(
-                            NSSet.init(
-                                array: sentimentObjects
-                                    .filter( { $0.date.simple == date })))
-                        
-                        sentimentObjects.forEach { sentiment in
-                            if sentiment.date.simple == object.date {
-                                sentiment.security = object
-                            }
+                let object = security.getObject(moc: moc)
+                if let object = object {
+                    let date = object.date.simple
+                    object.addToSentiment(
+                        NSSet.init(
+                            array: sentimentObjects
+                                .filter( { $0.date.simple == date })))
+                    
+                    sentimentObjects.forEach { sentiment in
+                        if sentiment.date.simple == object.date {
+                            sentiment.security = object
                         }
                     }
                 }
@@ -53,11 +51,13 @@ extension TonalSentiment {
             do {
                 try moc.save()
                 GraniteLogger.info("sentiment saved", .utility, focus: true)
-                completion?(true)
+                return true
             } catch let error {
-                completion?(false)
+                return false
                 GraniteLogger.info("sentiment saving failed - \(error.localizedDescription)", .utility)
             }
         }
+        
+        return result
     }
 }

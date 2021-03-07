@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct AssetSelectedExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = AssetGridItemContainerEvents.AssetTapped
+    typealias ExpeditionEvent = AssetGridEvents.AssetTapped
     typealias ExpeditionState = AssetSearchState
     
     func reduce(
@@ -21,7 +21,7 @@ struct AssetSelectedExpedition: GraniteExpedition {
 
         guard state.context == .unassigned else { return }
         guard let security = event.asset.asSecurity else { return }
-        guard let router = connection.router else { return }
+        guard let router = connection.retrieve(\RouterDependency.router) else { return }
         
         connection.update(\EnvironmentDependency.tonalModels.type,
                           value: .specified(security))

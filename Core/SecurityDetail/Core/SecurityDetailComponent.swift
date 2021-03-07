@@ -17,7 +17,7 @@ public struct SecurityDetailComponent: GraniteComponent {
     public init() {}
     
     var tunerState: SentimentSliderState {
-        let tuner = inject(\.envDependency,
+        let tuner = inject(\.detailDependency,
                                target: \.detail.slider)
         return tuner ?? .init()
     }
@@ -117,7 +117,7 @@ public struct SecurityDetailComponent: GraniteComponent {
                 PaddingVertical()
                 ZStack {
                     IndicatorDetailComponent(state: .init(state.quote))
-                        .share(.init(dep(\.hosted)))
+                        
                     
                     VStack {
                         Spacer()
@@ -140,7 +140,7 @@ public struct SecurityDetailComponent: GraniteComponent {
                 PaddingVertical()
                 
                 TonalControlComponent(state: .init(tunerState, model: state.model))
-                    .share(.init(dep(\.hosted)))
+                    
             }
         }
     }

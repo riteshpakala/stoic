@@ -27,6 +27,7 @@ public struct EnvironmentConfig {
         case modelBrowser
         case securityDetail(GranitePayload)
         case settings
+        case strategy
         case discuss
         
         public var page: Page {
@@ -59,6 +60,10 @@ public struct EnvironmentConfig {
             case .discuss:
                 return .init(windows: [
                     [.discuss]
+                ])
+            case .strategy:
+                return .init(windows: [
+                    [.strategy(.expanded), .portfolio(.expanded)]
                 ])
             case .settings:
                 return .init(windows: [
@@ -101,6 +106,8 @@ extension EnvironmentConfig {
             return .init(kind: .settings)
         case .discuss:
             return .init(kind: .discuss)
+        case .strategyDetail:
+            return .init(kind: .strategy)
         default:
             return .init(kind: .home)
         }

@@ -36,9 +36,8 @@ public class PortfolioState: GraniteState {
 }
 
 public class PortfolioCenter: GraniteCenter<PortfolioState> {
-    var envDependency: EnvironmentDependency {
-        self.hosted.env
-    }
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     var user: User {
         envDependency.user

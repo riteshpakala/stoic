@@ -17,7 +17,7 @@ public class EnvironmentState: GraniteState {
     
     let route: Route
     //
-    var localFrame: CGRect? = nil
+    var envSettings: EnvironmentStyle.Settings = .init()
     
     public init(_ route: GraniteRoute?) {
         let newRoute = route?.convert(to: Route.self) ?? .none
@@ -70,16 +70,13 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
             return Brand.Padding.small
         }
     }
+
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
-    //Dependencies
-    var routerDependency: RouterDependency {
-        hosted.fetch.add(self)
-    }
+    @GraniteDependency
+    var broadcastDependency: BroadcastDependency
     
-    lazy var envDependency: EnvironmentDependency = {
-        routerDependency.environment//.bind(self)
-    }()
-    //
     
 //    public override var relays: [GraniteBaseRelay] {
 //        [
@@ -91,7 +88,7 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
         [
             .onAppear(EnvironmentEvents.Boot()),
             .onAppear(EnvironmentEvents.Broadcasts()),
-            .onAppear(EnvironmentEvents.Variables(), .dependant),
+            .onAppear(EnvironmentEvents.Variables()),
         ]
     }
     
@@ -123,6 +120,6 @@ public class EnvironmentCenter: GraniteCenter<EnvironmentState> {
     
     public var environmentIPhoneSize: CGSize {
         return .init(width: .infinity,
-                     height: (state.localFrame?.height ?? EnvironmentConfig.iPhoneScreenHeight))
+                     height: (state.envSettings.lf?.data.height ?? EnvironmentConfig.iPhoneScreenHeight))
     }
 }

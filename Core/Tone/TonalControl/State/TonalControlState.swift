@@ -37,9 +37,8 @@ public class TonalControlState: GraniteState {
 }
 
 public class TonalControlCenter: GraniteCenter<TonalControlState> {
-    var envDependency: EnvironmentDependency {
-        dependency.hosted.env
-    }
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {
         [
