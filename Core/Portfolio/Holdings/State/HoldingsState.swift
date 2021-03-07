@@ -58,6 +58,9 @@ public class HoldingsCenter: GraniteCenter<HoldingsState> {
     let cryptoRelay: CryptoRelay = .init()
     
     @GraniteDependency
+    var routerDependency: RouterDependency
+    
+    @GraniteDependency
     var envDependency: EnvironmentDependency
     
     public override var expeditions: [GraniteBaseExpedition] {

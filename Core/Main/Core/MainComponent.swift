@@ -21,7 +21,7 @@ public struct MainComponent: GraniteComponent {
             .center
             .routerDependency
             .router
-            .refreshable = command.center
+            .home = command.center
     }
     
     var environment: EnvironmentComponent {

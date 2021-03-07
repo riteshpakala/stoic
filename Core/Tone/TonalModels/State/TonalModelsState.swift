@@ -80,6 +80,9 @@ public class TonalModelsCenter: GraniteCenter<TonalModelsState> {
     let tonalRelay: TonalRelay = .init()
 
     @GraniteDependency
+    var routerDependency: RouterDependency
+    
+    @GraniteDependency
     var detailDependency: DetailDependency
     
     @GraniteDependency

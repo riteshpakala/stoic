@@ -1796,7 +1796,6 @@
 		710C915A25A64FB400ECB355 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				710C915B25A64FBF00ECB355 /* Passthrough.swift */,
 				711D545F25A6913B0074D334 /* Geometry.swift */,
 				7179AD6325ACF493003FD06F /* UIKit.swift */,
 			);
@@ -2161,7 +2160,6 @@
 		7125BD6325A12EED00F22717 /* ViewLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				7175FBFF25F3FCE600F97D42 /* GraniteLoop */,
 				7137CF3925E4D6060098ED5B /* GraniteTimer */,
 				7199B29825C1210100B1A2B3 /* GraniteLoading */,
 				71017E2825B24A8F00E056A5 /* GraniteDisclaimer */,
@@ -2530,7 +2528,9 @@
 		712D3D0025A6B9AA005EE3F9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				7175FC0025F3FCEE00F97D42 /* GraniteLoop.swift */,
 				712D3D0125A6B9BD005EE3F9 /* Padding.swift */,
+				710C915B25A64FBF00ECB355 /* Passthrough.swift */,
 				714AD72225CB4BE000752A92 /* Keyboard.swift */,
 				711598B925C87E450026B5AE /* RoundedEdge.swift */,
 				71017E1225B23EB900E056A5 /* PagerView.swift */,
@@ -3045,14 +3045,6 @@
 				7169534925A7AD3400641BCE /* GraniteScrollView.swift */,
 			);
 			path = GraniteScrollView;
-			sourceTree = "<group>";
-		};
-		7175FBFF25F3FCE600F97D42 /* GraniteLoop */ = {
-			isa = PBXGroup;
-			children = (
-				7175FC0025F3FCEE00F97D42 /* GraniteLoop.swift */,
-			);
-			path = GraniteLoop;
 			sourceTree = "<group>";
 		};
 		7179AC9E25AC9472003FD06F /* TonalCompile */ = {

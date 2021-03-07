@@ -43,7 +43,7 @@ struct UserExpedition: GraniteExpedition {
                 connection.request(DiscussRelayEvents.Client.Reconnect.init(server: server, channel: discuss.channel))
             }
         } else {
-            connection.update(\RouterDependency.authState, value: .notAuthenticated, .here)
+            connection.update(\RouterDependency.authState, value: .notAuthenticated)
         }
     }
 }
@@ -60,7 +60,7 @@ struct LogoutExpedition: GraniteExpedition {
         do {
             try FirebaseAuth.Auth.auth().signOut()
             connection.retrieve(\RouterDependency.router)?.clean()
-            connection.update(\RouterDependency.authState, value: .notAuthenticated, .here)
+            connection.update(\RouterDependency.authState, value: .notAuthenticated)
         } catch let error {
             GraniteLogger.info("Error logging out \(String(describing: error))", .expedition, focus: true)
         }
@@ -104,8 +104,8 @@ struct LoginResultExpedition: GraniteExpedition {
             if let portfolio = portfolio {
                 newUser.portfolio = portfolio
             }
-            connection.update(\RouterDependency.authState, value: .authenticated, .here)
-            connection.update(\EnvironmentDependency.user, value: newUser, .here)
+            connection.update(\RouterDependency.authState, value: .authenticated)
+            connection.update(\EnvironmentDependency.user, value: newUser)
             
             connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
             

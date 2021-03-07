@@ -9,14 +9,14 @@ import Foundation
 import GraniteUI
 import SwiftUI
 
-class RouterDependency: GraniteDependable {
+class RouterDependency: GraniteRouterDependable {
     var router: Router = .init()
     var authState: AuthState = .none
 }
 
 public class Router: GraniteRouter {
     public var route: GraniteRoute = Route.home
-    public var refreshable: GraniteAdAstra? = nil
+    public var home: GraniteAdAstra? = nil
     
     required public init() {}
     
@@ -26,17 +26,23 @@ public class Router: GraniteRouter {
         self.route = newRoute
     }
 
+    public func loading(component: GraniteAdAstra?) {
+        print("{TEST} loading \(component)")
+    }
+    
+    public func closing(component: GraniteAdAstra?) {
+        print("{TEST} closing \(component)")
+    }
+    
     public func request(_ route: Route) {
         self.route = route
         
-        refreshable?.toTheStars(.here)
+        home?.toTheStars()
                     
         GraniteLogger.info("requesting route 2 \nself:\(String(describing: self))",
                            .dependency,
                            focus: true)
     }
-    
-    public var executable: ((Route) -> Void)?
     
     public func clean() {}
 }

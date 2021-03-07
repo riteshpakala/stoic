@@ -186,7 +186,7 @@ struct SyncCompleteStrategyExpedition: GraniteExpedition {
         let portfolio = coreDataInstance.getPortfolio(username: user.info.username)
         user.portfolio = portfolio
         
-        connection.update(\EnvironmentDependency.user, value: user, .home)
+        connection.update(\EnvironmentDependency.user, value: user)
         connection.request(StrategyEvents.Get())
         
         GraniteLogger.info("Strategy Sync Complete", .expedition, focus: true)

@@ -178,8 +178,8 @@ struct SignupResultExpedition: GraniteExpedition {
             if let portfolio = portfolio {
                 newUser.portfolio = portfolio
             }
-            connection.update(\RouterDependency.authState, value: .authenticated, .home)
-            connection.update(\EnvironmentDependency.user, value: newUser, .home)
+            connection.update(\RouterDependency.authState, value: .authenticated)
+            connection.update(\EnvironmentDependency.user, value: newUser)
             connection.request(DiscussRelayEvents.Client.Set.init(user: newUser))
             
             switch state.stage {

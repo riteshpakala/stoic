@@ -104,7 +104,7 @@ struct UpdateCompleteHoldingsExpedition: GraniteExpedition {
         
         user.portfolio = portfolio
         
-        connection.update(\EnvironmentDependency.user, value: user, .home)
+        connection.update(\EnvironmentDependency.user, value: user)
         connection.request(HoldingsEvents.Get())
 
         GraniteLogger.info("set user after Portfolio sync", .expedition, focus: true)

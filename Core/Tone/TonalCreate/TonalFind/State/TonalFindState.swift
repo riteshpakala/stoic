@@ -32,7 +32,10 @@ public class TonalFindCenter: GraniteCenter<TonalFindState> {
             .onAppear(TonalFindEvents.Find()),
         ]
     }
-
+    
+    @GraniteDependency
+    var routerDependency: RouterDependency
+    
     @GraniteDependency
     var toneDependency: ToneDependency
     

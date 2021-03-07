@@ -12,11 +12,23 @@ import Combine
 
 public class TonalSetState: GraniteState {
     var sentimentLoadingProgress: Double = 0.0
+    
+    public init(_ state: TonalSetState?) {
+        guard let newState = state else {
+            return
+        }
+        self.sentimentLoadingProgress = newState.sentimentLoadingProgress
+    }
+    
+    public required init() {}
 }
 
 public class TonalSetCenter: GraniteCenter<TonalSetState> {
     let tonalRelay: TonalRelay = .init()
 
+    @GraniteDependency
+    var routerDependency: RouterDependency
+    
     @GraniteDependency
     var toneDependency: ToneDependency
     

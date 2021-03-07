@@ -25,7 +25,6 @@ public struct TonalFindComponent: GraniteComponent {
             
             VStack {
                 AssetSearchComponent(state: .init(.tonalCreate(.none)))
-                    
                     .listen(to: command, .stop)
             }
             
