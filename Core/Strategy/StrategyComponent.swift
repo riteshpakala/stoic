@@ -169,6 +169,18 @@ public struct StrategyComponent: GraniteComponent {
                     })
                 }
             }
+            
+            if state.stage == .choosingModel {
+                VStack {
+                    GraniteModal(content: {
+                        TonalModelsComponent(state: .init(inject(\.envDependency,
+                                                                 target: \.tonalModels),
+                                                          securityPayload: .init(object: state.pickingModelForSecurity)))
+                    }, onExitTap: {
+                        set(\.stage, value: .none)
+                    })
+                }
+            }
         }
         .clipped()
     }
@@ -183,7 +195,7 @@ extension StrategyComponent {
     
     //TODO: poor choice to conditionally show strategy
     public var isDependancyEmpty: Bool {
-        state.strategy.name.isNotEmpty
+        command.center.strategiesAreEmpty
     }
     
     public var emptyPayload: GranitePayload? {

@@ -114,6 +114,45 @@ struct StrategyExpanded: View, GraniteEventResponder {
                 }
                 
                 Spacer()
+                
+                VStack(alignment: .trailing) {
+                    if item.testable.noModel {
+                        GraniteText("no model",
+                                    .subheadline,
+                                    .bold,
+                                    .trailing,
+                                    addSpacers: false)
+                            .shadow(color: .black,
+                                    radius: 2, x: 2, y: 2)
+                    } else {
+                        GraniteText("model id: "+item.testable.modelID,
+                                    .subheadline,
+                                    .bold,
+                                    .trailing,
+                                    addSpacers: false)
+                            .shadow(color: .black,
+                                    radius: 2, x: 2, y: 2)
+                    }
+                    
+                    GraniteText("tap to change",
+                                .caption,
+                                .regular,
+                                .trailing,
+                                addSpacers: false)
+                        .shadow(color: .black,
+                                radius: 2, x: 2, y: 2)
+                }
+                .padding(.top, Brand.Padding.xSmall)
+                .padding(.bottom, Brand.Padding.xSmall)
+                .padding(.leading, Brand.Padding.small)
+                .padding(.trailing, Brand.Padding.small)
+                .background(Brand.Colors.purple
+                                .opacity(0.57)
+                                .cornerRadius(6.0)
+                                .shadow(color: .black, radius: 4, x: 1, y: 2))
+                .modifier(TapAndLongPressModifier.init(tapAction: {
+                    sendEvent(StrategyEvents.PickModel(assetID: item.assetID))
+                } ))
             }.padding(.bottom, Brand.Padding.small)
             
             ScrollView(.horizontal, showsIndicators: false) {

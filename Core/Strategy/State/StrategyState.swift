@@ -19,6 +19,7 @@ public enum StrategyType: Equatable, Hashable {
 public enum StrategyStage: Equatable {
     case none
     case adding
+    case choosingModel
     case syncing
     case predicting
     
@@ -55,6 +56,8 @@ public class StrategyState: GraniteState {
     var wantsToClose: Strategy.Investments.Item? = nil
     var wantsToRemove: Strategy.Investments.Item? = nil
     
+    var pickingModelForSecurity: Security? = nil
+    
     var statusLabel: String {
         let count = securitiesToSync.count - securitiesSynced.count
         if count == .zero {
@@ -89,6 +92,7 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetStrategyExpedition.Discovery(),
+            TestableStrategyExpedition.Discovery(),
             SyncPredictionsExpedition.Discovery(),
             SyncStrategyExpedition.Discovery(),
             ResetStrategyExpedition.Discovery(),
@@ -98,6 +102,7 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
             SyncCompleteStrategyExpedition.Discovery(),
             RemoveFromStrategyExpedition.Discovery(),
             CloseFromStrategyExpedition.Discovery(),
+            PickModelForStrategyExpedition.Discovery()
         ]
     }
     
@@ -109,5 +114,10 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     
     var strategies: [Strategy] {
         [state.strategy]
+    }
+    
+    var strategiesAreEmpty: Bool {
+        envDependency.user.portfolio?.strategies.isEmpty == true ||
+        envDependency.user.portfolio == nil
     }
 }

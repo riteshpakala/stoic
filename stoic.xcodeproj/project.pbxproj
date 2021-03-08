@@ -663,6 +663,10 @@
 		71582E9525E5CFAF003D92F6 /* SwifterSpam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E4B25E5CFAE003D92F6 /* SwifterSpam.swift */; };
 		71582E9E25E5D53A003D92F6 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E9C25E5D53A003D92F6 /* SwiftyJSON.swift */; };
 		71582E9F25E5D53A003D92F6 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71582E9C25E5D53A003D92F6 /* SwiftyJSON.swift */; };
+		71604C6725F6B9820036C34C /* StrategyTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71604C6625F6B9820036C34C /* StrategyTestable.swift */; };
+		71604C6825F6B9820036C34C /* StrategyTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71604C6625F6B9820036C34C /* StrategyTestable.swift */; };
+		71604C6E25F6BB330036C34C /* TestableStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71604C6D25F6BB330036C34C /* TestableStrategyExpedition.swift */; };
+		71604C6F25F6BB330036C34C /* TestableStrategyExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71604C6D25F6BB330036C34C /* TestableStrategyExpedition.swift */; };
 		7169534A25A7AD3400641BCE /* GraniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169534925A7AD3400641BCE /* GraniteScrollView.swift */; };
 		7169534B25A7AD3400641BCE /* GraniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169534925A7AD3400641BCE /* GraniteScrollView.swift */; };
 		7169535125A7ADB400641BCE /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7169535025A7ADB400641BCE /* Run.swift */; };
@@ -1388,6 +1392,8 @@
 		71582E4A25E5CFAE003D92F6 /* SwifterTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterTag.swift; sourceTree = "<group>"; };
 		71582E4B25E5CFAE003D92F6 /* SwifterSpam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwifterSpam.swift; sourceTree = "<group>"; };
 		71582E9C25E5D53A003D92F6 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		71604C6625F6B9820036C34C /* StrategyTestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyTestable.swift; sourceTree = "<group>"; };
+		71604C6D25F6BB330036C34C /* TestableStrategyExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestableStrategyExpedition.swift; sourceTree = "<group>"; };
 		7169534925A7AD3400641BCE /* GraniteScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraniteScrollView.swift; sourceTree = "<group>"; };
 		7169535025A7ADB400641BCE /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		71727D2725CE7952005E03F4 /* NetworkService.Apply.Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.Apply.Code.swift; sourceTree = "<group>"; };
@@ -2162,6 +2168,7 @@
 			isa = PBXGroup;
 			children = (
 				712562A125B286DE00C8AC68 /* GetStrategyExpedition.swift */,
+				71604C6D25F6BB330036C34C /* TestableStrategyExpedition.swift */,
 				7182163025E06DDB0089CF78 /* SyncStrategyExpedition.swift */,
 				7182163B25E07E580089CF78 /* ResetStrategyExpedition.swift */,
 				7182164225E0895E0089CF78 /* ModifyStrategyExpedition.swift */,
@@ -3368,6 +3375,7 @@
 				71ADF23125B272F100B3B16E /* Strategy.swift */,
 				7157F6B725D4D18D00404B1B /* Strategy.Tone.swift */,
 				7157F6A225D4C14A00404B1B /* Strategy.Investments.swift */,
+				71604C6625F6B9820036C34C /* StrategyTestable.swift */,
 				7157F6A925D4CE7C00404B1B /* Strategy.Investments.Item.swift */,
 				713F27BE25B275AE00C3871E /* Strategy.CoreData.swift */,
 			);
@@ -4303,6 +4311,7 @@
 				7139F629259810C000D9C84B /* TonalSetEvents.swift in Sources */,
 				71D63EEC25926B860085D718 /* StockService.swift in Sources */,
 				71ADF23225B272F100B3B16E /* Strategy.swift in Sources */,
+				71604C6E25F6BB330036C34C /* TestableStrategyExpedition.swift in Sources */,
 				71CC7DB825C8F2AE00610B8A /* NetworkService.Apply.swift in Sources */,
 				719AD86C25B10746001350FA /* GraniteEmptyEvents.swift in Sources */,
 				711484B4259E0C7B00464684 /* WindowEvents.swift in Sources */,
@@ -4648,6 +4657,7 @@
 				7136A2C525CA3D9F00B923C1 /* DiscussService.swift in Sources */,
 				71EE7094258D9072005B2B8E /* AssetGridItemEvents.swift in Sources */,
 				7179AD0025AC9B08003FD06F /* TonalModel.CoreData.swift in Sources */,
+				71604C6725F6B9820036C34C /* StrategyTestable.swift in Sources */,
 				714343D625907DB5001F26A4 /* Double.swift in Sources */,
 				712D3D0225A6B9BD005EE3F9 /* Padding.swift in Sources */,
 				7123B13C2593CB4D00E5BD69 /* Security.CoreData.swift in Sources */,
@@ -4706,6 +4716,7 @@
 				71CC7DA525C8E7D800610B8A /* Get.Update.UserExpedition.swift in Sources */,
 				7182163D25E07E580089CF78 /* ResetStrategyExpedition.swift in Sources */,
 				719AD86D25B10746001350FA /* GraniteEmptyEvents.swift in Sources */,
+				71604C6825F6B9820036C34C /* StrategyTestable.swift in Sources */,
 				71CC7DB925C8F2AE00610B8A /* NetworkService.Apply.swift in Sources */,
 				7183D55425A428AE00FB91A9 /* MovingNumbersView.swift in Sources */,
 				7125BE6625A1388400F22717 /* PointSliderOptions.swift in Sources */,
@@ -5095,6 +5106,7 @@
 				71D63EF52592A9010085D718 /* StockService.Quotes.swift in Sources */,
 				7125BEAC25A159CD00F22717 /* SearchSecurityExpedition.swift in Sources */,
 				7118A22E259313FD007E7EAB /* TonalCreateEvents.swift in Sources */,
+				71604C6F25F6BB330036C34C /* TestableStrategyExpedition.swift in Sources */,
 				71ED8F1325C5C6A8000F6366 /* TonalModelAddExpedition.swift in Sources */,
 				71B4304825A8A26400A23F4D /* SearchSecurityResultExpedition.swift in Sources */,
 				71C08EC625AFA59300765894 /* CryptoService.swift in Sources */,

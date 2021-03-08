@@ -52,7 +52,7 @@ extension Strategy.Investments.Item {
         if self.prediction != nil {
             return self.tone.goal
         } else {
-            return "-"
+            return "*\n* train"
         }
     }
     

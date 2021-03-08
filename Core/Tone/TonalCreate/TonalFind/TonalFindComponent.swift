@@ -18,10 +18,18 @@ public struct TonalFindComponent: GraniteComponent {
     
     public var body: some View {
         VStack {
-            GraniteText("set the tone",
-                        .headline,
-                        .bold)
-                .padding(.top, Brand.Padding.medium)
+            if let security = command.center.toneDependency.tone.find.security {
+                GraniteText("set the tone for \(security.ticker.uppercased())",
+                            .headline,
+                            .bold)
+                    .padding(.top, Brand.Padding.medium)
+            } else {
+                
+                GraniteText("set the tone",
+                            .headline,
+                            .bold)
+                    .padding(.top, Brand.Padding.medium)
+            }
             
             VStack {
                 AssetSearchComponent(state: .init(.tonalCreate(.none)))

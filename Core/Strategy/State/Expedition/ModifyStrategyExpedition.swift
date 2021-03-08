@@ -76,3 +76,18 @@ struct CloseFromStrategyExpedition: GraniteExpedition {
         GraniteLogger.info("\(security.ticker) closed", .expedition, focus: true)
     }
 }
+
+struct PickModelForStrategyExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = StrategyEvents.PickModel
+    typealias ExpeditionState = StrategyState
+    
+    func reduce(
+        event: ExpeditionEvent,
+        state: ExpeditionState,
+        connection: GraniteConnection,
+        publisher: inout AnyPublisher<GraniteEvent, Never>) {
+        
+        state.pickingModelForSecurity = state.strategy.quotes.first(where: { $0.latestSecurity.assetID == event.assetID })?.latestSecurity
+        state.stage = .choosingModel
+    }
+}

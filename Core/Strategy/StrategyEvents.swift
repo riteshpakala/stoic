@@ -15,6 +15,12 @@ struct StrategyEvents {
         var async: DispatchQueue? {
             GraniteThread.event
         }
+        
+        public struct Testable: GraniteEvent {
+            var async: DispatchQueue? {
+                GraniteThread.event
+            }
+        }
     }
     public struct Reset: GraniteEvent {}
     public struct Remove: GraniteEvent {
@@ -43,4 +49,7 @@ struct StrategyEvents {
         }
     }
     public struct SyncComplete: GraniteEvent {}
+    public struct PickModel: GraniteEvent {
+        let assetID: String
+    }
 }

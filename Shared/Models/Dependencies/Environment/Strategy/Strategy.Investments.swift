@@ -21,7 +21,15 @@ extension Strategy {
                 hasher.combine(assetID+date.asStringWithTime)
             }
             
-            public class Change: Archiveable {
+            public class Change: Archiveable, Hashable {
+                public static func == (lhs: Strategy.Investments.Item.Change, rhs: Strategy.Investments.Item.Change) -> Bool {
+                    lhs.date == rhs.date
+                }
+                public func hash(into hasher: inout Hasher) {
+                    hasher.combine(date)
+                }
+                
+                
                 let amount: Double
                 let date: Date
                 let isTestable: Bool
@@ -68,6 +76,9 @@ extension Strategy {
             let companyName: String
             let assetID: String
             
+            //Chosen model to represent
+            var modelID: String = ""
+            
             //Date Added Not to be mistaken for the date of
             //the security
             let date: Date
@@ -75,16 +86,20 @@ extension Strategy {
             
             let initial: Change
             var changes: [Change] = []
-            var testableChanges: [Change] = []
+            
+            //Past, future, model management
+            var testable: Testable = .init()
             
             var listChanges: [Change] {
-                testableChanges + changes
+                testable.pastChanges + changes
             }
             
             var latestChange: Change {
                 changes.first ?? initial
             }
             
+            //This is technically best used with preview rather
+            //than the expanded view
             var prediction: TonalPrediction? = nil {
                 didSet {
                     if let newPrediction = prediction {
@@ -96,6 +111,7 @@ extension Strategy {
             var tone: TonalPrediction.Tone = .zero
             var closed: Bool = false
             var closedChange: Change? = nil
+            //
             
             public init(security: Security, date: Date = .today) {
                 self.ticker = security.ticker
@@ -134,6 +150,7 @@ extension Strategy {
                 case closed
                 case closedChange
                 case dateAdded
+                case modelID
             }
             
             required public convenience init(from decoder: Decoder) throws {
@@ -148,6 +165,7 @@ extension Strategy {
                 let closed: Bool = (try? container.decode(Bool.self, forKey: .closed)) ?? false
                 let closedChange: Change? = try? container.decode(Change.self, forKey: .closedChange)
                 let dateAdded: Date = try container.decode(Date.self, forKey: .dateAdded)
+                let modelID: String = try container.decode(String.self, forKey: .modelID)
                 
                 self.init(ticker: ticker,
                           exchangeName: exchangeName,
@@ -158,6 +176,7 @@ extension Strategy {
                 
                 self.closed = closed
                 self.closedChange = closedChange
+                self.modelID = modelID
                 
                 self.changes = changes.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
             }
@@ -174,6 +193,7 @@ extension Strategy {
                 try container.encode(closed, forKey: .closed)
                 try container.encode(closedChange, forKey: .closedChange)
                 try container.encode(date, forKey: .dateAdded)
+                try container.encode(modelID, forKey: .modelID)
             }
             
             public var asString: String {

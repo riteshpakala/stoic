@@ -28,7 +28,7 @@ public struct AssetSearchComponent: GraniteComponent {
                     set(\.securityType, value: index == 0 ? .stock : .crypto)
                 })
                 Spacer()
-            }.padding(.top, Brand.Padding.medium)
+            }.padding(.top, state.context == .unassigned ? Brand.Padding.large : Brand.Padding.medium)
             
             if state.securityData.isNotEmpty {
                 AssetGridComponent(state: .init(context: state.context,
