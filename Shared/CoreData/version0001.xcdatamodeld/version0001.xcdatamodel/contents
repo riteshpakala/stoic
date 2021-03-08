@@ -132,6 +132,7 @@
         <attribute name="daysTrained" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="engine" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="isStrategy" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="model" attributeType="Binary"/>
         <attribute name="range" attributeType="Binary"/>
         <attribute name="sentimentTuners" attributeType="Binary"/>
@@ -155,6 +156,6 @@
         <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
         <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>
         <element name="StrategyObject" positionX="-45" positionY="-450" width="128" height="104"/>
-        <element name="TonalModelObject" positionX="-45" positionY="-450" width="128" height="149"/>
+        <element name="TonalModelObject" positionX="-45" positionY="-450" width="128" height="164"/>
     </elements>
 </model>

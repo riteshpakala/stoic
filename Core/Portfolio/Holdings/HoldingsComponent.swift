@@ -103,6 +103,10 @@ public struct HoldingsComponent: GraniteComponent {
                                             .init("please wait, * stoic is\nupdating your portfolio\nwith the latest data.", opacity: 0.57))
             }
             
+            if state.fetchingDataToAdd {
+                GraniteDisclaimerComponent(state:
+                                            .init(loader: true, opacity: 0.57))
+            }
         }.clipped()
     }
 }

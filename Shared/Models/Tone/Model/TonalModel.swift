@@ -37,13 +37,15 @@ public class TonalModel: Asset {
     var latestSecurity: Security
     var last12Securities: [Security]
     var last12SecuritiesDailies: [Security] = []
+    let isStrategy: Bool
     
     public init(_ david: TonalModels,
                 daysTrained: Int,
                 tuners: [SentimentOutput],
                 quote: Quote,
                 range: [Date],
-                id: String = UUID().uuidString){
+                id: String = UUID().uuidString,
+                isStrategy: Bool){
         self.david = david
         self.daysTrained = daysTrained
         self.tuners = tuners
@@ -53,6 +55,7 @@ public class TonalModel: Asset {
         let sorted = quote.securities.sortDesc
         self.last12Securities = Array(sorted.prefix(12))
         self.latestSecurity = last12Securities.first ?? EmptySecurity.init()
+        self.isStrategy = isStrategy
     }
     
     var needsUpdate: Bool {

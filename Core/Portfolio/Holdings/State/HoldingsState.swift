@@ -23,6 +23,8 @@ public class HoldingsState: GraniteState {
     
     var addToPortfolio: Bool = false
     
+    var fetchingDataToAdd: Bool = false
+    
     var syncProgress: Double {
         Double(securitiesSynced.count)/Double(securitiesToSync.count)
     }

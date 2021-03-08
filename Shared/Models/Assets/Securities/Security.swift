@@ -116,22 +116,28 @@ extension Security {
     public var isNotLatest: Bool {
         let days: Int = Date.today.daysFrom(self.date)
         let hours: Int = Date.today.hoursFrom(self.date)
-//        let shouldUpdateHour = latestSecurity.date.timeComponents().hour <= Date.today.closingHour && latestSecurity.securityType == .stock
         
-//        let isToday: Bool = latestSecurity.date.dateComponents().day <= Date.today.dateComponents().day
         let afterHours: Bool = Date.today.closingHour <= Date.today.timeComponents().hour && self.securityType == .stock
-//        let hourCheck: Int = Date.today.closingHour <= latestSecurity.date.timeComponents().hour ? hours + 1 : 1
         
         let daysAreOverdue = abs(days) > 0
         let hoursAreOverdue = hours >= 1 && !afterHours
         
-        //We add 1 to get the "Next Trading Day" after the last
-        let lastDay = Date.today.advanceDate(value: (-1*abs(days)) + 1)
-        let lastDayByHours = Date.today.advanceDate(value: (-1*abs(hours / 24) + 1))
-        
-        let isValidTradingDay = self.securityType == .crypto ? true : (lastDay.validTradingDay && lastDayByHours.validTradingDay)
-        
-        return (daysAreOverdue || hoursAreOverdue) && isValidTradingDay
+        switch securityType {
+        case .crypto:
+            return hoursAreOverdue
+        case .stock:
+            if let date = Date.today.lastValidTradingDay {
+                return self.date.compare(date) == .orderedAscending && (daysAreOverdue || hoursAreOverdue)
+            } else {
+                return false
+            }
+        default:
+            return false
+        }
+    }
+    
+    public var canStore: Bool {
+        !self.hasPortfolio
     }
 }
 

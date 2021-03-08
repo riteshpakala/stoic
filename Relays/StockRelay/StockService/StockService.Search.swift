@@ -21,7 +21,6 @@ extension StockService {
         
         GraniteLogger.info("searching stock:\n\(url.absoluteString)\nself: \(String(describing: self))", .relay, focus: true)
         
-        
         return session
                 .dataTaskPublisher(for: url)
                 .compactMap { [weak self] (data, response) -> [StockServiceModels.Search]? in

@@ -26,6 +26,10 @@ extension Date {
         return Calendar.nyTimeDayFormatter.string(from: self)
     }
     
+    var asStringWithTimeLineBreak: String {
+        return Calendar.nyTimeDayLineBreakFormatter.string(from: self)
+    }
+    
     func asStringTimedWithTime(_ second: Int) -> String {
         return self.advanceDateBySeconds(value: second).asStringWithTime
     }
@@ -91,13 +95,13 @@ extension Date {
     }
     
     public enum Weekday: Int {
-        case sunday
         case monday
         case tuesday
         case wednesday
         case thursday
         case friday
         case saturday
+        case sunday
         case unknown
         
         var isWeekend: Bool {
@@ -227,6 +231,14 @@ extension Calendar {
         dateFormatter.dateFormat = "HH:mm:ss // MM/dd"
         return dateFormatter
     }
+    
+    static var nyTimeDayLineBreakFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = Calendar.nyTimezone
+        dateFormatter.dateFormat = "MM/dd //\nHH:mm:ss"
+        return dateFormatter
+    }
 }
 
 extension Double {
@@ -269,6 +281,17 @@ extension Date {
     
     var validTradingDay: Bool {
         !self.dayofTheWeek.isWeekend && !self.isUSHoliday
+    }
+    
+    var lastValidTradingDay: Date? {
+        for i in 1...12 {
+            let date = Date.today.advanceDate(value: -1*i)
+            if date.validTradingDay {
+                return date
+            }
+        }
+        
+        return nil
     }
     
     var closingHour: Int {

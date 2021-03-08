@@ -28,6 +28,14 @@ struct StrategyExpanded: View, GraniteEventResponder {
         self.command = command
     }
     
+    func colorFor(_ item: Strategy.Investments.Item.Change) -> Color {
+        if item.isTestable {
+            return Brand.Colors.marble
+        } else {
+            return Brand.Colors.white
+        }
+    }
+    
     public var body: some View {
         VStack {
             ForEach(strategies, id: \.self) { strategy in
@@ -106,55 +114,70 @@ struct StrategyExpanded: View, GraniteEventResponder {
                 }
                 
                 Spacer()
-            }
+            }.padding(.bottom, Brand.Padding.small)
             
-            ScrollView {
-                LazyHGrid(rows: columns, spacing: Brand.Padding.small) {
-                    ForEach(item.changes, id: \.date) { change in
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHGrid(rows: columns, spacing: Brand.Padding.large) {
+                    ForEach(item.listChanges.reversed(), id: \.date) { change in
                         
-                        HStack {
-                            VStack(alignment: .trailing) {
-                                GraniteText(change.date.asString,
-                                            .headline,
-                                            .regular,
-                                            .trailing,
-                                            addSpacers: false)
-                                
-                                GraniteText(change.amount.display,
-                                            .subheadline,
-                                            .bold,
-                                            .trailing,
-                                            addSpacers: false)
-                            }
+                        VStack {
                             
-                            PaddingHorizontal(Brand.Padding.xSmall, Brand.Colors.purple)
-                            
-                            VStack(alignment: .leading) {
-                                GraniteText("upper: 400",
-                                            Brand.Colors.purple,
-                                            .subheadline,
-                                            .bold,
-                                            .leading,
-                                            addSpacers: false)
+                            GraniteText(change.date.asStringWithTime,
+                                        colorFor(change),
+                                        .subheadline,
+                                        .regular)
+                        
+                            HStack {
+                                VStack(alignment: .trailing) {
+                                    
+                                    GraniteText(change.amount.display,
+                                                colorFor(change),
+                                                .headline,
+                                                .regular,
+                                                .trailing,
+                                                addSpacers: false)
+                                    
+                                    GraniteText(item.changePercent(change).statusPercentDisplay,
+                                                colorFor(change),
+                                                .subheadline,
+                                                .bold,
+                                                .trailing,
+                                                addSpacers: false)
+                                }
                                 
-                                GraniteText("lower: 400",
-                                            Brand.Colors.purple,
-                                            .subheadline,
-                                            .bold,
-                                            .leading,
-                                            addSpacers: false)
+                                PaddingHorizontal(Brand.Padding.xSmall, Brand.Colors.purple)
                                 
-                                GraniteText("buy***",
-                                            Brand.Colors.purple,
-                                            .subheadline,
-                                            .bold,
-                                            .leading,
-                                            addSpacers: false)
+                                VStack(alignment: .leading) {
+                                    GraniteText("upper: 400",
+                                                Brand.Colors.purple,
+                                                .footnote,
+                                                .regular,
+                                                .leading,
+                                                addSpacers: false)
+                                    
+                                    GraniteText("lower: 400",
+                                                Brand.Colors.purple,
+                                                .footnote,
+                                                .regular,
+                                                .leading,
+                                                addSpacers: false)
+                                    
+                                    GraniteText("buy***",
+                                                Brand.Colors.purple,
+                                                .subheadline,
+                                                .bold,
+                                                .leading,
+                                                addSpacers: false)
+                                }
                             }
                         }
+                        .scaleEffect(x: -1, y: 1, anchor: .center)
                     }
                 }
             }
+            .scaleEffect(x: -1, y: 1, anchor: .center)
+            .frame(height: 66)
+            
             
             HStack {
                 GraniteText("data: \(item.changes.count)",

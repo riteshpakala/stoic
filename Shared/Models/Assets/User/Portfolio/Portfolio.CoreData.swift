@@ -64,7 +64,17 @@ extension NSManagedObjectContext {
                     
                     object?.strategies = [strategy]
                     
+                    if let investments = strategy.investmentData?.investments {
+                        investments.items.forEach { item in
+                            item.closed = false
+                        }
+                        
+                        strategy.investmentData = investments.archived
+                    }
+                    
                     try self?.save()
+                    
+                    
                     
                     return object?.asPortfolio
                 } else {

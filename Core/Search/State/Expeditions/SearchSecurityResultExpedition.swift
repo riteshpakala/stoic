@@ -19,6 +19,7 @@ struct SearchStockResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        state.isEditing = false
         connection.request(SearchEvents.Result(securities: event.result), .contact)
     }
 }
@@ -33,6 +34,7 @@ struct SearchCryptoResultExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
+        state.isEditing = false
         connection.request(SearchEvents.Result(securities: event.result), .contact)
     }
 }

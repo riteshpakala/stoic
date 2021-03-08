@@ -56,6 +56,14 @@ extension Stock {
     public var changeAbsoluteValue: Double {
         changeAbsolute
     }
+    
+    public var metadata1: String {
+        self.name
+    }
+    
+    public var metadata2: String {
+        self.exchangeName
+    }
 }
 
 //MARK: -- Extensions
@@ -98,6 +106,32 @@ extension StockServiceModels.Quotes.QuoteResponse.QuoteResult {
             name: shortName,
             hasStrategy: false,
             hasPortfolio: false)
+    }
+}
+
+extension StockServiceModels.Search.Stock {
+    public func asStock(interval: SecurityInterval = .day) -> Stock {
+        let open: Double = 0.0
+        let high: Double = 0.0
+        let low: Double = 0.0
+        let close: Double = 0.0
+        let volume: Double = 0.0
+    
+    return Stock.init(
+        ticker: self.symbolName,
+        date: Date(),
+        open: open,
+        high: high,
+        low: low,
+        close: close,
+        volume: volume,
+        changePercent: 0.0,
+        changeAbsolute: 0.0,
+        interval: interval,
+        exchangeName: self.exchangeName,//TODO:??
+        name: self.companyName,
+        hasStrategy: false,
+        hasPortfolio: false)
     }
 }
 

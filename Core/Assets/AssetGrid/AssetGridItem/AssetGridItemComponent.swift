@@ -18,7 +18,7 @@ public struct AssetGridItemComponent: GraniteComponent {
     
     public var body: some View {
         VStack(spacing: 0) {
-            HStack {
+            HStack(spacing: 0) {
                 GradientView(colors: [Brand.Colors.greyV2.opacity(0.66),
                                       Brand.Colors.grey.opacity(0.24)],
                              cornerRadius: 6.0,
@@ -54,11 +54,11 @@ public struct AssetGridItemComponent: GraniteComponent {
                     
                     GraniteText(state.asset.subtitle,
                                 state.asset.symbolColor,
-                                .subheadline,
+                                .footnote,
                                 .regular,
                                 .leading,
                                 style: .init(radius: 2, offset: .init(x: 1, y: 1)))
-                }
+                }.padding(.leading, Brand.Padding.medium8)
                 
                 if state.asset.showDescription1 {
                     VStack(alignment: .trailing) {
@@ -74,36 +74,90 @@ public struct AssetGridItemComponent: GraniteComponent {
                         default:
                             GraniteText(state.asset.description1,
                                         state.asset.symbolColor,
-                                        .headline,
-                                        .regular)
-                            
-                            GraniteText(state.asset.description1_sub,
-                                        state.security.statusColor,
                                         .subheadline,
                                         .regular)
+                            
+                            if !state.asset.isIncomplete {
+                                GraniteText(state.asset.description1_sub,
+                                            state.security.statusColor,
+                                            .footnote,
+                                            .regular)
+                            }
                         }
                     }.padding(.trailing, Brand.Padding.medium)
                 }
                 
-                VStack(alignment: .center, spacing: 2) {
-                    Spacer()
-                    
-                    switch state.assetGridType {
-                    case .standard:
-                        VStack(alignment: .center, spacing: 4) {
-                            if state.asset.showDescription2 {
-                                GraniteText(state.asset.description2,
-                                            state.asset.symbolColor,
-                                            .subheadline,
-                                            .regular)
-                                    .frame(width: 60, height: 12, alignment: .bottom)
+                if !state.asset.isIncomplete {
+                    VStack(alignment: .center, spacing: 2) {
+                        Spacer()
+                        
+                        switch state.assetGridType {
+                        case .standard:
+                            VStack(alignment: .center, spacing: 4) {
+                                if state.asset.showDescription2 {
+                                    GraniteText(state.asset.description2,
+                                                state.asset.symbolColor,
+                                                .footnote,
+                                                .regular)
+                                        .frame(width: 60, height: 12, alignment: .bottom)
+                                }
+                                
+                                (state.security.statusColor)
+                                    .clipShape(Circle())
+                                    .frame(width: 6, height: 6, alignment: .top)
                             }
+                        case .add:
+                            if state.asset.canStore {
+                                Circle()
+                                    .foregroundColor(state.asset.symbolColor).overlay(
+                                    
+                                        GraniteText("+",
+                                                    Brand.Colors.black,
+                                                    .headline,
+                                                    .bold)
+                                                    .shadow(color: .black, radius: 6, x: 1, y: 1)
+                                    
+                                    
+                                    )
+                                    .frame(width: 24, height: 24)
+                                    .padding(.leading, Brand.Padding.small)
+                                    .shadow(color: .black, radius: 3, x: 1, y: 1)
+                            }
+                        case .radio:
+                            Circle()
+                                .foregroundColor(state.asset.symbolColor).overlay(
+                                
+                                    Circle()
+                                        .foregroundColor(Brand.Colors.black)
+                                        .padding(.top, Brand.Padding.xSmall)
+                                        .padding(.leading, Brand.Padding.xSmall)
+                                        .padding(.trailing, Brand.Padding.xSmall)
+                                        .padding(.bottom, Brand.Padding.xSmall)
+                                        .shadow(color: .black, radius: 2, x: 1, y: 1).overlay(
+                                        
+                                        
+                                            Circle()
+                                                .foregroundColor(state.radioSelections.contains(state.asset.assetID) ? state.asset.symbolColor : Brand.Colors.black)
+                                                .padding(.top, Brand.Padding.xSmall)
+                                                .padding(.leading, Brand.Padding.xSmall)
+                                                .padding(.trailing, Brand.Padding.xSmall)
+                                                .padding(.bottom, Brand.Padding.xSmall)
+                                                .shadow(color: .black, radius: 2, x: 1, y: 1)
+                                        )
+                                )
+                                .frame(width: 24, height: 24)
+                                .padding(.leading, Brand.Padding.small)
                             
-                            (state.security.statusColor)
-                                .clipShape(Circle())
-                                .frame(width: 6, height: 6, alignment: .top)
+                        default:
+                            EmptyView.init()
                         }
-                    case .add:
+                        
+                        Spacer()
+                    }
+                    .padding(.trailing, Brand.Padding.medium)
+                } else if state.assetGridType == .add && state.asset.canStore {
+                    VStack {
+                        Spacer()
                         Circle()
                             .foregroundColor(state.asset.symbolColor).overlay(
                             
@@ -118,38 +172,10 @@ public struct AssetGridItemComponent: GraniteComponent {
                             .frame(width: 24, height: 24)
                             .padding(.leading, Brand.Padding.small)
                             .shadow(color: .black, radius: 3, x: 1, y: 1)
-                    case .radio:
-                        Circle()
-                            .foregroundColor(state.asset.symbolColor).overlay(
-                            
-                                Circle()
-                                    .foregroundColor(Brand.Colors.black)
-                                    .padding(.top, Brand.Padding.xSmall)
-                                    .padding(.leading, Brand.Padding.xSmall)
-                                    .padding(.trailing, Brand.Padding.xSmall)
-                                    .padding(.bottom, Brand.Padding.xSmall)
-                                    .shadow(color: .black, radius: 2, x: 1, y: 1).overlay(
-                                    
-                                    
-                                        Circle()
-                                            .foregroundColor(state.radioSelections.contains(state.asset.assetID) ? state.asset.symbolColor : Brand.Colors.black)
-                                            .padding(.top, Brand.Padding.xSmall)
-                                            .padding(.leading, Brand.Padding.xSmall)
-                                            .padding(.trailing, Brand.Padding.xSmall)
-                                            .padding(.bottom, Brand.Padding.xSmall)
-                                            .shadow(color: .black, radius: 2, x: 1, y: 1)
-                                    )
-                            )
-                            .frame(width: 24, height: 24)
-                            .padding(.leading, Brand.Padding.small)
-                        
-                    default:
-                        EmptyView.init()
+                        Spacer()
                     }
-                    
-                    Spacer()
+                    .padding(.trailing, Brand.Padding.medium)
                 }
-                .padding(.trailing, Brand.Padding.medium)
                 
             }.opacity(state.asset.inValid ? 0.75 : 1.0)
             

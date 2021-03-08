@@ -85,6 +85,10 @@ public class AssetGridState: GraniteState {
 }
 
 public class AssetGridCenter: GraniteCenter<AssetGridState> {
+    var isComplete: Bool {
+        state.assetData.filter{ $0.isIncomplete }.isEmpty
+    }
+    
     var showDescription1: Bool {
         state.assetData.first?.showDescription1 == true
     }

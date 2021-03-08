@@ -71,13 +71,18 @@ struct SearchResultExpedition: GraniteExpedition {
             }
         }
         
-        let symbols: [String] = sanitizedStocks.map { $0.symbolName }
-        publisher = state
-            .service
-            .getQuotes(symbols: symbols.uniques.joined(separator: ","))
-            .replaceError(with: [])
-            .map { StockEvents.SearchQuoteResults(quotes: $0) }
-            .eraseToAnyPublisher()
+        
+        let searchQuotes = sanitizedStocks.map { $0.asStock() }
+        
+        connection.request(StockEvents.SearchResult.init(result: searchQuotes))
+        
+//        let symbols: [String] = sanitizedStocks.map { $0.symbolName }
+//        publisher = state
+//            .service
+//            .getQuotes(symbols: symbols.uniques.joined(separator: ","))
+//            .replaceError(with: [])
+//            .map { StockEvents.SearchQuoteResults(quotes: $0) }
+//            .eraseToAnyPublisher()
     }
 }
 

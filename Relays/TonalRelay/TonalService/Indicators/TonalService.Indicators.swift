@@ -36,14 +36,18 @@ extension TonalServiceModels {
             let securities: [Security] = quote.dailySecurities.sortDesc.filterBelow(security.date)
             self.history = Array(securities.prefix(Indicators.trailingDays))
             
-            var pairings: [PairedSecurity] = []
-            for i in 0..<securities.count-1 {
-                let base = securities[i]
-                let previous = securities[i+1]
-                
-                pairings.append(.init(base: base, previous: previous))
+            if securities.count > 1 {
+                var pairings: [PairedSecurity] = []
+                for i in 0..<securities.count-1 {
+                    let base = securities[i]
+                    let previous = securities[i+1]
+                    
+                    pairings.append(.init(base: base, previous: previous))
+                }
+                self.historyPaired = pairings
+            } else {
+                self.historyPaired = []
             }
-            self.historyPaired = pairings
         }
         
         public init(with quote: Quote) {

@@ -38,43 +38,45 @@ public struct AssetGridComponent: GraniteComponent {
         VStack {
             VStack(alignment: .leading, spacing: 0.0) {
                 Spacer()
-                HStack(spacing: Brand.Padding.large) {
+                HStack(spacing: Brand.Padding.medium) {
                     GraniteText(state.label,
                                 .subheadline,
                                 .regular,
                                 .leading)
                     
-                    if command.center.showDescription1 {
-                        switch command.center.assetType {
-                        case .model:
-                            GraniteText("expires",
-                                        .subheadline,
-                                        .regular,
-                                        .trailing)
-                        default:
-                            GraniteText("price",
-                                        .subheadline,
-                                        .regular,
-                                        .trailing)
+                    if command.center.isComplete {
+                        if command.center.showDescription1 {
+                            switch command.center.assetType {
+                            case .model:
+                                GraniteText("expires",
+                                            .subheadline,
+                                            .regular,
+                                            .trailing)
+                            default:
+                                GraniteText("price",
+                                            .subheadline,
+                                            .regular,
+                                            .trailing)
+                            }
                         }
-                    }
-                    
-                    if command.center.showDescription2 {
-                        switch state.type {
-                        case .standard:
-                            GraniteText("change",
-                                        .subheadline,
-                                        .regular).frame(width: 60)
-                        case .add:
-                            GraniteText("add",
-                                        .subheadline,
-                                        .regular)
-                        case .radio:
-                            GraniteText("select",
-                                        .subheadline,
-                                        .regular)
-                        default:
-                            EmptyView.init()
+                        
+                        if command.center.showDescription2 {
+                            switch state.type {
+                            case .standard:
+                                GraniteText("change",
+                                            .subheadline,
+                                            .regular).frame(width: 60)
+                            case .add:
+                                GraniteText("add",
+                                            .subheadline,
+                                            .regular)
+                            case .radio:
+                                GraniteText("select",
+                                            .subheadline,
+                                            .regular)
+                            default:
+                                EmptyView.init()
+                            }
                         }
                     }
                 }

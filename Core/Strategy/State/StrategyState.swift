@@ -43,6 +43,7 @@ public class StrategyState: GraniteState {
     var securities: [Security] = []
     var strategy: Strategy = .init([], "", .today, .empty)
     
+    var showOutdatedDisclaimer: Bool = false
     var showResetDisclaimer: Bool = false
     var showCloseDisclaimer: Bool {
         wantsToClose != nil

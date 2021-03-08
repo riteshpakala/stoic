@@ -65,6 +65,7 @@ public struct SearchComponent: GraniteComponent {
                         ProgressView().scaleEffect(0.66)
                         Spacer()
                     }
+                    .frame(height: 24)
                     .transition(.move(edge: .top))
                     .animation(.default)
                 }

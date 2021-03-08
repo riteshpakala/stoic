@@ -34,7 +34,12 @@ public protocol Asset: ID {
     var showDescription2: Bool { get }
     var description2: String { get }
     
+    var metadata1: String { get }
+    var metadata2: String { get }
+    
     var inValid: Bool { get }
+    var isIncomplete: Bool { get }
+    var canStore: Bool { get }
 }
 
 extension Asset {
@@ -65,7 +70,23 @@ extension Asset {
         nil
     }
     
+    public var isIncomplete: Bool {
+        false
+    }
+    
     public var inValid: Bool { false }
+    
+    public var metadata1: String {
+        ""
+    }
+    
+    public var metadata2: String {
+        ""
+    }
+    
+    public var canStore: Bool {
+        true
+    }
 }
 
 extension User {
@@ -157,7 +178,7 @@ extension Security {
     }
     
     public var subtitle: String {
-        "volume: "+self.volumeValue.abbreviate
+        self.isIncomplete ? metadata1 : "volume: "+self.volumeValue.abbreviate
     }
     
     public var symbol: String {
@@ -178,7 +199,7 @@ extension Security {
     }
     
     public var description1: String {
-        "$\(self.lastValue.display)"
+        self.isIncomplete ? metadata2 : "$\(self.lastValue.display)"
     }
     
     public var description1_sub: String {
@@ -190,6 +211,10 @@ extension Security {
     }
     
     public var inValid: Bool { !self.isLatest }
+    
+    public var isIncomplete: Bool {
+        self.lastValue == .zero && self.volumeValue == .zero
+    }
 }
 
 extension Sentiment {

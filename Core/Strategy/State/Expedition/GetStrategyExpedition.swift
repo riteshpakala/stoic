@@ -24,7 +24,6 @@ struct GetStrategyExpedition: GraniteExpedition {
             return
         }
         
-        
         state.user = user.info
         
         //Only 1 strategy for now
@@ -40,10 +39,25 @@ struct GetStrategyExpedition: GraniteExpedition {
             strategy = strategyFromDep
         }
         
+        state.showOutdatedDisclaimer = !strategy.isValid
+        
         strategy.generate()
         
         let assetIDs = strategy.investments.items.filter({ !$0.closed }).map { $0.assetID }
         let quotes = strategy.quotes.filter({ assetIDs.contains($0.latestSecurity.assetID) })
+        
+        if state.type == .expanded {
+            for (i, item) in strategy.investments.items.enumerated() {
+                if let quote = strategy.quotes.first(where: { $0.latestSecurity.assetID == item.assetID }),
+                   quote.securities.count > 12 {
+                    let securities = Array(quote.securities.sortDesc[1...12])
+                    for security in securities.sortAsc {
+                        strategy.investments.items[i].testableChanges.append(.init(security.lastValue, security.date, isTestable: true))
+                    }
+                }
+            }
+        }
+        
         
         let securities = quotes.filter({ $0.needsUpdate }).map { $0.latestSecurity }
         

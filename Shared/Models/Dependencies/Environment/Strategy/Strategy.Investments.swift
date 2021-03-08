@@ -24,11 +24,14 @@ extension Strategy {
             public class Change: Archiveable {
                 let amount: Double
                 let date: Date
+                let isTestable: Bool
                 
                 public init(_ amount: Double,
-                            _ date: Date = Date.today) {
+                            _ date: Date = Date.today,
+                            isTestable: Bool = false) {
                     self.amount = amount
                     self.date = date
+                    self.isTestable = isTestable
                 }
                 
                 enum CodingKeys: String, CodingKey {
@@ -72,6 +75,12 @@ extension Strategy {
             
             let initial: Change
             var changes: [Change] = []
+            var testableChanges: [Change] = []
+            
+            var listChanges: [Change] {
+                testableChanges + changes
+            }
+            
             var latestChange: Change {
                 changes.first ?? initial
             }

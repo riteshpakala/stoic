@@ -23,6 +23,7 @@ extension TonalModelObject {
     @NSManaged public var sentimentTuners: Data
     @NSManaged public var model: Data
     @NSManaged public var range: Data
+    @NSManaged public var isStrategy: Bool
     @NSManaged public var quote: QuoteObject?
 
 }

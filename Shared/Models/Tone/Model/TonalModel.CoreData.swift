@@ -50,7 +50,8 @@ extension TonalModelObject {
                      tuners: sentiment,
                      quote: quote.asQuote,
                      range: range,
-                     id: self.id)
+                     id: self.id,
+                     isStrategy: self.isStrategy)
     }
     
     var asToneLight: TonalModel? {
@@ -67,7 +68,8 @@ extension TonalModelObject {
                      tuners: [],
                      quote: quote.asQuote,
                      range: range,
-                     id: self.id)
+                     id: self.id,
+                     isStrategy: self.isStrategy)
     }
     
     func asToneFromQuote(_ quote: Quote, light: Bool = false) -> TonalModel? {
@@ -84,7 +86,8 @@ extension TonalModelObject {
                      tuners: light ? [] : sentiment,
                      quote: quote,
                      range: range,
-                     id: self.id)
+                     id: self.id,
+                     isStrategy: self.isStrategy)
     }
 }
 
@@ -107,6 +110,7 @@ extension TonalModel {
                 object.sentimentTuners = sentiment
                 object.quote = quote
                 object.range = range
+                object.isStrategy = self?.isStrategy == true
                 quote?.addToTonalModel(object)
                 
                 if overwrite, let modelID = self?.modelID {

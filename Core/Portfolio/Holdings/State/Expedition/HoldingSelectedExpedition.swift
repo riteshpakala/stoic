@@ -28,12 +28,22 @@ struct HoldingSelectedExpedition: GraniteExpedition {
         switch state.context {
         case .portfolio:
             if state.addToPortfolio {
-                let portfolio = security.addToPortfolio(username: user.info.username,
-                                        moc: coreDataInstance)
-                if let portfolio = portfolio {
-                    GraniteLogger.info("adding to portfolio:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
-                    connection.update(\EnvironmentDependency.user.portfolio,
-                                      value: portfolio)
+                guard !state.fetchingDataToAdd && security.canStore else { return }
+                switch security.securityType {
+                case .crypto:
+                    let portfolio = security.addToPortfolio(username: user.info.username,
+                                            moc: coreDataInstance)
+                    if let portfolio = portfolio {
+                        GraniteLogger.info("adding to portfolio:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
+                        
+                        connection.update(\EnvironmentDependency.user.portfolio,
+                                          value: portfolio)
+                    }
+                case .stock:
+                    state.fetchingDataToAdd = true
+                    connection.request(StockEvents.GetStockHistory.init(security: security))
+                default:
+                    break
                 }
             } else {
                 guard let router = connection.retrieve(\RouterDependency.router) else { return }
@@ -86,13 +96,17 @@ struct HoldingSelectionsConfirmedExpedition: GraniteExpedition {
         switch state.context {
         case .strategy:
             let selections = securities.filter({ event.assetIDs.contains($0.assetID) })
+            
+            //TODO: there should be a cleaner way to refresh
+            let isNewStrategy = portfolio?.strategies.isEmpty == true || portfolio?.strategies == nil
+            
             let updatedPortfolio = portfolio?.addToStrategy(selections, moc: coreDataInstance)
             connection.update(\EnvironmentDependency.user.portfolio,
                               value: updatedPortfolio)
             
             if let strategyName = updatedPortfolio?.strategies.first,
                let strategy = coreDataInstance.getStrategy(strategyName) {
-                connection.update(\StrategyDependency.strategy, value: strategy)
+                connection.update(\StrategyDependency.strategy, value: strategy, isNewStrategy ? .home : .none)
             }
             
             break

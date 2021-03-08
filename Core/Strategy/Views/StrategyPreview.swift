@@ -29,20 +29,6 @@ struct StrategyPreview: View, GraniteEventResponder {
     }
     
     public var body: some View {
-        ZStack {
-            GeometryReader { geometry in
-                GradientView(colors: [Brand.Colors.yellow,
-                                      Brand.Colors.purple],
-                             cornerRadius: 0.0,
-                             direction: .top)
-                            .shadow(color: Color.black,
-                                    radius: 8.0,
-                                    x: 4.0,
-                                    y: 3.0)
-                            .offset(x: 0,
-                                    y: (geometry.size.height*(1.0 - (state.syncProgress.isNaN ? 0.0 : state.syncProgress.asCGFloat))))
-                            .animation(.default)
-            }
             
             VStack {
                 VStack {
@@ -115,56 +101,6 @@ struct StrategyPreview: View, GraniteEventResponder {
             }
             .clipped()
             .padding(.top, Brand.Padding.medium)
-            
-            if state.stage == .syncing {
-                GraniteDisclaimerComponent(state:
-                                            .init("please wait, * stoic is\nsyncing the quotes\nin your strategy", opacity: 0.57))
-            }
-            
-            if state.showResetDisclaimer {
-                GraniteDisclaimerComponent(state:
-                                            .init("are you sure you want to reset your strategy dates?", opacity: 0.57,
-                                           action: {
-                                            GraniteHaptic.light.invoke()
-                                            sendEvent(StrategyEvents.Reset())
-                                           },
-                                           cancel:{
-                                             GraniteHaptic.light.invoke()
-                                             set(\.showResetDisclaimer, value: false)
-                                           }))
-            }
-            
-            if state.showRemoveDisclaimer {
-                GraniteDisclaimerComponent(state:
-                                            .init("are you sure you want to remove \(state.wantsToRemove?.ticker.uppercased() ?? "") from your strategy?", opacity: 0.57,
-                                           action: {
-                                            if let item = state.wantsToRemove {
-                                                GraniteHaptic.light.invoke()
-                                                sendEvent(StrategyEvents.Remove(assetID: item.assetID))
-                                            }
-                                           },
-                                           cancel:{
-                                             GraniteHaptic.light.invoke()
-                                             set(\.wantsToRemove, value: nil)
-                                           }))
-            }
-            
-            if state.showCloseDisclaimer {
-                GraniteDisclaimerComponent(state:
-                                            .init("are you sure you want to remove \(state.wantsToClose?.ticker.uppercased() ?? "") from your strategy? Current status will remain in your strategy to keep track of your total net during the strategy's duration", opacity: 0.57,
-                                           action: {
-                                            if let item = state.wantsToClose {
-                                                GraniteHaptic.light.invoke()
-                                                sendEvent(StrategyEvents.Close(assetID: item.assetID))
-                                            }
-                                           },
-                                           cancel:{
-                                             GraniteHaptic.light.invoke()
-                                             set(\.wantsToClose, value: nil)
-                                           }))
-            }
-        }
-        .clipped()
     }
     
     public func title(_ strategy: Strategy) -> some View {

@@ -37,6 +37,17 @@ extension Strategy.Investments.Item {
         latestChange.amount > initial.amount ? Brand.Colors.green : (latestChange.amount == initial.amount ? Brand.Colors.grey : Brand.Colors.red)
     }
     
+    public func changePercent(_ change: Change) -> Double {
+        let date = change.date
+        if let index = self.listChanges.firstIndex(where: { $0.date == date }),
+           index - 1 >= 0 {
+            let initial =  self.listChanges[index - 1]
+            return (change.amount - initial.amount) /  initial.amount
+        } else {
+            return 0.0
+        }
+    }
+    
     public var tonalGoal: String {
         if self.prediction != nil {
             return self.tone.goal

@@ -45,6 +45,10 @@ public class Strategy: Hashable, Identifiable {
         return candidate
     }
     
+    var isValid: Bool {
+        return endDate.compare(Date.today) == .orderedDescending
+    }
+    
     public init(_ quotes: [Quote],
                 _ name: String,
                 _ date: Date,

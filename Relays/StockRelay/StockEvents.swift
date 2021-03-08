@@ -20,6 +20,10 @@ public struct StockEvents {
         public var beam: GraniteBeamType {
             .rebound
         }
+        
+        public var debounce: Double {
+            1.2.randomBetween(1.6)
+        }
     }
     
     public struct SearchDataResult: GraniteEvent {

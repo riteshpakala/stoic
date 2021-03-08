@@ -24,24 +24,25 @@ struct SearchSecurityExpedition: GraniteExpedition {
         
         guard state.query.isNotEmpty else { return }
         
+//        connection.request(StockEvents.Search("msft"))
+        state.isEditing = true
+        
+        let type = state.securityType
+        let query = state.query
         state.searchTimer = Timer.scheduledTimer(
-            withTimeInterval: 0.4.randomBetween(2.4),
-            repeats: false) { timer in
-            
+            withTimeInterval: 1.2.randomBetween(2.4),
+            repeats: false) { [weak connection] timer in
+
             timer.invalidate()
             
-            switch state.securityType {
+            switch type {
             case .stock:
-                connection.request(StockEvents.Search(state.query))
+                connection?.request(StockEvents.Search(query))
             case .crypto:
-                connection.request(CryptoEvents.Search(state.query))
+                connection?.request(CryptoEvents.Search(query))
             default:
                 break
             }
-            
-            //Potential dependency updates
-//            connection.dependency(\TonalCreateDependency.search.state.query, value: event.query)
-            //
         }
     }
 }

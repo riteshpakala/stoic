@@ -57,7 +57,8 @@ struct SaveTheToneExpedition: GraniteExpedition {
                                            daysTrained: daysTrained,
                                            tuners: tuners,
                                            quote: quote,
-                                           range: range)
+                                           range: range,
+                                           isStrategy: false)
         
         let success = tonalModel.save(moc: coreDataInstance)
         if success {

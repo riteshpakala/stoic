@@ -34,6 +34,21 @@ public struct PortfolioComponent: GraniteComponent {
                 default:
                     portfolioStrategy
                     
+                    //TODO: there should be a cleaner way to comply with empty state
+                    //and then allow adding to the strategy from the Strategy component
+                    //not from portfolio
+                    if  command.center.portfolio?.strategies.isEmpty == true ||
+                        command.center.portfolio?.strategies == nil {
+                        GraniteButtonComponent(
+                            state: .init(.add,
+                                         padding: .init(0,0,Brand.Padding.xSmall,0),
+                                         action: {
+                                           GraniteHaptic.light.invoke()
+                                           set(\.stage, value: .adding)
+                                         }))
+                            .background(Brand.Colors.black)
+                    }
+                    
                 }
                 
             }

@@ -123,13 +123,26 @@ struct StockUpdatedHistoryHoldingsExpedition: GraniteExpedition {
         
         let stocks = event.data
         
-        _ = stocks.save(moc: coreDataInstance)
+        let quote = stocks.save(moc: coreDataInstance)
         
-        state.securitiesSynced.append(stocks.first?.assetID ?? "")
-        
-        GraniteLogger.info("Portfolio Update Progress \(state.syncProgress)", .expedition, focus: true)
-        
-        connection.request(HoldingsEvents.Push())
+        if state.addToPortfolio {
+            state.fetchingDataToAdd = false
+            guard let user = connection.retrieve(\EnvironmentDependency.user),
+                  let security = quote?.latestSecurity else { return }
+            let portfolio = security.addToPortfolio(username: user.info.username,
+                                    moc: coreDataInstance)
+            if let portfolio = portfolio {
+                GraniteLogger.info("adding to portfolio:\n\(portfolio.holdings.securities.map { $0.name })", .expedition, focus: true)
+                
+                connection.update(\EnvironmentDependency.user.portfolio, value: portfolio)
+            }
+        } else {
+            state.securitiesSynced.append(stocks.first?.assetID ?? "")
+            
+            GraniteLogger.info("Portfolio Update Progress \(state.syncProgress)", .expedition, focus: true)
+            
+            connection.request(HoldingsEvents.Push())
+        }
     }
 }
 

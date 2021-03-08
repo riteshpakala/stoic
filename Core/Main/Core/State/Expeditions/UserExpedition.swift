@@ -22,17 +22,6 @@ struct UserExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-//        if var item = connection.retrieve(\MyDependency.test) {
-//            print("{TEST} \(item)")
-//            item.inc()
-//            connection.update(\MyDependency.test, value: item)
-//            if var item2 = connection.retrieve(\MyDependency.test) {
-//                print("{TEST} \(item2)")
-//            }
-//        } else {
-//            print("{TEST} failed")
-//        }
-        
         if  let user = FirebaseAuth.Auth.auth().currentUser {
             if connection.retrieve(\RouterDependency.authState) == AuthState.none {
                 connection.request(NetworkEvents.User.Get.init(id: user.uid))

@@ -35,6 +35,7 @@ struct ResetStrategyExpedition: GraniteExpedition {
         
         connection.update(\EnvironmentDependency.user, value: user)
         
+        connection.request(StrategyEvents.Get())
         GraniteLogger.info("strategy reset", .expedition, focus: true)
     }
 }
