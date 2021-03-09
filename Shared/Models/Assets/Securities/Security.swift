@@ -127,7 +127,7 @@ extension Security {
             return hoursAreOverdue
         case .stock:
             if let date = Date.today.lastValidTradingDay {
-                return self.date.compare(date) == .orderedAscending && (daysAreOverdue || hoursAreOverdue)
+                return self.date.compare(date) == .orderedDescending && (daysAreOverdue || hoursAreOverdue)
             } else {
                 return false
             }

@@ -97,6 +97,7 @@ extension TonalModel {
               let sentiment = self.tuners.archived,
               let range = self.range.archived else {
             
+            GraniteLogger.info("failed to retrieve data to appropriately save model", .utility, focus: true)
             return false
         }
         
@@ -113,17 +114,20 @@ extension TonalModel {
                 object.isStrategy = self?.isStrategy == true
                 quote?.addToTonalModel(object)
                 
-                if overwrite, let modelID = self?.modelID {
-                    object.id = modelID
+                if let modelID = self?.modelID {
+                    if overwrite {
+                        object.id = modelID
+                    }
                     
                     try moc.save()
                     return true
                 } else {
+                    GraniteLogger.info("failed to save tonal model", .utility, focus: true)
                     return false
                 }
                 
             } catch let error {
-                GraniteLogger.error("failed to save tonal model\n\(error)", .utility)
+                GraniteLogger.info("failed to save tonal model\n\(error)", .utility, focus: true)
                 return false
             }
         }

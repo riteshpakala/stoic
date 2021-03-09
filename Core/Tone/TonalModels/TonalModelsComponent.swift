@@ -67,7 +67,7 @@ public struct TonalModelsComponent: GraniteComponent {
                     AssetGridComponent(state: .init(.standard,
                                                     context: .tonalBrowser(.empty),
                                                     assetData: state.tones ?? []))
-                        .listen(to: command, .stop).showEmptyState
+                        .listen(to: command).showEmptyState
                         
                 }.padding(.top, Brand.Padding.large)
                 

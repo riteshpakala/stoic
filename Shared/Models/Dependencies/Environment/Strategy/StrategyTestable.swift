@@ -16,7 +16,8 @@ extension Strategy.Investments.Item {
         var modelID: String = ""
         
         var noModel: Bool {
-            modelID.isEmpty
+            print("{TEST} \(modelID)")
+            return modelID.isEmpty
         }
         
         func getTone(forChange change: Change) -> TonalPrediction.Tone? {
@@ -32,5 +33,14 @@ extension Strategy.Investments.Item {
             tones[change] = .init(prediction,
                                   context: .purchased)
         }
+        
+        var modelIDDisplay: String {
+            (self.modelID.components(separatedBy: "-").last ?? self.modelID).lowercased()
+        }
+        
+    }
+    
+    func toneExists(_ change: Change) -> Bool {
+        self.testable.tones[change] != nil
     }
 }

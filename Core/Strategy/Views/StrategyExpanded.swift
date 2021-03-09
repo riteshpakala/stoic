@@ -35,7 +35,7 @@ struct StrategyExpanded: View, GraniteEventResponder {
             return Brand.Colors.white
         }
     }
-    
+
     public var body: some View {
         VStack {
             ForEach(strategies, id: \.self) { strategy in
@@ -125,7 +125,7 @@ struct StrategyExpanded: View, GraniteEventResponder {
                             .shadow(color: .black,
                                     radius: 2, x: 2, y: 2)
                     } else {
-                        GraniteText("model id: "+item.testable.modelID,
+                        GraniteText("model id: "+item.testable.modelIDDisplay,
                                     .subheadline,
                                     .bold,
                                     .trailing,
@@ -187,26 +187,41 @@ struct StrategyExpanded: View, GraniteEventResponder {
                                 PaddingHorizontal(Brand.Padding.xSmall, Brand.Colors.purple)
                                 
                                 VStack(alignment: .leading) {
-                                    GraniteText("upper: 400",
-                                                Brand.Colors.purple,
-                                                .footnote,
-                                                .regular,
-                                                .leading,
-                                                addSpacers: false)
                                     
-                                    GraniteText("lower: 400",
-                                                Brand.Colors.purple,
-                                                .footnote,
-                                                .regular,
-                                                .leading,
-                                                addSpacers: false)
-                                    
-                                    GraniteText("buy***",
-                                                Brand.Colors.purple,
-                                                .subheadline,
-                                                .bold,
-                                                .leading,
-                                                addSpacers: false)
+                                    if item.toneExists(change) {
+                                        GraniteText("upper: 400",
+                                                    Brand.Colors.purple,
+                                                    .footnote,
+                                                    .regular,
+                                                    .leading,
+                                                    addSpacers: false)
+                                        
+                                        GraniteText("lower: 400",
+                                                    Brand.Colors.purple,
+                                                    .footnote,
+                                                    .regular,
+                                                    .leading,
+                                                    addSpacers: false)
+                                        
+                                        GraniteText("buy***",
+                                                    Brand.Colors.purple,
+                                                    .subheadline,
+                                                    .bold,
+                                                    .leading,
+                                                    addSpacers: false)
+                                    } else {
+                                        GraniteText("tap to test",
+                                                    Brand.Colors.purple,
+                                                    .footnote,
+                                                    .regular,
+                                                    .leading,
+                                                    addSpacers: false)
+                                                    .modifier(TapAndLongPressModifier(tapAction: {
+                                                       
+                                                        GraniteHaptic.light.invoke()
+                                                        sendEvent(StrategyEvents.Tone.Request.init(change: change, item: item))
+                                                    }))
+                                    }
                                 }
                             }
                         }

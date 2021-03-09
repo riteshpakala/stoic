@@ -8,7 +8,7 @@
 import Foundation
 import GraniteUI
 
-public struct TonalPrediction {
+public struct TonalPrediction: Archiveable {
     let close: Double
     let low: Double
     let high: Double
@@ -16,7 +16,7 @@ public struct TonalPrediction {
     var current: Double
     var securityDate: Date
     let modelDate: Date
-    let dateGenerated: Date = .today
+    var dateGenerated: Date = .today
     let targetDate: Date
     let interval: SecurityInterval
     
@@ -51,6 +51,62 @@ public struct TonalPrediction {
     
     static var zero: TonalPrediction {
         .init(close: 0, low: 0, high: 0, volume: 0, current: 0, modelDate: .today, targetDate: .today, securityDate: .today, interval: .day)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case close
+        case low
+        case high
+        case volume
+        case current
+        case securityDate
+        case modelDate
+        case dateGenerated
+        case targetDate
+        case interval
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        let close: Double = try container.decode(Double.self, forKey: .close)
+        let low: Double = try container.decode(Double.self, forKey: .low)
+        let high: Double = try container.decode(Double.self, forKey: .high)
+        let volume: Double = try container.decode(Double.self, forKey: .volume)
+        let current: Double = try container.decode(Double.self, forKey: .current)
+        let securityDate: Date = try container.decode(Date.self, forKey: .securityDate)
+        let modelDate: Date = try container.decode(Date.self, forKey: .modelDate)
+        let dateGenerated: Date = try container.decode(Date.self, forKey: .dateGenerated)
+        let targetDate: Date = try container.decode(Date.self, forKey: .targetDate)
+        let interval: String = try container.decode(String.self, forKey: .interval)
+
+        self.init(close: close,
+                  low: low,
+                  high: high,
+                  volume: volume,
+                  current: current,
+                  modelDate: modelDate,
+                  targetDate: targetDate,
+                  securityDate: securityDate,
+                  interval: SecurityInterval.init(rawValue: interval) ?? .day)
+
+        self.dateGenerated = dateGenerated
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(close, forKey: .close)
+        try container.encode(low, forKey: .low)
+        try container.encode(high, forKey: .high)
+        try container.encode(volume, forKey: .volume)
+        try container.encode(current, forKey: .current)
+        try container.encode(securityDate, forKey: .securityDate)
+        try container.encode(modelDate, forKey: .modelDate)
+        try container.encode(targetDate, forKey: .targetDate)
+        try container.encode(dateGenerated, forKey: .dateGenerated)
+        try container.encode(securityDate, forKey: .securityDate)
+        try container.encode(interval.rawValue, forKey: .interval)
     }
 }
 

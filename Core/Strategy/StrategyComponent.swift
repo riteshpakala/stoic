@@ -176,6 +176,7 @@ public struct StrategyComponent: GraniteComponent {
                         TonalModelsComponent(state: .init(inject(\.envDependency,
                                                                  target: \.tonalModels),
                                                           securityPayload: .init(object: state.pickingModelForSecurity)))
+                                                    .listen(to: command, .stop)
                     }, onExitTap: {
                         set(\.stage, value: .none)
                     })

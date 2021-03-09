@@ -12,12 +12,12 @@ import Combine
 
 struct StrategyEvents {
     public struct Get: GraniteEvent {
-        var async: DispatchQueue? {
+        public var async: DispatchQueue? {
             GraniteThread.event
         }
         
         public struct Testable: GraniteEvent {
-            var async: DispatchQueue? {
+            public var async: DispatchQueue? {
                 GraniteThread.event
             }
         }
@@ -34,12 +34,12 @@ struct StrategyEvents {
             .quiet
         }
         
-        var async: DispatchQueue? {
+        public var async: DispatchQueue? {
             GraniteThread.event
         }
     }
     public struct Predict: GraniteEvent {
-        var async: DispatchQueue? {
+        public var async: DispatchQueue? {
             GraniteThread.event
         }
     }
@@ -51,5 +51,15 @@ struct StrategyEvents {
     public struct SyncComplete: GraniteEvent {}
     public struct PickModel: GraniteEvent {
         let assetID: String
+    }
+    
+    public struct Tone {
+        public struct Request: GraniteEvent {
+            let change: Strategy.Investments.Item.Change
+            let item: Strategy.Investments.Item
+            public var async: DispatchQueue? {
+                GraniteThread.event
+            }
+        }
     }
 }

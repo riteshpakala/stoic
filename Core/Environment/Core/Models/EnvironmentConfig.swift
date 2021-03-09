@@ -109,7 +109,7 @@ extension EnvironmentConfig {
         case .strategyDetail:
             return .init(kind: .strategy)
         default:
-            return .init(kind: .strategy)//.home)
+            return .init(kind: .home)
         }
     }
 }

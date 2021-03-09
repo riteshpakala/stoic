@@ -33,21 +33,20 @@ struct TestableStrategyExpedition: GraniteExpedition {
         }
         
         //Let's find a model if there is any
-        for investment in strategy.investments.items {
+        for (i, investment) in strategy.investments.items.enumerated() {
             if let quote = strategy.getQuoteFor(investment) {
                 let model = quote.models.first(where: { $0.isStrategy }) ?? quote.models.first
                 
                 if let tonalModel = model {
                     //Found a model
-                    investment.modelID = tonalModel.modelID
-                    print("{TEST} found it")
+                    strategy.investments.items[i].testable.modelID = tonalModel.modelID
                 } else {
                     //No model found
-                    print("{TEST} nothing found")
+                    GraniteLogger.info("no model found for the strategy boot")
                 }
             }
         }
         
-        
+        state.strategy = strategy
     }
 }

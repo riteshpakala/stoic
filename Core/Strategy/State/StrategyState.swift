@@ -102,7 +102,9 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
             SyncCompleteStrategyExpedition.Discovery(),
             RemoveFromStrategyExpedition.Discovery(),
             CloseFromStrategyExpedition.Discovery(),
-            PickModelForStrategyExpedition.Discovery()
+            PickModelForStrategyExpedition.Discovery(),
+            TonalModelFavoritedExpedition.Discovery(),
+            ToneDataRequestedExpedition.Discovery()
         ]
     }
     

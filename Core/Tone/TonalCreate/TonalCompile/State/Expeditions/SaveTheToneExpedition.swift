@@ -64,7 +64,7 @@ struct SaveTheToneExpedition: GraniteExpedition {
         if success {
             connection.update(\ToneDependency.tone.compile.tonalModel, value: tonalModel)
             
-            GraniteLogger.info("saved tonal model\nself:String(describing: self)", .expedition)
+            GraniteLogger.info("saved tonal model", .expedition, focus: true)
         }
     }
 }

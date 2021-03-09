@@ -908,6 +908,8 @@
 		71CA211925A4AEC900C448D7 /* TonalService.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA211725A4AEC900C448D7 /* TonalService.Model.swift */; };
 		71CA308525F543DB004518F9 /* TonalCreatePrepare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA308425F543DB004518F9 /* TonalCreatePrepare.swift */; };
 		71CA308625F543DB004518F9 /* TonalCreatePrepare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CA308425F543DB004518F9 /* TonalCreatePrepare.swift */; };
+		71CC794525F745CD00D5B37F /* AssetInteractionExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC794425F745CD00D5B37F /* AssetInteractionExpedition.swift */; };
+		71CC794625F745CD00D5B37F /* AssetInteractionExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC794425F745CD00D5B37F /* AssetInteractionExpedition.swift */; };
 		71CC7D9225C8E76300610B8A /* NetworkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */; };
 		71CC7D9325C8E76300610B8A /* NetworkEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */; };
 		71CC7D9425C8E76300610B8A /* NetworkRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CC7D8D25C8E76200610B8A /* NetworkRelay.swift */; };
@@ -1514,6 +1516,7 @@
 		71C2BFB125ABE26A006445EB /* GetFloorExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFloorExpedition.swift; sourceTree = "<group>"; };
 		71CA211725A4AEC900C448D7 /* TonalService.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Model.swift; sourceTree = "<group>"; };
 		71CA308425F543DB004518F9 /* TonalCreatePrepare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalCreatePrepare.swift; sourceTree = "<group>"; };
+		71CC794425F745CD00D5B37F /* AssetInteractionExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetInteractionExpedition.swift; sourceTree = "<group>"; };
 		71CC7D8C25C8E76200610B8A /* NetworkEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEvents.swift; sourceTree = "<group>"; };
 		71CC7D8D25C8E76200610B8A /* NetworkRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRelay.swift; sourceTree = "<group>"; };
 		71CC7D8F25C8E76200610B8A /* NetworkState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkState.swift; sourceTree = "<group>"; };
@@ -2172,6 +2175,7 @@
 				7182163025E06DDB0089CF78 /* SyncStrategyExpedition.swift */,
 				7182163B25E07E580089CF78 /* ResetStrategyExpedition.swift */,
 				7182164225E0895E0089CF78 /* ModifyStrategyExpedition.swift */,
+				71CC794425F745CD00D5B37F /* AssetInteractionExpedition.swift */,
 			);
 			path = Expedition;
 			sourceTree = "<group>";
@@ -4570,6 +4574,7 @@
 				71C2BF6A25ABA5B8006445EB /* HoldingSelectedExpedition.swift in Sources */,
 				71434344259076EE001F26A4 /* CGAffineTransform+Convenience.swift in Sources */,
 				7179AD6425ACF493003FD06F /* UIKit.swift in Sources */,
+				71CC794525F745CD00D5B37F /* AssetInteractionExpedition.swift in Sources */,
 				7139F6A325983C2000D9C84B /* TonalService.swift in Sources */,
 				71494D7225ABEE2A0086E598 /* AddToFloorExpedition.swift in Sources */,
 				71582E9E25E5D53A003D92F6 /* SwiftyJSON.swift in Sources */,
@@ -5067,6 +5072,7 @@
 				7183D56C25A428AE00FB91A9 /* Haptic.swift in Sources */,
 				7179ACE225AC9987003FD06F /* TonalModelObject+CoreDataProperties.swift in Sources */,
 				710889C22591B3AB00795EDF /* CryptoCurrency.swift in Sources */,
+				71CC794625F745CD00D5B37F /* AssetInteractionExpedition.swift in Sources */,
 				71ACC24025B0AB9100E02AE3 /* TonalDetailComponent.swift in Sources */,
 				7139F6A425983C2000D9C84B /* TonalService.swift in Sources */,
 				712BD1DD25BA678F004D6E94 /* IndicatorDetailComponent.swift in Sources */,
