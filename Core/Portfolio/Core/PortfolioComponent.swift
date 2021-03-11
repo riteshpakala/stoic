@@ -73,7 +73,7 @@ public struct PortfolioComponent: GraniteComponent {
         VStack {
             HStack(spacing: 0) {
                 GraniteText("\(command.center.username)",
-                            .headline,
+                            .subheadline,
                             .bold,
                             style: .init(gradient: [Brand.Colors.black.opacity(0.75),
                                                     Brand.Colors.black.opacity(0.36)]))
@@ -93,7 +93,7 @@ public struct PortfolioComponent: GraniteComponent {
             VStack(spacing: Brand.Padding.medium) {
                 
                 GraniteText("age: \(command.center.age) days",
-                            .headline,
+                            .subheadline,
                             .bold)
             }
             .padding(.leading, Brand.Padding.medium)
@@ -105,7 +105,7 @@ public struct PortfolioComponent: GraniteComponent {
             HStack(spacing: 0) {
                 
                 GraniteText("trading day: \(Date.nextTradingDay.asString)",
-                            .headline,
+                            .subheadline,
                             .bold,
                             .leading,
                             style: .init(gradient: [Brand.Colors.black.opacity(0.75),

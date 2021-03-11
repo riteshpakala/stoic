@@ -367,6 +367,8 @@
 		71267A4625A59D89006132D8 /* Security.Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71267A4425A59D89006132D8 /* Security.Helpers.swift */; };
 		7126ED7C25B77B6800195901 /* VariablesExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126ED7B25B77B6800195901 /* VariablesExpedition.swift */; };
 		7126ED7D25B77B6800195901 /* VariablesExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126ED7B25B77B6800195901 /* VariablesExpedition.swift */; };
+		712B1B1F25F9B73C00D953B2 /* Strategy.Investments.Item.Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712B1B1E25F9B73C00D953B2 /* Strategy.Investments.Item.Change.swift */; };
+		712B1B2025F9B73C00D953B2 /* Strategy.Investments.Item.Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712B1B1E25F9B73C00D953B2 /* Strategy.Investments.Item.Change.swift */; };
 		712BD1D825BA678F004D6E94 /* IndicatorDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D525BA678F004D6E94 /* IndicatorDetailState.swift */; };
 		712BD1D925BA678F004D6E94 /* IndicatorDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D525BA678F004D6E94 /* IndicatorDetailState.swift */; };
 		712BD1DA25BA678F004D6E94 /* IndicatorDetailEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 712BD1D625BA678F004D6E94 /* IndicatorDetailEvents.swift */; };
@@ -1245,6 +1247,7 @@
 		71267A3D25A59A3F006132D8 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		71267A4425A59D89006132D8 /* Security.Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Security.Helpers.swift; sourceTree = "<group>"; };
 		7126ED7B25B77B6800195901 /* VariablesExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablesExpedition.swift; sourceTree = "<group>"; };
+		712B1B1E25F9B73C00D953B2 /* Strategy.Investments.Item.Change.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strategy.Investments.Item.Change.swift; sourceTree = "<group>"; };
 		712BD1D525BA678F004D6E94 /* IndicatorDetailState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorDetailState.swift; sourceTree = "<group>"; };
 		712BD1D625BA678F004D6E94 /* IndicatorDetailEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorDetailEvents.swift; sourceTree = "<group>"; };
 		712BD1D725BA678F004D6E94 /* IndicatorDetailComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorDetailComponent.swift; sourceTree = "<group>"; };
@@ -3381,6 +3384,7 @@
 				7157F6A225D4C14A00404B1B /* Strategy.Investments.swift */,
 				71604C6625F6B9820036C34C /* StrategyTestable.swift */,
 				7157F6A925D4CE7C00404B1B /* Strategy.Investments.Item.swift */,
+				712B1B1E25F9B73C00D953B2 /* Strategy.Investments.Item.Change.swift */,
 				713F27BE25B275AE00C3871E /* Strategy.CoreData.swift */,
 			);
 			path = Strategy;
@@ -4337,6 +4341,7 @@
 				7189C9C825AE8E5F00D98A85 /* GetCryptoSearchExpedition.swift in Sources */,
 				7143433A259076EE001F26A4 /* CGFloat+Angle.swift in Sources */,
 				7108898F2591B29800795EDF /* Promise.swift in Sources */,
+				712B1B1F25F9B73C00D953B2 /* Strategy.Investments.Item.Change.swift in Sources */,
 				7143435D259076F4001F26A4 /* EdgeInsets+Convenience.swift in Sources */,
 				71434340259076EE001F26A4 /* CGVector+Convenience.swift in Sources */,
 				71B4300D25A889E500A23F4D /* FloorObject+CoreDataClass.swift in Sources */,
@@ -4932,6 +4937,7 @@
 				7121F6DB2596F9B000BBD459 /* QuoteObject+CoreDataClass.swift in Sources */,
 				710889AE2591B29800795EDF /* Cryptowatcher+Assets.swift in Sources */,
 				71143E0A25A4C78300379E4B /* TonalService.Indicators.Volatility.swift in Sources */,
+				712B1B2025F9B73C00D953B2 /* Strategy.Investments.Item.Change.swift in Sources */,
 				719AD86F25B10746001350FA /* GraniteEmptyState.swift in Sources */,
 				710889B02591B29800795EDF /* Aggregates.swift in Sources */,
 				7125BD8D25A1316500F22717 /* DefaultHorizontalValueView.swift in Sources */,

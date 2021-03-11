@@ -10,13 +10,16 @@ import Foundation
 extension Strategy.Investments.Item {
     
     class Testable {
+        //Changes before the initial
         var pastChanges: [Change] = []
+        
         var predictions: [Change : TonalPrediction] = [:]
         var tones: [Change : TonalPrediction.Tone] = [:]
+        
+        //TEST
         var modelID: String = ""
         
         var noModel: Bool {
-            print("{TEST} \(modelID)")
             return modelID.isEmpty
         }
         

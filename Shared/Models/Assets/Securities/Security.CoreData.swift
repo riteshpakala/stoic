@@ -234,6 +234,14 @@ extension Security {
     public var asInvestmentItem: Strategy.Investments.Item {
         .init(security: self)
     }
+    
+    public func asChange(testable: Bool = false) -> Strategy.Investments.Item.Change {
+        .init(self.lastValue,
+              absoluteChange: self.changeAbsoluteValue,
+              percentChange: self.changePercentValue,
+              date: self.date,
+              isTestable: testable)
+    }
 }
 
 extension Array where Element == Security {

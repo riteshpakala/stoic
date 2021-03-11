@@ -27,7 +27,7 @@ struct TestableStrategyExpedition: GraniteExpedition {
                quote.securities.count > 12 {
                 let securities = Array(quote.securities.sortDesc[1...12])
                 for security in securities.sortAsc {
-                    strategy.investments.items[i].testable.pastChanges.append(.init(security.lastValue, security.date, isTestable: true))
+                    strategy.investments.items[i].testable.pastChanges.append(security.asChange(testable: true))
                 }
             }
         }

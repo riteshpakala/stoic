@@ -36,7 +36,7 @@ public struct GraniteTimerComponent: GraniteComponent {
                                 .leading)
                 default:
                     GraniteText("\(state.initial.asStringTimedWithTime((self.timePassed) * (state.type == .countup ? 1 : -1)))",
-                                .headline,
+                                .subheadline,
                                 .bold,
                                 style: .init(gradient: [Brand.Colors.black.opacity(0.75),
                                                         Brand.Colors.black.opacity(0.36)]))

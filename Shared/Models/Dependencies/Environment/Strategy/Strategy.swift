@@ -59,22 +59,12 @@ public class Strategy: Hashable, Identifiable {
         self.investments = investmentData
         
         //Update investments
-        for quote in quotes {
-            if let index = investments.items.firstIndex(where: { $0.assetID == quote.latestSecurity.assetID }) {
-                
-                let item = investments.items[index]
-                
-                item.changes.removeAll(where: { $0.date.simple.asString == quote.latestSecurity.date.simple.asString })
-                
-                //Since items are already stored in descending order
-                //if there was a removal it should remove the first item.
-                item.changes.insert(.init(quote.latestSecurity.lastValue,
-                                           quote.latestSecurity.date), at: 0)
-                
-                
-                self.investments.items[index].changes = item.changes
-            }
-        }
+//        for quote in quotes {
+//            if let index = investments.items.firstIndex(where: { $0.assetID == quote.latestSecurity.assetID }) {
+//
+//                investments.items[index].update(from: quote)
+//            }
+//        }
     }
 }
 

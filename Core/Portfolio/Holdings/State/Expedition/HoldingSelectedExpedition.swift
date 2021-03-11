@@ -26,7 +26,8 @@ struct HoldingSelectedExpedition: GraniteExpedition {
         guard let security = event.asset.asSecurity else { return }
         
         switch state.context {
-        case .portfolio:
+        case .portfolio,
+             .strategy:
             if state.addToPortfolio {
                 guard !state.fetchingDataToAdd && security.canStore else { return }
                 switch security.securityType {

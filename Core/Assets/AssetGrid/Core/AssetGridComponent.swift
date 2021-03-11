@@ -146,7 +146,8 @@ extension AssetGridComponent {
     public var emptyText: String {
         switch state.context {
         case .holdings,
-             .portfolio:
+             .portfolio,
+             .strategy:
             return "add & save a security\nfor easy access"
         case .floor:
             return "add & save\na security to\nyour trading floor"
@@ -168,6 +169,7 @@ extension AssetGridComponent {
              .topVolume,
              .winners,
              .losers,
+             .strategy,
              .winnersAndLosers:
             let securities: [Security]? = (state.assetData as? [Security])
             return securities == nil || securities?.isEmpty == true
@@ -179,9 +181,11 @@ extension AssetGridComponent {
     }
     
     public var emptyPayload: GranitePayload? {
+        print("{TEST} \(state.context)")
         switch state.context {
         case .holdings,
              .portfolio,
+             .strategy,
              .floor:
             return .init(object: [Brand.Colors.yellow, Brand.Colors.redBurn])
         case .tonalBrowser:
