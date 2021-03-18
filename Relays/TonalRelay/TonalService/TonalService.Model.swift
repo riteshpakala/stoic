@@ -231,6 +231,15 @@ extension TonalModels {
             }
         }
         
+        var inDimNoSentiment: Int {
+            switch self {
+            case .volume:
+                return 5
+            default:
+                return 5
+            }
+        }
+        
         func model(for model: SVMModel) -> Model {
             switch self {
             case .close:

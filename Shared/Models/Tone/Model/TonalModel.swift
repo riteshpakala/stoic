@@ -69,12 +69,11 @@ public class TonalModel: Asset {
     }
     
     public func predictAll(_ sentiment: SentimentOutput? = nil) -> TonalPrediction {
-        let sentimentToUse = sentiment ?? david.sentimentAvg
         
-        let close: Double = predict(sentimentToUse, modelType: .close)
-        let low: Double = predict(sentimentToUse, modelType: .low)
-        let high: Double = predict(sentimentToUse, modelType: .high)
-        let volume: Double = predict(sentimentToUse, modelType: .volume)
+        let close: Double = predict(sentiment, modelType: .close)
+        let low: Double = predict(sentiment, modelType: .low)
+        let high: Double = predict(sentiment, modelType: .high)
+        let volume: Double = predict(sentiment, modelType: .volume)
         
         let prediction: TonalPrediction = .init(close: close,
                                                 low: low,
@@ -88,7 +87,7 @@ public class TonalModel: Asset {
         return prediction
     }
     
-    public func predict(_ sentiment: SentimentOutput = .neutral,
+    public func predict(_ sentiment: SentimentOutput?,
                         modelType: TonalModels.ModelType = .close,
                         scale: Bool = true) -> Double {
         quote.precompute()

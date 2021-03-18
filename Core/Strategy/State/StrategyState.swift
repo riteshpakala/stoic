@@ -92,7 +92,7 @@ public class StrategyCenter: GraniteCenter<StrategyState> {
     public override var expeditions: [GraniteBaseExpedition] {
         [
             GetStrategyExpedition.Discovery(),
-            TestableStrategyExpedition.Discovery(),
+            MetaStrategyExpedition.Discovery(),
             SyncPredictionsExpedition.Discovery(),
             SyncStrategyExpedition.Discovery(),
             ResetStrategyExpedition.Discovery(),

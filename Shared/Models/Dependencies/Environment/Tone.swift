@@ -57,6 +57,11 @@ public class Tone {
         self.selectedRange = selectedRange
     }
     
+    //should be ordered coming in
+    public init(securities: [Security]) {
+        let sorted = securities.sortDesc
+    }
+    
     // Stages
     public var find: Find = .init()
     public var set: Set = .init()

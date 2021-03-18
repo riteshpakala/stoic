@@ -61,7 +61,7 @@ struct GetStrategyExpedition: GraniteExpedition {
         
         //May there's a better way to populate changes for the expanded strategy
         if state.type == .expanded {
-            connection.request(StrategyEvents.Get.Testable())
+            connection.request(StrategyEvents.Get.Meta())
         }
         
         GraniteLogger.info("getting strategy\nitems: \(strategy.investments.items.count)", .expedition, focus: true)

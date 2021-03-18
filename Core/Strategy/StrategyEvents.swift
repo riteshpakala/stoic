@@ -16,11 +16,14 @@ struct StrategyEvents {
             GraniteThread.event
         }
         
-        public struct Testable: GraniteEvent {
+        public struct Meta: GraniteEvent {
             public var async: DispatchQueue? {
                 GraniteThread.event
             }
         }
+    }
+    public struct Train: GraniteEvent {
+        
     }
     public struct Reset: GraniteEvent {}
     public struct Remove: GraniteEvent {

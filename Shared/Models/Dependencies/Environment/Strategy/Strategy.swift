@@ -66,6 +66,12 @@ public class Strategy: Hashable, Identifiable {
 //            }
 //        }
     }
+    
+    public func updatePrediction(forItem item: Strategy.Investments.Item) {
+        if let index = investments.items.firstIndex(where: { $0.assetID == item.assetID }) {
+            investments.items[index] = item
+        }
+    }
 }
 
 extension Data {

@@ -12,13 +12,11 @@ import CoreData
 //MARK: -- Generate
 extension TonalModels {
     public static func generate(tone: Tone,
-                                moc: NSManagedObjectContext,
-                                _ completion: @escaping ((TonalModels?) -> Void)) {
+                                moc: NSManagedObjectContext) -> TonalModels? {
         
         guard let range = tone.selectedRange else {
             GraniteLogger.error("failed to retrieve range\nself: \(String(describing: self))", .relay, focus: true)
-            completion(nil)
-            return
+            return nil
         }
         
         let securityObjects = range.objects
@@ -26,8 +24,7 @@ extension TonalModels {
         let foundQuote = securityObjects.first?.getQuote(moc: moc)
         guard var quote = foundQuote else {
             GraniteLogger.info("failed to retrieve quote\nself: \(String(describing: self))", .relay, focus: true)
-            completion(nil)
-            return
+            return nil
         }
         
         quote.precompute()
@@ -42,7 +39,7 @@ extension TonalModels {
         // size
         guard bucket.isValid else {
             GraniteLogger.info("failed to bucket\n\(bucket.pockets.count)\n\(bucket.rangeDates)\nself: \(String(describing: self))", .relay, focus: true)
-            return
+            return nil
         }
         
         GraniteLogger.info("generating tonal model", .ml, focus: true, symbol: "🛠")
@@ -108,7 +105,7 @@ extension TonalModels {
         
         GraniteLogger.info("tonal model generation - complete - ✅", .ml, focus: true)
         
-        completion(.init(models: models, sentiments: sentimentAvgs, created: quote.latestSecurity.date))
+        return .init(models: models, sentiments: sentimentAvgs, created: quote.latestSecurity.date)
     }
     
     public func append(security: Security,

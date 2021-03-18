@@ -306,14 +306,14 @@ struct StrategyPreview: View, GraniteEventResponder {
             
             VStack(spacing: Brand.Padding.xSmall) {
                 
-                GraniteText("$\(item.initial.amount.display)",
+                GraniteText("$\(item.meta.initial.amount.display)",
                             .subheadline,
                             .bold,
                             .leading)
                             .shadow(color: .black,
                                     radius: 2, x: 2, y: 2)
                                 
-                GraniteText("\(item.initial.date.asString)",
+                GraniteText("\(item.meta.initial.date.asString)",
                             .footnote,
                             .bold,
                             .leading)

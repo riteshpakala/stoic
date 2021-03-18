@@ -41,13 +41,21 @@ struct ToneDataRequestedExpedition: GraniteExpedition {
         connection: GraniteConnection,
         publisher: inout AnyPublisher<GraniteEvent, Never>) {
         
-        let modelID = event.item.modelID
         if let quote = state.strategy.getQuoteFor(event.item) {
-            if let model = quote.models.first(where: { $0.modelID == modelID }) {
+            
+            if let model = TonalModels.generate(fromQuote: quote,
+                                                fromDate: event.change.date) {
                 
+                
+                let prediction = model.predictAll()
+                print("{TEST} updating")
+                event.item.meta.update(prediction, change: event.change)
+//                TonalModel.
             }
+            
+//            if let model = quote.models.first(where: { $0.modelID == modelID }) {
+//                
+//            }
         }
-        
-        print("{TEST} waht is up")
     }
 }

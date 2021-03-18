@@ -115,41 +115,41 @@ struct StrategyExpanded: View, GraniteEventResponder {
                 
                 Spacer()
                 
-                VStack(alignment: .trailing) {
-                    if item.testable.noModel {
-                        GraniteText("no model",
-                                    .subheadline,
-                                    .bold,
-                                    .trailing,
-                                    addSpacers: false)
-                            .shadow(color: .black,
-                                    radius: 2, x: 2, y: 2)
-                    } else {
-                        GraniteText("model id: "+item.testable.modelIDDisplay,
-                                    .subheadline,
-                                    .bold,
-                                    .trailing,
-                                    addSpacers: false)
-                            .shadow(color: .black,
-                                    radius: 2, x: 2, y: 2)
-                    }
-                    
-                    GraniteText("tap to change",
-                                .caption,
-                                .regular,
-                                .trailing,
-                                addSpacers: false)
-                        .shadow(color: .black,
-                                radius: 2, x: 2, y: 2)
-                }
-                .padding(.top, Brand.Padding.xSmall)
-                .padding(.bottom, Brand.Padding.xSmall)
-                .padding(.leading, Brand.Padding.small)
-                .padding(.trailing, Brand.Padding.small)
-                .background(Brand.Colors.purple
-                                .opacity(0.57)
-                                .cornerRadius(6.0)
-                                .shadow(color: .black, radius: 4, x: 1, y: 2))
+//                VStack(alignment: .trailing) {
+//                    if item.meta.noModel {
+//                        GraniteText("no model",
+//                                    .subheadline,
+//                                    .bold,
+//                                    .trailing,
+//                                    addSpacers: false)
+//                            .shadow(color: .black,
+//                                    radius: 2, x: 2, y: 2)
+//                    } else {
+//                        GraniteText("model id: "+item.meta.modelIDDisplay,
+//                                    .subheadline,
+//                                    .bold,
+//                                    .trailing,
+//                                    addSpacers: false)
+//                            .shadow(color: .black,
+//                                    radius: 2, x: 2, y: 2)
+//                    }
+//                    
+//                    GraniteText("tap to change",
+//                                .caption,
+//                                .regular,
+//                                .trailing,
+//                                addSpacers: false)
+//                        .shadow(color: .black,
+//                                radius: 2, x: 2, y: 2)
+//                }
+//                .padding(.top, Brand.Padding.xSmall)
+//                .padding(.bottom, Brand.Padding.xSmall)
+//                .padding(.leading, Brand.Padding.small)
+//                .padding(.trailing, Brand.Padding.small)
+//                .background(Brand.Colors.purple
+//                                .opacity(0.57)
+//                                .cornerRadius(6.0)
+//                                .shadow(color: .black, radius: 4, x: 1, y: 2))
                 .modifier(TapAndLongPressModifier.init(tapAction: {
                     sendEvent(StrategyEvents.PickModel(assetID: item.assetID))
                 } ))
@@ -188,22 +188,22 @@ struct StrategyExpanded: View, GraniteEventResponder {
                                 
                                 VStack(alignment: .leading) {
                                     
-                                    if item.toneExists(change) {
-                                        GraniteText("upper: 400",
+                                    if let tone = item.meta.getTone(forChange: change) {
+                                        GraniteText("upper: \(tone.prediction.high.display)",
                                                     Brand.Colors.purple,
                                                     .footnote,
                                                     .regular,
                                                     .leading,
                                                     addSpacers: false)
                                         
-                                        GraniteText("lower: 400",
+                                        GraniteText("lower: \(tone.prediction.low.display)",
                                                     Brand.Colors.purple,
                                                     .footnote,
                                                     .regular,
                                                     .leading,
                                                     addSpacers: false)
                                         
-                                        GraniteText("buy***",
+                                        GraniteText(tone.decision.rawValue,
                                                     Brand.Colors.purple,
                                                     .subheadline,
                                                     .bold,
@@ -234,7 +234,7 @@ struct StrategyExpanded: View, GraniteEventResponder {
             
             
             HStack {
-                GraniteText("data: \(item.changes.count)",
+                GraniteText("data: \(item.meta.aggregate.count)",
                             Brand.Colors.marble,
                             .footnote,
                             .regular,

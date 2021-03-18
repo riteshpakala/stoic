@@ -40,21 +40,20 @@ struct CompileTheToneExpedition: GraniteExpedition {
         
         connection.update(\ToneDependency.tone.compile.state, value: .compiling)
         
-        TonalModels.generate(tone: tone, moc: coreDataInstance) { model in
-            if let model = model {
-                connection.update(\ToneDependency.tone.compile.state, value: .compiled)
-                connection.update(\ToneDependency.tone.compile.model, value: model)
-                
-                let tonalModel: TonalModel = .init(model,
-                                                   daysTrained: daysTrained,
-                                                   tuners: tuners,
-                                                   quote: quote,
-                                                   range: range,
-                                                   isStrategy: false)
-                
-                tonalModel.precompute()
-                connection.update(\ToneDependency.tone.compile.tonalModel, value: tonalModel)
-            }
+        if let model = TonalModels.generate(tone: tone, moc: coreDataInstance) {
+            connection.update(\ToneDependency.tone.compile.state, value: .compiled)
+            connection.update(\ToneDependency.tone.compile.model, value: model)
+            
+            let tonalModel: TonalModel = .init(model,
+                                               daysTrained: daysTrained,
+                                               tuners: tuners,
+                                               quote: quote,
+                                               range: range,
+                                               isStrategy: false)
+            
+            tonalModel.precompute()
+            connection.update(\ToneDependency.tone.compile.tonalModel, value: tonalModel)
         }
+        
     }
 }

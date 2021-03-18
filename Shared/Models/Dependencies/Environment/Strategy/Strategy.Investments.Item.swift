@@ -31,18 +31,15 @@ extension Strategy.Investments {
         let date: Date
         //
         
-        let initial: Change
-        var changes: [Change] = []
-        
         //Past, future, model management
-        var testable: Testable = .init()
+        var meta: Strategy.Investments.Item.Meta
         
         var listChanges: [Change] {
-            testable.pastChanges + changes
+            meta.aggregate
         }
         
         var latestChange: Change {
-            changes.first ?? initial
+            meta.future.last ?? meta.initial
         }
         
         //This is technically best used with preview rather
@@ -65,7 +62,7 @@ extension Strategy.Investments {
             self.companyName = security.name
             self.exchangeName = security.exchangeName
             self.assetID = security.assetID
-            self.initial = security.asChange()
+            self.meta = .init(initial: security.asChange())
             self.date = date
         }
         
@@ -73,13 +70,13 @@ extension Strategy.Investments {
                     exchangeName: String,
                     companyName: String,
                     assetID: String,
-                    initial: Change,
+                    meta: Strategy.Investments.Item.Meta,
                     date: Date = .today) {
             self.ticker = ticker
             self.exchangeName = exchangeName
             self.companyName = companyName
             self.assetID = assetID
-            self.initial = initial
+            self.meta = meta
             self.date = date
         }
         
@@ -109,7 +106,7 @@ extension Strategy.Investments {
             
             for i in 1...(dayDiff - 1) {
                 guard index + i < quote.securities.count else { continue }
-                changes.insert(quote.securities[index + i].asChange(), at: 0)
+                meta.future.insert(quote.securities[index + i].asChange(), at: 0)
             }
             //this should update changes...
         }
@@ -124,12 +121,11 @@ extension Strategy.Investments {
             case exchangeName
             case companyName
             case assetID
-            case initial
-            case changes
             case closed
             case closedChange
             case dateAdded
             case modelID
+            case meta
         }
         
         required public convenience init(from decoder: Decoder) throws {
@@ -139,25 +135,22 @@ extension Strategy.Investments {
             let exchangeName: String = try container.decode(String.self, forKey: .exchangeName)
             let companyName: String = try container.decode(String.self, forKey: .companyName)
             let assetID: String = try container.decode(String.self, forKey: .assetID)
-            let initial: Change = try container.decode(Change.self, forKey: .initial)
-            let changes: [Change] = try container.decode([Change].self, forKey: .changes)
             let closed: Bool = (try? container.decode(Bool.self, forKey: .closed)) ?? false
             let closedChange: Change? = try? container.decode(Change.self, forKey: .closedChange)
             let dateAdded: Date = try container.decode(Date.self, forKey: .dateAdded)
             let modelID: String = try container.decode(String.self, forKey: .modelID)
+            let meta: Strategy.Investments.Item.Meta = try container.decode(Strategy.Investments.Item.Meta.self, forKey: .meta)
             
             self.init(ticker: ticker,
                       exchangeName: exchangeName,
                       companyName: companyName,
                       assetID: assetID,
-                      initial: initial,
+                      meta: meta,
                       date: dateAdded)
             
             self.closed = closed
             self.closedChange = closedChange
             self.modelID = modelID
-            
-            self.changes = changes.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
         }
         
         public func encode(to encoder: Encoder) throws {
@@ -167,12 +160,11 @@ extension Strategy.Investments {
             try container.encode(exchangeName, forKey: .exchangeName)
             try container.encode(companyName, forKey: .companyName)
             try container.encode(assetID, forKey: .assetID)
-            try container.encode(initial, forKey: .initial)
-            try container.encode(changes, forKey: .changes)
             try container.encode(closed, forKey: .closed)
             try container.encode(closedChange, forKey: .closedChange)
             try container.encode(date, forKey: .dateAdded)
             try container.encode(modelID, forKey: .modelID)
+            try container.encode(meta, forKey: .meta)
         }
         
         public var asString: String {
@@ -184,21 +176,21 @@ extension Strategy.Investments {
             
             title += """
             \n----- initial -----
-            \(initial.asString)
+            \(meta.initial.asString)
             -----
             // changes --------
             """
             
-            if changes.isEmpty {
-                title += "\n None"
-            } else {
-                for change in changes {
-                    title += """
-                    \n\(change.asString)
-                    -------
-                    """
-                }
-            }
+//            if changes.isEmpty {
+//                title += "\n None"
+//            } else {
+//                for change in changes {
+//                    title += """
+//                    \n\(change.asString)
+//                    -------
+//                    """
+//                }
+//            }
             
             return title
         }
@@ -210,7 +202,7 @@ extension Strategy.Investments.Item {
     }
     
     public var closedPercent: Double {
-        ((closedChange ?? latestChange).amount - initial.amount) / initial.amount
+        ((closedChange ?? latestChange).amount - meta.initial.amount) / meta.initial.amount
     }
     
     public var closedDate: Date {
@@ -218,7 +210,7 @@ extension Strategy.Investments.Item {
     }
     
     public var closedStatusColor: Color {
-        closedAmount > initial.amount ? Brand.Colors.green : (latestChange.amount == initial.amount ? Brand.Colors.grey : Brand.Colors.red)
+        closedAmount > meta.initial.amount ? Brand.Colors.green : (latestChange.amount == meta.initial.amount ? Brand.Colors.grey : Brand.Colors.red)
     }
     
     public var lastValue: Double {
@@ -226,11 +218,11 @@ extension Strategy.Investments.Item {
     }
     
     public var latestChangePercent: Double {
-        (latestChange.amount - initial.amount) / initial.amount
+        (latestChange.amount - meta.initial.amount) / meta.initial.amount
     }
     
     public var statusColor: Color {
-        latestChange.amount > initial.amount ? Brand.Colors.green : (latestChange.amount == initial.amount ? Brand.Colors.grey : Brand.Colors.red)
+        latestChange.amount > meta.initial.amount ? Brand.Colors.green : (latestChange.amount == meta.initial.amount ? Brand.Colors.grey : Brand.Colors.red)
     }
     
     public func changePercent(_ change: Change) -> Double {

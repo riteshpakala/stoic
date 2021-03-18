@@ -20,7 +20,7 @@ extension TonalModels {
     public func predict(_ quote: Quote,
                         _ modelType: ModelType = .close,
                         range: [Date],
-                        sentiment: SentimentOutput) -> Double? {
+                        sentiment: SentimentOutput?) -> Double? {
         
         let sortedSecurities = quote.securities.sortDesc
         
@@ -96,32 +96,54 @@ extension TonalModels {
     }
     
     public func run(_ security: Security,
-                    _ sentiment: SentimentOutput,
+                    _ sentiment: SentimentOutput?,
                     _ quote: Quote,
                     _ modelType: ModelType) -> Double? {
-        let testData = DataSet(
-            dataType: .Regression,
-            inputDimension: self.currentType.inDim,
-            outputDimension: TonalService.AI.Models.Settings.outDim)
+        
+        let testData: DataSet?
         
         do {
-            let dataSet = TonalService.AI.Models.DataSet(
-                    security,
-                    sentiment,
-                    quote: quote,
-                    modelType: self.currentType,
-                    predicting: true)
-            
-            GraniteLogger.info("predicting:\n\(dataSet.description)\nself: \(String(describing: self))", .relay)
-            
-            try testData.addTestDataPoint(input: dataSet.asArray)
+            if let sentiment = sentiment {
+                testData = DataSet(
+                    dataType: .Regression,
+                    inputDimension: self.currentType.inDim,
+                    outputDimension: TonalService.AI.Models.Settings.outDim)
+                
+                let dataSet = TonalService.AI.Models.DataSet(
+                        security,
+                        sentiment,
+                        quote: quote,
+                        modelType: self.currentType,
+                        predicting: true)
+                
+                GraniteLogger.info("predicting:\n\(dataSet.description)\nself: \(String(describing: self))", .ml, focus: true)
+                
+                try testData?.addTestDataPoint(input: dataSet.asArray)
+            } else {
+                testData = DataSet(
+                    dataType: .Regression,
+                    inputDimension: self.currentType.inDimNoSentiment,
+                    outputDimension: TonalService.AI.Models.Settings.outDim)
+                
+                let dataSet = TonalService.AI.Models.DataSetNoSentiment(
+                        security,
+                        quote: quote,
+                        modelType: self.currentType,
+                        predicting: true)
+                
+                GraniteLogger.info("predicting w/o sentiment:\n\(dataSet.description)\nself: \(String(describing: self))", .ml, focus: true)
+                
+                try testData?.addTestDataPoint(input: dataSet.asArray)
+            }
         }
         catch {
-            GraniteLogger.error("invalid dataSet", .ml)
+            GraniteLogger.info("invalid dataSet", .ml, focus: true)
         }
         
-        self.model(forType: modelType)?.predictValues(data: testData)
-        guard let output = testData.singleOutput(index: 0) else {
+        guard let dataSet = testData else { GraniteLogger.info("failed to create dataSet", .ml, focus: true); return nil }
+        
+        self.model(forType: modelType)?.predictValues(data: dataSet)
+        guard let output = dataSet.singleOutput(index: 0) else {
             return nil
         }
         

@@ -9,8 +9,8 @@ import GraniteUI
 import SwiftUI
 import Combine
 
-struct TestableStrategyExpedition: GraniteExpedition {
-    typealias ExpeditionEvent = StrategyEvents.Get.Testable
+struct MetaStrategyExpedition: GraniteExpedition {
+    typealias ExpeditionEvent = StrategyEvents.Get.Meta
     typealias ExpeditionState = StrategyState
     
     func reduce(
@@ -27,25 +27,25 @@ struct TestableStrategyExpedition: GraniteExpedition {
                quote.securities.count > 12 {
                 let securities = Array(quote.securities.sortDesc[1...12])
                 for security in securities.sortAsc {
-                    strategy.investments.items[i].testable.pastChanges.append(security.asChange(testable: true))
+                    strategy.investments.items[i].meta.past.append(security.asChange(testable: true))
                 }
             }
         }
         
         //Let's find a model if there is any
-        for (i, investment) in strategy.investments.items.enumerated() {
-            if let quote = strategy.getQuoteFor(investment) {
-                let model = quote.models.first(where: { $0.isStrategy }) ?? quote.models.first
-                
-                if let tonalModel = model {
-                    //Found a model
-                    strategy.investments.items[i].testable.modelID = tonalModel.modelID
-                } else {
-                    //No model found
-                    GraniteLogger.info("no model found for the strategy boot")
-                }
-            }
-        }
+//        for (i, investment) in strategy.investments.items.enumerated() {
+//            if let quote = strategy.getQuoteFor(investment) {
+//                let model = quote.models.first(where: { $0.isStrategy }) ?? quote.models.first
+//                
+//                if let tonalModel = model {
+//                    //Found a model
+//                    strategy.investments.items[i].meta.modelID = tonalModel.modelID
+//                } else {
+//                    //No model found
+//                    GraniteLogger.info("no model found for the strategy boot")
+//                }
+//            }
+//        }
         
         state.strategy = strategy
     }

@@ -198,7 +198,127 @@ extension TonalService {
                     return desc
                 }
             }
-        }
+            
+            //MARK: -- DataSet without no sentiment
+            struct DataSetNoSentiment {
+                let security: Security
+                
+                var indicators: TonalServiceModels.Indicators
+                
+                let modelType: TonalModels.ModelType
+                let predicting: Bool
 
+                init(
+                    _ security: Security,
+                    quote: Quote,
+                    modelType: TonalModels.ModelType = .none,
+                    predicting: Bool = false) {
+
+                    self.security = security
+                    self.indicators = .init(security, with: quote)
+                    self.modelType = modelType
+                    self.predicting = predicting
+                }
+
+                public var asArray: [Double] {
+                    switch modelType {
+                    case .close:
+                        return [
+                            indicators.emaWA(),
+                            indicators.smaWA(),
+                            indicators.avgVolChange(),
+                            indicators.vwa(),
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
+                        ]
+                    case .low:
+                        return [
+                            indicators.emaWA(),
+                            indicators.smaWA(),
+                            indicators.avgVolChange(),
+                            indicators.vwa(),
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
+                        ]
+                    case .high:
+                        return [
+                            indicators.emaWA(),
+                            indicators.smaWA(),
+                            indicators.avgVolChange(),
+                            indicators.vwa(),
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
+                        ]
+                    case .volume:
+                        return [
+                            indicators.emaWA(),
+                            indicators.smaWA(),
+                            indicators.avgVolChange(),
+                            indicators.vwa(),
+                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
+                        ]
+                    default:
+                        return []
+                    }
+                }
+
+                public var inDim: Int {
+                    asArray.count
+                }
+
+                public var outDim: Int {
+                    output.count
+                }
+
+                public var output: [Double] {
+                    switch modelType {
+                    case .close, .none:
+                        return [security.lastValue]
+                    case .low:
+                        return [security.lowValue]
+                    case .high:
+                        return [security.highValue]
+                    case .volume:
+                        return [security.volumeValue]
+                    }
+                }
+
+                public var description: String {
+                    let desc: String =
+                        """
+                        💽💽💽💽💽💽💽💽💽💽💽💽💽
+                        '''''''''''''''''''''''''''''
+                        [ Security Data Set - \(security.securityType) - \(security.date.asString) ]
+                        Value: \(security.lastValue)
+                        Change: \(security.changePercentValue)
+                        Volume: \(security.volumeValue)
+                        - Previous Data Set - \(indicators.basePair.previous.date.asString)
+                        Value: \(indicators.basePair.previous.lastValue)
+                        Change: \(indicators.basePair.previous.changePercentValue)
+                        Volume: \(indicators.basePair.previous.volumeValue)
+                        ----
+                        \(indicators.averagesToString)
+                        \(indicators.stochastic.values.toString)
+                        Previus stoichs:
+                        \(indicators.stochasticPreviousDay.values.toString)
+                        '''''''''''''''''''''''''''''
+                        💽
+                        """
+                    return desc
+                }
+                
+                public var inputDescription: String {
+                    let desc: String =
+                        """
+                        💽💽💽💽💽💽💽💽💽💽💽💽💽
+                        '''''''''''''''''''''''''''''
+                        [ Security Data Set - \(security.securityType)  ]
+                        
+                        \(indicators.basePair.base.date.asString) ----
+                        \(indicators.averagesToString)
+                        '''''''''''''''''''''''''''''
+                        💽
+                        """
+                    return desc
+                }
+            }
+        }
     }
 }

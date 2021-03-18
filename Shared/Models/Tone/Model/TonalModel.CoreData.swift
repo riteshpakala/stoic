@@ -135,3 +135,32 @@ extension TonalModel {
         return result
     }
 }
+
+extension TonalModels {
+    func save(forQuote quote: Quote,
+              range: [Date],
+              tuners: [SentimentOutput] = [],
+              moc: NSManagedObjectContext,
+              overwrite: Bool = false) -> TonalModel? {
+        var modelExists: Bool = false
+        
+        let models = TonalModel.get(forSecurity: quote.latestSecurity,
+                                    moc: moc)
+        modelExists = models.filter { $0.date == self.created }.isNotEmpty
+        
+        guard !modelExists else { return nil }
+        
+        let tonalModel: TonalModel = .init(self,
+                                           daysTrained: range.count,
+                                           tuners: tuners,
+                                           quote: quote,
+                                           range: range,
+                                           isStrategy: false)
+        
+        if tonalModel.save(moc: moc, overwrite: overwrite) {
+            return tonalModel
+        } else {
+            return nil
+        }
+    }
+}
