@@ -189,7 +189,7 @@ struct StrategyExpanded: View, GraniteEventResponder {
                                 VStack(alignment: .leading) {
                                     
                                     if let tone = item.meta.getTone(forChange: change) {
-                                        GraniteText("upper: \(tone.prediction.high.display)",
+                                        GraniteText("close: \(tone.prediction.close.display)",
                                                     Brand.Colors.purple,
                                                     .footnote,
                                                     .regular,

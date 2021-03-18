@@ -25,7 +25,7 @@ extension Strategy {
     
     public func getQuoteFor(_ item: Investments.Item) -> Quote? {
         for quote in quotes {
-            if let index = investments.items.firstIndex(where: { $0.assetID == quote.latestSecurity.assetID }) {
+            if quote.latestSecurity.assetID == item.assetID {
                 return quote
             }
         }

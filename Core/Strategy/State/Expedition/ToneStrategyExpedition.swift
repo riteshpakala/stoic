@@ -48,7 +48,7 @@ struct ToneDataRequestedExpedition: GraniteExpedition {
                 
                 
                 let prediction = model.predictAll()
-                print("{TEST} updating")
+                print("{TEST} updating \(quote.latestSecurity.assetID)")
                 event.item.meta.update(prediction, change: event.change)
 //                TonalModel.
             }
