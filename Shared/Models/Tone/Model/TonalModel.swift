@@ -68,23 +68,55 @@ public class TonalModel: Asset {
         self.last12SecuritiesDailies = Array(sorted.prefix(12))
     }
     
-    public func predictAll(_ sentiment: SentimentOutput? = nil) -> TonalPrediction {
+    public func predictAll(from targetDate: Date? = nil, _ sentiment: SentimentOutput? = nil) -> TonalPrediction {
         
-        let close: Double = predict(sentiment, modelType: .close)
-        let low: Double = predict(sentiment, modelType: .low)
-        let high: Double = predict(sentiment, modelType: .high)
-        let volume: Double = predict(sentiment, modelType: .volume)
+        let targetSecurity = quote.securities.first(where: { $0.date.compare(targetDate ?? .today) == .orderedSame }) ?? latestSecurity
+        
+        let close: Double = predict(on: targetSecurity, sentiment, modelType: .close)
+        let low: Double = predict(on: targetSecurity, sentiment, modelType: .low)
+        let high: Double = predict(on: targetSecurity, sentiment, modelType: .high)
+        let volume: Double = predict(on: targetSecurity, sentiment, modelType: .volume)
         
         let prediction: TonalPrediction = .init(close: close,
                                                 low: low,
                                                 high: high,
                                                 volume: volume,
-                                                current: latestSecurity.lastValue,
+                                                current: targetSecurity.lastValue,
                                                 modelDate: date,
-                                                targetDate: targetDate,
-                                                securityDate: latestSecurity.date,
+                                                targetDate: targetSecurity.date.nextValidTradingDay,
+                                                securityDate: targetSecurity.date,
                                                 interval: latestSecurity.interval)
         return prediction
+    }
+    
+    public func predict(on security: Security,
+                        _ sentiment: SentimentOutput?,
+                        modelType: TonalModels.ModelType = .close,
+                        scale: Bool = true) -> Double {
+        quote.precompute()
+        guard let output = david.predict(on: security,
+                                         quote,
+                                         modelType,
+                                         sentiment: sentiment) else {
+            return 0.0
+        }
+        
+        if scale {
+            switch modelType {
+            case .close:
+                return david.scale(prediction: output, security.lastValue)
+            case .high:
+                return david.scale(prediction: output, security.highValue)
+            case .low:
+                return david.scale(prediction: output, security.lowValue)
+            case .volume:
+                return david.scale(prediction: output, security.volumeValue)
+            default:
+                return output
+            }
+        } else {
+            return output
+        }
     }
     
     public func predict(_ sentiment: SentimentOutput?,

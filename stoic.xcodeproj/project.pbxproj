@@ -860,6 +860,8 @@
 		71BE145F25A15B170015D157 /* GetStockSearchExpedition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE145D25A15B170015D157 /* GetStockSearchExpedition.swift */; };
 		71BE146525A15DB60015D157 /* StockService.Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE146425A15DB60015D157 /* StockService.Search.swift */; };
 		71BE146625A15DB60015D157 /* StockService.Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BE146425A15DB60015D157 /* StockService.Search.swift */; };
+		71BF79E4260410BF00EA4C80 /* TonalService.Indicators.MacD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BF79E3260410BF00EA4C80 /* TonalService.Indicators.MacD.swift */; };
+		71BF79E5260410BF00EA4C80 /* TonalService.Indicators.MacD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BF79E3260410BF00EA4C80 /* TonalService.Indicators.MacD.swift */; };
 		71C08E8425AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8025AF53AE00765894 /* SearchResponseObject+CoreDataClass.swift */; };
 		71C08E8525AF53AF00765894 /* SearchResponseObject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8025AF53AE00765894 /* SearchResponseObject+CoreDataClass.swift */; };
 		71C08E8625AF53AF00765894 /* NetworkResponseObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C08E8125AF53AE00765894 /* NetworkResponseObject+CoreDataProperties.swift */; };
@@ -1496,6 +1498,7 @@
 		71BDF2952599430A00F66EA2 /* TonalService.Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Utilities.swift; sourceTree = "<group>"; };
 		71BE145D25A15B170015D157 /* GetStockSearchExpedition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStockSearchExpedition.swift; sourceTree = "<group>"; };
 		71BE146425A15DB60015D157 /* StockService.Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockService.Search.swift; sourceTree = "<group>"; };
+		71BF79E3260410BF00EA4C80 /* TonalService.Indicators.MacD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonalService.Indicators.MacD.swift; sourceTree = "<group>"; };
 		71C08E8025AF53AE00765894 /* SearchResponseObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SearchResponseObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		71C08E8125AF53AE00765894 /* NetworkResponseObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkResponseObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		71C08E8225AF53AE00765894 /* NetworkResponseObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkResponseObject+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1882,6 +1885,7 @@
 				71143E0825A4C78300379E4B /* TonalService.Indicators.Volatility.swift */,
 				71143DFD25A4C70800379E4B /* TonalService.Indicators.Averages.swift */,
 				7189C9B925AE660800D98A85 /* TonalService.Indicators.Stochastics.swift */,
+				71BF79E3260410BF00EA4C80 /* TonalService.Indicators.MacD.swift */,
 			);
 			path = Indicators;
 			sourceTree = "<group>";
@@ -4313,6 +4317,7 @@
 				712415F225A35F2200169B9C /* Search.swift in Sources */,
 				71DC58C725988F11004935CF /* StoicRNN_10.mlmodel in Sources */,
 				7125BDDB25A131D200F22717 /* HorizontalRangeTrack.swift in Sources */,
+				71BF79E4260410BF00EA4C80 /* TonalService.Indicators.MacD.swift in Sources */,
 				7143430725907622001F26A4 /* RepresentableAsFloat.swift in Sources */,
 				710889A52591B29800795EDF /* Pairs.swift in Sources */,
 				7125BDC925A1318D00F22717 /* RangeSliderOptions.swift in Sources */,
@@ -4752,6 +4757,7 @@
 				711402D1258DBD0900BA387D /* GetTradingDayExpedition.swift in Sources */,
 				7108898A2591B29800795EDF /* Async.swift in Sources */,
 				71434325259076EB001F26A4 /* Int+Convenience.swift in Sources */,
+				71BF79E5260410BF00EA4C80 /* TonalService.Indicators.MacD.swift in Sources */,
 				7108899A2591B29800795EDF /* Promise+Delay.swift in Sources */,
 				71C08EC025AFA59300765894 /* CryptoService.Quotes.swift in Sources */,
 				7122EA3725D5AC170029A342 /* BroadcastsExpedition.swift in Sources */,

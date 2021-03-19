@@ -234,9 +234,9 @@ extension TonalModels {
         var inDimNoSentiment: Int {
             switch self {
             case .volume:
-                return 5
+                return 6
             default:
-                return 5
+                return 6
             }
         }
         

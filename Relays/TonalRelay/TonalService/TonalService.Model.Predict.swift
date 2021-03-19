@@ -17,6 +17,14 @@ extension TonalModels {
         return (value*prediction) + value
     }
     
+    public func predict(on security: Security,
+                        _ quote: Quote,
+                        _ modelType: ModelType = .close,
+                        sentiment: SentimentOutput?) -> Double? {
+        
+        return run(security, sentiment, quote, modelType)
+    }
+    
     public func predict(_ quote: Quote,
                         _ modelType: ModelType = .close,
                         range: [Date],

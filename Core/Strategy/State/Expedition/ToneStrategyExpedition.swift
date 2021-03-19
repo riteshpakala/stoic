@@ -43,11 +43,12 @@ struct ToneDataRequestedExpedition: GraniteExpedition {
         
         if let quote = state.strategy.getQuoteFor(event.item) {
             
+            //train from a 1 day lag (hence the -1)
             if let model = TonalModels.generate(fromQuote: quote,
-                                                fromDate: event.change.date) {
+                                                fromDate: event.change.date.advanceDate(value: -1)) {
                 
-                
-                let prediction = model.predictAll()
+                //predict on selected day
+                let prediction = model.predictAll(from: event.change.date)
                 print("{TEST} updating \(quote.latestSecurity.assetID)")
                 event.item.meta.update(prediction, change: event.change)
 //                TonalModel.

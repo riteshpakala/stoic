@@ -94,46 +94,14 @@ extension TonalService {
                 }
 
                 public var asArray: [Double] {
-                    switch modelType {
-                    case .close:
-                        return [
-                            indicators.emaWA(),
-                            indicators.smaWA(),
-                            indicators.avgVolChange(),
-                            indicators.vwa(),
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.magnitude,
-                        ]
-                    case .low:
-                        return [
-                            indicators.emaWA(),
-                            indicators.smaWA(),
-                            indicators.avgVolChange(),
-                            indicators.vwa(),
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.magnitude,
-                        ]
-                    case .high:
-                        return [
-                            indicators.emaWA(),
-                            indicators.smaWA(),
-                            indicators.avgVolChange(),
-                            indicators.vwa(),
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.magnitude,
-                        ]
-                    case .volume:
-                        return [
-                            indicators.emaWA(),
-                            indicators.smaWA(),
-                            indicators.avgVolChange(),
-                            indicators.vwa(),
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                            sentiment.magnitude,
-                        ]
-                    default:
-                        return []
-                    }
+                    [
+                        indicators.emaWA(context: TonalServiceModels.Indicators.Context.from(modelType)),
+                        indicators.smaWA(context: TonalServiceModels.Indicators.Context.from(modelType)),
+                        indicators.avgVolChange(),
+                        indicators.vwa(),
+                        indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
+                        sentiment.magnitude,
+                    ]
                 }
 
                 public var inDim: Int {
@@ -221,42 +189,14 @@ extension TonalService {
                 }
 
                 public var asArray: [Double] {
-                    switch modelType {
-                    case .close:
-                        return [
-                            indicators.emaWA(),
-                            indicators.smaWA(),
-                            indicators.avgVolChange(),
-                            indicators.vwa(),
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                        ]
-                    case .low:
-                        return [
-                            indicators.emaWA(),
-                            indicators.smaWA(),
-                            indicators.avgVolChange(),
-                            indicators.vwa(),
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                        ]
-                    case .high:
-                        return [
-                            indicators.emaWA(),
-                            indicators.smaWA(),
-                            indicators.avgVolChange(),
-                            indicators.vwa(),
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                        ]
-                    case .volume:
-                        return [
-                            indicators.emaWA(),
-                            indicators.smaWA(),
-                            indicators.avgVolChange(),
-                            indicators.vwa(),
-                            indicators.stochasticPreviousDay.values.percentDs.first ?? 0.0,
-                        ]
-                    default:
-                        return []
-                    }
+                    [
+                        indicators.emaWA(context: TonalServiceModels.Indicators.Context.from(modelType)),
+                        indicators.macD(context: TonalServiceModels.Indicators.Context.from(modelType)),
+                        indicators.macDPreviousSignal(context: TonalServiceModels.Indicators.Context.from(modelType)),
+                        indicators.smaWA(context: TonalServiceModels.Indicators.Context.from(modelType)),
+                        indicators.avgVolChange(),
+                        indicators.vwa(),
+                    ]
                 }
 
                 public var inDim: Int {
@@ -298,6 +238,8 @@ extension TonalService {
                         \(indicators.stochastic.values.toString)
                         Previus stoichs:
                         \(indicators.stochasticPreviousDay.values.toString)
+                        MacD_Close: \(indicators.macD(context: .close))
+                        MacDSig_Close: \(indicators.macDSignal(context: .close))
                         '''''''''''''''''''''''''''''
                         💽
                         """

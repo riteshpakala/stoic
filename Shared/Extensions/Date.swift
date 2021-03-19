@@ -294,6 +294,17 @@ extension Date {
         return nil
     }
     
+    var nextValidTradingDay: Date {
+        for i in 1...12 {
+            let date = Date.today.advanceDate(value: i)
+            if date.validTradingDay {
+                return date
+            }
+        }
+        
+        return Date.today
+    }
+    
     var closingHour: Int {
         if let tgDay = Date.thanksGivingDay(year: self.dateComponents().year) {
             let theDayAfterTG = tgDay.advanceDate(value: 1)

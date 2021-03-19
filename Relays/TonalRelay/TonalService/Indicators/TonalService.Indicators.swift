@@ -24,6 +24,25 @@ extension TonalServiceModels {
             }
         }
         
+        public enum Context {
+            case high
+            case close
+            case low
+            
+            public static func from(_ type: TonalModels.ModelType) -> Context {
+                switch type {
+                case .high:
+                    return .high
+                case .close:
+                    return .close
+                case .low:
+                    return .low
+                default:
+                    return .close
+                }
+            }
+        }
+        
         let security: Security
         let history: [Security]
         let historyPaired: [PairedSecurity]
@@ -50,17 +69,30 @@ extension TonalServiceModels {
             }
         }
         
+        public init(_ security: Security,
+                    quote: Quote,
+                    securities: [Security]) {
+            self.quote = quote
+            self.security = security
+            let securitiesFiltered =  securities.filterBelow(security.date)
+            self.history = securitiesFiltered
+            
+            if securitiesFiltered.count > 1 {
+                var pairings: [PairedSecurity] = []
+                for i in 0..<securitiesFiltered.count-1 {
+                    let base = securitiesFiltered[i]
+                    let previous = securitiesFiltered[i+1]
+                    
+                    pairings.append(.init(base: base, previous: previous))
+                }
+                self.historyPaired = pairings
+            } else {
+                self.historyPaired = []
+            }
+        }
+        
         public init(with quote: Quote) {
             self.init(quote.latestSecurity, with: quote)
-        }
-        
-        // Indicators
-        var stochastic: Stochastics {
-            .init([security] + history)
-        }
-        
-        var stochasticPreviousDay: Stochastics {
-            .init(history)
         }
     }
 }
@@ -76,5 +108,19 @@ extension TonalServiceModels.Indicators {
     
     var volChange: Double {
         (basePair.base.lastValue - basePair.previous.lastValue) / basePair.previous.lastValue
+    }
+}
+
+extension Security {
+    public func value(forContext context: TonalServiceModels.Indicators.Context) -> Double {
+        
+        switch context {
+        case .high:
+            return highValue
+        case .close:
+            return lastValue
+        case .low:
+            return lowValue
+        }
     }
 }

@@ -8,6 +8,15 @@
 import Foundation
 
 extension TonalServiceModels.Indicators {
+    // Indicators
+    var stochastic: Stochastics {
+        .init([security] + history)
+    }
+    
+    var stochasticPreviousDay: Stochastics {
+        .init(history)
+    }
+    
     public struct Stochastics {
         public struct Value {
             let dates: [Date]
