@@ -119,9 +119,20 @@ extension TonalServiceModels.Indicators {
             }
         }
         
+        var valueLast: Double {
+            switch context {
+            case .high:
+                return firstOfHistoricalSecurities.highValue
+            case .close:
+                return firstOfHistoricalSecurities.lastValue
+            case .low:
+                return firstOfHistoricalSecurities.lowValue
+            }
+        }
+        
         let prevEMA_aka_SMA = indicatorsOfThePast.ema(days, context: context, iter: iter + 1)
         let x1 = value - prevEMA_aka_SMA
-        let K: Double = 2/(days + 1)
+        let K: Double = log10(value/valueLast)//2/(days + 1)
         let y1 = prevEMA_aka_SMA
 
         let emaValue = (x1 * K) + prevEMA_aka_SMA//(y1 * (1 - K))

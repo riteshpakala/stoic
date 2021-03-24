@@ -12,7 +12,7 @@ extension TonalServiceModels.Indicators {
         let ema12 = ema(12, context: context)
         let ema26 = ema(26, context: context)
         
-        print("{TEST} \(self.security.date) - ema12: \(ema12) // ema26: \(ema26)")
+//        print("{TEST} \(self.security.date) - ema12: \(ema12) // ema26: \(ema26)")
         return ema12 - ema26
     }
     

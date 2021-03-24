@@ -56,10 +56,10 @@ extension TonalModels {
                         label: security.date.asString)
                 }
                 catch {
-                    GraniteLogger.error("invalid dataSet", .ml, focus: true)
+                    GraniteLogger.info("invalid dataSet", .ml, focus: true)
                 }
             }
-    
+            GraniteLogger.info("training", .ml, focus: true)
             let david = SVMModel(
                 problemType: .ϵSVMRegression,
                 kernelSettings:

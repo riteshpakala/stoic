@@ -240,6 +240,8 @@ extension TonalService {
                         \(indicators.stochasticPreviousDay.values.toString)
                         MacD_Close: \(indicators.macD(context: .close))
                         MacDSig_Close: \(indicators.macDSignal(context: .close))
+                        ema12: \(indicators.ema(12, context: .close))
+                        ema26: \(indicators.ema(26, context: .close))
                         '''''''''''''''''''''''''''''
                         💽
                         """
