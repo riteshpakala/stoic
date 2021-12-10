@@ -1,6 +1,0 @@
-framework module Pods_StoicTests {
-  umbrella header "Pods-StoicTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

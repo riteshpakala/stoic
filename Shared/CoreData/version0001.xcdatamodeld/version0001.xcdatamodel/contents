@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20C69" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="BaseNetworkResponseObject" representedClassName=".BaseNetworkResponseObject" parentEntity="NetworkResponseObject" syncable="YES"/>
+    <entity name="CryptoDataObject" representedClassName=".CryptoDataObject" parentEntity="SecurityObject" syncable="YES">
+        <attribute name="close" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="high" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="low" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="open" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="volume" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="volumeBTC" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="FloorObject" representedClassName=".FloorObject" syncable="YES">
+        <attribute name="coordX" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="coordY" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PortfolioObject" inverseName="floor" inverseEntity="PortfolioObject"/>
+        <relationship name="security" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="floor" inverseEntity="SecurityObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="security"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="NetworkResponseObject" representedClassName=".NetworkResponseObject" isAbstract="YES" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="responseType" attributeType="String"/>
+        <attribute name="route" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint/>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="PortfolioObject" representedClassName=".PortfolioObject" syncable="YES">
+        <attribute name="username" attributeType="String"/>
+        <relationship name="floor" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorObject" inverseName="portfolio" inverseEntity="FloorObject"/>
+        <relationship name="securities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="portfolio" inverseEntity="SecurityObject"/>
+        <relationship name="strategies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StrategyObject" inverseName="portfolio" inverseEntity="StrategyObject"/>
+    </entity>
+    <entity name="QuoteObject" representedClassName=".QuoteObject" syncable="YES">
+        <attribute name="exchangeName" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="securityType" attributeType="String"/>
+        <attribute name="ticker" attributeType="String"/>
+        <relationship name="securities" toMany="YES" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="quote" inverseEntity="SecurityObject"/>
+        <relationship name="strategy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StrategyObject" inverseName="quotes" inverseEntity="StrategyObject"/>
+        <relationship name="tonalModel" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TonalModelObject" inverseName="quote" inverseEntity="TonalModelObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="ticker"/>
+                <constraint value="securityType"/>
+                <constraint value="exchangeName"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="SearchResponseObject" representedClassName=".SearchResponseObject" parentEntity="NetworkResponseObject" syncable="YES">
+        <attribute name="entityDescription" attributeType="String"/>
+        <attribute name="exchangeName" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="symbolName" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="symbolName"/>
+                <constraint value="exchangeName"/>
+                <constraint value="entityDescription"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="SecurityObject" representedClassName=".SecurityObject" isAbstract="YES" syncable="YES">
+        <attribute name="changeAbsoluteValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="changePercentValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="exchangeName" attributeType="String"/>
+        <attribute name="highValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="indicator" attributeType="String"/>
+        <attribute name="intervalType" attributeType="String"/>
+        <attribute name="lastValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lowValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="securityType" attributeType="String"/>
+        <attribute name="ticker" attributeType="String"/>
+        <attribute name="volumeValue" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="floor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorObject" inverseName="security" inverseEntity="FloorObject"/>
+        <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PortfolioObject" inverseName="securities" inverseEntity="PortfolioObject"/>
+        <relationship name="quote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="securities" inverseEntity="QuoteObject"/>
+        <relationship name="sentiment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SentimentObject" inverseName="security" inverseEntity="SentimentObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="date"/>
+                <constraint value="ticker"/>
+                <constraint value="name"/>
+                <constraint value="intervalType"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="SentimentObject" representedClassName=".SentimentObject" isAbstract="YES" syncable="YES">
+        <attribute name="compound" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="content" attributeType="String"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="neg" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="neu" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pos" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="sentimentType" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="security" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SecurityObject" inverseName="sentiment" inverseEntity="SecurityObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="date"/>
+                <constraint value="content"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="SocialDataObject" representedClassName=".SocialDataObject" parentEntity="SentimentObject" syncable="YES"/>
+    <entity name="StockDataObject" representedClassName=".StockDataObject" parentEntity="SecurityObject" syncable="YES">
+        <attribute name="close" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="high" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="low" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="open" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="volume" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="StrategyObject" representedClassName=".StrategyObject" syncable="YES">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="investmentData" optional="YES" attributeType="Binary"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="portfolio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PortfolioObject" inverseName="strategies" inverseEntity="PortfolioObject"/>
+        <relationship name="quotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="strategy" inverseEntity="QuoteObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="TonalModelObject" representedClassName=".TonalModelObject" syncable="YES">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="daysTrained" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="engine" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="isStrategy" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="model" attributeType="Binary"/>
+        <attribute name="range" attributeType="Binary"/>
+        <attribute name="sentimentTuners" attributeType="Binary"/>
+        <relationship name="quote" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteObject" inverseName="tonalModel" inverseEntity="QuoteObject"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <elements>
+        <element name="BaseNetworkResponseObject" positionX="-45" positionY="-450" width="128" height="29"/>
+        <element name="CryptoDataObject" positionX="-15.463134765625" positionY="-21.51837158203125" width="128" height="119"/>
+        <element name="FloorObject" positionX="-36" positionY="-441" width="128" height="89"/>
+        <element name="NetworkResponseObject" positionX="-45" positionY="-450" width="128" height="89"/>
+        <element name="PortfolioObject" positionX="-45" positionY="-450" width="128" height="89"/>
+        <element name="QuoteObject" positionX="125.478515625" positionY="-606.2244567871094" width="128" height="134"/>
+        <element name="SearchResponseObject" positionX="-36" positionY="-441" width="128" height="89"/>
+        <element name="SecurityObject" positionX="-120.431640625" positionY="-482.8954162597656" width="128" height="284"/>
+        <element name="SentimentObject" positionX="-45" positionY="-450" width="128" height="149"/>
+        <element name="SocialDataObject" positionX="-45" positionY="-450" width="128" height="29"/>
+        <element name="StockDataObject" positionX="-214.094970703125" positionY="-21.4537353515625" width="128" height="104"/>
+        <element name="StrategyObject" positionX="-45" positionY="-450" width="128" height="104"/>
+        <element name="TonalModelObject" positionX="-45" positionY="-450" width="128" height="164"/>
+    </elements>
+</model>

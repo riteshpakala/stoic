@@ -1,0 +1,68 @@
+//
+//  TonalFindComponent.swift
+//  * stoic
+//
+//  Created by Ritesh Pakala on 1/2/21.
+//  Copyright (c) 2021 ___ORGANIZATIONNAME___. All rights reserved.
+//
+
+import GraniteUI
+import SwiftUI
+import Combine
+
+public struct TonalFindComponent: GraniteComponent {
+    @ObservedObject
+    public var command: GraniteCommand<TonalFindCenter, TonalFindState> = .init()
+    
+    public init() {}
+    
+    public var body: some View {
+        VStack {
+            if let security = command.center.toneDependency.tone.find.security {
+                GraniteText("set the tone for \(security.ticker.uppercased())",
+                            .headline,
+                            .bold)
+                    .padding(.top, Brand.Padding.medium)
+            } else {
+                
+                GraniteText("set the tone",
+                            .headline,
+                            .bold)
+                    .padding(.top, Brand.Padding.medium)
+            }
+            
+            VStack {
+                AssetSearchComponent(state: .init(.tonalCreate(.none)))
+                    .listen(to: command, .stop)
+            }
+            
+            if command.center.findState == .parsed {
+                PaddingVertical()
+                
+                VStack {
+                    GraniteText("days to train",
+                                .subheadline,
+                                .regular,
+                                .leading)
+                    
+                    BasicSliderComponent(
+                        state: inject(\.toneDependency,
+                                         target: \.tone.find.sliderDays))
+                        .listen(to: command)
+                        .padding(.top, Brand.Padding.medium)
+                        .padding(.bottom, Brand.Padding.medium)
+                    
+                    GraniteText("\(command.center.daysSelected) days", .subheadline, .regular)
+                }
+                .padding(.top, Brand.Padding.large)
+                .padding(.bottom, Brand.Padding.medium)
+                .padding(.leading, Brand.Padding.medium)
+                .padding(.trailing, Brand.Padding.medium)
+                .transition(.move(edge: .bottom))
+            }
+            
+        }/*.onTapGesture {
+            sendEvent(TonalFindEvents.Find.init(ticker: "MSFT"))
+        }*/
+    }
+}

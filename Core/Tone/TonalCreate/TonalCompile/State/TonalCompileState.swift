@@ -1,0 +1,61 @@
+//
+//  TonalCompileState.swift
+//  * stoic
+//
+//  Created by Ritesh Pakala on 1/5/21.
+//  Copyright (c) 2021 ___ORGANIZATIONNAME___. All rights reserved.
+//
+
+import GraniteUI
+import SwiftUI
+import Combine
+
+public class TonalCompileState: GraniteState {
+    var tune: SentimentOutput = .neutral
+    var currentPrediction: Double = 0.0
+}
+
+public class TonalCompileCenter: GraniteCenter<TonalCompileState> {
+
+    @GraniteDependency
+    var toneDependency: ToneDependency
+    
+    @GraniteDependency
+    var envDependency: EnvironmentDependency
+    
+    var tone: Tone {
+        toneDependency.tone
+    }
+    
+    var latestSecurity: Security? {
+        tone.latestSecurity
+    }
+    
+    var quote: Quote? {
+        tone.find.quote
+    }
+    
+    var tonalCompile: Tone.Compile {
+        tone.compile
+    }
+    
+    var compileState: Tone.Compile.State {
+        tonalCompile.state
+    }
+    
+    var tuneState: Tone.Tune.State {
+        tone.tune.stage
+    }
+    
+    var model: TonalModel? {
+        tonalCompile.tonalModel
+    }
+    
+    override public var expeditions: [GraniteBaseExpedition] {
+        [
+            CompileTheToneExpedition.Discovery(),
+            SaveTheToneExpedition.Discovery(),
+            PredictTheToneExpedition.Discovery()
+        ]
+    }
+}

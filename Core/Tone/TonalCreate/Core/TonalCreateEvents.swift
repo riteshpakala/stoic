@@ -1,0 +1,20 @@
+//
+//  TonalCreateEvents.swift
+//  * stoic
+//
+//  Created by Ritesh Pakala on 12/22/20.
+//  Copyright (c) 2020 ___ORGANIZATIONNAME___. All rights reserved.
+//
+
+import GraniteUI
+import SwiftUI
+import Combine
+
+struct TonalCreateEvents {
+    struct Prepare: GraniteEvent {
+        var component: GraniteAdAstra
+        var behavior: GraniteEventBehavior {
+            .quiet
+        }
+    }
+}

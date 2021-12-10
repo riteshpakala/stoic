@@ -1,0 +1,35 @@
+//
+//  Strategy.Tone.Generate.swift
+//  stoic
+//
+//  Created by Ritesh Pakala on 2/10/21.
+//
+
+import Foundation
+
+extension Strategy {
+    //Update tonal prediction for investments
+    public func generate() {
+        for quote in quotes {
+            if let index = investments.items.firstIndex(where: { $0.assetID == quote.latestSecurity.assetID }) {
+                let mutableQuote: Quote = quote
+                var model = mutableQuote.models.first(where: { $0.isStrategy }) ?? mutableQuote.models.first
+                var prediction = model?.predictAll()
+                prediction?.current = self.investments.items[index].lastValue
+                if let prediction = prediction {
+                    self.investments.items[index].prediction = prediction
+                }
+            }
+        }
+    }
+    
+    public func getQuoteFor(_ item: Investments.Item) -> Quote? {
+        for quote in quotes {
+            if quote.latestSecurity.assetID == item.assetID {
+                return quote
+            }
+        }
+        
+        return nil
+    }
+}

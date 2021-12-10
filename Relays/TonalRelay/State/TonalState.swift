@@ -1,0 +1,61 @@
+//
+//  TonalState.swift
+//  * stoic
+//
+//  Created by Ritesh Pakala on 12/22/20.
+//  Copyright (c) 2020 ___ORGANIZATIONNAME___. All rights reserved.
+//
+
+import GraniteUI
+import SwiftUI
+import Combine
+
+public enum TonalStage {
+    case none
+    case searching
+    case predicting
+    case compiling
+}
+
+public class TonalState: GraniteState {
+    
+    let oracle = TonalService.TweetOracle()
+    
+    let modelThreads: Int = 3
+    let dataChunks: Int = 3
+    let dataScale: Int = 360
+    let service: TonalService = .init()
+    var stage: TonalStage = .none 
+    var sentimentProgress: Double {
+        service
+        .soundAggregate
+        .progress(
+            threads: modelThreads,
+            dateChunks: dataChunks)
+    }
+    
+    lazy var operationQueue: OperationQueue = {
+        var queue: OperationQueue = .init()
+        queue.maxConcurrentOperationCount = modelThreads
+        queue.name = "tonal.relay.predict.op"
+        queue.qualityOfService = .background
+        return queue
+    }()
+}
+
+public class TonalCenter: GraniteCenter<TonalState> {
+    
+    public var progress: Double {
+        state.sentimentProgress
+    }
+    
+    public override var expeditions: [GraniteBaseExpedition] {
+        [
+            GetSentimentExpedition.Discovery(),
+            GetSentimentThinkExpedition.Discovery(),
+            ProcessSentimentExpedition.Discovery(),
+            TonalHistoryExpedition.Discovery(),
+            TonalSoundsExpedition.Discovery()
+        ]
+    }
+}
